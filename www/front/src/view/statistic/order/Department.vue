@@ -42,7 +42,7 @@ import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
-import blueTheme from "@/extend/echarts_theme/blue.json";
+import blueTheme from "@/extend/echarts-theme/blue.json";
 import Panel from "@/component/Panel.vue";
 
 const query = ref({

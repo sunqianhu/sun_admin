@@ -87,8 +87,8 @@ const init = async () => {
     return;
   }
   user.value = response.data.user;
-  loginLogs.value = response.data.login_logs;
-  operationLogs.value = response.data.operation_logs;
+  loginLogs.value = response.data.login - logs;
+  operationLogs.value = response.data.operation - logs;
 };
 
 onMounted(() => {

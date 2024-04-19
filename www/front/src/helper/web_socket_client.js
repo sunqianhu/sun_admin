@@ -1,9 +1,9 @@
 /**
  * websocket客户端
  */
-function WebSocketClient(url) {
+function WebsocketClient(url) {
   this.url = url;
-  this.webSocketClient = null;
+  this.websocketClient = null;
   this.reconnetInterval = 1000 * 10; //重连间隔
   this.reconnetFlag = false; //重连标识
   this.pingTimer = 0; //心跳定时器
@@ -27,21 +27,21 @@ function WebSocketClient(url) {
     }
 
     if (window.WebSocket) {
-      that.webSocketClient = new WebSocket(that.url);
+      that.websocketClient = new WebSocket(that.url);
     } else if (window.MozwebSocket) {
-      that.webSocketClient = new MozwebSocket(that.url);
+      that.websocketClient = new MozwebSocket(that.url);
     } else {
       throw new Error("浏览器不支持websocket，推荐使用新版chrome浏览器");
     }
 
-    that.webSocketClient.onopen = function (event) {
+    that.websocketClient.onopen = function (event) {
       console.log("webSocket：onopen 连接成功");
       that.ping();
       if (that.onOpen) {
         that.onOpen(event);
       }
     };
-    that.webSocketClient.addEventListener("error", function (event) {
+    that.websocketClient.addEventListener("error", function (event) {
       console.log("webSocket：onerror 遇到错误", event);
       clearInterval(that.pingTimer);
       that.reconnet();
@@ -49,7 +49,7 @@ function WebSocketClient(url) {
         that.onError(event);
       }
     });
-    that.webSocketClient.onclose = function (event) {
+    that.websocketClient.onclose = function (event) {
       console.log("webSocket：onclose 连接关闭");
       clearInterval(that.pingTimer);
       that.reconnet();
@@ -57,7 +57,7 @@ function WebSocketClient(url) {
         that.onClose(event);
       }
     };
-    that.webSocketClient.addEventListener("message", function (event) {
+    that.websocketClient.addEventListener("message", function (event) {
       console.log("webSocket：onmessage 收到消息", event);
       if (that.onMessage) {
         that.onMessage(event);
@@ -93,7 +93,7 @@ function WebSocketClient(url) {
     }
     that.pingTimer = setInterval(() => {
       console.log("webSocket：发送心跳");
-      that.webSocketClient.send('{"type":"ping"}');
+      that.websocketClient.send('{"type":"ping"}');
     }, that.pingInterval);
   };
 
@@ -102,7 +102,7 @@ function WebSocketClient(url) {
    * @param {string} data
    */
   this.send = function (data) {
-    return this.webSocketClient.send(data);
+    return this.websocketClient.send(data);
   };
 }
 
@@ -111,6 +111,6 @@ function WebSocketClient(url) {
  * @param {string} url
  * @returns
  */
-export function useWebSocketClient(url) {
-  return new WebSocketClient(url);
+export function useWebsocketClient(url) {
+  return new WebsocketClient(url);
 }

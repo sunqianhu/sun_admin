@@ -20,7 +20,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Close } from "@element-plus/icons-vue";
-import { useWebSocketClient } from "@/helper/web_socket_client.js";
+import { useWebsocketClient } from "@/helper/websocket-client.js";
 import { config } from "@/../config.js";
 import axios from "@/helper/axios";
 import audioPath from "@/asset/message.mp3";
@@ -30,11 +30,11 @@ const messages = ref([]); //消息
 const show = ref(false); //显示
 
 //websocket客户端
-const webSocketClient = useWebSocketClient(config.messageWebSocketServerUrl);
-webSocketClient.onOpen = () => {
+const websocketClient = useWebsocketClient(config.messageWebSocketServerUrl);
+websocketClient.onOpen = () => {
   bind();
 };
-webSocketClient.onMessage = (event) => {
+websocketClient.onMessage = (event) => {
   const data = JSON.parse(event.data);
   if (!data) {
     return;
@@ -43,7 +43,7 @@ webSocketClient.onMessage = (event) => {
     showMessage(data);
   }
 };
-webSocketClient.connect();
+websocketClient.connect();
 
 /**
  * 获取未读消息
@@ -66,7 +66,7 @@ const bind = () => {
     user_id: localStorage.getItem("user_id")
   };
   const dataString = JSON.stringify(data);
-  webSocketClient.send(dataString);
+  websocketClient.send(dataString);
 };
 
 /**
