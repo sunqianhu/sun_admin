@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : 127.0.0.1
 Source Server Version : 50529
 Source Host           : 127.0.0.1:3306
-Source Database       : thinkphpvuemanagetemplate
+Source Database       : sun_manage_template_laravel_elementplus
 
 Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-04-12 13:36:57
+Date: 2024-04-19 17:06:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
