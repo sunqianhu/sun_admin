@@ -12,7 +12,7 @@ use app\model\OperationLog as OperationLogModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
-use sunqianhu\helper\ArrayHandler;
+use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
 /**

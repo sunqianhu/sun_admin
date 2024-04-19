@@ -2,7 +2,7 @@
 
 namespace app\manage\controller\system;
 
-use sunqianhu\helper\ArrayHandler;
+use Sunqianhu\Helper\ArrayHandler;
 use app\helper\Dictionary as DictionaryHelper;
 use app\manage\controller\Base;
 use app\manage\validate\Menu as MenuValidate;

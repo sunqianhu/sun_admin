@@ -5,7 +5,7 @@ namespace app\manage\controller\statistic\order;
 use app\manage\controller\Base;
 use app\manage\validate\Order as OrderValidate;
 use app\model\Department as DepartmentModel;
-use sunqianhu\helper\ArrayHandler;
+use Sunqianhu\Helper\ArrayHandler;
 
 class Department extends Base
 {

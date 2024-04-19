@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "658a1272ab43c517caffbd463e4e9e93",
+    "content-hash": "1dc3cac9d242462ab816420fb4306072",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -1197,22 +1197,22 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.0.8",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "f58154a8e766209c9cd0a7fc4e059612d3e3ee8f"
+                "reference": "2b5f84e5e4a1a94840df7a1957e8ddafdc649afc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/f58154a8e766209c9cd0a7fc4e059612d3e3ee8f",
-                "reference": "f58154a8e766209c9cd0a7fc4e059612d3e3ee8f",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/2b5f84e5e4a1a94840df7a1957e8ddafdc649afc",
+                "reference": "2b5f84e5e4a1a94840df7a1957e8ddafdc649afc",
                 "shasum": ""
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "sunqianhu\\helper\\": "src/"
+                    "Sunqianhu\\Helper\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1228,9 +1228,9 @@
             "description": "php助手类包含项目开发过程中各种常用的类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.0.8"
+                "source": "https://github.com/sunqianhu/helper/tree/1.1.0"
             },
-            "time": "2024-04-12T02:57:41+00:00"
+            "time": "2024-04-19T07:53:25+00:00"
         },
         {
             "name": "symfony/polyfill-iconv",
