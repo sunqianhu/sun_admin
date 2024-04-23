@@ -26,6 +26,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { config } from "../../config.js";
 
 const props = defineProps({
   files: {

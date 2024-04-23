@@ -13,7 +13,7 @@ return [
             // 磁盘类型
             'type'       => 'local',
             // 磁盘路径
-            'root'       => app()->getRootPath() . 'public/storage',
+            'root'       => app()->getRootPath() . 'public/file',
             // 磁盘路径对应的外部URL路径
             'url'        => '/file',
             // 可见性
