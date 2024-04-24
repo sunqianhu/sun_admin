@@ -106,7 +106,8 @@ const navigateTo = (index, url) => {
   if (!url) {
     return;
   }
-  router.push(url);
+  //router.push(url);
+  window.open(url);
 };
 
 /**

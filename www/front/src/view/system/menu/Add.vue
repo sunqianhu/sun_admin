@@ -89,7 +89,7 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :loading="buttonLoading" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -100,7 +100,7 @@ import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const buttonLoading = ref(false);
+const submitLoading = ref(false);
 
 const menu = ref({
   type_id: 1,
@@ -149,15 +149,15 @@ const close = () => {
 const submitForm = async () => {
   await menuRef.value.validate();
 
-  buttonLoading.value = true;
+  submitLoading.value = true;
   let response;
   try {
     response = await axios.post("manage/system.Menu/saveAdd", menu.value);
   } catch (error) {
-    buttonLoading.value = false;
+    submitLoading.value = false;
     return;
   }
-  buttonLoading.value = false;
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,

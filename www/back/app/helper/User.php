@@ -31,17 +31,17 @@ class User
 
     /**
      * 字符串转id
-     * @param $user
+     * @param $idString
      * @return void
      */
-    public function stringToIds($user)
+    public function stringToIds($idString)
     {
-        if ($user === 'all') {
+        if ($idString === 'all') {
             return UserModel::where('status_id', 1)
                 ->column('id');
         }
 
-        return explode(',', $user);
+        return explode(',', $idString);
     }
 
     /**

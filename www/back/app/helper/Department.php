@@ -7,6 +7,16 @@ use app\model\Department as DepartmentModel;
 class Department
 {
     /**
+     * 得到姓名
+     * @param $id
+     * @return mixed
+     */
+    public function getName($id)
+    {
+        return DepartmentModel::where('id', $id)->value('name');
+    }
+
+    /**
      * 得到名称字符串
      * @param $ids
      * @param $separator
@@ -14,10 +24,10 @@ class Department
      */
     public function getNameString($ids, $separator = '，')
     {
-        if(empty($ids)){
+        if (empty($ids)) {
             return '';
         }
-         $names = DepartmentModel::where('id', 'in', $ids)->column('name');
-         return implode($separator, $names);
+        $names = DepartmentModel::where('id', 'in', $ids)->column('name');
+        return implode($separator, $names);
     }
 }

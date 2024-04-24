@@ -6,7 +6,7 @@
         <el-input v-model="config.version" />
       </el-form-item>
       <div class="submit-wrap">
-        <el-button type="primary" class="button" @click="submitForm" :loading="buttonLoading">
+        <el-button type="primary" class="button" @click="submitForm" :loading="submitLoading">
           保存
         </el-button>
       </div>
@@ -21,7 +21,7 @@ import axios from "@/helper/axios";
 const configRef = ref({});
 const config = ref({});
 const pageLoading = ref(true);
-const buttonLoading = ref(false);
+const submitLoading = ref(false);
 
 /**
  * 初始化
@@ -46,15 +46,15 @@ const init = async () => {
 const submitForm = async () => {
   await configRef.value.validate();
 
-  buttonLoading.value = true;
+  submitLoading.value = true;
   let response;
   try {
     response = await axios.post("manage/system.Config/save", config.value);
   } catch (error) {
-    buttonLoading.value = false;
+    submitLoading.value = false;
     return;
   }
-  buttonLoading.value = false;
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
