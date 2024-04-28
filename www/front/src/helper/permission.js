@@ -1,17 +1,20 @@
 import { useAppStore } from "../store/app";
-import axios from "../helper/axios";
 
-/**
- * 是否有权限
- * @param {string} name 权限名称
- * @returns boolean
- */
-export const isPermission = (name) => {
-  const appStore = useAppStore();
-  const permissions = appStore.permissions;
-  if (!permissions.includes(name)) {
-    return false;
+class Permission {
+  /**
+   * 是否拥有权限
+   * @param {*} key
+   * @returns
+   */
+  hasPermission(key) {
+    const appStore = useAppStore();
+    const permissions = appStore.permissions;
+    if (!permissions.includes(key)) {
+      return false;
+    }
+
+    return true;
   }
+}
 
-  return true;
-};
+export default Permission;
