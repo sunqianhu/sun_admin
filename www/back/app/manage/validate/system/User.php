@@ -16,8 +16,7 @@ class User extends Validate
         'role_ids'=>'array',
         'status_id' =>  'require',
         'password1' =>  'require|min:6',
-        'password2' =>  'require|confirm:password1',
-        'avatar_base64_content'=>'require',
+        'password2' =>  'require|confirm:password1'
     ];
     protected $message = [
         'id.require' => 'id参数错误',
@@ -35,15 +34,13 @@ class User extends Validate
         'password1.require' => '新密码不能为空',
         'password1.min' => '新密码最少6位',
         'password2.require' => '确认新密码不能为空',
-        'password2.confirm' => '两次输入密码不相同',
-        'avatar_base64_content.require' => '头像内容不能为空'
+        'password2.confirm' => '两次输入密码不相同'
     ];
     protected $scene = [
         'add' => ['account', 'password', 'name', 'phone', 'department_id', 'role_ids', 'status_id'],
         'edit' => ['id', 'name', 'phone', 'department_id', 'role_ids'],
         'edit_status' => ['id', 'status_id'],
         'edit_password' => ['id', 'password1', 'password2'],
-        'offline' => ['id'],
-        'edit_avatar'=>['avatar_base64_content']
+        'offline' => ['id']
     ];
 }

@@ -3,7 +3,7 @@
 namespace app\manage\controller;
 
 use app\helper\File;
-use app\manage\validate\system\User as UserValidate;
+use app\manage\validate\My as MyValidate;
 use app\model\User as UserModel;
 use Exception;
 use Sunqianhu\Helper\Image;
@@ -50,7 +50,7 @@ class My extends Base
         $post = $this->request->post(['avatar_base64_content']);
 
         try {
-            validate(UserValidate::class)->scene('edit_avatar')->check($post);
+            validate(MyValidate::class)->scene('edit_avatar')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
@@ -88,7 +88,7 @@ class My extends Base
         $post = $this->request->post(['password1', 'password2']);
 
         try {
-            validate(UserValidate::class)->scene('edit_password')->check($post);
+            validate(MyValidate::class)->scene('edit_password')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
