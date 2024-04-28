@@ -15,7 +15,4 @@ class Login extends Validate
         'password.require' => '密码不能为空',
         'password.min' => '密码长度最少6位'
     ];
-    protected $scene = [
-        'login' => ['account', 'password']
-    ];
 }

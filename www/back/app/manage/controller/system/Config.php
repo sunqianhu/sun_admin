@@ -40,7 +40,7 @@ class Config extends Base
 
         //验证
         try {
-            validate(ConfigValidate::class)->scene('save')->check($post);
+            validate(ConfigValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

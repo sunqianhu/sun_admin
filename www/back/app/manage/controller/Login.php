@@ -26,7 +26,7 @@ class Login extends Base
 
         //验证
         try {
-            validate(LoginValidate::class)->scene('login')->check($post);
+            validate(LoginValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
