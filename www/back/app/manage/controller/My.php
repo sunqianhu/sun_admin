@@ -3,10 +3,10 @@
 namespace app\manage\controller;
 
 use app\helper\File;
-use Sunqianhu\Helper\Image;
-use app\manage\validate\User as UserValidate;
+use app\manage\validate\system\User as UserValidate;
 use app\model\User as UserModel;
 use Exception;
+use Sunqianhu\Helper\Image;
 use think\exception\ValidateException;
 use think\facade\Config;
 

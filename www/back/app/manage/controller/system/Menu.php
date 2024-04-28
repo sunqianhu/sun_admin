@@ -2,11 +2,11 @@
 
 namespace app\manage\controller\system;
 
-use Sunqianhu\Helper\ArrayHandler;
 use app\helper\Dictionary as DictionaryHelper;
 use app\manage\controller\Base;
-use app\manage\validate\Menu as MenuValidate;
+use app\manage\validate\system\Menu as MenuValidate;
 use app\model\Menu as MenuModel;
+use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
 /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace app\manage\controller\statistic\order;
+namespace app\manage\controller\statistics\order;
 
 use app\manage\controller\Base;
-use app\manage\validate\Order as OrderValidate;
+use app\manage\validate\statistics\Order as OrderValidate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use think\exception\ValidateException;

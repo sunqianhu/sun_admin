@@ -2,12 +2,12 @@
 
 namespace app\manage\controller\system;
 
-use Sunqianhu\Helper\ArrayHandler;
 use app\manage\controller\Base;
-use app\manage\validate\Role as RoleValidate;
+use app\manage\validate\system\Role as RoleValidate;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
 use app\model\RoleMenu as RoleMenuModel;
+use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
 /**

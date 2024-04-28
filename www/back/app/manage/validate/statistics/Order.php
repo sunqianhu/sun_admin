@@ -1,6 +1,6 @@
 <?php
 
-namespace app\manage\validate;
+namespace app\manage\validate\statistics;
 
 use think\Validate;
 
