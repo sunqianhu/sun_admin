@@ -20,7 +20,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Close } from "@element-plus/icons-vue";
-import { useWebsocketClient } from "@/helper/websocket-client.js";
+import WebsocketClient from "@/helper/websocket-client.js";
 import { config } from "@/../config.js";
 import axios from "@/helper/axios";
 import audioPath from "@/asset/message.mp3";
@@ -30,7 +30,7 @@ const messages = ref([]); //消息
 const show = ref(false); //显示
 
 //websocket客户端
-const websocketClient = useWebsocketClient(config.messageWebSocketServerUrl);
+const websocketClient = new WebsocketClient(config.messageWebSocketServerUrl);
 websocketClient.onOpen = () => {
   bind();
 };
