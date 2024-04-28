@@ -1,8 +1,15 @@
 /**
- * 是否是空
- * @param {*} arr
- * @returns
+ * 数组处理器
  */
-export function isEmpty(arr) {
-  return (Array.isArray(arr) && arr.length === 0) || !arr;
-}
+const arrayHandler = {
+  /**
+   * 是否为空
+   * @param {*} arr
+   * @returns
+   */
+  isEmpty: (arr) => {
+    return (Array.isArray(arr) && arr.length === 0) || !arr;
+  }
+};
+
+export default arrayHandler;
