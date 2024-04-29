@@ -7,7 +7,6 @@ use think\Validate;
 class My extends Validate
 {
     protected $rule = [
-        'id'  =>  'require|number',
         'avatar_base64_content'=>'require',
         'password1' =>  'require|min:6',
         'password2' =>  'require|confirm:password1'

@@ -118,20 +118,20 @@ class Message extends Command
         $connection->activeTime = time();
 
         //消息
-        $dataDecode = json_decode($data, true);
-        if (empty($dataDecode) || empty($dataDecode['type'])) {
+        $decodeData = json_decode($data, true);
+        if (empty($decodeData) || empty($decodeData['type'])) {
             return;
         }
 
         //处理
-        switch ($dataDecode['type']) {
+        switch ($decodeData['type']) {
             //绑定
             case 'bind':
-                $this->bind($connection, $dataDecode['user_id']);
+                $this->bind($connection, $decodeData['user_id']);
                 break;
             //发送
             case 'send':
-                $this->send($dataDecode['user_ids'], $dataDecode['data']);
+                $this->send($decodeData['user_ids'], $decodeData['data']);
                 break;
         }
     }
@@ -184,7 +184,7 @@ class Message extends Command
         }
 
         //消息
-        $dataEncode = json_encode($data);
+        $encodeData = json_encode($data);
 
         //指定
         foreach ($this->worker->connections as $connection) {
@@ -192,7 +192,7 @@ class Message extends Command
                 continue;
             }
             if (in_array($connection->userId, $userIds)) {
-                $connection->send($dataEncode);
+                $connection->send($encodeData);
             }
         }
     }
