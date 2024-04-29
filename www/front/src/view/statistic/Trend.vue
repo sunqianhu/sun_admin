@@ -1,14 +1,19 @@
 <template>
-  <div class="department">
+  <div class="trend" v-loading="pageLoading">
     <div class="page-header">
-      <span class="name">订单部门统计</span>
-      <span class="description">统计每个部门订单量</span>
+      <span class="name">趋势统计</span>
+      <span class="description">订单趋势统计</span>
+      <div class="operation">
+        <el-button type="primary" @click="exportExcel" :loading="exportExcelLoading">
+          导出
+        </el-button>
+      </div>
     </div>
     <div class="search">
       <el-form :model="query" :inline="true">
         <el-form-item label="订单时间">
           <el-date-picker
-            v-model="query.add_time"
+            v-model="query.add_times"
             type="datetimerange"
             format="YYYY-MM-DD HH:mm:ss"
             value-format="X"
@@ -24,15 +29,11 @@
         </el-form-item>
       </el-form>
     </div>
-
-    <div class="chart" id="chart" v-loading="loading"></div>
-
-    <panel title="订单明细" class="list">
-      <el-table :data="orders" row-key="name" class="table">
-        <el-table-column prop="name" label="部门" />
-        <el-table-column prop="number" label="订单量" />
-      </el-table>
-    </panel>
+    <div class="chart" id="chart"></div>
+    <el-table :data="days" row-key="name" class="list">
+      <el-table-column prop="full_name" label="日期" />
+      <el-table-column prop="number" label="订单数量" />
+    </el-table>
   </div>
 </template>
 
@@ -43,26 +44,26 @@ import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import blueTheme from "@/extend/echarts-theme/blue.json";
-import Panel from "@/component/Panel.vue";
 
 const query = ref({
-  add_time: [
+  add_times: [
     dayjs(dayjs().subtract(1, "month").format("YYYY-MM-DD") + " 00:00:00").unix(),
     dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix()
   ]
 });
-const orders = ref([]);
-const loading = ref(true);
+const days = ref([]);
+const pageLoading = ref(true);
+const exportExcelLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
-  loading.value = true;
-  const response = await axios.get("manage/statistic.order.Department/init", {
+  pageLoading.value = true;
+  const response = await axios.get("manage/statistic.Trend/init", {
     params: query.value
   });
-  loading.value = false;
+  pageLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -71,7 +72,7 @@ const init = async () => {
     return;
   }
 
-  orders.value = response.data;
+  days.value = response.data;
   drawChart();
 };
 
@@ -81,8 +82,8 @@ const init = async () => {
 const drawChart = () => {
   let chartElement = document.getElementById("chart");
   let chart;
-
   let option = {
+    tooltip: {},
     grid: {
       left: "0",
       right: "10",
@@ -92,6 +93,7 @@ const drawChart = () => {
     },
     xAxis: {
       type: "category",
+      boundaryGap: false, // 坐标轴两边留白策略
       data: []
     },
     yAxis: {
@@ -103,32 +105,73 @@ const drawChart = () => {
     series: [
       {
         name: "订单数量",
-        type: "bar",
-        label: {
-          show: true,
-          color: "#ffffff"
-        },
+        type: "line",
+        areaStyle: {
+          color: {
+            type: "linear",
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 0,
+                color: "#3fb1e3" // 0% 处的颜色
+              },
+              {
+                offset: 1,
+                color: "rgba(255,255,255,0)" // 100% 处的颜色
+              }
+            ]
+          }
+        }, // 区域填充样式
         data: []
       }
     ]
   };
-  let data = orders.value;
-  let length = data.length;
-  let item;
+  let dayValues = days.value;
 
   //数据
-  for (let index = 0; index < length; index++) {
-    item = data[index];
-    if (index >= 10) {
-      break;
-    }
-    option.xAxis.data.push(item.name);
-    option.series[0].data.push(item.number);
-  }
+  dayValues.forEach((day) => {
+    option.xAxis.data.push(day.name);
+    option.series[0].data.push(day.number);
+  });
 
   //画
   chart = echarts.init(chartElement, "blue_theme");
   chart.setOption(option);
+};
+
+/**
+ * 导出excel
+ */
+const exportExcel = async () => {
+  exportExcelLoading.value = true;
+  let response;
+  try {
+    response = await axios.get("manage/statistic.trend/exportExcel", {
+      params: query.value,
+      responseType: "blob"
+    });
+  } catch (error) {
+    exportExcelLoading.value = false;
+    return;
+  }
+  exportExcelLoading.value = false;
+
+  const blob = new Blob([response], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  });
+  const url = window.URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "趋势统计.xlsx";
+  document.body.appendChild(link);
+  link.click();
+
+  window.URL.revokeObjectURL(url);
+  link.remove();
 };
 
 /**
@@ -145,12 +188,13 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.department {
+.trend {
   background-color: var(--background-color-panel);
   padding: var(--padding);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   .page-header {
+    display: flex;
     .name {
       font-size: 20px;
       font-weight: bold;
@@ -159,6 +203,9 @@ onMounted(() => {
       color: var(--font-color-secondary);
       margin-left: var(--margin);
       font-size: var(--font-size-small);
+      flex: 1;
+    }
+    .operation {
     }
   }
   .search {
@@ -170,11 +217,9 @@ onMounted(() => {
   }
   .list {
     margin-top: var(--margin);
+    width: 100%;
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
-    }
-    .table {
-      width: 100%;
     }
   }
 }
