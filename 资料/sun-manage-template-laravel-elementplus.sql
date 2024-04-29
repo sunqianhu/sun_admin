@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-04-24 17:17:57
+Date: 2024-04-29 16:11:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -125,7 +125,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -158,6 +158,7 @@ INSERT INTO `login_log` VALUES ('25', '1', '1713515711', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('26', '1', '1713515905', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('27', '1', '1713516084', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('28', '1', '1713516103', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('29', '1', '1714358953', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for menu
@@ -215,8 +216,8 @@ INSERT INTO `menu` VALUES ('29', '2', '2', '用户详情', 'system_user_detail',
 INSERT INTO `menu` VALUES ('30', '0', '4', '外部链接', 'baidu', '', '', 'https://www.baidu.com', 'ChatSquare', '', '', '2', '1', '3', '新窗口');
 INSERT INTO `menu` VALUES ('31', '1', '2', '系统设置', 'system_config', '/system/config', 'system/config/Index.vue', '', 'Cpu', 'manage/system.Config/init\nmanage/system.Config/save', 'main', '2', '1', '1', '');
 INSERT INTO `menu` VALUES ('32', '0', '1', '统计分析', 'statistic', '', '', '', 'PieChart', '', '', '2', '1', '2', '');
-INSERT INTO `menu` VALUES ('33', '32', '2', '订单趋势统计', 'statistic_order_trend', '/statistic/order/trend', 'statistic/order/Trend.vue', '', 'Share', 'manage/statistic.order.Trend/init\nmanage/statistic.order.Trend/exportExcel', 'main', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('34', '32', '2', '订单部门统计', 'statistic_order_department', '/statistic/order/department', 'statistic/order/Department.vue', '', 'OfficeBuilding', 'manage/statistic.order.Department/init', 'main', '2', '1', '3', '');
+INSERT INTO `menu` VALUES ('33', '32', '2', '趋势统计', 'statistic_trend', '/statistic/trend', 'statistic/Trend.vue', '', 'Share', 'manage/statistic.Trend/init\nmanage/statistic.Trend/exportExcel', 'main', '2', '1', '1', '');
+INSERT INTO `menu` VALUES ('34', '32', '2', '部门统计', 'statistic_department', '/statistic/department', 'statistic/Department.vue', '', 'OfficeBuilding', 'manage/statistic.Department/init\nmanage/statistic.Department/exportExcel', 'main', '2', '1', '3', '');
 
 -- ----------------------------
 -- Table structure for message
@@ -442,7 +443,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=353 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -799,6 +800,55 @@ INSERT INTO `operation_log` VALUES ('349', '1', '1713517968', '127.0.0.1', '/man
 INSERT INTO `operation_log` VALUES ('350', '1', '1713517968', '127.0.0.1', '/manage/system.user/getindexusers');
 INSERT INTO `operation_log` VALUES ('351', '1', '1713517970', '127.0.0.1', '/manage/system.department/getindexdepartments');
 INSERT INTO `operation_log` VALUES ('352', '1', '1713517971', '127.0.0.1', '/manage/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('353', '1', '1714358962', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('354', '1', '1714358967', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('355', '1', '1714359031', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('356', '1', '1714359031', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('357', '1', '1714359034', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('358', '1', '1714359042', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('359', '1', '1714359042', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('360', '1', '1714359044', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('361', '1', '1714359070', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('362', '1', '1714359070', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('363', '1', '1714359078', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('364', '1', '1714359087', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('365', '1', '1714359087', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('366', '1', '1714359184', '127.0.0.1', '/manage/statistic.order.trend/init');
+INSERT INTO `operation_log` VALUES ('367', '1', '1714359190', '127.0.0.1', '/manage/statistic.order.department/init');
+INSERT INTO `operation_log` VALUES ('368', '1', '1714359195', '127.0.0.1', '/manage/statistic.order.trend/init');
+INSERT INTO `operation_log` VALUES ('369', '1', '1714359216', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('370', '1', '1714359219', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('371', '1', '1714359236', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('372', '1', '1714359237', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('373', '1', '1714359239', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('374', '1', '1714359261', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('375', '1', '1714359261', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('376', '1', '1714359266', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('377', '1', '1714359269', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('378', '1', '1714359269', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('379', '1', '1714359271', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('380', '1', '1714359277', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('381', '1', '1714359278', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('382', '1', '1714359279', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('383', '1', '1714359287', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('384', '1', '1714359287', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('385', '1', '1714359297', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('386', '1', '1714359355', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('387', '1', '1714359448', '127.0.0.1', '/manage/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('388', '1', '1714359460', '127.0.0.1', '/manage/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('389', '1', '1714359488', '127.0.0.1', '/manage/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('390', '1', '1714359713', '127.0.0.1', '/manage/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('391', '1', '1714359733', '127.0.0.1', '/manage/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('392', '1', '1714360160', '127.0.0.1', '/manage/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('393', '1', '1714360450', '127.0.0.1', '/manage/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('394', '1', '1714360457', '127.0.0.1', '/manage/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('395', '1', '1714360466', '127.0.0.1', '/manage/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('396', '1', '1714360467', '127.0.0.1', '/manage/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('397', '1', '1714360468', '127.0.0.1', '/manage/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('398', '1', '1714360470', '127.0.0.1', '/manage/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('399', '1', '1714360472', '127.0.0.1', '/manage/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('400', '1', '1714360473', '127.0.0.1', '/manage/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('401', '1', '1714360476', '127.0.0.1', '/manage/statistic.department/exportexcel');
 
 -- ----------------------------
 -- Table structure for role
@@ -897,7 +947,7 @@ CREATE TABLE `token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of token
@@ -922,6 +972,7 @@ INSERT INTO `token` VALUES ('50', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6
 INSERT INTO `token` VALUES ('51', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjY3MjI4MTAwIDE3MTM1MTU5MDUifQ.xycuNoSt49VJTryP60vdogfJZRfM6wwUZRoNVLc0LRQ', '1713544706', '1');
 INSERT INTO `token` VALUES ('52', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjUxOTg5MDAwIDE3MTM1MTYwODQifQ.tnofIeN90fJf2cOhZ78r0an0wyAxj23Y6ig-DCct19A', '1713544884', '1');
 INSERT INTO `token` VALUES ('53', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQyNDcxNjAwIDE3MTM1MTYxMDMifQ.HaIx6t8K7GaKAI27wOhL5TlEcvMq4kCgnMoNxITgisc', '1713546771', '1');
+INSERT INTO `token` VALUES ('54', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQyMDQ0MTAwIDE3MTQzNTg5NTMifQ.unDXDgas54VynrHmFecNua3CSZ3q-h8CHnaPOe_IswU', '1714389276', '1');
 
 -- ----------------------------
 -- Table structure for user
@@ -947,7 +998,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', '', '1684989244', '1687667332', '1713516103', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', '', '1684989244', '1687667332', '1714358953', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
 
 -- ----------------------------
