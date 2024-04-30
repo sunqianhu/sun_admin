@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-04-30 11:40:12
+Date: 2024-04-30 11:41:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('1', 'version', '1.1.0');
+INSERT INTO `config` VALUES ('1', 'version', '2.0.0');
 
 -- ----------------------------
 -- Table structure for department
@@ -445,7 +445,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=431 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=432 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -880,6 +880,7 @@ INSERT INTO `operation_log` VALUES ('427', '1', '1714448130', '127.0.0.1', '/des
 INSERT INTO `operation_log` VALUES ('428', '1', '1714448140', '127.0.0.1', '/desktop/statistic.department/init');
 INSERT INTO `operation_log` VALUES ('429', '1', '1714448156', '127.0.0.1', '/desktop/system.config/init');
 INSERT INTO `operation_log` VALUES ('430', '1', '1714448403', '127.0.0.1', '/desktop/system.config/save');
+INSERT INTO `operation_log` VALUES ('431', '1', '1714448507', '127.0.0.1', '/desktop/system.config/save');
 
 -- ----------------------------
 -- Table structure for role
@@ -1005,7 +1006,7 @@ INSERT INTO `token` VALUES ('52', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6
 INSERT INTO `token` VALUES ('53', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQyNDcxNjAwIDE3MTM1MTYxMDMifQ.HaIx6t8K7GaKAI27wOhL5TlEcvMq4kCgnMoNxITgisc', '1713546771', '1');
 INSERT INTO `token` VALUES ('54', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQyMDQ0MTAwIDE3MTQzNTg5NTMifQ.unDXDgas54VynrHmFecNua3CSZ3q-h8CHnaPOe_IswU', '1714389276', '1');
 INSERT INTO `token` VALUES ('55', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg3MzcyNzAwIDE3MTQ0NDc0NjgifQ.gamO0qokRHfEKVtERbmq_-8e9mPEaX7dm--NEe96gXc', '1714476270', '1');
-INSERT INTO `token` VALUES ('56', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ5NDk5NjAwIDE3MTQ0NDc1NDEifQ.uV7RsyjKgJeKZDFr07zyVTYHJH3JdcxiD6PAeH89NuY', '1714477203', '1');
+INSERT INTO `token` VALUES ('56', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ5NDk5NjAwIDE3MTQ0NDc1NDEifQ.uV7RsyjKgJeKZDFr07zyVTYHJH3JdcxiD6PAeH89NuY', '1714477307', '1');
 
 -- ----------------------------
 -- Table structure for user
