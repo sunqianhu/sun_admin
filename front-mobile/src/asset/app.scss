@@ -1,0 +1,108 @@
+@import "vant.scss";
+
+:root:root {
+  //颜色
+  --color-primary: #409eff;
+  --color-success: #07c160;
+  --color-warning: #ff976a;
+  --color-danger: #ee0a24;
+
+  //文字
+  --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "微软雅黑", Arial, sans-serif;
+
+  //文字大小
+  --font-size: 14px;
+  --font-size-small: 12px;
+  --font-size-big: 16px;
+  --font-size-title: 20px;
+
+  // 文字颜色
+  --font-color: #323233;
+  --font-color-secondary: #969799;
+  --font-color-placeholder: #a8abb2;
+  --font-color-conspicuous: #409eff; //引人注目的
+  --font-color-link: #409eff; //链接
+
+  //边框颜色
+  --border-color: #dcdfe6;
+  --border-color-light: #e4e7ed;
+  --border-color-dark: #d4d7de;
+
+  //背景颜色
+  --background-color-page: #ffffff;
+  --background-color-page-texture: #f0f2f5; //纹理页面
+  --background-color-panel: #ffffff;
+  --background-color-panel-secondary: #f0f2f5; //次要面板
+
+  //内边距
+  --padding: 16px;
+  --padding-small: 8px;
+  --padding-big: 32px;
+
+  //外边距
+  --margin: 16px;
+  --margin-small: 8px;
+  --margin-big: 32px;
+
+  //阴影
+  --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
+  --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
+  --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
+
+  //圆角
+  --border-radius: 4px;
+  --border-radius-small: 2px;
+  --border-radius-big: 8px;
+  --border-radius-round: 20px;
+  --border-radius-circle: 100%;
+
+  //阴影
+  --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
+  --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
+  --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
+
+  //透明度
+  --opacity: 0.7;
+}
+
+html {
+  margin: 0px;
+  padding: 0px;
+  body {
+    margin: 0px;
+    padding: 0px;
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: 150%;
+    color: var(--font-color);
+    a {
+      color: var(--font-color-link);
+      text-decoration: none;
+      &:active {
+        opacity: var(--opacity);
+      }
+    }
+  }
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: var(--font-family);
+  margin: 0px;
+  padding: 0px;
+  line-height: 150%;
+}
+.form-message {
+  color: var(--font-color-secondary);
+  font-size: var(--font-size-small);
+}
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.clickable:active {
+  opacity: var(--opacity);
+}
