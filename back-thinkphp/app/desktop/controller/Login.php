@@ -4,7 +4,7 @@ namespace app\desktop\controller;
 
 use app\entity\User as UserEntity;
 use app\helper\LoginFailChecker;
-use app\helper\manage\Jwt;
+use app\helper\desktop\Jwt;
 use app\desktop\validate\Login as LoginValidate;
 use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;

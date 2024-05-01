@@ -2,11 +2,12 @@
 
 namespace app\desktop\controller;
 
-use Sunqianhu\Helper\ArrayHandler;
-use app\helper\Menu as MenuHelper;
-use app\model\Menu as MenuModel;
+use app\helper\desktop\Module as MenuHelper;
+use app\model\desktop\Module as ModuleModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
+use app\model\UserRole as UserRoleModel;
+use Sunqianhu\Helper\ArrayHandler;
 
 /**
  * 框架
@@ -19,60 +20,61 @@ class Frame extends Base
      */
     public function getRoutes()
     {
-        $roleIds = RoleModel::join('user_role', 'role.id = user_role.role_id')
-            ->where('user_role.user_id', $this->user->id)
+        $roleIds = UserRoleModel::where('user_id', $this->user->id)
+            ->group('role_id')
             ->column('role_id');
         if (empty($roleIds)) {
             return $this->success('获取成功', []);
         }
 
         //页面
-        $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
-            ->field('menu.id,menu.menu_id,menu.type_id,menu.name,menu.path,menu.key,menu.component,menu.keep_alive,menu.layout')
-            ->where('menu.type_id', 'in', '1,2')
-            ->where('role_menu.role_id', 'in', $roleIds)
-            ->order('menu.sort','asc')
-            ->group('menu.id')
+        $moduleModels = ModuleModel::alias('m')
+            ->join('role_desktop_module rdm', 'm.id = rdm.module_id')
+            ->field('m.id,m.module_id,m.type_id,m.name,m.path,m.key,m.component,m.keep_alive,m.layout')
+            ->where('m.type_id', 'in', '1,2')
+            ->where('rdm.role_id', 'in', $roleIds)
+            ->order('m.sort', 'asc')
+            ->group('m.id')
             ->select();
-        if ($menuModels->isEmpty()) {
+        if ($moduleModels->isEmpty()) {
             return $this->success('获取成功', []);
         }
 
-        $menus = $menuModels->toArray();
+        $modules = $moduleModels->toArray();
         $arrayHandler = new ArrayHandler();
-        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
-        $menuHelper = new MenuHelper();
-        $mainFirstPageId = $menuHelper->getMainFirstPageId($treeMenus);
-        $blankFirstPageId = $menuHelper->getBlankFirstPageId($treeMenus);
+        $treeMenus = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
+        $moduleHelper = new MenuHelper();
+        $mainFirstPageId = $moduleHelper->getMainFirstPageId($treeMenus);
+        $blankFirstPageId = $moduleHelper->getBlankFirstPageId($treeMenus);
 
         $routes = [];
-        foreach ($menuModels as $menuModel) {
+        foreach ($moduleModels as $moduleModel) {
             if (
-                $menuModel->type_id != 2 ||
-                $menuModel->path === '' ||
-                $menuModel->name === '' ||
-                $menuModel->component === ''
+                $moduleModel->type_id != 2 ||
+                $moduleModel->path === '' ||
+                $moduleModel->name === '' ||
+                $moduleModel->component === ''
             ) {
                 continue;
             }
 
             //父页面跳转
             $parentRedirect = '';
-            if($menuModel->id == $mainFirstPageId){
+            if ($moduleModel->id == $mainFirstPageId) {
                 $parentRedirect = 'main';
             }
-            if($menuModel->id == $blankFirstPageId){
+            if ($moduleModel->id == $blankFirstPageId) {
                 $parentRedirect = 'blank';
             }
 
             $route = [];
-            $route['path'] = $menuModel->path;
-            $route['name'] = $menuModel->key;
-            $route['component'] = $menuModel->component;
-            $route['layout'] = $menuModel->layout;
+            $route['path'] = $moduleModel->path;
+            $route['name'] = $moduleModel->key;
+            $route['component'] = $moduleModel->component;
+            $route['layout'] = $moduleModel->layout;
             $route['parent_redirect'] = $parentRedirect;
-            $route['meta']['name'] = $menuModel->name;
-            $route['meta']['keep_alive'] = $menuModel->keep_alive == 1;
+            $route['meta']['name'] = $moduleModel->name;
+            $route['meta']['keep_alive'] = $moduleModel->keep_alive == 1;
             $routes[] = $route;
         }
 
@@ -85,27 +87,28 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $roleIds = RoleModel::join('user_role', 'role.id = user_role.role_id')
-            ->where('user_role.user_id', $this->user->id)
+        $roleIds = UserRoleModel::where('user_id', $this->user->id)
+            ->group('role_id')
             ->column('role_id');
         if (empty($roleIds)) {
             return $this->success('获取成功', []);
         }
 
-        //菜单
-        $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
-            ->field('menu.key')
-            ->where('role_menu.role_id', 'in', $roleIds)
-            ->order('menu.sort', 'asc')
-            ->group('menu.id')
+        //模块
+        $moduleModels = ModuleModel::alias('m')
+            ->join('role_desktop_module rdm', 'm.id = rdm.module_id')
+            ->field('m.key')
+            ->where('rdm.role_id', 'in', $roleIds)
+            ->order('m.sort', 'asc')
+            ->group('m.id')
             ->select();
-        if ($menuModels->isEmpty()) {
+        if ($moduleModels->isEmpty()) {
             return $this->success('获取成功', []);
         }
 
         $permissions = [];
-        foreach ($menuModels as $menuModel) {
-            $permissions[] = $menuModel->key;
+        foreach ($moduleModels as $moduleModel) {
+            $permissions[] = $moduleModel->key;
         }
 
         return $this->success('获取成功', $permissions);
@@ -115,15 +118,16 @@ class Frame extends Base
      * 获取水印
      * @return void
      */
-    public function getWatermark(){
+    public function getWatermark()
+    {
         $userModel = UserModel::field('id,name')->find($this->user->id);
-        if(empty($userModel)){
+        if (empty($userModel)) {
             return $this->error('没有找到用户记录');
         }
         $data = [
-            'id'=>$userModel->id,
-            'name'=>$userModel->name,
-            'time'=>date('Y-m-d H:i:s')
+            'id' => $userModel->id,
+            'name' => $userModel->name,
+            'time' => date('Y-m-d H:i:s')
         ];
         return $this->success('获取成功', $data);
     }

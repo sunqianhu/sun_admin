@@ -3,10 +3,10 @@
 namespace app\desktop\controller;
 
 use app\helper\Config as ConfigHelper;
-use Sunqianhu\Helper\ArrayHandler;
-use app\model\Menu as MenuModel;
-use app\model\Role as RoleModel;
+use app\model\desktop\Module as ModuleModel;
 use app\model\User as UserModel;
+use app\model\UserRole as UserRoleModel;
+use Sunqianhu\Helper\ArrayHandler;
 
 /**
  * 主页
@@ -39,36 +39,37 @@ class Main extends Base
      */
     public function getMenus()
     {
-        $roleIds = RoleModel::join('user_role', 'role.id = user_role.role_id')
-            ->where('user_role.user_id', $this->user->id)
+        $roleIds = UserRoleModel::where('user_id', $this->user->id)
+            ->group('role_id')
             ->column('role_id');
         if (empty($roleIds)) {
             return $this->success('获取成功', []);
         }
 
-        //菜单
-        $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
-            ->field('menu.*')
-            ->where('menu.type_id', 'in', '1,2,4')
-            ->where('role_menu.role_id', 'in', $roleIds)
+        //模块
+        $moduleModels = ModuleModel::alias('m')
+            ->join('role_desktop_module rdm', 'm.id = rdm.module_id')
+            ->field('m.*')
+            ->where('m.type_id', 'in', '1,2,4')
+            ->where('rdm.role_id', 'in', $roleIds)
             ->where('show', 1)
-            ->order('menu.sort', 'asc')
-            ->group('menu.id')
+            ->order('m.sort', 'asc')
+            ->group('m.id')
             ->select();
-        if ($menuModels->isEmpty()) {
+        if ($moduleModels->isEmpty()) {
             return $this->success('获取成功', []);
         }
 
         $menus = [];
-        foreach ($menuModels as $menuModel) {
+        foreach ($moduleModels as $moduleModel) {
             $menu = [];
-            $menu['id'] = $menuModel->id;
-            $menu['menu_id'] = $menuModel->menu_id;
-            $menu['type_id'] = $menuModel->type_id;
-            $menu['name'] = $menuModel->name;
-            $menu['path'] = $menuModel->path;
-            $menu['url'] = $menuModel->url;
-            $menu['icon'] = $menuModel->icon;
+            $menu['id'] = $moduleModel->id;
+            $menu['menu_id'] = $moduleModel->module_id;
+            $menu['type_id'] = $moduleModel->type_id;
+            $menu['name'] = $moduleModel->name;
+            $menu['path'] = $moduleModel->path;
+            $menu['url'] = $moduleModel->url;
+            $menu['icon'] = $moduleModel->icon;
             $menus[] = $menu;
         }
         $arrayHandler = new ArrayHandler();

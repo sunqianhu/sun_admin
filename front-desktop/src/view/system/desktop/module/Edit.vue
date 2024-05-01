@@ -2,7 +2,7 @@
   department
   <el-dialog
     :model-value="open"
-    title="修改菜单"
+    title="修改模块"
     width="600"
     :draggable="true"
     align-center
@@ -10,11 +10,11 @@
     class="edit"
   >
     <el-scrollbar max-height="350px" class="scrollbar" v-loading="pageLoading">
-      <el-form :model="menu" :rules="rules" scroll-to-error ref="menuRef" label-width="120px">
-        <el-form-item label="上级菜单" prop="menu_id">
+      <el-form :model="module" :rules="rules" scroll-to-error ref="moduleRef" label-width="120px">
+        <el-form-item label="上级模块" prop="module_id">
           <el-tree-select
-            v-model="menu.menu_id"
-            :data="treeMenus"
+            v-model="module.module_id"
+            :data="treeModules"
             :render-after-expand="false"
             show-checkbox
             check-strictly
@@ -22,53 +22,53 @@
             clearable
           />
         </el-form-item>
-        <el-form-item label="菜单类型" prop="type_id">
-          <el-radio-group v-model="menu.type_id">
+        <el-form-item label="模块类型" prop="type_id">
+          <el-radio-group v-model="module.type_id">
             <el-radio v-for="type in types" :key="type.key" :label="parseInt(type.key)">
               {{ type.value }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="菜单名称" prop="name">
-          <el-input v-model="menu.name" />
+        <el-form-item label="模块名称" prop="name">
+          <el-input v-model="module.name" />
         </el-form-item>
-        <el-form-item label="菜单key" prop="key">
-          <el-input v-model="menu.key" />
-          <div class="form-message">菜单的唯一标识，用于前端路由名称和权限指令标识</div>
+        <el-form-item label="模块key" prop="key">
+          <el-input v-model="module.key" />
+          <div class="form-message">模块的唯一标识，用于前端路由名称和权限指令标识</div>
         </el-form-item>
-        <el-form-item label="路由路径" prop="path" v-if="menu.type_id == 2">
-          <el-input v-model="menu.path" />
+        <el-form-item label="路由路径" prop="path" v-if="module.type_id == 2">
+          <el-input v-model="module.path" />
           <div class="form-message">例如/system/user</div>
         </el-form-item>
-        <el-form-item label="组件路径" prop="component" v-if="menu.type_id == 2">
-          <el-input v-model="menu.component" />
+        <el-form-item label="组件路径" prop="component" v-if="module.type_id == 2">
+          <el-input v-model="module.component" />
           <div class="form-message">相对于view目录</div>
         </el-form-item>
         <el-form-item
-          label="菜单图标"
+          label="模块图标"
           prop="icon"
-          v-if="menu.type_id == 1 || menu.type_id == 2 || menu.type_id == 4"
+          v-if="module.type_id == 1 || module.type_id == 2 || module.type_id == 4"
         >
-          <el-input v-model="menu.icon" />
+          <el-input v-model="module.icon" />
           <div class="form-message">elementplus图标组件名</div>
         </el-form-item>
-        <el-form-item label="接口地址" prop="api" v-if="menu.type_id == 2 || menu.type_id == 3">
-          <el-input v-model="menu.api" type="textarea" rows="3" />
+        <el-form-item label="接口地址" prop="api" v-if="module.type_id == 2 || module.type_id == 3">
+          <el-input v-model="module.api" type="textarea" rows="3" />
           <div class="form-message">后端接口网址一行一个，格式：应用/控制器/方法</div>
         </el-form-item>
-        <el-form-item label="链接网址" prop="url" v-if="menu.type_id == 4">
-          <el-input v-model="menu.url" />
+        <el-form-item label="链接网址" prop="url" v-if="module.type_id == 4">
+          <el-input v-model="module.url" />
         </el-form-item>
-        <el-form-item label="页面布局" prop="layout" v-if="menu.type_id == 2">
-          <el-select v-model="menu.layout" clearable>
+        <el-form-item label="页面布局" prop="layout" v-if="module.type_id == 2">
+          <el-select v-model="module.layout" clearable>
             <el-option v-for="layout in layouts" :label="layout.value" :value="layout.key" />
           </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="menu.remark" maxlength="32" />
+          <el-input v-model="module.remark" maxlength="32" />
         </el-form-item>
-        <el-form-item label="保活" prop="keep_alive" v-if="menu.type_id == 2">
-          <el-radio-group v-model="menu.keep_alive">
+        <el-form-item label="保活" prop="keep_alive" v-if="module.type_id == 2">
+          <el-radio-group v-model="module.keep_alive">
             <el-radio :label="1">是</el-radio>
             <el-radio :label="2">否</el-radio>
           </el-radio-group>
@@ -76,15 +76,15 @@
         <el-form-item
           label="菜单显示"
           prop="show"
-          v-if="menu.type_id == 1 || menu.type_id == 2 || menu.type_id == 4"
+          v-if="module.type_id == 1 || module.type_id == 2 || module.type_id == 4"
         >
-          <el-radio-group v-model="menu.show">
+          <el-radio-group v-model="module.show">
             <el-radio :label="1">显示</el-radio>
             <el-radio :label="2">隐藏</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input v-model="menu.sort" type="number" />
+          <el-input v-model="module.sort" type="number" />
         </el-form-item>
       </el-form>
     </el-scrollbar>
@@ -101,15 +101,15 @@ import axios from "@/helper/axios";
 
 const props = defineProps(["open", "id"]);
 const emits = defineEmits(["close", "submited"]);
-const menu = ref({});
-const menuRef = ref();
+const module = ref({});
+const moduleRef = ref();
 const rules = {
-  type_id: [{ required: true, message: "菜单类型不能为空", trigger: "blur" }],
-  name: [{ required: true, message: "菜单名称不能为空", trigger: "blur" }],
-  key: [{ required: true, message: "菜单key不能为空", trigger: "blur" }],
+  type_id: [{ required: true, message: "模块类型不能为空", trigger: "blur" }],
+  name: [{ required: true, message: "模块名称不能为空", trigger: "blur" }],
+  key: [{ required: true, message: "模块key不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
-const treeMenus = ref([]);
+const treeModules = ref([]);
 const types = ref([]);
 const layouts = ref([]);
 const pageLoading = ref(true);
@@ -120,7 +120,7 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   pageLoading.value = true;
-  const response = await axios.get("desktop/system.Menu/initEdit", {
+  const response = await axios.get("desktop/system.desktop.Module/initEdit", {
     params: { id: props.id }
   });
   pageLoading.value = false;
@@ -132,15 +132,15 @@ const init = async () => {
     return;
   }
 
-  treeMenus.value = response.data.tree_menus;
+  treeModules.value = response.data.tree_modules;
   types.value = response.data.types;
   layouts.value = response.data.layouts;
   await nextTick();
 
-  if (response.data.menu.menu_id == "0") {
-    response.data.menu.menu_id = "";
+  if (response.data.module.module_id == "0") {
+    response.data.module.module_id = "";
   }
-  menu.value = response.data.menu;
+  module.value = response.data.module;
 };
 
 /**
@@ -154,12 +154,12 @@ const close = () => {
  * 提交表单
  */
 const submitForm = async () => {
-  await menuRef.value.validate();
+  await moduleRef.value.validate();
 
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.Menu/saveEdit", menu.value);
+    response = await axios.post("desktop/system.desktop.Module/saveEdit", module.value);
   } catch (error) {
     submitLoading.value = false;
     return;

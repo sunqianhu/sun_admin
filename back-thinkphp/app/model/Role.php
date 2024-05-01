@@ -1,6 +1,8 @@
 <?php
 namespace app\model;
 
+use app\model\desktop\Module;
+
 class Role extends Base
 {
     /**
@@ -9,6 +11,6 @@ class Role extends Base
      */
     public function menus()
     {
-        return $this->belongsToMany(Menu::class, 'role_menu', 'menu_id', 'role_id');
+        return $this->belongsToMany(Module::class, 'role_menu', 'menu_id', 'role_id');
     }
 }

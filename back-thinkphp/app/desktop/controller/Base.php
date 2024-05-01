@@ -3,10 +3,10 @@
 namespace app\desktop\controller;
 
 use app\BaseController;
-use app\helper\manage\Jwt;
-use app\model\Menu as MenuModel;
+use app\helper\desktop\Jwt;
+use app\model\desktop\Module as ModuleModel;
 use app\model\OperationLog as OperationLogModel;
-use app\model\Role as RoleModel;
+use app\model\UserRole as UserRoleModel;
 use Exception;
 use think\Response;
 
@@ -104,32 +104,31 @@ class Base extends BaseController
             return;
         }
 
-        $roleIds = RoleModel::join('user_role', 'role.id = user_role.role_id')
-            ->where('user_role.user_id', $user->id)
+        $roleIds = UserRoleModel::where('user_id', $this->user->id)
+            ->group('role_id')
             ->column('role_id');
         if (empty($roleIds)) {
             throw new Exception('未设置角色');
         }
 
-        $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
-            ->field('menu.api')
-            ->where('role_menu.role_id', 'in', $roleIds)
-            ->where('menu.api', '<>', '')
-            ->group('menu.id')
+        $moduleModels = ModuleModel::alias('m')
+            ->join('role_desktop_module rdm', 'm.id = rdm.module_id')
+            ->field('m.api')
+            ->where('rdm.role_id', 'in', $roleIds)
+            ->where('m.api', '<>', '')
+            ->group('m.id')
+            ->append(['apis'])
             ->select();
-        if ($menuModels->isEmpty()) {
+        if ($moduleModels->isEmpty()) {
             throw new Exception('无权限');
         }
 
         $have = false;
-        foreach ($menuModels as $menuModel) {
-            $api = $menuModel->api;
-            if ($api === '') {
+        foreach ($moduleModels as $moduleModel) {
+            $apis = $moduleModel->apis;
+            if (empty($apis)) {
                 continue;
             }
-            $api = strtolower($api);
-            $api = str_replace("\r\n", "\n", $api);
-            $apis = explode("\n", $api);
             if (in_array($url, $apis)) {
                 $have = true;
                 break;

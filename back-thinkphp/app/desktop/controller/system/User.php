@@ -2,7 +2,7 @@
 
 namespace app\desktop\controller\system;
 
-use app\helper\manage\Jwt;
+use app\helper\desktop\Jwt;
 use app\helper\User as UserHelper;
 use app\desktop\controller\Base;
 use app\desktop\validate\system\User as UserValidate;

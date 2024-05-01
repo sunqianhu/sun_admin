@@ -1,9 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-name">菜单管理</div>
+    <div class="page-name">模块管理</div>
     <div class="search">
       <el-form :model="query" :inline="true">
-        <el-form-item label="菜单名称">
+        <el-form-item label="模块名称">
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
@@ -17,13 +17,13 @@
     </div>
 
     <div class="list">
-      <el-table :data="menus" v-loading="loading" row-key="id" class="table">
-        <el-table-column v-slot="{ row }" prop="name" label="菜单名称">
+      <el-table :data="modules" v-loading="loading" row-key="id" class="table">
+        <el-table-column v-slot="{ row }" prop="name" label="模块名称">
           {{ row.name }}
           <span v-if="row.remark" class="remark">{{ row.remark }}</span>
         </el-table-column>
-        <el-table-column prop="key" label="菜单key" width="300" show-overflow-tooltip />
-        <el-table-column v-slot="{ row }" prop="type_id" label="菜单类型" width="100">
+        <el-table-column prop="key" label="模块key" width="300" show-overflow-tooltip />
+        <el-table-column v-slot="{ row }" prop="type_id" label="模块类型" width="100">
           <el-tag :type="row.type_tag_type">{{ row.type_name }}</el-tag>
         </el-table-column>
         <el-table-column prop="sort" label="排序" width="100" />
@@ -42,7 +42,7 @@
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getMenus();
+        getModules();
         addFlag = false;
       "
       v-if="addFlag"
@@ -51,7 +51,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getMenus();
+        getModules();
         editFlag = false;
       "
       :id="rowId"
@@ -69,17 +69,17 @@ import Edit from "./Edit.vue";
 
 const rowId = ref(0);
 const query = ref({});
-const menus = ref([]);
+const modules = ref([]);
 const loading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 
 /**
- * 得到菜单
+ * 得到模块
  */
-const getMenus = async () => {
+const getModules = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.Menu/getIndexMenus", {
+  const response = await axios.get("desktop/system.desktop.Module/getIndexModules", {
     params: query.value
   });
   loading.value = false;
@@ -90,14 +90,14 @@ const getMenus = async () => {
     });
     return;
   }
-  menus.value = response.data;
+  modules.value = response.data;
 };
 
 /**
  * 搜索
  */
 const search = () => {
-  getMenus();
+  getModules();
 };
 
 /**
@@ -120,7 +120,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.Menu/delete", {
+  const response = await axios.post("desktop/system.desktop.Module/delete", {
     id: id
   });
   if (response.code != 1) {
@@ -134,11 +134,11 @@ const del = async (id) => {
     message: response.message,
     type: "success"
   });
-  getMenus();
+  getModules();
 };
 
 onMounted(() => {
-  getMenus();
+  getModules();
 });
 </script>
 

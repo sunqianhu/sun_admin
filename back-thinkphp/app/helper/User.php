@@ -2,7 +2,7 @@
 
 namespace app\helper;
 
-use app\model\Menu as MenuModel;
+use app\model\desktop\Module as MenuModel;
 use app\model\User as UserModel;
 use think\facade\Config;
 

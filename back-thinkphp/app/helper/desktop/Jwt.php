@@ -3,12 +3,11 @@
  * 管理后台jwt
  */
 
-namespace app\helper\manage;
+namespace app\helper\desktop;
 
 use app\entity\User as UserEntity;
 use app\helper\token;
-use app\helper\用户id;
-use app\model\Token as TokenModel;
+use app\model\desktop\Token as TokenModel;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;

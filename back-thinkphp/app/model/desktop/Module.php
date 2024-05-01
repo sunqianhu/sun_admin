@@ -1,11 +1,14 @@
 <?php
 
-namespace app\model;
+namespace app\model\desktop;
 
 use app\helper\Dictionary as DictionaryHelper;
+use app\model\Base;
 
-class Menu extends Base
+class Module extends Base
 {
+    protected $name = 'desktop_module';
+
     /**
      * 获取接口地址
      * @param $value
@@ -14,9 +17,11 @@ class Menu extends Base
     public function getApisAttr($value, $data)
     {
         if(!isset($data['api'])){
-            return '';
+            return [];
         }
-        return explode("\r\n", $data['api']);
+
+        $api = str_replace("\r\n", "\n", $data['api']);
+        return explode("\n", $api);
     }
 
     /**
@@ -56,7 +61,7 @@ class Menu extends Base
     }
 
     /**
-     * 得到菜单名称和备注
+     * 得到模块名称和备注
      * @param $value
      * @return string
      */
