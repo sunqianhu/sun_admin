@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-05-02 23:21:23
+Date: 2024-05-02 23:24:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('1', 'version', '2.0.0');
+INSERT INTO `config` VALUES ('1', 'version', '2.0.1');
 
 -- ----------------------------
 -- Table structure for department
@@ -159,7 +159,7 @@ INSERT INTO `desktop_token` VALUES ('58', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
 INSERT INTO `desktop_token` VALUES ('59', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjkzODUyMzAwIDE3MTQ1NzI2MjcifQ.AZwkev3RiitDb06JG47K9tn13fhgdRoHzl0DOExngPg', '1714601428', '1');
 INSERT INTO `desktop_token` VALUES ('60', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ2NTk4MjAwIDE3MTQ1NzQ3NjcifQ.JnJ-RhfRAO1cNd4eVTwvj4nKEzEMSk2hbRsxrUxEP2M', '1714603568', '1');
 INSERT INTO `desktop_token` VALUES ('61', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjI1NDI1MTAwIDE3MTQ1NzQ4MjkifQ.JlcPPVlgAmWSuCMroUJMIanOgNXQS69h5ZxsSro4ahM', '1714604452', '1');
-INSERT INTO `desktop_token` VALUES ('62', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjIwODMxMzAwIDE3MTQ2MzM3NTMifQ.cCRIIVDce3AHfFlQAeZDAoSq8FOAdhxe1VyXPQ5ajY4', '1714692066', '1');
+INSERT INTO `desktop_token` VALUES ('62', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjIwODMxMzAwIDE3MTQ2MzM3NTMifQ.cCRIIVDce3AHfFlQAeZDAoSq8FOAdhxe1VyXPQ5ajY4', '1714692136', '1');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -546,7 +546,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=734 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=741 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -1284,6 +1284,13 @@ INSERT INTO `operation_log` VALUES ('730', '1', '1714662142', '127.0.0.1', '/des
 INSERT INTO `operation_log` VALUES ('731', '1', '1714662485', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
 INSERT INTO `operation_log` VALUES ('732', '1', '1714663266', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
 INSERT INTO `operation_log` VALUES ('733', '1', '1714663266', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('734', '1', '1714663288', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('735', '1', '1714663289', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('736', '1', '1714663291', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('737', '1', '1714663293', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('738', '1', '1714663304', '127.0.0.1', '/desktop/system.loginlog/getindexloginlogs');
+INSERT INTO `operation_log` VALUES ('739', '1', '1714663308', '127.0.0.1', '/desktop/system.config/init');
+INSERT INTO `operation_log` VALUES ('740', '1', '1714663336', '127.0.0.1', '/desktop/system.config/save');
 
 -- ----------------------------
 -- Table structure for role
