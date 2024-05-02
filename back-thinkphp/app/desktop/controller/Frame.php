@@ -2,9 +2,9 @@
 
 namespace app\desktop\controller;
 
-use app\helper\desktop\Module as MenuHelper;
+use app\helper\desktop\Module as ModuleHelper;
+use app\helper\User as Userhelper;
 use app\model\desktop\Module as ModuleModel;
-use app\model\Role as RoleModel;
 use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
 use Sunqianhu\Helper\ArrayHandler;
@@ -20,9 +20,8 @@ class Frame extends Base
      */
     public function getRoutes()
     {
-        $roleIds = UserRoleModel::where('user_id', $this->user->id)
-            ->group('role_id')
-            ->column('role_id');
+        $userHelper = new Userhelper();
+        $roleIds = $userHelper->getRoleIds($this->user->id);
         if (empty($roleIds)) {
             return $this->success('获取成功', []);
         }
@@ -42,10 +41,10 @@ class Frame extends Base
 
         $modules = $moduleModels->toArray();
         $arrayHandler = new ArrayHandler();
-        $treeMenus = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
-        $moduleHelper = new MenuHelper();
-        $mainFirstPageId = $moduleHelper->getMainFirstPageId($treeMenus);
-        $blankFirstPageId = $moduleHelper->getBlankFirstPageId($treeMenus);
+        $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
+        $moduleHelper = new ModuleHelper();
+        $mainFirstPageId = $moduleHelper->getMainFirstPageId($treeModules);
+        $blankFirstPageId = $moduleHelper->getBlankFirstPageId($treeModules);
 
         $routes = [];
         foreach ($moduleModels as $moduleModel) {
@@ -87,9 +86,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $roleIds = UserRoleModel::where('user_id', $this->user->id)
-            ->group('role_id')
-            ->column('role_id');
+        $userHelper = new Userhelper();
+        $roleIds = $userHelper->getRoleIds($this->user->id);
         if (empty($roleIds)) {
             return $this->success('获取成功', []);
         }
@@ -109,6 +107,9 @@ class Frame extends Base
         $permissions = [];
         foreach ($moduleModels as $moduleModel) {
             $permissions[] = $moduleModel->key;
+        }
+        if(!empty($permissions)){
+            $permissions = array_unique($permissions);
         }
 
         return $this->success('获取成功', $permissions);

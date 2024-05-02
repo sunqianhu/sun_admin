@@ -3,6 +3,7 @@
 namespace app\helper;
 
 use app\model\Department as DepartmentModel;
+use think\facade\Cache;
 
 class Department
 {
@@ -13,7 +14,15 @@ class Department
      */
     public function getName($id)
     {
-        return DepartmentModel::where('id', $id)->value('name');
+        $key = 'department_'.$id;
+        $name = Cache::get($key);
+        if($name !== null){
+            return $name;
+        }
+
+        $name = DepartmentModel::where('id', $id)->value('name');
+        Cache::set($key, $name, 600);
+        return $name;
     }
 
     /**

@@ -32,7 +32,7 @@ class Module extends Base
     public function getTypeNameAttr($value, $data)
     {
         $dictionaryHelper = new DictionaryHelper();
-        return $dictionaryHelper->getValue('menu_type', $data['type_id']);
+        return $dictionaryHelper->getValue('desktop_module_type', $data['type_id']);
     }
 
     /**

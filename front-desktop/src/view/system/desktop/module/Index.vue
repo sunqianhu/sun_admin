@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <div class="page-name">模块管理</div>
+    <div class="page-name">桌面端模块管理</div>
     <div class="search">
       <el-form :model="query" :inline="true">
         <el-form-item label="模块名称">
@@ -37,7 +37,7 @@
         </el-table-column>
       </el-table>
     </div>
-
+    <div class="explain">菜单是由模块动态生成</div>
     <add
       :open="addFlag"
       @close="addFlag = false"
@@ -155,10 +155,8 @@ onMounted(() => {
   .search {
     margin-top: var(--margin);
   }
-
   .toolbar {
   }
-
   .list {
     margin-top: var(--margin);
     :deep(th.el-table__cell) {
@@ -172,6 +170,11 @@ onMounted(() => {
         color: var(--font-color-secondary);
       }
     }
+  }
+  .explain {
+    margin-top: var(--margin);
+    font-size: var(--font-size-small);
+    color: var(--font-color-secondary);
   }
 }
 </style>

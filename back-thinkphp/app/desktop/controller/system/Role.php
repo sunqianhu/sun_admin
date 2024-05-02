@@ -4,9 +4,11 @@ namespace app\desktop\controller\system;
 
 use app\desktop\controller\Base;
 use app\desktop\validate\system\Role as RoleValidate;
-use app\model\desktop\Module as MenuModel;
+use app\model\desktop\Module as DesktopModuleModel;
+use app\model\mobile\Module as MobileModuleModel;
 use app\model\Role as RoleModel;
-use app\model\RoleMenu as RoleMenuModel;
+use app\model\RoleDesktopModule as RoleDesktopModuleModel;
+use app\model\RoleMobileModule as RoleMobileModuleModel;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
@@ -41,16 +43,29 @@ class Role extends Base
      */
     public function initAdd()
     {
-        //菜单
-        $menuModels = MenuModel::field('id, id, menu_id, name, remark')
+        //桌面端模块
+        $desktopModuleModels = DesktopModuleModel::field('id, module_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
-        $menus = $menuModels->toArray();
+        $desktopModules = $desktopModuleModels->toArray();
         $arrayHandler = new ArrayHandler();
-        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        $treeDesktopModules = $arrayHandler->convertTree($desktopModules, 'id', 'module_id', 'children');
 
-        return $this->success('获取成功', $treeMenus);
+        //移动端模块
+        $mobileModuleModels = MobileModuleModel::field('id, module_id, name, remark')
+            ->order('sort', 'asc')
+            ->append(['name_remark'])
+            ->select();
+        $mobileModules = $mobileModuleModels->toArray();
+        $arrayHandler = new ArrayHandler();
+        $treeMobileModules = $arrayHandler->convertTree($mobileModules, 'id', 'module_id', 'children');
+
+        $data = [
+            'desktop_modules'=>$treeDesktopModules,
+            'mobile_modules'=>$treeMobileModules,
+        ];
+        return $this->success('获取成功', $data);
     }
 
     /**
@@ -58,7 +73,7 @@ class Role extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['name', 'menu_ids' => []]);
+        $post = $this->request->post(['name', 'desktop_module_ids' => [], 'mobile_module_ids' => []]);
 
         //验证
         try {
@@ -70,12 +85,22 @@ class Role extends Base
         $roleModel = new RoleModel();
         $roleModel->save($post);
 
-        if (!empty($post['menu_ids'])) {
-            foreach($post['menu_ids'] as $menuId){
-                $roleMenuModel = new RoleMenuModel();
-                $roleMenuModel->save([
+        if (!empty($post['desktop_module_ids'])) {
+            foreach($post['desktop_module_ids'] as $desktopModuleId){
+                $roleDesktopModuleModel = new RoleDesktopModuleModel();
+                $roleDesktopModuleModel->save([
                     'role_id'=>$roleModel->id,
-                    'menu_id'=>$menuId
+                    'module_id'=>$desktopModuleId
+                ]);
+            }
+        }
+
+        if (!empty($post['mobile_module_ids'])) {
+            foreach($post['mobile_module_ids'] as $mobileModuleId){
+                $roleMobileModuleModel = new RoleMobileModuleModel();
+                $roleMobileModuleModel->save([
+                    'role_id'=>$roleModel->id,
+                    'module_id'=>$mobileModuleId
                 ]);
             }
         }
@@ -96,7 +121,7 @@ class Role extends Base
         }
 
         //角色
-        $roleModel = RoleModel::with('menus')
+        $roleModel = RoleModel::with(['desktopModules', 'mobileModules'])
             ->field('id,name')
             ->find($id);
         if (empty($roleModel)) {
@@ -104,23 +129,37 @@ class Role extends Base
         }
         $role = $roleModel->toArray();
 
-        $role['menu_ids'] = [];
-        if (!empty($role['menus'])) {
-            $role['menu_ids'] = array_column($role['menus'], 'id');
+        $role['desktop_module_ids'] = [];
+        if (!empty($role['desktopModules'])) {
+            $role['desktop_module_ids'] = array_column($role['desktopModules'], 'id');
+        }
+        $role['mobile_module_ids'] = [];
+        if (!empty($role['mobileModules'])) {
+            $role['mobile_module_ids'] = array_column($role['mobileModules'], 'id');
         }
 
-        //菜单
-        $menuModels = MenuModel::field('id, id, menu_id, name, remark')
+        //桌面端模块
+        $desktopModuleModels = DesktopModuleModel::field('id, id, module_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
-        $menus = $menuModels->toArray();
+        $desktopModules = $desktopModuleModels->toArray();
         $arrayHandler = new ArrayHandler();
-        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        $treeDesktopModules = $arrayHandler->convertTree($desktopModules, 'id', 'module_id', 'children');
+
+        //移动端模块
+        $mobileModuleModels = MobileModuleModel::field('id, module_id, name, remark')
+            ->order('sort', 'asc')
+            ->append(['name_remark'])
+            ->select();
+        $mobileModules = $mobileModuleModels->toArray();
+        $arrayHandler = new ArrayHandler();
+        $treeMobileModules = $arrayHandler->convertTree($mobileModules, 'id', 'module_id', 'children');
 
         $data = [
             'role' => $role,
-            'menus' => $treeMenus
+            'desktop_modules' => $treeDesktopModules,
+            'mobile_modules'=>$treeMobileModules
         ];
         return $this->success('获取成功', $data);
     }
@@ -130,7 +169,7 @@ class Role extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'name', 'menu_ids' => []]);
+        $post = $this->request->post(['id', 'name', 'desktop_module_ids' => [], 'mobile_module_ids' => []]);
 
         //验证
         try {
@@ -145,24 +184,65 @@ class Role extends Base
         }
         $roleModel->save($post);
 
-        //关联
-        $oldMenuIds = array_column($roleModel->menus->toArray(), 'id');
-        $deleteMenuIds = array_unique(array_values(array_diff($oldMenuIds, $post['menu_ids'])));
-        $addMenuIds = array_unique(array_values(array_diff($post['menu_ids'], $oldMenuIds)));
-        if(!empty($deleteMenuIds)){
-            foreach($deleteMenuIds as $deleteMenuId){
-                $roleMenuModel = RoleMenuModel::where('role_id', $roleModel->id)
-                    ->where('menu_id', $deleteMenuId)
-                    ->findOrEmpty();
-                $roleMenuModel->delete();
+        //桌面端模块
+        $oldDesktopModuleIds = array_column($roleModel->desktopModules->toArray(), 'id');
+        $deleteDesktopModuleIds = array_unique(array_values(array_diff($oldDesktopModuleIds, $post['desktop_module_ids'])));
+        $addDesktopModuleIds = array_unique(array_values(array_diff($post['desktop_module_ids'], $oldDesktopModuleIds)));
+        if(!empty($deleteDesktopModuleIds)){
+            foreach($deleteDesktopModuleIds as $deleteDesktopModuleId){
+                RoleDesktopModuleModel::where('role_id', $roleModel->id)
+                    ->where('module_id', $deleteDesktopModuleId)
+                    ->delete();
             }
         }
-        if(!empty($addMenuIds)) {
-            foreach($addMenuIds as $addMenuId){
-                $roleMenuModel = new RoleMenuModel();
-                $roleMenuModel->save([
+        if(!empty($addDesktopModuleIds)) {
+            foreach($addDesktopModuleIds as $addDesktopModuleId){
+                $roleDesktopModuleModel = new RoleDesktopModuleModel();
+                $roleDesktopModuleModel->save([
                     'role_id'=>$roleModel->id,
-                    'menu_id'=>$addMenuId
+                    'module_id'=>$addDesktopModuleId
+                ]);
+            }
+        }
+
+        //桌面端模块
+        $oldDesktopModuleIds = array_column($roleModel->desktopModules->toArray(), 'id');
+        $deleteDesktopModuleIds = array_unique(array_values(array_diff($oldDesktopModuleIds, $post['desktop_module_ids'])));
+        $addDesktopModuleIds = array_unique(array_values(array_diff($post['desktop_module_ids'], $oldDesktopModuleIds)));
+        if(!empty($deleteDesktopModuleIds)){
+            foreach($deleteDesktopModuleIds as $deleteDesktopModuleId){
+                RoleDesktopModuleModel::where('role_id', $roleModel->id)
+                    ->where('module_id', $deleteDesktopModuleId)
+                    ->delete();
+            }
+        }
+        if(!empty($addDesktopModuleIds)) {
+            foreach($addDesktopModuleIds as $addDesktopModuleId){
+                $roleDesktopModuleModel = new RoleDesktopModuleModel();
+                $roleDesktopModuleModel->save([
+                    'role_id'=>$roleModel->id,
+                    'module_id'=>$addDesktopModuleId
+                ]);
+            }
+        }
+
+        //移动端模块
+        $oldMobileModuleIds = array_column($roleModel->mobileModules->toArray(), 'id');
+        $deleteMobileModuleIds = array_unique(array_values(array_diff($oldMobileModuleIds, $post['mobile_module_ids'])));
+        $addMobileModuleIds = array_unique(array_values(array_diff($post['mobile_module_ids'], $oldMobileModuleIds)));
+        if(!empty($deleteMobileModuleIds)){
+            foreach($deleteMobileModuleIds as $deleteMobileModuleId){
+                RoleMobileModuleModel::where('role_id', $roleModel->id)
+                    ->where('module_id', $deleteMobileModuleId)
+                    ->delete();
+            }
+        }
+        if(!empty($addMobileModuleIds)) {
+            foreach($addMobileModuleIds as $addMobileModuleId){
+                $roleMobileModuleModel = new RoleMobileModuleModel();
+                $roleMobileModuleModel->save([
+                    'role_id'=>$roleModel->id,
+                    'module_id'=>$addMobileModuleId
                 ]);
             }
         }
@@ -187,9 +267,8 @@ class Role extends Base
             return $this->error('没有找到记录');
         }
         $roleModel->delete();
-
-        $roleMenuModels = RoleMenuModel::where('role_id', $roleModel->id)->select();
-        $roleMenuModels->delete();
+        RoleDesktopModuleModel::where('role_id', $roleModel->id)->delete();
+        RoleMobileModuleModel::where('role_id', $roleModel->id)->delete();
 
         return $this->success('删除成功');
     }

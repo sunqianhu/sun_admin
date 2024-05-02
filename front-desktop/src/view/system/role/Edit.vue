@@ -2,68 +2,81 @@
   <el-dialog
     :model-value="open"
     title="修改角色"
-    width="500"
+    width="600"
     :draggable="true"
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="300px" class="scrollbar" v-loading="loading">
+    <el-scrollbar max-height="400px" class="scrollbar" v-loading="dialogLoading">
       <el-form :model="role" :rules="rules" scroll-to-error ref="roleRef" label-width="120px">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
-        <el-form-item label="角色权限" prop="menu_ids">
-          <div>
-            <el-input v-model="menuFilterText" placeholder="关键词" />
-            <el-tree
-              :props="{ children: 'children', label: 'name_remark' }"
-              :data="menus"
-              show-checkbox
-              node-key="id"
-              :filter-node-method="filterMenu"
-              ref="menuRef"
-              empty-text="无菜单"
-              @check="checkMenu"
-              :default-checked-keys="menuDefaultCheckKeys"
-            />
-          </div>
+        <el-form-item label="桌面端模块" prop="desktop_module_ids">
+          <el-tree
+            :props="{ children: 'children', label: 'name_remark' }"
+            :data="desktopModules"
+            show-checkbox
+            node-key="id"
+            ref="desktopModuleRef"
+            empty-text="无模块"
+            @check="checkDesktopModule"
+            :default-checked-keys="desktopModuleDefaultCheckKeys"
+          />
+        </el-form-item>
+        <el-form-item label="移动端模块" prop="mobile_module_ids">
+          <el-tree
+            :props="{ children: 'children', label: 'name_remark' }"
+            :data="mobileModules"
+            show-checkbox
+            node-key="id"
+            ref="mobileModuleRef"
+            empty-text="无模块"
+            @check="checkMobileModule"
+            :default-checked-keys="mobileModuleDefaultCheckKeys"
+          />
         </el-form-item>
       </el-form>
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" @click="submitForm" :loading="submitLoading"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
 
 <script setup>
-import { ref, watch, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 
 const props = defineProps(["open", "id"]);
 const emits = defineEmits(["close", "submited"]);
 const role = ref({
-  menu_ids: []
+  desktop_module_ids: [],
+  mobile_module_ids: []
 });
 const roleRef = ref();
 const rules = {
   name: [{ required: true, message: "角色名称不能为空", trigger: "blur" }]
 };
-const menus = ref([]);
-const menuRef = ref(null);
-const menuFilterText = ref("");
-const loading = ref(true);
-const menuDefaultCheckKeys = ref([]);
+const dialogLoading = ref(true);
+const desktopModules = ref([]);
+const desktopModuleRef = ref(null);
+const desktopModuleDefaultCheckKeys = ref([]);
+const mobileModules = ref([]);
+const mobileModuleRef = ref(null);
+const mobileModuleDefaultCheckKeys = ref([]);
+const submitLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
+  dialogLoading.value = true;
   const response = await axios.get("desktop/system.Role/initEdit", {
     params: { id: props.id }
   });
-  loading.value = false;
+  dialogLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -72,10 +85,16 @@ const init = async () => {
     return;
   }
 
-  menus.value = response.data.menus;
+  desktopModules.value = response.data.desktop_modules;
+  mobileModules.value = response.data.mobile_modules;
   role.value = response.data.role;
   await nextTick();
-  menuDefaultCheckKeys.value = getMenuDefaultCheckKeys(response.data.role.menu_ids);
+  desktopModuleDefaultCheckKeys.value = getDesktopModuleDefaultCheckKeys(
+    response.data.role.desktop_module_ids
+  );
+  mobileModuleDefaultCheckKeys.value = getMobileModuleDefaultCheckKeys(
+    response.data.role.mobile_module_ids
+  );
 };
 
 /**
@@ -86,47 +105,71 @@ const close = () => {
 };
 
 /**
- * 过滤菜单节点
+ * 得到桌面端模块默认选中的key(排除父节点)
+ * @param {array} desktopModuleIds
  */
-const filterMenu = (value, data) => {
-  if (value === "") {
-    return true;
-  }
-  return data.name.includes(value);
-};
-
-/**
- * 得到菜单默认选中的key(排除父节点)
- * @param {array} menuIds
- */
-const getMenuDefaultCheckKeys = (menuIds) => {
-  let finalMenuIds = [];
+const getDesktopModuleDefaultCheckKeys = (desktopModuleIds) => {
+  let finalModuleIds = [];
   let i;
-  let menuId = 0;
+  let desktopModuleId = 0;
   let node;
 
-  for (i in menuIds) {
-    menuId = menuIds[i];
-    node = menuRef.value.getNode(menuId);
+  for (i in desktopModuleIds) {
+    desktopModuleId = desktopModuleIds[i];
+    node = desktopModuleRef.value.getNode(desktopModuleId);
     if (!node) {
       continue;
     }
 
     if (!node.childNodes || !node.childNodes.length) {
-      finalMenuIds.push(menuId);
+      finalModuleIds.push(desktopModuleId);
     }
   }
-  return finalMenuIds;
+  return finalModuleIds;
 };
 
 /**
- * 选择菜单
+ * 选择桌面端模块
  */
-const checkMenu = () => {
-  const allKeys = menuRef.value.getCheckedKeys(); //全选中
-  const halfKeys = menuRef.value.getHalfCheckedKeys(); //半选中
+const checkDesktopModule = () => {
+  const allKeys = desktopModuleRef.value.getCheckedKeys(); //全选中
+  const halfKeys = desktopModuleRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
-  role.value.menu_ids = keys;
+  role.value.desktop_module_ids = keys;
+};
+
+/**
+ * 得到移动端模块默认选中的key(排除父节点)
+ * @param {array} desktopModuleIds
+ */
+const getMobileModuleDefaultCheckKeys = (mobileModuleIds) => {
+  let finalModuleIds = [];
+  let i;
+  let mobileModuleId = 0;
+  let node;
+
+  for (i in mobileModuleIds) {
+    mobileModuleId = mobileModuleIds[i];
+    node = mobileModuleRef.value.getNode(mobileModuleId);
+    if (!node) {
+      continue;
+    }
+
+    if (!node.childNodes || !node.childNodes.length) {
+      finalModuleIds.push(mobileModuleId);
+    }
+  }
+  return finalModuleIds;
+};
+
+/**
+ * 选择移动端模块
+ */
+const checkMobileModule = () => {
+  const allKeys = mobileModuleRef.value.getCheckedKeys(); //全选中
+  const halfKeys = mobileModuleRef.value.getHalfCheckedKeys(); //半选中
+  const keys = [...allKeys, ...halfKeys];
+  role.value.mobile_module_ids = keys;
 };
 
 /**
@@ -135,7 +178,9 @@ const checkMenu = () => {
 const submitForm = async () => {
   await roleRef.value.validate();
 
+  submitLoading.value = true;
   const response = await axios.post("desktop/system.Role/saveEdit", role.value);
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -150,10 +195,6 @@ const submitForm = async () => {
   });
   emits("submited", true);
 };
-
-watch(menuFilterText, (value) => {
-  menuRef.value?.filter(value);
-});
 
 onMounted(() => {
   init();

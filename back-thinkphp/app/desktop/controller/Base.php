@@ -92,7 +92,7 @@ class Base extends BaseController
 
         $token = $this->request->header('token', '');
         if (empty($token)) {
-            throw new Exception('token错误');
+            throw new Exception('未获取到token');
         }
 
         $jwt = new Jwt();
@@ -129,6 +129,7 @@ class Base extends BaseController
             if (empty($apis)) {
                 continue;
             }
+            $apis = array_map('strtolower', $apis);
             if (in_array($url, $apis)) {
                 $have = true;
                 break;

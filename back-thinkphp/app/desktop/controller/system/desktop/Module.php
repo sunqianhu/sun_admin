@@ -42,8 +42,6 @@ class Module extends Base
     public function initAdd()
     {
         $moduleModels = ModuleModel::field('id, id as value, module_id, name as label')
-            ->where("type_id", '<>', 3)
-            ->where("type_id", '<>', 4)
             ->order('sort', 'asc')
             ->select();
         $modules = $moduleModels->toArray();
@@ -52,8 +50,8 @@ class Module extends Base
         $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
-        $types = $dictionaryHelper->getList('module_type');
-        $layouts = $dictionaryHelper->getList('module_layout');
+        $types = $dictionaryHelper->getList('desktop_module_type');
+        $layouts = $dictionaryHelper->getList('desktop_module_layout');
 
         $data = [
             'tree_modules' => $treeModules,
@@ -106,8 +104,8 @@ class Module extends Base
         $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
-        $types = $dictionaryHelper->getList('module_type');
-        $layouts = $dictionaryHelper->getList('module_layout');
+        $types = $dictionaryHelper->getList('desktop_module_type');
+        $layouts = $dictionaryHelper->getList('desktop_module_layout');
 
         $data = [
             'tree_modules' => $treeModules,

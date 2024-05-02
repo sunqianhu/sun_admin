@@ -1,7 +1,7 @@
 <?php
 namespace app\model;
 
-use think\facade\Config;
+use app\helper\User as UserHelper;
 
 class User extends Base
 {
@@ -46,24 +46,7 @@ class User extends Base
      */
     public function getAvatarUrlAttr($value, $data)
     {
-        $path = $data['avatar']??'';
-        if($path === ''){
-            $path = 'avatar.png';
-        }
-        return Config::get('filesystem.access_prefix') . $path;
-    }
-
-    /**
-     * 得到前端头像url
-     * @param $path
-     * @return string
-     */
-    public function getFrontAvatarUrlAttr($value, $data)
-    {
-        $path = $data['avatar']??'';
-        if($path === ''){
-            $path = 'avatar.png';
-        }
-        return Config::get('filesystem.access_prefix') . $path;
+        $userHelper = new UserHelper();
+        return $userHelper->getAvatarUrl($data['avatar']);
     }
 }

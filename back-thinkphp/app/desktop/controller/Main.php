@@ -3,6 +3,7 @@
 namespace app\desktop\controller;
 
 use app\helper\Config as ConfigHelper;
+use app\helper\User as Userhelper;
 use app\model\desktop\Module as ModuleModel;
 use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
@@ -39,9 +40,8 @@ class Main extends Base
      */
     public function getMenus()
     {
-        $roleIds = UserRoleModel::where('user_id', $this->user->id)
-            ->group('role_id')
-            ->column('role_id');
+        $userHelper = new Userhelper();
+        $roleIds = $userHelper->getRoleIds($this->user->id);
         if (empty($roleIds)) {
             return $this->success('获取成功', []);
         }

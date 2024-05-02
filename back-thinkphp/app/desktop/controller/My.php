@@ -38,6 +38,7 @@ class My extends Base
     {
         $userModel = UserModel::field('avatar')->find($this->user->id);
         $avatar = $userModel->front_avatar_url;
+
         return $this->success('获取成功', $avatar);
     }
 

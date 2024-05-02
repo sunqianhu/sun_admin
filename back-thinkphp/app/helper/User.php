@@ -2,8 +2,10 @@
 
 namespace app\helper;
 
-use app\model\desktop\Module as MenuModel;
+use app\model\desktop\Module as ModuleModel;
 use app\model\User as UserModel;
+use app\model\UserRole as UserRoleModel;
+use think\facade\Cache;
 use think\facade\Config;
 
 class User
@@ -51,7 +53,15 @@ class User
      */
     public function getName($id)
     {
-        return UserModel::where('id', $id)->value('name');
+        $key = 'user_'.$id;
+        $name = Cache::get($key);
+        if($name !== null){
+            return $name;
+        }
+
+        $name = UserModel::where('id', $id)->value('name');
+        Cache::set($key, $name, 600);
+        return $name;
     }
 
     /**
@@ -75,20 +85,20 @@ class User
     }
 
     /**
-     * 通过菜单key得到用户ids
+     * 通过桌面端模块key得到用户ids
      * @param $menuKey
      * @param $departmentIds
      * @return array
      */
-    public function getUserIdsByMenuKey($menuKey, $departmentIds = []){
+    public function getUserIdsByDesktopModuleKey($moduleKey, $departmentIds = []){
         $userIds = [];
 
         //角色id
-        $roleIds = MenuModel::alias('m')
-            ->leftJoin('role_menu rm', 'm.id = rm.menu_id')
-            ->where('m.key', $menuKey)
-            ->group('rm.role_id')
-            ->column('rm.role_id');
+        $roleIds = ModuleModel::alias('m')
+            ->leftJoin('role_desktop_module rdm', 'm.id = rdm.module_id')
+            ->where('m.key', $moduleKey)
+            ->group('rdm.role_id')
+            ->column('rdm.role_id');
         if(empty($roleIds)){
             return $userIds;
         }
@@ -121,15 +131,14 @@ class User
     }
 
     /**
-     * 得到前端头像url
-     * @param $path
-     * @return string
+     * 得到角色id集合
+     * @param $userId
+     * @return mixed
      */
-    public function getFrontAvatarUrl($path)
-    {
-        if($path === ''){
-            $path = 'avatar.png';
-        }
-        return Config::get('filesystem.access_prefix') . $path;
+    public function getRoleIds($userId){
+        $roleIds = UserRoleModel::where('user_id', $userId)
+            ->group('role_id')
+            ->column('role_id');
+        return $roleIds;
     }
 }
