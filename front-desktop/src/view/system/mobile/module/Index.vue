@@ -15,7 +15,6 @@
     <div class="tool">
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
-
     <div class="list">
       <el-table :data="modules" v-loading="loading" row-key="id" class="table">
         <el-table-column v-slot="{ row }" prop="name" label="模块名称">
@@ -24,7 +23,7 @@
         </el-table-column>
         <el-table-column prop="key" label="模块key" width="300" show-overflow-tooltip />
         <el-table-column v-slot="{ row }" prop="type_id" label="模块类型" width="100">
-          <el-tag :type="row.type_id">{{ row.type_name }}</el-tag>
+          <tag :id="row.type_id">{{ row.type_name }}</tag>
         </el-table-column>
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
@@ -37,9 +36,7 @@
         </el-table-column>
       </el-table>
     </div>
-
     <div class="explain">模块不生成前端路由，前端路由使用静态路由。</div>
-
     <add
       :open="addFlag"
       @close="addFlag = false"
@@ -68,6 +65,7 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
+import Tag from "./component/Tag.vue";
 
 const rowId = ref(0);
 const query = ref({});

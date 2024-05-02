@@ -5,7 +5,7 @@ namespace app\helper\desktop;
 class Module
 {
     /**
-     * 得到主布局第一个页面菜单id
+     * 得到主布局第一个页面模块id
      * @param $treeModules
      * @return int|mixed
      */
@@ -26,7 +26,7 @@ class Module
     }
 
     /**
-     * 得到空白布局第一个页面菜单id
+     * 得到空白布局第一个页面模块id
      * @param $treeModules 
      * @return int|mixed
      */

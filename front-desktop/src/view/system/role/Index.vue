@@ -11,11 +11,9 @@
         </el-form-item>
       </el-form>
     </div>
-
     <div class="toolbar">
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
-
     <div class="list">
       <el-table :data="roles" v-loading="loading" row-key="id" class="table">
         <el-table-column prop="name" label="角色名称" />

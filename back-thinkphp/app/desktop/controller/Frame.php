@@ -6,7 +6,6 @@ use app\helper\desktop\Module as ModuleHelper;
 use app\helper\User as Userhelper;
 use app\model\desktop\Module as ModuleModel;
 use app\model\User as UserModel;
-use app\model\UserRole as UserRoleModel;
 use Sunqianhu\Helper\ArrayHandler;
 
 /**

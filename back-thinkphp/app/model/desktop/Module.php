@@ -36,31 +36,6 @@ class Module extends Base
     }
 
     /**
-     * 得到类型名称
-     * @param $value
-     * @return string
-     */
-    public function getTypeTagTypeAttr($value, $data)
-    {
-        $type = '';
-        switch ($data['type_id']){
-            case 1:
-                $type = 'warning';
-                break;
-            case 2:
-                $type = '';
-                break;
-            case 3:
-                $type = 'warning';
-                break;
-            case 4:
-                $type = 'info';
-                break;
-        }
-        return $type;
-    }
-
-    /**
      * 得到模块名称和备注
      * @param $value
      * @return string

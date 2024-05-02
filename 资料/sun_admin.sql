@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-04-30 11:41:55
+Date: 2024-05-02 23:21:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,6 +52,116 @@ INSERT INTO `department` VALUES ('2', '1', '2', '部门1-1', '1');
 INSERT INTO `department` VALUES ('3', '0', '1', '部门2', '2');
 
 -- ----------------------------
+-- Table structure for desktop_module
+-- ----------------------------
+DROP TABLE IF EXISTS `desktop_module`;
+CREATE TABLE `desktop_module` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `module_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级模块id',
+  `type_id` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '模块类型id',
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '模块名称',
+  `key` varchar(128) DEFAULT '' COMMENT '模块key',
+  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '路由路径',
+  `component` varchar(255) NOT NULL DEFAULT '' COMMENT '组件路径',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '网址',
+  `icon` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单图标',
+  `api` varchar(1024) NOT NULL DEFAULT '' COMMENT '接口地址',
+  `layout` varchar(32) NOT NULL DEFAULT '' COMMENT '页面布局',
+  `keep_alive` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '保活',
+  `show` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '菜单显示',
+  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `remark` varchar(32) NOT NULL DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COMMENT='模块';
+
+-- ----------------------------
+-- Records of desktop_module
+-- ----------------------------
+INSERT INTO `desktop_module` VALUES ('1', '0', '1', '系统管理', 'system', '', '', '', 'Setting', '', '', '2', '1', '99', '');
+INSERT INTO `desktop_module` VALUES ('2', '1', '2', '用户管理', 'system_user', '/system/user', 'system/user/Index.vue', '', 'User', 'desktop/system.User/initIndex\ndesktop/system.User/getIndexUsers', 'main', '2', '1', '3', '');
+INSERT INTO `desktop_module` VALUES ('3', '2', '3', '添加', 'system_user_add', '', '', '', '', 'desktop/system.User/initAdd\ndesktop/system.User/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('4', '2', '3', '修改', 'system_user_edit', '', '', '', '', 'desktop/system.User/initEdit\ndesktop/system.User/saveEdit', '', '2', '1', '2', '');
+INSERT INTO `desktop_module` VALUES ('5', '1', '2', '部门管理', 'system_department', '/system/department', 'system/department/Index.vue', '', 'Memo', 'desktop/system.Department/getIndexDepartments', 'main', '2', '1', '5', '');
+INSERT INTO `desktop_module` VALUES ('6', '2', '3', '修改状态', 'system_user_edit_status', '', '', '', '', 'desktop/system.User/editStatus', '', '2', '1', '3', '');
+INSERT INTO `desktop_module` VALUES ('7', '2', '3', '修改密码', 'system_user_edit_password', '', '', '', '', 'desktop/system.User/editPassword', '', '2', '1', '5', '');
+INSERT INTO `desktop_module` VALUES ('8', '5', '3', '添加', 'system_department_add', '', '', '', '', 'desktop/system.Department/initAdd\ndesktop/system.Department/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('9', '5', '3', '修改', 'system_department_edit', '', '', '', '', 'desktop/system.Department/initEdit\ndesktop/system.Department/saveEdit', '', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('10', '5', '3', '删除', 'system_department_delete', '', '', '', '', 'desktop/system.Department/delete', '', '2', '1', '3', '');
+INSERT INTO `desktop_module` VALUES ('11', '1', '2', '角色管理', 'system_role', '/system/role', 'system/role/Index.vue', '', 'ChatSquare', 'desktop/system.Role/getIndexRoles', 'main', '2', '1', '7', '');
+INSERT INTO `desktop_module` VALUES ('12', '11', '3', '添加', 'system_role_add', '', '', '', '', 'desktop/system.Role/initAdd\ndesktop/system.Role/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('13', '11', '3', '修改', 'system_role_edit', '', '', '', '', 'desktop/system.Role/initEdit\ndesktop/system.Role/saveEdit', '', '2', '1', '2', '');
+INSERT INTO `desktop_module` VALUES ('14', '11', '3', '删除', 'system_role_delete', '', '', '', '', 'desktop/system.Role/delete', '', '2', '1', '3', '');
+INSERT INTO `desktop_module` VALUES ('15', '1', '2', '桌面端模块管理', 'system_desktop_module', '/system/desktop/module', 'system/desktop/module/Index.vue', '', 'Reading', 'desktop/system.desktop.module/getindexmodules', 'main', '2', '1', '9', '');
+INSERT INTO `desktop_module` VALUES ('16', '15', '3', '添加', 'system_desktop_module_add', '', '', '', '', 'desktop/system.desktop.Module/initAdd\ndesktop/system.desktop.Module/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('17', '15', '3', '修改', 'system_desktop_module_edit', '', '', '', '', 'desktop/system.desktop.Module/initEdit\ndesktop/system.desktop.Module/saveEdit', '', '2', '1', '2', '');
+INSERT INTO `desktop_module` VALUES ('18', '15', '3', '删除', 'system_menu_delete', '', '', '', '', 'desktop/system.desktop.Module/delete', '', '2', '1', '3', '');
+INSERT INTO `desktop_module` VALUES ('19', '1', '2', '字典管理', 'system_dictionary', '/system/dictionary', 'system/dictionary/Index.vue', '', 'Document', 'desktop/system.Dictionary/getIndexDictionarys', 'main', '2', '1', '11', '');
+INSERT INTO `desktop_module` VALUES ('20', '19', '3', '添加', 'system_dictionary_add', '', '', '', '', 'desktop/system.Dictionary/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('21', '19', '3', '修改', 'system_dictionary_edit', '', '', '', '', 'desktop/system.Dictionary/initEdit\ndesktop/system.Dictionary/saveEdit', '', '2', '1', '2', '');
+INSERT INTO `desktop_module` VALUES ('22', '19', '3', '删除', 'system_dictionary_delete', '', '', '', '', 'desktop/system.Dictionary/delete', '', '2', '1', '3', '');
+INSERT INTO `desktop_module` VALUES ('23', '0', '2', '首页', 'index', '/index', 'Index.vue', '', 'House', '', 'main', '2', '1', '0', '');
+INSERT INTO `desktop_module` VALUES ('26', '2', '3', '踢下线', 'system_user_offline', '', '', '', '', 'desktop/system.User/offLine', '', '2', '1', '5', '');
+INSERT INTO `desktop_module` VALUES ('27', '1', '2', '登录日志', 'system_login_log', '/system/login-log', 'system/login-log/Index.vue', '', 'MapLocation', 'desktop/system.LoginLog/getIndexLoginLogs', 'main', '2', '1', '13', '');
+INSERT INTO `desktop_module` VALUES ('28', '1', '2', '操作日志', 'system_operation_log', '/system/operation-log', 'system/operation-log/Index.vue', '', 'Mouse', 'desktop/system.OperationLog/getIndexOperationLogs', 'main', '2', '1', '15', '');
+INSERT INTO `desktop_module` VALUES ('29', '2', '2', '用户详情', 'system_user_detail', '/system/user/:id', 'system/user/Detail.vue', '', '', 'desktop/system.user/detail', 'blank', '2', '2', '3', '');
+INSERT INTO `desktop_module` VALUES ('30', '0', '4', '外部链接', 'baidu', '', '', 'https://www.baidu.com', 'ChatSquare', '', '', '2', '1', '3', '新窗口');
+INSERT INTO `desktop_module` VALUES ('31', '1', '2', '系统设置', 'system_config', '/system/config', 'system/config/Index.vue', '', 'Cpu', 'desktop/system.Config/init\ndesktop/system.Config/save', 'main', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('32', '0', '1', '统计分析', 'statistic', '', '', '', 'PieChart', '', '', '2', '1', '2', '');
+INSERT INTO `desktop_module` VALUES ('33', '32', '2', '趋势统计', 'statistic_trend', '/statistic/trend', 'statistic/Trend.vue', '', 'Share', 'desktop/statistic.Trend/init\ndesktop/statistic.Trend/exportExcel', 'main', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('34', '32', '2', '部门统计', 'statistic_department', '/statistic/department', 'statistic/Department.vue', '', 'OfficeBuilding', 'desktop/statistic.Department/init\ndesktop/statistic.Department/exportExcel', 'main', '2', '1', '3', '');
+INSERT INTO `desktop_module` VALUES ('35', '1', '2', '移动端模块管理', 'system_mobile_module', '/system/mobile/module', 'system/mobile/module/Index.vue', '', 'Iphone', 'desktop/system.mobile.module/getIndexModules', 'main', '2', '1', '10', '');
+INSERT INTO `desktop_module` VALUES ('36', '35', '3', '添加', 'system_mobile_module_add', '', '', '', '', 'desktop/system.mobile.Module/initAdd\ndesktop/system.mobile.Module/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `desktop_module` VALUES ('37', '35', '3', '修改', 'system_mobile_module_edit', '', '', '', '', 'desktop/system.mobile.Module/initEdit\ndesktop/system.mobile.Module/saveEdit', '', '2', '1', '3', '');
+INSERT INTO `desktop_module` VALUES ('38', '35', '3', '删除', 'system_mobile_module_delete', '', '', '', '', 'desktop/system.mobile.Module/delete', '', '2', '1', '5', '');
+
+-- ----------------------------
+-- Table structure for desktop_token
+-- ----------------------------
+DROP TABLE IF EXISTS `desktop_token`;
+CREATE TABLE `desktop_token` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `token` text NOT NULL COMMENT 'token',
+  `expires_in` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '有效期',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  PRIMARY KEY (`id`),
+  KEY `token` (`token`(128)) USING BTREE,
+  KEY `user_id` (`user_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+
+-- ----------------------------
+-- Records of desktop_token
+-- ----------------------------
+INSERT INTO `desktop_token` VALUES ('34', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC42MDA0MDMwMCAxNzAzMjE1OTU0In0.hCtCWoJvF5UJ_OX2yYvozYIM-tUGYyLbbWHcDkm4_R8', '1703226008', '10');
+INSERT INTO `desktop_token` VALUES ('35', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43NzY1MjMwMCAxNzAzMjI2NzQ0In0.o1NW6DuKKk6PRjnpGlGJrjmofBDQQdedmHLOGyHZ4vI', '1703235581', '10');
+INSERT INTO `desktop_token` VALUES ('36', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43OTgzNzYwMCAxNzAzNDg1MjQzIn0.owdRQGm9nQQIH3LF4HCFes1GuoxjMhZ090ym3mXTV9s', '1703496265', '10');
+INSERT INTO `desktop_token` VALUES ('37', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4yMzAxOTgwMCAxNzAzNTYxMTE5In0.yMAPpSgE43MQ2VNMJm4qM3560E19d5CJvqC-SFb45Q8', '1703568404', '10');
+INSERT INTO `desktop_token` VALUES ('38', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC40Mjc1NTAwMCAxNzAzNTcwMzkxIn0.mwnHb0RhHhIWOQzt94-cpxuM5jliZ754_xOVA2e_xR0', '1703584727', '10');
+INSERT INTO `desktop_token` VALUES ('39', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC44Mzg0NTYwMCAxNzAzNTc4MTExIn0.ZcYF9H3xXtI5V9TKq-8XOeSa76wBg_TM1GKnUt47HUA', '1703585312', '10');
+INSERT INTO `desktop_token` VALUES ('40', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC41ODYyNDgwMCAxNzAzNTc4MTU4In0.fA36XuiF1BW8F5HGaPJS6CYpIRWQKohzACPwduBti7k', '1703585359', '10');
+INSERT INTO `desktop_token` VALUES ('41', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4xNzM3NTYwMCAxNzAzNTc4MTk2In0.Y8aS9mz7wCq6gWEi-S5UcnmWw5hKWOIGrr_ewrDtsQI', '1703585396', '10');
+INSERT INTO `desktop_token` VALUES ('42', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4xNzQ0MDMwMCAxNzAzNTc4MjA3In0.VjQ5HRcjKYo8gfzH6NoN9DneAE8cFLAPtTLzMaC-TBg', '1703593928', '10');
+INSERT INTO `desktop_token` VALUES ('43', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC41OTg5NjEwMCAxNzAzNjM5MzA4In0.uHjXcyEhttgy0V9hDYUS1QykJarzgKSke3J7-nmg99o', '1703657085', '10');
+INSERT INTO `desktop_token` VALUES ('44', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43NTk5MTcwMCAxNzAzNzI2NjU0In0.8Fy4Wiw_M13SgOUrIHlRtOEEg_zv4VbcnXy9x1MkRpg', '1703733855', '10');
+INSERT INTO `desktop_token` VALUES ('45', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43MzI5NzYwMCAxNzAzNzI3MDg3In0.q7FPU2dFfb_0gnQtn0LsmEn5mEok7ga997gZEPM200U', '1703735267', '10');
+INSERT INTO `desktop_token` VALUES ('46', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43NDQxNTgwMCAxNzA0NDE3NDQ1In0.AwVM6Ry1x22wCJMOcPYmSYUE_GdP7cDReXKau3jBI4Y', '1704424647', '10');
+INSERT INTO `desktop_token` VALUES ('47', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC41NDAyNjUwMCAxNzA0NDE3NDY5In0.4lHwTZ41SoQeIE8_7h81YL9EwgiYjnKerwiONFkjL88', '1704453986', '10');
+INSERT INTO `desktop_token` VALUES ('48', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjM2ODcwNTAwIDE3MTM1MTU2NTUifQ.jiDE79glBnyMJ8mATonzCKsQXYdl26rhq0vfuAN2xVY', '1713544456', '1');
+INSERT INTO `desktop_token` VALUES ('49', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjkyOTYzMzAwIDE3MTM1MTU2NjYifQ.xVKyJQQ1UAl4_Viv_5M6TU9zllYXPlM1gGXoGr3eU0U', '1713544467', '1');
+INSERT INTO `desktop_token` VALUES ('50', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg5MTM3OTAwIDE3MTM1MTU3MTAifQ.m1Y_NXijpkIMfCIxLWa-1KVyoujok6pWc4E0kIw31TQ', '1713544511', '1');
+INSERT INTO `desktop_token` VALUES ('51', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjY3MjI4MTAwIDE3MTM1MTU5MDUifQ.xycuNoSt49VJTryP60vdogfJZRfM6wwUZRoNVLc0LRQ', '1713544706', '1');
+INSERT INTO `desktop_token` VALUES ('52', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjUxOTg5MDAwIDE3MTM1MTYwODQifQ.tnofIeN90fJf2cOhZ78r0an0wyAxj23Y6ig-DCct19A', '1713544884', '1');
+INSERT INTO `desktop_token` VALUES ('53', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQyNDcxNjAwIDE3MTM1MTYxMDMifQ.HaIx6t8K7GaKAI27wOhL5TlEcvMq4kCgnMoNxITgisc', '1713546771', '1');
+INSERT INTO `desktop_token` VALUES ('54', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQyMDQ0MTAwIDE3MTQzNTg5NTMifQ.unDXDgas54VynrHmFecNua3CSZ3q-h8CHnaPOe_IswU', '1714389276', '1');
+INSERT INTO `desktop_token` VALUES ('55', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg3MzcyNzAwIDE3MTQ0NDc0NjgifQ.gamO0qokRHfEKVtERbmq_-8e9mPEaX7dm--NEe96gXc', '1714476270', '1');
+INSERT INTO `desktop_token` VALUES ('56', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ5NDk5NjAwIDE3MTQ0NDc1NDEifQ.uV7RsyjKgJeKZDFr07zyVTYHJH3JdcxiD6PAeH89NuY', '1714489649', '1');
+INSERT INTO `desktop_token` VALUES ('57', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjM4MjgyMDAwIDE3MTQ1NzI1ODcifQ.1xRmyc2Yi7K9ylnDPF2hK3ZFHU2VqxcwYRwYPFOqEew', '1714601388', '1');
+INSERT INTO `desktop_token` VALUES ('58', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg2ODI1ODAwIDE3MTQ1NzI2MTMifQ.eYOjBnPTx9uo44bqa5Dy0Sw46JpwzM5VRmQnd9sjb8Q', '1714601414', '1');
+INSERT INTO `desktop_token` VALUES ('59', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjkzODUyMzAwIDE3MTQ1NzI2MjcifQ.AZwkev3RiitDb06JG47K9tn13fhgdRoHzl0DOExngPg', '1714601428', '1');
+INSERT INTO `desktop_token` VALUES ('60', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ2NTk4MjAwIDE3MTQ1NzQ3NjcifQ.JnJ-RhfRAO1cNd4eVTwvj4nKEzEMSk2hbRsxrUxEP2M', '1714603568', '1');
+INSERT INTO `desktop_token` VALUES ('61', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjI1NDI1MTAwIDE3MTQ1NzQ4MjkifQ.JlcPPVlgAmWSuCMroUJMIanOgNXQS69h5ZxsSro4ahM', '1714604452', '1');
+INSERT INTO `desktop_token` VALUES ('62', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjIwODMxMzAwIDE3MTQ2MzM3NTMifQ.cCRIIVDce3AHfFlQAeZDAoSq8FOAdhxe1VyXPQ5ajY4', '1714692066', '1');
+
+-- ----------------------------
 -- Table structure for dictionary
 -- ----------------------------
 DROP TABLE IF EXISTS `dictionary`;
@@ -62,20 +172,23 @@ CREATE TABLE `dictionary` (
   `value` varchar(64) NOT NULL DEFAULT '' COMMENT '字典值',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='字典';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='字典';
 
 -- ----------------------------
 -- Records of dictionary
 -- ----------------------------
-INSERT INTO `dictionary` VALUES ('1', 'menu_type', '1', '目录', '1');
-INSERT INTO `dictionary` VALUES ('2', 'menu_type', '2', '页面', '2');
-INSERT INTO `dictionary` VALUES ('3', 'menu_type', '3', '按钮', '3');
-INSERT INTO `dictionary` VALUES ('4', 'menu_layout', 'main', '主布局', '1');
-INSERT INTO `dictionary` VALUES ('5', 'menu_layout', 'blank', '空白布局', '2');
-INSERT INTO `dictionary` VALUES ('6', 'menu_type', '4', '外部链接', '4');
+INSERT INTO `dictionary` VALUES ('1', 'desktop_module_type', '1', '目录', '1');
+INSERT INTO `dictionary` VALUES ('2', 'desktop_module_type', '2', '页面', '2');
+INSERT INTO `dictionary` VALUES ('3', 'desktop_module_type', '3', '按钮', '3');
+INSERT INTO `dictionary` VALUES ('4', 'desktop_module_layout', 'main', '主布局', '1');
+INSERT INTO `dictionary` VALUES ('5', 'desktop_module_layout', 'blank', '空白布局', '2');
+INSERT INTO `dictionary` VALUES ('6', 'desktop_module_type', '4', '外部链接', '4');
 INSERT INTO `dictionary` VALUES ('7', 'department_type', '1', '类型1', '1');
 INSERT INTO `dictionary` VALUES ('8', 'department_type', '2', '类型2', '2');
 INSERT INTO `dictionary` VALUES ('9', 'department_type', '3', '类型3', '3');
+INSERT INTO `dictionary` VALUES ('10', 'mobile_module_type', '1', '目录', '1');
+INSERT INTO `dictionary` VALUES ('11', 'mobile_module_type', '2', '页面', '2');
+INSERT INTO `dictionary` VALUES ('12', 'mobile_module_type', '3', '按钮', '3');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -125,7 +238,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -161,65 +274,12 @@ INSERT INTO `login_log` VALUES ('28', '1', '1713516103', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('29', '1', '1714358953', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('30', '1', '1714447469', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('31', '1', '1714447541', '127.0.0.1');
-
--- ----------------------------
--- Table structure for menu
--- ----------------------------
-DROP TABLE IF EXISTS `menu`;
-CREATE TABLE `menu` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `menu_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级菜单id',
-  `type_id` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '菜单类型id',
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单名称',
-  `key` varchar(128) DEFAULT '' COMMENT '菜单key',
-  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '路由路径',
-  `component` varchar(255) NOT NULL DEFAULT '' COMMENT '组件路径',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接网址',
-  `icon` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单图标',
-  `api` varchar(1024) NOT NULL DEFAULT '' COMMENT '接口地址',
-  `layout` varchar(32) NOT NULL DEFAULT '' COMMENT '页面布局',
-  `keep_alive` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '保活',
-  `show` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '菜单显示',
-  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `remark` varchar(32) NOT NULL DEFAULT '' COMMENT '备注',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
-
--- ----------------------------
--- Records of menu
--- ----------------------------
-INSERT INTO `menu` VALUES ('1', '0', '1', '系统管理', 'system', '', '', '', 'Setting', '', '', '2', '1', '99', '');
-INSERT INTO `menu` VALUES ('2', '1', '2', '用户管理', 'system_user', '/system/user', 'system/user/Index.vue', '', 'User', 'desktop/system.User/initIndex\ndesktop/system.User/getIndexUsers', 'main', '2', '1', '3', '');
-INSERT INTO `menu` VALUES ('3', '2', '3', '添加', 'system_user_add', '', '', '', '', 'desktop/system.User/initAdd\ndesktop/system.User/saveAdd', '', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('4', '2', '3', '修改', 'system_user_edit', '', '', '', '', 'desktop/system.User/initEdit\ndesktop/system.User/saveEdit', '', '2', '1', '2', '');
-INSERT INTO `menu` VALUES ('5', '1', '2', '部门管理', 'system_department', '/system/department', 'system/department/Index.vue', '', 'Memo', 'desktop/system.Department/getIndexDepartments', 'main', '2', '1', '5', '');
-INSERT INTO `menu` VALUES ('6', '2', '3', '修改状态', 'system_user_edit_status', '', '', '', '', 'desktop/system.User/editStatus', '', '2', '1', '3', '');
-INSERT INTO `menu` VALUES ('7', '2', '3', '修改密码', 'system_user_edit_password', '', '', '', '', 'desktop/system.User/editPassword', '', '2', '1', '5', '');
-INSERT INTO `menu` VALUES ('8', '5', '3', '添加', 'system_department_add', '', '', '', '', 'desktop/system.Department/initAdd\ndesktop/system.Department/saveAdd', '', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('9', '5', '3', '修改', 'system_department_edit', '', '', '', '', 'desktop/system.Department/initEdit\ndesktop/system.Department/saveEdit', '', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('10', '5', '3', '删除', 'system_department_delete', '', '', '', '', 'desktop/system.Department/delete', '', '2', '1', '3', '');
-INSERT INTO `menu` VALUES ('11', '1', '2', '角色管理', 'system_role', '/system/role', 'system/role/Index.vue', '', 'ChatSquare', 'desktop/system.Role/getIndexRoles', 'main', '2', '1', '7', '');
-INSERT INTO `menu` VALUES ('12', '11', '3', '添加', 'system_role_add', '', '', '', '', 'desktop/system.Role/initAdd\ndesktop/system.Role/saveAdd', '', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('13', '11', '3', '修改', 'system_role_edit', '', '', '', '', 'desktop/system.Role/initEdit\ndesktop/system.Role/saveEdit', '', '2', '1', '2', '');
-INSERT INTO `menu` VALUES ('14', '11', '3', '删除', 'system_role_delete', '', '', '', '', 'desktop/system.Role/delete', '', '2', '1', '3', '');
-INSERT INTO `menu` VALUES ('15', '1', '2', '菜单管理', 'system_menu', '/system/menu', 'system/menu/Index.vue', '', 'Reading', 'desktop/system.Menu/getIndexMenus', 'main', '2', '1', '9', '');
-INSERT INTO `menu` VALUES ('16', '15', '3', '添加', 'system_menu_add', '', '', '', '', 'desktop/system.Menu/initAdd\ndesktop/system.Menu/saveAdd', '', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('17', '15', '3', '修改', 'menu_edit', '', '', '', '', 'desktop/system.Menu/initEdit\ndesktop/system.Menu/saveEdit', '', '2', '1', '2', '');
-INSERT INTO `menu` VALUES ('18', '15', '3', '删除', 'system_menu_delete', '', '', '', '', 'desktop/system.Menu/delete', '', '2', '1', '3', '');
-INSERT INTO `menu` VALUES ('19', '1', '2', '字典管理', 'system_dictionary', '/system/dictionary', 'system/dictionary/Index.vue', '', 'Document', 'desktop/system.Dictionary/getIndexDictionarys', 'main', '2', '1', '11', '');
-INSERT INTO `menu` VALUES ('20', '19', '3', '添加', 'system_dictionary_add', '', '', '', '', 'desktop/system.Dictionary/saveAdd', '', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('21', '19', '3', '修改', 'system_dictionary_edit', '', '', '', '', 'desktop/system.Dictionary/initEdit\ndesktop/system.Dictionary/saveEdit', '', '2', '1', '2', '');
-INSERT INTO `menu` VALUES ('22', '19', '3', '删除', 'system_dictionary_delete', '', '', '', '', 'desktop/system.Dictionary/delete', '', '2', '1', '3', '');
-INSERT INTO `menu` VALUES ('23', '0', '2', '首页', 'index', '/index', 'Index.vue', '', 'House', '', 'main', '2', '1', '0', '');
-INSERT INTO `menu` VALUES ('26', '2', '3', '踢下线', 'system_user_offline', '', '', '', '', 'desktop/system.User/offLine', '', '2', '1', '5', '');
-INSERT INTO `menu` VALUES ('27', '1', '2', '登录日志', 'system_login_log', '/system/login-log', 'system/login-log/Index.vue', '', 'MapLocation', 'desktop/system.LoginLog/getIndexLoginLogs', 'main', '2', '1', '13', '');
-INSERT INTO `menu` VALUES ('28', '1', '2', '操作日志', 'system_operation_log', '/system/operation-log', 'system/operation-log/Index.vue', '', 'Mouse', 'desktop/system.OperationLog/getIndexOperationLogs', 'main', '2', '1', '15', '');
-INSERT INTO `menu` VALUES ('29', '2', '2', '用户详情', 'system_user_detail', '/system/user/:id', 'system/user/Detail.vue', '', '', 'desktop/system.user/detail', 'blank', '2', '2', '3', '');
-INSERT INTO `menu` VALUES ('30', '0', '4', '外部链接', 'baidu', '', '', 'https://www.baidu.com', 'ChatSquare', '', '', '2', '1', '3', '新窗口');
-INSERT INTO `menu` VALUES ('31', '1', '2', '系统设置', 'system_config', '/system/config', 'system/config/Index.vue', '', 'Cpu', 'desktop/system.Config/init\ndesktop/system.Config/save', 'main', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('32', '0', '1', '统计分析', 'statistic', '', '', '', 'PieChart', '', '', '2', '1', '2', '');
-INSERT INTO `menu` VALUES ('33', '32', '2', '趋势统计', 'statistic_trend', '/statistic/trend', 'statistic/Trend.vue', '', 'Share', 'desktop/statistic.Trend/init\ndesktop/statistic.Trend/exportExcel', 'main', '2', '1', '1', '');
-INSERT INTO `menu` VALUES ('34', '32', '2', '部门统计', 'statistic_department', '/statistic/department', 'statistic/Department.vue', '', 'OfficeBuilding', 'desktop/statistic.Department/init\ndesktop/statistic.Department/exportExcel', 'main', '2', '1', '3', '');
+INSERT INTO `login_log` VALUES ('32', '1', '1714572587', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('33', '1', '1714572614', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('34', '1', '1714572628', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('35', '1', '1714574767', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('36', '1', '1714574829', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('37', '1', '1714633753', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -435,6 +495,47 @@ INSERT INTO `message` VALUES ('193', '10', '消息标题1695436666', '/login-log
 INSERT INTO `message` VALUES ('194', '11', '消息标题1695436666', '/login-log', '1695436666', '0');
 
 -- ----------------------------
+-- Table structure for mobile_module
+-- ----------------------------
+DROP TABLE IF EXISTS `mobile_module`;
+CREATE TABLE `mobile_module` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `module_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '模块id',
+  `type_id` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '模块类型id',
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '模块名称',
+  `key` varchar(128) DEFAULT '' COMMENT '模块key',
+  `api` varchar(1024) NOT NULL DEFAULT '' COMMENT '接口地址',
+  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `remark` varchar(32) NOT NULL DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='模块';
+
+-- ----------------------------
+-- Records of mobile_module
+-- ----------------------------
+INSERT INTO `mobile_module` VALUES ('1', '0', '1', '统计分析', 'statistic', '', '1', '');
+INSERT INTO `mobile_module` VALUES ('2', '1', '2', '趋势统计', 'statistic_trend', 'mobile/statistic.Trend/init\nmobile/statistic.Trend/exportExcel', '1', '');
+INSERT INTO `mobile_module` VALUES ('3', '1', '2', '部门统计', 'statistic_department', 'mobile/statistic.Department/init\nmobile/statistic.Department/exportExcel', '1', '');
+
+-- ----------------------------
+-- Table structure for module_token
+-- ----------------------------
+DROP TABLE IF EXISTS `module_token`;
+CREATE TABLE `module_token` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `token` text NOT NULL COMMENT 'token',
+  `expires_in` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '有效期',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  PRIMARY KEY (`id`),
+  KEY `token` (`token`(128)) USING BTREE,
+  KEY `user_id` (`user_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='token';
+
+-- ----------------------------
+-- Records of module_token
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for operation_log
 -- ----------------------------
 DROP TABLE IF EXISTS `operation_log`;
@@ -445,7 +546,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=432 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=734 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -881,6 +982,308 @@ INSERT INTO `operation_log` VALUES ('428', '1', '1714448140', '127.0.0.1', '/des
 INSERT INTO `operation_log` VALUES ('429', '1', '1714448156', '127.0.0.1', '/desktop/system.config/init');
 INSERT INTO `operation_log` VALUES ('430', '1', '1714448403', '127.0.0.1', '/desktop/system.config/save');
 INSERT INTO `operation_log` VALUES ('431', '1', '1714448507', '127.0.0.1', '/desktop/system.config/save');
+INSERT INTO `operation_log` VALUES ('432', '1', '1714448664', '127.0.0.1', '/desktop/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('433', '1', '1714448664', '127.0.0.1', '/desktop/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('434', '1', '1714448668', '127.0.0.1', '/desktop/system.config/init');
+INSERT INTO `operation_log` VALUES ('435', '1', '1714448669', '127.0.0.1', '/desktop/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('436', '1', '1714448669', '127.0.0.1', '/desktop/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('437', '1', '1714460450', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('438', '1', '1714460450', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('439', '1', '1714460450', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('440', '1', '1714460451', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('441', '1', '1714460458', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('442', '1', '1714460463', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('443', '1', '1714460746', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('444', '1', '1714460773', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('445', '1', '1714460776', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('446', '1', '1714460811', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('447', '1', '1714460813', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('448', '1', '1714460849', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('449', '1', '1714575652', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('450', '1', '1714633807', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('451', '1', '1714633818', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('452', '1', '1714633826', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('453', '1', '1714634095', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('454', '1', '1714634096', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('455', '1', '1714634103', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('456', '1', '1714634117', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('457', '1', '1714634117', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('458', '1', '1714634122', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('459', '1', '1714634152', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('460', '1', '1714634153', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('461', '1', '1714634163', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('462', '1', '1714634165', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('463', '1', '1714634166', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('464', '1', '1714634178', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('465', '1', '1714634184', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('466', '1', '1714634185', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('467', '1', '1714634187', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('468', '1', '1714634190', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('469', '1', '1714634191', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('470', '1', '1714634194', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('471', '1', '1714634199', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('472', '1', '1714634200', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('473', '1', '1714634202', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('474', '1', '1714634205', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('475', '1', '1714634205', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('476', '1', '1714634208', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('477', '1', '1714634210', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('478', '1', '1714634211', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('479', '1', '1714634213', '127.0.0.1', '/desktop/system.dictionary/initedit');
+INSERT INTO `operation_log` VALUES ('480', '1', '1714634215', '127.0.0.1', '/desktop/system.dictionary/saveedit');
+INSERT INTO `operation_log` VALUES ('481', '1', '1714634215', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('482', '1', '1714634248', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('483', '1', '1714634256', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('484', '1', '1714634298', '127.0.0.1', '/desktop/system.desktop.module/saveedit');
+INSERT INTO `operation_log` VALUES ('485', '1', '1714634299', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('486', '1', '1714634303', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('487', '1', '1714634339', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('488', '1', '1714634344', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('489', '1', '1714634485', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('490', '1', '1714634493', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('491', '1', '1714634503', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('492', '1', '1714634654', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('493', '1', '1714634678', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('494', '1', '1714634684', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('495', '1', '1714634688', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('496', '1', '1714634696', '127.0.0.1', '/desktop/system.desktop.module/saveadd');
+INSERT INTO `operation_log` VALUES ('497', '1', '1714634696', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('498', '1', '1714634700', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('499', '1', '1714634715', '127.0.0.1', '/desktop/system.desktop.module/saveedit');
+INSERT INTO `operation_log` VALUES ('500', '1', '1714634715', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('501', '1', '1714634720', '127.0.0.1', '/desktop/system.desktop.module/delete');
+INSERT INTO `operation_log` VALUES ('502', '1', '1714634720', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('503', '1', '1714634877', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('504', '1', '1714634908', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('505', '1', '1714635546', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('506', '1', '1714635630', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('507', '1', '1714635717', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('508', '1', '1714635734', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('509', '1', '1714635848', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('510', '1', '1714635954', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('511', '1', '1714635958', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('512', '1', '1714635989', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('513', '1', '1714635992', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('514', '1', '1714635995', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('515', '1', '1714636046', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('516', '1', '1714636049', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('517', '1', '1714636071', '127.0.0.1', '/desktop/system.role/saveadd');
+INSERT INTO `operation_log` VALUES ('518', '1', '1714636072', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('519', '1', '1714636555', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('520', '1', '1714636622', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('521', '1', '1714636622', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('522', '1', '1714636624', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('523', '1', '1714636655', '127.0.0.1', '/desktop/system.role/delete');
+INSERT INTO `operation_log` VALUES ('524', '1', '1714636656', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('525', '1', '1714636679', '127.0.0.1', '/desktop/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('526', '1', '1714636679', '127.0.0.1', '/desktop/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('527', '1', '1714636681', '127.0.0.1', '/desktop/system.department/getindexdepartments');
+INSERT INTO `operation_log` VALUES ('528', '1', '1714636682', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('529', '1', '1714636682', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('530', '1', '1714656307', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('531', '1', '1714656332', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('532', '1', '1714656335', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('533', '1', '1714656496', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('534', '1', '1714656499', '127.0.0.1', '/desktop/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('535', '1', '1714656507', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('536', '1', '1714656510', '127.0.0.1', '/desktop/statistic.department/init');
+INSERT INTO `operation_log` VALUES ('537', '1', '1714656512', '127.0.0.1', '/desktop/system.config/init');
+INSERT INTO `operation_log` VALUES ('538', '1', '1714656514', '127.0.0.1', '/desktop/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('539', '1', '1714656514', '127.0.0.1', '/desktop/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('540', '1', '1714656516', '127.0.0.1', '/desktop/system.department/getindexdepartments');
+INSERT INTO `operation_log` VALUES ('541', '1', '1714656517', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('542', '1', '1714656518', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('543', '1', '1714656528', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('544', '1', '1714656578', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('545', '1', '1714656664', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('546', '1', '1714656664', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('547', '1', '1714656666', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('548', '1', '1714656687', '127.0.0.1', '/desktop/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('549', '1', '1714656688', '127.0.0.1', '/desktop/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('550', '1', '1714656691', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('551', '1', '1714656694', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('552', '1', '1714656697', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('553', '1', '1714656702', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('554', '1', '1714656713', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('555', '1', '1714656715', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('556', '1', '1714656723', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('557', '1', '1714656804', '127.0.0.1', '/desktop/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('558', '1', '1714656804', '127.0.0.1', '/desktop/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('559', '1', '1714656806', '127.0.0.1', '/desktop/system.department/getindexdepartments');
+INSERT INTO `operation_log` VALUES ('560', '1', '1714656807', '127.0.0.1', '/desktop/system.config/init');
+INSERT INTO `operation_log` VALUES ('561', '1', '1714656809', '127.0.0.1', '/desktop/system.loginlog/getindexloginlogs');
+INSERT INTO `operation_log` VALUES ('562', '1', '1714656829', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('563', '1', '1714656907', '127.0.0.1', '/desktop/system.config/init');
+INSERT INTO `operation_log` VALUES ('564', '1', '1714656909', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('565', '1', '1714656952', '127.0.0.1', '/desktop/system.config/init');
+INSERT INTO `operation_log` VALUES ('566', '1', '1714656955', '127.0.0.1', '/desktop/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('567', '1', '1714656955', '127.0.0.1', '/desktop/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('568', '1', '1714656957', '127.0.0.1', '/desktop/system.department/getindexdepartments');
+INSERT INTO `operation_log` VALUES ('569', '1', '1714656960', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('570', '1', '1714656961', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('571', '1', '1714656963', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('572', '1', '1714656971', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('573', '1', '1714656972', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('574', '1', '1714656989', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('575', '1', '1714656992', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('576', '1', '1714657001', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('577', '1', '1714657203', '127.0.0.1', '/desktop/system.desktop.module/saveadd');
+INSERT INTO `operation_log` VALUES ('578', '1', '1714657203', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('579', '1', '1714657206', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('580', '1', '1714657208', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('581', '1', '1714657224', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('582', '1', '1714657227', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('583', '1', '1714657278', '127.0.0.1', '/desktop/system.desktop.module/saveadd');
+INSERT INTO `operation_log` VALUES ('584', '1', '1714657278', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('585', '1', '1714657279', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('586', '1', '1714657284', '127.0.0.1', '/desktop/system.desktop.module/saveedit');
+INSERT INTO `operation_log` VALUES ('587', '1', '1714657285', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('588', '1', '1714657287', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('589', '1', '1714657291', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('590', '1', '1714657297', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('591', '1', '1714657365', '127.0.0.1', '/desktop/system.desktop.module/saveedit');
+INSERT INTO `operation_log` VALUES ('592', '1', '1714657365', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('593', '1', '1714657376', '127.0.0.1', '/desktop/system.desktop.module/saveadd');
+INSERT INTO `operation_log` VALUES ('594', '1', '1714657376', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('595', '1', '1714657379', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('596', '1', '1714657394', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('597', '1', '1714657434', '127.0.0.1', '/desktop/system.desktop.module/saveadd');
+INSERT INTO `operation_log` VALUES ('598', '1', '1714657435', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('599', '1', '1714657436', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('600', '1', '1714657439', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('601', '1', '1714657446', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('602', '1', '1714657447', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('603', '1', '1714657452', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('604', '1', '1714657456', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('605', '1', '1714657462', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('606', '1', '1714657523', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('607', '1', '1714657531', '127.0.0.1', '/desktop/system.config/init');
+INSERT INTO `operation_log` VALUES ('608', '1', '1714657599', '127.0.0.1', '/desktop/statistic.trend/init');
+INSERT INTO `operation_log` VALUES ('609', '1', '1714657601', '127.0.0.1', '/desktop/system.config/init');
+INSERT INTO `operation_log` VALUES ('610', '1', '1714657605', '127.0.0.1', '/desktop/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('611', '1', '1714657605', '127.0.0.1', '/desktop/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('612', '1', '1714657612', '127.0.0.1', '/desktop/system.department/getindexdepartments');
+INSERT INTO `operation_log` VALUES ('613', '1', '1714658209', '127.0.0.1', '/desktop/system.department/getindexdepartments');
+INSERT INTO `operation_log` VALUES ('614', '1', '1714658272', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('615', '1', '1714658290', '127.0.0.1', '/desktop/system.dictionary/saveadd');
+INSERT INTO `operation_log` VALUES ('616', '1', '1714658291', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('617', '1', '1714658300', '127.0.0.1', '/desktop/system.dictionary/saveadd');
+INSERT INTO `operation_log` VALUES ('618', '1', '1714658301', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('619', '1', '1714658315', '127.0.0.1', '/desktop/system.dictionary/saveadd');
+INSERT INTO `operation_log` VALUES ('620', '1', '1714658316', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('621', '1', '1714658407', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('622', '1', '1714658462', '127.0.0.1', '/desktop/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('623', '1', '1714658717', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('624', '1', '1714658720', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('625', '1', '1714658888', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('626', '1', '1714658993', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('627', '1', '1714658999', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('628', '1', '1714659003', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('629', '1', '1714659004', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('630', '1', '1714659030', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('631', '1', '1714659040', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('632', '1', '1714659132', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('633', '1', '1714659139', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('634', '1', '1714659142', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('635', '1', '1714659337', '127.0.0.1', '/desktop/system.desktop.module/initadd');
+INSERT INTO `operation_log` VALUES ('636', '1', '1714659355', '127.0.0.1', '/desktop/system.mobile.module/initadd');
+INSERT INTO `operation_log` VALUES ('637', '1', '1714659446', '127.0.0.1', '/desktop/system.mobile.module/initadd');
+INSERT INTO `operation_log` VALUES ('638', '1', '1714659483', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('639', '1', '1714659485', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('640', '1', '1714659488', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('641', '1', '1714659490', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('642', '1', '1714659498', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('643', '1', '1714659520', '127.0.0.1', '/desktop/system.desktop.module/saveedit');
+INSERT INTO `operation_log` VALUES ('644', '1', '1714659521', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('645', '1', '1714659535', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('646', '1', '1714659537', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('647', '1', '1714659545', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('648', '1', '1714659548', '127.0.0.1', '/desktop/system.mobile.module/initadd');
+INSERT INTO `operation_log` VALUES ('649', '1', '1714659562', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('650', '1', '1714659567', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('651', '1', '1714659569', '127.0.0.1', '/desktop/system.mobile.module/initadd');
+INSERT INTO `operation_log` VALUES ('652', '1', '1714659596', '127.0.0.1', '/desktop/system.mobile.module/saveadd');
+INSERT INTO `operation_log` VALUES ('653', '1', '1714659609', '127.0.0.1', '/desktop/system.mobile.module/saveadd');
+INSERT INTO `operation_log` VALUES ('654', '1', '1714659625', '127.0.0.1', '/desktop/system.mobile.module/saveadd');
+INSERT INTO `operation_log` VALUES ('655', '1', '1714659625', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('656', '1', '1714659639', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('657', '1', '1714659644', '127.0.0.1', '/desktop/system.mobile.module/initadd');
+INSERT INTO `operation_log` VALUES ('658', '1', '1714659687', '127.0.0.1', '/desktop/system.mobile.module/saveadd');
+INSERT INTO `operation_log` VALUES ('659', '1', '1714659687', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('660', '1', '1714659690', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('661', '1', '1714659813', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('662', '1', '1714659814', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('663', '1', '1714659986', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('664', '1', '1714659988', '127.0.0.1', '/desktop/system.mobile.module/initedit');
+INSERT INTO `operation_log` VALUES ('665', '1', '1714659997', '127.0.0.1', '/desktop/system.mobile.module/initedit');
+INSERT INTO `operation_log` VALUES ('666', '1', '1714660028', '127.0.0.1', '/desktop/system.mobile.module/initedit');
+INSERT INTO `operation_log` VALUES ('667', '1', '1714660073', '127.0.0.1', '/desktop/system.mobile.module/saveedit');
+INSERT INTO `operation_log` VALUES ('668', '1', '1714660073', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('669', '1', '1714660138', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('670', '1', '1714660145', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('671', '1', '1714660148', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('672', '1', '1714660486', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('673', '1', '1714660528', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('674', '1', '1714660533', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('675', '1', '1714660541', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('676', '1', '1714660635', '127.0.0.1', '/desktop/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('677', '1', '1714660644', '127.0.0.1', '/desktop/system.role/saveadd');
+INSERT INTO `operation_log` VALUES ('678', '1', '1714660645', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('679', '1', '1714660647', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('680', '1', '1714660973', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('681', '1', '1714661015', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('682', '1', '1714661029', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('683', '1', '1714661033', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('684', '1', '1714661039', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('685', '1', '1714661045', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('686', '1', '1714661056', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('687', '1', '1714661063', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('688', '1', '1714661070', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('689', '1', '1714661077', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('690', '1', '1714661107', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('691', '1', '1714661114', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('692', '1', '1714661149', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('693', '1', '1714661181', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('694', '1', '1714661193', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('695', '1', '1714661209', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('696', '1', '1714661246', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('697', '1', '1714661253', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('698', '1', '1714661265', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('699', '1', '1714661285', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('700', '1', '1714661399', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('701', '1', '1714661399', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('702', '1', '1714661402', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('703', '1', '1714661408', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('704', '1', '1714661412', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('705', '1', '1714661413', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('706', '1', '1714661415', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('707', '1', '1714661428', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('708', '1', '1714661431', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('709', '1', '1714661433', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('710', '1', '1714661516', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('711', '1', '1714661522', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('712', '1', '1714661525', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('713', '1', '1714661525', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('714', '1', '1714661612', '127.0.0.1', '/desktop/system.role/delete');
+INSERT INTO `operation_log` VALUES ('715', '1', '1714661612', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('716', '1', '1714661636', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('717', '1', '1714661652', '127.0.0.1', '/desktop/system.mobile.module/initadd');
+INSERT INTO `operation_log` VALUES ('718', '1', '1714661666', '127.0.0.1', '/desktop/system.desktop.module/initedit');
+INSERT INTO `operation_log` VALUES ('719', '1', '1714661681', '127.0.0.1', '/desktop/system.mobile.module/saveadd');
+INSERT INTO `operation_log` VALUES ('720', '1', '1714661682', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('721', '1', '1714661684', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('722', '1', '1714661686', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('723', '1', '1714661690', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('724', '1', '1714661691', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('725', '1', '1714661693', '127.0.0.1', '/desktop/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('726', '1', '1714661697', '127.0.0.1', '/desktop/system.role/saveedit');
+INSERT INTO `operation_log` VALUES ('727', '1', '1714661698', '127.0.0.1', '/desktop/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('728', '1', '1714661793', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('729', '1', '1714662141', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('730', '1', '1714662142', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('731', '1', '1714662485', '127.0.0.1', '/desktop/system.mobile.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('732', '1', '1714663266', '127.0.0.1', '/desktop/system.desktop.module/getindexmodules');
+INSERT INTO `operation_log` VALUES ('733', '1', '1714663266', '127.0.0.1', '/desktop/system.role/getindexroles');
 
 -- ----------------------------
 -- Table structure for role
@@ -890,7 +1293,7 @@ CREATE TABLE `role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of role
@@ -899,57 +1302,83 @@ INSERT INTO `role` VALUES ('1', '超级用户');
 INSERT INTO `role` VALUES ('2', '普通角色');
 
 -- ----------------------------
--- Table structure for role_menu
+-- Table structure for role_desktop_module
 -- ----------------------------
-DROP TABLE IF EXISTS `role_menu`;
-CREATE TABLE `role_menu` (
+DROP TABLE IF EXISTS `role_desktop_module`;
+CREATE TABLE `role_desktop_module` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `role_id` int(10) unsigned NOT NULL COMMENT '角色id',
-  `menu_id` int(10) unsigned NOT NULL COMMENT '菜单id',
+  `module_id` int(10) unsigned NOT NULL COMMENT '模块id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=300 DEFAULT CHARSET=utf8 COMMENT='角色权限关联';
+) ENGINE=InnoDB AUTO_INCREMENT=378 DEFAULT CHARSET=utf8 COMMENT='角色模块关系';
 
 -- ----------------------------
--- Records of role_menu
+-- Records of role_desktop_module
 -- ----------------------------
-INSERT INTO `role_menu` VALUES ('204', '2', '3');
-INSERT INTO `role_menu` VALUES ('205', '2', '4');
-INSERT INTO `role_menu` VALUES ('206', '2', '6');
-INSERT INTO `role_menu` VALUES ('207', '2', '1');
-INSERT INTO `role_menu` VALUES ('208', '2', '2');
-INSERT INTO `role_menu` VALUES ('264', '1', '23');
-INSERT INTO `role_menu` VALUES ('265', '1', '30');
-INSERT INTO `role_menu` VALUES ('266', '1', '1');
-INSERT INTO `role_menu` VALUES ('267', '1', '31');
-INSERT INTO `role_menu` VALUES ('268', '1', '2');
-INSERT INTO `role_menu` VALUES ('269', '1', '3');
-INSERT INTO `role_menu` VALUES ('270', '1', '4');
-INSERT INTO `role_menu` VALUES ('271', '1', '6');
-INSERT INTO `role_menu` VALUES ('272', '1', '29');
-INSERT INTO `role_menu` VALUES ('273', '1', '26');
-INSERT INTO `role_menu` VALUES ('274', '1', '7');
-INSERT INTO `role_menu` VALUES ('275', '1', '5');
-INSERT INTO `role_menu` VALUES ('276', '1', '9');
-INSERT INTO `role_menu` VALUES ('277', '1', '8');
-INSERT INTO `role_menu` VALUES ('278', '1', '10');
-INSERT INTO `role_menu` VALUES ('279', '1', '11');
-INSERT INTO `role_menu` VALUES ('280', '1', '12');
-INSERT INTO `role_menu` VALUES ('281', '1', '13');
-INSERT INTO `role_menu` VALUES ('282', '1', '14');
-INSERT INTO `role_menu` VALUES ('283', '1', '15');
-INSERT INTO `role_menu` VALUES ('284', '1', '16');
-INSERT INTO `role_menu` VALUES ('285', '1', '17');
-INSERT INTO `role_menu` VALUES ('286', '1', '18');
-INSERT INTO `role_menu` VALUES ('287', '1', '19');
-INSERT INTO `role_menu` VALUES ('288', '1', '20');
-INSERT INTO `role_menu` VALUES ('289', '1', '21');
-INSERT INTO `role_menu` VALUES ('290', '1', '22');
-INSERT INTO `role_menu` VALUES ('291', '1', '27');
-INSERT INTO `role_menu` VALUES ('292', '1', '28');
-INSERT INTO `role_menu` VALUES ('297', '1', '32');
-INSERT INTO `role_menu` VALUES ('298', '1', '33');
-INSERT INTO `role_menu` VALUES ('299', '1', '34');
+INSERT INTO `role_desktop_module` VALUES ('264', '1', '23');
+INSERT INTO `role_desktop_module` VALUES ('265', '1', '30');
+INSERT INTO `role_desktop_module` VALUES ('266', '1', '1');
+INSERT INTO `role_desktop_module` VALUES ('267', '1', '31');
+INSERT INTO `role_desktop_module` VALUES ('268', '1', '2');
+INSERT INTO `role_desktop_module` VALUES ('269', '1', '3');
+INSERT INTO `role_desktop_module` VALUES ('270', '1', '4');
+INSERT INTO `role_desktop_module` VALUES ('271', '1', '6');
+INSERT INTO `role_desktop_module` VALUES ('272', '1', '29');
+INSERT INTO `role_desktop_module` VALUES ('273', '1', '26');
+INSERT INTO `role_desktop_module` VALUES ('274', '1', '7');
+INSERT INTO `role_desktop_module` VALUES ('275', '1', '5');
+INSERT INTO `role_desktop_module` VALUES ('276', '1', '9');
+INSERT INTO `role_desktop_module` VALUES ('277', '1', '8');
+INSERT INTO `role_desktop_module` VALUES ('278', '1', '10');
+INSERT INTO `role_desktop_module` VALUES ('279', '1', '11');
+INSERT INTO `role_desktop_module` VALUES ('280', '1', '12');
+INSERT INTO `role_desktop_module` VALUES ('281', '1', '13');
+INSERT INTO `role_desktop_module` VALUES ('282', '1', '14');
+INSERT INTO `role_desktop_module` VALUES ('283', '1', '15');
+INSERT INTO `role_desktop_module` VALUES ('284', '1', '16');
+INSERT INTO `role_desktop_module` VALUES ('285', '1', '17');
+INSERT INTO `role_desktop_module` VALUES ('286', '1', '18');
+INSERT INTO `role_desktop_module` VALUES ('287', '1', '19');
+INSERT INTO `role_desktop_module` VALUES ('288', '1', '20');
+INSERT INTO `role_desktop_module` VALUES ('289', '1', '21');
+INSERT INTO `role_desktop_module` VALUES ('290', '1', '22');
+INSERT INTO `role_desktop_module` VALUES ('291', '1', '27');
+INSERT INTO `role_desktop_module` VALUES ('292', '1', '28');
+INSERT INTO `role_desktop_module` VALUES ('297', '1', '32');
+INSERT INTO `role_desktop_module` VALUES ('298', '1', '33');
+INSERT INTO `role_desktop_module` VALUES ('299', '1', '34');
+INSERT INTO `role_desktop_module` VALUES ('300', '2', '23');
+INSERT INTO `role_desktop_module` VALUES ('301', '2', '32');
+INSERT INTO `role_desktop_module` VALUES ('302', '2', '33');
+INSERT INTO `role_desktop_module` VALUES ('303', '2', '34');
+INSERT INTO `role_desktop_module` VALUES ('304', '2', '30');
+INSERT INTO `role_desktop_module` VALUES ('305', '1', '35');
+INSERT INTO `role_desktop_module` VALUES ('306', '1', '36');
+INSERT INTO `role_desktop_module` VALUES ('307', '1', '37');
+INSERT INTO `role_desktop_module` VALUES ('308', '1', '38');
+
+-- ----------------------------
+-- Table structure for role_mobile_module
+-- ----------------------------
+DROP TABLE IF EXISTS `role_mobile_module`;
+CREATE TABLE `role_mobile_module` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `role_id` int(10) unsigned NOT NULL COMMENT '角色id',
+  `module_id` int(10) unsigned NOT NULL COMMENT '模块id',
+  PRIMARY KEY (`id`),
+  KEY `role_id` (`role_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='角色模块关系';
+
+-- ----------------------------
+-- Records of role_mobile_module
+-- ----------------------------
+INSERT INTO `role_mobile_module` VALUES ('5', '1', '1');
+INSERT INTO `role_mobile_module` VALUES ('6', '1', '2');
+INSERT INTO `role_mobile_module` VALUES ('7', '1', '3');
+INSERT INTO `role_mobile_module` VALUES ('8', '2', '1');
+INSERT INTO `role_mobile_module` VALUES ('9', '2', '2');
+INSERT INTO `role_mobile_module` VALUES ('10', '2', '3');
 
 -- ----------------------------
 -- Table structure for runtime
@@ -966,47 +1395,6 @@ CREATE TABLE `runtime` (
 -- Records of runtime
 -- ----------------------------
 INSERT INTO `runtime` VALUES ('1', 'version', '1.0.0');
-
--- ----------------------------
--- Table structure for token
--- ----------------------------
-DROP TABLE IF EXISTS `token`;
-CREATE TABLE `token` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `token` text NOT NULL COMMENT 'token',
-  `expires_in` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '有效期',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-  PRIMARY KEY (`id`),
-  KEY `token` (`token`(128)) USING BTREE,
-  KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COMMENT='token';
-
--- ----------------------------
--- Records of token
--- ----------------------------
-INSERT INTO `token` VALUES ('34', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC42MDA0MDMwMCAxNzAzMjE1OTU0In0.hCtCWoJvF5UJ_OX2yYvozYIM-tUGYyLbbWHcDkm4_R8', '1703226008', '10');
-INSERT INTO `token` VALUES ('35', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43NzY1MjMwMCAxNzAzMjI2NzQ0In0.o1NW6DuKKk6PRjnpGlGJrjmofBDQQdedmHLOGyHZ4vI', '1703235581', '10');
-INSERT INTO `token` VALUES ('36', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43OTgzNzYwMCAxNzAzNDg1MjQzIn0.owdRQGm9nQQIH3LF4HCFes1GuoxjMhZ090ym3mXTV9s', '1703496265', '10');
-INSERT INTO `token` VALUES ('37', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4yMzAxOTgwMCAxNzAzNTYxMTE5In0.yMAPpSgE43MQ2VNMJm4qM3560E19d5CJvqC-SFb45Q8', '1703568404', '10');
-INSERT INTO `token` VALUES ('38', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC40Mjc1NTAwMCAxNzAzNTcwMzkxIn0.mwnHb0RhHhIWOQzt94-cpxuM5jliZ754_xOVA2e_xR0', '1703584727', '10');
-INSERT INTO `token` VALUES ('39', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC44Mzg0NTYwMCAxNzAzNTc4MTExIn0.ZcYF9H3xXtI5V9TKq-8XOeSa76wBg_TM1GKnUt47HUA', '1703585312', '10');
-INSERT INTO `token` VALUES ('40', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC41ODYyNDgwMCAxNzAzNTc4MTU4In0.fA36XuiF1BW8F5HGaPJS6CYpIRWQKohzACPwduBti7k', '1703585359', '10');
-INSERT INTO `token` VALUES ('41', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4xNzM3NTYwMCAxNzAzNTc4MTk2In0.Y8aS9mz7wCq6gWEi-S5UcnmWw5hKWOIGrr_ewrDtsQI', '1703585396', '10');
-INSERT INTO `token` VALUES ('42', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4xNzQ0MDMwMCAxNzAzNTc4MjA3In0.VjQ5HRcjKYo8gfzH6NoN9DneAE8cFLAPtTLzMaC-TBg', '1703593928', '10');
-INSERT INTO `token` VALUES ('43', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC41OTg5NjEwMCAxNzAzNjM5MzA4In0.uHjXcyEhttgy0V9hDYUS1QykJarzgKSke3J7-nmg99o', '1703657085', '10');
-INSERT INTO `token` VALUES ('44', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43NTk5MTcwMCAxNzAzNzI2NjU0In0.8Fy4Wiw_M13SgOUrIHlRtOEEg_zv4VbcnXy9x1MkRpg', '1703733855', '10');
-INSERT INTO `token` VALUES ('45', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43MzI5NzYwMCAxNzAzNzI3MDg3In0.q7FPU2dFfb_0gnQtn0LsmEn5mEok7ga997gZEPM200U', '1703735267', '10');
-INSERT INTO `token` VALUES ('46', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43NDQxNTgwMCAxNzA0NDE3NDQ1In0.AwVM6Ry1x22wCJMOcPYmSYUE_GdP7cDReXKau3jBI4Y', '1704424647', '10');
-INSERT INTO `token` VALUES ('47', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC41NDAyNjUwMCAxNzA0NDE3NDY5In0.4lHwTZ41SoQeIE8_7h81YL9EwgiYjnKerwiONFkjL88', '1704453986', '10');
-INSERT INTO `token` VALUES ('48', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjM2ODcwNTAwIDE3MTM1MTU2NTUifQ.jiDE79glBnyMJ8mATonzCKsQXYdl26rhq0vfuAN2xVY', '1713544456', '1');
-INSERT INTO `token` VALUES ('49', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjkyOTYzMzAwIDE3MTM1MTU2NjYifQ.xVKyJQQ1UAl4_Viv_5M6TU9zllYXPlM1gGXoGr3eU0U', '1713544467', '1');
-INSERT INTO `token` VALUES ('50', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg5MTM3OTAwIDE3MTM1MTU3MTAifQ.m1Y_NXijpkIMfCIxLWa-1KVyoujok6pWc4E0kIw31TQ', '1713544511', '1');
-INSERT INTO `token` VALUES ('51', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjY3MjI4MTAwIDE3MTM1MTU5MDUifQ.xycuNoSt49VJTryP60vdogfJZRfM6wwUZRoNVLc0LRQ', '1713544706', '1');
-INSERT INTO `token` VALUES ('52', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjUxOTg5MDAwIDE3MTM1MTYwODQifQ.tnofIeN90fJf2cOhZ78r0an0wyAxj23Y6ig-DCct19A', '1713544884', '1');
-INSERT INTO `token` VALUES ('53', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQyNDcxNjAwIDE3MTM1MTYxMDMifQ.HaIx6t8K7GaKAI27wOhL5TlEcvMq4kCgnMoNxITgisc', '1713546771', '1');
-INSERT INTO `token` VALUES ('54', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQyMDQ0MTAwIDE3MTQzNTg5NTMifQ.unDXDgas54VynrHmFecNua3CSZ3q-h8CHnaPOe_IswU', '1714389276', '1');
-INSERT INTO `token` VALUES ('55', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg3MzcyNzAwIDE3MTQ0NDc0NjgifQ.gamO0qokRHfEKVtERbmq_-8e9mPEaX7dm--NEe96gXc', '1714476270', '1');
-INSERT INTO `token` VALUES ('56', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ5NDk5NjAwIDE3MTQ0NDc1NDEifQ.uV7RsyjKgJeKZDFr07zyVTYHJH3JdcxiD6PAeH89NuY', '1714477307', '1');
 
 -- ----------------------------
 -- Table structure for user
@@ -1032,7 +1420,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', '', '1684989244', '1687667332', '1714447541', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', '', '1684989244', '1687667332', '1714633753', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
 
 -- ----------------------------

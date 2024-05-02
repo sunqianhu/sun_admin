@@ -205,27 +205,6 @@ class Role extends Base
             }
         }
 
-        //桌面端模块
-        $oldDesktopModuleIds = array_column($roleModel->desktopModules->toArray(), 'id');
-        $deleteDesktopModuleIds = array_unique(array_values(array_diff($oldDesktopModuleIds, $post['desktop_module_ids'])));
-        $addDesktopModuleIds = array_unique(array_values(array_diff($post['desktop_module_ids'], $oldDesktopModuleIds)));
-        if(!empty($deleteDesktopModuleIds)){
-            foreach($deleteDesktopModuleIds as $deleteDesktopModuleId){
-                RoleDesktopModuleModel::where('role_id', $roleModel->id)
-                    ->where('module_id', $deleteDesktopModuleId)
-                    ->delete();
-            }
-        }
-        if(!empty($addDesktopModuleIds)) {
-            foreach($addDesktopModuleIds as $addDesktopModuleId){
-                $roleDesktopModuleModel = new RoleDesktopModuleModel();
-                $roleDesktopModuleModel->save([
-                    'role_id'=>$roleModel->id,
-                    'module_id'=>$addDesktopModuleId
-                ]);
-            }
-        }
-
         //移动端模块
         $oldMobileModuleIds = array_column($roleModel->mobileModules->toArray(), 'id');
         $deleteMobileModuleIds = array_unique(array_values(array_diff($oldMobileModuleIds, $post['mobile_module_ids'])));

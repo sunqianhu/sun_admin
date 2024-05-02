@@ -58,11 +58,11 @@ const rules = {
   name: [{ required: true, message: "角色名称不能为空", trigger: "blur" }]
 };
 const dialogLoading = ref(true);
+const submitLoading = ref(false);
 const desktopModules = ref([]);
 const desktopModuleRef = ref(null);
 const mobileModules = ref([]);
 const mobileModuleRef = ref(null);
-const submitLoading = ref(false);
 
 /**
  * 初始化

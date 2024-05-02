@@ -26,7 +26,7 @@ class Module extends Base
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
         $query = $query->order('sort', 'asc');
-        $query->append(['type_name', 'type_tag_type']);
+        $query->append(['type_name']);
         $moduleModels = $query->select();
         $modules = $moduleModels->toArray();
 
