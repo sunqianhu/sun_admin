@@ -2,10 +2,8 @@
 
 namespace app\helper;
 
-use app\model\LoginFailChecker as LoginFailCheckerModel;
 use Sunqianhu\Helper\Time as TimeHelper;
 use think\facade\Cache;
-use think\facade\Db;
 
 class LoginFailChecker
 {
