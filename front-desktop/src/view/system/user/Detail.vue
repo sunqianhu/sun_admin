@@ -97,9 +97,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-:global(body) {
-  background: var(--background-color-page-texture);
-}
 .detail {
   padding: var(--padding);
   .pannel {

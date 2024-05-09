@@ -1,3 +1,4 @@
+import "tdesign-mobile-vue/es/style/index.css";
 import "./asset/app.scss";
 
 import { createApp } from "vue";

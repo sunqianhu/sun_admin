@@ -35,7 +35,6 @@
   --background-color-page: #ffffff;
   --background-color-page-texture: #f0f2f5; //纹理页面
   --background-color-panel: #ffffff;
-  --background-color-panel-secondary: #f0f2f5; //次要面板
   --background-color-table-header: #e9e9eb;
 
   //内边距
@@ -59,9 +58,6 @@
   --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
   --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
   --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
-
-  //透明度
-  --opacity: 0.7;
 }
 
 html {

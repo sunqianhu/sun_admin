@@ -1,10 +1,8 @@
 <template>
   <div class="xxx">
-    <van-button type="primary">主要按钮</van-button>
-    <van-button type="success">成功按钮</van-button>
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="danger">危险按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
+    <t-button size="large" theme="primary">填充按钮</t-button>
+    <t-button size="large" theme="light">填充按钮</t-button>
+    <t-button size="large">填充按钮</t-button>
   </div>
 </template>
 
@@ -20,6 +18,6 @@ int();
 </script>
 
 <style lang="scss" scoped>
-.xxx {
+:global .xxx {
 }
 </style>
