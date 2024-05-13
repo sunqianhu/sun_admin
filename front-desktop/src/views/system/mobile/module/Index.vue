@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <div class="page-name">桌面端模块管理</div>
+    <div class="page-name">移动端模块管理</div>
     <div class="search">
       <el-form :model="query" :inline="true">
         <el-form-item label="模块名称">
@@ -11,6 +11,7 @@
         </el-form-item>
       </el-form>
     </div>
+
     <div class="tool">
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
@@ -35,7 +36,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="explain">菜单是由模块动态生成</div>
+    <div class="explain">模块不生成前端路由，前端路由使用静态路由。</div>
     <add
       :open="addFlag"
       @close="addFlag = false"
@@ -64,7 +65,7 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
-import Tag from "./component/Tag.vue";
+import Tag from "./components/Tag.vue";
 
 const rowId = ref(0);
 const query = ref({});
@@ -78,7 +79,7 @@ const editFlag = ref(false);
  */
 const getModules = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.desktop.Module/getIndexModules", {
+  const response = await axios.get("desktop/system.mobile.Module/getIndexModules", {
     params: query.value
   });
   loading.value = false;
@@ -119,7 +120,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.desktop.Module/delete", {
+  const response = await axios.post("desktop/system.mobile.Module/delete", {
     id: id
   });
   if (response.code != 1) {

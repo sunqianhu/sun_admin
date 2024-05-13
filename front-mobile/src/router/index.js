@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: () => import("../view/Login.vue"),
+      component: () => import("../views/Login.vue"),
       meta: {
         name: "登录"
       }
@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: "/test",
       name: "test",
-      component: () => import("../view/Test.vue"),
+      component: () => import("../views/Test.vue"),
       meta: {
         name: "测试页面"
       }
@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: "/:pathMatch(.*)*",
       name: "404",
-      component: () => import("../view/404.vue"),
+      component: () => import("../views/404.vue"),
       meta: {
         name: "页面没有找到"
       }

@@ -16,7 +16,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useAppStore } from "@/store/app";
+import { useAppStore } from "@/stores/app";
 import axios from "@/helper/axios";
 import MenuItem from "./MenuItem.vue";
 

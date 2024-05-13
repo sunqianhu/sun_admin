@@ -6,7 +6,7 @@
 
 <script setup>
 import { ref } from "vue";
-import Panel from "../component/Panel.vue";
+import Panel from "../components/Panel.vue";
 </script>
 
 <style scoped></style>

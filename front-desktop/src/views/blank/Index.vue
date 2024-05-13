@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import Watermark from "@/component/Watermark.vue";
+import Watermark from "@/components/Watermark.vue";
 import { useDark, useToggle } from "@vueuse/core";
 
 const isDark = useDark();

@@ -3,7 +3,7 @@
     <el-container :class="{ close: !appStore.siderStatus }" class="container">
       <el-aside class="aside">
         <div class="system-name">
-          <img src="@/asset/logo.png" class="logo" />
+          <img src="@/assets/logo.png" class="logo" />
           <span class="name">SunAdmin</span>
         </div>
         <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>
@@ -36,14 +36,14 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useAppStore } from "@/store/app";
+import { useAppStore } from "@/stores/app";
 import Menu from "./Menu.vue";
 import LightDark from "./LightDark.vue";
 import Hamburger from "./Hamburger.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 import Message from "./Message.vue";
-import Watermark from "@/component/Watermark.vue";
+import Watermark from "@/components/Watermark.vue";
 import axios from "@/helper/axios";
 
 const appStore = useAppStore();

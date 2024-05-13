@@ -1,5 +1,5 @@
 import "tdesign-mobile-vue/es/style/index.css";
-import "./asset/app.scss";
+import "./assets/app.scss";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";

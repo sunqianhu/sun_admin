@@ -33,15 +33,15 @@
         </el-form-item>
         <el-form-item label="模块key" prop="key">
           <el-input v-model="module.key" />
-          <div class="form-message">模块的唯一标识，用于前端路由名称和权限指令标识</div>
+          <div class="form-tip">模块的唯一标识，用于前端路由名称和权限指令标识</div>
         </el-form-item>
         <el-form-item label="路由路径" prop="path" v-if="module.type_id == 2">
           <el-input v-model="module.path" />
-          <div class="form-message">例如/system/user</div>
+          <div class="form-tip">例如/system/user</div>
         </el-form-item>
         <el-form-item label="组件路径" prop="component" v-if="module.type_id == 2">
           <el-input v-model="module.component" />
-          <div class="form-message">相对于view目录</div>
+          <div class="form-tip">相对于view目录</div>
         </el-form-item>
         <el-form-item
           label="菜单图标"
@@ -49,11 +49,11 @@
           v-if="module.type_id == 1 || module.type_id == 2 || module.type_id == 4"
         >
           <el-input v-model="module.icon" />
-          <div class="form-message">elementplus图标组件名</div>
+          <div class="form-tip">elementplus图标组件名</div>
         </el-form-item>
         <el-form-item label="接口地址" prop="api" v-if="module.type_id == 2 || module.type_id == 3">
           <el-input v-model="module.api" type="textarea" rows="3" />
-          <div class="form-message">后端接口网址一行一个，格式：应用/控制器/方法</div>
+          <div class="form-tip">后端接口网址一行一个，格式：应用/控制器/方法</div>
         </el-form-item>
         <el-form-item label="链接网址" prop="url" v-if="module.type_id == 4">
           <el-input v-model="module.url" />

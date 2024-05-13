@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import axios from "@/helper/axios";
-import { useAppStore } from "@/store/app";
+import { useAppStore } from "@/stores/app";
 
 /**
  * 得到登录路由路径
@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: "/",
       name: "main",
-      component: () => import("../view/main/Index.vue"),
+      component: () => import("../views/main/Index.vue"),
       meta: {
         name: "首页"
       },
@@ -28,7 +28,7 @@ const router = createRouter({
     {
       path: "/blank",
       name: "blank",
-      component: () => import("../view/blank/Index.vue"),
+      component: () => import("../views/blank/Index.vue"),
       meta: {
         name: "空白页面"
       },
@@ -37,7 +37,7 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: () => import("../view/Login.vue"),
+      component: () => import("../views/Login.vue"),
       meta: {
         name: "SunAdmin"
       }
@@ -45,7 +45,7 @@ const router = createRouter({
     {
       path: "/test",
       name: "test",
-      component: () => import("../view/Test.vue"),
+      component: () => import("../views/Test.vue"),
       meta: {
         name: "测试页面"
       }
@@ -53,7 +53,7 @@ const router = createRouter({
     {
       path: "/:pathMatch(.*)*",
       name: "404",
-      component: () => import("../view/404.vue"),
+      component: () => import("../views/404.vue"),
       meta: {
         name: "页面没有找到"
       }
@@ -102,17 +102,17 @@ router.beforeEach(async (to, from) => {
     let blankRoute = allRoutes.find((route) => route.name == "blank");
     let childRoutes = [];
     const componentFilePaths = import.meta.glob([
-      "@/view/*.vue",
-      "@/view/*/*.vue",
-      "@/view/*/*/*.vue",
-      "@/view/*/*/*/*.vue"
+      "@/views/*.vue",
+      "@/views/*/*.vue",
+      "@/views/*/*/*.vue",
+      "@/views/*/*/*/*.vue"
     ]);
 
     if (response.data.length > 0) {
       childRoutes = response.data;
 
       childRoutes.forEach((childRoute) => {
-        childRoute.component = componentFilePaths["/src/view/" + childRoute.component];
+        childRoute.component = componentFilePaths["/src/views/" + childRoute.component];
         if (childRoute.layout == "main") {
           mainRoute.children.push(childRoute);
           if (childRoute.parent_redirect) {

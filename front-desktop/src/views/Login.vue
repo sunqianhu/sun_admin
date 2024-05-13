@@ -1,12 +1,12 @@
 <template>
   <div class="login">
     <div class="background">
-      <video src="@/asset/login/background.mp4" autoplay loop muted></video>
+      <video src="@/assets/login/background.mp4" autoplay loop muted></video>
     </div>
     <div class="form-wrap">
       <div class="header">
         <div class="title">
-          <img src="@/asset/logo.png" class="logo" alt="logo" />
+          <img src="@/assets/logo.png" class="logo" alt="logo" />
           <span class="name">SunAdmin</span>
         </div>
       </div>

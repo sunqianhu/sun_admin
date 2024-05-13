@@ -28,8 +28,8 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
-import Description from "@/component/Description.vue";
-import DescriptionItem from "@/component/DescriptionItem.vue";
+import Description from "@/components/Description.vue";
+import DescriptionItem from "@/components/DescriptionItem.vue";
 
 const props = defineProps(["open"]);
 const emits = defineEmits(["close"]);
