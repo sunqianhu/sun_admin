@@ -1,8 +1,8 @@
 <template>
-  <div class="trend" v-loading="pageLoading">
+  <div class="department" v-loading="loading">
     <div class="page-header">
-      <span class="name">趋势统计</span>
-      <span class="description">订单趋势统计</span>
+      <span class="name">部门统计</span>
+      <span class="description">按部门统计订单量</span>
       <div class="operation">
         <el-button type="primary" @click="exportExcel" :loading="exportExcelLoading">
           导出
@@ -29,10 +29,12 @@
         </el-form-item>
       </el-form>
     </div>
+
     <div class="chart" id="chart"></div>
-    <el-table :data="days" row-key="name" class="list">
-      <el-table-column prop="full_name" label="日期" />
-      <el-table-column prop="number" label="订单数量" />
+
+    <el-table :data="departments" row-key="name" class="list">
+      <el-table-column prop="name" label="部门" />
+      <el-table-column prop="number" label="订单量" />
     </el-table>
   </div>
 </template>
@@ -43,7 +45,7 @@ import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
-import blueTheme from "@/extend/echarts-theme/blue.json";
+import blueTheme from "@/extend/echarts_theme/blue.json";
 
 const query = ref({
   add_times: [
@@ -51,7 +53,7 @@ const query = ref({
     dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix()
   ]
 });
-const days = ref([]);
+const departments = ref([]);
 const pageLoading = ref(true);
 const exportExcelLoading = ref(false);
 
@@ -60,7 +62,7 @@ const exportExcelLoading = ref(false);
  */
 const init = async () => {
   pageLoading.value = true;
-  const response = await axios.get("desktop/statistic.Trend/init", {
+  const response = await axios.get("desktop/statistic.Department/init", {
     params: query.value
   });
   pageLoading.value = false;
@@ -72,7 +74,7 @@ const init = async () => {
     return;
   }
 
-  days.value = response.data;
+  departments.value = response.data;
   drawChart();
 };
 
@@ -82,8 +84,8 @@ const init = async () => {
 const drawChart = () => {
   let chartElement = document.getElementById("chart");
   let chart;
+
   let option = {
-    tooltip: {},
     grid: {
       left: "0",
       right: "10",
@@ -93,7 +95,6 @@ const drawChart = () => {
     },
     xAxis: {
       type: "category",
-      boundaryGap: false, // 坐标轴两边留白策略
       data: []
     },
     yAxis: {
@@ -105,37 +106,28 @@ const drawChart = () => {
     series: [
       {
         name: "订单数量",
-        type: "line",
-        areaStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "#3fb1e3" // 0% 处的颜色
-              },
-              {
-                offset: 1,
-                color: "rgba(255,255,255,0)" // 100% 处的颜色
-              }
-            ]
-          }
-        }, // 区域填充样式
+        type: "bar",
+        label: {
+          show: true,
+          color: "#ffffff"
+        },
         data: []
       }
     ]
   };
-  let dayValues = days.value;
+  let departmentValues = departments.value;
+  let length = departmentValues.length;
+  let department;
 
   //数据
-  dayValues.forEach((day) => {
-    option.xAxis.data.push(day.name);
-    option.series[0].data.push(day.number);
-  });
+  for (let index = 0; index < length; index++) {
+    department = departmentValues[index];
+    if (index >= 10) {
+      break;
+    }
+    option.xAxis.data.push(department.name);
+    option.series[0].data.push(department.number);
+  }
 
   //画
   chart = echarts.init(chartElement, "blue_theme");
@@ -149,7 +141,7 @@ const exportExcel = async () => {
   exportExcelLoading.value = true;
   let response;
   try {
-    response = await axios.get("desktop/statistic.trend/exportExcel", {
+    response = await axios.get("desktop/statistic.Department/exportExcel", {
       params: query.value,
       responseType: "blob"
     });
@@ -166,7 +158,7 @@ const exportExcel = async () => {
 
   const link = document.createElement("a");
   link.href = url;
-  link.download = "趋势统计.xlsx";
+  link.download = "部门统计.xlsx";
   document.body.appendChild(link);
   link.click();
 
@@ -188,7 +180,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.trend {
+.department {
   background-color: var(--background-color-panel);
   padding: var(--padding);
   border-radius: var(--border-radius);

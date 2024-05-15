@@ -24,7 +24,7 @@
 
     <panel title="登录日志" class="pannel">
       <template #extra>
-        <el-link href="/system/login-log" type="primary" target="_blank"> 更多 </el-link>
+        <el-link href="/system/login_log" type="primary" target="_blank"> 更多 </el-link>
       </template>
       <el-table :data="loginLogs" row-key="id" style="width: 100%">
         <el-table-column prop="ip" label="登录ip" />
@@ -36,7 +36,7 @@
 
     <panel title="操作日志" class="pannel">
       <template #extra>
-        <el-link href="/system/operation-log" type="primary" target="_blank"> 更多 </el-link>
+        <el-link href="/system/operation_log" type="primary" target="_blank"> 更多 </el-link>
       </template>
       <el-table :data="operationLogs" row-key="id" style="width: 100%">
         <el-table-column label="操作时间" v-slot="{ row }">

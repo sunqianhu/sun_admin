@@ -1,12 +1,10 @@
-import Permission from "../helper/Permission";
-
-const permission = new Permission();
+import { hasPermission } from "../helper/permission";
 
 export default {
   //挂载完成后
   mounted(el, binding, vnode, prevVnode) {
     let name = binding.value;
-    if (permission.hasPermission(name)) {
+    if (hasPermission(name)) {
       return;
     }
 
