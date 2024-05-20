@@ -23,7 +23,7 @@
     </panel>
 
     <panel title="登录日志" class="pannel">
-      <template #extra>
+      <template #actions>
         <el-link href="/system/login_log" type="primary" target="_blank"> 更多 </el-link>
       </template>
       <el-table :data="loginLogs" row-key="id" style="width: 100%">
@@ -35,7 +35,7 @@
     </panel>
 
     <panel title="操作日志" class="pannel">
-      <template #extra>
+      <template #actions>
         <el-link href="/system/operation_log" type="primary" target="_blank"> 更多 </el-link>
       </template>
       <el-table :data="operationLogs" row-key="id" style="width: 100%">
@@ -98,9 +98,9 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .detail {
-  padding: var(--padding);
+  padding: var(--padding-md);
   .pannel {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
     &:first-child {
       margin-top: 0px;
     }

@@ -20,7 +20,6 @@
             v-model="department.department_id"
             :data="treeDepartments"
             :render-after-expand="false"
-            show-checkbox
             check-strictly
             placeholder="无"
             clearable

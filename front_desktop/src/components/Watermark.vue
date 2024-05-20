@@ -52,7 +52,7 @@ onMounted(() => {
     opacity: 0.15;
     transform: rotate(-30deg);
     .name {
-      font-size: var(--font-size-big);
+      font-size: var(--font-size-lg);
     }
   }
 }

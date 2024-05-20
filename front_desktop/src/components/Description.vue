@@ -4,6 +4,6 @@
   </el-row>
 </template>
 
-<script setup lang="ts"></script>
+<script setup></script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

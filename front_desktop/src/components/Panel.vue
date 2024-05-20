@@ -1,11 +1,11 @@
 <template>
   <div class="panel">
     <slot name="header">
-      <div class="header" v-if="title || subTitle || $slots.extra">
+      <div class="header" v-if="title || subTitle || $slots.actions">
         <div class="title" v-if="title">{{ title }}</div>
         <div class="sub-title" v-if="subTitle">{{ subTitle }}</div>
-        <div class="extra">
-          <slot name="extra">{{ extra }}</slot>
+        <div class="actions" v-if="$slots.actions">
+          <slot name="actions"></slot>
         </div>
       </div>
     </slot>
@@ -24,57 +24,43 @@ const props = defineProps({
   subTitle: {
     type: String,
     default: ""
-  },
-  extra: {
-    type: String,
-    default: ""
   }
 });
 </script>
 
 <style lang="scss" scoped>
 .panel {
-  background: var(--background-color-panel);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  background: var(--background-color-light);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-base);
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
     height: 45px;
     .title {
-      padding: 0px 8px;
-      margin-left: var(--margin-small);
+      padding: 0px var(--padding-xs);
+      margin-left: var(--margin-xs);
       color: var(--color-primary);
       border-bottom: 2px solid var(--color-primary);
       position: relative;
-      z-index: 2;
-      font-size: var(--font-size-big);
+      font-size: var(--font-size-lg);
       font-weight: bold;
       line-height: 43px;
     }
     .sub-title {
       flex: 1;
-      margin-left: var(--margin);
+      margin-left: var(--margin-md);
       color: var(--font-color-secondary);
-      font-size: var(--font-size-small);
+      font-size: var(--font-size-sm);
     }
-    .extra {
+    .actions {
       margin-left: auto;
-      margin-right: 16px;
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      height: 0.5px;
+      margin-right: var(--margin-md);
     }
   }
   .body {
-    padding: var(--padding);
+    padding: var(--padding-md);
   }
 }
 </style>

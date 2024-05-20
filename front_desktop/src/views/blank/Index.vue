@@ -1,5 +1,5 @@
 <template>
-  <div class="blank-layout">
+  <div class="layout-blank">
     <router-view v-slot="{ Component, route }">
       <keep-alive v-if="route.meta.keep_alive == true">
         <component :is="Component" />
@@ -19,10 +19,7 @@ useToggle(isDark);
 </script>
 
 <style lang="scss" scoped>
-:global(html body) {
-  max-width: 1440px;
-  margin: 0px auto;
-}
-.blank-layout {
+.layout-blank {
+  background-color: var(--background-color-base);
 }
 </style>

@@ -131,8 +131,8 @@ onMounted(() => {
   right: 10px;
   bottom: 10px;
   z-index: 3001;
-  box-shadow: var(--box-shadow);
-  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-base);
+  border-radius: var(--border-radius-md);
 
   .title {
     display: flex;
@@ -144,7 +144,7 @@ onMounted(() => {
       cursor: pointer;
       color: var(--font-color-secondary);
       &:hover {
-        color: var(--font-color);
+        color: var(--font-color-base);
       }
     }
   }

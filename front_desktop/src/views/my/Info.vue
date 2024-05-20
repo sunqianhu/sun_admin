@@ -4,6 +4,7 @@
     title="账号信息"
     width="500"
     :draggable="true"
+    v-loading="dialogLoading"
     @close="close"
     class="info"
   >
@@ -33,16 +34,16 @@ import DescriptionItem from "@/components/DescriptionItem.vue";
 
 const props = defineProps(["open"]);
 const emits = defineEmits(["close"]);
+const dialogLoading = ref(false);
 const user = ref({});
-const loading = ref(true);
 
 /**
  * 初始化
  */
 const init = async () => {
-  loading.value = true;
+  dialogLoading.value = true;
   const response = await axios.get("desktop/My/info");
-  loading.value = false;
+  dialogLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,

@@ -126,7 +126,6 @@ html {
 <style lang="scss" scoped>
 .login {
   height: 100%;
-  background-color: var(--background-color-page);
   position: relative;
   .background {
     position: absolute;
@@ -149,7 +148,7 @@ html {
     transform: translate(-50%, -50%);
     z-index: 3;
     background: rgba(255, 255, 255, 0.9);
-    border-radius: var(--border-radius-big);
+    border-radius: var(--border-radius-lg);
     box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.12);
     .header {
       text-align: center;
@@ -186,7 +185,7 @@ html {
     bottom: 16px;
     z-index: 2;
     text-align: center;
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-sm);
     color: var(--font-color-secondary);
   }
 }

@@ -22,7 +22,7 @@
         </el-table-column>
         <el-table-column prop="key" label="模块key" width="300" show-overflow-tooltip />
         <el-table-column v-slot="{ row }" prop="type_id" label="模块类型" width="100">
-          <tag :id="row.type_id">{{ row.type_name }}</tag>
+          <type-tag :id="row.type_id">{{ row.type_name }}</type-tag>
         </el-table-column>
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
@@ -64,7 +64,7 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
-import Tag from "./components/Tag.vue";
+import TypeTag from "./TypeTag.vue";
 
 const rowId = ref(0);
 const query = ref({});
@@ -143,36 +143,36 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .index {
-  background-color: var(--background-color-panel);
-  padding: var(--padding);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  background-color: var(--background-color-light);
+  padding: var(--padding-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-base);
   .page-name {
     font-size: 20px;
     font-weight: bold;
   }
   .search {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
   }
   .toolbar {
   }
   .list {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
     :deep(th.el-table__cell) {
-      background-color: var(--background-color-table-header);
+      background-color: var(--background-color-dark);
     }
     .table {
       width: 100%;
 
       .remark {
-        font-size: var(--font-size-small);
+        font-size: var(--font-size-sm);
         color: var(--font-color-secondary);
       }
     }
   }
   .explain {
-    margin-top: var(--margin);
-    font-size: var(--font-size-small);
+    margin-top: var(--margin-md);
+    font-size: var(--font-size-sm);
     color: var(--font-color-secondary);
   }
 }

@@ -189,10 +189,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .trend {
-  background-color: var(--background-color-panel);
-  padding: var(--padding);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  background-color: var(--background-color-light);
+  padding: var(--padding-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-base);
   .page-header {
     display: flex;
     .name {
@@ -201,25 +201,25 @@ onMounted(() => {
     }
     .description {
       color: var(--font-color-secondary);
-      margin-left: var(--margin);
-      font-size: var(--font-size-small);
+      margin-left: var(--margin-md);
+      font-size: var(--font-size-sm);
       flex: 1;
     }
     .operation {
     }
   }
   .search {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
   }
   .chart {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
     height: 200px;
   }
   .list {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
     width: 100%;
     ::v-deep(th.el-table__cell) {
-      background-color: var(--background-color-table-header);
+      background-color: var(--background-color-dark);
     }
   }
 }

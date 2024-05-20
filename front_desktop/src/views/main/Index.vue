@@ -1,5 +1,5 @@
 <template>
-  <div class="main-layout">
+  <div class="layout-main">
     <el-container :class="{ close: !appStore.siderStatus }" class="container">
       <el-aside class="aside">
         <div class="system-name">
@@ -93,7 +93,7 @@ html {
 </style>
 
 <style lang="scss" scoped>
-.main-layout {
+.layout-main {
   height: 100%;
 
   .container {
@@ -133,13 +133,13 @@ html {
       }
       .version {
         padding-left: 16px;
-        font-size: var(--font-size-small);
+        font-size: var(--font-size-sm);
         color: var(--font-color-secondary);
       }
     }
 
     .workspace {
-      background-color: var(--background-color-page-texture);
+      background-color: var(--background-color-base);
       .header {
         display: flex;
         align-items: center;
@@ -194,7 +194,7 @@ html {
 
 //暗黑模式
 .dark {
-  .main-layout {
+  .layout-main {
     .container {
       .aside {
         background-color: #141414;

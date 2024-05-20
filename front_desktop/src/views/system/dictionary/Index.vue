@@ -183,30 +183,30 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .index {
-  background-color: var(--background-color-panel);
-  padding: var(--padding);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  background-color: var(--background-color-light);
+  padding: var(--padding-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-base);
   .page-name {
     font-size: 20px;
     font-weight: bold;
   }
   .search {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
   }
   .toolbar {
   }
   .list {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
     :deep(th.el-table__cell) {
-      background-color: var(--background-color-table-header);
+      background-color: var(--background-color-dark);
     }
     .table {
       width: 100%;
     }
   }
   .pagination {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="fullscreen" @click="toggleFullScreen">
+  <div class="full-screen" @click="toggleFullScreen">
     <el-tooltip effect="dark" content="切换全屏" placement="bottom">
       <FullScreen class="icon" />
     </el-tooltip>
@@ -26,7 +26,7 @@ const toggleFullScreen = () => {
 </script>
 
 <style lang="scss" scoped>
-.fullscreen {
+.full-screen {
   line-height: 1px;
   .icon {
     width: 20px;

@@ -5,99 +5,130 @@
 :root:root {
   //颜色
   --color-primary: #409eff;
-  --color-success: #07c160;
+  --color-success: #67c23a;
   --color-warning: #e6a23c;
-  --color-danger: #ee0a24;
+  --color-danger: #f56c6c;
+  --color-link: #409eff;
 
   //文字
-  --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-    "微软雅黑", Arial, sans-serif;
+  --font-family-base: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 
-  //文字大小
-  --font-size: 14px;
-  --font-size-small: 12px;
-  --font-size-big: 16px;
-  --font-size-title: 20px;
-
-  //文字颜色
-  --font-color: #303133;
+  --font-color-base: #303133;
+  --font-color-regular: #606266;
   --font-color-secondary: #909399;
   --font-color-placeholder: #a8abb2;
-  --font-color-disabled: #c8cbd2;
-  --font-color-conspicuous: #409eff; //引人注目的
-  --font-color-link: #409eff; //链接
+  --font-color-disabled: #c0c4cc;
 
-  //边框颜色
-  --border-color: #dcdfe6;
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+
+  --font-bold-thin: 400;
+  --font-bold-base: 500;
+  --font-bold-bold: bold;
+
+  //行高
+  --line-height-xs: 14px;
+  --line-height-sm: 18px;
+  --line-height-md: 20px;
+  --line-height-lg: 22px;
+  --line-height-xl: 30px;
+
+  //边框
   --border-color-light: #e4e7ed;
+  --border-color-base: #e4e7ed;
   --border-color-dark: #d4d7de;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-max: 999px;
 
-  //背景颜色
-  --background-color-page: #ffffff;
-  --background-color-page-texture: #f0f2f5; //纹理页面
-  --background-color-dialog: #ffffff;
-  --background-color-panel: #ffffff;
-  --background-color-table-header: #e9e9eb;
+  //背景
+  --background-color-light: #ffffff;
+  --background-color-base: #f0f2f5;
+  --background-color-dark: #ebedf0;
 
   //内边距
-  --padding: 16px;
-  --padding-small: 8px;
-  --padding-big: 32px;
+  --padding-base: 4px;
+  --padding-xs: 8px;
+  --padding-sm: 12px;
+  --padding-md: 16px;
+  --padding-lg: 24px;
+  --padding-xl: 32px;
 
   //外边距
-  --margin: 16px;
-  --margin-small: 8px;
-  --margin-big: 32px;
+  --margin-base: 4px;
+  --margin-xs: 8px;
+  --margin-sm: 12px;
+  --margin-md: 16px;
+  --margin-lg: 24px;
+  --margin-xl: 32px;
 
-  //圆角
-  --border-radius: 4px;
-  --border-radius-small: 2px;
-  --border-radius-big: 8px;
-  --border-radius-round: 20px;
-  --border-radius-circle: 100%;
+  //层级
+  --index-base: 1;
+  --index-top: 2000;
+  --index-popper: 3000;
+
+  //活跃
+  --active-color: #909399;
+  --active-opacity: 0.6;
+
+  //禁用
+  --disabled-color: #c0c4cc;
+  --disabled-opacity: 0.5;
 
   //阴影
-  --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
   --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
+  --box-shadow-base: 0px 0px 16px rgba(0, 0, 0, 0.12);
   --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
+
+  //动画
+  --animation-duration-base: 0.3s;
+  --animation-duration-fast: 0.2s;
+
+  //组件大小
+  --component-size-sm: 24px;
+  --component-size-base: 32px;
+  --component-size-bg: 40px;
 }
 
 html {
   margin: 0px;
   padding: 0px;
-  body {
-    margin: 0px;
-    padding: 0px;
-    font-family: var(--font-family);
-    font-size: var(--font-size);
-    line-height: 150%;
-    color: var(--font-color);
-    //超链接
-    a {
-      color: var(--font-color-link);
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-    //对话框
-    .el-dialog {
-      background-color: var(--background-color-dialog);
-    }
+}
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  line-height: 150%;
+  color: var(--font-color-base);
+  background-color: var(--background-color-light);
+}
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
   }
 }
-
 pre {
   white-space: pre-wrap;
   word-wrap: break-word;
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   margin: 0px;
   padding: 0px;
   line-height: 150%;
 }
 .form-tip {
   color: var(--font-color-secondary);
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-sm);
+}
+.el-dialog {
+  background-color: var(--background-color-light);
 }
 .text-ellipsis {
   overflow: hidden;

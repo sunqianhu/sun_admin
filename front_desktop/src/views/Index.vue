@@ -9,16 +9,16 @@
 
 <style lang="scss" scoped>
 .index {
-  background-color: var(--background-color-panel);
+  background-color: var(--background-color-light);
   padding: 16px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-base);
   .page-name {
     font-size: 20px;
     font-weight: bold;
   }
   .welcome {
-    margin-top: var(--margin);
+    margin-top: var(--margin-md);
   }
 }
 </style>
