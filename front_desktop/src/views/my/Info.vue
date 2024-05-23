@@ -5,23 +5,21 @@
     width="500"
     :draggable="true"
     v-loading="dialogLoading"
-    @close="close"
+    @close="handleClose"
     class="info"
   >
-    <description>
-      <description-item label="账号" sm="24" md="24" lg="24">{{ user.account }}</description-item>
-      <description-item label="姓名" sm="24" md="24" lg="24">{{ user.name }}</description-item>
-      <description-item label="手机号码" sm="24" md="24" lg="24">{{ user.phone }}</description-item>
-      <description-item label="所属部门" sm="24" md="24" lg="24">
+    <label-values>
+      <label-value label="账号" sm="24" md="24" lg="24">{{ user.account }}</label-value>
+      <label-value label="姓名" sm="24" md="24" lg="24">{{ user.name }}</label-value>
+      <label-value label="手机号码" sm="24" md="24" lg="24">{{ user.phone }}</label-value>
+      <label-value label="所属部门" sm="24" md="24" lg="24">
         {{ user.department_name }}
-      </description-item>
-      <description-item label="最后登录时间" sm="24" md="24" lg="24">
+      </label-value>
+      <label-value label="最后登录时间" sm="24" md="24" lg="24">
         {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
-      </description-item>
-      <description-item label="最后登录ip" sm="24" md="24" lg="24">{{
-        user.login_ip
-      }}</description-item>
-    </description>
+      </label-value>
+      <label-value label="最后登录ip" sm="24" md="24" lg="24">{{ user.login_ip }}</label-value>
+    </label-values>
   </el-dialog>
 </template>
 
@@ -29,8 +27,8 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
-import Description from "@/components/Description.vue";
-import DescriptionItem from "@/components/DescriptionItem.vue";
+import LabelValues from "@/components/LabelValues.vue";
+import LabelValue from "@/components/LabelValue.vue";
 
 const props = defineProps(["open"]);
 const emits = defineEmits(["close"]);
@@ -55,9 +53,9 @@ const init = async () => {
 };
 
 /**
- * 关闭
+ * 处理关闭
  */
-const close = () => {
+const handleClose = () => {
   emits("close", true);
 };
 

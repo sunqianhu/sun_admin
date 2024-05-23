@@ -1,7 +1,7 @@
 <template>
   <el-col :xs="props.xs" :sm="props.sm" :md="props.md" :lg="props.lg" class="col">
     <div class="label">{{ label }}：</div>
-    <div class="content"><slot></slot></div>
+    <div class="value"><slot></slot></div>
   </el-col>
 </template>
 
@@ -35,9 +35,12 @@ const props = defineProps({
   display: flex;
   padding: 3px 0px;
   .label {
+    width: 80px;
     color: var(--font-color-secondary);
+    background-color: var(--background-color-base);
   }
-  .content {
+  .value {
+    flex: 1;
   }
 }
 </style>

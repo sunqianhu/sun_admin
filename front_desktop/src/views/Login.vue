@@ -16,7 +16,7 @@
         scroll-to-error
         ref="loginRef"
         class="form"
-        @keyup.enter="submitForm"
+        @keyup.enter="handleFormSubmit"
       >
         <el-form-item prop="account">
           <el-input
@@ -51,7 +51,7 @@
       :show="vCodeFlag"
       @success="
         vCodeFlag = false;
-        submitForm();
+        handleFormSubmit();
       "
       @close="vCodeFlag = false"
     />
@@ -84,9 +84,9 @@ const verify = async () => {
 };
 
 /**
- * 提交表单
+ * 处理表单提交
  */
-const submitForm = async () => {
+const handleFormSubmit = async () => {
   loading.value = true;
   let response;
   try {

@@ -45,8 +45,8 @@
         :page-sizes="[10, 30, 50, 100, 200, 300]"
         :page-size="query.size"
         :total="total"
-        @size-change="changePageSize"
-        @current-change="changePageCurrent"
+        @size-change="handlePaginationSizeChange"
+        @current-change="handlePaginationCurrentChange"
       />
     </div>
   </div>
@@ -99,20 +99,20 @@ const search = () => {
 };
 
 /**
- * 切换页面显示条目数
+ * 处理分页显示条数改变
  * @param {number} size
  */
-const changePageSize = (size) => {
+const handlePaginationSizeChange = (size) => {
   query.value.size = size;
   query.value.number = 1;
   getLoginLogs();
 };
 
 /**
- * 切换当前页
+ * 处理分页当前页改变
  * @param {number} page
  */
-const changePageCurrent = (page) => {
+const handlePaginationCurrentChange = (page) => {
   query.value.page = page;
   getLoginLogs();
 };

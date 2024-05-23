@@ -5,11 +5,11 @@ namespace app\desktop\controller;
 class Template extends Base
 {
     /**
-     * 首页
+     * xxx
      * @return void
      */
-    public function index()
+    public function xxx()
     {
-        echo 'ok';
+        return $this->success('获取成功');
     }
 }

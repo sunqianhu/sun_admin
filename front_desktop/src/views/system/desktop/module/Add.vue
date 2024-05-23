@@ -5,7 +5,7 @@
     width="600"
     :draggable="true"
     align-center
-    @close="close"
+    @close="handleClose"
     class="add"
   >
     <el-scrollbar max-height="350px" class="scrollbar">
@@ -88,7 +88,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="handleFormSubmit">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -136,16 +138,16 @@ const init = async () => {
 };
 
 /**
- * 关闭
+ * 处理关闭
  */
-const close = () => {
+const handleClose = () => {
   emits("close", true);
 };
 
 /**
- * 提交表单
+ * 处理表单提交
  */
-const submitForm = async () => {
+const handleFormSubmit = async () => {
   await moduleRef.value.validate();
 
   submitLoading.value = true;

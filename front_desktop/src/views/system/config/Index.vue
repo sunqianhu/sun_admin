@@ -6,7 +6,7 @@
         <el-input v-model="config.version" />
       </el-form-item>
       <div class="submit-wrap">
-        <el-button type="primary" class="button" @click="submitForm" :loading="submitLoading">
+        <el-button type="primary" class="button" @click="handleFormSubmit" :loading="submitLoading">
           保存
         </el-button>
       </div>
@@ -41,9 +41,9 @@ const init = async () => {
 };
 
 /**
- * 提交表单
+ * 处理表单提交
  */
-const submitForm = async () => {
+const handleFormSubmit = async () => {
   await configRef.value.validate();
 
   submitLoading.value = true;

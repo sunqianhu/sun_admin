@@ -79,8 +79,8 @@
         :page-sizes="[10, 30, 50, 100, 200, 300]"
         v-model:page-size="query.size"
         :total="total"
-        @size-change="changePageSize"
-        @current-change="changePageCurrent"
+        @size-change="handlePaginationSizeChange"
+        @current-change="handlePaginationCurrentChange"
       />
     </div>
 
@@ -183,20 +183,20 @@ const search = () => {
 };
 
 /**
- * 切换页面显示条目数
+ * 处理分页显示条数改变
  * @param {number} size
  */
-const changePageSize = (size) => {
+const handlePaginationSizeChange = (size) => {
   query.value.size = size;
   query.value.page = 1;
   getUsers();
 };
 
 /**
- * 切换页面页码
+ * 处理分页当前页改变
  * @param {*} page
  */
-const changePageCurrent = (page) => {
+const handlePaginationCurrentChange = (page) => {
   query.value.page = page;
   getUsers();
 };

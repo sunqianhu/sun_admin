@@ -5,7 +5,7 @@
     width="800"
     :draggable="true"
     align-center
-    @close="close"
+    @close="handleClose"
   >
     <div class="edit-avatar">
       <el-row>
@@ -96,9 +96,9 @@ const init = async () => {
 };
 
 /**
- * 关闭
+ * 处理关闭
  */
-const close = () => {
+const handleClose = () => {
   emits("close", true);
 };
 

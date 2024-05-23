@@ -18,8 +18,8 @@ const isDark = useDark();
 useToggle(isDark);
 </script>
 
-<style lang="scss" scoped>
-.layout-blank {
+<style lang="scss">
+body {
   background-color: var(--background-color-base);
 }
 </style>
