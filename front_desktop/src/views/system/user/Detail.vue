@@ -1,25 +1,25 @@
 <template>
   <div class="detail" v-loading="loading">
     <panel title="用户信息" class="pannel">
-      <label-values>
-        <label-value label="用户id">{{ user.id }}</label-value>
-        <label-value label="账号">{{ user.account }}</label-value>
-        <label-value label="姓名">{{ user.name }}</label-value>
-        <label-value label="手机号码">{{ user.phone }}</label-value>
-        <label-value label="部门">{{ user.department?.name }}</label-value>
-        <label-value label="角色">{{ user.role_name_string }}</label-value>
-        <label-value label="状态">{{ user.status_name }}</label-value>
-        <label-value label="添加时间">
+      <label-value>
+        <label-value-item label="用户id">{{ user.id }}</label-value-item>
+        <label-value-item label="账号">{{ user.account }}</label-value-item>
+        <label-value-item label="姓名">{{ user.name }}</label-value-item>
+        <label-value-item label="手机号码">{{ user.phone }}</label-value-item>
+        <label-value-item label="部门">{{ user.department?.name }}</label-value-item>
+        <label-value-item label="角色">{{ user.role_name_string }}</label-value-item>
+        <label-value-item label="状态">{{ user.status_name }}</label-value-item>
+        <label-value-item label="添加时间">
           {{ dayjs.unix(user.add_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </label-value>
-        <label-value label="最后修改时间">
+        </label-value-item>
+        <label-value-item label="最后修改时间">
           {{ dayjs.unix(user.edit_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </label-value>
-        <label-value label="最后登录时间">
+        </label-value-item>
+        <label-value-item label="最后登录时间">
           {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </label-value>
-        <label-value label="最后登录ip">{{ user.login_ip }}</label-value>
-      </label-values>
+        </label-value-item>
+        <label-value-item label="最后登录ip">{{ user.login_ip }}</label-value-item>
+      </label-value>
     </panel>
 
     <panel title="登录日志" class="pannel">
@@ -54,8 +54,8 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/helper/axios";
 import Panel from "@/components/Panel.vue";
-import LabelValues from "@/components/LabelValues.vue";
 import LabelValue from "@/components/LabelValue.vue";
+import LabelValueItem from "@/components/LabelValueItem.vue";
 import dayjs from "dayjs";
 
 const route = useRoute();

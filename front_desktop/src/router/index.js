@@ -131,7 +131,7 @@ router.beforeEach(async (to, from) => {
       router.addRoute(blankRoute);
     }
 
-    return to.path;
+    return to.fullPath;
   }
 
   return true;

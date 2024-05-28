@@ -8,18 +8,20 @@
     @close="handleClose"
     class="info"
   >
-    <label-values>
-      <label-value label="账号" sm="24" md="24" lg="24">{{ user.account }}</label-value>
-      <label-value label="姓名" sm="24" md="24" lg="24">{{ user.name }}</label-value>
-      <label-value label="手机号码" sm="24" md="24" lg="24">{{ user.phone }}</label-value>
-      <label-value label="所属部门" sm="24" md="24" lg="24">
+    <label-value>
+      <label-value-item label="账号" sm="24" md="24" lg="24">{{ user.account }}</label-value-item>
+      <label-value-item label="姓名" sm="24" md="24" lg="24">{{ user.name }}</label-value-item>
+      <label-value-item label="手机号码" sm="24" md="24" lg="24">{{ user.phone }}</label-value-item>
+      <label-value-item label="所属部门" sm="24" md="24" lg="24">
         {{ user.department_name }}
-      </label-value>
-      <label-value label="最后登录时间" sm="24" md="24" lg="24">
+      </label-value-item>
+      <label-value-item label="最后登录时间" sm="24" md="24" lg="24">
         {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
-      </label-value>
-      <label-value label="最后登录ip" sm="24" md="24" lg="24">{{ user.login_ip }}</label-value>
-    </label-values>
+      </label-value-item>
+      <label-value-item label="最后登录ip" sm="24" md="24" lg="24">{{
+        user.login_ip
+      }}</label-value-item>
+    </label-value>
   </el-dialog>
 </template>
 
@@ -27,8 +29,8 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
-import LabelValues from "@/components/LabelValues.vue";
 import LabelValue from "@/components/LabelValue.vue";
+import LabelValueItem from "@/components/LabelValueItem.vue";
 
 const props = defineProps(["open"]);
 const emits = defineEmits(["close"]);
