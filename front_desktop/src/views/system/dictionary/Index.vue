@@ -92,7 +92,7 @@ const editFlag = ref(false);
 const total = ref(0);
 
 /**
- * 加载数据
+ * 得到字典集合
  */
 const getDictionarys = async () => {
   loading.value = true;

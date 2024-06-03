@@ -74,7 +74,7 @@ const addFlag = ref(false);
 const editFlag = ref(false);
 
 /**
- * 加载数据
+ * 得到部门集合
  */
 const getDepartments = async () => {
   loading.value = true;

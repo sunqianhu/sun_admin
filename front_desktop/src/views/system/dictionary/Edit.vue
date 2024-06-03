@@ -18,7 +18,7 @@
         <el-form-item label="字典类型" prop="type">
           <el-input v-model="dictionary.type" />
         </el-form-item>
-        <el-form-item label="字典键" prop="name">
+        <el-form-item label="字典键" prop="key">
           <el-input v-model="dictionary.key" />
         </el-form-item>
         <el-form-item label="字典值" prop="value">
