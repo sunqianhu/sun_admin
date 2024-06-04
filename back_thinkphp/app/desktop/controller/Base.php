@@ -19,7 +19,7 @@ class Base extends BaseController
      * @var string[] 不登录网址
      */
     private $noLoginUrls = [
-        'desktop/login/getcaptcha',
+        'desktop/login/getCaptcha',
         'desktop/login/login',
         'desktop/test/index'
     ];
@@ -29,19 +29,19 @@ class Base extends BaseController
      */
     private $noPermissionUrls = [
         'desktop/login/logout',
-        'desktop/frame/getroutes',
-        'desktop/frame/getpermissions',
-        'desktop/frame/getwatermark',
+        'desktop/frame/getRoutes',
+        'desktop/frame/getPermissions',
+        'desktop/frame/getWatermark',
         'desktop/main/init',
-        'desktop/main/getmenus',
-        'desktop/main/getavatar',
+        'desktop/main/getMenus',
+        'desktop/main/getAvatar',
         'desktop/message/readall',
-        'desktop/message/getnoreads',
+        'desktop/message/getNoReads',
         'desktop/uploadfile/upload',
         'desktop/my/info',
-        'desktop/my/initeditavatar',
-        'desktop/my/saveeditavatar',
-        'desktop/my/editpassword'
+        'desktop/my/initEditAvatar',
+        'desktop/my/saveEditAvatar',
+        'desktop/my/editPassword'
     ];
 
     /**
@@ -86,6 +86,7 @@ class Base extends BaseController
         $url = strtolower($url);
 
         //登录
+        $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
         if (in_array($url, $this->noLoginUrls)) {
             return;
         }
@@ -100,6 +101,7 @@ class Base extends BaseController
         $this->user = $user;
 
         //权限
+        $this->noPermissionUrls = array_map('strtolower', $this->noPermissionUrls);
         if (in_array($url, $this->noPermissionUrls)) {
             return;
         }
