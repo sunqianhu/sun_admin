@@ -4,7 +4,7 @@
     title="修改角色"
     width="600"
     :draggable="true"
-    @close="handleClose"
+    @close="close"
     class="edit"
   >
     <el-scrollbar max-height="400px" class="scrollbar" v-loading="dialogLoading">
@@ -40,9 +40,7 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="handleFormSubmit" :loading="submitLoading">
-        提交
-      </el-button>
+      <el-button type="primary" @click="submitForm" :loading="submitLoading"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -100,9 +98,9 @@ const init = async () => {
 };
 
 /**
- * 处理关闭
+ * 关闭
  */
-const handleClose = () => {
+const close = () => {
   emits("close", true);
 };
 
@@ -175,9 +173,9 @@ const checkMobileModule = () => {
 };
 
 /**
- * 处理表单提交
+ * 提交表单
  */
-const handleFormSubmit = async () => {
+const submitForm = async () => {
   await roleRef.value.validate();
 
   submitLoading.value = true;

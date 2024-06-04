@@ -5,7 +5,7 @@
     width="500"
     :draggable="true"
     v-loading="dialogLoading"
-    @close="handleClose"
+    @close="close"
     class="info"
   >
     <label-value>
@@ -55,9 +55,9 @@ const init = async () => {
 };
 
 /**
- * 处理关闭
+ * 关闭
  */
-const handleClose = () => {
+const close = () => {
   emits("close", true);
 };
 

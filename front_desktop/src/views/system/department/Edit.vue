@@ -4,7 +4,7 @@
     title="修改部门"
     width="500"
     :draggable="true"
-    @close="handleClose"
+    @close="close"
     class="edit"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
@@ -40,7 +40,7 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="handleFormSubmit"> 提交 </el-button>
+      <el-button type="primary" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -87,16 +87,16 @@ const init = async () => {
 };
 
 /**
- * 处理关闭
+ * 关闭
  */
-const handleClose = () => {
+const close = () => {
   emits("close", true);
 };
 
 /**
- * 处理表单提交
+ * 提交表单
  */
-const handleFormSubmit = async () => {
+const submitForm = async () => {
   await departmentRef.value.validate();
   const response = await axios.post("desktop/system.Department/saveEdit", department.value);
   if (response.code != 1) {

@@ -1,11 +1,5 @@
 <template>
-  <el-dialog
-    :model-value="open"
-    title="修改密码"
-    width="500"
-    :draggable="true"
-    @close="handleClose"
-  >
+  <el-dialog :model-value="open" title="修改密码" width="500" :draggable="true" @close="close">
     <div class="edit-password">
       <el-form :model="user" :rules="rules" ref="userRef" label-width="120px">
         <el-form-item label="新密码" prop="password1">
@@ -18,7 +12,7 @@
     </div>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="handleFormSubmit"> 提交 </el-button>
+      <el-button type="primary" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -37,16 +31,16 @@ const rules = {
 };
 
 /**
- * 处理关闭
+ * 关闭
  */
-const handleClose = () => {
+const close = () => {
   emits("close", true);
 };
 
 /**
- * 处理表单提交
+ * 提交表单
  */
-const handleFormSubmit = async () => {
+const submitForm = async () => {
   await userRef.value.validate();
 
   const response = await axios.post("desktop/my/editPassword", user.value);
