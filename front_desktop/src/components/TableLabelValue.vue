@@ -5,15 +5,8 @@
         <td :width="item.labelWidth" :colspan="item.labelColspan" class="label">
           {{ item.label }}
         </td>
-        <td
-          :width="item.contentWidth"
-          :colspan="item.contentColspan"
-          class="content"
-        >
-          <vnode-render
-            :vnode="item.contentVnodes"
-            v-if="item.contentVnodes"
-          ></vnode-render>
+        <td :width="item.contentWidth" :colspan="item.contentColspan" class="content">
+          <vnode-render :vnode="item.contentVnodes" v-if="item.contentVnodes"></vnode-render>
         </td>
       </template>
     </tr>
@@ -21,7 +14,7 @@
 </template>
 
 <script setup>
-import { useSlots } from "vue";
+import { ref, useSlots, watch, onMounted } from "vue";
 import VnodeRender from "./VnodeRender.js";
 
 const props = defineProps({
@@ -31,20 +24,15 @@ const props = defineProps({
   }
 });
 const slots = useSlots();
-let items = [];
-let vnodes = [];
-let defaultProps = {};
-let rows = [];
-let row = [];
-let columnNumber = 0; //列数量
+let rows = ref([]); //行
+let itemDefaultProps = {}; //项默认属性
 
 /**
  * 创建项
  * @param {*} item
  */
 const createItem = (vnode) => {
-  let item = {};
-  item = { ...defaultProps, ...vnode.props };
+  let item = { ...itemDefaultProps, ...vnode.props };
   if (item["label-width"]) {
     item.labelWidth = item["label-width"];
   }
@@ -58,39 +46,93 @@ const createItem = (vnode) => {
     item.contentColspan = item["content-colspan"];
   }
   item.contentVnodes =
-    vnode && vnode.children && vnode.children.default
-      ? vnode.children.default()
-      : [];
+    vnode && vnode.children && vnode.children.default ? vnode.children.default() : [];
   return item;
 };
 
-//项
-if (slots && slots.default) {
-  vnodes = slots.default();
-  vnodes.filter((vnode) => {
+/**
+ * 获取项
+ */
+const getItems = () => {
+  let items = [];
+  if (!slots || !slots.default) {
+    return items;
+  }
+
+  let vnodes = slots.default();
+  if (vnodes.length === 0) {
+    return items;
+  }
+
+  vnodes = vnodes.filter((vnode) => {
     if (vnode.type.__name == "TableLabelValueItem") {
       return true;
     }
     return false;
   });
+  if (vnodes.length === 0) {
+    return items;
+  }
+
   vnodes.forEach((vnode) => {
     let item = createItem(vnode);
     items.push(item);
   });
-}
 
-//行
-items.forEach((item, index) => {
-  let labelColspan = item.labelColspan ? item.labelColspan : 1;
-  let contentColspan = item.contentColspan ? item.contentColspan : 1;
-  columnNumber += labelColspan + contentColspan;
-  row.push(item);
+  return items;
+};
 
-  if (props.column - columnNumber < 2 || index === items.length - 1) {
-    columnNumber = 0;
-    rows.push(row);
-    row = [];
+/**
+ * 设置行
+ * @param items
+ */
+const setRows = (items) => {
+  let row = [];
+  let columnNumber = 0; //列数量
+
+  rows.value = [];
+  items.forEach((item, index) => {
+    let labelColspan = item.labelColspan ? item.labelColspan : 1;
+    let contentColspan = item.contentColspan ? item.contentColspan : 1;
+    columnNumber += labelColspan + contentColspan;
+
+    row.push(item);
+    if (props.column - columnNumber < 2 || index >= items.length - 1) {
+      rows.value.push(row);
+      columnNumber = 0;
+      row = [];
+    }
+  });
+  console.log(`output->rows`, rows);
+};
+
+/**
+ * 初始化
+ */
+const init = () => {
+  let items = getItems();
+  setRows(items);
+};
+
+//监听插槽内容改变
+watch(
+  () => {
+    const allVnodes = [];
+    const vnodes = slots.default ? slots.default() : [];
+    vnodes.forEach((vnode) => {
+      if (vnode.children && vnode.children.default) {
+        allVnodes.push(...vnode.children.default());
+      }
+    });
+    return allVnodes;
+  },
+  () => {
+    init();
   }
+);
+
+onMounted(() => {
+  init();
 });
 </script>
 
