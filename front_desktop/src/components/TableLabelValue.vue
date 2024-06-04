@@ -2,10 +2,10 @@
   <table class="table-label-value">
     <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
       <template v-for="item in row">
-        <td :width="item.labelWidth" :colspan="item.labelColspan" class="label">
+        <td valign="top" :width="item.labelWidth" :colspan="item.labelColspan" class="label">
           {{ item.label }}
         </td>
-        <td :width="item.contentWidth" :colspan="item.contentColspan" class="content">
+        <td valign="top" :width="item.contentWidth" :colspan="item.contentColspan" class="content">
           <vnode-render :vnode="item.contentVnodes" v-if="item.contentVnodes"></vnode-render>
         </td>
       </template>
@@ -103,7 +103,6 @@ const setRows = (items) => {
       row = [];
     }
   });
-  console.log(`output->rows`, rows);
 };
 
 /**
