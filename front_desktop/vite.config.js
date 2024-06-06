@@ -5,7 +5,9 @@ import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-import { config } from "./config.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 //https://vitejs.dev/config/
 export default defineConfig({
@@ -26,7 +28,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: config.proxyServer,
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "")
       }

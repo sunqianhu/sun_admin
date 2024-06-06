@@ -1,5 +1,5 @@
 <template>
-  <div class="department" v-loading="loading">
+  <div class="department" v-loading="pageLoading">
     <div class="page-header">
       <span class="name">部门统计</span>
       <span class="description">按部门统计订单量</span>

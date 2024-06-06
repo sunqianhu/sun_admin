@@ -1,10 +1,9 @@
 import axios from "axios";
 import router from "../router";
 import { useAppStore } from "../stores/app";
-import { config } from "../../config.js";
 
 const instance = axios.create({
-  baseURL: config.proxyPrefix,
+  baseURL: import.meta.env.VITE_API_PREFIX,
   timeout: 1000 * 15
 });
 

@@ -26,7 +26,6 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { config } from "../../config.js";
 
 const props = defineProps({
   files: {
@@ -69,7 +68,7 @@ const data = {
   module: props.module
 };
 const uploadRef = ref(null);
-const action = config.proxyPrefix + "desktop/UploadFile/upload";
+const action = import.meta.env.VITE_API_PREFIX + "desktop/UploadFile/upload";
 
 /**
  * 初始化

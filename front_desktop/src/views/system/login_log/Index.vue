@@ -54,7 +54,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { dayjs } from "element-plus";
+import dayjs from "dayjs";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 

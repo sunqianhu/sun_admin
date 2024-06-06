@@ -14,9 +14,7 @@
         <a href="#">内容2</a>
       </table-label-value-item>
       <table-label-value-item label="字段3">内容3</table-label-value-item>
-      <table-label-value-item label="字段4" :content-colspan="1"
-        >内容4</table-label-value-item
-      >
+      <table-label-value-item label="字段4" :content-colspan="1">内容4</table-label-value-item>
       <table-label-value-item label="字段5">内容5</table-label-value-item>
       <table-label-value-item label="字段6">内容6</table-label-value-item>
       <table-label-value-item label="字段7">内容7</table-label-value-item>
@@ -30,6 +28,8 @@
 import { ref } from "vue";
 import TableLabelValue from "../components/TableLabelValue.vue";
 import TableLabelValueItem from "../components/TableLabelValueItem.vue";
+
+console.log(`output->import.meta.env.VITE_API_URL`, import.meta.env.VITE_API_URL);
 </script>
 
 <style scoped></style>

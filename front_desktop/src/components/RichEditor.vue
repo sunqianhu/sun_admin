@@ -16,7 +16,6 @@ import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
 import { onBeforeUnmount, ref, shallowRef, watch } from "vue";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
-import { config } from "../../config.js";
 
 const props = defineProps({
   modelValue: {
@@ -59,7 +58,7 @@ const editorConfig = Object.assign(
     placeholder: "请输入...",
     MENU_CONF: {
       uploadImage: {
-        server: config.proxyPrefix + "desktop/UploadFile/upload",
+        server: import.meta.env.VITE_API_PREFIX + "desktop/UploadFile/upload",
         fieldName: "file",
         maxFileSize: 1024 * 1024 * 20,
         headers: {
@@ -83,7 +82,7 @@ const editorConfig = Object.assign(
         }
       },
       uploadVideo: {
-        server: config.proxyPrefix + "desktop/UploadFile/upload",
+        server: import.meta.env.VITE_API_PREFIX + "desktop/UploadFile/upload",
         fieldName: "file",
         maxFileSize: 1024 * 1024 * 200,
         headers: {

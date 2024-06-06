@@ -13,7 +13,7 @@ const props = defineProps({
   }
 });
 
-const type = ref("");
+const type = ref("info");
 
 /**
  * 初始化
@@ -22,22 +22,22 @@ const init = () => {
   let id = props.id;
   switch (id) {
     case 1:
-      type.value = "primary";
+      type.value = "info";
       break;
     case 2:
       type.value = "success";
       break;
     case 3:
-      type.value = "info";
-      break;
-    case 4:
       type.value = "warning";
       break;
-    case 5:
+    case 4:
       type.value = "danger";
       break;
+    case 5:
+      type.value = "info";
+      break;
     default:
-      type.value = "primary";
+      type.value = "info";
       break;
   }
 };
