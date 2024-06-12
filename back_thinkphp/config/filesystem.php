@@ -21,6 +21,6 @@ return [
         ],
         // 更多的磁盘配置信息
     ],
-    'root_path'=>app()->getRootPath() . 'public/file/', // 根目录
-    'access_prefix'=>'/api/file/', // 访问前缀
+    'root_path'=>env('filesystem.root_path', app()->getRootPath() . 'public/file/'), // 根目录
+    'access_prefix'=>env('filesystem.access_prefix', '/api/file/') // 访问前缀
 ];
