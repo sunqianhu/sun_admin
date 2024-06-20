@@ -3,9 +3,8 @@
 namespace app\desktop\controller\system\mobile;
 
 use app\desktop\controller\Base;
-use app\desktop\validate\system\mobile\Module as ModuleValidate;
-use app\helper\Dictionary as DictionaryHelper;
 use app\model\mobile\Module as ModuleModel;
+use app\validate\mobile\Module as ModuleValidate;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
@@ -21,12 +20,11 @@ class Module extends Base
     public function getIndexModules()
     {
         $get = $this->request->get(['name']);
-        $query = ModuleModel::field('id,module_id,type_id,name,key,sort,remark');
+        $query = ModuleModel::field('id,module_id,name,key,sort,remark');
         if (isset($get['name'])) {
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
         $query = $query->order('sort', 'asc');
-        $query->append(['type_name']);
         $moduleModels = $query->select();
         $modules = $moduleModels->toArray();
 
@@ -49,12 +47,8 @@ class Module extends Base
         $arrayHandler = new ArrayHandler();
         $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
 
-        $dictionaryHelper = new DictionaryHelper();
-        $types = $dictionaryHelper->getList('mobile_module_type');
-
         $data = [
             'tree_modules' => $treeModules,
-            'types' => $types,
         ];
         return $this->success('获取成功', $data);
     }
@@ -64,7 +58,7 @@ class Module extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['module_id' => 0, 'type_id' => 0, 'name'=>'', 'key'=>'', 'api' => '', 'remark'=>'', 'sort']);
+        $post = $this->request->post(['module_id' => 0, 'name'=>'', 'key'=>'', 'api' => '', 'remark'=>'', 'sort']);
 
         //验证
         try {
@@ -89,7 +83,7 @@ class Module extends Base
             return $this->error('id参数错误');
         }
 
-        $moduleModel = ModuleModel::field('id,name,key,type_id,module_id,api,remark,sort')->find($id);
+        $moduleModel = ModuleModel::field('id,name,key,module_id,api,remark,sort')->find($id);
         if (empty($moduleModel)) {
             return $this->error('没有找到记录');
         }
@@ -101,12 +95,8 @@ class Module extends Base
         $arrayHandler = new ArrayHandler();
         $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
 
-        $dictionaryHelper = new DictionaryHelper();
-        $types = $dictionaryHelper->getList('mobile_module_type');
-
         $data = [
             'tree_modules' => $treeModules,
-            'types' => $types,
             'module' => $module
         ];
         return $this->success('获取成功', $data);
@@ -117,7 +107,7 @@ class Module extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'module_id' => 0, 'type_id' => 0, 'name', 'key'=>'', 'api' => '', 'remark'=>'', 'sort']);
+        $post = $this->request->post(['id', 'module_id' => 0, 'name', 'key'=>'', 'api' => '', 'remark'=>'', 'sort']);
 
         //验证
         try {

@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-use app\helper\Dictionary as DictionaryHelper;
+use app\service\Dictionary as DictionaryService;
 
 class Department extends Base
 {
@@ -13,7 +13,7 @@ class Department extends Base
      */
     public function getTypeNameAttr($value, $data)
     {
-        $dictionaryHelper = new DictionaryHelper();
-        return $dictionaryHelper->getValue('department_type', $data['type_id']);
+        $dictionaryService = new DictionaryService();
+        return $dictionaryService->getValue('department_type', $data['type_id']);
     }
 }

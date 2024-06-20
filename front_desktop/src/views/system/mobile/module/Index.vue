@@ -22,9 +22,6 @@
           <span v-if="row.remark" class="remark">{{ row.remark }}</span>
         </el-table-column>
         <el-table-column prop="key" label="模块key" width="300" show-overflow-tooltip />
-        <el-table-column v-slot="{ row }" prop="type_id" label="模块类型" width="100">
-          <type-tag :id="row.type_id">{{ row.type_name }}</type-tag>
-        </el-table-column>
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
@@ -65,7 +62,6 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
-import TypeTag from "./TypeTag.vue";
 
 const rowId = ref(0);
 const query = ref({});

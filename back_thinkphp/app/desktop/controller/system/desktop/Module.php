@@ -3,9 +3,10 @@
 namespace app\desktop\controller\system\desktop;
 
 use app\desktop\controller\Base;
-use app\desktop\validate\system\desktop\Module as ModuleValidate;
-use app\helper\Dictionary as DictionaryHelper;
 use app\model\desktop\Module as ModuleModel;
+use app\service\desktop\Module2 as ModuleService;
+use app\service\Dictionary as DictionaryService;
+use app\validate\desktop\Module as ModuleValidate;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
@@ -41,17 +42,11 @@ class Module extends Base
      */
     public function initAdd()
     {
-        $moduleModels = ModuleModel::field('id, id as value, module_id, name as label')
-            ->order('sort', 'asc')
-            ->select();
-        $modules = $moduleModels->toArray();
 
-        $arrayHandler = new ArrayHandler();
-        $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
 
-        $dictionaryHelper = new DictionaryHelper();
-        $types = $dictionaryHelper->getList('desktop_module_type');
-        $layouts = $dictionaryHelper->getList('desktop_module_layout');
+        $dictionaryService = new DictionaryService();
+        $types = $dictionaryService->getList('desktop_module_type');
+        $layouts = $dictionaryService->getList('desktop_module_layout');
 
         $data = [
             'tree_modules' => $treeModules,
@@ -70,13 +65,13 @@ class Module extends Base
 
         //验证
         try {
-            validate(ModuleValidate::class)->scene('add')->check($post);
+            validate(ModuleValidate::class)->scene('desktop_add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $moduleModel = new ModuleModel();
-        $moduleModel->save($post);
+        $moduleService = new ModuleService();
+        $moduleService->add($post);
 
         return $this->success('添加成功');
     }
@@ -103,9 +98,9 @@ class Module extends Base
         $arrayHandler = new ArrayHandler();
         $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
 
-        $dictionaryHelper = new DictionaryHelper();
-        $types = $dictionaryHelper->getList('desktop_module_type');
-        $layouts = $dictionaryHelper->getList('desktop_module_layout');
+        $dictionaryService = new DictionaryService();
+        $types = $dictionaryService->getList('desktop_module_type');
+        $layouts = $dictionaryService->getList('desktop_module_layout');
 
         $data = [
             'tree_modules' => $treeModules,

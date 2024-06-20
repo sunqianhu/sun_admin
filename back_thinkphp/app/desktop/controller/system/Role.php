@@ -3,12 +3,12 @@
 namespace app\desktop\controller\system;
 
 use app\desktop\controller\Base;
-use app\desktop\validate\system\Role as RoleValidate;
 use app\model\desktop\Module as DesktopModuleModel;
 use app\model\mobile\Module as MobileModuleModel;
 use app\model\Role as RoleModel;
 use app\model\RoleDesktopModule as RoleDesktopModuleModel;
 use app\model\RoleMobileModule as RoleMobileModuleModel;
+use app\validate\Role as RoleValidate;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 

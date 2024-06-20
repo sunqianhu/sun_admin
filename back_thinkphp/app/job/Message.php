@@ -2,9 +2,9 @@
 
 namespace app\job;
 
+use app\service\Message as MessageHelper;
 use Exception;
 use think\queue\Job;
-use app\helper\Message as MessageHelper;
 
 class Message
 {

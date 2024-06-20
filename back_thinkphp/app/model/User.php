@@ -1,7 +1,7 @@
 <?php
 namespace app\model;
 
-use app\helper\User as UserHelper;
+use app\service\User as UserHelper;
 
 class User extends Base
 {

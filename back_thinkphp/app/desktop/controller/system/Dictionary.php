@@ -3,8 +3,8 @@
 namespace app\desktop\controller\system;
 
 use app\desktop\controller\Base;
-use app\desktop\validate\system\Dictionary as DictionaryValidate;
 use app\model\Dictionary as DictionaryModel;
+use app\validate\Dictionary as DictionaryValidate;
 use think\exception\ValidateException;
 
 /**

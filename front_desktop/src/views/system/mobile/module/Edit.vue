@@ -21,13 +21,6 @@
             clearable
           />
         </el-form-item>
-        <el-form-item label="模块类型" prop="type_id">
-          <el-radio-group v-model="module.type_id">
-            <el-radio v-for="type in types" :key="type.key" :label="parseInt(type.key)">
-              {{ type.value }}
-            </el-radio>
-          </el-radio-group>
-        </el-form-item>
         <el-form-item label="模块名称" prop="name">
           <el-input v-model="module.name" />
         </el-form-item>

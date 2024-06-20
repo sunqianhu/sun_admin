@@ -2,16 +2,16 @@
 
 namespace app\desktop\controller\system;
 
-use app\helper\desktop\Jwt;
-use app\helper\User as UserHelper;
 use app\desktop\controller\Base;
-use app\desktop\validate\system\User as UserValidate;
 use app\model\Department as DepartmentModel;
 use app\model\LoginLog as LoginLogModel;
 use app\model\OperationLog as OperationLogModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
+use app\service\desktop\session\Jwt;
+use app\service\User as UserHelper;
+use app\validate\User as UserValidate;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 

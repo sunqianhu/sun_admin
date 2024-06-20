@@ -7,7 +7,7 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import dotenv from "dotenv";
 
-//https://vitejs.dev/config/
+// https://vitejs.dev/config/
 const viteConfig = ({ mode }) => {
   dotenv.config({ path: ".env" });
   dotenv.config({ path: ".env." + mode });

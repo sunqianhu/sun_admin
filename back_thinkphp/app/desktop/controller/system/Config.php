@@ -2,9 +2,9 @@
 
 namespace app\desktop\controller\system;
 
-use app\helper\Config as ConfigHelper;
 use app\desktop\controller\Base;
-use app\desktop\validate\system\Config as ConfigValidate;
+use app\service\Config as ConfigHelper;
+use app\validate\Config as ConfigValidate;
 use think\exception\ValidateException;
 
 /**

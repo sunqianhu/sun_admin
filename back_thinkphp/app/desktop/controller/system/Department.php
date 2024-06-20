@@ -2,10 +2,10 @@
 
 namespace app\desktop\controller\system;
 
-use app\helper\Dictionary as DictionaryHelper;
 use app\desktop\controller\Base;
-use app\desktop\validate\system\Department as DepartmentValidate;
 use app\model\Department as DepartmentModel;
+use app\service\Dictionary as DictionaryService;
+use app\validate\Department as DepartmentValidate;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
@@ -14,7 +14,6 @@ use think\exception\ValidateException;
  */
 class Department extends Base
 {
-
     /**
      * 得到首页部门
      */
@@ -49,8 +48,8 @@ class Department extends Base
         $arrayHandler = new ArrayHandler();
         $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
-        $dictionaryHelper = new DictionaryHelper();
-        $types = $dictionaryHelper->getList('department_type');
+        $dictionaryService = new DictionaryService();
+        $types = $dictionaryService->getList('department_type');
 
         $data = [
             'tree_departments'=>$treeDepartments,
@@ -104,8 +103,8 @@ class Department extends Base
         $arrayHandler = new ArrayHandler();
         $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
-        $dictionaryHelper = new DictionaryHelper();
-        $types = $dictionaryHelper->getList('department_type');
+        $dictionaryService = new DictionaryService();
+        $types = $dictionaryService->getList('department_type');
 
         $data = [
             'tree_departments' => $treeDepartments,

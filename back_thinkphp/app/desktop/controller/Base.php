@@ -3,10 +3,10 @@
 namespace app\desktop\controller;
 
 use app\BaseController;
-use app\helper\desktop\Jwt;
 use app\model\desktop\Module as ModuleModel;
 use app\model\OperationLog as OperationLogModel;
 use app\model\UserRole as UserRoleModel;
+use app\service\desktop\session\Jwt;
 use Exception;
 use think\Response;
 

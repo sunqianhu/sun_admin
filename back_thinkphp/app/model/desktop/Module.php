@@ -2,7 +2,6 @@
 
 namespace app\model\desktop;
 
-use app\helper\Dictionary as DictionaryHelper;
 use app\model\Base;
 
 class Module extends Base
@@ -22,17 +21,6 @@ class Module extends Base
 
         $api = str_replace("\r\n", "\n", $data['api']);
         return explode("\n", $api);
-    }
-
-    /**
-     * 得到类型名称
-     * @param $value
-     * @return string
-     */
-    public function getTypeNameAttr($value, $data)
-    {
-        $dictionaryHelper = new DictionaryHelper();
-        return $dictionaryHelper->getValue('desktop_module_type', $data['type_id']);
     }
 
     /**

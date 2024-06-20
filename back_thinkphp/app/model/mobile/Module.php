@@ -2,8 +2,8 @@
 
 namespace app\model\mobile;
 
-use app\helper\Dictionary as DictionaryHelper;
 use app\model\Base;
+use app\service\Dictionary as DictionaryService;
 
 class Module extends Base
 {
@@ -31,8 +31,8 @@ class Module extends Base
      */
     public function getTypeNameAttr($value, $data)
     {
-        $dictionaryHelper = new DictionaryHelper();
-        return $dictionaryHelper->getValue('mobile_module_type', $data['type_id']);
+        $dictionaryService = new DictionaryService();
+        return $dictionaryService->getValue('mobile_module_type', $data['type_id']);
     }
 
     /**

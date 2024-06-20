@@ -1,0 +1,95 @@
+<?php
+/**
+ * jwt
+ */
+
+namespace app\service\desktop\session;
+
+use app\entity\User as UserEntity;
+use app\model\desktop\Token as TokenModel;
+use app\model\User as UserModel;
+use Firebase\JWT\JWT as FirebaseJWT;
+use Firebase\JWT\Key;
+use Exception;
+
+class Jwt
+{
+    private $key = 'axjeJXKlA836x7s@#';
+    private $leeway = 180;
+
+    /**
+     * 得到token
+     * @param UserEntity $userEntity
+     * @return token
+     */
+    function getToken(UserEntity $userEntity)
+    {
+        $payload = [
+            'id' => $userEntity->id,
+            'name' => $userEntity->name,
+            'department_id' => $userEntity->departmentId,
+            'time' => microtime()
+        ];
+        $token = FirebaseJWT::encode($payload, $this->key, 'HS256');
+
+        $data = [
+            'token' => $token,
+            'user_id' => $userEntity->id,
+            'expires_in' => time() + 3600 * 2
+        ];
+        $tokenModel = new TokenModel();
+        $tokenModel->save($data);
+
+        return $token;
+    }
+
+    /**
+     * 解析token
+     * @param $token token
+     * @return UserEntity 用户对象
+     */
+    function resolverToken($token)
+    {
+        FirebaseJWT::$leeway = $this->leeway;
+        $decoded = FirebaseJWT::decode($token, new Key($this->key, 'HS256'));
+
+        // 验证
+        $tokenModel = TokenModel::where('token', $token)->find();
+        if (empty($tokenModel)) {
+            throw new Exception('没有找到记录');
+        }
+        if ($tokenModel->expires_in < time()) {
+            throw new Exception('token已过期');
+        }
+        if ($tokenModel->user_id != $decoded->id) {
+            throw new Exception('token非法');
+        }
+
+        // 有效期
+        $tokenModel->expires_in = time() + 3600 * 8;
+        $tokenModel->save();
+
+        $userModel = UserModel::find($tokenModel->user_id);
+        if(empty($userModel)){
+            throw new Exception('没有找到用户记录');
+        }
+
+        $userEntity = new UserEntity();
+        $userEntity->id = $userModel->id;
+        $userEntity->name = $userModel->name;
+        $userEntity->departmentId = $userModel->department_id;
+
+        return $userEntity;
+    }
+
+    /**
+     * 删除token
+     * @param $token
+     * @return void
+     */
+    function deleteToken($token)
+    {
+        TokenModel::where('token', '=', $token)->delete();
+        return true;
+    }
+}

@@ -16,7 +16,7 @@
         scroll-to-error
         ref="loginRef"
         class="form"
-        @keyup.enter="submitForm"
+        @keyup.enter="verify"
       >
         <el-form-item prop="account">
           <el-input
@@ -37,17 +37,18 @@
           />
         </el-form-item>
         <el-form-item class="submit">
-          <el-button type="primary" size="large" @click="verify" class="button" :loading="loading"
-            >登录</el-button
-          >
+          <el-button type="primary" size="large" @click="verify" class="button" :loading="loading">
+            登录
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="footer">
-      <div class="browser">浏览器支持：Edge ≥ 79 Firefox≥78 Chrome≥64 Safari≥12</div>
-      <div class="copyright">Copyright &copy; 2023 asun</div>
+      <div class="browser">浏览器支持：Edge ≥ 85 Firefox≥79 Chrome≥85 Safari≥14.1</div>
+      <div class="copyright">Copyright &copy; 2024 asun</div>
     </div>
-    <Vcode
+
+    <vcode
       :show="vCodeFlag"
       @success="
         vCodeFlag = false;
