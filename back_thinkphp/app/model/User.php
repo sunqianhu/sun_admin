@@ -46,7 +46,7 @@ class User extends Base
      */
     public function getAvatarUrlAttr($value, $data)
     {
-        $userHelper = new UserHelper();
-        return $userHelper->getAvatarUrl($data['avatar']);
+        $userService = new UserHelper();
+        return $userService->getAvatarUrl($data['avatar']);
     }
 }

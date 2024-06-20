@@ -266,8 +266,8 @@ class User extends Base
         }
 
         $user = $userModel->toArray();
-        $userHelper = new UserHelper();
-        $user['role_name_string'] = $userHelper->getRoleNameString($userModel->roles, '，');
+        $userService = new UserHelper();
+        $user['role_name_string'] = $userService->getRoleNameString($userModel->roles, '，');
 
         //登录日志
         $loginLogModels = LoginLogModel::alias('ll')

@@ -25,9 +25,9 @@ class Base extends BaseController
     ];
 
     /**
-     * @var string[] 不判断权限网址
+     * @var string[] 不鉴权网址
      */
-    private $noPermissionUrls = [
+    private $noAuthorizationUrls = [
         'desktop/login/logout',
         'desktop/frame/getRoutes',
         'desktop/frame/getPermissions',
@@ -58,7 +58,7 @@ class Base extends BaseController
         parent::initialize();
 
         try {
-            $this->auth();
+            $this->authorization();
         } catch (Exception $exception) {
             $message = $exception->getMessage();
             $code = 0;
@@ -77,7 +77,7 @@ class Base extends BaseController
      * @return void
      * @throws Exception
      */
-    function auth()
+    function authorization()
     {
         $appName = app('http')->getName();
         $controller = $this->request->controller();
@@ -101,8 +101,8 @@ class Base extends BaseController
         $this->user = $user;
 
         //权限
-        $this->noPermissionUrls = array_map('strtolower', $this->noPermissionUrls);
-        if (in_array($url, $this->noPermissionUrls)) {
+        $this->noAuthorizationUrls = array_map('strtolower', $this->noAuthorizationUrls);
+        if (in_array($url, $this->noAuthorizationUrls)) {
             return;
         }
 
@@ -190,7 +190,7 @@ class Base extends BaseController
         if (in_array($noSlashUrl, $this->noLoginUrls)) {
             return;
         }
-        if (in_array($noSlashUrl, $this->noPermissionUrls)) {
+        if (in_array($noSlashUrl, $this->noAuthorizationUrls)) {
             return;
         }
 

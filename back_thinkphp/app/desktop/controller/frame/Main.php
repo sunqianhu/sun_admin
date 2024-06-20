@@ -6,7 +6,7 @@ use app\desktop\controller\Base;
 use app\model\desktop\Module as ModuleModel;
 use app\model\User as UserModel;
 use app\service\Config as ConfigHelper;
-use app\service\User as Userhelper;
+use app\service\User as UserService;
 use Sunqianhu\Helper\ArrayHandler;
 
 /**
@@ -40,8 +40,8 @@ class Main extends Base
      */
     public function getMenus()
     {
-        $userHelper = new Userhelper();
-        $roleIds = $userHelper->getRoleIds($this->user->id);
+        $userService = new UserService();
+        $roleIds = $userService->getRoleIds($this->user->id);
         if (empty($roleIds)) {
             return $this->success('获取成功', []);
         }
