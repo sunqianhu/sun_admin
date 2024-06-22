@@ -1,0 +1,70 @@
+<?php
+
+namespace app\desktop\controller\system\user;
+
+use app\desktop\controller\Base;
+use app\model\Department as DepartmentModel;
+use app\service\Dictionary as DictionaryService;
+use Sunqianhu\Helper\ArrayHandler;
+use think\exception\ValidateException;
+
+class Edit extends Base
+{
+    /**
+     * 初始化
+     */
+    public function init()
+    {
+        $id = $this->request->get('id', 0);
+        if ($id <= 0 || !is_numeric($id)) {
+            return $this->error('id参数错误');
+        }
+
+        //部门
+        $departmentModel = DepartmentModel::field('id,name,department_id,type_id,sort')->find($id);
+        if (empty($departmentModel)) {
+            return $this->error('没有找到记录');
+        }
+        $department = $departmentModel->toArray();
+
+        //树形部门
+        $departmentModels = DepartmentModel::field('id, id as value, department_id, type_id, name as label')
+            ->order('sort', 'asc')
+            ->select();
+        $departments = $departmentModels->toArray();
+        $arrayHandler = new ArrayHandler();
+        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+
+        $dictionaryService = new DictionaryService();
+        $types = $dictionaryService->getList('department_type');
+
+        $data = [
+            'tree_departments' => $treeDepartments,
+            'department' => $department,
+            'types'=>$types
+        ];
+        return $this->success('获取成功', $data);
+    }
+
+    /**
+     * 保存
+     */
+    public function save()
+    {
+        $post = $this->request->post(['id', 'department_id' => 0, 'type_id', 'name', 'sort']);
+
+        //验证
+        try {
+            validate(DepartmentValidate::class)->scene('edit')->check($post);
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
+        }
+        $departmentModel = DepartmentModel::find($post['id']);
+        if(empty($departmentModel)){
+            return $this->error('没有找到部门记录');
+        }
+        $departmentModel->save($post);
+
+        return $this->success('修改成功');
+    }
+}

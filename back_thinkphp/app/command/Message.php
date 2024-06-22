@@ -1,5 +1,5 @@
 <?php
-declare (strict_types=1);
+declare (strict_types = 1);
 
 namespace app\command;
 
@@ -9,17 +9,14 @@ use think\console\input\Argument;
 use think\console\input\Option;
 use think\console\Output;
 use think\facade\Config;
-use Workerman\Worker;
 use Workerman\Connection\TcpConnection;
 use Workerman\Timer;
+use Workerman\Worker;
 
-/**
- * 消息服务
- */
 class Message extends Command
 {
     /**
-     * @var object 容器类
+     * @var object 容器
      */
     public $worker;
 
@@ -28,17 +25,13 @@ class Message extends Command
      */
     private $actions = ['start', 'stop', 'reload', 'restart', 'status'];
 
-    /**
-     * 配置
-     * @return void
-     */
     protected function configure()
     {
-        //指令配置
-        $this->setName('message')
+        // 指令配置
+        $this->setName('Message')
             ->addArgument('action', Argument::OPTIONAL, "操作参数[start|stop|reload|restart|status]", 'start')
             ->addOption('daemon', null, Option::VALUE_OPTIONAL, '以守护进程运行')
-            ->setDescription('websocket消息服务端，windows启动命令：php think message，linux启动命令：php think message start --daemon true');
+            ->setDescription('websocket系统消息服务端，windows启动命令：php think message，linux启动命令：php think message start --daemon true');
     }
 
     /**
@@ -74,17 +67,16 @@ class Message extends Command
             if (isset($argv[4])) {
                 unset($argv[4]);
             }
-        } else {
-            //window不支持命令参数
         }
 
         //容器
         $config = Config::get('message');
-        if(!isset($config['server_ip']) || !isset($config['port'])){
-            echo '还未配置服务器端监听ip或监听端口';
+        if(!isset($config['ip']) || !isset($config['port'])){
+            echo '还未配置监听ip或端口';
             exit;
         }
-        $url = 'websocket://' . $config['server_ip'] . ':' . $config['port'];
+
+        $url = 'websocket://' . $config['ip'] . ':' . $config['port'];
         $this->worker = new Worker($url);
         $this->worker->name = 'message';
         $this->worker->count = 1;
@@ -191,9 +183,10 @@ class Message extends Command
             if (empty($connection->userId)) {
                 continue;
             }
-            if (in_array($connection->userId, $userIds)) {
-                $connection->send($encodeData);
+            if (!in_array($connection->userId, $userIds)) {
+                continue;
             }
+            $connection->send($encodeData);
         }
     }
 }

@@ -38,8 +38,7 @@ class Message
                 'url' => $userId,
                 'add_time' => time()
             ];
-            $messageModel = new MessageModel();
-            $messageModel->save($data);
+            $this->add($data);
         }
 
         //消息
@@ -54,7 +53,7 @@ class Message
             ]
         ];
         $encodeData = json_encode($data);
-        $url = 'ws://' . $config['client_ip'] . ':' . $config['port'];
+        $url = 'ws://' . $config['ip'] . ':' . $config['port'];
         $client = new Client($url);
         $client->text($encodeData);
         $client->close();
@@ -74,5 +73,15 @@ class Message
             'url'=>$url
         ];
         Queue::push('app\job\Message', $data, 'message');
+    }
+
+    /**
+     * 添加
+     * @param $data
+     * @return void
+     */
+    public function add($data){
+        $messageModel = new MessageModel();
+        $messageModel->save($data);
     }
 }

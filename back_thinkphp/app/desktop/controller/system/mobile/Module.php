@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\mobile;
 
 use app\desktop\controller\Base;
 use app\model\mobile\Module as ModuleModel;
-use app\validate\mobile\Module as ModuleValidate;
+use app\validate\mobile\Permission as ModuleValidate;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
@@ -97,7 +97,7 @@ class Module extends Base
 
         $data = [
             'tree_modules' => $treeModules,
-            'module' => $module
+            'permission' => $module
         ];
         return $this->success('获取成功', $data);
     }

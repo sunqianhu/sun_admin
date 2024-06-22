@@ -8,9 +8,9 @@ use think\facade\Cache;
 class Dictionary
 {
     /**
-     * @var int 缓存有效期
+     * @var int 有效期
      */
-    private $cacheExpire = 600;
+    private $expire = 600;
 
     /**
      * 获取字典集合

@@ -7,6 +7,21 @@ use think\facade\Cache;
 
 class Department
 {
+    public function add($data)
+    {
+
+    }
+
+    public function edit()
+    {
+
+    }
+
+    public function delete()
+    {
+
+    }
+
     /**
      * 得到姓名
      * @param $id
@@ -14,7 +29,7 @@ class Department
      */
     public function getName($id)
     {
-        $key = 'department_'.$id;
+        $key = 'department_name_'.$id;
         $name = Cache::get($key);
         if($name !== null){
             return $name;

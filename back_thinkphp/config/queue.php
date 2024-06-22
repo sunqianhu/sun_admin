@@ -18,7 +18,7 @@ return [
         'database' => [
             'type'       => 'database',
             'queue'      => 'default',
-            'table'      => 'jobs',
+            'table'      => 'job',
             'connection' => null,
         ],
         'redis'    => [

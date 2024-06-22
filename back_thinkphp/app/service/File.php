@@ -1,7 +1,4 @@
 <?php
-/**
- * 文件
- */
 
 namespace app\service;
 
@@ -16,6 +13,10 @@ class File
      */
     public function getUrl($path)
     {
+        if($path === ''){
+            return '';
+        }
+
         return Config::get('filesystem.access_prefix') . $path;
     }
 
@@ -38,7 +39,7 @@ class File
      * @return string
      * @throws Exception
      */
-    public function mkModuleDir($module = ''){
+    public function makeModuleDir($module = ''){
         $rootPath = Config::get('filesystem.root_path'); // 磁盘根目录
         if (empty($rootPath)) {
             throw new Exception('没有配置文件目录');
@@ -91,7 +92,7 @@ class File
             throw new Exception('没有获取到mime类型');
         }
         if(!in_array($mimeType, $allowMimeTypes)){
-            throw new Exception('内容的mime类型不允许');
+            throw new Exception('此mime类型的内容不允许');
         }
         $ext = $extMap[$mimeType];
         $base64Content = $contents[1] ?? '';
@@ -100,7 +101,7 @@ class File
         }
         $decodeContent = base64_decode($base64Content);
 
-        $relativeDir = $this->mkModuleDir($module);
+        $relativeDir = $this->makeModuleDir($module);
         $fileName = md5(time() . rand(1000, 9999)) . '.' . $ext;
         $path = $relativeDir . $fileName; // 文件相对路径
         $fullPath = $this->getFullPath($path); // 全文件路径

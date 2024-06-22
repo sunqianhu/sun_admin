@@ -2,7 +2,7 @@
 
 return [
     // 默认磁盘
-    'default' => env('filesystem.driver', 'public'),
+    'default' => 'local',
     // 磁盘列表
     'disks'   => [
         'local'  => [
@@ -13,14 +13,14 @@ return [
             // 磁盘类型
             'type'       => 'local',
             // 磁盘路径
-            'root'       => app()->getRootPath() . 'public/file',
+            'root'       => app()->getRootPath() . 'public/storage',
             // 磁盘路径对应的外部URL路径
-            'url'        => '/file',
+            'url'        => '/storage',
             // 可见性
             'visibility' => 'public',
         ],
         // 更多的磁盘配置信息
     ],
-    'root_path'=>env('filesystem.root_path', app()->getRootPath() . 'public/file/'), // 根目录
-    'access_prefix'=>env('filesystem.access_prefix', '/api/file/') // 访问前缀
+    'root_path'=>env('FILESYSTEM_ROOT_PATH', app()->getRootPath() . 'public/storage/'), // 根目录
+    'access_prefix'=>env('FILESYSTEM_ACCESS_PREFIX', '/api/storage/') // 访问前缀
 ];

@@ -19,7 +19,7 @@ class UploadFile extends Base
     public function upload()
     {
         $requestFile = $this->request->file();
-        $module = $this->request->post('module', ''); //模块
+        $module = $this->request->post('permission', ''); //模块
 
         //验证
         try {
