@@ -5,7 +5,7 @@ namespace app\service\desktop;
 use app\service\User as UserService;
 use Sunqianhu\Helper\ArrayHandler;
 
-class FrontRoute
+class Route
 {
     /**
      * 得到用户的路由

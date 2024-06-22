@@ -3,10 +3,9 @@
 namespace app\desktop\controller;
 
 use app\BaseController;
-use app\model\desktop\Module as ModuleModel;
-use app\model\OperationLog as OperationLogModel;
-use app\model\UserRole as UserRoleModel;
-use app\service\desktop\session\Jwt;
+use app\service\desktop\Session as SessionService;
+use app\entity\desktop\Session as SessionEntity;
+use app\service\OperationLog as OperationLogService;
 use Exception;
 use think\Response;
 
@@ -16,38 +15,9 @@ use think\Response;
 class Base extends BaseController
 {
     /**
-     * @var string[] 不登录网址
+     * @var SessionEntity 会话
      */
-    private $noLoginUrls = [
-        'desktop/login/getCaptcha',
-        'desktop/login/login',
-        'desktop/test/index'
-    ];
-
-    /**
-     * @var string[] 不鉴权网址
-     */
-    private $noAuthUrls = [
-        'desktop/login/logout',
-        'desktop/frame/getRoutes',
-        'desktop/frame/getPermissions',
-        'desktop/frame/getWatermark',
-        'desktop/main/init',
-        'desktop/main/getMenus',
-        'desktop/main/getAvatar',
-        'desktop/message/readall',
-        'desktop/message/getNoReads',
-        'desktop/uploadfile/upload',
-        'desktop/my/info',
-        'desktop/my/initEditAvatar',
-        'desktop/my/saveEditAvatar',
-        'desktop/my/editPassword'
-    ];
-
-    /**
-     * @var 用户
-     */
-    public $user;
+    public SessionEntity $session;
 
     /**
      * 初始化
@@ -57,89 +27,17 @@ class Base extends BaseController
     {
         parent::initialize();
 
+        $sessionService = new SessionService();
         try {
-            $this->auth();
+            $this->session = $sessionService->auth($this->request);
         } catch (Exception $exception) {
             $message = $exception->getMessage();
-            $code = 0;
-            if(strpos($message, '登录已失效') !== false){
-                $code = 2;
-            }
-            $this->error($message, null, $code)->send();
+            $this->error($message, null, 2)->send();
             exit;
         }
 
-        $this->addOperationLog();
-    }
-
-    /**
-     * 鉴权
-     * @return void
-     * @throws Exception
-     */
-    function auth()
-    {
-        $appName = app('http')->getName();
-        $controller = $this->request->controller();
-        $action = $this->request->action();
-        $url = $appName . '/' . $controller . '/' . $action;
-        $url = strtolower($url);
-
-        //登录
-        $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
-        if (in_array($url, $this->noLoginUrls)) {
-            return;
-        }
-
-        $token = $this->request->header('token', '');
-        if (empty($token)) {
-            throw new Exception('未获取到token');
-        }
-
-        $jwt = new Jwt();
-        $user = $jwt->resolverToken($token);
-        $this->user = $user;
-
-        //权限
-        $this->noAuthUrls = array_map('strtolower', $this->noAuthUrls);
-        if (in_array($url, $this->noAuthUrls)) {
-            return;
-        }
-
-        $roleIds = UserRoleModel::where('user_id', $this->user->id)
-            ->group('role_id')
-            ->column('role_id');
-        if (empty($roleIds)) {
-            throw new Exception('未设置角色');
-        }
-
-        $moduleModels = ModuleModel::alias('m')
-            ->join('role_desktop_module rdm', 'm.id = rdm.module_id')
-            ->field('m.api')
-            ->where('rdm.role_id', 'in', $roleIds)
-            ->where('m.api', '<>', '')
-            ->group('m.id')
-            ->append(['apis'])
-            ->select();
-        if ($moduleModels->isEmpty()) {
-            throw new Exception('无权限');
-        }
-
-        $have = false;
-        foreach ($moduleModels as $moduleModel) {
-            $apis = $moduleModel->apis;
-            if (empty($apis)) {
-                continue;
-            }
-            $apis = array_map('strtolower', $apis);
-            if (in_array($url, $apis)) {
-                $have = true;
-                break;
-            }
-        }
-        if (!$have) {
-            throw new Exception('无权限');
-        }
+        $operationLogService = new OperationLogService();
+        $operationLogService->add($this->session->user->id, $this->request->baseUrl(), $this->request->ip());
     }
 
     /**
@@ -170,38 +68,5 @@ class Base extends BaseController
             'data' => $data
         ];
         return Response::create($result, 'json', 200);
-    }
-
-    /**
-     * 新增操作日志
-     * @return void
-     */
-    public function addOperationLog()
-    {
-        if (empty($this->user->id)) {
-            return;
-        }
-
-        //不记录公共页面
-        $url = $this->request->baseUrl();
-        $url = strtolower($url);
-
-        $noSlashUrl = substr($url, 1);
-        if (in_array($noSlashUrl, $this->noLoginUrls)) {
-            return;
-        }
-        if (in_array($noSlashUrl, $this->noAuthUrls)) {
-            return;
-        }
-
-        //记录
-        $data = [
-            'user_id' => $this->user->id,
-            'time' => time(),
-            'ip' => $this->request->ip(),
-            'url' => $url
-        ];
-        $operationLogModel = new OperationLogModel();
-        $operationLogModel->save($data);
     }
 }

@@ -1,13 +1,12 @@
 <?php
 
-namespace app\model\mobile;
+namespace app\model\desktop;
 
 use app\model\Base;
-use app\service\Dictionary as DictionaryService;
 
-class Module extends Base
+class Menu extends Base
 {
-    protected $name = 'mobile_module';
+    protected $name = 'desktop_menu';
 
     /**
      * 获取接口地址
@@ -25,18 +24,7 @@ class Module extends Base
     }
 
     /**
-     * 得到类型名称
-     * @param $value
-     * @return string
-     */
-    public function getTypeNameAttr($value, $data)
-    {
-        $dictionaryService = new DictionaryService();
-        return $dictionaryService->getValue('mobile_module_type', $data['type_id']);
-    }
-
-    /**
-     * 得到模块名称和备注
+     * 得到权限名称和备注
      * @param $value
      * @return string
      */

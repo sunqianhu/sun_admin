@@ -3,11 +3,11 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Module as DesktopModuleModel;
-use app\model\mobile\Module as MobileModuleModel;
+use app\model\desktop\Permission as DesktopPermissionModel;
+use app\model\mobile\Permission as MobilePermissionModel;
 use app\model\Role as RoleModel;
-use app\model\RoleDesktopModule as RoleDesktopModuleModel;
-use app\model\RoleMobileModule as RoleMobileModuleModel;
+use app\model\RoleDesktopPermission as RoleDesktopPermissionModel;
+use app\model\RoleMobilePermission as RoleMobilePermissionModel;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
@@ -18,21 +18,21 @@ class Add extends Base
      */
     public function initAdd()
     {
-        //桌面端模块
-        $desktopModuleModels = DesktopModuleModel::field('id, module_id, name, remark')
+        //桌面端权限
+        $desktopPermissionModels = DesktopPermissionModel::field('id, module_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
-        $desktopModules = $desktopModuleModels->toArray();
+        $desktopModules = $desktopPermissionModels->toArray();
         $arrayHandler = new ArrayHandler();
         $treeDesktopModules = $arrayHandler->convertTree($desktopModules, 'id', 'module_id', 'children');
 
-        //移动端模块
-        $mobileModuleModels = MobileModuleModel::field('id, module_id, name, remark')
+        //移动端权限
+        $mobilePermissionModels = MobilePermissionModel::field('id, module_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
-        $mobileModules = $mobileModuleModels->toArray();
+        $mobileModules = $mobilePermissionModels->toArray();
         $arrayHandler = new ArrayHandler();
         $treeMobileModules = $arrayHandler->convertTree($mobileModules, 'id', 'module_id', 'children');
 
@@ -62,8 +62,8 @@ class Add extends Base
 
         if (!empty($post['desktop_module_ids'])) {
             foreach($post['desktop_module_ids'] as $desktopModuleId){
-                $roleDesktopModuleModel = new RoleDesktopModuleModel();
-                $roleDesktopModuleModel->save([
+                $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
+                $roleDesktopPermissionModel->save([
                     'role_id'=>$roleModel->id,
                     'module_id'=>$desktopModuleId
                 ]);
@@ -72,8 +72,8 @@ class Add extends Base
 
         if (!empty($post['mobile_module_ids'])) {
             foreach($post['mobile_module_ids'] as $mobileModuleId){
-                $roleMobileModuleModel = new RoleMobileModuleModel();
-                $roleMobileModuleModel->save([
+                $roleMobilePermissionModel = new RoleMobilePermissionModel();
+                $roleMobilePermissionModel->save([
                     'role_id'=>$roleModel->id,
                     'module_id'=>$mobileModuleId
                 ]);

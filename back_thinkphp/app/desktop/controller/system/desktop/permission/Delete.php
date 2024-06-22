@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\desktop\module;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Module as ModuleModel;
+use app\model\desktop\Permission as PermissionModel;
 
 class Index extends Base
 {
@@ -17,12 +17,12 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $childrenModuleModel = ModuleModel::where('module_id', $id)->find();
-        if (!empty($childrenModuleModel)) {
-            return $this->error('存在子模块，不能删除');
+        $childrenPermissionModel = PermissionModel::where('module_id', $id)->find();
+        if (!empty($childrenPermissionModel)) {
+            return $this->error('存在子权限，不能删除');
         }
 
-        $moduleModel = ModuleModel::find($id);
+        $moduleModel = PermissionModel::find($id);
         $moduleModel->delete();
 
         return $this->success('删除成功');

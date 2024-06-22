@@ -4,8 +4,8 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\Role as RoleModel;
-use app\model\RoleDesktopModule as RoleDesktopModuleModel;
-use app\model\RoleMobileModule as RoleMobileModuleModel;
+use app\model\RoleDesktopPermission as RoleDesktopPermissionModel;
+use app\model\RoleMobilePermission as RoleMobilePermissionModel;
 
 class Delete extends Base
 {
@@ -26,8 +26,8 @@ class Delete extends Base
             return $this->error('没有找到记录');
         }
         $roleModel->delete();
-        RoleDesktopModuleModel::where('role_id', $roleModel->id)->delete();
-        RoleMobileModuleModel::where('role_id', $roleModel->id)->delete();
+        RoleDesktopPermissionModel::where('role_id', $roleModel->id)->delete();
+        RoleMobilePermissionModel::where('role_id', $roleModel->id)->delete();
 
         return $this->success('删除成功');
     }

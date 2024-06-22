@@ -1,13 +1,10 @@
 <?php
 
-namespace app\desktop\controller\frame;
+namespace app\desktop\controller\main;
 
 use app\desktop\controller\Base;
 use app\model\Message as MessageModel;
 
-/**
- * 消息提醒
- */
 class Message extends Base
 {
     /**

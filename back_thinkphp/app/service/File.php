@@ -34,7 +34,7 @@ class File
     }
 
     /**
-     * 创建模块目录
+     * 创建权限目录
      * @param $module
      * @return string
      * @throws Exception

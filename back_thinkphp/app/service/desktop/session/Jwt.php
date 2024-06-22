@@ -5,6 +5,7 @@
 
 namespace app\service\desktop\session;
 
+use app\entity\desktop\Session as SessionEntity;
 use app\entity\User as UserEntity;
 use app\model\desktop\Token as TokenModel;
 use app\model\User as UserModel;
@@ -45,8 +46,11 @@ class Jwt
 
     /**
      * 解析token
-     * @param $token token
-     * @return UserEntity 用户对象
+     * @param $token
+     * @return SessionEntity
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     function resolverToken($token)
     {
@@ -66,7 +70,7 @@ class Jwt
         }
 
         // 有效期
-        $tokenModel->expires_in = time() + 3600 * 8;
+        $tokenModel->expires_in = time() + 60 * 30;
         $tokenModel->save();
 
         $userModel = UserModel::find($tokenModel->user_id);
@@ -79,7 +83,11 @@ class Jwt
         $userEntity->name = $userModel->name;
         $userEntity->departmentId = $userModel->department_id;
 
-        return $userEntity;
+        $sessionEntity = new SessionEntity();
+        $sessionEntity->token = $token;
+        $sessionEntity->user = $userEntity;
+
+        return $sessionEntity;
     }
 
     /**

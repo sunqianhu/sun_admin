@@ -2,7 +2,7 @@
 
 namespace app\service\desktop;
 
-use app\model\desktop\Module as ModuleModel;
+use app\model\desktop\Permission as PermissionModel;
 use app\model\User as UserModel;
 use app\service\User as UserService;
 use Sunqianhu\Helper\ArrayHandler;
@@ -13,7 +13,7 @@ use think\db\exception\ModelNotFoundException;
 class Permission
 {
     /**
-     * 得到树形模块
+     * 得到树形权限
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -21,7 +21,7 @@ class Permission
      */
     public function getTreeModules()
     {
-        $moduleModels = ModuleModel::field('id, module_id, name')
+        $moduleModels = PermissionModel::field('id, module_id, name')
             ->order('sort', 'asc')
             ->select();
         $modules = $moduleModels->toArray();
@@ -38,7 +38,7 @@ class Permission
      */
     public function add($data)
     {
-        $moduleModel = new ModuleModel();
+        $moduleModel = new PermissionModel();
         $moduleModel->save($data);
     }
 
@@ -52,7 +52,7 @@ class Permission
      * @throws ModelNotFoundException
      */
     public function edit($id, $data){
-        $moduleModel = ModuleModel::find($id);
+        $moduleModel = PermissionModel::find($id);
         if(empty($moduleModel)){
             throw new Exception('没有找到记录');
         }
@@ -69,7 +69,7 @@ class Permission
      * @throws Exception
      */
     public function delete($id){
-        $moduleModel = ModuleModel::find($id);
+        $moduleModel = PermissionModel::find($id);
         if(empty($moduleModel)){
             throw new Exception('没有找到记录');
         }
@@ -77,7 +77,7 @@ class Permission
     }
 
     /**
-     * 得到主布局第一个页面模块id
+     * 得到主布局第一个页面权限id
      * @param $treeModules
      * @return int|mixed
      */
@@ -98,7 +98,7 @@ class Permission
     }
 
     /**
-     * 得到空白布局第一个页面模块id
+     * 得到空白布局第一个页面权限id
      * @param $treeModules
      * @return int|mixed
      */
@@ -131,7 +131,7 @@ class Permission
             return $permissions;
         }
 
-        //模块
+        //权限
         $permissionModels = PermissionModel::alias('p')
             ->join('role_desktop_permission rdp', 'p.id = rdp.permission_id')
             ->field('p.key')
@@ -154,7 +154,7 @@ class Permission
     }
 
     /**
-     * 通过桌面端模块key得到用户ids
+     * 通过桌面端权限key得到用户ids
      * @param $permissionKey
      * @param $departmentIds
      * @return array

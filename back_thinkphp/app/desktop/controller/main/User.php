@@ -1,25 +1,17 @@
 <?php
 
-namespace app\desktop\controller\frame;
+namespace app\desktop\controller\main;
 
-use app\desktop\controller\Base;
-use app\desktop\validate\My as MyValidate;
 use app\model\User as UserModel;
 use app\service\File;
-use Exception;
 use Sunqianhu\Helper\Image;
 use think\exception\ValidateException;
 use think\facade\Config;
 
-/**
- * 个人中心
- */
-class My extends Base
+class User
 {
-    /**
-     * 账号信息
-     */
-    public function info()
+
+    public function getUserInfo()
     {
         $userModel = UserModel::field('id,account,name,phone,login_time,login_ip,department_id')
             ->find($this->user->id);
@@ -28,13 +20,6 @@ class My extends Base
         return $this->success('获取成功', $user);
     }
 
-    /**
-     * 初始化修改头像
-     * @return \think\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
     public function initEditAvatar()
     {
         $userModel = UserModel::field('avatar')->find($this->user->id);

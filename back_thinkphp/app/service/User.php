@@ -5,9 +5,6 @@ namespace app\service;
 use app\model\desktop\Permission as PermissionModel;
 use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
-use app\service\desktop\Permission as PermissionService;
-use app\service\User as UserService;
-use Sunqianhu\Helper\ArrayHandler;
 use think\facade\Cache;
 use app\service\File as FileService;
 use app\service\App as AppService;
@@ -95,5 +92,56 @@ class User
             ->group('role_id')
             ->column('role_id');
         return $roleIds;
+    }
+
+    /**
+     * 得到用户的接口集合
+     * @param $userId
+     * @return array
+     */
+    public function getApis($userId){
+        $roleIds = $this->getRoleIds($userId);
+
+        $permissionModels = PermissionModel::alias('p')
+            ->join('role_desktop_permission rdp', 'p.id = rdp.permission_id')
+            ->field('p.api')
+            ->where('rdp.role_id', 'in', $roleIds)
+            ->where('p.api', '<>', '')
+            ->group('p.id')
+            ->append(['apis'])
+            ->select();
+        if ($permissionModels->isEmpty()) {
+            return [];
+        }
+        $allApis = [];
+        foreach ($permissionModels as $permissionModel) {
+            $apis = $permissionModel->apis;
+            $allApis = array_merge($allApis, $apis);
+        }
+        $allApis = array_unique($allApis);
+        return $allApis;
+    }
+
+    /**
+     * 对某个网址是否有访问权限
+     * @param $userId
+     * @param $url
+     * @return false|void
+     */
+    public function hasPermission($userId, $url){
+        $apis = $this->getApis($userId);
+        if(empty($apis)){
+            return false;
+        }
+
+        $apis = array_map('strtolower', $apis);
+        $url = strtolower($url);
+        foreach($apis as $api){
+            if($url === $api){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

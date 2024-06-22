@@ -7,10 +7,37 @@ use app\entity\User as UserEntity;
 use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
 use app\service\desktop\session\Jwt;
+use app\service\LoginLog as LoginLogService;
+use app\service\User as UserService;
 use Exception;
 
 class Session
 {
+    /**
+     * @var string[] 不登录网址
+     */
+    public $noLoginUrls = [
+        'desktop/Login/login',
+        'desktop/Test/index'
+    ];
+
+    /**
+     * @var string[] 不鉴权网址
+     */
+    public $noAuthUrls = [
+        'desktop/Frame/getRoutes',
+        'desktop/Frame/getPermissions',
+        'desktop/Main/init',
+        'desktop/main.User/info',
+        'desktop/main.User/initEditAvatar',
+        'desktop/main.User/saveEditAvatar',
+        'desktop/main.User/editPassword',
+        'desktop/main.Message/readAll',
+        'desktop/main.Message/getNoReads',
+        'desktop/uploadFile/upload',
+        'desktop/Login/logout',
+    ];
+
     /**
      * 登录
      * @param $account
@@ -20,6 +47,7 @@ class Session
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     public function login($account, $password, $ip)
     {
@@ -42,13 +70,8 @@ class Session
         $token = $jwt->getToken($userEntity);
 
         //登录日志
-        $data = [
-            'user_id' => $userModel->id,
-            'time' => time(),
-            'ip' => $ip
-        ];
-        $loginLogModel = new LoginLogModel();
-        $loginLogModel->save($data);
+        $loginLogService = new LoginLogService();
+        $loginLogService->add($userModel->id, $ip);
 
         //用户表
         $userModel->login_time = time();
@@ -71,5 +94,51 @@ class Session
     {
         $jwt = new Jwt();
         $jwt->deleteToken($token);
+    }
+
+    /**
+     * 鉴权
+     * @return void
+     * @throws Exception
+     */
+    function auth($request)
+    {
+        $appName = app('http')->getName();
+        $controller = $request->controller();
+        $action = $request->action();
+        $url = $appName . '/' . $controller . '/' . $action;
+        $url = strtolower($url);
+        $token = $request->header('token', '');
+
+        //登录
+        $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
+        if (in_array($url, $this->noLoginUrls)) {
+            try{
+                $jwt = new Jwt();
+                return $jwt->resolverToken($token);
+            }catch (Exception $exception){
+                return;
+            }
+        }
+
+
+        if ($token === '') {
+            throw new Exception('未获取到token');
+        }
+        $jwt = new Jwt();
+        $sessionEntity = $jwt->resolverToken($token);
+        $userEntity = $sessionEntity->user;
+
+        $this->noAuthUrls = array_map('strtolower', $this->noAuthUrls);
+        if (in_array($url, $this->noAuthUrls)) {
+            return $sessionEntity;
+        }
+
+        $userService = new UserService();
+        if(!$userService->hasPermission($userEntity->id)){
+            throw new Exception('无权限');
+        }
+
+        return $sessionEntity;
     }
 }

@@ -3,18 +3,18 @@
 namespace app\desktop\controller\system\desktop\module;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Module as ModuleModel;
+use app\model\desktop\Permission as PermissionModel;
 use Sunqianhu\Helper\ArrayHandler;
 
 class Index extends Base
 {
     /**
-     * 得到首页模块集合
+     * 得到首页权限集合
      */
     public function getIndexModules()
     {
         $get = $this->request->get(['name']);
-        $query = ModuleModel::field('id,module_id,type_id,name,key,sort,remark');
+        $query = PermissionModel::field('id,module_id,type_id,name,key,sort,remark');
         if (isset($get['name'])) {
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }

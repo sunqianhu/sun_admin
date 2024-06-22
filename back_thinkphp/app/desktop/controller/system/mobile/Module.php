@@ -3,24 +3,24 @@
 namespace app\desktop\controller\system\mobile;
 
 use app\desktop\controller\Base;
-use app\model\mobile\Module as ModuleModel;
+use app\model\mobile\Permission as PermissionModel;
 use app\validate\mobile\Permission as ModuleValidate;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
 /**
- * 模块管理
+ * 权限管理
  */
 class Module extends Base
 {
 
     /**
-     * 得到首页模块集合
+     * 得到首页权限集合
      */
     public function getIndexModules()
     {
         $get = $this->request->get(['name']);
-        $query = ModuleModel::field('id,module_id,name,key,sort,remark');
+        $query = PermissionModel::field('id,module_id,name,key,sort,remark');
         if (isset($get['name'])) {
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
@@ -39,7 +39,7 @@ class Module extends Base
      */
     public function initAdd()
     {
-        $moduleModels = ModuleModel::field('id, id as value, module_id, name as label')
+        $moduleModels = PermissionModel::field('id, id as value, module_id, name as label')
             ->order('sort', 'asc')
             ->select();
         $modules = $moduleModels->toArray();
@@ -67,7 +67,7 @@ class Module extends Base
             return $this->error($exception->getError());
         }
 
-        $moduleModel = new ModuleModel();
+        $moduleModel = new PermissionModel();
         $moduleModel->save($post);
 
         return $this->success('添加成功');
@@ -83,14 +83,14 @@ class Module extends Base
             return $this->error('id参数错误');
         }
 
-        $moduleModel = ModuleModel::field('id,name,key,module_id,api,remark,sort')->find($id);
+        $moduleModel = PermissionModel::field('id,name,key,module_id,api,remark,sort')->find($id);
         if (empty($moduleModel)) {
             return $this->error('没有找到记录');
         }
         $moduleModel->append(['apis']);
         $module = $moduleModel->toArray();
 
-        $moduleModels = ModuleModel::field('id, id as value,module_id,name as label')->order('sort', 'asc')->select();
+        $moduleModels = PermissionModel::field('id, id as value,module_id,name as label')->order('sort', 'asc')->select();
         $modules = $moduleModels->toArray();
         $arrayHandler = new ArrayHandler();
         $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
@@ -116,9 +116,9 @@ class Module extends Base
             return $this->error($exception->getError());
         }
 
-        $moduleModel = ModuleModel::find($post['id']);
+        $moduleModel = PermissionModel::find($post['id']);
         if(empty($moduleModel)){
-            return $this->error('没有找到模块记录');
+            return $this->error('没有找到权限记录');
         }
         $moduleModel->save($post);
 
@@ -135,12 +135,12 @@ class Module extends Base
             return $this->error('id参数错误');
         }
 
-        $childrenModuleModel = ModuleModel::where('module_id', $id)->find();
-        if (!empty($childrenModuleModel)) {
-            return $this->error('存在子模块，不能删除');
+        $childrenPermissionModel = PermissionModel::where('module_id', $id)->find();
+        if (!empty($childrenPermissionModel)) {
+            return $this->error('存在子权限，不能删除');
         }
 
-        $moduleModel = ModuleModel::find($id);
+        $moduleModel = PermissionModel::find($id);
         $moduleModel->delete();
 
         return $this->success('删除成功');

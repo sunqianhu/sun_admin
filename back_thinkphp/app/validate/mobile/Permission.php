@@ -17,12 +17,12 @@ class Permission extends Validate
     protected $message = [
         'id.require' => 'id不能为空',
         'id.number' => 'id必须是数字',
-        'module_id.require' => '上级模块不能为空',
-        'module_id.number' => '上级模块必须是数字',
-        'type_id.require' => '模块类型不能为空',
-        'type_id.number' => '模块类型必须是数字',
-        'name.require' => '模块名称不能为空',
-        'key.require' => '模块key不能为空',
+        'module_id.require' => '上级权限不能为空',
+        'module_id.number' => '上级权限必须是数字',
+        'type_id.require' => '权限类型不能为空',
+        'type_id.number' => '权限类型必须是数字',
+        'name.require' => '权限名称不能为空',
+        'key.require' => '权限key不能为空',
         'sort.require' => '排序不能为空',
         'sort.number' => '排序必须是数字',
     ];

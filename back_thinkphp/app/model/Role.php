@@ -1,26 +1,26 @@
 <?php
 namespace app\model;
 
-use app\model\desktop\Module as DesktopModuleModel;
-use app\model\mobile\Module as MobileModuleModel;
+use app\model\desktop\Permission as DesktopPermissionModel;
+use app\model\mobile\Permission as MobilePermissionModel;
 
 class Role extends Base
 {
     /**
-     * 桌面端模块
+     * 桌面端权限
      * @return \think\model\relation\BelongsToMany
      */
     public function desktopModules()
     {
-        return $this->belongsToMany(DesktopModuleModel::class, 'role_desktop_module', 'module_id', 'role_id');
+        return $this->belongsToMany(DesktopPermissionModel::class, 'role_desktop_module', 'module_id', 'role_id');
     }
 
     /**
-     * 移动端模块
+     * 移动端权限
      * @return \think\model\relation\BelongsToMany
      */
     public function mobileModules()
     {
-        return $this->belongsToMany(MobileModuleModel::class, 'role_mobile_module', 'module_id', 'role_id');
+        return $this->belongsToMany(MobilePermissionModel::class, 'role_mobile_module', 'module_id', 'role_id');
     }
 }

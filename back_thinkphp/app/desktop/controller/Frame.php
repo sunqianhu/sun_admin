@@ -22,10 +22,10 @@ class Frame extends Base
     }
 
     /**
-     * 获取模块
+     * 获取权限
      * @return void
      */
-    public function getModules()
+    public function getPermissions()
     {
         $userService = new UserService();
         $permissions = $userService->getPermissions($this->user->id);

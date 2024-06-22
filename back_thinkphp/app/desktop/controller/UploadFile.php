@@ -1,8 +1,7 @@
 <?php
 
-namespace app\desktop\controller\frame;
+namespace app\desktop\controller;
 
-use app\desktop\controller\Base;
 use app\service\File as FileHelper;
 use app\validate\UploadFile as UploadFileValidate;
 use think\exception\ValidateException;
@@ -19,7 +18,7 @@ class UploadFile extends Base
     public function upload()
     {
         $requestFile = $this->request->file();
-        $module = $this->request->post('permission', ''); //模块
+        $module = $this->request->post('permission', ''); //权限
 
         //验证
         try {
@@ -28,7 +27,7 @@ class UploadFile extends Base
             return $this->error($exception->getError());
         }
         if (!in_array($module, $this->allowModules)) {
-            return $this->error('模块参数不允许');
+            return $this->error('权限参数不允许');
         }
 
         $fileHelper = new FileHelper();
