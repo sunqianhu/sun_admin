@@ -1,9 +1,10 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\Department as DepartmentModel;
+use app\service\Department as DepartmentService;
 use Sunqianhu\Helper\ArrayHandler;
 
 class Index extends Base
@@ -28,5 +29,28 @@ class Index extends Base
         $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartments);
+    }
+
+    /**
+     * 删除
+     * @return \think\Response|void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function delete(){
+        $id = $this->request->post('id', 0);
+        if ($id <= 0 || !is_numeric($id)) {
+            return $this->error('id参数错误');
+        }
+
+        $departmentService = new DepartmentService();
+        try{
+            $departmentService->delete($id);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
+
+        return $this->success('删除成功');
     }
 }

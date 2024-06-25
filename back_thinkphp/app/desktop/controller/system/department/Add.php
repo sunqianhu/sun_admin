@@ -1,11 +1,11 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
-use app\model\Department as DepartmentModel;
+use app\service\Department as DepartmentService;
 use app\service\Dictionary as DictionaryService;
-use Sunqianhu\Helper\ArrayHandler;
+use app\validate\Department as DepartmentValidate;
 use think\exception\ValidateException;
 
 class Add extends Base
@@ -15,12 +15,8 @@ class Add extends Base
      */
     public function init()
     {
-        $departmentModels = DepartmentModel::field('id, id as value, department_id, name as label')
-            ->order('sort', 'asc')
-            ->select();
-        $departments = $departmentModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $departmentService = new DepartmentService();
+        $treeDepartments = $departmentService->getTreeDepartments();
 
         $dictionaryService = new DictionaryService();
         $types = $dictionaryService->getList('department_type');
@@ -41,13 +37,13 @@ class Add extends Base
 
         //验证
         try {
-            validate(DepartmentValidate::class)->scene('add')->check($post);
+            validate(DepartmentValidate::class)->scene('desktop_add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $departmentModel = new DepartmentModel();
-        $departmentModel->save($post);
+        $departmentService = new DepartmentService();
+        $departmentService->add($post);
 
         return $this->success('添加成功');
     }

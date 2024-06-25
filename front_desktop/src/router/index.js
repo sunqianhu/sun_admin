@@ -67,6 +67,14 @@ const router = createRouter({
       }
     },
     {
+      path: "/system/department",
+      name: "system_mobile_permdddission",
+      component: () => import("../views/system/department/Index.vue"),
+      meta: {
+        name: "权限管理"
+      }
+    },
+    {
       path: "/system/desktop/menu",
       name: "system_desktop_menu",
       component: () => import("../views/system/desktop/menu/Index.vue"),

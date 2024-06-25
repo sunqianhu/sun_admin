@@ -19,6 +19,8 @@
           <el-tree-select
             v-model="department.department_id"
             :data="treeDepartments"
+            :props="{ label: 'name' }"
+            node-key="id"
             :render-after-expand="false"
             check-strictly
             placeholder="无"
@@ -68,7 +70,7 @@ const types = ref([]);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/system.department/initAdd");
+  const response = await axios.get("desktop/system.department.Add/init");
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -94,7 +96,7 @@ const close = () => {
 const submitForm = async () => {
   await departmentRef.value.validate();
 
-  const response = await axios.post("desktop/system.Department/saveAdd", department.value);
+  const response = await axios.post("desktop/system.department.Add/save", department.value);
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -114,6 +116,7 @@ onMounted(() => {
   init();
 });
 </script>
+
 <style lang="scss" scoped>
 .add {
   .scrollbar {

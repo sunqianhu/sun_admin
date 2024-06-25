@@ -78,7 +78,7 @@ const editFlag = ref(false);
  */
 const getDepartments = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.Department/getIndexDepartments", {
+  const response = await axios.get("desktop/system.department.Index/getDepartments", {
     params: query.value
   });
   loading.value = false;
@@ -120,7 +120,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.Department/delete", {
+  const response = await axios.post("desktop/system.department.Index/delete", {
     id: id
   });
   if (response.code != 1) {

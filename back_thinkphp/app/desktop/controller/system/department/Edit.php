@@ -1,11 +1,12 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\Department as DepartmentModel;
+use app\service\Department as DepartmentService;
 use app\service\Dictionary as DictionaryService;
-use Sunqianhu\Helper\ArrayHandler;
+use app\validate\Department as DepartmentValidate;
 use think\exception\ValidateException;
 
 class Edit extends Base
@@ -27,13 +28,8 @@ class Edit extends Base
         }
         $department = $departmentModel->toArray();
 
-        //树形部门
-        $departmentModels = DepartmentModel::field('id, id as value, department_id, type_id, name as label')
-            ->order('sort', 'asc')
-            ->select();
-        $departments = $departmentModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $departmentService = new DepartmentService();
+        $treeDepartments = $departmentService->getTreeDepartments();
 
         $dictionaryService = new DictionaryService();
         $types = $dictionaryService->getList('department_type');
@@ -55,15 +51,13 @@ class Edit extends Base
 
         //验证
         try {
-            validate(DepartmentValidate::class)->scene('edit')->check($post);
+            validate(DepartmentValidate::class)->scene('desktop_edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
-        $departmentModel = DepartmentModel::find($post['id']);
-        if(empty($departmentModel)){
-            return $this->error('没有找到部门记录');
-        }
-        $departmentModel->save($post);
+
+        $departmentService = new DepartmentService();
+        $departmentService->edit($post['id'], $post);
 
         return $this->success('修改成功');
     }

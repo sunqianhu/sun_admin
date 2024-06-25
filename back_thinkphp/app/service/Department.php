@@ -3,23 +3,72 @@
 namespace app\service;
 
 use app\model\Department as DepartmentModel;
+use Sunqianhu\Helper\ArrayHandler;
 use think\facade\Cache;
 
 class Department
 {
+    /**
+     * 得到树形部门
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getTreeDepartments()
+    {
+        $departmentModels = DepartmentModel::field('id, id, department_id, name')
+            ->order('sort', 'asc')
+            ->select();
+        $departments = $departmentModels->toArray();
+        $arrayHandler = new ArrayHandler();
+        return $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+    }
+
+    /**
+     * 添加
+     * @param $data
+     * @return void
+     */
     public function add($data)
     {
-
+        $departmentModel = new DepartmentModel();
+        $departmentModel->save($data);
     }
 
-    public function edit()
+    /**
+     * 修改
+     * @param $id
+     * @param $data
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function edit($id, $data)
     {
-
+        $departmentModel = DepartmentModel::find($id);
+        if(empty($departmentModel)){
+            throw new Exception('没有找到记录');
+        }
+        $departmentModel->save($data);
     }
 
-    public function delete()
+    /**
+     * 删除
+     * @param $id
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function delete($id)
     {
-
+        $departmentModel = DepartmentModel::find($id);
+        if(empty($departmentModel)){
+            throw new Exception('没有找到记录');
+        }
+        $departmentModel->delete();
     }
 
     /**

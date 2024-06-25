@@ -20,6 +20,8 @@
           <el-tree-select
             v-model="permission.permission_id"
             :data="treePermissions"
+            :props="{ label: 'name' }"
+            node-key="id"
             :render-after-expand="false"
             check-strictly
             placeholder="无"
