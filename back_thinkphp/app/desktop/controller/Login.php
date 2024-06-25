@@ -2,8 +2,8 @@
 
 namespace app\desktop\controller;
 
-use app\service\desktop\session\LoginFailChecker;
-use app\service\desktop\session\Session as SessionService;
+use app\service\desktop\Session as SessionService;
+use app\service\LoginFailChecker;
 use app\validate\User as UserValidate;
 use think\exception\ValidateException;
 use Exception;

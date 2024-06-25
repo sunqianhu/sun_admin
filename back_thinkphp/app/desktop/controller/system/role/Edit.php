@@ -26,7 +26,7 @@ class Edit extends Base
         }
 
         //角色
-        $roleModel = RoleModel::with(['desktopModules', 'mobileModules'])
+        $roleModel = RoleModel::with(['desktopPermissions', 'mobilePermissions'])
             ->field('id,name')
             ->find($id);
         if (empty($roleModel)) {
@@ -34,37 +34,37 @@ class Edit extends Base
         }
         $role = $roleModel->toArray();
 
-        $role['desktop_module_ids'] = [];
-        if (!empty($role['desktopModules'])) {
-            $role['desktop_module_ids'] = array_column($role['desktopModules'], 'id');
+        $role['desktop_permission_ids'] = [];
+        if (!empty($role['desktopPermissions'])) {
+            $role['desktop_permission_ids'] = array_column($role['desktopPermissions'], 'id');
         }
-        $role['mobile_module_ids'] = [];
-        if (!empty($role['mobileModules'])) {
-            $role['mobile_module_ids'] = array_column($role['mobileModules'], 'id');
+        $role['mobile_permission_ids'] = [];
+        if (!empty($role['mobilePermissions'])) {
+            $role['mobile_permission_ids'] = array_column($role['mobilePermissions'], 'id');
         }
 
         //桌面端权限
-        $desktopPermissionModels = DesktopPermissionModel::field('id, id, module_id, name, remark')
+        $desktopPermissionModels = DesktopPermissionModel::field('id, id, permission_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
-        $desktopModules = $desktopPermissionModels->toArray();
+        $desktopPermissions = $desktopPermissionModels->toArray();
         $arrayHandler = new ArrayHandler();
-        $treeDesktopModules = $arrayHandler->convertTree($desktopModules, 'id', 'module_id', 'children');
+        $treeDesktopPermissions = $arrayHandler->convertTree($desktopPermissions, 'id', 'permission_id', 'children');
 
         //移动端权限
-        $mobilePermissionModels = MobilePermissionModel::field('id, module_id, name, remark')
+        $mobilePermissionModels = MobilePermissionModel::field('id, permission_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
-        $mobileModules = $mobilePermissionModels->toArray();
+        $mobilePermissions = $mobilePermissionModels->toArray();
         $arrayHandler = new ArrayHandler();
-        $treeMobileModules = $arrayHandler->convertTree($mobileModules, 'id', 'module_id', 'children');
+        $treeMobilePermissions = $arrayHandler->convertTree($mobilePermissions, 'id', 'permission_id', 'children');
 
         $data = [
             'role' => $role,
-            'desktop_modules' => $treeDesktopModules,
-            'mobile_modules'=>$treeMobileModules
+            'desktop_permissions' => $treeDesktopPermissions,
+            'mobile_permissions'=>$treeMobilePermissions
         ];
         return $this->success('获取成功', $data);
     }
@@ -74,7 +74,7 @@ class Edit extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'name', 'desktop_module_ids' => [], 'mobile_module_ids' => []]);
+        $post = $this->request->post(['id', 'name', 'desktop_permission_ids' => [], 'mobile_permission_ids' => []]);
 
         //验证
         try {
@@ -90,43 +90,43 @@ class Edit extends Base
         $roleModel->save($post);
 
         //桌面端权限
-        $oldDesktopModuleIds = array_column($roleModel->desktopModules->toArray(), 'id');
-        $deleteDesktopModuleIds = array_unique(array_values(array_diff($oldDesktopModuleIds, $post['desktop_module_ids'])));
-        $addDesktopModuleIds = array_unique(array_values(array_diff($post['desktop_module_ids'], $oldDesktopModuleIds)));
-        if(!empty($deleteDesktopModuleIds)){
-            foreach($deleteDesktopModuleIds as $deleteDesktopModuleId){
+        $oldDesktopPermissionIds = array_column($roleModel->desktopPermissions->toArray(), 'id');
+        $deleteDesktopPermissionIds = array_unique(array_values(array_diff($oldDesktopPermissionIds, $post['desktop_permission_ids'])));
+        $addDesktopPermissionIds = array_unique(array_values(array_diff($post['desktop_permission_ids'], $oldDesktopPermissionIds)));
+        if(!empty($deleteDesktopPermissionIds)){
+            foreach($deleteDesktopPermissionIds as $deleteDesktopPermissionId){
                 RoleDesktopPermissionModel::where('role_id', $roleModel->id)
-                    ->where('module_id', $deleteDesktopModuleId)
+                    ->where('permission_id', $deleteDesktopPermissionId)
                     ->delete();
             }
         }
-        if(!empty($addDesktopModuleIds)) {
-            foreach($addDesktopModuleIds as $addDesktopModuleId){
+        if(!empty($addDesktopPermissionIds)) {
+            foreach($addDesktopPermissionIds as $addDesktopPermissionId){
                 $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
                 $roleDesktopPermissionModel->save([
                     'role_id'=>$roleModel->id,
-                    'module_id'=>$addDesktopModuleId
+                    'permission_id'=>$addDesktopPermissionId
                 ]);
             }
         }
 
         //移动端权限
-        $oldMobileModuleIds = array_column($roleModel->mobileModules->toArray(), 'id');
-        $deleteMobileModuleIds = array_unique(array_values(array_diff($oldMobileModuleIds, $post['mobile_module_ids'])));
-        $addMobileModuleIds = array_unique(array_values(array_diff($post['mobile_module_ids'], $oldMobileModuleIds)));
-        if(!empty($deleteMobileModuleIds)){
-            foreach($deleteMobileModuleIds as $deleteMobileModuleId){
+        $oldMobilePermissionIds = array_column($roleModel->mobilePermissions->toArray(), 'id');
+        $deleteMobilePermissionIds = array_unique(array_values(array_diff($oldMobilePermissionIds, $post['mobile_permission_ids'])));
+        $addMobilePermissionIds = array_unique(array_values(array_diff($post['mobile_permission_ids'], $oldMobilePermissionIds)));
+        if(!empty($deleteMobilePermissionIds)){
+            foreach($deleteMobilePermissionIds as $deleteMobilePermissionId){
                 RoleMobilePermissionModel::where('role_id', $roleModel->id)
-                    ->where('module_id', $deleteMobileModuleId)
+                    ->where('permission_id', $deleteMobilePermissionId)
                     ->delete();
             }
         }
-        if(!empty($addMobileModuleIds)) {
-            foreach($addMobileModuleIds as $addMobileModuleId){
+        if(!empty($addMobilePermissionIds)) {
+            foreach($addMobilePermissionIds as $addMobilePermissionId){
                 $roleMobilePermissionModel = new RoleMobilePermissionModel();
                 $roleMobilePermissionModel->save([
                     'role_id'=>$roleModel->id,
-                    'module_id'=>$addMobileModuleId
+                    'permission_id'=>$addMobilePermissionId
                 ]);
             }
         }

@@ -12,26 +12,26 @@
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
-        <el-form-item label="桌面端模块" prop="desktop_module_ids">
+        <el-form-item label="桌面端权限" prop="desktop_module_ids">
           <el-tree
             :props="{ children: 'children', label: 'name_remark' }"
             :data="desktopModules"
             show-checkbox
             node-key="id"
             ref="desktopModuleRef"
-            empty-text="无模块"
+            empty-text="无权限"
             @check="checkDesktopModule"
             :default-checked-keys="desktopModuleDefaultCheckKeys"
           />
         </el-form-item>
-        <el-form-item label="移动端模块" prop="mobile_module_ids">
+        <el-form-item label="移动端权限" prop="mobile_module_ids">
           <el-tree
             :props="{ children: 'children', label: 'name_remark' }"
             :data="mobileModules"
             show-checkbox
             node-key="id"
             ref="mobileModuleRef"
-            empty-text="无模块"
+            empty-text="无权限"
             @check="checkMobileModule"
             :default-checked-keys="mobileModuleDefaultCheckKeys"
           />
@@ -105,7 +105,7 @@ const close = () => {
 };
 
 /**
- * 得到桌面端模块默认选中的key(排除父节点)
+ * 得到桌面端权限默认选中的key(排除父节点)
  * @param {array} desktopModuleIds
  */
 const getDesktopModuleDefaultCheckKeys = (desktopModuleIds) => {
@@ -129,7 +129,7 @@ const getDesktopModuleDefaultCheckKeys = (desktopModuleIds) => {
 };
 
 /**
- * 选择桌面端模块
+ * 选择桌面端权限
  */
 const checkDesktopModule = () => {
   const allKeys = desktopModuleRef.value.getCheckedKeys(); //全选中
@@ -139,7 +139,7 @@ const checkDesktopModule = () => {
 };
 
 /**
- * 得到移动端模块默认选中的key(排除父节点)
+ * 得到移动端权限默认选中的key(排除父节点)
  * @param {array} desktopModuleIds
  */
 const getMobileModuleDefaultCheckKeys = (mobileModuleIds) => {
@@ -163,7 +163,7 @@ const getMobileModuleDefaultCheckKeys = (mobileModuleIds) => {
 };
 
 /**
- * 选择移动端模块
+ * 选择移动端权限
  */
 const checkMobileModule = () => {
   const allKeys = mobileModuleRef.value.getCheckedKeys(); //全选中

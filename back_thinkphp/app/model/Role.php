@@ -10,17 +10,17 @@ class Role extends Base
      * 桌面端权限
      * @return \think\model\relation\BelongsToMany
      */
-    public function desktopModules()
+    public function desktopPermissions()
     {
-        return $this->belongsToMany(DesktopPermissionModel::class, 'role_desktop_module', 'module_id', 'role_id');
+        return $this->belongsToMany(DesktopPermissionModel::class, 'role_desktop_permission', 'permission_id', 'role_id');
     }
 
     /**
      * 移动端权限
      * @return \think\model\relation\BelongsToMany
      */
-    public function mobileModules()
+    public function mobilePermissions()
     {
-        return $this->belongsToMany(MobilePermissionModel::class, 'role_mobile_module', 'module_id', 'role_id');
+        return $this->belongsToMany(MobilePermissionModel::class, 'role_mobile_permission', 'permission_id', 'role_id');
     }
 }

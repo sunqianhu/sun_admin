@@ -1,29 +1,29 @@
 <template>
   <div class="index">
-    <div class="page-name">桌面端模块管理</div>
+    <div class="page-name">权限管理</div>
     <div class="search">
       <el-form :model="query" :inline="true">
-        <el-form-item label="模块名称">
+        <el-form-item label="权限名称">
           <el-input v-model="query.name" />
+        </el-form-item>
+        <el-form-item label="权限标识">
+          <el-input v-model="query.key" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="search">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
-    <div class="tool">
+
+    <div class="toolbar">
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
     <div class="list">
-      <el-table :data="modules" v-loading="loading" row-key="id" class="table">
-        <el-table-column v-slot="{ row }" prop="name" label="模块名称">
+      <el-table :data="permissions" v-loading="loading" row-key="id" class="table">
+        <el-table-column v-slot="{ row }" prop="name" label="权限名称">
           {{ row.name }}
-          <span v-if="row.remark" class="remark">{{ row.remark }}</span>
         </el-table-column>
-        <el-table-column prop="key" label="模块key" width="300" show-overflow-tooltip />
-        <el-table-column v-slot="{ row }" prop="type_id" label="模块类型" width="100">
-          <type-tag :id="row.type_id">{{ row.type_name }}</type-tag>
-        </el-table-column>
+        <el-table-column prop="key" label="权限标识" width="300" show-overflow-tooltip />
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
@@ -35,12 +35,11 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="explain">菜单是由模块动态生成</div>
     <add
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getModules();
+        getPermissions();
         addFlag = false;
       "
       v-if="addFlag"
@@ -49,7 +48,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getModules();
+        getPermissions();
         editFlag = false;
       "
       :id="rowId"
@@ -64,21 +63,20 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
-import TypeTag from "./TypeTag.vue";
 
 const rowId = ref(0);
 const query = ref({});
-const modules = ref([]);
+const permissions = ref([]);
 const loading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 
 /**
- * 得到模块
+ * 得到权限
  */
-const getModules = async () => {
+const getPermissions = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.desktop.Module/getIndexModules", {
+  const response = await axios.get("desktop/system.mobile.permission.Index/getPermissions", {
     params: query.value
   });
   loading.value = false;
@@ -89,14 +87,14 @@ const getModules = async () => {
     });
     return;
   }
-  modules.value = response.data;
+  permissions.value = response.data;
 };
 
 /**
  * 搜索
  */
 const search = () => {
-  getModules();
+  getPermissions();
 };
 
 /**
@@ -119,7 +117,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.desktop.Module/delete", {
+  const response = await axios.post("desktop/system.mobile.permission.Index/delete", {
     id: id
   });
   if (response.code != 1) {
@@ -133,11 +131,11 @@ const del = async (id) => {
     message: response.message,
     type: "success"
   });
-  getModules();
+  getPermissions();
 };
 
 onMounted(() => {
-  getModules();
+  getPermissions();
 });
 </script>
 
@@ -169,11 +167,6 @@ onMounted(() => {
         color: var(--font-color-secondary);
       }
     }
-  }
-  .explain {
-    margin-top: var(--margin-md);
-    font-size: var(--font-size-sm);
-    color: var(--font-color-secondary);
   }
 }
 </style>

@@ -1,31 +1,58 @@
 <?php
 
-namespace app\desktop\controller\system\desktop\module;
+namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
 use app\model\desktop\Permission as PermissionModel;
+use app\service\desktop\Permission as PermissionService;
+use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
 class Index extends Base
 {
     /**
-     * 得到首页权限集合
+     * 得到权限集合
      */
-    public function getIndexModules()
+    public function getPermissions()
     {
-        $get = $this->request->get(['name']);
-        $query = PermissionModel::field('id,module_id,type_id,name,key,sort,remark');
+        $get = $this->request->get(['name', 'key']);
+        $query = PermissionModel::field('id,permission_id,name,key,sort');
         if (isset($get['name'])) {
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
+        if (isset($get['key'])) {
+            $query = $query->where('key', 'LIKE', '%' . $get['key'] . '%');
+        }
         $query = $query->order('sort', 'asc');
-        $query->append(['type_name']);
-        $moduleModels = $query->select();
-        $modules = $moduleModels->toArray();
+        $permissionModels = $query->select();
+        $permissions = $permissionModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
+        $treePermissions = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
 
-        return $this->success('获取成功', $treeModules);
+        return $this->success('获取成功', $treePermissions);
+    }
+
+    /**
+     * 删除
+     * @return \think\Response|void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function delete(){
+        $id = $this->request->post('id', 0);
+        if ($id <= 0 || !is_numeric($id)) {
+            return $this->error('id参数错误');
+        }
+
+        $permissionService = new PermissionService();
+        try{
+            $permissionService->delete($id);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
+
+        return $this->success('删除成功');
     }
 }

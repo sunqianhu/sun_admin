@@ -19,26 +19,26 @@ class Add extends Base
     public function initAdd()
     {
         //桌面端权限
-        $desktopPermissionModels = DesktopPermissionModel::field('id, module_id, name, remark')
+        $desktopPermissionModels = DesktopPermissionModel::field('id, permission_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
-        $desktopModules = $desktopPermissionModels->toArray();
+        $desktopPermissions = $desktopPermissionModels->toArray();
         $arrayHandler = new ArrayHandler();
-        $treeDesktopModules = $arrayHandler->convertTree($desktopModules, 'id', 'module_id', 'children');
+        $treeDesktopPermissions = $arrayHandler->convertTree($desktopPermissions, 'id', 'permission_id', 'children');
 
         //移动端权限
-        $mobilePermissionModels = MobilePermissionModel::field('id, module_id, name, remark')
+        $mobilePermissionModels = MobilePermissionModel::field('id, permission_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
-        $mobileModules = $mobilePermissionModels->toArray();
+        $mobilePermissions = $mobilePermissionModels->toArray();
         $arrayHandler = new ArrayHandler();
-        $treeMobileModules = $arrayHandler->convertTree($mobileModules, 'id', 'module_id', 'children');
+        $treeMobilePermissions = $arrayHandler->convertTree($mobilePermissions, 'id', 'permission_id', 'children');
 
         $data = [
-            'desktop_modules'=>$treeDesktopModules,
-            'mobile_modules'=>$treeMobileModules,
+            'desktop_permissions'=>$treeDesktopPermissions,
+            'mobile_permissions'=>$treeMobilePermissions,
         ];
         return $this->success('获取成功', $data);
     }
@@ -48,7 +48,7 @@ class Add extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['name', 'desktop_module_ids' => [], 'mobile_module_ids' => []]);
+        $post = $this->request->post(['name', 'desktop_permission_ids' => [], 'mobile_permission_ids' => []]);
 
         //验证
         try {
@@ -60,22 +60,22 @@ class Add extends Base
         $roleModel = new RoleModel();
         $roleModel->save($post);
 
-        if (!empty($post['desktop_module_ids'])) {
-            foreach($post['desktop_module_ids'] as $desktopModuleId){
+        if (!empty($post['desktop_permission_ids'])) {
+            foreach($post['desktop_permission_ids'] as $desktopPermissionId){
                 $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
                 $roleDesktopPermissionModel->save([
                     'role_id'=>$roleModel->id,
-                    'module_id'=>$desktopModuleId
+                    'permission_id'=>$desktopPermissionId
                 ]);
             }
         }
 
-        if (!empty($post['mobile_module_ids'])) {
-            foreach($post['mobile_module_ids'] as $mobileModuleId){
+        if (!empty($post['mobile_permission_ids'])) {
+            foreach($post['mobile_permission_ids'] as $mobilePermissionId){
                 $roleMobilePermissionModel = new RoleMobilePermissionModel();
                 $roleMobilePermissionModel->save([
                     'role_id'=>$roleModel->id,
-                    'module_id'=>$mobileModuleId
+                    'permission_id'=>$mobilePermissionId
                 ]);
             }
         }

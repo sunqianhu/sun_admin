@@ -27,17 +27,21 @@ class Base extends BaseController
     {
         parent::initialize();
 
-        $sessionService = new SessionService();
-        try {
-            $this->session = $sessionService->auth($this->request);
-        } catch (Exception $exception) {
-            $message = $exception->getMessage();
-            $this->error($message, null, 2)->send();
-            exit;
-        }
-
-        $operationLogService = new OperationLogService();
-        $operationLogService->add($this->session->user->id, $this->request->baseUrl(), $this->request->ip());
+//        $sessionService = new SessionService();
+//        try {
+//            $session = $sessionService->auth($this->request);
+//            if($session == null){
+//                return;
+//            }
+//            $this->session = $session;
+//        } catch (Exception $exception) {
+//            $message = $exception->getMessage();
+//            $this->error($message, null, 2)->send();
+//            exit;
+//        }
+//
+//        $operationLogService = new OperationLogService();
+//        $operationLogService->add($this->session->user->id, $this->request->baseUrl(), $this->request->ip());
     }
 
     /**

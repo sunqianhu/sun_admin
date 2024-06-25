@@ -30,7 +30,7 @@ class Dictionary
             ->order('sort', 'asc')
             ->select();
         $list = $dictionaryModels->toArray();
-        Cache::set($cacheKey, $list, $this->cacheExpire);
+        Cache::set($cacheKey, $list, $this->expire);
 
         return $list;
     }
@@ -54,7 +54,7 @@ class Dictionary
             ->where('key', '=', $key)
             ->order('sort', 'asc')
             ->value('value');
-        Cache::set($cacheKey, $value, $this->cacheExpire);
+        Cache::set($cacheKey, $value, $this->expire);
 
         return $value;
     }
@@ -80,7 +80,7 @@ class Dictionary
             ->order('sort', 'asc')
             ->column('value');
         $valueString = implode($glue, $values);
-        Cache::set($cacheKey, $valueString, $this->cacheExpire);
+        Cache::set($cacheKey, $valueString, $this->expire);
 
         return $valueString;
     }

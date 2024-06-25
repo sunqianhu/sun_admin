@@ -5,6 +5,7 @@ namespace app\service\desktop;
 use app\model\desktop\Permission as PermissionModel;
 use app\model\User as UserModel;
 use app\service\User as UserService;
+use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -19,16 +20,16 @@ class Permission
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTreeModules()
+    public function getTreePermissions()
     {
-        $moduleModels = PermissionModel::field('id, module_id, name')
+        $permissionModels = PermissionModel::field('id, permission_id, name')
             ->order('sort', 'asc')
             ->select();
-        $modules = $moduleModels->toArray();
+        $permissions = $permissionModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
-        return $treeModules;
+        $treePermissions = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        return $treePermissions;
     }
 
     /**
@@ -38,8 +39,8 @@ class Permission
      */
     public function add($data)
     {
-        $moduleModel = new PermissionModel();
-        $moduleModel->save($data);
+        $permissionModel = new PermissionModel();
+        $permissionModel->save($data);
     }
 
     /**
@@ -52,11 +53,11 @@ class Permission
      * @throws ModelNotFoundException
      */
     public function edit($id, $data){
-        $moduleModel = PermissionModel::find($id);
-        if(empty($moduleModel)){
+        $permissionModel = PermissionModel::find($id);
+        if(empty($permissionModel)){
             throw new Exception('没有找到记录');
         }
-        $moduleModel->save($data);
+        $permissionModel->save($data);
     }
 
     /**
@@ -69,29 +70,47 @@ class Permission
      * @throws Exception
      */
     public function delete($id){
-        $moduleModel = PermissionModel::find($id);
-        if(empty($moduleModel)){
+        $permissionModel = PermissionModel::find($id);
+        if(empty($permissionModel)){
             throw new Exception('没有找到记录');
         }
-        $moduleModel->delete();
+        if($this->hasChildrenPermission($id)){
+            throw new Exception('存在子权限不能删除');
+        }
+        $permissionModel->delete();
+    }
+
+    /**
+     * 是否有子权限
+     * @param $id
+     * @return void
+     */
+    public function hasChildrenPermission($id){
+        $permissionModel = PermissionModel::where('permission_id', $id)
+            ->limit(0,1)
+            ->find();
+        if(!empty($permissionModel)){
+            return true;
+        }
+        return false;
     }
 
     /**
      * 得到主布局第一个页面权限id
-     * @param $treeModules
+     * @param $treePermissions
      * @return int|mixed
      */
-    public function getMainFirstPageId($treeModules)
+    public function getMainFirstPageId($treePermissions)
     {
-        foreach($treeModules as $treeModule){
-            if($treeModule['layout'] == "main" && $treeModule['type_id'] == 2){
-                return $treeModule['id'];
+        foreach($treePermissions as $treePermission){
+            if($treePermission['layout'] == "main" && $treePermission['type_id'] == 2){
+                return $treePermission['id'];
             }
-            if(empty($treeModule['children'])){
+            if(empty($treePermission['children'])){
                 continue;
             }
 
-            return $this->getMainFirstPageId($treeModule['children']);
+            return $this->getMainFirstPageId($treePermission['children']);
         }
 
         return 0;
@@ -99,20 +118,20 @@ class Permission
 
     /**
      * 得到空白布局第一个页面权限id
-     * @param $treeModules
+     * @param $treePermissions
      * @return int|mixed
      */
-    public function getBlankFirstPageId($treeModules)
+    public function getBlankFirstPageId($treePermissions)
     {
-        foreach($treeModules as $treeModule){
-            if($treeModule['layout'] == "blank" && $treeModule['type_id'] == 2){
-                return $treeModule['id'];
+        foreach($treePermissions as $treePermission){
+            if($treePermission['layout'] == "blank" && $treePermission['type_id'] == 2){
+                return $treePermission['id'];
             }
-            if(empty($treeModule['children'])){
+            if(empty($treePermission['children'])){
                 continue;
             }
 
-            return $this->getBlankFirstPageId($treeModule['children']);
+            return $this->getBlankFirstPageId($treePermission['children']);
         }
 
         return 0;

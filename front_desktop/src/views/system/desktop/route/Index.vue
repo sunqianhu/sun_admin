@@ -1,9 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-name">移动端模块管理</div>
+    <div class="page-name">路由管理</div>
     <div class="search">
       <el-form :model="query" :inline="true">
-        <el-form-item label="模块名称">
+        <el-form-item label="路由名称">
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
@@ -12,17 +12,21 @@
       </el-form>
     </div>
 
-    <div class="tool">
+    <div class="toolbar">
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
+
     <div class="list">
-      <el-table :data="modules" v-loading="loading" row-key="id" class="table">
-        <el-table-column v-slot="{ row }" prop="name" label="模块名称">
+      <el-table :data="routes" v-loading="loading" row-key="id" class="table">
+        <el-table-column v-slot="{ row }" prop="name" label="路由名称">
           {{ row.name }}
-          <span v-if="row.remark" class="remark">{{ row.remark }}</span>
         </el-table-column>
-        <el-table-column prop="key" label="模块key" width="300" show-overflow-tooltip />
-        <el-table-column prop="sort" label="排序" width="100" />
+        <el-table-column prop="key" label="路由标识" show-overflow-tooltip />
+        <el-table-column prop="path" label="路由路径" show-overflow-tooltip />
+        <el-table-column prop="component_path" label="组件路径" show-overflow-tooltip />
+        <el-table-column prop="layout_name" label="页面布局" width="100" show-overflow-tooltip />
+        <el-table-column prop="keep_alive_name" label="保活" width="80" show-overflow-tooltip />
+        <el-table-column prop="sort" label="排序" width="80" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
@@ -33,12 +37,12 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="explain">模块不生成前端路由，前端路由使用静态路由。</div>
+
     <add
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getModules();
+        getRoutes();
         addFlag = false;
       "
       v-if="addFlag"
@@ -47,7 +51,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getModules();
+        getRoutes();
         editFlag = false;
       "
       :id="rowId"
@@ -65,17 +69,17 @@ import Edit from "./Edit.vue";
 
 const rowId = ref(0);
 const query = ref({});
-const modules = ref([]);
+const routes = ref([]);
 const loading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 
 /**
- * 得到模块
+ * 得到路由
  */
-const getModules = async () => {
+const getRoutes = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.mobile.Module/getIndexModules", {
+  const response = await axios.get("desktop/system.desktop.route.Index/getRoutes", {
     params: query.value
   });
   loading.value = false;
@@ -86,14 +90,14 @@ const getModules = async () => {
     });
     return;
   }
-  modules.value = response.data;
+  routes.value = response.data;
 };
 
 /**
  * 搜索
  */
 const search = () => {
-  getModules();
+  getRoutes();
 };
 
 /**
@@ -116,7 +120,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.mobile.Module/delete", {
+  const response = await axios.post("desktop/system.desktop.route.Index/delete", {
     id: id
   });
   if (response.code != 1) {
@@ -130,11 +134,11 @@ const del = async (id) => {
     message: response.message,
     type: "success"
   });
-  getModules();
+  getRoutes();
 };
 
 onMounted(() => {
-  getModules();
+  getRoutes();
 });
 </script>
 

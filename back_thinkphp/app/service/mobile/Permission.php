@@ -2,15 +2,9 @@
 
 namespace app\service\mobile;
 
-use app\model\desktop\Permission as PermissionModel;
-use app\model\User as UserModel;
-use app\service\desktop\Exception;
-use app\service\desktop\PermissionModel;
-use app\service\User as UserService;
+use app\model\mobile\Permission as PermissionModel;
+use Exception;
 use Sunqianhu\Helper\ArrayHandler;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
 
 class Permission
 {
@@ -21,16 +15,17 @@ class Permission
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTreeModules()
+    public function getTreePermissions()
     {
-        $moduleModels = PermissionModel::field('id, module_id, name')
+
+        $permissionModels = PermissionModel::field('id, permission_id, name')
             ->order('sort', 'asc')
             ->select();
-        $modules = $moduleModels->toArray();
+        $permissions = $permissionModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeModules = $arrayHandler->convertTree($modules, 'id', 'module_id', 'children');
-        return $treeModules;
+        $treePermissions = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        return $treePermissions;
     }
 
     /**
@@ -40,8 +35,8 @@ class Permission
      */
     public function add($data)
     {
-        $moduleModel = new PermissionModel();
-        $moduleModel->save($data);
+        $permissionModel = new PermissionModel();
+        $permissionModel->save($data);
     }
 
     /**
@@ -54,11 +49,11 @@ class Permission
      * @throws ModelNotFoundException
      */
     public function edit($id, $data){
-        $moduleModel = PermissionModel::find($id);
-        if(empty($moduleModel)){
+        $permissionModel = PermissionModel::find($id);
+        if(empty($permissionModel)){
             throw new Exception('没有找到记录');
         }
-        $moduleModel->save($data);
+        $permissionModel->save($data);
     }
 
     /**
@@ -71,53 +66,11 @@ class Permission
      * @throws Exception
      */
     public function delete($id){
-        $moduleModel = PermissionModel::find($id);
-        if(empty($moduleModel)){
+        $permissionModel = PermissionModel::find($id);
+        if(empty($permissionModel)){
             throw new Exception('没有找到记录');
         }
-        $moduleModel->delete();
-    }
-
-    /**
-     * 得到主布局第一个页面权限id
-     * @param $treeModules
-     * @return int|mixed
-     */
-    public function getMainFirstPageId($treeModules)
-    {
-        foreach($treeModules as $treeModule){
-            if($treeModule['layout'] == "main" && $treeModule['type_id'] == 2){
-                return $treeModule['id'];
-            }
-            if(empty($treeModule['children'])){
-                continue;
-            }
-
-            return $this->getMainFirstPageId($treeModule['children']);
-        }
-
-        return 0;
-    }
-
-    /**
-     * 得到空白布局第一个页面权限id
-     * @param $treeModules
-     * @return int|mixed
-     */
-    public function getBlankFirstPageId($treeModules)
-    {
-        foreach($treeModules as $treeModule){
-            if($treeModule['layout'] == "blank" && $treeModule['type_id'] == 2){
-                return $treeModule['id'];
-            }
-            if(empty($treeModule['children'])){
-                continue;
-            }
-
-            return $this->getBlankFirstPageId($treeModule['children']);
-        }
-
-        return 0;
+        $permissionModel->delete();
     }
 
     /**

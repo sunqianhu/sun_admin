@@ -56,8 +56,8 @@ class Main extends Base
         }
 
         //权限
-        $moduleModels = PermissionModel::alias('m')
-            ->join('role_desktop_module rdm', 'm.id = rdm.module_id')
+        $permissionModels = PermissionModel::alias('m')
+            ->join('role_desktop_permission rdm', 'm.id = rdm.permission_id')
             ->field('m.*')
             ->where('m.type_id', 'in', '1,2,4')
             ->where('rdm.role_id', 'in', $roleIds)
@@ -65,20 +65,20 @@ class Main extends Base
             ->order('m.sort', 'asc')
             ->group('m.id')
             ->select();
-        if ($moduleModels->isEmpty()) {
+        if ($permissionModels->isEmpty()) {
             return $this->success('获取成功', []);
         }
 
         $menus = [];
-        foreach ($moduleModels as $moduleModel) {
+        foreach ($permissionModels as $permissionModel) {
             $menu = [];
-            $menu['id'] = $moduleModel->id;
-            $menu['menu_id'] = $moduleModel->module_id;
-            $menu['type_id'] = $moduleModel->type_id;
-            $menu['name'] = $moduleModel->name;
-            $menu['path'] = $moduleModel->path;
-            $menu['url'] = $moduleModel->url;
-            $menu['icon'] = $moduleModel->icon;
+            $menu['id'] = $permissionModel->id;
+            $menu['menu_id'] = $permissionModel->permission_id;
+            $menu['type_id'] = $permissionModel->type_id;
+            $menu['name'] = $permissionModel->name;
+            $menu['path'] = $permissionModel->path;
+            $menu['url'] = $permissionModel->url;
+            $menu['icon'] = $permissionModel->icon;
             $menus[] = $menu;
         }
         $arrayHandler = new ArrayHandler();

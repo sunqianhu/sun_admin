@@ -3,7 +3,6 @@
 namespace app\model\mobile;
 
 use app\model\Base;
-use app\service\Dictionary as DictionaryService;
 
 class Permission extends Base
 {
@@ -16,39 +15,11 @@ class Permission extends Base
      */
     public function getApisAttr($value, $data)
     {
-        if(!isset($data['api'])){
+        if(!isset($data['api_string'])){
             return [];
         }
 
-        $api = str_replace("\r\n", "\n", $data['api']);
-        return explode("\n", $api);
-    }
-
-    /**
-     * 得到类型名称
-     * @param $value
-     * @return string
-     */
-    public function getTypeNameAttr($value, $data)
-    {
-        $dictionaryService = new DictionaryService();
-        return $dictionaryService->getValue('mobile_module_type', $data['type_id']);
-    }
-
-    /**
-     * 得到权限名称和备注
-     * @param $value
-     * @return string
-     */
-    public function getNameRemarkAttr($value, $data)
-    {
-        $nameRemark = '';
-        if(!empty($data['name'])){
-            $nameRemark .= $data['name'];
-        }
-        if(!empty($data['remark'])){
-            $nameRemark .= '（'.$data['remark'].'）';
-        }
-        return $nameRemark;
+        $apiString = str_replace("\r\n", "\n", $data['api_string']);
+        return explode("\n", $apiString);
     }
 }

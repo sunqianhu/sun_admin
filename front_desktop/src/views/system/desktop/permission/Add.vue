@@ -1,41 +1,45 @@
 <template>
   <el-dialog
     :model-value="open"
-    title="添加模块"
-    width="600"
+    title="添加权限"
     :draggable="true"
     align-center
+    width="600"
     @close="close"
     class="add"
   >
-    <el-scrollbar max-height="350px" class="scrollbar">
-      <el-form :model="module" :rules="rules" scroll-to-error ref="moduleRef" label-width="120px">
-        <el-form-item label="上级模块" prop="module_id">
+    <el-scrollbar max-height="400px" v-loading="dialogLoading" class="scrollbar">
+      <el-form
+        :model="permission"
+        :rules="rules"
+        scroll-to-error
+        ref="permissionRef"
+        label-width="120px"
+      >
+        <el-form-item label="上级权限" prop="permission_id">
           <el-tree-select
-            v-model="module.module_id"
-            :data="treeModules"
+            v-model="permission.permission_id"
+            :data="treePermissions"
+            :props="{ label: 'name' }"
+            node-key="id"
             :render-after-expand="false"
             check-strictly
             placeholder="无"
             clearable
           />
         </el-form-item>
-        <el-form-item label="模块名称" prop="name">
-          <el-input v-model="module.name" />
+        <el-form-item label="权限名称" prop="name">
+          <el-input v-model="permission.name" />
         </el-form-item>
-        <el-form-item label="模块key" prop="key">
-          <el-input v-model="module.key" />
-          <div class="form-tip">模块的唯一标识，用于前端权限指令标识</div>
+        <el-form-item label="权限标识" prop="key">
+          <el-input v-model="permission.key" />
         </el-form-item>
-        <el-form-item label="接口地址" prop="api" v-if="module.type_id == 2 || module.type_id == 3">
-          <el-input v-model="module.api" type="textarea" rows="3" />
-          <div class="form-tip">后端接口网址一行一个，格式：应用/控制器/方法</div>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="module.remark" maxlength="32" />
+        <el-form-item label="接口地址" prop="api_string">
+          <el-input v-model="permission.api_string" type="textarea" rows="3" />
+          <div class="form-tip">后端接口地址一行一个，格式：应用/控制器/方法</div>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input v-model="module.sort" type="number" />
+          <el-input v-model="permission.sort" type="number" />
         </el-form-item>
       </el-form>
     </el-scrollbar>
@@ -52,27 +56,26 @@ import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const submitLoading = ref(false);
-
-const module = ref({
-  type_id: 1,
+const dialogLoading = ref(false);
+const permission = ref({
   sort: 1
 });
-const moduleRef = ref();
+const permissionRef = ref();
 const rules = {
-  type_id: [{ required: true, message: "模块类型不能为空", trigger: "blur" }],
-  name: [{ required: true, message: "模块名称不能为空", trigger: "blur" }],
-  key: [{ required: true, message: "模块key不能为空", trigger: "blur" }],
+  name: [{ required: true, message: "权限名称不能为空", trigger: "blur" }],
+  key: [{ required: true, message: "权限标识不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
-const treeModules = ref([]);
-const types = ref([]);
+const treePermissions = ref([]);
+const submitLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/system.mobile.Module/initAdd");
+  dialogLoading.value = true;
+  const response = await axios.get("desktop/system.desktop.permission.Add/init");
+  dialogLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -80,8 +83,7 @@ const init = async () => {
     });
     return;
   }
-  treeModules.value = response.data.tree_modules;
-  types.value = response.data.types;
+  treePermissions.value = response.data.tree_permissions;
 };
 
 /**
@@ -95,12 +97,12 @@ const close = () => {
  * 提交表单
  */
 const submitForm = async () => {
-  await moduleRef.value.validate();
+  await permissionRef.value.validate();
 
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.mobile.Module/saveAdd", module.value);
+    response = await axios.post("desktop/system.desktop.permission.Add/save", permission.value);
   } catch (error) {
     submitLoading.value = false;
     return;
@@ -124,6 +126,7 @@ onMounted(() => {
   init();
 });
 </script>
+
 <style lang="scss" scoped>
 .add {
   .scrollbar {
