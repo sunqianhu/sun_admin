@@ -92,11 +92,11 @@ class Route
     }
     
     /**
-     * 得到用户的路由
+     * 得到路由集合
      * @param $userId
      * @return array
      */
-    public function getRoutes($userId)
+    public function getRoutesByUserId($userId)
     {
         $routes = [];
         $userService = new UserService();

@@ -7,9 +7,6 @@ use app\model\User as UserModel;
 use app\service\User as UserService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
 
 class Permission
 {
@@ -96,52 +93,10 @@ class Permission
     }
 
     /**
-     * 得到主布局第一个页面权限id
-     * @param $treePermissions
-     * @return int|mixed
-     */
-    public function getMainFirstPageId($treePermissions)
-    {
-        foreach($treePermissions as $treePermission){
-            if($treePermission['layout'] == "main" && $treePermission['type_id'] == 2){
-                return $treePermission['id'];
-            }
-            if(empty($treePermission['children'])){
-                continue;
-            }
-
-            return $this->getMainFirstPageId($treePermission['children']);
-        }
-
-        return 0;
-    }
-
-    /**
-     * 得到空白布局第一个页面权限id
-     * @param $treePermissions
-     * @return int|mixed
-     */
-    public function getBlankFirstPageId($treePermissions)
-    {
-        foreach($treePermissions as $treePermission){
-            if($treePermission['layout'] == "blank" && $treePermission['type_id'] == 2){
-                return $treePermission['id'];
-            }
-            if(empty($treePermission['children'])){
-                continue;
-            }
-
-            return $this->getBlankFirstPageId($treePermission['children']);
-        }
-
-        return 0;
-    }
-
-    /**
-     * 获取用户的权限
+     * 得到权限集合
      * @return mixed
      */
-    public function getPermissions($userId)
+    public function getPermissionsByUserId($userId)
     {
         $permissions = [];
         $userService = new UserService();
