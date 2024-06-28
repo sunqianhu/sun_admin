@@ -7,9 +7,12 @@
         <el-form-item label="部门">
           <el-tree-select
             v-model="query.department_id"
-            :data="departments"
+            :data="treeDepartments"
+            :props="{ label: 'name' }"
+            node-key="id"
             :render-after-expand="false"
             check-strictly
+            placeholder="不限"
             clearable
           />
         </el-form-item>
@@ -114,7 +117,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import { Search, ArrowDown, Plus } from "@element-plus/icons-vue";
@@ -127,7 +130,7 @@ const query = ref({
   page: 1
 });
 const loading = ref(true);
-const departments = ref([]);
+const treeDepartments = ref([]);
 const roles = ref([]);
 const users = ref([]);
 const total = ref(0);
@@ -140,7 +143,7 @@ const editPasswordFlag = ref(false);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/system.User/initIndex");
+  const response = await axios.get("desktop/system.user.Index/init");
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -149,8 +152,9 @@ const init = async () => {
     return;
   }
 
-  departments.value = response.data.departments;
+  treeDepartments.value = response.data.tree_departments;
   roles.value = response.data.roles;
+  await nextTick();
   getUsers();
 };
 
@@ -159,7 +163,7 @@ const init = async () => {
  */
 const getUsers = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.User/getIndexUsers", {
+  const response = await axios.get("desktop/system.user.Index/getUsers", {
     params: query.value
   });
   loading.value = false;

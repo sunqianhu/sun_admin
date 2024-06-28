@@ -31,6 +31,12 @@
         <el-form-item label="菜单图标" prop="icon">
           <el-input v-model="menu.icon" />
         </el-form-item>
+        <el-form-item label="打开方式" prop="target">
+          <el-radio-group v-model="menu.target">
+            <el-radio :value="1">本窗口</el-radio>
+            <el-radio :value="9">新窗口</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="menu.sort" type="number" />
         </el-form-item>

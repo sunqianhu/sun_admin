@@ -3,7 +3,8 @@
 namespace app\desktop\controller\system\config;
 
 use app\desktop\controller\Base;
-use app\service\Config as ConfigHelper;
+use app\service\Config as ConfigService;
+use app\validate\Config as ConfigValidate;
 use think\exception\ValidateException;
 
 class Index extends Base
@@ -17,9 +18,9 @@ class Index extends Base
      */
     public function init()
     {
-        $configHelper = new ConfigHelper();
+        $configService = new ConfigService();
         $config = [
-            'version'=>$configHelper->getValue('version')
+            'version'=>$configService->getValue('version')
         ];
         $data = [
             'config' => $config
@@ -36,14 +37,14 @@ class Index extends Base
 
         //验证
         try {
-            validate(ConfigValidate::class)->check($post);
+            validate(ConfigValidate::class)->scene('desktop_index')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $configHelper = new ConfigHelper();
+        $configService = new ConfigService();
         foreach($post as $key => $value){
-            $configHelper->setValue($key, $value);
+            $configService->setValue($key, $value);
         }
 
         return $this->success('保存成功');

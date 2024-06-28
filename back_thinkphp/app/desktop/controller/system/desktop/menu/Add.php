@@ -28,7 +28,7 @@ class Add extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['menu_id' => 0, 'name'=>'', 'url'=>'', 'icon'=>'', 'sort']);
+        $post = $this->request->post(['menu_id' => 0, 'name'=>'', 'url'=>'', 'icon'=>'', 'target', 'sort']);
 
         //验证
         try {

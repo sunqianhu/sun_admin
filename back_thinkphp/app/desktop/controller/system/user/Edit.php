@@ -7,15 +7,17 @@ use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
+use app\service\Department as DepartmentService;
+use app\service\User as UserServer;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
 class Edit extends Base
 {
     /**
-     * 初始化修改
+     * 初始化
      */
-    public function initEdit()
+    public function init()
     {
         $id = $this->request->get('id', 0);
         if ($id <= 0 || !is_numeric($id)) {
@@ -24,23 +26,16 @@ class Edit extends Base
 
         $userModel = UserModel::field('id,name,phone,department_id')
             ->with('roles')
+            ->append(['role_ids'])
             ->find($id);
         if (empty($userModel)) {
             return $this->error('没有找到记录');
         }
         $user = $userModel->toArray();
-        $user['role_ids'] = [];
-        if (!empty($user['roles'])) {
-            $user['role_ids'] = array_column($user['roles'], 'id');
-        }
 
         //部门
-        $departmentModels = DepartmentModel::field('id, id as value,department_id, name as label')
-            ->order('sort', 'asc')
-            ->select();
-        $departments = $departmentModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $departmentService = new DepartmentService();
+        $treeDepartments = $departmentService->getTreeDepartments();
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -57,7 +52,7 @@ class Edit extends Base
     /**
      * 保存修改
      */
-    public function saveEdit()
+    public function save()
     {
         $post = $this->request->post(['id', 'name', 'phone', 'department_id', 'role_ids']);
 
@@ -68,42 +63,11 @@ class Edit extends Base
             return $this->error($exception->getError());
         }
 
-        //手机号码
-        $userModel = UserModel::where('id', '<>', $post['id'])
-            ->where('phone', '=', $post['phone'])
-            ->find();
-        if (!empty($userModel)) {
-            return $this->error('手机号码已经存在');
-        }
-
-        //账号
-        $userModel = UserModel::find($post['id']);
-        if (empty($userModel)) {
-            return $this->error('没有找到记录');
-        }
-
-        $post['edit_time'] = time();
-        $userModel->save($post);
-
-        $oldRoleIds = array_column($userModel->roles->toArray(), 'id');
-        $deleteRoleIds = array_unique(array_values(array_diff($oldRoleIds, $post['role_ids'])));
-        $addRoleIds = array_unique(array_values(array_diff($post['role_ids'], $oldRoleIds)));
-        if(!empty($deleteRoleIds)){
-            foreach($deleteRoleIds as $deleteRoleId){
-                $userRoleModel = UserRoleModel::where('user_id', $userModel->id)
-                    ->where('role_id', $deleteRoleId)
-                    ->findOrEmpty();
-                $userRoleModel->delete();
-            }
-        }
-        if(!empty($addRoleIds)) {
-            foreach($addRoleIds as $addRoleId){
-                $userRoleModel = new UserRoleModel();
-                $userRoleModel->save([
-                    'user_id'=>$userModel->id,
-                    'role_id'=>$addRoleId
-                ]);
-            }
+        try{
+            $userServer = new UserServer();
+            $userServer->edit($post['id'], $post);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
         }
 
         return $this->success('修改成功');

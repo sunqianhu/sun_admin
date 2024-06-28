@@ -48,7 +48,7 @@ websocketClient.connect();
  * 获取未读消息
  */
 const getNoReadMessages = async () => {
-  const response = await axios.get("desktop/message/getNoReads");
+  const response = await axios.get("desktop/main.Message/getNoReads");
   if (response.data.length == 0) {
     return;
   }
@@ -80,7 +80,7 @@ const showMessage = async (data) => {
   messages.value.unshift(message);
   playAudio();
 
-  await axios.get("desktop/message/readAll");
+  await axios.get("desktop/main.message/readAll");
 };
 
 /**

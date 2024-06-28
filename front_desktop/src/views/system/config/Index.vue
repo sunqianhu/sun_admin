@@ -27,7 +27,7 @@ const submitLoading = ref(false);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/system.Config/init");
+  const response = await axios.get("desktop/system.config.Index/init");
   pageLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -49,7 +49,7 @@ const submitForm = async () => {
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.Config/save", config.value);
+    response = await axios.post("desktop/system.config.Index/save", config.value);
   } catch (error) {
     submitLoading.value = false;
     return;

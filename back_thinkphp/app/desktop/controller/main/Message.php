@@ -13,13 +13,13 @@ class Message extends Base
      */
     public function readAll()
     {
-        $messageModels = MessageModel::where('user_id', $this->user->id)
+        $messageModels = MessageModel::where('user_id', $this->session->user->id)
             ->where('read', 0)
             ->select();
         if ($messageModels->isEmpty()) {
             return $this->success('设置成功');
         }
-        $messageModels->update([
+        $messageModels->save([
             'read' => 1
         ]);
         return $this->success('设置成功');
@@ -32,7 +32,7 @@ class Message extends Base
     public function getNoReads()
     {
         //数据
-        $messageModels = MessageModel::where("user_id", $this->user->id)
+        $messageModels = MessageModel::where("user_id", $this->session->user->id)
             ->where("read", 0)
             ->order('id', 'desc')
             ->limit(0, 50)
@@ -41,10 +41,10 @@ class Message extends Base
 
         //设为已读
         if (!$messageModels->isEmpty()) {
-            $messageModels = MessageModel::where("user_id", $this->user->id)
+            $messageModels = MessageModel::where("user_id", $this->session->user->id)
                 ->where("read", 0)
                 ->select();
-            $messageModels->update([
+            $messageModels->save([
                 'read' => 1
             ]);
         }

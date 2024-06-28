@@ -43,6 +43,8 @@ class User extends Validate
         'desktop_edit' => ['id', 'name', 'phone', 'department_id', 'role_ids'],
         'desktop_edit_status' => ['id', 'status_id'],
         'desktop_edit_password' => ['id', 'password1', 'password2'],
+        'desktop_main_edit_password' => ['password1', 'password2'],
+        'desktop_main_edit_avatar' => ['avatar_base64_content'],
         'desktop_offline' => ['id'],
         'desktop_login'=>['account', 'password'],
         'desktop_edit_avatar'=>['avatar_base64_content'],

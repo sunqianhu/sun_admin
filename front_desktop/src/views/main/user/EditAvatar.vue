@@ -64,7 +64,7 @@ import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 
 const props = defineProps(["open"]);
-const emits = defineEmits(["close", "saveed"]);
+const emits = defineEmits(["close", "saved"]);
 const cropperRef = ref();
 const option = ref({
   img: "",
@@ -83,7 +83,7 @@ const saveLoading = ref(false);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/my/initEditAvatar");
+  const response = await axios.get("desktop/main.user.EditAvatar/init");
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -159,11 +159,12 @@ const realTimePreview = (data) => {
  */
 const save = () => {
   cropperRef.value.getCropData(async (data) => {
-    console.log(`output->data`, data);
     saveLoading.value = true;
     let response;
     try {
-      response = await axios.post("desktop/my/saveEditAvatar", { avatar_base64_content: data });
+      response = await axios.post("desktop/main.user.EditAvatar/save", {
+        avatar_base64_content: data
+      });
     } catch (error) {
       saveLoading.value = false;
       return;
@@ -181,7 +182,7 @@ const save = () => {
       message: response.message,
       type: "success"
     });
-    emits("saveed", true);
+    emits("saved", true);
   });
 };
 

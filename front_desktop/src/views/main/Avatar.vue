@@ -6,7 +6,7 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item :icon="User" @click="openInfo"> 账号信息 </el-dropdown-item>
+          <el-dropdown-item :icon="User" @click="openDetail"> 账号信息 </el-dropdown-item>
           <el-dropdown-item :icon="User" @click="openEditAvatar"> 修改头像 </el-dropdown-item>
           <el-dropdown-item :icon="Edit" @click="openEditPassword"> 修改密码 </el-dropdown-item>
           <el-dropdown-item :icon="SwitchButton" @click="logout"> 退出登录 </el-dropdown-item>
@@ -14,11 +14,11 @@
       </template>
     </el-dropdown>
 
-    <info :open="infoFlag" @close="infoFlag = false" v-if="infoFlag"></info>
+    <detail :open="detailFlag" @close="detailFlag = false" v-if="detailFlag"></detail>
     <edit-avatar
       :open="editAvatarFlag"
       @close="editAvatarFlag = false"
-      @saveed="
+      @saved="
         editAvatarFlag = false;
         init();
       "
@@ -39,12 +39,12 @@ import { useRouter } from "vue-router";
 import { Edit, SwitchButton, User } from "@element-plus/icons-vue";
 import { useAppStore } from "../../stores/app";
 import axios from "@/helper/axios";
-import Info from "./user/Info.vue";
+import Detail from "./user/Detail.vue";
 import EditAvatar from "./user/EditAvatar.vue";
 import EditPassword from "./user/EditPassword.vue";
 
 const router = useRouter();
-const infoFlag = ref(false);
+const detailFlag = ref(false);
 const editAvatarFlag = ref(false);
 const editPasswordFlag = ref(false);
 const avatar = ref("");
@@ -62,10 +62,10 @@ const init = async () => {
 };
 
 /**
- * 账号信息
+ * 打开用户详情
  */
-const openInfo = async () => {
-  infoFlag.value = true;
+const openDetail = async () => {
+  detailFlag.value = true;
 };
 
 /**

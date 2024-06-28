@@ -35,18 +35,18 @@ class File
 
     /**
      * 创建权限目录
-     * @param $permission
+     * @param $module
      * @return string
      * @throws Exception
      */
-    public function makePermissionDir($permission = ''){
+    public function makePermissionDir($module = ''){
         $rootPath = Config::get('filesystem.root_path'); // 磁盘根目录
         if (empty($rootPath)) {
             throw new Exception('没有配置文件目录');
         }
 
-        if ($permission != '') {
-            $relativeDir = $permission . '/';
+        if ($module != '') {
+            $relativeDir = $module . '/';
         }
         $relativeDir .= date('Y/m/d') . '/'; // 目录
         $fullDir = $rootPath . $relativeDir;
@@ -61,12 +61,12 @@ class File
 
     /**
      * 保存base64内容到文件
-     * @param $permission
+     * @param $module
      * @param $content
      * @return string
      * @throws Exception
      */
-    public function saveBase64ContentToFile($permission, $content)
+    public function saveBase64ContentToFile($module, $content)
     {
         $allowMimeTypes = [
             'image/jpg',
@@ -101,7 +101,7 @@ class File
         }
         $decodeContent = base64_decode($base64Content);
 
-        $relativeDir = $this->makePermissionDir($permission);
+        $relativeDir = $this->makePermissionDir($module);
         $fileName = md5(time() . rand(1000, 9999)) . '.' . $ext;
         $path = $relativeDir . $fileName; // 文件相对路径
         $fullPath = $this->getFullPath($path); // 全文件路径

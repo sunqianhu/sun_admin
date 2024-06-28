@@ -20,7 +20,7 @@ class Edit extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::field('id,menu_id,name,url,icon,sort')->find($id);
+        $menuModel = MenuModel::field('id,menu_id,name,url,icon,target,sort')->find($id);
         if (empty($menuModel)) {
             return $this->error('没有找到记录');
         }
@@ -41,7 +41,7 @@ class Edit extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['id', 'menu_id' => 0, 'name'=>'', 'url'=>'', 'icon'=>'', 'sort']);
+        $post = $this->request->post(['id', 'menu_id' => 0, 'name'=>'', 'url'=>'', 'icon'=>'', 'target', 'sort']);
 
         //验证
         try {

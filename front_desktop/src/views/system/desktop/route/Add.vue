@@ -30,8 +30,8 @@
         <el-form-item label="保活" prop="keep_alive">
           <div>
             <el-radio-group v-model="route.keep_alive">
-              <el-radio :label="1">是</el-radio>
-              <el-radio :label="2">否</el-radio>
+              <el-radio :value="1">是</el-radio>
+              <el-radio :value="2">否</el-radio>
             </el-radio-group>
             <div class="form-tip">返回页后页面不重新载入数据</div>
           </div>

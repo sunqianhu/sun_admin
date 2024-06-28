@@ -3,10 +3,11 @@
 namespace app\desktop\controller\main\user;
 
 use app\desktop\controller\Base;
-use app\model\User as UserModel;
+use app\service\User as UserService;
+use app\validate\User as UserValidate;
 use think\exception\ValidateException;
 
-class Password extends Base
+class EditPassword extends Base
 {
     /**
      * 保存
@@ -16,14 +17,13 @@ class Password extends Base
         $post = $this->request->post(['password1', 'password2']);
 
         try {
-            validate(MyValidate::class)->scene('edit_password')->check($post);
+            validate(UserValidate::class)->scene('desktop_main_edit_password')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $userModel = UserModel::find($this->user->id);
-        $userModel->password = md5($post['password1']);
-        $userModel->save();
+        $userService = new UserService();
+        $userService->editPassword($this->session->user->id, $post['password1']);
 
         return $this->success('修改成功');
     }

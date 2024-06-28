@@ -64,10 +64,10 @@ class Base extends BaseController
      * @param string $message 提示消息
      * @param mixed $data 返回数据
      */
-    public function error(string $message, $data = null)
+    public function error(string $message, $data = null, $code = 0)
     {
         $result = [
-            'code' => 0,
+            'code' => $code,
             'message' => $message,
             'data' => $data
         ];

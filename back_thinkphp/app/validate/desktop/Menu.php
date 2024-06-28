@@ -8,7 +8,7 @@ class Menu extends Validate
 {
     protected $rule = [
         'id'  =>  'require|number',
-        'menu_id'  =>  'require|number|different:id',
+        'menu_id'  =>  'number|different:id',
         'name'  =>  'require',
         'sort'  =>  'require|number',
     ];

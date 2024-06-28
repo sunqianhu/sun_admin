@@ -8,7 +8,6 @@ class Route extends Validate
 {
     protected $rule = [
         'id'  =>  'require|number',
-        'route_id'  =>  'require|number',
         'name'  =>  'require',
         'key'  =>  'require',
         'path'  =>  'require',
@@ -20,8 +19,6 @@ class Route extends Validate
     protected $message = [
         'id.require' => 'id不能为空',
         'id.number' => 'id必须是数字',
-        'route_id.require' => '上级路由不能为空',
-        'route_id.number' => '上级路由必须是数字',
         'name.require' => '路由名称不能为空',
         'key.require' => '路由标识不能为空',
         'path.require' => '路由路径不能为空',

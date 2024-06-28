@@ -6,6 +6,7 @@ use app\desktop\controller\Base;
 use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
+use app\service\Department as DepartmentService;
 use app\service\desktop\session\Jwt;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
@@ -13,33 +14,29 @@ use think\exception\ValidateException;
 class Index extends Base
 {
     /**
-     * 初始化首页
+     * 初始化
      */
-    public function initIndex()
+    public function init()
     {
         //部门
-        $departmentModels = DepartmentModel::field('id, id as value,department_id, name as label')
-            ->order('sort', 'asc')
-            ->select();
-        $departments = $departmentModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $departmentService = new DepartmentService();
+        $treeDepartments = $departmentService->getTreeDepartments();
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
         $roles = $roleModels->toArray();
 
         $data = [
-            'departments' => $treeDepartments,
+            'tree_departments' => $treeDepartments,
             'roles' => $roles
         ];
         return $this->success('获取成功', $data);
     }
 
     /**
-     * 获取首页用户
+     * 获取用户
      */
-    public function getIndexUsers()
+    public function getUsers()
     {
         $get = $this->request->get(['department_id', 'role_id', 'account', 'name', 'phone', 'size' => 30, 'page' => 1]);
 
