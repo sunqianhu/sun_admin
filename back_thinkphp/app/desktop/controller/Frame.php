@@ -2,7 +2,7 @@
 
 namespace app\desktop\controller;
 
-use app\service\User as UserService;
+use app\service\user\Desktop as DesktopService;
 
 /**
  * 框架
@@ -15,8 +15,8 @@ class Frame extends Base
      */
     public function getRoutes()
     {
-        $userService = new UserService();
-        $routes = $userService->getRoutes($this->user->id);
+        $desktopService = new DesktopService();
+        $routes = $desktopService->getRoutes($this->session->user->id);
 
         return $this->success('获取成功', $routes);
     }
@@ -27,8 +27,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $userService = new UserService();
-        $permissions = $userService->getPermissions($this->user->id);
+        $desktopService = new DesktopService();
+        $permissions = $desktopService->getPermissionKeys($this->session->user->id);
 
         return $this->success('获取成功', $permissions);
     }

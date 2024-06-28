@@ -1,13 +1,7 @@
 <template>
   <template v-for="menu in menus" :key="menu.id">
     <template v-if="!menu.children">
-      <el-menu-item index="" v-if="menu.type_id == 4" @click="openOutLink(menu.url)">
-        <el-icon v-if="menu.icon">
-          <component :is="icons[menu.icon]"></component>
-        </el-icon>
-        <span>{{ menu.name }}</span>
-      </el-menu-item>
-      <el-menu-item :index="menu.path" v-else>
+      <el-menu-item @click="navigateTo(menu.url, menu.target)">
         <el-icon v-if="menu.icon">
           <component :is="icons[menu.icon]"></component>
         </el-icon>
@@ -28,7 +22,9 @@
 
 <script setup>
 import * as icons from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const props = defineProps({
   menus: {
     type: Array,
@@ -37,11 +33,16 @@ const props = defineProps({
 });
 
 /**
- * 打开外部链接
- * @param {*} url
+ * 导航
+ * @param url
+ * @param target
  */
-const openOutLink = (url) => {
-  window.open(url);
+const navigateTo = (url, target) => {
+  if (target == 9) {
+    window.open(url);
+    return;
+  }
+  router.push(url);
 };
 </script>
 

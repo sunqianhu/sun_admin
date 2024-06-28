@@ -3,17 +3,10 @@
 namespace app\desktop\controller;
 
 use app\service\desktop\Session as SessionService;
-use app\model\desktop\Permission as PermissionModel;
 use app\model\User as UserModel;
 use app\service\Config as ConfigHelper;
-use app\service\desktop\session\Jwt;
-use app\service\File;
-use app\service\User as UserService;
+use app\service\user\Desktop as DesktopService;
 use app\service\Watermark as WatermarkService;
-use Sunqianhu\Helper\ArrayHandler;
-use Sunqianhu\Helper\Image;
-use think\exception\ValidateException;
-use think\facade\Config;
 
 /**
  * 主页
@@ -30,15 +23,10 @@ class Main extends Base
     public function init()
     {
         $configHelper = new ConfigHelper();
-        $config = [
-            'version' => $configHelper->getValue('version')
-        ];
-
-        $userModel = UserModel::field('avatar')->find($this->user->id);
-        $avatar = $userModel->avatar_url;
+        $version = $configHelper->getValue('version');
 
         $data = [
-            'config' => $config
+            'version' => $version
         ];
         return $this->success('获取成功', $data);
     }
@@ -49,55 +37,41 @@ class Main extends Base
      */
     public function getMenus()
     {
-        $userService = new UserService();
-        $roleIds = $userService->getRoleIds($this->user->id);
-        if (empty($roleIds)) {
-            return $this->success('获取成功', []);
-        }
-
-        //权限
-        $permissionModels = PermissionModel::alias('m')
-            ->join('role_desktop_permission rdm', 'm.id = rdm.permission_id')
-            ->field('m.*')
-            ->where('m.type_id', 'in', '1,2,4')
-            ->where('rdm.role_id', 'in', $roleIds)
-            ->where('show', 1)
-            ->order('m.sort', 'asc')
-            ->group('m.id')
-            ->select();
-        if ($permissionModels->isEmpty()) {
-            return $this->success('获取成功', []);
-        }
-
-        $menus = [];
-        foreach ($permissionModels as $permissionModel) {
-            $menu = [];
-            $menu['id'] = $permissionModel->id;
-            $menu['menu_id'] = $permissionModel->permission_id;
-            $menu['type_id'] = $permissionModel->type_id;
-            $menu['name'] = $permissionModel->name;
-            $menu['path'] = $permissionModel->path;
-            $menu['url'] = $permissionModel->url;
-            $menu['icon'] = $permissionModel->icon;
-            $menus[] = $menu;
-        }
-        $arrayHandler = new ArrayHandler();
-        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        $desktopService = new DesktopService();
+        $treeMenus = $desktopService->getMenus($this->session->user->id);
 
         return $this->success('获取成功', $treeMenus);
     }
 
+    /**
+     * 得到头像
+     * @return \think\Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getAvatar()
+    {
+        $userModel = UserModel::field('avatar')->find($this->session->user->id);
+        $avatar = $userModel->avatar_url;
+
+        return $this->success('获取成功', $avatar);
+    }
 
     /**
-     * 获取水印
+     * 得到水印
      * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getWatermark()
     {
         $watermarkService = new WatermarkService();
         $watermarkEntity = $watermarkService->getWatermark($this->session->user->id);
-        $data = $watermarkEntity->toArray();
-        return $this->success('获取成功', $data);
+        $watermark = $watermarkEntity->toArray();
+
+        return $this->success('获取成功', $watermark);
     }
 
     /**

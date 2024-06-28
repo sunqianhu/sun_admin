@@ -39,9 +39,9 @@ import { useRouter } from "vue-router";
 import { Edit, SwitchButton, User } from "@element-plus/icons-vue";
 import { useAppStore } from "../../stores/app";
 import axios from "@/helper/axios";
-import Info from "@/views/my/Info.vue";
-import EditAvatar from "@/views/my/EditAvatar.vue";
-import EditPassword from "@/views/my/EditPassword.vue";
+import Info from "./user/Info.vue";
+import EditAvatar from "./user/EditAvatar.vue";
+import EditPassword from "./user/EditPassword.vue";
 
 const router = useRouter();
 const infoFlag = ref(false);
@@ -89,7 +89,7 @@ const logout = async () => {
   const appStore = useAppStore();
   let url;
 
-  const response = await axios.get("desktop/Login/logout");
+  const response = await axios.get("desktop/Main/logout");
   if (response.code != 1) {
     ElMessage({
       message: response.message,

@@ -1,26 +1,24 @@
 <?php
 
-namespace app\desktop\controller\main;
+namespace app\desktop\controller\main\user;
 
+use app\desktop\controller\Base;
 use app\model\User as UserModel;
 use app\service\File;
 use Sunqianhu\Helper\Image;
 use think\exception\ValidateException;
 use think\facade\Config;
 
-class User
+class Avatar extends Base
 {
-
-    public function getUserInfo()
-    {
-        $userModel = UserModel::field('id,account,name,phone,login_time,login_ip,department_id')
-            ->find($this->user->id);
-        $user = $userModel->toArray();
-        $user['department_name'] = $userModel->department->name ?? '';
-        return $this->success('获取成功', $user);
-    }
-
-    public function initEditAvatar()
+    /**
+     * 初始化
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function init()
     {
         $userModel = UserModel::field('avatar')->find($this->user->id);
         $avatar = $userModel->front_avatar_url;
@@ -29,10 +27,10 @@ class User
     }
 
     /**
-     * 保存修改头像
+     * 保存
      * @return \think\Response
      */
-    public function saveEditAvatar()
+    public function save()
     {
         $post = $this->request->post(['avatar_base64_content']);
 
@@ -65,25 +63,5 @@ class User
         $userModel->save();
 
         return $this->success('修改成功', $url);
-    }
-
-    /**
-     * 修改密码
-     */
-    public function editPassword()
-    {
-        $post = $this->request->post(['password1', 'password2']);
-
-        try {
-            validate(MyValidate::class)->scene('edit_password')->check($post);
-        } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
-        }
-
-        $userModel = UserModel::find($this->user->id);
-        $userModel->password = md5($post['password1']);
-        $userModel->save();
-
-        return $this->success('修改成功');
     }
 }

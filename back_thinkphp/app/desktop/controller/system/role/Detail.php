@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
 

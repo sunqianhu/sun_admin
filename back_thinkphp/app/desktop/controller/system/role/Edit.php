@@ -1,24 +1,25 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Permission as DesktopPermissionModel;
-use app\model\mobile\Permission as MobilePermissionModel;
 use app\model\Role as RoleModel;
-use app\model\RoleDesktopPermission as RoleDesktopPermissionModel;
-use app\model\RoleMobilePermission as RoleMobilePermissionModel;
-use Sunqianhu\Helper\ArrayHandler;
+use app\service\desktop\Menu as DesktopMenuService;
+use app\service\desktop\Permission as DesktopPermissionService;
+use app\service\desktop\Route as DesktopRouteService;
+use app\service\mobile\Permission as MobilePermissionService;
+use app\service\Role as RoleService;
+use app\validate\Role as RoleValidate;
 use think\exception\ValidateException;
 
 class Edit extends Base
 {
     /**
-     * 初始化修改
+     * 初始化
      *
      * @return void
      */
-    public function initEdit()
+    public function init()
     {
         $id = $this->request->get('id', 0);
         if ($id <= 0 || !is_numeric($id)) {
@@ -26,109 +27,57 @@ class Edit extends Base
         }
 
         //角色
-        $roleModel = RoleModel::with(['desktopPermissions', 'mobilePermissions'])
+        $roleModel = RoleModel::with(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions'])
             ->field('id,name')
+            ->append(['desktop_permission_ids', 'desktop_menu_ids', 'desktop_route_ids', 'mobile_permission_ids'])
             ->find($id);
         if (empty($roleModel)) {
             return $this->error('没有找到记录');
         }
+        $roleModel->hidden(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions']);
         $role = $roleModel->toArray();
 
-        $role['desktop_permission_ids'] = [];
-        if (!empty($role['desktopPermissions'])) {
-            $role['desktop_permission_ids'] = array_column($role['desktopPermissions'], 'id');
-        }
-        $role['mobile_permission_ids'] = [];
-        if (!empty($role['mobilePermissions'])) {
-            $role['mobile_permission_ids'] = array_column($role['mobilePermissions'], 'id');
-        }
+        $desktopPermissionService = new DesktopPermissionService();
+        $desktopPermissions = $desktopPermissionService->getTreePermissions();
 
-        //桌面端权限
-        $desktopPermissionModels = DesktopPermissionModel::field('id, id, permission_id, name, remark')
-            ->order('sort', 'asc')
-            ->append(['name_remark'])
-            ->select();
-        $desktopPermissions = $desktopPermissionModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        $treeDesktopPermissions = $arrayHandler->convertTree($desktopPermissions, 'id', 'permission_id', 'children');
+        $desktopMenuService = new DesktopMenuService();
+        $desktopMenus = $desktopMenuService->getTreeMenus();
 
-        //移动端权限
-        $mobilePermissionModels = MobilePermissionModel::field('id, permission_id, name, remark')
-            ->order('sort', 'asc')
-            ->append(['name_remark'])
-            ->select();
-        $mobilePermissions = $mobilePermissionModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        $treeMobilePermissions = $arrayHandler->convertTree($mobilePermissions, 'id', 'permission_id', 'children');
+        $desktopRouteService = new DesktopRouteService();
+        $desktopRoutes = $desktopRouteService->getRoutes();
+
+        $mobilePermissionService = new MobilePermissionService();
+        $mobilePermissions = $mobilePermissionService->getTreePermissions();
 
         $data = [
             'role' => $role,
-            'desktop_permissions' => $treeDesktopPermissions,
-            'mobile_permissions'=>$treeMobilePermissions
+            'desktop_permissions' => $desktopPermissions,
+            'desktop_menus'=>$desktopMenus,
+            'desktop_routes'=>$desktopRoutes,
+            'mobile_permissions'=>$mobilePermissions
         ];
         return $this->success('获取成功', $data);
     }
 
     /**
-     * 保存修改
+     * 保存
      */
-    public function saveEdit()
+    public function save()
     {
-        $post = $this->request->post(['id', 'name', 'desktop_permission_ids' => [], 'mobile_permission_ids' => []]);
+        $post = $this->request->post(['id', 'name', 'desktop_permission_ids' => [], 'desktop_menu_ids' => [], 'desktop_route_ids' => [], 'mobile_permission_ids' => []]);
 
         //验证
         try {
-            validate(RoleValidate::class)->scene('edit')->check($post);
+            validate(RoleValidate::class)->scene('desktop_edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $roleModel = RoleModel::find($post['id']);
-        if (empty($roleModel)) {
-            return $this->error('没有找到记录');
-        }
-        $roleModel->save($post);
-
-        //桌面端权限
-        $oldDesktopPermissionIds = array_column($roleModel->desktopPermissions->toArray(), 'id');
-        $deleteDesktopPermissionIds = array_unique(array_values(array_diff($oldDesktopPermissionIds, $post['desktop_permission_ids'])));
-        $addDesktopPermissionIds = array_unique(array_values(array_diff($post['desktop_permission_ids'], $oldDesktopPermissionIds)));
-        if(!empty($deleteDesktopPermissionIds)){
-            foreach($deleteDesktopPermissionIds as $deleteDesktopPermissionId){
-                RoleDesktopPermissionModel::where('role_id', $roleModel->id)
-                    ->where('permission_id', $deleteDesktopPermissionId)
-                    ->delete();
-            }
-        }
-        if(!empty($addDesktopPermissionIds)) {
-            foreach($addDesktopPermissionIds as $addDesktopPermissionId){
-                $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
-                $roleDesktopPermissionModel->save([
-                    'role_id'=>$roleModel->id,
-                    'permission_id'=>$addDesktopPermissionId
-                ]);
-            }
-        }
-
-        //移动端权限
-        $oldMobilePermissionIds = array_column($roleModel->mobilePermissions->toArray(), 'id');
-        $deleteMobilePermissionIds = array_unique(array_values(array_diff($oldMobilePermissionIds, $post['mobile_permission_ids'])));
-        $addMobilePermissionIds = array_unique(array_values(array_diff($post['mobile_permission_ids'], $oldMobilePermissionIds)));
-        if(!empty($deleteMobilePermissionIds)){
-            foreach($deleteMobilePermissionIds as $deleteMobilePermissionId){
-                RoleMobilePermissionModel::where('role_id', $roleModel->id)
-                    ->where('permission_id', $deleteMobilePermissionId)
-                    ->delete();
-            }
-        }
-        if(!empty($addMobilePermissionIds)) {
-            foreach($addMobilePermissionIds as $addMobilePermissionId){
-                $roleMobilePermissionModel = new RoleMobilePermissionModel();
-                $roleMobilePermissionModel->save([
-                    'role_id'=>$roleModel->id,
-                    'permission_id'=>$addMobilePermissionId
-                ]);
-            }
+        $roleService = new RoleService();
+        try{
+            $roleService->edit($post['id'], $post);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
         }
 
         return $this->success('修改成功');

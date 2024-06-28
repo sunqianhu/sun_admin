@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
 use app\model\Role as RoleModel;
@@ -10,7 +10,7 @@ class Index extends Base
     /**
      * 得到首页角色
      */
-    public function getIndexRoles()
+    public function getRoles()
     {
         $get = $this->request->get(['name' => '', 'size' => '30', 'page' => '1']);
 

@@ -4,11 +4,10 @@ namespace app\service\desktop;
 
 use app\entity\desktop\Session as SessionEntity;
 use app\entity\User as UserEntity;
-use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
 use app\service\desktop\session\Jwt;
 use app\service\LoginLog as LoginLogService;
-use app\service\User as UserService;
+use app\service\user\Desktop as DesktopService;
 use Exception;
 
 class Session
@@ -28,6 +27,7 @@ class Session
         'desktop/Frame/getRoutes',
         'desktop/Frame/getPermissions',
         'desktop/Main/init',
+        'desktop/Main/getMenus',
         'desktop/main.User/info',
         'desktop/main.User/initEditAvatar',
         'desktop/main.User/saveEditAvatar',
@@ -36,6 +36,7 @@ class Session
         'desktop/main.Message/getNoReads',
         'desktop/uploadFile/upload',
         'desktop/Login/logout',
+        'desktop/components.Watermark/getWatermark'
     ];
 
     /**
@@ -79,7 +80,7 @@ class Session
         $userModel->save();
 
         $sessionEntity = new SessionEntity();
-        $sessionEntity->userId = $userModel->id;
+        $sessionEntity->user = $userEntity;
         $sessionEntity->token = $token;
 
         return $sessionEntity;
@@ -121,7 +122,6 @@ class Session
             }
         }
 
-
         if ($token === '') {
             throw new Exception('未获取到token');
         }
@@ -134,8 +134,8 @@ class Session
             return $sessionEntity;
         }
 
-        $userService = new UserService();
-        if(!$userService->hasPermission($userEntity->id)){
+        $desktopService = new DesktopService();
+        if(!$desktopService->hasPermission($userEntity->id, $url)){
             throw new Exception('无权限');
         }
 

@@ -2,8 +2,9 @@
   <el-dialog
     :model-value="open"
     title="修改角色"
-    width="600"
+    width="700"
     :draggable="true"
+    align-center
     @close="close"
     class="edit"
   >
@@ -12,28 +13,52 @@
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
-        <el-form-item label="桌面端权限" prop="desktop_module_ids">
+        <el-form-item label="桌面端权限" prop="desktop_permission_ids">
           <el-tree
-            :props="{ children: 'children', label: 'name_remark' }"
-            :data="desktopModules"
-            show-checkbox
+            :data="desktopPermissions"
+            :props="{ children: 'children', label: 'name' }"
             node-key="id"
-            ref="desktopModuleRef"
+            show-checkbox
+            ref="desktopPermissionRef"
             empty-text="无权限"
-            @check="checkDesktopModule"
-            :default-checked-keys="desktopModuleDefaultCheckKeys"
+            :default-checked-keys="desktopPermissionDefaultCheckKeys"
+            @check="checkDesktopPermission"
           />
         </el-form-item>
-        <el-form-item label="移动端权限" prop="mobile_module_ids">
+        <el-form-item label="桌面端菜单" prop="desktop_menu_ids">
           <el-tree
-            :props="{ children: 'children', label: 'name_remark' }"
-            :data="mobileModules"
-            show-checkbox
+            :data="desktopMenus"
+            :props="{ children: 'children', label: 'name' }"
             node-key="id"
-            ref="mobileModuleRef"
+            show-checkbox
+            ref="desktopMenuRef"
+            empty-text="无菜单"
+            :default-checked-keys="desktopMenuDefaultCheckKeys"
+            @check="checkDesktopMenu"
+          />
+        </el-form-item>
+        <el-form-item label="桌面端路由" prop="desktop_route_ids">
+          <el-tree
+            :data="desktopRoutes"
+            :props="{ children: 'children', label: 'name' }"
+            node-key="id"
+            show-checkbox
+            ref="desktopRouteRef"
+            empty-text="无路由"
+            :default-checked-keys="desktopRouteDefaultCheckKeys"
+            @check="checkDesktopRoute"
+          />
+        </el-form-item>
+        <el-form-item label="移动端权限" prop="mobile_permission_ids">
+          <el-tree
+            :data="mobilePermissions"
+            :props="{ children: 'children', label: 'name' }"
+            node-key="id"
+            show-checkbox
+            ref="mobilePermissionRef"
             empty-text="无权限"
-            @check="checkMobileModule"
-            :default-checked-keys="mobileModuleDefaultCheckKeys"
+            :default-checked-keys="mobilePermissionDefaultCheckKeys"
+            @check="checkMobilePermission"
           />
         </el-form-item>
       </el-form>
@@ -52,8 +77,10 @@ import axios from "@/helper/axios";
 const props = defineProps(["open", "id"]);
 const emits = defineEmits(["close", "submited"]);
 const role = ref({
-  desktop_module_ids: [],
-  mobile_module_ids: []
+  desktop_permission_ids: [],
+  desktop_menu_ids: [],
+  desktop_route_ids: [],
+  mobile_permission_ids: []
 });
 const roleRef = ref();
 const rules = {
@@ -61,19 +88,25 @@ const rules = {
 };
 const dialogLoading = ref(true);
 const submitLoading = ref(false);
-const desktopModules = ref([]);
-const desktopModuleRef = ref(null);
-const desktopModuleDefaultCheckKeys = ref([]);
-const mobileModules = ref([]);
-const mobileModuleRef = ref(null);
-const mobileModuleDefaultCheckKeys = ref([]);
+const desktopPermissions = ref([]);
+const desktopPermissionRef = ref(null);
+const desktopMenus = ref([]);
+const desktopMenuRef = ref(null);
+const desktopRoutes = ref([]);
+const desktopRouteRef = ref([]);
+const mobilePermissions = ref([]);
+const mobilePermissionRef = ref(null);
+const desktopPermissionDefaultCheckKeys = ref([]);
+const desktopMenuDefaultCheckKeys = ref([]);
+const desktopRouteDefaultCheckKeys = ref([]);
+const mobilePermissionDefaultCheckKeys = ref([]);
 
 /**
  * 初始化
  */
 const init = async () => {
   dialogLoading.value = true;
-  const response = await axios.get("desktop/system.Role/initEdit", {
+  const response = await axios.get("desktop/system.role.Edit/init", {
     params: { id: props.id }
   });
   dialogLoading.value = false;
@@ -85,15 +118,24 @@ const init = async () => {
     return;
   }
 
-  desktopModules.value = response.data.desktop_modules;
-  mobileModules.value = response.data.mobile_modules;
-  role.value = response.data.role;
+  desktopPermissions.value = response.data.desktop_permissions;
+  desktopMenus.value = response.data.desktop_menus;
+  desktopRoutes.value = response.data.desktop_routes;
+  mobilePermissions.value = response.data.mobile_permissions;
   await nextTick();
-  desktopModuleDefaultCheckKeys.value = getDesktopModuleDefaultCheckKeys(
-    response.data.role.desktop_module_ids
+
+  role.value = response.data.role;
+  desktopPermissionDefaultCheckKeys.value = getDesktopPermissionDefaultCheckKeys(
+    response.data.role.desktop_permission_ids
   );
-  mobileModuleDefaultCheckKeys.value = getMobileModuleDefaultCheckKeys(
-    response.data.role.mobile_module_ids
+  desktopMenuDefaultCheckKeys.value = getDesktopMenuDefaultCheckKeys(
+    response.data.role.desktop_menu_ids
+  );
+  desktopRouteDefaultCheckKeys.value = getDesktopRouteDefaultCheckKeys(
+    response.data.role.desktop_route_ids
+  );
+  mobilePermissionDefaultCheckKeys.value = getMobilePermissionDefaultCheckKeys(
+    response.data.role.mobile_permission_ids
   );
 };
 
@@ -106,70 +148,122 @@ const close = () => {
 
 /**
  * 得到桌面端权限默认选中的key(排除父节点)
- * @param {array} desktopModuleIds
+ * @param {array} desktopPermissionIds
  */
-const getDesktopModuleDefaultCheckKeys = (desktopModuleIds) => {
-  let finalModuleIds = [];
-  let i;
-  let desktopModuleId = 0;
-  let node;
-
-  for (i in desktopModuleIds) {
-    desktopModuleId = desktopModuleIds[i];
-    node = desktopModuleRef.value.getNode(desktopModuleId);
+const getDesktopPermissionDefaultCheckKeys = (desktopPermissionIds) => {
+  let finalPermissionIds = [];
+  for (let i in desktopPermissionIds) {
+    let desktopPermissionId = desktopPermissionIds[i];
+    let node = desktopPermissionRef.value.getNode(desktopPermissionId);
     if (!node) {
       continue;
     }
 
     if (!node.childNodes || !node.childNodes.length) {
-      finalModuleIds.push(desktopModuleId);
+      finalPermissionIds.push(desktopPermissionId);
     }
   }
-  return finalModuleIds;
+  return finalPermissionIds;
 };
 
 /**
  * 选择桌面端权限
  */
-const checkDesktopModule = () => {
-  const allKeys = desktopModuleRef.value.getCheckedKeys(); //全选中
-  const halfKeys = desktopModuleRef.value.getHalfCheckedKeys(); //半选中
+const checkDesktopPermission = () => {
+  const allKeys = desktopPermissionRef.value.getCheckedKeys(); //全选中
+  const halfKeys = desktopPermissionRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
-  role.value.desktop_module_ids = keys;
+  role.value.desktop_permission_ids = keys;
 };
 
 /**
- * 得到移动端权限默认选中的key(排除父节点)
- * @param {array} desktopModuleIds
+ * 得到桌面端菜单默认选中的key(排除父节点)
+ * @param {array} desktopMenuIds
  */
-const getMobileModuleDefaultCheckKeys = (mobileModuleIds) => {
-  let finalModuleIds = [];
-  let i;
-  let mobileModuleId = 0;
-  let node;
-
-  for (i in mobileModuleIds) {
-    mobileModuleId = mobileModuleIds[i];
-    node = mobileModuleRef.value.getNode(mobileModuleId);
+const getDesktopMenuDefaultCheckKeys = (desktopMenuIds) => {
+  let finalMenuIds = [];
+  for (let i in desktopMenuIds) {
+    let desktopMenuId = desktopMenuIds[i];
+    let node = desktopMenuRef.value.getNode(desktopMenuId);
     if (!node) {
       continue;
     }
 
     if (!node.childNodes || !node.childNodes.length) {
-      finalModuleIds.push(mobileModuleId);
+      finalMenuIds.push(desktopMenuId);
     }
   }
-  return finalModuleIds;
+  return finalMenuIds;
+};
+
+/**
+ * 选择桌面端菜单
+ */
+const checkDesktopMenu = () => {
+  const allKeys = desktopMenuRef.value.getCheckedKeys(); //全选中
+  const halfKeys = desktopMenuRef.value.getHalfCheckedKeys(); //半选中
+  const keys = [...allKeys, ...halfKeys];
+  role.value.desktop_menu_ids = keys;
+};
+
+/**
+ * 得到桌面端路由默认选中的key(排除父节点)
+ * @param {array} desktopRouteIds
+ */
+const getDesktopRouteDefaultCheckKeys = (desktopRouteIds) => {
+  let finalRouteIds = [];
+  for (let i in desktopRouteIds) {
+    let desktopRouteId = desktopRouteIds[i];
+    let node = desktopRouteRef.value.getNode(desktopRouteId);
+    if (!node) {
+      continue;
+    }
+
+    if (!node.childNodes || !node.childNodes.length) {
+      finalRouteIds.push(desktopRouteId);
+    }
+  }
+  return finalRouteIds;
+};
+
+/**
+ * 选择桌面端路由
+ */
+const checkDesktopRoute = () => {
+  const allKeys = desktopRouteRef.value.getCheckedKeys(); //全选中
+  const halfKeys = desktopRouteRef.value.getHalfCheckedKeys(); //半选中
+  const keys = [...allKeys, ...halfKeys];
+  role.value.desktop_route_ids = keys;
+};
+
+/**
+ * 得到移动端权限默认选中的key(排除父节点)
+ * @param {array} desktopPermissionIds
+ */
+const getMobilePermissionDefaultCheckKeys = (mobilePermissionIds) => {
+  let finalPermissionIds = [];
+  for (let i in mobilePermissionIds) {
+    let mobilePermissionId = mobilePermissionIds[i];
+    let node = mobilePermissionRef.value.getNode(mobilePermissionId);
+    if (!node) {
+      continue;
+    }
+
+    if (!node.childNodes || !node.childNodes.length) {
+      finalPermissionIds.push(mobilePermissionId);
+    }
+  }
+  return finalPermissionIds;
 };
 
 /**
  * 选择移动端权限
  */
-const checkMobileModule = () => {
-  const allKeys = mobileModuleRef.value.getCheckedKeys(); //全选中
-  const halfKeys = mobileModuleRef.value.getHalfCheckedKeys(); //半选中
+const checkMobilePermission = () => {
+  const allKeys = mobilePermissionRef.value.getCheckedKeys(); //全选中
+  const halfKeys = mobilePermissionRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
-  role.value.mobile_module_ids = keys;
+  role.value.mobile_permission_ids = keys;
 };
 
 /**
@@ -177,9 +271,8 @@ const checkMobileModule = () => {
  */
 const submitForm = async () => {
   await roleRef.value.validate();
-
   submitLoading.value = true;
-  const response = await axios.post("desktop/system.Role/saveEdit", role.value);
+  const response = await axios.post("desktop/system.role.Edit/save", role.value);
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -200,6 +293,7 @@ onMounted(() => {
   init();
 });
 </script>
+
 <style lang="scss" scoped>
 .edit {
   .scrollbar {

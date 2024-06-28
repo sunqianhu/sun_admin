@@ -1,83 +1,64 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Permission as DesktopPermissionModel;
-use app\model\mobile\Permission as MobilePermissionModel;
-use app\model\Role as RoleModel;
-use app\model\RoleDesktopPermission as RoleDesktopPermissionModel;
-use app\model\RoleMobilePermission as RoleMobilePermissionModel;
-use Sunqianhu\Helper\ArrayHandler;
+use app\service\desktop\Menu as  DesktopMenuService;
+use app\service\desktop\Permission as DesktopPermissionService;
+use app\service\desktop\Route as DesktopRouteService;
+use app\service\mobile\Permission as MobilePermissionService;
+use app\service\Role as  RoleService;
+use app\validate\Role as RoleValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Add extends Base
 {
     /**
-     * 初始化添加页面
+     * 初始化
      */
-    public function initAdd()
+    public function init()
     {
-        //桌面端权限
-        $desktopPermissionModels = DesktopPermissionModel::field('id, permission_id, name, remark')
-            ->order('sort', 'asc')
-            ->append(['name_remark'])
-            ->select();
-        $desktopPermissions = $desktopPermissionModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        $treeDesktopPermissions = $arrayHandler->convertTree($desktopPermissions, 'id', 'permission_id', 'children');
+        $desktopPermissionService = new DesktopPermissionService();
+        $desktopPermissions = $desktopPermissionService->getTreePermissions();
 
-        //移动端权限
-        $mobilePermissionModels = MobilePermissionModel::field('id, permission_id, name, remark')
-            ->order('sort', 'asc')
-            ->append(['name_remark'])
-            ->select();
-        $mobilePermissions = $mobilePermissionModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        $treeMobilePermissions = $arrayHandler->convertTree($mobilePermissions, 'id', 'permission_id', 'children');
+        $desktopMenuService = new DesktopMenuService();
+        $desktopMenus = $desktopMenuService->getTreeMenus();
+
+        $desktopRouteService = new DesktopRouteService();
+        $desktopRoutes = $desktopRouteService->getRoutes();
+
+        $mobilePermissionService = new MobilePermissionService();
+        $mobilePermissions = $mobilePermissionService->getTreePermissions();
 
         $data = [
-            'desktop_permissions'=>$treeDesktopPermissions,
-            'mobile_permissions'=>$treeMobilePermissions,
+            'desktop_permissions'=>$desktopPermissions,
+            'desktop_menus'=>$desktopMenus,
+            'desktop_routes'=>$desktopRoutes,
+            'mobile_permissions'=>$mobilePermissions,
         ];
         return $this->success('获取成功', $data);
     }
 
     /**
-     * 保存添加
+     * 保存
      */
-    public function saveAdd()
+    public function save()
     {
-        $post = $this->request->post(['name', 'desktop_permission_ids' => [], 'mobile_permission_ids' => []]);
+        $post = $this->request->post(['name', 'desktop_permission_ids' => [], 'desktop_menu_ids' => [], 'desktop_route_ids' => [], 'mobile_permission_ids' => []]);
 
         //验证
         try {
-            validate(RoleValidate::class)->scene('add')->check($post);
+            validate(RoleValidate::class)->scene('desktop_add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $roleModel = new RoleModel();
-        $roleModel->save($post);
-
-        if (!empty($post['desktop_permission_ids'])) {
-            foreach($post['desktop_permission_ids'] as $desktopPermissionId){
-                $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
-                $roleDesktopPermissionModel->save([
-                    'role_id'=>$roleModel->id,
-                    'permission_id'=>$desktopPermissionId
-                ]);
-            }
-        }
-
-        if (!empty($post['mobile_permission_ids'])) {
-            foreach($post['mobile_permission_ids'] as $mobilePermissionId){
-                $roleMobilePermissionModel = new RoleMobilePermissionModel();
-                $roleMobilePermissionModel->save([
-                    'role_id'=>$roleModel->id,
-                    'permission_id'=>$mobilePermissionId
-                ]);
-            }
+        $roleService = new RoleService();
+        try{
+            $roleService->add($post);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
         }
 
         return $this->success('添加成功');

@@ -6,7 +6,6 @@
     :default-active="defaultActive"
     :collapse="!appStore.siderStatus"
     :unique-opened="true"
-    :router="true"
     class="menu"
   >
     <menu-item :menus="menus"></menu-item>

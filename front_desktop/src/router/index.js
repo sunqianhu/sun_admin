@@ -51,46 +51,6 @@ const router = createRouter({
       }
     },
     {
-      path: "/system/desktop/permission",
-      name: "system_desktop_permission",
-      component: () => import("../views/system/desktop/permission/Index.vue"),
-      meta: {
-        name: "权限管理"
-      }
-    },
-    {
-      path: "/system/mobile/permission",
-      name: "system_mobile_permission",
-      component: () => import("../views/system/mobile/permission/Index.vue"),
-      meta: {
-        name: "权限管理"
-      }
-    },
-    {
-      path: "/system/department",
-      name: "system_mobile_permdddission",
-      component: () => import("../views/system/department/Index.vue"),
-      meta: {
-        name: "权限管理"
-      }
-    },
-    {
-      path: "/system/desktop/menu",
-      name: "system_desktop_menu",
-      component: () => import("../views/system/desktop/menu/Index.vue"),
-      meta: {
-        name: "菜单管理"
-      }
-    },
-    {
-      path: "/system/desktop/route",
-      name: "system_desktop_route",
-      component: () => import("../views/system/desktop/route/Index.vue"),
-      meta: {
-        name: "菜单管理"
-      }
-    },
-    {
       path: "/:pathMatch(.*)*",
       name: "404",
       component: () => import("../views/404.vue"),
@@ -101,86 +61,87 @@ const router = createRouter({
   ]
 });
 
-// //前置守卫
-// router.beforeEach(async (to, from) => {
-//   NProgress.start();
+const writeList = ["/login", "/404", "/test"];
 
-//   //白名单
-//   const writeList = ["/login", "/404", "/test"];
-//   if (writeList.includes(to.path)) {
-//     return true;
-//   }
+//前置守卫
+router.beforeEach(async (to, from) => {
+  NProgress.start();
 
-//   //登录
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     return getLoginRoutePath();
-//   }
+  //白名单
+  if (writeList.includes(to.path)) {
+    return true;
+  }
 
-//   const appStore = useAppStore();
-//   let response; //响应
+  //登录
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return getLoginRoutePath();
+  }
 
-//   //权限
-//   if (!appStore.isSetPermission) {
-//     response = await axios.get("desktop/frame/getPermissions");
-//     if (response.code != 1) {
-//       return getLoginRoutePath();
-//     }
-//     appStore.setPermissions(response.data);
-//   }
+  const appStore = useAppStore();
+  let response; //响应
 
-//   //动态路由
-//   if (!appStore.isSetRoute) {
-//     response = await axios.get("desktop/frame/getRoutes");
-//     if (response.code != 1) {
-//       return getLoginRoutePath();
-//     }
-//     appStore.setRoutes(response.data);
+  //权限
+  if (!appStore.isSetPermission) {
+    response = await axios.get("desktop/frame/getPermissions");
+    if (response.code != 1) {
+      return getLoginRoutePath();
+    }
+    appStore.setPermissions(response.data);
+  }
 
-//     let allRoutes = router.getRoutes();
-//     let mainRoute = allRoutes.find((route) => route.name == "main");
-//     let blankRoute = allRoutes.find((route) => route.name == "blank");
-//     let childRoutes = [];
-//     const componentFilePaths = import.meta.glob([
-//       "@/views/*.vue",
-//       "@/views/*/*.vue",
-//       "@/views/*/*/*.vue",
-//       "@/views/*/*/*/*.vue"
-//     ]);
+  //动态路由
+  if (!appStore.isSetRoute) {
+    response = await axios.get("desktop/frame/getRoutes");
+    if (response.code != 1) {
+      return getLoginRoutePath();
+    }
+    appStore.setRoutes(response.data);
 
-//     if (response.data.length > 0) {
-//       childRoutes = response.data;
+    let allRoutes = router.getRoutes();
+    let mainRoute = allRoutes.find((route) => route.name == "main");
+    let blankRoute = allRoutes.find((route) => route.name == "blank");
+    let childRoutes = [];
+    const componentFilePaths = import.meta.glob([
+      "@/views/*.vue",
+      "@/views/*/*.vue",
+      "@/views/*/*/*.vue",
+      "@/views/*/*/*/*.vue"
+    ]);
 
-//       childRoutes.forEach((childRoute) => {
-//         childRoute.component = componentFilePaths["/src/views/" + childRoute.component];
-//         if (childRoute.layout == "main") {
-//           mainRoute.children.push(childRoute);
-//           if (childRoute.parent_redirect) {
-//             mainRoute.redirect = childRoute.path;
-//           }
-//         }
-//         if (childRoute.layout == "blank") {
-//           blankRoute.children.push(childRoute);
-//           if (childRoute.parent_redirect) {
-//             blankRoute.redirect = childRoute.path;
-//           }
-//         }
-//       });
+    if (response.data.length > 0) {
+      childRoutes = response.data;
 
-//       router.addRoute(mainRoute);
-//       router.addRoute(blankRoute);
-//     }
+      childRoutes.forEach((childRoute) => {
+        childRoute.component = componentFilePaths["/src/views/" + childRoute.component_path];
+        if (childRoute.layout == "main") {
+          mainRoute.children.push(childRoute);
+          // if (childRoute.parent_redirect) {
+          //   mainRoute.redirect = childRoute.path;
+          // }
+        }
+        if (childRoute.layout == "blank") {
+          blankRoute.children.push(childRoute);
+          // if (childRoute.parent_redirect) {
+          //   blankRoute.redirect = childRoute.path;
+          // }
+        }
+      });
 
-//     return to.fullPath;
-//   }
+      router.addRoute(mainRoute);
+      router.addRoute(blankRoute);
+    }
 
-//   return true;
-// });
+    return to.fullPath;
+  }
 
-// //后置钩子
-// router.afterEach((to, from) => {
-//   NProgress.done();
-//   document.title = to.meta.name;
-// });
+  return true;
+});
+
+//后置钩子
+router.afterEach((to, from) => {
+  NProgress.done();
+  document.title = to.meta.name;
+});
 
 export default router;

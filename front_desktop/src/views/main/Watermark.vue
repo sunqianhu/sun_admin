@@ -1,8 +1,8 @@
 <template>
   <div class="watermark" v-if="!loading">
     <div class="item" v-for="index in 100">
-      <div class="name">{{ data.name + data.id }}</div>
-      <div class="time">{{ data.time }}</div>
+      <div class="name">{{ data.user_name + data.user_id }}</div>
+      <div class="time">{{ data.date_time }}</div>
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@ const loading = ref(true);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/frame/getWatermark");
+  const response = await axios.get("desktop/Main/getWatermark");
   if (response.code != 1) {
     ElMessage({
       message: response.message,

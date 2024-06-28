@@ -10,22 +10,19 @@ use Sunqianhu\Helper\ArrayHandler;
 class Route
 {
     /**
-     * 得到树形菜单
+     * 得到路由集合
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTreeRoutes()
+    public function getRoutes()
     {
-        $routeModels = RouteModel::field('id, route_id, name')
-            ->order('sort', 'asc')
+        $routeModels = RouteModel::order('sort', 'asc')
             ->select();
         $routes = $routeModels->toArray();
 
-        $arrayHandler = new ArrayHandler();
-        $treeRoutes = $arrayHandler->convertTree($routes, 'id', 'route_id', 'children');
-        return $treeRoutes;
+        return $routes;
     }
 
     /**
@@ -76,21 +73,6 @@ class Route
         $routeModel->delete();
     }
 
-    /**
-     * 是否有子菜单
-     * @param $id
-     * @return void
-     */
-    public function hasChildrenRoute($id){
-        $routeModel = RouteModel::where('route_id', $id)
-            ->limit(0,1)
-            ->find();
-        if(!empty($routeModel)){
-            return true;
-        }
-        return false;
-    }
-    
     /**
      * 得到路由集合
      * @param $userId

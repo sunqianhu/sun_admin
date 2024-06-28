@@ -7,7 +7,7 @@
           <span class="name">SunAdmin</span>
         </div>
         <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>
-        <div class="version">版本：{{ config.version }}</div>
+        <div class="version">版本：{{ version }}</div>
       </el-aside>
       <el-container class="workspace">
         <el-header class="header">
@@ -43,11 +43,11 @@ import Hamburger from "./Hamburger.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 import Message from "./Message.vue";
-import Watermark from "@/components/Watermark.vue";
+import Watermark from "./Watermark.vue";
 import axios from "@/helper/axios";
 
 const appStore = useAppStore();
-const config = ref({});
+const version = ref("");
 
 /**
  * 初始化
@@ -61,7 +61,7 @@ const init = async () => {
   if (response.code != 1) {
     return;
   }
-  config.value = response.data.config;
+  version.value = response.data.version;
 };
 
 /**

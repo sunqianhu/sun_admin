@@ -85,7 +85,7 @@ const total = ref(0);
  */
 const getRoles = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.Role/getIndexRoles", {
+  const response = await axios.get("desktop/system.role.Index/getRoles", {
     params: query.value
   });
   loading.value = false;

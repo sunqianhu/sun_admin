@@ -49,4 +49,18 @@ class User extends Base
         $userService = new UserHelper();
         return $userService->getAvatarUrl($data['avatar']);
     }
+
+    /**
+     * 得到部门名字
+     * @param $value
+     * @param $data
+     * @return array
+     */
+    public function getDepartmentNameAttr($value, $data){
+        if(empty($this->department)){
+            return '';
+        }
+
+        return $this->department->name;
+    }
 }
