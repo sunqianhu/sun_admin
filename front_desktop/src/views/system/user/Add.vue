@@ -26,6 +26,8 @@
           <el-tree-select
             v-model="user.department_id"
             :data="departments"
+            :props="{ label: 'name' }"
+            node-key="id"
             :render-after-expand="false"
             check-strictly
           />
@@ -76,7 +78,7 @@ const roles = ref([]);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/system.User/initAdd");
+  const response = await axios.get("desktop/system.user.Add/init");
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -101,7 +103,7 @@ const close = () => {
 const submitForm = async () => {
   await userRef.value.validate();
 
-  const response = await axios.post("desktop/system.user/saveAdd", user.value);
+  const response = await axios.post("desktop/system.user.Add/save", user.value);
   if (response.code != 1) {
     ElMessage({
       message: response.message,

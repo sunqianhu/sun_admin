@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\statistic;
+namespace app\desktop\controller\statistic\trend;
 
 use app\desktop\controller\Base;
 use app\validate\statistic\Trend as TrendValidate;
@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use think\exception\ValidateException;
 
-class Trend extends Base
+class Index extends Base
 {
     /**
      * 初始化
@@ -20,7 +20,7 @@ class Trend extends Base
 
         // 验证
         try {
-            validate(TrendValidate::class)->scene('init')->check($get);
+            validate(TrendValidate::class)->scene('desktop_init')->check($get);
         } catch (ValidateException $e) {
             return $this->error($e->getError());
         }
@@ -65,7 +65,7 @@ class Trend extends Base
 
         // 验证
         try {
-            validate(TrendValidate::class)->scene('export_excel')->check($get);
+            validate(TrendValidate::class)->scene('desktop_export_excel')->check($get);
         } catch (ValidateException $e) {
             return $this->error($e->getError());
         }

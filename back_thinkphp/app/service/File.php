@@ -39,7 +39,7 @@ class File
      * @return string
      * @throws Exception
      */
-    public function makePermissionDir($module = ''){
+    public function makeModuleDir($module = ''){
         $rootPath = Config::get('filesystem.root_path'); // 磁盘根目录
         if (empty($rootPath)) {
             throw new Exception('没有配置文件目录');
@@ -101,7 +101,7 @@ class File
         }
         $decodeContent = base64_decode($base64Content);
 
-        $relativeDir = $this->makePermissionDir($module);
+        $relativeDir = $this->makeModuleDir($module);
         $fileName = md5(time() . rand(1000, 9999)) . '.' . $ext;
         $path = $relativeDir . $fileName; // 文件相对路径
         $fullPath = $this->getFullPath($path); // 全文件路径

@@ -49,6 +49,9 @@ class Edit extends Base
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
+        if($post['id'] == $post['permission_id']){
+            return $this->error('上级权限不能和权限单相同');
+        }
 
         $permissionService = new PermissionService();
         $permissionService->edit($post['id'], $post);

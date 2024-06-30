@@ -1,14 +1,14 @@
 <template>
   <template v-for="menu in menus" :key="menu.id">
     <template v-if="!menu.children">
-      <el-menu-item @click="navigateTo(menu.url, menu.target)">
+      <el-menu-item :index="menu.url" @click="navigateTo(menu.url, menu.target)">
         <el-icon v-if="menu.icon">
           <component :is="icons[menu.icon]"></component>
         </el-icon>
         <span>{{ menu.name }}</span>
       </el-menu-item>
     </template>
-    <el-sub-menu v-else :index="'/' + menu.id">
+    <el-sub-menu :index="'group_' + menu.id" v-else>
       <template #title>
         <el-icon v-if="menu.icon">
           <component :is="icons[menu.icon]"></component>

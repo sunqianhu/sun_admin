@@ -76,7 +76,7 @@ const total = ref(0);
  */
 const getOperationLogs = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.OperationLog/getIndexOperationLogs", {
+  const response = await axios.get("desktop/system.operation_log.Index/getOperationLogs", {
     params: query.value
   });
   loading.value = false;

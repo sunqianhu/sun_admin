@@ -2,14 +2,13 @@
 
 namespace app\service;
 
-use app\service\desktop\session\账号;
 use Sunqianhu\Helper\Time as TimeHelper;
 use think\facade\Cache;
 
 class LoginFailChecker
 {
     /**
-     * @var string 缓存键
+     * @var string
      */
     public $cacheKey = '';
 
@@ -24,11 +23,11 @@ class LoginFailChecker
 
     /**
      * 构造
-     * @param $account 账号
+     * @param $account
      */
     public function __construct($account)
     {
-        $this->cacheKey = 'login_'.$account;
+        $this->cacheKey = 'login_fail_checker_'.$account;
     }
 
     /**

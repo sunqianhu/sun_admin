@@ -8,7 +8,7 @@ class Menu extends Validate
 {
     protected $rule = [
         'id'  =>  'require|number',
-        'menu_id'  =>  'number|different:id',
+        'menu_id'  =>  'number',
         'name'  =>  'require',
         'sort'  =>  'require|number',
     ];
@@ -16,7 +16,6 @@ class Menu extends Validate
         'id.require' => 'id不能为空',
         'id.number' => 'id必须是数字',
         'menu_id.number' => '上级菜单必须是数字',
-        'menu_id.different'=>'上级菜单不能和本菜单一样',
         'name.require' => '菜单名称不能为空',
         'sort.require' => '排序不能为空',
         'sort.number' => '排序必须是数字',

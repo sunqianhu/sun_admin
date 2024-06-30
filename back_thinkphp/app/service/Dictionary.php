@@ -13,6 +13,52 @@ class Dictionary
     private $expire = 600;
 
     /**
+     * 添加
+     * @param $data
+     * @return void
+     */
+    public function add($data)
+    {
+        $dictionaryModel = new DictionaryModel();
+        $dictionaryModel->save($data);
+    }
+
+    /**
+     * 修改
+     * @param $id
+     * @param $data
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function edit($id, $data)
+    {
+        $dictionaryModel = DictionaryModel::find($id);
+        if(empty($dictionaryModel)){
+            throw new Exception('没有找到记录');
+        }
+        $dictionaryModel->save($data);
+    }
+
+    /**
+     * 删除
+     * @param $id
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function delete($id)
+    {
+        $dictionaryModel = DictionaryModel::find($id);
+        if(empty($dictionaryModel)){
+            throw new Exception('没有找到记录');
+        }
+        $dictionaryModel->delete();
+    }
+
+    /**
      * 获取字典集合
      * @param $type
      * @return array

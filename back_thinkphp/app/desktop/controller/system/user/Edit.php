@@ -3,13 +3,11 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
-use app\model\UserRole as UserRoleModel;
 use app\service\Department as DepartmentService;
 use app\service\User as UserServer;
-use Sunqianhu\Helper\ArrayHandler;
+use app\validate\User as UserValidate;
 use think\exception\ValidateException;
 
 class Edit extends Base
@@ -58,7 +56,7 @@ class Edit extends Base
 
         //验证
         try {
-            validate(UserValidate::class)->scene('edit')->check($post);
+            validate(UserValidate::class)->scene('desktop_edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

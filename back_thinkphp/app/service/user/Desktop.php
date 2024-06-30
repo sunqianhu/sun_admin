@@ -49,7 +49,7 @@ class Desktop
      * @return false|void
      */
     public function hasPermission($userId, $url){
-        return true;
+        //return true;
         $apis = $this->getApis($userId);
         if(empty($apis)){
             return false;
@@ -104,7 +104,21 @@ class Desktop
             ->field('r.*')
             ->where('rdr.role_id', 'in', $roleIds)
             ->select();
-        return $routeModels->toArray();
+        $routes = [];
+        foreach($routeModels as $routeModel){
+            $route = [
+                'path'=>$routeModel->path,
+                'name'=>$routeModel->key,
+                'component_path'=>$routeModel->component_path,
+                'layout'=>$routeModel->layout,
+                'meta'=>[
+                    'name'=>$routeModel->name,
+                    'keep_alive'=>$routeModel->keep_alive
+                ]
+            ];
+            $routes[] = $route;
+        }
+        return $routes;
     }
 
     /**
@@ -127,6 +141,6 @@ class Desktop
         $menus = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        return $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        return $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
 use app\model\Dictionary as DictionaryModel;
+use app\service\Dictionary as DictionaryService;
+use app\validate\Dictionary as DictionaryValidate;
 use think\exception\ValidateException;
 
 class Edit extends Base
@@ -39,16 +41,17 @@ class Edit extends Base
 
         //验证
         try {
-            validate(DictionaryValidate::class)->scene('edit')->check($post);
+            validate(DictionaryValidate::class)->scene('desktop_edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $dictionaryModel = DictionaryModel::find($post['id']);
-        if (empty($dictionaryModel)) {
-            return $this->error('没有找到记录');
+        try{
+            $dictionaryService = new DictionaryService();
+            $dictionaryService->edit($post['id'], $post);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
         }
-        $dictionaryModel->save($post);
 
         return $this->success('修改成功');
     }

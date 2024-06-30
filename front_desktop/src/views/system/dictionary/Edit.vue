@@ -55,7 +55,7 @@ const rules = {
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/system.Dictionary/initEdit", {
+  const response = await axios.get("desktop/system.dictionary.Edit/init", {
     params: { id: props.id }
   });
   if (response.code != 1) {
@@ -81,7 +81,7 @@ const close = () => {
 const submitForm = async () => {
   await dictionaryRef.value.validate();
 
-  const response = await axios.post("desktop/system.Dictionary/saveEdit", dictionary.value);
+  const response = await axios.post("desktop/system.dictionary.Edit/save", dictionary.value);
   if (response.code != 1) {
     ElMessage({
       message: response.message,

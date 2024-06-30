@@ -1,5 +1,4 @@
 <template>
-  department
   <el-dialog
     :model-value="open"
     title="修改权限"

@@ -41,7 +41,7 @@ class Login extends Base
             $availableNumber = $loginFailChecker->getAvailableNumber();
             $message = $exception->getMessage();
             if($availableNumber > 0){
-                $message .= '，还能尝试'.$availableNumber.'次';
+                $message .= '，还能再试'.$availableNumber.'次';
             }else{
                 $message .= '，连续登录失败'.$loginFailChecker->number.'次，请'.$loginFailChecker->getResetReadableTime().'后再试';
             }

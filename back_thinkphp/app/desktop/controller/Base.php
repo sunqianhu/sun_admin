@@ -36,7 +36,11 @@ class Base extends BaseController
             $this->session = $session;
         } catch (Exception $exception) {
             $message = $exception->getMessage();
-            $this->error($message, null, 2)->send();
+            $code = 0;
+            if($message == 'token错误'){
+                $code = 2;
+            }
+            $this->error($message, null, $code)->send();
             exit;
         }
 

@@ -116,17 +116,15 @@ router.beforeEach(async (to, from) => {
         childRoute.component = componentFilePaths["/src/views/" + childRoute.component_path];
         if (childRoute.layout == "main") {
           mainRoute.children.push(childRoute);
-          // if (childRoute.parent_redirect) {
-          //   mainRoute.redirect = childRoute.path;
-          // }
         }
         if (childRoute.layout == "blank") {
           blankRoute.children.push(childRoute);
-          // if (childRoute.parent_redirect) {
-          //   blankRoute.redirect = childRoute.path;
-          // }
         }
       });
+
+      if (mainRoute.children?.length > 0) {
+        mainRoute.redirect = mainRoute.children[0].path;
+      }
 
       router.addRoute(mainRoute);
       router.addRoute(blankRoute);

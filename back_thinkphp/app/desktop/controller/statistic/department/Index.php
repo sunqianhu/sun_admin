@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\statistic;
+namespace app\desktop\controller\statistic\department;
 
 use app\desktop\controller\Base;
 use app\model\Department as DepartmentModel;
@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Sunqianhu\Helper\ArrayHandler;
 use think\exception\ValidateException;
 
-class Department extends Base
+class Index extends Base
 {
     /**
      * 初始化
@@ -22,9 +22,9 @@ class Department extends Base
 
         // 验证
         try {
-            validate(DepartmentValidate::class)->scene('init')->check($get);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+            validate(DepartmentValidate::class)->scene('desktop_init')->check($get);
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
         if (count($get['add_times']) != 2) {
             return $this->error('添加时间参数错误');
@@ -59,7 +59,7 @@ class Department extends Base
 
         // 验证
         try {
-            validate(DepartmentValidate::class)->scene('export_excel')->check($get);
+            validate(DepartmentValidate::class)->scene('desktop_export_excel')->check($get);
         } catch (ValidateException $e) {
             return $this->error($e->getError());
         }

@@ -1,9 +1,10 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
-use app\model\Dictionary as DictionaryModel;
+use app\service\Dictionary as DictionaryService;
+use app\validate\Dictionary as DictionaryValidate;
 use think\exception\ValidateException;
 
 class Add extends Base
@@ -17,13 +18,17 @@ class Add extends Base
 
         //验证
         try {
-            validate(DictionaryValidate::class)->scene('add')->check($post);
+            validate(DictionaryValidate::class)->scene('desktop_add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $dictionaryModel = new DictionaryModel();
-        $dictionaryModel->save($post);
+        try{
+            $dictionaryService = new DictionaryService();
+            $dictionaryService->add($post);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('添加成功');
     }

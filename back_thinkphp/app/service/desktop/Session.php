@@ -28,15 +28,16 @@ class Session
         'desktop/Frame/getPermissions',
         'desktop/Main/init',
         'desktop/Main/getMenus',
+        'desktop/Main/getAvatar',
+        'desktop/Main/getWatermark',
+        'desktop/Main/logout',
         'desktop/main.User/info',
         'desktop/main.User/initEditAvatar',
         'desktop/main.User/saveEditAvatar',
         'desktop/main.User/editPassword',
         'desktop/main.Message/readAll',
         'desktop/main.Message/getNoReads',
-        'desktop/uploadFile/upload',
-        'desktop/Login/logout',
-        'desktop/components.Watermark/getWatermark'
+        'desktop/uploadFile/upload'
     ];
 
     /**
@@ -52,7 +53,7 @@ class Session
      */
     public function login($account, $password, $ip)
     {
-        $userModel = UserModel::field('id,department_id,status_id,name,phone,avatar')
+        $userModel = UserModel::field('id,department_id,status_id,name')
             ->where('account', $account)
             ->where('password', md5($password))
             ->find();

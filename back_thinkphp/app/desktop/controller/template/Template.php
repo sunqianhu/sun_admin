@@ -1,6 +1,8 @@
 <?php
 
-namespace app\desktop\controller;
+namespace think\app\desktop\controller\template;
+
+use app\desktop\controller\Base;
 
 class Template extends Base
 {

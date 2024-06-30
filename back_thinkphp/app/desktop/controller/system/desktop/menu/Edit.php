@@ -49,6 +49,9 @@ class Edit extends Base
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
+        if($post['id'] == $post['menu_id']){
+            return $this->error('上级菜单不能和本菜单相同');
+        }
 
         $menuService = new MenuService();
         $menuService->edit($post['id'], $post);

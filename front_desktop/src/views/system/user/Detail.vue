@@ -2,23 +2,23 @@
   <div class="detail" v-loading="loading">
     <panel title="用户信息" class="pannel">
       <label-value>
-        <label-value-item label="用户id">{{ user.id }}</label-value-item>
-        <label-value-item label="账号">{{ user.account }}</label-value-item>
-        <label-value-item label="姓名">{{ user.name }}</label-value-item>
-        <label-value-item label="手机号码">{{ user.phone }}</label-value-item>
-        <label-value-item label="部门">{{ user.department?.name }}</label-value-item>
-        <label-value-item label="角色">{{ user.role_name_string }}</label-value-item>
-        <label-value-item label="状态">{{ user.status_name }}</label-value-item>
-        <label-value-item label="添加时间">
+        <label-value-item label="用户id" :md="8">{{ user.id }}</label-value-item>
+        <label-value-item label="账号" :md="8">{{ user.account }}</label-value-item>
+        <label-value-item label="姓名" :md="8">{{ user.name }}</label-value-item>
+        <label-value-item label="手机号码" :md="8">{{ user.phone }}</label-value-item>
+        <label-value-item label="部门" :md="8">{{ user.department?.name }}</label-value-item>
+        <label-value-item label="角色" :md="8">{{ user.role_name_string }}</label-value-item>
+        <label-value-item label="状态" :md="8">{{ user.status_name }}</label-value-item>
+        <label-value-item label="添加时间" :md="8">
           {{ dayjs.unix(user.add_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
-        <label-value-item label="最后修改时间">
+        <label-value-item label="最后修改时间" :md="8">
           {{ dayjs.unix(user.edit_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
-        <label-value-item label="最后登录时间">
+        <label-value-item label="最后登录时间" :md="8">
           {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
-        <label-value-item label="最后登录ip">{{ user.login_ip }}</label-value-item>
+        <label-value-item label="最后登录ip" :md="8">{{ user.login_ip }}</label-value-item>
       </label-value>
     </panel>
 
@@ -71,7 +71,7 @@ const init = async () => {
   loading.value = true;
   let response;
   try {
-    response = await axios.get("desktop/system.User/detail", {
+    response = await axios.get("desktop/system.user.Detail/init", {
       params: { id: route.params.id }
     });
   } catch (error) {

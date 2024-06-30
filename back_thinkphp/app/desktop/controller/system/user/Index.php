@@ -3,12 +3,11 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
 use app\service\Department as DepartmentService;
-use app\service\desktop\session\Jwt;
-use Sunqianhu\Helper\ArrayHandler;
+use app\service\User as UserServer;
+use app\validate\User as UserValidate;
 use think\exception\ValidateException;
 
 class Index extends Base
@@ -79,16 +78,17 @@ class Index extends Base
 
         //验证
         try {
-            validate(UserValidate::class)->scene('edit_status')->check($post);
+            validate(UserValidate::class)->scene('desktop_edit_status')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $userModel = UserModel::find($post['id']);
-        if(empty($userModel)){
-            return $this->error('没有找到用户记录');
+        try{
+            $userServer = new UserServer();
+            $userServer->editStatus($post['id'], $post['status_id']);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
         }
-        $userModel->save($post);
 
         return $this->success('修改成功');
     }
@@ -102,13 +102,17 @@ class Index extends Base
 
         //验证
         try {
-            validate(UserValidate::class)->scene('offline')->check($post);
+            validate(UserValidate::class)->scene('desktop_offline')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $jwt = new Jwt();
-        $jwt->deleteToken($post['id']);
+        try{
+            $userServer = new UserServer();
+            $userServer->desktopOffLine($post['id']);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('操作成功');
     }

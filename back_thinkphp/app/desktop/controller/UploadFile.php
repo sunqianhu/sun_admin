@@ -9,7 +9,7 @@ use think\facade\Filesystem;
 
 class UploadFile extends Base
 {
-    private $allowPermissions = ['rich_editor'];
+    private $allowModules = ['rich_editor'];
 
     /**
      * 上传
@@ -18,7 +18,7 @@ class UploadFile extends Base
     public function upload()
     {
         $requestFile = $this->request->file();
-        $permission = $this->request->post('permission', ''); //权限
+        $module = $this->request->post('module', ''); //权限
 
         //验证
         try {
@@ -26,13 +26,13 @@ class UploadFile extends Base
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
-        if (!in_array($permission, $this->allowPermissions)) {
+        if (!in_array($module, $this->allowModules)) {
             return $this->error('权限参数不允许');
         }
 
         $fileHelper = new FileHelper();
         $file = $requestFile['file'];
-        $path = Filesystem::putFile($permission, $file);
+        $path = Filesystem::putFile($module, $file);
         $path = str_replace('\\', '/', $path);
         $url = $fileHelper->getUrl($path);
 

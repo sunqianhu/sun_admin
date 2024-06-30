@@ -44,7 +44,7 @@ const close = () => {
  */
 const submitForm = async () => {
   await userRef.value.validate();
-  const response = await axios.post("desktop/system.User/editPassword", user.value);
+  const response = await axios.post("desktop/system.user.EditPassword/save", user.value);
   if (response.code != 1) {
     ElMessage({
       message: response.message,

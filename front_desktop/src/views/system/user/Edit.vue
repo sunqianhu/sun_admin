@@ -19,6 +19,8 @@
           <el-tree-select
             v-model="user.department_id"
             :data="departments"
+            :props="{ label: 'name' }"
+            node-key="id"
             :render-after-expand="false"
             check-strictly
           />
@@ -60,7 +62,7 @@ const roles = ref([]);
  * 初始化
  */
 const init = async () => {
-  let response = await axios.get("desktop/system.User/initEdit", {
+  let response = await axios.get("desktop/system.user.Edit/init", {
     params: { id: props.id }
   });
   if (response.code != 1) {
@@ -89,7 +91,7 @@ const close = () => {
 const submitForm = async () => {
   await userRef.value.validate();
 
-  const response = await axios.post("desktop/system.User/saveEdit", user.value);
+  const response = await axios.post("desktop/system.user.Edit/save", user.value);
   if (response.code != 1) {
     ElMessage({
       message: response.message,

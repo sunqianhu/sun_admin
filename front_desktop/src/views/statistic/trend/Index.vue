@@ -60,7 +60,7 @@ const exportExcelLoading = ref(false);
  */
 const init = async () => {
   pageLoading.value = true;
-  const response = await axios.get("desktop/statistic.Trend/init", {
+  const response = await axios.get("desktop/statistic.trend.Index/init", {
     params: query.value
   });
   pageLoading.value = false;
@@ -149,7 +149,7 @@ const exportExcel = async () => {
   exportExcelLoading.value = true;
   let response;
   try {
-    response = await axios.get("desktop/statistic.trend/exportExcel", {
+    response = await axios.get("desktop/statistic.trend.Index/exportExcel", {
       params: query.value,
       responseType: "blob"
     });

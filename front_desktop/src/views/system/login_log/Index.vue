@@ -75,7 +75,7 @@ const total = ref(0);
  */
 const getLoginLogs = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.LoginLog/getIndexLoginLogs", {
+  const response = await axios.get("desktop/system.login_log.Index/getLoginLogs", {
     params: query.value
   });
   loading.value = false;

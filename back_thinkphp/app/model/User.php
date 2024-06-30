@@ -77,4 +77,18 @@ class User extends Base
         $roles = $this->roles->toArray();
         return array_column($roles, 'id');
     }
+
+    /**
+     * 得到角色名称集合
+     * @param $value
+     * @param $data
+     * @return array
+     */
+    public function getRoleNamesAttr($value, $data){
+        if(empty($this->roles)){
+            return [];
+        }
+        $roles = $this->roles->toArray();
+        return array_column($roles, 'name');
+    }
 }

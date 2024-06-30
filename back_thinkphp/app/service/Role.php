@@ -7,6 +7,7 @@ use app\model\RoleDesktopMenu as RoleDesktopMenuModel;
 use app\model\RoleDesktopPermission as RoleDesktopPermissionModel;
 use app\model\RoleDesktopRoute as RoleDesktopRouteModel;
 use app\model\RoleMobilePermission as RoleMobilePermissionModel;
+use app\model\UserRole as UserRoleModel;
 use Exception;
 use think\facade\Db;
 
@@ -136,5 +137,24 @@ class Role
             throw new Exception($exception->getMessage());
             Db::rollback();
         }
+    }
+
+    /**
+     * 删除
+     * @param $id
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function delete($id)
+    {
+        $roleModel = RoleModel::find($id);
+        if(empty($roleModel)){
+            throw new Exception('没有找到记录');
+        }
+
+        UserRoleModel::where('role_id', $roleModel->id)->delete();
+        $roleModel->delete();
     }
 }

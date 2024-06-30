@@ -43,7 +43,7 @@
     <div class="list">
       <el-table :data="users" v-loading="loading" stripe class="table">
         <el-table-column v-slot="{ row }" prop="account" label="账号">
-          <el-link :href="'/system/user/' + row.id" type="primary" target="_blank">
+          <el-link :href="'/system/user/detail-' + row.id" type="primary" target="_blank">
             {{ row.account }}
           </el-link>
         </el-table-column>
@@ -226,7 +226,7 @@ const openEdit = (id) => {
  */
 const editStatus = async (row) => {
   row.status_id = row.status_id == 1 ? 2 : 1;
-  const response = await axios.post("desktop/system.User/editStatus", {
+  const response = await axios.post("desktop/system.user.Index/editStatus", {
     id: row.id,
     status_id: row.status_id
   });
@@ -259,7 +259,7 @@ const openEditPassword = async (id) => {
 const offLine = async (id) => {
   let response = await ElMessageBox.confirm("确定将用户踢下线吗？", "提示", { draggable: true });
 
-  response = await axios.post("desktop/system.User/offLine", {
+  response = await axios.post("desktop/system.user.Index/offLine", {
     id: id
   });
   if (response.code != 1) {
@@ -292,6 +292,9 @@ onMounted(() => {
   }
   .search {
     margin-top: var(--margin-md);
+    .el-select {
+      min-width: 198px;
+    }
   }
   .toolbar {
   }

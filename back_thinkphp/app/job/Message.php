@@ -2,7 +2,7 @@
 
 namespace app\job;
 
-use app\service\Message as MessageHelper;
+use app\service\Message as MessageService;
 use Exception;
 use think\queue\Job;
 
@@ -16,7 +16,7 @@ class Message
             return;
         }
 
-        $messageHelper = new MessageHelper();
+        $messageHelper = new MessageService();
         try {
             $messageHelper->send($data['user_ids'], $data['title'], $data['url']);
         } catch (Exception $exception) {

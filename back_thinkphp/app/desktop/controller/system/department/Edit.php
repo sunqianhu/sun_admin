@@ -55,6 +55,9 @@ class Edit extends Base
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
+        if($post['id'] == $post['department_id']){
+            return $this->error('上级部门不能和本部门相同');
+        }
 
         $departmentService = new DepartmentService();
         $departmentService->edit($post['id'], $post);

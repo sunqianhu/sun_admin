@@ -1,8 +1,9 @@
 <?php
 
-namespace app\desktop\controller\system\user;
+namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
+use app\service\Dictionary as DictionaryService;
 use app\model\Dictionary as DictionaryModel;
 
 class Index extends Base
@@ -32,5 +33,28 @@ class Index extends Base
             'page' => $get['page'],
         ]);
         return $this->success('获取成功', $dictionarys);
+    }
+
+    /**
+     * 删除
+     * @return \think\Response|void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function delete(){
+        $id = $this->request->post('id', 0);
+        if ($id <= 0 || !is_numeric($id)) {
+            return $this->error('id参数错误');
+        }
+
+        $dictionaryService = new DictionaryService();
+        try{
+            $dictionaryService->delete($id);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
+
+        return $this->success('删除成功');
     }
 }

@@ -15,7 +15,7 @@ class Trend extends Validate
         'add_times.arrayItemNumber' => '订单时间项必须是数字'
     ];
     protected $scene = [
-        'desktop_init'=>['add_times'],
+        's'=>['add_times'],
         'desktop_export_excel'=>['add_times']
     ];
 

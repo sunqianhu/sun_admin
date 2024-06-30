@@ -4,10 +4,9 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\Role as RoleModel;
-use app\model\User as UserModel;
-use app\model\UserRole as UserRoleModel;
 use app\service\Department as DepartmentService;
 use app\service\User as UserServer;
+use app\validate\User as UserValidate;
 use Exception;
 use think\exception\ValidateException;
 

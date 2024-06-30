@@ -2,6 +2,7 @@
 
 namespace app\service;
 
+use app\model\desktop\Token as TokenModel;
 use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
 use Exception;
@@ -31,13 +32,13 @@ class User
             throw new Exception('手机号码已经存在');
         }
 
-        $post['password'] = md5($data['password']);
-        $post['add_time'] = time();
+        $data['password'] = md5($data['password']);
+        $data['add_time'] = time();
         $userModel = new UserModel();
-        $userModel->save($post);
+        $userModel->save($data);
 
-        if (!empty($post['role_ids'])) {
-            foreach($post['role_ids'] as $roleId){
+        if (!empty($data['role_ids'])) {
+            foreach($data['role_ids'] as $roleId){
                 $userRoleModel = new UserRoleModel();
                 $userRoleModel->save([
                     'user_id'=>$userModel->id,
@@ -68,12 +69,12 @@ class User
             throw new Exception('没有找到记录');
         }
 
-        $post['edit_time'] = time();
+        $data['edit_time'] = time();
         $userModel->save($data);
 
         UserRoleModel::where('user_id', $userModel->id)->delete();
-        if (!empty($post['role_ids'])) {
-            foreach($post['role_ids'] as $roleId){
+        if (!empty($data['role_ids'])) {
+            foreach($data['role_ids'] as $roleId){
                 $userRoleModel = new UserRoleModel();
                 $userRoleModel->save([
                     'user_id'=>$userModel->id,
@@ -209,5 +210,32 @@ class User
         $userModel->save();
 
         return $path;
+    }
+
+    /**
+     * 修改状态
+     * @param $id
+     * @param $statusId
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function editStatus($id, $statusId){
+        $userModel = UserModel::find($id);
+        if(empty($userModel)){
+            throw new Exception('没有找到记录');
+        }
+        $userModel->status_id = $statusId;
+        $userModel->save();
+    }
+
+    /**
+     * 桌面端踢下线
+     * @param $id
+     * @return void
+     */
+    public function desktopOffLine($id){
+        TokenModel::where('user_id', '=', $id)->delete();
     }
 }

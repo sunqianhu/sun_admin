@@ -6,14 +6,13 @@ use app\desktop\controller\Base;
 use app\model\LoginLog as LoginLogModel;
 use app\model\OperationLog as OperationLogModel;
 use app\model\User as UserModel;
-use app\service\User as UserHelper;
 
 class Detail extends Base
 {
     /**
-     * 详情
+     * 初始化
      */
-    public function detail()
+    public function init()
     {
         $id = $this->request->get('id', 0);
         if ($id <= 0 || !is_numeric($id)) {
@@ -23,14 +22,13 @@ class Detail extends Base
         $userModel = UserModel::field('id,account,name,phone,department_id,add_time,status_id,edit_time,login_time,login_ip')
             ->with(['roles', 'department'])
             ->find($id);
-        $userModel->append(['status_name']);
+        $userModel->append(['status_name', 'role_names']);
         if (empty($userModel)) {
             return $this->error('没有找到记录');
         }
 
         $user = $userModel->toArray();
-        $userService = new UserHelper();
-        $user['role_name_string'] = $userService->getRoleNameString($userModel->roles, '，');
+        $user['role_name_string'] = implode('，', $userModel->role_names);
 
         //登录日志
         $loginLogModels = LoginLogModel::alias('ll')
