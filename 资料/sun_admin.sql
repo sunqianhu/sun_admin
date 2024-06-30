@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-06-30 12:46:33
+Date: 2024-06-30 12:53:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,7 +42,7 @@ CREATE TABLE `department` (
   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '部门名称',
   `sort` int(255) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
 
 -- ----------------------------
 -- Records of department
@@ -198,7 +198,7 @@ CREATE TABLE `desktop_token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of desktop_token
@@ -232,7 +232,7 @@ INSERT INTO `desktop_token` VALUES ('80', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
 INSERT INTO `desktop_token` VALUES ('82', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ3ODE3MTAwIDE3MTk2NjgyNzIifQ.J7Z-ONPbDelAsQq1mAZ0S8LEd8lBUtYmI0O47FG4vNM', '1719674359', '1');
 INSERT INTO `desktop_token` VALUES ('83', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjY1OTQzOTAwIDE3MTk2NzI1NjQifQ.2DPj1BHhK3ilQkTy2BoexwidgtPfB2jdzfd0yvvqWTI', '1719674390', '1');
 INSERT INTO `desktop_token` VALUES ('84', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjA0ODM0OTAwIDE3MTk2NzI2MTIifQ.vRrDwUIGftSWR-Qe-o-yVaU1EOTvZvvVbbCllCRgIOs', '1719676141', '1');
-INSERT INTO `desktop_token` VALUES ('85', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjgxOTYzMjAwIDE3MTk3MTM3MzUifQ.hmcVq8rNzRQsb6uZ89OOxh5TnwDVc4bc29DSkmMrwqM', '1719724557', '1');
+INSERT INTO `desktop_token` VALUES ('86', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjc0NjQ4MzAwIDE3MTk3MjI4ODMifQ.6mwY_w7k3_jpRRKHwLQbqjIX7-V7e2WnDQYL8WVk2lU', '1719725011', '1');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -306,7 +306,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -328,6 +328,7 @@ INSERT INTO `login_log` VALUES ('14', '1', '1719668272', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('15', '1', '1719672564', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('16', '1', '1719672612', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('17', '1', '1719713736', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('18', '1', '1719722883', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -397,7 +398,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1682 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1741 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -2083,6 +2084,65 @@ INSERT INTO `operation_log` VALUES ('1678', '1', '1719722758', '127.0.0.1', '/de
 INSERT INTO `operation_log` VALUES ('1679', '1', '1719722758', '127.0.0.1', '/desktop/main/init');
 INSERT INTO `operation_log` VALUES ('1680', '1', '1719722758', '127.0.0.1', '/desktop/main/getwatermark');
 INSERT INTO `operation_log` VALUES ('1681', '1', '1719722758', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('1682', '1', '1719722878', '127.0.0.1', '/desktop/main/logout');
+INSERT INTO `operation_log` VALUES ('1683', '1', '1719722884', '127.0.0.1', '/desktop/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('1684', '1', '1719722884', '127.0.0.1', '/desktop/frame/getroutes');
+INSERT INTO `operation_log` VALUES ('1685', '1', '1719722884', '127.0.0.1', '/desktop/main/getmenus');
+INSERT INTO `operation_log` VALUES ('1686', '1', '1719722885', '127.0.0.1', '/desktop/main/getavatar');
+INSERT INTO `operation_log` VALUES ('1687', '1', '1719722885', '127.0.0.1', '/desktop/main/getwatermark');
+INSERT INTO `operation_log` VALUES ('1688', '1', '1719722885', '127.0.0.1', '/desktop/main/init');
+INSERT INTO `operation_log` VALUES ('1689', '1', '1719722885', '127.0.0.1', '/desktop/main.message/getnoreads');
+INSERT INTO `operation_log` VALUES ('1690', '1', '1719722888', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('1691', '1', '1719722890', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('1692', '1', '1719722892', '127.0.0.1', '/desktop/statistic.trend.index/exportexcel');
+INSERT INTO `operation_log` VALUES ('1693', '1', '1719722898', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('1694', '1', '1719722900', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('1695', '1', '1719722901', '127.0.0.1', '/desktop/statistic.department.index/exportexcel');
+INSERT INTO `operation_log` VALUES ('1696', '1', '1719722911', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('1697', '1', '1719722912', '127.0.0.1', '/desktop/system.config.index/save');
+INSERT INTO `operation_log` VALUES ('1698', '1', '1719722914', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('1699', '1', '1719722915', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('1700', '1', '1719722918', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('1701', '1', '1719722921', '127.0.0.1', '/desktop/system.user.add/init');
+INSERT INTO `operation_log` VALUES ('1702', '1', '1719722937', '127.0.0.1', '/desktop/system.user.add/save');
+INSERT INTO `operation_log` VALUES ('1703', '1', '1719722938', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('1704', '1', '1719722945', '127.0.0.1', '/desktop/system.user.index/editstatus');
+INSERT INTO `operation_log` VALUES ('1705', '1', '1719722946', '127.0.0.1', '/desktop/system.user.index/editstatus');
+INSERT INTO `operation_log` VALUES ('1706', '1', '1719722947', '127.0.0.1', '/desktop/system.user.edit/init');
+INSERT INTO `operation_log` VALUES ('1707', '1', '1719722948', '127.0.0.1', '/desktop/system.user.edit/save');
+INSERT INTO `operation_log` VALUES ('1708', '1', '1719722949', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('1709', '1', '1719722960', '127.0.0.1', '/desktop/system.user.editpassword/save');
+INSERT INTO `operation_log` VALUES ('1710', '1', '1719722968', '127.0.0.1', '/desktop/system.user.index/offline');
+INSERT INTO `operation_log` VALUES ('1711', '1', '1719722970', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('1712', '1', '1719722973', '127.0.0.1', '/desktop/system.department.add/init');
+INSERT INTO `operation_log` VALUES ('1713', '1', '1719722981', '127.0.0.1', '/desktop/system.department.add/save');
+INSERT INTO `operation_log` VALUES ('1714', '1', '1719722981', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('1715', '1', '1719722983', '127.0.0.1', '/desktop/system.department.edit/init');
+INSERT INTO `operation_log` VALUES ('1716', '1', '1719722984', '127.0.0.1', '/desktop/system.department.edit/save');
+INSERT INTO `operation_log` VALUES ('1717', '1', '1719722985', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('1718', '1', '1719722988', '127.0.0.1', '/desktop/system.department.index/delete');
+INSERT INTO `operation_log` VALUES ('1719', '1', '1719722988', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('1720', '1', '1719722989', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('1721', '1', '1719722991', '127.0.0.1', '/desktop/system.role.add/init');
+INSERT INTO `operation_log` VALUES ('1722', '1', '1719722994', '127.0.0.1', '/desktop/system.role.add/save');
+INSERT INTO `operation_log` VALUES ('1723', '1', '1719722994', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('1724', '1', '1719722996', '127.0.0.1', '/desktop/system.role.edit/init');
+INSERT INTO `operation_log` VALUES ('1725', '1', '1719723001', '127.0.0.1', '/desktop/system.role.edit/save');
+INSERT INTO `operation_log` VALUES ('1726', '1', '1719723002', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('1727', '1', '1719723034', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('1728', '1', '1719723034', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('1729', '1', '1719723038', '127.0.0.1', '/desktop/system.role.index/delete');
+INSERT INTO `operation_log` VALUES ('1730', '1', '1719723038', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('1731', '1', '1719723042', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('1732', '1', '1719723046', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('1733', '1', '1719723048', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('1734', '1', '1719723050', '127.0.0.1', '/desktop/system.mobile.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('1735', '1', '1719723051', '127.0.0.1', '/desktop/system.dictionary.index/getdictionarys');
+INSERT INTO `operation_log` VALUES ('1736', '1', '1719723053', '127.0.0.1', '/desktop/system.login_log.index/getloginlogs');
+INSERT INTO `operation_log` VALUES ('1737', '1', '1719723056', '127.0.0.1', '/desktop/system.operation_log.index/getoperationlogs');
+INSERT INTO `operation_log` VALUES ('1738', '1', '1719723206', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('1739', '1', '1719723208', '127.0.0.1', '/desktop/system.user.edit/init');
+INSERT INTO `operation_log` VALUES ('1740', '1', '1719723212', '127.0.0.1', '/desktop/system.user.edit/init');
 
 -- ----------------------------
 -- Table structure for role
@@ -2092,7 +2152,7 @@ CREATE TABLE `role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of role
@@ -2110,7 +2170,7 @@ CREATE TABLE `role_desktop_menu` (
   `menu_id` int(10) unsigned NOT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8 COMMENT='角色桌面端菜单关系';
+) ENGINE=InnoDB AUTO_INCREMENT=333 DEFAULT CHARSET=utf8 COMMENT='角色桌面端菜单关系';
 
 -- ----------------------------
 -- Records of role_desktop_menu
@@ -2138,6 +2198,10 @@ INSERT INTO `role_desktop_menu` VALUES ('325', '3', '10');
 INSERT INTO `role_desktop_menu` VALUES ('326', '3', '11');
 INSERT INTO `role_desktop_menu` VALUES ('327', '3', '13');
 INSERT INTO `role_desktop_menu` VALUES ('328', '3', '14');
+INSERT INTO `role_desktop_menu` VALUES ('329', '5', '15');
+INSERT INTO `role_desktop_menu` VALUES ('330', '5', '16');
+INSERT INTO `role_desktop_menu` VALUES ('331', '5', '17');
+INSERT INTO `role_desktop_menu` VALUES ('332', '5', '18');
 
 -- ----------------------------
 -- Table structure for role_desktop_permission
@@ -2149,7 +2213,7 @@ CREATE TABLE `role_desktop_permission` (
   `permission_id` int(10) unsigned NOT NULL COMMENT '权限id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=285 DEFAULT CHARSET=utf8 COMMENT='角色桌面端权限关系';
+) ENGINE=InnoDB AUTO_INCREMENT=325 DEFAULT CHARSET=utf8 COMMENT='角色桌面端权限关系';
 
 -- ----------------------------
 -- Records of role_desktop_permission
@@ -2202,6 +2266,46 @@ INSERT INTO `role_desktop_permission` VALUES ('281', '3', '36');
 INSERT INTO `role_desktop_permission` VALUES ('282', '3', '37');
 INSERT INTO `role_desktop_permission` VALUES ('283', '3', '18');
 INSERT INTO `role_desktop_permission` VALUES ('284', '3', '19');
+INSERT INTO `role_desktop_permission` VALUES ('285', '5', '1');
+INSERT INTO `role_desktop_permission` VALUES ('286', '5', '8');
+INSERT INTO `role_desktop_permission` VALUES ('287', '5', '2');
+INSERT INTO `role_desktop_permission` VALUES ('288', '5', '3');
+INSERT INTO `role_desktop_permission` VALUES ('289', '5', '4');
+INSERT INTO `role_desktop_permission` VALUES ('290', '5', '5');
+INSERT INTO `role_desktop_permission` VALUES ('291', '5', '6');
+INSERT INTO `role_desktop_permission` VALUES ('292', '5', '7');
+INSERT INTO `role_desktop_permission` VALUES ('293', '5', '9');
+INSERT INTO `role_desktop_permission` VALUES ('294', '5', '20');
+INSERT INTO `role_desktop_permission` VALUES ('295', '5', '21');
+INSERT INTO `role_desktop_permission` VALUES ('296', '5', '22');
+INSERT INTO `role_desktop_permission` VALUES ('297', '5', '10');
+INSERT INTO `role_desktop_permission` VALUES ('298', '5', '42');
+INSERT INTO `role_desktop_permission` VALUES ('299', '5', '43');
+INSERT INTO `role_desktop_permission` VALUES ('300', '5', '44');
+INSERT INTO `role_desktop_permission` VALUES ('301', '5', '11');
+INSERT INTO `role_desktop_permission` VALUES ('302', '5', '12');
+INSERT INTO `role_desktop_permission` VALUES ('303', '5', '23');
+INSERT INTO `role_desktop_permission` VALUES ('304', '5', '24');
+INSERT INTO `role_desktop_permission` VALUES ('305', '5', '25');
+INSERT INTO `role_desktop_permission` VALUES ('306', '5', '13');
+INSERT INTO `role_desktop_permission` VALUES ('307', '5', '26');
+INSERT INTO `role_desktop_permission` VALUES ('308', '5', '27');
+INSERT INTO `role_desktop_permission` VALUES ('309', '5', '28');
+INSERT INTO `role_desktop_permission` VALUES ('310', '5', '14');
+INSERT INTO `role_desktop_permission` VALUES ('311', '5', '29');
+INSERT INTO `role_desktop_permission` VALUES ('312', '5', '30');
+INSERT INTO `role_desktop_permission` VALUES ('313', '5', '31');
+INSERT INTO `role_desktop_permission` VALUES ('314', '5', '15');
+INSERT INTO `role_desktop_permission` VALUES ('315', '5', '16');
+INSERT INTO `role_desktop_permission` VALUES ('316', '5', '32');
+INSERT INTO `role_desktop_permission` VALUES ('317', '5', '33');
+INSERT INTO `role_desktop_permission` VALUES ('318', '5', '34');
+INSERT INTO `role_desktop_permission` VALUES ('319', '5', '17');
+INSERT INTO `role_desktop_permission` VALUES ('320', '5', '35');
+INSERT INTO `role_desktop_permission` VALUES ('321', '5', '36');
+INSERT INTO `role_desktop_permission` VALUES ('322', '5', '37');
+INSERT INTO `role_desktop_permission` VALUES ('323', '5', '18');
+INSERT INTO `role_desktop_permission` VALUES ('324', '5', '19');
 
 -- ----------------------------
 -- Table structure for role_desktop_route
@@ -2291,15 +2395,13 @@ CREATE TABLE `user` (
   `login_ip` varchar(32) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`),
   KEY `department_id` (`department_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='管理用户';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='管理用户';
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', 'avatar/2024/06/29/a3acf6bdbe87981d4595e156a3cc9f27.png', '1684989244', '1716183018', '1719713736', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', 'avatar/2024/06/29/a3acf6bdbe87981d4595e156a3cc9f27.png', '1684989244', '1716183018', '1719722883', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
-INSERT INTO `user` VALUES ('3', '1', '1', '15108273577', 'e10adc3949ba59abbe56e057f20f883e', 'fdsfdsfdsfdsf', '15108273577', '', '1719669726', '1719669955', '0', '');
-INSERT INTO `user` VALUES ('4', '1', '1', 'admin3', 'e10adc3949ba59abbe56e057f20f883e', 'fdsf', '15108273573', '', '1719718369', '1719718375', '0', '');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -2311,13 +2413,10 @@ CREATE TABLE `user_role` (
   `role_id` int(10) unsigned NOT NULL COMMENT '角色id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COMMENT='用户角色';
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='用户角色';
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES ('46', '1', '3');
-INSERT INTO `user_role` VALUES ('47', '1', '3');
-INSERT INTO `user_role` VALUES ('50', '2', '3');
-INSERT INTO `user_role` VALUES ('51', '3', '3');
-INSERT INTO `user_role` VALUES ('53', '4', '3');
+INSERT INTO `user_role` VALUES ('58', '1', '3');
+INSERT INTO `user_role` VALUES ('59', '2', '4');
