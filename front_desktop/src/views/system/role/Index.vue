@@ -128,7 +128,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.Role/delete", {
+  const response = await axios.post("desktop/system.role.Index/delete", {
     id: id
   });
   if (response.code != 1) {
