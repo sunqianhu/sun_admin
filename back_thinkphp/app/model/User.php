@@ -61,7 +61,7 @@ class User extends Base
             return '';
         }
 
-        return $this->department->name;
+        return $this->department->getData('name');
     }
 
     /**
