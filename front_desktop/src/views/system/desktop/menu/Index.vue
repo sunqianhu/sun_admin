@@ -21,7 +21,8 @@
         <el-table-column v-slot="{ row }" prop="name" label="菜单名称">
           {{ row.name }}
         </el-table-column>
-        <el-table-column prop="icon" label="菜单图标" width="300" show-overflow-tooltip />
+        <el-table-column prop="url" label="菜单网址" show-overflow-tooltip />
+        <el-table-column prop="icon" label="菜单图标" width="200" show-overflow-tooltip />
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>

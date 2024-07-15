@@ -3,6 +3,7 @@
 namespace app\service;
 
 use app\model\Dictionary as DictionaryModel;
+use Exception;
 use think\facade\Cache;
 
 class Dictionary
@@ -31,6 +32,7 @@ class Dictionary
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     public function edit($id, $data)
     {
@@ -48,6 +50,7 @@ class Dictionary
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     public function delete($id)
     {

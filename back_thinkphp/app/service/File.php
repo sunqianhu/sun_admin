@@ -10,11 +10,12 @@ class File
     /**
      * 得到访问url
      * @param string $path 路径
+     * @throws Exception
      */
     public function getUrl($path)
     {
         if($path === ''){
-            return '';
+            throw new Exception('路径参数不能为空');
         }
 
         return Config::get('filesystem.access_prefix') . $path;
@@ -27,10 +28,9 @@ class File
      */
     public function getFullPath($path){
         if($path === ''){
-            return '';
+            throw new Exception('路径参数不能为空');
         }
-        $rootPath = Config::get('filesystem.root_path');
-        return $rootPath . $path;
+        return Config::get('filesystem.root_path') . $path;
     }
 
     /**
@@ -45,6 +45,7 @@ class File
             throw new Exception('没有配置文件目录');
         }
 
+        $relativeDir = '';
         if ($module != '') {
             $relativeDir = $module . '/';
         }
@@ -102,7 +103,7 @@ class File
         $decodeContent = base64_decode($base64Content);
 
         $relativeDir = $this->makeModuleDir($module);
-        $fileName = md5(time() . rand(1000, 9999)) . '.' . $ext;
+        $fileName = md5(time() .'_sun_'. rand(1000, 9999)) . '.' . $ext;
         $path = $relativeDir . $fileName; // 文件相对路径
         $fullPath = $this->getFullPath($path); // 全文件路径
 

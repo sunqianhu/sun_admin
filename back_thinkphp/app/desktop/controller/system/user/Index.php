@@ -7,7 +7,9 @@ use app\model\Role as RoleModel;
 use app\model\User as UserModel;
 use app\service\Department as DepartmentService;
 use app\service\User as UserServer;
+use app\service\user\Desktop as DesktopService;
 use app\validate\User as UserValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Index extends Base
@@ -108,8 +110,8 @@ class Index extends Base
         }
 
         try{
-            $userServer = new UserServer();
-            $userServer->desktopOffLine($post['id']);
+            $desktopService = new DesktopService();
+            $desktopService->offLine($post['id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

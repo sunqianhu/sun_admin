@@ -5,6 +5,7 @@ namespace app\desktop\controller\system\desktop\route;
 use app\desktop\controller\Base;
 use app\model\desktop\Route as RouteModel;
 use app\service\desktop\Route as RouteService;
+use app\service\Dictionary as DictionaryService;
 use app\validate\desktop\Route as RouteValidate;
 use think\exception\ValidateException;
 
@@ -26,8 +27,12 @@ class edit extends Base
         }
         $route = $routeModel->toArray();
 
+        $dictionaryService = new DictionaryService();
+        $layouts = $dictionaryService->getList('desktop_route_layout');
+
         $data = [
-            'route' => $route
+            'route' => $route,
+            'layouts' => $layouts
         ];
         return $this->success('获取成功', $data);
     }

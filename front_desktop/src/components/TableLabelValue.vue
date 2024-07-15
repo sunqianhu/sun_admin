@@ -94,10 +94,10 @@ const setRows = (items) => {
   items.forEach((item, index) => {
     let labelColspan = item.labelColspan ? item.labelColspan : 1;
     let contentColspan = item.contentColspan ? item.contentColspan : 1;
-    columnNumber += labelColspan + contentColspan;
+    columnNumber += parseInt(labelColspan) + parseInt(contentColspan);
 
     row.push(item);
-    if (props.column - columnNumber < 2 || index >= items.length - 1) {
+    if (props.column - columnNumber < 2 || index == items.length - 1) {
       rows.value.push(row);
       columnNumber = 0;
       row = [];

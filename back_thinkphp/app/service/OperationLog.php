@@ -4,6 +4,7 @@ namespace app\service;
 
 use app\model\OperationLog as OperationLogModel;
 use app\service\desktop\Session as SessionService;
+use Exception;
 
 class OperationLog
 {
@@ -14,7 +15,7 @@ class OperationLog
     public function add($userId, $url, $ip)
     {
         if (empty($userId)) {
-            return;
+            throw new Exception('用户id不能为空');
         }
         $url = strtolower($url);
         $sessionService = new SessionService();

@@ -9,7 +9,7 @@ use Exception;
 use Sunqianhu\Helper\Image as ImageHelper;
 use think\facade\Cache;
 use app\service\File as FileService;
-use app\service\App as AppService;
+use app\service\Site as SiteService;
 
 class User
 {
@@ -85,6 +85,24 @@ class User
     }
 
     /**
+     * 修改密码
+     * @param $id
+     * @param $password
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function editPassword($id, $password){
+        $userModel = UserModel::find($id);
+        if(empty($userModel)){
+            throw new Exception('没有找到记录');
+        }
+        $userModel->password = md5($password);
+        $userModel->save();
+    }
+
+    /**
      * id转账号
      * @param $idString
      * @param $fromDelimiter
@@ -147,8 +165,8 @@ class User
     {
         if($path === ''){
             $path = 'image/avatar.png';
-            $appService = new AppService();
-            return $appService->getUrl($path);
+            $siteService = new SiteService();
+            return $siteService->getUrl($path);
         }
 
         $fileService = new FileService();
@@ -165,24 +183,6 @@ class User
             ->group('role_id')
             ->column('role_id');
         return $roleIds;
-    }
-
-    /**
-     * 修改密码
-     * @param $id
-     * @param $password
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function editPassword($id, $password){
-        $userModel = UserModel::find($id);
-        if(empty($userModel)){
-            throw new Exception('没有找到记录');
-        }
-        $userModel->password = md5($password);
-        $userModel->save();
     }
 
     /**
@@ -228,14 +228,5 @@ class User
         }
         $userModel->status_id = $statusId;
         $userModel->save();
-    }
-
-    /**
-     * 桌面端踢下线
-     * @param $id
-     * @return void
-     */
-    public function desktopOffLine($id){
-        TokenModel::where('user_id', '=', $id)->delete();
     }
 }

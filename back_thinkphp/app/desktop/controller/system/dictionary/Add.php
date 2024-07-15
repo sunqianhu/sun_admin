@@ -10,7 +10,7 @@ use think\exception\ValidateException;
 class Add extends Base
 {
     /**
-     * 保存添加
+     * 保存
      */
     public function save()
     {

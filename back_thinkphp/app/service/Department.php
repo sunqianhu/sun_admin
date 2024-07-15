@@ -3,6 +3,7 @@
 namespace app\service;
 
 use app\model\Department as DepartmentModel;
+use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\facade\Cache;
 
@@ -44,6 +45,7 @@ class Department
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     public function edit($id, $data)
     {
@@ -61,6 +63,7 @@ class Department
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     public function delete($id)
     {

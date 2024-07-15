@@ -1,6 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-name">路由管理</div>
+    <div class="page-header">
+      <span class="name">路由管理</span>
+      <span class="description">前端路由管理</span>
+    </div>
     <div class="search">
       <el-form :model="query" :inline="true">
         <el-form-item label="路由名称">
@@ -25,8 +28,8 @@
         <el-table-column prop="path" label="路由路径" show-overflow-tooltip />
         <el-table-column prop="component_path" label="组件路径" show-overflow-tooltip />
         <el-table-column prop="layout_name" label="页面布局" width="100" show-overflow-tooltip />
-        <el-table-column prop="keep_alive_name" label="保活" width="80" show-overflow-tooltip />
-        <el-table-column prop="sort" label="排序" width="80" />
+        <el-table-column prop="keep_alive_name" label="保活" width="60" show-overflow-tooltip />
+        <el-table-column prop="sort" label="排序" width="60" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
@@ -148,9 +151,16 @@ onMounted(() => {
   padding: var(--padding-md);
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
-  .page-name {
-    font-size: 20px;
-    font-weight: bold;
+  .page-header {
+    .name {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .description {
+      color: var(--font-color-secondary);
+      margin-left: var(--margin-md);
+      font-size: var(--font-size-sm);
+    }
   }
   .search {
     margin-top: var(--margin-md);

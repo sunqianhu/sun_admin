@@ -5,6 +5,7 @@ namespace app\service\user;
 use app\model\desktop\Menu as MenuModel;
 use app\model\desktop\Permission as PermissionModel;
 use app\model\desktop\Route as RouteModel;
+use app\model\desktop\Token as TokenModel;
 use app\service\User as UserService;
 use Sunqianhu\Helper\ArrayHandler;
 
@@ -82,6 +83,7 @@ class Desktop
             ->join('role_desktop_permission rdp', 'p.id = rdp.permission_id')
             ->field('p.key')
             ->where('rdp.role_id', 'in', $roleIds)
+            ->order('p.sort', 'asc')
             ->group('key')
             ->column('key');
         return $keys;
@@ -103,6 +105,7 @@ class Desktop
             ->join('role_desktop_route rdr', 'r.id = rdr.route_id')
             ->field('r.*')
             ->where('rdr.role_id', 'in', $roleIds)
+            ->order('r.sort', 'asc')
             ->select();
         $routes = [];
         foreach($routeModels as $routeModel){
@@ -137,10 +140,20 @@ class Desktop
             ->field('m.*')
             ->join('role_desktop_menu rdm', 'm.id = rdm.menu_id')
             ->where('rdm.role_id', 'in', $roleIds)
+            ->order('m.sort', 'asc')
             ->select();
         $menus = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
         return $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+    }
+
+    /**
+     * 下线
+     * @param $id
+     * @return void
+     */
+    public function offLine($id){
+        TokenModel::where('user_id', '=', $id)->delete();
     }
 }
