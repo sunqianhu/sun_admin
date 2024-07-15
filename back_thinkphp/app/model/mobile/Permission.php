@@ -22,4 +22,19 @@ class Permission extends Base
         $apiString = str_replace("\r\n", "\n", $data['api_string']);
         return explode("\n", $apiString);
     }
+
+    /**
+     * 名称键
+     * @param $value
+     * @param $data
+     * @return string
+     */
+    public function getNameKeyAttr($value, $data)
+    {
+        $nameKey = $data['name'];
+        if(isset($data['key']) && $data['key'] !== ''){
+            $nameKey = $data['name'].'（'.$data['key'].'）';
+        }
+        return $nameKey;
+    }
 }

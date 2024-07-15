@@ -24,6 +24,23 @@ class Route
     }
 
     /**
+     * 得到带名称路径的路由集合
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getRoutesWithNamePath()
+    {
+        $routeModels = RouteModel::order('sort', 'asc')
+            ->append(['name_path'])
+            ->select();
+        $routes = $routeModels->toArray();
+
+        return $routes;
+    }
+
+    /**
      * 添加
      * @param $data
      * @return void

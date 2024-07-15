@@ -17,8 +17,28 @@ class Menu
      */
     public function getTreeMenus()
     {
-        $menuModels = MenuModel::field('id, menu_id, name')
+        $menuModels = MenuModel::field('id, menu_id, name, url')
             ->order('sort', 'asc')
+            ->select();
+        $menus = $menuModels->toArray();
+
+        $arrayHandler = new ArrayHandler();
+        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        return $treeMenus;
+    }
+
+    /**
+     * 得到带名称和url的树形菜单
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getTreeMenusWithNameUrl()
+    {
+        $menuModels = MenuModel::field('id, menu_id, name, url')
+            ->order('sort', 'asc')
+            ->append(['name_url'])
             ->select();
         $menus = $menuModels->toArray();
 

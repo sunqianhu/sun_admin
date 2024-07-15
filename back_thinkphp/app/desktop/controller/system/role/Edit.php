@@ -38,16 +38,16 @@ class Edit extends Base
         $role = $roleModel->toArray();
 
         $desktopPermissionService = new DesktopPermissionService();
-        $desktopPermissions = $desktopPermissionService->getTreePermissions();
+        $desktopPermissions = $desktopPermissionService->getTreePermissionsWithNameKey();
 
         $desktopMenuService = new DesktopMenuService();
-        $desktopMenus = $desktopMenuService->getTreeMenus();
+        $desktopMenus = $desktopMenuService->getTreeMenusWithNameUrl();
 
         $desktopRouteService = new DesktopRouteService();
-        $desktopRoutes = $desktopRouteService->getRoutes();
+        $desktopRoutes = $desktopRouteService->getRoutesWithNamePath();
 
         $mobilePermissionService = new MobilePermissionService();
-        $mobilePermissions = $mobilePermissionService->getTreePermissions();
+        $mobilePermissions = $mobilePermissionService->getTreePermissionsWithNameKey();
 
         $data = [
             'role' => $role,

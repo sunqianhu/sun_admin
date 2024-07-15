@@ -35,7 +35,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
 import Menu from "./Menu.vue";
 import LightDark from "./LightDark.vue";
@@ -44,25 +43,9 @@ import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 import Message from "./Message.vue";
 import Watermark from "./Watermark.vue";
-import axios from "@/helper/axios";
 
 const appStore = useAppStore();
-const version = ref("");
-
-/**
- * 初始化
- */
-const init = async () => {
-  if (document.body.clientWidth < 768) {
-    appStore.setSiderStatus(false);
-  }
-
-  const response = await axios.get("desktop/main/init");
-  if (response.code != 1) {
-    return;
-  }
-  version.value = response.data.version;
-};
+const version = import.meta.env.VITE_VERSION;
 
 /**
  * 窗口大小改变回调
@@ -74,10 +57,6 @@ window.onresize = () => {
     appStore.setSiderStatus(true);
   }
 };
-
-onMounted(() => {
-  init();
-});
 </script>
 
 <style lang="scss">

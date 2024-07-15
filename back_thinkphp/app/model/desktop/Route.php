@@ -33,4 +33,18 @@ class Route extends Base
         return $dictionaryService->getValue('desktop_route_keep_alive', $data['keep_alive']);
     }
 
+    /**
+     * 名称和路径
+     * @param $value
+     * @param $data
+     * @return string
+     */
+    public function getNamePathAttr($value, $data)
+    {
+        $namePath = $data['name'];
+        if(isset($data['path']) && $data['path'] !== ''){
+            $namePath = $data['name'].'（'.$data['path'].'）';
+        }
+        return $namePath;
+    }
 }

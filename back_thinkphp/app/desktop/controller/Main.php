@@ -4,7 +4,6 @@ namespace app\desktop\controller;
 
 use app\service\desktop\Session as SessionService;
 use app\model\User as UserModel;
-use app\service\Config as ConfigHelper;
 use app\service\user\Desktop as DesktopService;
 use app\service\Watermark as WatermarkService;
 
@@ -13,24 +12,6 @@ use app\service\Watermark as WatermarkService;
  */
 class Main extends Base
 {
-    /**
-     * 初始化
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function init()
-    {
-        $configHelper = new ConfigHelper();
-        $version = $configHelper->getValue('version');
-
-        $data = [
-            'version' => $version
-        ];
-        return $this->success('获取成功', $data);
-    }
-
     /**
      * 得到菜单
      * @return void

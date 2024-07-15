@@ -26,7 +26,6 @@ class Session
     public $noAuthUrls = [
         'desktop/Frame/getRoutes',
         'desktop/Frame/getPermissions',
-        'desktop/Main/init',
         'desktop/Main/getMenus',
         'desktop/Main/getAvatar',
         'desktop/Main/getWatermark',

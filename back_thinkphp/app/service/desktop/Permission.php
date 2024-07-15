@@ -17,8 +17,28 @@ class Permission
      */
     public function getTreePermissions()
     {
-        $permissionModels = PermissionModel::field('id, permission_id, name')
+        $permissionModels = PermissionModel::field('id, permission_id, name, key')
             ->order('sort', 'asc')
+            ->select();
+        $permissions = $permissionModels->toArray();
+
+        $arrayHandler = new ArrayHandler();
+        $treePermissions = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        return $treePermissions;
+    }
+
+    /**
+     * 得到带名称和key的树形权限
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getTreePermissionsWithNameKey()
+    {
+        $permissionModels = PermissionModel::field('id, permission_id, name, key')
+            ->order('sort', 'asc')
+            ->append(['name_key'])
             ->select();
         $permissions = $permissionModels->toArray();
 

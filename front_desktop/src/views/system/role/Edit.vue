@@ -16,7 +16,7 @@
         <el-form-item label="桌面端权限" prop="desktop_permission_ids">
           <el-tree
             :data="desktopPermissions"
-            :props="{ children: 'children', label: 'name' }"
+            :props="{ children: 'children', label: 'name_key' }"
             node-key="id"
             show-checkbox
             ref="desktopPermissionRef"
@@ -28,7 +28,7 @@
         <el-form-item label="桌面端菜单" prop="desktop_menu_ids">
           <el-tree
             :data="desktopMenus"
-            :props="{ children: 'children', label: 'name' }"
+            :props="{ children: 'children', label: 'name_url' }"
             node-key="id"
             show-checkbox
             ref="desktopMenuRef"
@@ -40,7 +40,7 @@
         <el-form-item label="桌面端路由" prop="desktop_route_ids">
           <el-tree
             :data="desktopRoutes"
-            :props="{ children: 'children', label: 'name' }"
+            :props="{ children: 'children', label: 'name_path' }"
             node-key="id"
             show-checkbox
             ref="desktopRouteRef"
@@ -52,7 +52,7 @@
         <el-form-item label="移动端权限" prop="mobile_permission_ids">
           <el-tree
             :data="mobilePermissions"
-            :props="{ children: 'children', label: 'name' }"
+            :props="{ children: 'children', label: 'name_key' }"
             node-key="id"
             show-checkbox
             ref="mobilePermissionRef"
