@@ -23,7 +23,7 @@ class Edit extends Base
         }
 
         $userModel = UserModel::field('id,name,phone,department_id')
-            ->with('roles')
+            ->with(['roles'])
             ->append(['role_ids'])
             ->find($id);
         if (empty($userModel)) {

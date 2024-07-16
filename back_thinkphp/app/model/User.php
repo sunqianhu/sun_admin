@@ -21,8 +21,7 @@ class User extends Base
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'user_role', 'role_id', 'user_id')
-            ->field('role.id,role.name');
+        return $this->belongsToMany(Role::class, 'user_role', 'role_id', 'user_id');
     }
 
     /**
