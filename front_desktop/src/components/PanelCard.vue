@@ -1,5 +1,5 @@
 <template>
-  <div class="panel">
+  <div class="panel-card">
     <slot name="header">
       <div class="header" v-if="title || subTitle || $slots.actions">
         <div class="title" v-if="title">{{ title }}</div>
@@ -29,7 +29,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.panel {
+.panel-card {
   background: var(--background-color-light);
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);

@@ -1,6 +1,6 @@
 <template>
   <div class="detail" v-loading="loading">
-    <panel title="用户信息" class="pannel">
+    <panel-card title="用户信息" class="pannel-card">
       <label-value>
         <label-value-item label="用户id" :md="8">{{ user.id }}</label-value-item>
         <label-value-item label="账号" :md="8">{{ user.account }}</label-value-item>
@@ -20,9 +20,9 @@
         </label-value-item>
         <label-value-item label="最后登录ip" :md="8">{{ user.login_ip }}</label-value-item>
       </label-value>
-    </panel>
+    </panel-card>
 
-    <panel title="登录日志" class="pannel">
+    <panel-card title="登录日志" class="pannel-card">
       <template #actions>
         <el-link href="/system/login_log" type="primary" target="_blank"> 更多 </el-link>
       </template>
@@ -32,9 +32,9 @@
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
       </el-table>
-    </panel>
+    </panel-card>
 
-    <panel title="操作日志" class="pannel">
+    <panel-card title="操作日志" class="pannel-card">
       <template #actions>
         <el-link href="/system/operation_log" type="primary" target="_blank"> 更多 </el-link>
       </template>
@@ -45,7 +45,7 @@
         <el-table-column prop="url" label="操作地址" width="450" />
         <el-table-column prop="ip" label="操作ip" />
       </el-table>
-    </panel>
+    </panel-card>
   </div>
 </template>
 
@@ -53,7 +53,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/helper/axios";
-import Panel from "@/components/Panel.vue";
+import PanelCard from "@/components/PanelCard.vue";
 import LabelValue from "@/components/LabelValue.vue";
 import LabelValueItem from "@/components/LabelValueItem.vue";
 import dayjs from "dayjs";
@@ -99,7 +99,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .detail {
   padding: var(--padding-md);
-  .pannel {
+  .pannel-card {
     margin-top: var(--margin-md);
     &:first-child {
       margin-top: 0px;
