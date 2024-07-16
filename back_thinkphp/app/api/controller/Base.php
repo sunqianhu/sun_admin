@@ -26,9 +26,8 @@ class Base extends BaseController
         parent::initialize();
 
         $this->session = new SessionEntity();
-        $sessionService = new SessionService();
 
-        //ip
+        $sessionService = new SessionService();
         try {
             $sessionService->ipAuth($this->request->ip());
             $this->session = $sessionService->tokenAuth($this->request->header('token', ''));

@@ -6,6 +6,7 @@ return [
     // 指令定义
     'commands' => [
         'message' => 'app\command\Message',
+        'generate_api_token'=>'app\command\GenerateApiToken',
         'test' => 'app\command\Test'
     ],
 ];

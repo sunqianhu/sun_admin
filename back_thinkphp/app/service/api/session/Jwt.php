@@ -1,6 +1,6 @@
 <?php
 
-namespace app\service\desktop\session;
+namespace app\service\api\session;
 
 use app\entity\api\Session as SessionEntity;
 use app\entity\User as UserEntity;
@@ -14,7 +14,7 @@ class Jwt
 {
     private $key = 'axjeJXKlA836x7s@#';
     private $leeway = 180;
-    public $expire = 60 * 60 * 24 * 365 * 2; //有效期
+    public $expire = 60 * 60 * 24 * 365; //有效期
 
     /**
      * 得到token
