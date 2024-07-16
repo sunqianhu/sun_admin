@@ -1,7 +1,4 @@
 <?php
-/**
- * json web token
- */
 
 namespace app\service\desktop\session;
 
@@ -17,7 +14,7 @@ class Jwt
 {
     private $key = 'axjeJXKlA836x7s@#';
     private $leeway = 180;
-    public  $expire = 60 * 30; //有效期
+    public $expire = 60 * 30; //有效期
 
     /**
      * 得到token
@@ -52,6 +49,7 @@ class Jwt
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     function resolverToken($token)
     {
@@ -61,13 +59,13 @@ class Jwt
         // 验证
         $tokenModel = TokenModel::where('token', $token)->find();
         if (empty($tokenModel)) {
-            throw new Exception('token错误');
+            throw new Exception('登录凭证错误');
         }
         if ($tokenModel->expires_in < time()) {
-            throw new Exception('token错误');
+            throw new Exception('登录已过期');
         }
         if ($tokenModel->user_id != $decoded->id) {
-            throw new Exception('token错误');
+            throw new Exception('登录凭证错误');
         }
 
         // 有效期
@@ -75,8 +73,8 @@ class Jwt
         $tokenModel->save();
 
         $userModel = UserModel::find($tokenModel->user_id);
-        if(empty($userModel)){
-            throw new Exception('token错误');
+        if (empty($userModel)) {
+            throw new Exception('登录凭证错误');
         }
 
         $userEntity = new UserEntity();

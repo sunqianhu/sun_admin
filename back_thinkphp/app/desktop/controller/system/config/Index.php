@@ -20,7 +20,7 @@ class Index extends Base
     {
         $configService = new ConfigService();
         $config = [
-            'version'=>$configService->getValue('version')
+            'denied_ip_string'=>$configService->getValue('denied_ip_string')
         ];
         $data = [
             'config' => $config
@@ -33,7 +33,7 @@ class Index extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['version']);
+        $post = $this->request->post(['denied_ip_string']);
 
         //验证
         try {

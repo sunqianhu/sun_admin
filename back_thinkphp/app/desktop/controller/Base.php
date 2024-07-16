@@ -27,26 +27,42 @@ class Base extends BaseController
     {
         parent::initialize();
 
+        $this->session = new SessionEntity();
         $sessionService = new SessionService();
+
+        //ip
         try {
-            $session = $sessionService->auth($this->request);
-            if($session == null){
-                return;
-            }
-            $this->session = $session;
+            $sessionService->ipAuth($this->request->ip());
         } catch (Exception $exception) {
-            $message = $exception->getMessage();
-            $code = 0;
-            if($message == 'token错误'){
-                $code = 2;
-            }
-            $this->error($message, null, $code)->send();
+            $this->error($exception->getMessage(), null, 0)->send();
             exit;
         }
 
+        //token
+        try {
+            $sessionEntity = $sessionService->tokenAuth($this->request);
+            if(empty($sessionEntity)) {
+                return;
+            }
+            $this->session = $sessionEntity;
+        } catch (Exception $exception) {
+            $this->error($exception->getMessage(), null, 2)->send();
+            exit;
+        }
+
+        //路由
+        try {
+            $sessionService->ruoteAuth($this->request, $this->session->user->id);
+        } catch (Exception $exception) {
+            $this->error($exception->getMessage(), null, 0)->send();
+            exit;
+        }
+
+        //操作日志
         $operationLogService = new OperationLogService();
         $operationLogService->add($this->session->user->id, $this->request->baseUrl(), $this->request->ip());
     }
+
 
     /**
      * 成功响应

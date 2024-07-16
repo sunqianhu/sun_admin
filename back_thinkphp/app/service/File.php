@@ -34,6 +34,23 @@ class File
     }
 
     /**
+     * 删除
+     * @param $path
+     * @return void
+     * @throws Exception
+     */
+    public function unlink($path){
+        if($path === ''){
+            throw new Exception('路径参数不能为空');
+        }
+        $fullPath = $this->getFullPath($path);
+        if(!file_exists($fullPath)){
+            throw new Exception('文件不存在');
+        }
+        unlink($fullPath);
+    }
+
+    /**
      * 创建权限目录
      * @param $module
      * @return string

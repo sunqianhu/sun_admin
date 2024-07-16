@@ -1,15 +1,15 @@
 <template>
   <div class="index" v-loading="pageLoading">
     <div class="page-name">系统设置</div>
-    <el-form :model="config" label-width="130px" ref="configRef" class="form">
-      <el-form-item label="版本号" prop="version">
-        <el-input v-model="config.version" />
+    <el-form :model="config" label-width="120px" ref="configRef" class="form">
+      <el-form-item label="禁止访问IP" prop="denied_ip_string">
+        <el-input v-model="config.denied_ip_string" type="textarea" :rows="3" />
       </el-form-item>
-      <div class="submit-wrap">
+      <el-form-item>
         <el-button type="primary" class="button" @click="submitForm" :loading="submitLoading">
           保存
         </el-button>
-      </div>
+      </el-form-item>
     </el-form>
   </div>
 </template>

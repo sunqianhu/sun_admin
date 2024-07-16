@@ -12,7 +12,7 @@ class Message
     {
         $job->delete();
 
-        if (empty($data) || empty($data['user_ids']) || empty($data['title']) || !isset($data['url'])) {
+        if (empty($data) || empty($data['user_ids']) || !isset($data['title']) || !isset($data['url'])) {
             return;
         }
 

@@ -5,6 +5,7 @@ namespace app\service\desktop;
 use app\entity\desktop\Session as SessionEntity;
 use app\entity\User as UserEntity;
 use app\model\User as UserModel;
+use app\service\Config as ConfigService;
 use app\service\desktop\session\Jwt;
 use app\service\LoginLog as LoginLogService;
 use app\service\user\Desktop as DesktopService;
@@ -16,27 +17,27 @@ class Session
      * @var string[] 不登录网址
      */
     public $noLoginUrls = [
-        'desktop/Login/login',
-        'desktop/Test/index'
+        '/desktop/Login/login',
+        '/desktop/Test/index'
     ];
 
     /**
      * @var string[] 不鉴权网址
      */
     public $noAuthUrls = [
-        'desktop/Frame/getRoutes',
-        'desktop/Frame/getPermissions',
-        'desktop/Main/getMenus',
-        'desktop/Main/getAvatar',
-        'desktop/Main/getWatermark',
-        'desktop/Main/logout',
-        'desktop/main.user.Detail/getUser',
-        'desktop/main.user.EditAvatar/init',
-        'desktop/main.user.EditAvatar/save',
-        'desktop/main.user.EditPassword/save',
-        'desktop/main.Message/readAll',
-        'desktop/main.Message/getNoReads',
-        'desktop/uploadFile/upload'
+        '/desktop/Frame/getRoutes',
+        '/desktop/Frame/getPermissions',
+        '/desktop/Main/getMenus',
+        '/desktop/Main/getAvatar',
+        '/desktop/Main/getWatermark',
+        '/desktop/Main/logout',
+        '/desktop/main.user.Detail/getUser',
+        '/desktop/main.user.EditAvatar/init',
+        '/desktop/main.user.EditAvatar/save',
+        '/desktop/main.user.EditPassword/save',
+        '/desktop/main.Message/readAll',
+        '/desktop/main.Message/getNoReads',
+        '/desktop/uploadFile/upload'
     ];
 
     /**
@@ -98,47 +99,81 @@ class Session
     }
 
     /**
-     * 鉴权
-     * @return void
+     * ip认证
+     * @param $ip
+     * @return true
      * @throws Exception
      */
-    function auth($request)
-    {
-        $appName = app('http')->getName();
-        $controller = $request->controller();
-        $action = $request->action();
-        $url = $appName . '/' . $controller . '/' . $action;
-        $url = strtolower($url);
-        $token = $request->header('token', '');
+    function ipAuth($ip){
+        $configService = new ConfigService();
+        $deniedIpString = $configService->getValue('denied_ip_string');
+        $deniedIps = explode("\r\n", $deniedIpString);
+        if(empty($deniedIps)){
+            return true;
+        }
+        if(in_array($ip, $deniedIps)){
+            throw new Exception('您的ip已被拒绝访问');
+        }
+        return true;
+    }
 
-        //登录
+    /**
+     * token认证
+     * @param $request
+     * @return SessionEntity|true
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    function tokenAuth($request)
+    {
+        $token = $request->header('token', '');
+        $url = $request->baseUrl();
+        $url = strtolower($url);
         $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
+
         if (in_array($url, $this->noLoginUrls)) {
             try{
                 $jwt = new Jwt();
                 return $jwt->resolverToken($token);
-            }catch (Exception $exception){
-                return;
-            }
+            }catch (Exception $exception){}
+            return;
         }
 
-        if ($token === '') {
-            throw new Exception('未获取到token');
-        }
         $jwt = new Jwt();
-        $sessionEntity = $jwt->resolverToken($token);
-        $userEntity = $sessionEntity->user;
+        return $jwt->resolverToken($token);
+    }
 
+    /**
+     * 路由认证
+     * @param $request
+     * @return void
+     * @throws Exception
+     */
+    function ruoteAuth($request, $userId)
+    {
+        if(empty($userId)){
+            throw new Exception('用户id不能为空');
+        }
+
+        $url = $request->baseUrl();
+        $url = strtolower($url);
+
+        //登录
+        $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
+        if (in_array($url, $this->noLoginUrls)) {
+            return;
+        }
+
+        //鉴权
         $this->noAuthUrls = array_map('strtolower', $this->noAuthUrls);
         if (in_array($url, $this->noAuthUrls)) {
-            return $sessionEntity;
+            return;
         }
 
         $desktopService = new DesktopService();
-        if(!$desktopService->hasPermission($userEntity->id, $url)){
+        if(!$desktopService->hasPermission($userId, $url)){
             throw new Exception('无权限');
         }
-
-        return $sessionEntity;
     }
 }

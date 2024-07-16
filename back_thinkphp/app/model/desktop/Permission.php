@@ -20,7 +20,11 @@ class Permission extends Base
         }
 
         $apiString = str_replace("\r\n", "\n", $data['api_string']);
-        return explode("\n", $apiString);
+        $apis = explode("\n", $apiString);
+        $apis = array_filter($apis, function($value) {
+            return $value !== '' && $value !== null;
+        });
+        return $apis;
     }
 
     /**

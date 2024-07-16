@@ -17,6 +17,7 @@ class User
      * 添加
      * @param $data
      * @return void
+     * @throws Exception
      */
     public function add($data)
     {
@@ -92,6 +93,7 @@ class User
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     public function editPassword($id, $password){
         $userModel = UserModel::find($id);

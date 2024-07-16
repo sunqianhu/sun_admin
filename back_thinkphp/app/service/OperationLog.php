@@ -11,6 +11,7 @@ class OperationLog
     /**
      * 添加
      * @return void
+     * @throws Exception
      */
     public function add($userId, $url, $ip)
     {
@@ -19,12 +20,12 @@ class OperationLog
         }
         $url = strtolower($url);
         $sessionService = new SessionService();
-
-        $noSlashUrl = substr($url, 1);
-        if (in_array($noSlashUrl, $sessionService->noLoginUrls)) {
+        $sessionService->noLoginUrls = array_map('strtolower', $sessionService->noLoginUrls);
+        if (in_array($url, $sessionService->noLoginUrls)) {
             return;
         }
-        if (in_array($noSlashUrl, $sessionService->noAuthUrls)) {
+        $sessionService->noAuthUrls = array_map('strtolower', $sessionService->noAuthUrls);
+        if (in_array($url, $sessionService->noAuthUrls)) {
             return;
         }
 

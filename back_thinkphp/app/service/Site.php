@@ -22,9 +22,6 @@ class Site
      * @return string
      */
     public function getFullPath($path){
-        if($path === ''){
-            throw new Exception('路径不能为空');
-        }
         return Config::get('site.root_path') . $path;
     }
 }

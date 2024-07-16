@@ -24,7 +24,6 @@ class Role extends Base
      */
     public function desktopMenus()
     {
-
         return $this->belongsToMany(DesktopMenuModel::class, 'role_desktop_menu', 'menu_id', 'role_id');
     }
 

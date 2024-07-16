@@ -32,6 +32,10 @@ instance.interceptors.response.use(
   function (response) {
     const data = response.data;
     if (data && data.code == 2) {
+      ElMessage({
+        message: data.message,
+        type: "error"
+      });
       logout();
       return Promise.reject(data);
     }

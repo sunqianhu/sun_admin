@@ -11,7 +11,8 @@ class User extends Base
      */
     public function department()
     {
-        return $this->belongsTo(Department::class, 'department_id', 'id');
+        return $this->belongsTo(Department::class, 'department_id', 'id')
+            ->field('department.id,department.department_id,department.name');
     }
 
     /**
@@ -20,7 +21,8 @@ class User extends Base
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'user_role', 'role_id', 'user_id');
+        return $this->belongsToMany(Role::class, 'user_role', 'role_id', 'user_id')
+            ->field('role.id,role.name');
     }
 
     /**

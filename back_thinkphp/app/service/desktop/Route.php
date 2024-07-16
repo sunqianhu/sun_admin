@@ -82,9 +82,6 @@ class Route
         if(empty($routeModel)){
             throw new Exception('没有找到记录');
         }
-        if($this->hasChildrenRoute($id)){
-            throw new Exception('存在子菜单不能删除');
-        }
         $routeModel->delete();
     }
 }
