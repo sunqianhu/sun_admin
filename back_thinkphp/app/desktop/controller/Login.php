@@ -4,7 +4,7 @@ namespace app\desktop\controller;
 
 use app\service\desktop\Session as SessionService;
 use app\service\LoginFailChecker;
-use app\validate\User as UserValidate;
+use app\validate\Session as SessionValidate;
 use think\exception\ValidateException;
 use Exception;
 
@@ -22,7 +22,7 @@ class Login extends Base
         $post = $this->request->post(['account' => '', 'password' => '']);
 
         try {
-            validate(UserValidate::class)->scene('desktop_login')->check($post);
+            validate(SessionValidate::class)->scene('desktop_login')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

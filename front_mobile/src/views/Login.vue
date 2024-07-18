@@ -1,25 +1,29 @@
 <template>
   <div class="login">
-    <van-form @submit="submitForm" class="form">
+    <van-form scroll-to-error required ref="sessionRef" @submit="submitForm" class="form">
       <van-cell-group inset>
         <van-field
-          v-model="username"
+          v-model="session.account"
           name="账号"
           label="账号"
           placeholder="账号"
           :rules="[{ required: true, message: '账号不能为空' }]"
+          clearable
         />
         <van-field
-          v-model="password"
+          v-model="session.password"
           type="password"
           name="密码"
           label="密码"
           placeholder="密码"
           :rules="[{ required: true, message: '密码不能为空' }]"
+          clearable
         />
       </van-cell-group>
       <div class="button-wrap">
-        <van-button type="primary" round block native-type="submit"> 登录 </van-button>
+        <van-button type="primary" :loading="loading" round block native-type="submit">
+          登录
+        </van-button>
       </div>
     </van-form>
   </div>
@@ -27,14 +31,32 @@
 
 <script setup>
 import { ref } from "vue";
+import axios from "@/helper/axios";
 
-const formRef = ref();
-const user = ref({});
+const session = ref({});
+const sessionRef = ref();
+const loading = ref(false);
 
 /**
  * 提交表单
  */
-const submitForm = async () => {};
+const submitForm = async () => {
+  let response;
+  try {
+    response = await axios.post("mobile/login/login", session.value);
+  } catch (error) {
+    console.log(`output->error`, error);
+    loading.value = false;
+    return;
+  }
+  loading.value = false;
+  if (response.code != 1) {
+    showFailToast(response.message);
+    return;
+  }
+
+  localStorage.setItem("token", response.data.token);
+};
 </script>
 
 <style lang="scss" scoped>

@@ -11,10 +11,10 @@
         </div>
       </div>
       <el-form
-        :model="login"
+        :model="session"
         :rules="rules"
         scroll-to-error
-        ref="loginRef"
+        ref="sessionRef"
         class="form"
         @keyup.enter="verify"
       >
@@ -23,7 +23,7 @@
             :prefix-icon="User"
             placeholder="请输入账号"
             size="large"
-            v-model="login.account"
+            v-model="session.account"
           />
         </el-form-item>
         <el-form-item prop="password">
@@ -33,7 +33,7 @@
             show-password
             size="large"
             :prefix-icon="Lock"
-            v-model="login.password"
+            v-model="session.password"
           />
         </el-form-item>
         <el-form-item class="submit">
@@ -67,8 +67,8 @@ import axios from "@/helper/axios";
 import Vcode from "vue3-puzzle-vcode";
 
 const router = useRouter();
-const login = ref({});
-const loginRef = ref(null);
+const session = ref({});
+const sessionRef = ref(null);
 const rules = {
   account: [{ required: true, message: "账号不能为空", trigger: "blur" }],
   password: [{ required: true, message: "密码不能为空", trigger: "blur" }]
@@ -80,7 +80,7 @@ const vCodeFlag = ref(false);
  * 验证
  */
 const verify = async () => {
-  await loginRef.value.validate();
+  await sessionRef.value.validate();
   vCodeFlag.value = true;
 };
 
@@ -91,7 +91,7 @@ const submitForm = async () => {
   loading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/login/login", login.value);
+    response = await axios.post("desktop/login/login", session.value);
   } catch (error) {
     loading.value = false;
     return;
