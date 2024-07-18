@@ -1,24 +1,391 @@
 <template>
-  <div class="index">
-    <div class="page-name">系统首页</div>
-    <div class="welcome">欢迎登录系统</div>
+  <div class="index" v-loading="pageLoading">
+    <div class="welcome">
+      <img src="@/assets/index/welcome.svg" class="img" />
+      <div class="name">你好张三上午好，欢迎回来！</div>
+    </div>
+
+    <div class="statistic">
+      <el-row justify="space-between" :gutter="16">
+        <el-col :sm="12" :md="6">
+          <div class="item today-local-opinion">
+            <div class="name">name1</div>
+            <div class="number-wrap">
+              <el-icon class="icon"><Odometer /></el-icon>
+              <span class="number">21</span>条
+            </div>
+          </div>
+        </el-col>
+        <el-col :sm="12" :md="6">
+          <div class="item today-push-street">
+            <div class="name">name2</div>
+            <div class="number-wrap">
+              <el-icon class="icon"><ChatSquare /></el-icon>
+              <span class="number">17</span>条
+            </div>
+          </div>
+        </el-col>
+        <el-col :sm="12" :md="6">
+          <div class="item today-push-street">
+            <div class="name">name3</div>
+            <div class="number-wrap">
+              <el-icon class="icon"><ChatSquare /></el-icon>
+              <span class="number">25</span>条
+            </div>
+          </div>
+        </el-col>
+        <el-col :sm="12" :md="6">
+          <div class="item today-push-street">
+            <div class="name">name3</div>
+            <div class="number-wrap">
+              <el-icon class="icon"><ChatSquare /></el-icon>
+              <span class="number">25</span>条
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+
+    <div class="modules">
+      <el-row justify="space-between" :gutter="16">
+        <el-col :md="12">
+          <panel-card title="module1" class="module">
+            <div class="chart" id="module1-chart"></div>
+          </panel-card>
+        </el-col>
+        <el-col :sm="12">
+          <panel-card title="module2" class="module">
+            <div class="chart" id="module2-chart"></div>
+          </panel-card>
+        </el-col>
+        <el-col :md="12">
+          <panel-card title="module3" class="module">
+            <template #actions>
+              <a href="javascript:;">更多</a>
+            </template>
+            <el-table :data="tableData" style="width: 100%">
+              <el-table-column prop="date" label="Date" width="100" />
+              <el-table-column prop="name" label="Name" width="100" />
+              <el-table-column prop="address" label="Address" />
+            </el-table>
+          </panel-card>
+        </el-col>
+        <el-col :sm="12">
+          <panel-card title="module4" class="module">
+            <template #actions>
+              <a href="javascript:;">更多</a>
+            </template>
+            <el-table :data="tableData" style="width: 100%">
+              <el-table-column prop="date" label="Date" width="100" />
+              <el-table-column prop="name" label="Name" width="100" />
+              <el-table-column prop="address" label="Address" />
+            </el-table>
+          </panel-card>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, onMounted, watch } from "vue";
+import axios from "@/helper/axios";
+import * as echarts from "echarts";
+import blueTheme from "@/extend/echarts_theme/blue.json";
+import { Odometer, ChatSquare } from "@element-plus/icons-vue";
+import PanelCard from "@/components/PanelCard.vue";
+
+const pageLoading = ref(false);
+const tableData = [
+  {
+    date: "2016-05-03",
+    name: "Tom",
+    address: "No. 189, Grove St, Los Angeles"
+  },
+  {
+    date: "2016-05-02",
+    name: "Tom",
+    address: "No. 189, Grove St, Los Angeles"
+  },
+  {
+    date: "2016-05-04",
+    name: "Tom",
+    address: "No. 189, Grove St, Los Angeles"
+  },
+  {
+    date: "2016-05-01",
+    name: "Tom",
+    address: "No. 189, Grove St, Los Angeles"
+  }
+];
+
+/**
+ * 初始化
+ */
+const init = async () => {
+  echarts.registerTheme("blue_theme", blueTheme);
+
+  // pageLoading.value = true;
+  // const response = await axios.get("desktop/index/init");
+  // pageLoading.value = false;
+  // if (response.code != 1) {
+  //   ElMessage({
+  //     message: response.message,
+  //     type: "error"
+  //   });
+  //   return;
+  // }
+
+  drawLineChart();
+  drawBarChart();
+};
+
+/**
+ * 折线图
+ */
+let lineChart;
+const drawLineChart = () => {
+  let chartElement = document.getElementById("module1-chart");
+  let chart;
+  let option = {
+    tooltip: {},
+    grid: {
+      left: "0",
+      right: "10",
+      top: "10",
+      bottom: "0",
+      containLabel: true
+    },
+    xAxis: {
+      type: "category",
+      boundaryGap: false, // 坐标轴两边留白策略
+      data: []
+    },
+    yAxis: {
+      type: "value",
+      axisLabel: {
+        formatter: "{value}条"
+      }
+    },
+    series: [
+      {
+        name: "舆情数量",
+        type: "line",
+        areaStyle: {
+          color: {
+            type: "linear",
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 0,
+                color: "#3fb1e3" // 0% 处的颜色
+              },
+              {
+                offset: 1,
+                color: "rgba(255,255,255,0)" // 100% 处的颜色
+              }
+            ]
+          }
+        }, // 区域填充样式
+        data: []
+      }
+    ]
+  };
+  let data = [
+    {
+      name: "18日",
+      number: 12
+    },
+    {
+      name: "19日",
+      number: 18
+    },
+    {
+      name: "20日",
+      number: 15
+    },
+    {
+      name: "21日",
+      number: 24
+    },
+    {
+      name: "22日",
+      number: 19
+    }
+  ];
+
+  //数据
+  data.forEach((item) => {
+    option.xAxis.data.push(item.name);
+    option.series[0].data.push(item.number);
+  });
+
+  //画
+  chart = echarts.init(chartElement, "blue_theme");
+  chart.setOption(option);
+  lineChart = chart;
+};
+
+/**
+ * 柱状图
+ */
+let barChart;
+const drawBarChart = () => {
+  let chartElement = document.getElementById("module2-chart");
+  let chart;
+
+  let option = {
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "shadow"
+      }
+    },
+    grid: {
+      left: "0",
+      right: "10",
+      top: "10",
+      bottom: "0",
+      containLabel: true
+    },
+    xAxis: {
+      type: "category",
+      data: []
+    },
+    yAxis: {
+      type: "value",
+      axisLabel: {
+        formatter: "{value}条"
+      }
+    },
+    series: [
+      {
+        name: "数量",
+        type: "bar",
+        label: {
+          show: true,
+          color: "#ffffff"
+        },
+        data: []
+      }
+    ]
+  };
+  let data = [
+    {
+      name: "bar1",
+      number: Math.round(Math.random() * 100)
+    },
+    {
+      name: "bar1",
+      number: Math.round(Math.random() * 100)
+    },
+    {
+      name: "bar1",
+      number: Math.round(Math.random() * 100)
+    },
+    {
+      name: "bar1",
+      number: Math.round(Math.random() * 100)
+    },
+    {
+      name: "bar1",
+      number: Math.round(Math.random() * 100)
+    }
+  ];
+  let length = data.length;
+  let item;
+
+  //数据
+  for (let index = 0; index < length; index++) {
+    item = data[index];
+    if (index >= 10) {
+      break;
+    }
+    option.xAxis.data.push(item.name);
+    option.series[0].data.push(item.number);
+  }
+
+  //画
+  chart = echarts.init(chartElement, "blue_theme");
+  chart.setOption(option);
+  barChart = chart;
+};
+
+/**
+ * 重绘图形
+ */
+const resizeChart = () => {
+  setTimeout(() => {
+    lineChart.resize();
+    barChart.resize();
+  }, 500);
+};
+
+// div大小改变
+window.addEventListener("resize", function () {
+  resizeChart();
+});
+
+onMounted(() => {
+  init();
+});
+</script>
 
 <style lang="scss" scoped>
 .index {
-  background-color: var(--background-color-light);
-  padding: 16px;
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--box-shadow-base);
-  .page-name {
-    font-size: 20px;
-    font-weight: bold;
-  }
   .welcome {
+    background: var(--background-color-light);
+    border-radius: var(--border-radius-sm);
+    padding: var(--padding-md);
+    display: flex;
+    align-items: center;
+    .img {
+      width: 50px;
+      display: inline-block;
+    }
+    .name {
+      font-size: var(--font-size-lg);
+      font-weight: bold;
+      color: var(--color-primary);
+      margin-left: 16px;
+    }
+  }
+  .statistic {
     margin-top: var(--margin-md);
+    .item {
+      padding: var(--padding-md);
+      background-color: var(--background-color-light);
+      border-radius: var(--border-radius-sm);
+      margin-bottom: var(--margin-md);
+      .name {
+      }
+      .number-wrap {
+        margin-top: var(--margin-md);
+        .icon {
+          font-size: 20px;
+          color: #8595f4;
+        }
+        .number {
+          font-size: 32px;
+          font-weight: bold;
+          margin-left: 8px;
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+  .modules {
+    .module {
+      margin-bottom: var(--margin-md);
+      #module1-chart,
+      #module2-chart {
+        width: 100%;
+        height: 250px;
+      }
+    }
   }
 }
 </style>
