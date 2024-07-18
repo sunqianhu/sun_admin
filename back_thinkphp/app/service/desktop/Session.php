@@ -31,6 +31,7 @@ class Session
         '/desktop/Main/getAvatar',
         '/desktop/Main/getWatermark',
         '/desktop/Main/logout',
+        '/desktop/Blank/getWatermark',
         '/desktop/main.user.Detail/getUser',
         '/desktop/main.user.EditAvatar/init',
         '/desktop/main.user.EditAvatar/save',
