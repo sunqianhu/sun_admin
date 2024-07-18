@@ -1,7 +1,7 @@
 <template>
   <div class="layout-main">
     <el-container :class="{ close: !appStore.siderStatus }" class="container">
-      <el-aside class="aside">
+      <el-aside class="aside" id="aside">
         <div class="system-name">
           <img src="@/assets/logo.png" class="logo" />
           <span class="name">SunAdmin</span>
@@ -11,11 +11,11 @@
       </el-aside>
       <el-container class="workspace">
         <el-header class="header">
-          <hamburger></hamburger>
+          <hamburger class="hamburger"></hamburger>
           <div class="right">
             <light-dark class="light-dark"></light-dark>
             <full-screen class="fullscreen"></full-screen>
-            <avatar></avatar>
+            <avatar class="avatar"></avatar>
           </div>
         </el-header>
         <el-main class="body">
@@ -44,8 +44,44 @@ import Avatar from "./Avatar.vue";
 import Message from "./Message.vue";
 import Watermark from "./Watermark.vue";
 
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { onMounted } from "vue";
+
 const appStore = useAppStore();
 const version = import.meta.env.VITE_VERSION;
+
+/**
+ * 引导
+ */
+const guide = () => {
+  if (localStorage.getItem("guide") == 1) {
+    return;
+  }
+
+  localStorage.setItem("guide", 1);
+  const driverObj = driver({
+    showProgress: true,
+    steps: [
+      {
+        element: ".aside",
+        popover: { title: "功能菜单", description: "点击功能菜单导航到具体的功能栏目" }
+      },
+      {
+        element: ".hamburger",
+        popover: { title: "折叠按钮", description: "打开或折叠左边功能菜单" }
+      },
+      { element: ".light-dark", popover: { title: "暗黑模式", description: "切换系统风格" } },
+      { element: ".fullscreen", popover: { title: "全屏", description: "切换全屏显示" } },
+      { element: ".avatar", popover: { title: "头像", description: "查看修改个人信息" } },
+      { element: ".body", popover: { title: "工作区", description: "具体功能显示区" } }
+    ],
+    prevBtnText: "上一个",
+    nextBtnText: "下一个",
+    doneBtnText: "完成"
+  });
+  driverObj.drive();
+};
 
 /**
  * 窗口大小改变回调
@@ -57,6 +93,10 @@ window.onresize = () => {
     appStore.setSiderStatus(true);
   }
 };
+
+onMounted(() => {
+  guide();
+});
 </script>
 
 <style lang="scss">
