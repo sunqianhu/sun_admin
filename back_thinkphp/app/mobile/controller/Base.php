@@ -1,5 +1,6 @@
 <?php
 
+namespace app\mobile\controller;
 
 use app\BaseController;
 use app\service\mobile\Session as SessionService;

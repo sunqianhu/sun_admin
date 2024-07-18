@@ -1,6 +1,6 @@
 <?php
 
-namespace app\service\desktop\session;
+namespace app\service\mobile\session;
 
 use app\entity\mobile\Session as SessionEntity;
 use app\entity\User as UserEntity;

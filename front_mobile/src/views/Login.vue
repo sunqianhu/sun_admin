@@ -32,7 +32,9 @@
 <script setup>
 import { ref } from "vue";
 import axios from "@/helper/axios";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const session = ref({});
 const sessionRef = ref();
 const loading = ref(false);
@@ -42,6 +44,7 @@ const loading = ref(false);
  */
 const submitForm = async () => {
   let response;
+  loading.value = true;
   try {
     response = await axios.post("mobile/login/login", session.value);
   } catch (error) {
@@ -56,6 +59,7 @@ const submitForm = async () => {
   }
 
   localStorage.setItem("token", response.data.token);
+  router.push("/index");
 };
 </script>
 

@@ -1,13 +1,13 @@
 <?php
 
+namespace app\mobile\controller;
 
 use app\service\mobile\Session as SessionService;
 use app\service\LoginFailChecker;
 use app\validate\Session as SessionValidate;
 use think\exception\ValidateException;
-use Exception;
 
-class Login extends \app\desktop\controller\Base
+class Login extends Base
 {
     /**
      * 登录
@@ -49,7 +49,6 @@ class Login extends \app\desktop\controller\Base
         $loginFailChecker->resetFail();
 
         $data = [
-            'user_id'=>$sessionEntity->user->id,
             'token'=>$sessionEntity->token
         ];
         return $this->success('登录成功', $data);

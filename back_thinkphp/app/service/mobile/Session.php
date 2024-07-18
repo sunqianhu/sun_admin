@@ -8,6 +8,7 @@ use app\model\User as UserModel;
 use app\service\Config as ConfigService;
 use app\service\mobile\session\Jwt;
 use app\service\LoginLog as LoginLogService;
+use app\service\user\Mobile as MobileService;
 use Exception;
 
 class Session
@@ -24,8 +25,6 @@ class Session
      * @var string[] 不鉴权网址
      */
     public $noAuthUrls = [
-        '/desktop/Main/getWatermark',
-        '/desktop/Main/logout',
         '/desktop/uploadFile/upload'
     ];
 
@@ -131,5 +130,39 @@ class Session
 
         $jwt = new Jwt();
         return $jwt->resolverToken($token);
+    }
+
+
+    /**
+     * 路由认证
+     * @param $request
+     * @return void
+     * @throws Exception
+     */
+    function ruoteAuth($request, $userId)
+    {
+        if(empty($userId)){
+            throw new Exception('用户id不能为空');
+        }
+
+        $url = $request->baseUrl();
+        $url = strtolower($url);
+
+        //登录
+        $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
+        if (in_array($url, $this->noLoginUrls)) {
+            return;
+        }
+
+        //鉴权
+        $this->noAuthUrls = array_map('strtolower', $this->noAuthUrls);
+        if (in_array($url, $this->noAuthUrls)) {
+            return;
+        }
+
+        $mobileService = new MobileService();
+        if(!$mobileService->hasPermission($userId, $url)){
+            throw new Exception('无权限');
+        }
     }
 }
