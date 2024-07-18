@@ -1,11 +1,10 @@
 import axios from "axios";
 import router from "../router";
 import { useAppStore } from "../stores/app";
-import { config } from "../../config.js";
 
 const instance = axios.create({
-  baseURL: config.proxyPrefix,
-  timeout: 1000 * 15
+  baseURL: import.meta.env.VITE_API_PREFIX,
+  timeout: 1000 * 30
 });
 
 //请求拦截器
@@ -20,10 +19,7 @@ instance.interceptors.request.use(
     return config;
   },
   function (error) {
-    ElMessage({
-      message: error.message,
-      type: "error"
-    });
+    showToast(error.message);
     return Promise.reject(error);
   }
 );
@@ -33,6 +29,7 @@ instance.interceptors.response.use(
   function (response) {
     const data = response.data;
     if (data && data.code == 2) {
+      showToast(data.message);
       logout();
       return Promise.reject(data);
     }
@@ -40,10 +37,7 @@ instance.interceptors.response.use(
     return data;
   },
   function (error) {
-    ElMessage({
-      message: error.message,
-      type: "error"
-    });
+    showToast(error.message);
     return Promise.reject(error);
   }
 );
@@ -55,8 +49,7 @@ const logout = () => {
   const appStore = useAppStore();
 
   localStorage.removeItem("token");
-  appStore.clearRoutes();
-  appStore.clearPermissions();
+  //appStore.clearRoutes();
   router.replace("/login");
 };
 

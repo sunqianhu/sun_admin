@@ -93,8 +93,8 @@ body {
   padding: 0px;
   font-family: var(--font-family-base);
   font-size: var(--font-size-md);
-  line-height: 150%;
-  background-color: var(--background-color-light);
+  line-height: var(--line-height-md);
+  background-color: var(--background-color-base);
   color: var(--font-color-base);
 }
 a {

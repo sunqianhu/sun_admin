@@ -4,43 +4,38 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import { TDesignResolver } from "unplugin-vue-components/resolvers";
-
-import { config } from "./config.js";
+import { VantResolver } from "@vant/auto-import-resolver";
+import dotenv from "dotenv";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    vue(),
-    AutoImport({
-      resolvers: [
-        TDesignResolver({
-          library: "mobile-vue"
-        })
-      ]
-    }),
-    Components({
-      resolvers: [
-        TDesignResolver({
-          library: "mobile-vue"
-        })
-      ]
-    })
-  ],
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url))
-    }
-  },
-  server: {
-    proxy: {
-      "/api": {
-        target: config.proxyServer,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "")
+const viteConfig = ({ mode }) => {
+  dotenv.config({ path: ".env." + mode });
+  return defineConfig({
+    plugins: [
+      vue(),
+      AutoImport({
+        resolvers: [VantResolver()]
+      }),
+      Components({
+        resolvers: [VantResolver()]
+      })
+    ],
+    resolve: {
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url))
       }
     },
-    host: "0.0.0.0",
-    port: 5173
-  }
-});
+    server: {
+      proxy: {
+        "/api": {
+          target: process.env.VITE_API_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, "")
+        }
+      },
+      host: "0.0.0.0",
+      port: 5173
+    }
+  });
+};
+export default viteConfig;
