@@ -7,6 +7,7 @@ use app\model\desktop\Route as RouteModel;
 use app\service\desktop\Route as RouteService;
 use app\service\Dictionary as DictionaryService;
 use app\validate\desktop\Route as RouteValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class edit extends Base
@@ -52,7 +53,11 @@ class edit extends Base
         }
 
         $routeService = new RouteService();
-        $routeService->edit($post['id'], $post);
+        try{
+            $routeService->edit($post['id'], $post);
+        } catch (Exception $exception) {
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('修改成功');
     }

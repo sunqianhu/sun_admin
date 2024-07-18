@@ -7,6 +7,7 @@ use app\model\Department as DepartmentModel;
 use app\service\Department as DepartmentService;
 use app\service\Dictionary as DictionaryService;
 use app\validate\Department as DepartmentValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Edit extends Base
@@ -60,7 +61,11 @@ class Edit extends Base
         }
 
         $departmentService = new DepartmentService();
-        $departmentService->edit($post['id'], $post);
+        try{
+            $departmentService->edit($post['id'], $post);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('修改成功');
     }

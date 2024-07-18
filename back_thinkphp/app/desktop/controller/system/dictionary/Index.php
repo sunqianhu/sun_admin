@@ -5,6 +5,7 @@ namespace app\desktop\controller\system\dictionary;
 use app\desktop\controller\Base;
 use app\service\Dictionary as DictionaryService;
 use app\model\Dictionary as DictionaryModel;
+use Exception;
 
 class Index extends Base
 {

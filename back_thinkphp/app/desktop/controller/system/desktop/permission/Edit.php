@@ -6,6 +6,7 @@ use app\desktop\controller\Base;
 use app\model\desktop\Permission as PermissionModel;
 use app\service\desktop\Permission as PermissionService;
 use app\validate\desktop\Permission as PermissionValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Edit extends Base
@@ -54,7 +55,11 @@ class Edit extends Base
         }
 
         $permissionService = new PermissionService();
-        $permissionService->edit($post['id'], $post);
+        try{
+            $permissionService->edit($post['id'], $post);
+        } catch (Exception $exception) {
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('修改成功');
     }

@@ -6,6 +6,7 @@ use app\desktop\controller\Base;
 use app\service\desktop\Route as RouteService;
 use app\service\Dictionary as DictionaryService;
 use app\validate\desktop\Route as RouteValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Add extends Base
@@ -38,7 +39,11 @@ class Add extends Base
         }
 
         $routeService = new RouteService();
-        $routeService->add($post);
+        try{
+            $routeService->add($post);
+        } catch (Exception $exception) {
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('添加成功');
     }

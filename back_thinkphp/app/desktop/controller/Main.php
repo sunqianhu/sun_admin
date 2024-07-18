@@ -61,8 +61,8 @@ class Main extends Base
      */
     public function logout()
     {
-        $sSessionService = new SessionService();
-        $sSessionService->logout($this->session->token);
+        $sessionService = new SessionService();
+        $sessionService->logout($this->session->token);
 
         return $this->success("退出成功");
     }

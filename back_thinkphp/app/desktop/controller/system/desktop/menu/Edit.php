@@ -6,6 +6,7 @@ use app\desktop\controller\Base;
 use app\model\desktop\Menu as MenuModel;
 use app\service\desktop\Menu as MenuService;
 use app\validate\desktop\Menu as MenuValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Edit extends Base
@@ -54,7 +55,11 @@ class Edit extends Base
         }
 
         $menuService = new MenuService();
-        $menuService->edit($post['id'], $post);
+        try{
+            $menuService->edit($post['id'], $post);
+        } catch (Exception $exception) {
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('修改成功');
     }

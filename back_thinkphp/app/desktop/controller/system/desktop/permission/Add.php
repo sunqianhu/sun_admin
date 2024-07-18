@@ -5,6 +5,7 @@ namespace app\desktop\controller\system\desktop\permission;
 use app\desktop\controller\Base;
 use app\service\desktop\Permission as PermissionService;
 use app\validate\desktop\Permission as PermissionValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Add extends Base
@@ -28,7 +29,7 @@ class Add extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['permission_id' => 0, 'name'=>'', 'key'=>'', 'api_string'=>'', 'sort']);
+        $post = $this->request->post(['permission_id' => 0, 'name' => '', 'key' => '', 'api_string' => '', 'sort']);
 
         //验证
         try {
@@ -38,7 +39,11 @@ class Add extends Base
         }
 
         $permissionService = new PermissionService();
-        $permissionService->add($post);
+        try {
+            $permissionService->add($post);
+        } catch (Exception $exception) {
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('添加成功');
     }

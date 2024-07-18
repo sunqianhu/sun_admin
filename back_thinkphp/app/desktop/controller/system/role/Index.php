@@ -5,6 +5,7 @@ namespace app\desktop\controller\system\role;
 use app\desktop\controller\Base;
 use app\model\Role as RoleModel;
 use app\service\Role as RoleService;
+use Exception;
 
 class Index extends Base
 {

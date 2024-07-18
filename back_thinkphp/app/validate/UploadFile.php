@@ -7,7 +7,7 @@ use think\Validate;
 class UploadFile extends Validate
 {
     protected $rule = [
-        'file' => 'file|fileExt:png,jpg,jpeg,gif,doc,docx,xls,xlsx,ppt,pptx,zip,gz,rar,mp3,mp4|fileSize:'.(1024 * 1024 * 200)
+        'file' => 'file|fileExt:png,jpg,jpeg,gif,doc,docx,xls,xlsx,ppt,pptx,zip,gz,rar,mp3,mp4|fileSize:'.(1024 * 1024 * 100)
     ];
     protected $message = [
         'file.file' => '上传不是一个文件',

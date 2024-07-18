@@ -5,6 +5,7 @@ namespace app\desktop\controller\system\user;
 use app\desktop\controller\Base;
 use app\service\User as UserServer;
 use app\validate\user\EditPassword as EditPasswordValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class EditPassword extends Base

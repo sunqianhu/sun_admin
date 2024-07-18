@@ -6,6 +6,7 @@ use app\desktop\controller\Base;
 use app\service\Department as DepartmentService;
 use app\service\Dictionary as DictionaryService;
 use app\validate\Department as DepartmentValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Add extends Base
@@ -43,7 +44,11 @@ class Add extends Base
         }
 
         $departmentService = new DepartmentService();
-        $departmentService->add($post);
+        try{
+            $departmentService->add($post);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('添加成功');
     }

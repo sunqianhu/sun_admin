@@ -8,6 +8,7 @@ use app\model\User as UserModel;
 use app\service\Department as DepartmentService;
 use app\service\User as UserServer;
 use app\validate\User as UserValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Edit extends Base

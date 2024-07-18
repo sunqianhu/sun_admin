@@ -5,6 +5,7 @@ namespace app\desktop\controller\system\desktop\menu;
 use app\desktop\controller\Base;
 use app\service\desktop\Menu as MenuService;
 use app\validate\desktop\Menu as MenuValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Add extends Base
@@ -28,7 +29,7 @@ class Add extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['menu_id' => 0, 'name'=>'', 'url'=>'', 'icon'=>'', 'target', 'sort']);
+        $post = $this->request->post(['menu_id' => 0, 'name' => '', 'url' => '', 'icon' => '', 'target', 'sort']);
 
         //验证
         try {
@@ -38,7 +39,11 @@ class Add extends Base
         }
 
         $menuService = new MenuService();
-        $menuService->add($post);
+        try {
+            $menuService->add($post);
+        } catch (Exception $exception) {
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('添加成功');
     }
