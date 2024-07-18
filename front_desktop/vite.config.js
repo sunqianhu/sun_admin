@@ -9,7 +9,6 @@ import dotenv from "dotenv";
 
 // https://vitejs.dev/config/
 const viteConfig = ({ mode }) => {
-  dotenv.config({ path: ".env" });
   dotenv.config({ path: ".env." + mode });
 
   return defineConfig({
