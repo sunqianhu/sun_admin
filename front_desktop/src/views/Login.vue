@@ -178,7 +178,6 @@ html {
       }
     }
   }
-
   .footer {
     position: absolute;
     left: 16px;

@@ -13,17 +13,6 @@
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
-        <el-form-item label="桌面端权限" prop="desktop_permission_ids">
-          <el-tree
-            :data="desktopPermissions"
-            :props="{ children: 'children', label: 'name_key' }"
-            node-key="id"
-            show-checkbox
-            ref="desktopPermissionRef"
-            empty-text="无权限"
-            @check="checkDesktopPermission"
-          />
-        </el-form-item>
         <el-form-item label="桌面端菜单" prop="desktop_menu_ids">
           <el-tree
             :data="desktopMenus"
@@ -33,6 +22,17 @@
             ref="desktopMenuRef"
             empty-text="无菜单"
             @check="checkDesktopMenu"
+          />
+        </el-form-item>
+        <el-form-item label="桌面端权限" prop="desktop_permission_ids">
+          <el-tree
+            :data="desktopPermissions"
+            :props="{ children: 'children', label: 'name_key' }"
+            node-key="id"
+            show-checkbox
+            ref="desktopPermissionRef"
+            empty-text="无权限"
+            @check="checkDesktopPermission"
           />
         </el-form-item>
         <el-form-item label="桌面端路由" prop="desktop_route_ids">

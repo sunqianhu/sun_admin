@@ -18,6 +18,7 @@ const props = defineProps({
 .col {
   display: flex;
   .label {
+    white-space: nowrap;
     color: var(--font-color-secondary);
   }
   .value {

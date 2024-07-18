@@ -4,7 +4,7 @@ namespace app\desktop\controller\main\user;
 
 use app\desktop\controller\Base;
 use app\service\User as UserService;
-use app\validate\User as UserValidate;
+use app\validate\user\EditPassword as EditPasswordValidate;
 use think\exception\ValidateException;
 
 class EditPassword extends Base
@@ -17,7 +17,7 @@ class EditPassword extends Base
         $post = $this->request->post(['password1', 'password2']);
 
         try {
-            validate(UserValidate::class)->scene('desktop_main_edit_password')->check($post);
+            validate(EditPasswordValidate::class)->scene('desktop_main_edit_password')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

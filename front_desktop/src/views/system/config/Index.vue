@@ -4,6 +4,7 @@
     <el-form :model="config" label-width="120px" ref="configRef" class="form">
       <el-form-item label="禁止访问IP" prop="denied_ip_string">
         <el-input v-model="config.denied_ip_string" type="textarea" :rows="3" />
+        <div class="form-tip">一行一个</div>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" class="button" @click="submitForm" :loading="submitLoading">

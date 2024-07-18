@@ -102,7 +102,7 @@ router.beforeEach(async (to, from) => {
     let mainRoute = allRoutes.find((route) => route.name == "main");
     let blankRoute = allRoutes.find((route) => route.name == "blank");
     let childRoutes = [];
-    const componentFilePaths = import.meta.glob([
+    const components = import.meta.glob([
       "@/views/*.vue",
       "@/views/*/*.vue",
       "@/views/*/*/*.vue",
@@ -113,11 +113,13 @@ router.beforeEach(async (to, from) => {
       childRoutes = response.data;
 
       childRoutes.forEach((childRoute) => {
-        childRoute.component = componentFilePaths["/src/views/" + childRoute.component_path];
+        if (!childRoute.component_path) {
+          return;
+        }
+        childRoute.component = components["/src/views/" + childRoute.component_path];
         if (childRoute.layout == "main") {
           mainRoute.children.push(childRoute);
-        }
-        if (childRoute.layout == "blank") {
+        } else if (childRoute.layout == "blank") {
           blankRoute.children.push(childRoute);
         }
       });

@@ -4,7 +4,7 @@ import { useAppStore } from "../stores/app";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_PREFIX,
-  timeout: 1000 * 15
+  timeout: 1000 * 30
 });
 
 //请求拦截器
