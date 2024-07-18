@@ -39,11 +39,11 @@ class User
         $userModel->save($data);
 
         if (!empty($data['role_ids'])) {
-            foreach($data['role_ids'] as $roleId){
+            foreach ($data['role_ids'] as $roleId) {
                 $userRoleModel = new UserRoleModel();
                 $userRoleModel->save([
-                    'user_id'=>$userModel->id,
-                    'role_id'=>$roleId
+                    'user_id' => $userModel->id,
+                    'role_id' => $roleId
                 ]);
             }
         }
@@ -75,11 +75,11 @@ class User
 
         UserRoleModel::where('user_id', $userModel->id)->delete();
         if (!empty($data['role_ids'])) {
-            foreach($data['role_ids'] as $roleId){
+            foreach ($data['role_ids'] as $roleId) {
                 $userRoleModel = new UserRoleModel();
                 $userRoleModel->save([
-                    'user_id'=>$userModel->id,
-                    'role_id'=>$roleId
+                    'user_id' => $userModel->id,
+                    'role_id' => $roleId
                 ]);
             }
         }
@@ -95,9 +95,10 @@ class User
      * @throws \think\db\exception\ModelNotFoundException
      * @throws Exception
      */
-    public function editPassword($id, $password){
+    public function editPassword($id, $password)
+    {
         $userModel = UserModel::find($id);
-        if(empty($userModel)){
+        if (empty($userModel)) {
             throw new Exception('没有找到记录');
         }
         $userModel->password = md5($password);
@@ -126,30 +127,15 @@ class User
     }
 
     /**
-     * 字符串转id
-     * @param $idString
-     * @return void
-     */
-    public function stringToIds($idString, $delimiter = ',')
-    {
-        if ($idString === 'all') {
-            return UserModel::where('status_id', 1)
-                ->column('id');
-        }
-
-        return explode($delimiter, $idString);
-    }
-
-    /**
      * 得到姓名
      * @param $id
      * @return mixed
      */
     public function getName($id)
     {
-        $key = 'user_name_'.$id;
+        $key = 'user_name_' . $id;
         $name = Cache::get($key);
-        if($name !== null){
+        if ($name !== null) {
             return $name;
         }
 
@@ -165,7 +151,7 @@ class User
      */
     public function getAvatarUrl($path)
     {
-        if($path === ''){
+        if ($path === '') {
             $path = 'image/avatar.png';
             $siteService = new SiteService();
             return $siteService->getUrl($path);
@@ -180,7 +166,8 @@ class User
      * @param $userId
      * @return mixed
      */
-    public function getRoleIds($userId){
+    public function getRoleIds($userId)
+    {
         $roleIds = UserRoleModel::where('user_id', $userId)
             ->group('role_id')
             ->column('role_id');
@@ -196,7 +183,8 @@ class User
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function editAvatar($id, $base64Content){
+    public function editAvatar($id, $base64Content)
+    {
         $fileService = new FileService();
         $path = $fileService->saveBase64ContentToFile('avatar', $base64Content);
 
@@ -205,7 +193,7 @@ class User
         $imageHelper->thumbnail($fullPath, $fullPath, 100, 100);
 
         $userModel = UserModel::find($id);
-        if(empty($userModel)){
+        if (empty($userModel)) {
             throw new Exception('没有找到用户记录');
         }
         $userModel->avatar = $path;
@@ -223,12 +211,23 @@ class User
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function editStatus($id, $statusId){
+    public function editStatus($id, $statusId)
+    {
         $userModel = UserModel::find($id);
-        if(empty($userModel)){
+        if (empty($userModel)) {
             throw new Exception('没有找到记录');
         }
         $userModel->status_id = $statusId;
         $userModel->save();
+    }
+
+    /**
+     * 通过部门id集合得到id集合
+     * @param $departmentIds
+     * @return array
+     */
+    public function getIdsByDepartmentIds($departmentIds)
+    {
+        return UserModel::where('department_id', 'in', $departmentIds)->column('id');
     }
 }
