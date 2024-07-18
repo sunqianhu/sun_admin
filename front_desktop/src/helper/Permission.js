@@ -8,9 +8,8 @@ import { useAppStore } from "../stores/app";
 export const hasPermission = (key) => {
   const appStore = useAppStore();
   const permissions = appStore.permissions;
-  if (!permissions.includes(key)) {
+  if (!permissions) {
     return false;
   }
-
-  return true;
+  return permissions.includes(key);
 };

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import axios from "@/helper/axios";
+import { useAppStore } from "@/stores/app";
 
 /**
  * 得到登录路由路径
@@ -13,6 +15,15 @@ const getLoginRoutePath = () => {
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/",
+      name: "index",
+      component: () => import("../views/Index.vue"),
+      meta: {
+        name: "首页"
+      },
+      children: []
+    },
     {
       path: "/login",
       name: "login",
@@ -55,6 +66,18 @@ router.beforeEach(async (to, from) => {
   const token = localStorage.getItem("token");
   if (!token) {
     return getLoginRoutePath();
+  }
+
+  const appStore = useAppStore();
+  let response; //响应
+
+  //权限
+  if (!appStore.isSetPermission) {
+    response = await axios.get("mobile/Frame/getPermissions");
+    if (response.code != 1) {
+      return getLoginRoutePath();
+    }
+    appStore.setPermissions(response.data);
   }
 
   return true;

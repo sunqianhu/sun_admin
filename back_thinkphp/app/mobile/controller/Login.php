@@ -5,6 +5,7 @@ namespace app\mobile\controller;
 use app\service\mobile\Session as SessionService;
 use app\service\LoginFailChecker;
 use app\validate\Session as SessionValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class Login extends Base

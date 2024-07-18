@@ -25,7 +25,8 @@ class Session
      * @var string[] 不鉴权网址
      */
     public $noAuthUrls = [
-        '/desktop/uploadFile/upload'
+        '/mobile/Frame/getPermissions',
+        '/mobile/uploadFile/upload'
     ];
 
     /**

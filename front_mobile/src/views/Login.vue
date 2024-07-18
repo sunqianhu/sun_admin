@@ -59,7 +59,7 @@ const submitForm = async () => {
   }
 
   localStorage.setItem("token", response.data.token);
-  router.push("/index");
+  router.push("/");
 };
 </script>
 
