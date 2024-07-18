@@ -143,7 +143,7 @@ html {
         }
       }
       .body {
-        padding: 16px;
+        padding: 0px;
       }
     }
     &.close {

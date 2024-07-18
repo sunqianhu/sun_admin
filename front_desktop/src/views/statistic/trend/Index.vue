@@ -190,6 +190,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .trend {
   background-color: var(--background-color-light);
+  margin: var(--margin-md);
   padding: var(--padding-md);
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
