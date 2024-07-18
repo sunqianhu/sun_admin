@@ -20,7 +20,7 @@
     </div>
 
     <div class="list">
-      <el-table :data="dictionarys" v-loading="listLoading" row-key="id" class="table">
+      <el-table :data="dictionarys" v-loading="loading" row-key="id" class="table">
         <el-table-column v-slot="{ row }" prop="account" label="账号">
           <el-link :href="'/system/user/detail-' + row.id" type="primary" target="_blank">
             {{ row.account }}
@@ -85,7 +85,7 @@ const query = ref({
   page: 1
 });
 const dictionarys = ref([]);
-const listLoading = ref(true);
+const loading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
@@ -94,11 +94,11 @@ const total = ref(0);
  * 得到字典集合
  */
 const getDictionarys = async () => {
-  listLoading.value = true;
+  loading.value = true;
   const response = await axios.get("desktop/system.dictionary.Index/getDictionarys", {
     params: query.value
   });
-  listLoading.value = false;
+  loading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
