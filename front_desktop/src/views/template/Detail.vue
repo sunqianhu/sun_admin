@@ -1,0 +1,81 @@
+<template>
+  <div class="detail" v-loading="pageLoading">
+    <panel-card title="用户信息" class="moudle">
+      <label-value>
+        <label-value-item label="用户id" :md="8">{{ user.id }}</label-value-item>
+        <label-value-item label="添加时间" :md="8">
+          {{ dayjs.unix(user.add_time).format("YYYY-MM-DD HH:mm:ss") }}
+        </label-value-item>
+      </label-value>
+    </panel-card>
+
+    <panel-card title="登录日志" class="moudle">
+      <template #actions>
+        <el-link href="/system/login_log" type="primary" target="_blank"> 更多 </el-link>
+      </template>
+      <el-table :data="loginLogs" row-key="id" style="width: 100%">
+        <el-table-column prop="ip" label="登录ip" />
+        <el-table-column label="登录时间" v-slot="{ row }">
+          {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
+        </el-table-column>
+      </el-table>
+    </panel-card>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import axios from "@/helper/axios";
+import PanelCard from "@/components/PanelCard.vue";
+import LabelValue from "@/components/LabelValue.vue";
+import LabelValueItem from "@/components/LabelValueItem.vue";
+import dayjs from "dayjs";
+
+const route = useRoute();
+const pageLoading = ref(true);
+const user = ref({});
+const loginLogs = ref([]);
+
+/**
+ * 初始化
+ */
+const init = async () => {
+  pageLoading.value = true;
+  let response;
+  try {
+    response = await axios.get("desktop/system.user.Detail/init", {
+      params: { id: route.params.id }
+    });
+  } catch (error) {
+    pageLoading.value = false;
+    return;
+  }
+  pageLoading.value = false;
+  if (response.code != 1) {
+    ElMessage({
+      message: response.message,
+      type: "error"
+    });
+    return;
+  }
+  user.value = response.data.user;
+  loginLogs.value = response.data.login_logs;
+};
+
+onMounted(() => {
+  init();
+});
+</script>
+
+<style lang="scss" scoped>
+.detail {
+  padding: var(--padding-md);
+  .moudle {
+    margin-top: var(--margin-md);
+    &:first-child {
+      margin-top: 0px;
+    }
+  }
+}
+</style>

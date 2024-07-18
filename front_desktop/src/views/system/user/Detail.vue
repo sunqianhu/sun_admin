@@ -1,6 +1,6 @@
 <template>
   <div class="detail" v-loading="loading">
-    <panel-card title="用户信息" class="pannel-card">
+    <panel-card title="用户信息" class="moudle">
       <label-value>
         <label-value-item label="用户id" :md="8">{{ user.id }}</label-value-item>
         <label-value-item label="账号" :md="8">{{ user.account }}</label-value-item>
@@ -22,7 +22,7 @@
       </label-value>
     </panel-card>
 
-    <panel-card title="登录日志" class="pannel-card">
+    <panel-card title="登录日志" class="moudle">
       <template #actions>
         <el-link href="/system/login_log" type="primary" target="_blank"> 更多 </el-link>
       </template>
@@ -34,7 +34,7 @@
       </el-table>
     </panel-card>
 
-    <panel-card title="操作日志" class="pannel-card">
+    <panel-card title="操作日志" class="moudle">
       <template #actions>
         <el-link href="/system/operation_log" type="primary" target="_blank"> 更多 </el-link>
       </template>
@@ -87,8 +87,8 @@ const init = async () => {
     return;
   }
   user.value = response.data.user;
-  loginLogs.value = response.data.login - logs;
-  operationLogs.value = response.data.operation - logs;
+  loginLogs.value = response.data.login_logs;
+  operationLogs.value = response.data.operation_logs;
 };
 
 onMounted(() => {
@@ -99,7 +99,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .detail {
   padding: var(--padding-md);
-  .pannel-card {
+  .moudle {
     margin-top: var(--margin-md);
     &:first-child {
       margin-top: 0px;
