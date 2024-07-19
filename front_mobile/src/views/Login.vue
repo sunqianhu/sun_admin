@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <van-form scroll-to-error required ref="sessionRef" @submit="submitForm" class="form">
-      <van-cell-group inset>
+      <group-radius>
         <van-field
           v-model="session.account"
           name="账号"
@@ -19,7 +19,8 @@
           :rules="[{ required: true, message: '密码不能为空' }]"
           clearable
         />
-      </van-cell-group>
+      </group-radius>
+
       <div class="button-wrap">
         <van-button type="primary" :loading="loading" round block native-type="submit">
           登录
@@ -33,6 +34,7 @@
 import { ref } from "vue";
 import axios from "@/helper/axios";
 import { useRouter } from "vue-router";
+import GroupRadius from "@/components/GroupRadius.vue";
 
 const router = useRouter();
 const session = ref({});
@@ -65,10 +67,10 @@ const submitForm = async () => {
 
 <style lang="scss" scoped>
 .login {
-  padding-top: var(--padding-md);
+  padding: var(--padding-md);
   .form {
     .button-wrap {
-      padding: var(--padding-md);
+      margin-top: var(--margin-md);
     }
   }
 }

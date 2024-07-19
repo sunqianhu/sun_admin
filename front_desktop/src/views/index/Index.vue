@@ -336,7 +336,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .index {
-  margin: var(--margin-md);
   .welcome {
     background: var(--background-color-light);
     border-radius: var(--border-radius-sm);

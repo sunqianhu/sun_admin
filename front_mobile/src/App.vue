@@ -1,5 +1,7 @@
 <template>
-  <RouterView />
+  <van-config-provider theme="light">
+    <RouterView />
+  </van-config-provider>
 </template>
 
 <script setup></script>

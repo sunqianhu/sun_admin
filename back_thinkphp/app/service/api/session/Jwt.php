@@ -56,10 +56,10 @@ class Jwt
         FirebaseJWT::$leeway = $this->leeway;
         $decoded = FirebaseJWT::decode($token, new Key($this->key, 'HS256'));
 
-        // 验证
+        //验证
         $tokenModel = TokenModel::where('token', $token)->find();
         if (empty($tokenModel)) {
-            throw new Exception('登录凭证错误');
+            throw new Exception('未登录');
         }
         if ($tokenModel->expires_in < time()) {
             throw new Exception('登录已过期');
@@ -68,13 +68,13 @@ class Jwt
             throw new Exception('登录凭证错误');
         }
 
-        // 有效期
+        //有效期
         $tokenModel->expires_in = time() + $this->expire;
         $tokenModel->save();
 
         $userModel = UserModel::find($tokenModel->user_id);
         if (empty($userModel)) {
-            throw new Exception('登录凭证错误');
+            throw new Exception('没有找到用户');
         }
 
         $sessionEntity = new SessionEntity();

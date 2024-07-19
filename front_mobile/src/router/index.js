@@ -33,6 +33,15 @@ const router = createRouter({
       }
     },
     {
+      path: "/my/detail",
+      name: "my_detail",
+      component: () => import("../views/my/Detail.vue"),
+      meta: {
+        name: "个人信息"
+      },
+      children: []
+    },
+    {
       path: "/test",
       name: "test",
       component: () => import("../views/Test.vue"),
