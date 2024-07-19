@@ -1,10 +1,23 @@
 <template>
   <div class="test">
-    <van-button type="primary">主要按钮</van-button>
-    <van-button type="success">成功按钮</van-button>
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="danger">危险按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
+    <panel-card title="标题标题">内容</panel-card>
+
+    <panel-inline title="标题标题" style="margin-top: 16px">内容</panel-inline>
+
+    <label-value>
+      <label-value-item label="添加事件">2024-07-19 21:23:33</label-value-item>
+      <label-value-item label="添加事件">2024-07-19 21:23:33</label-value-item>
+      <label-value-item label="添加事件">2024-07-19 21:23:33</label-value-item>
+      <label-value-item label="添加事件">2024-07-19 21:23:33</label-value-item>
+    </label-value>
+
+    <table-label-value>
+      <table-label-value-item label="添加事件">2024-07-19 21:23:33</table-label-value-item>
+      <table-label-value-item label="添加事件">2024-07-19 21:23:33</table-label-value-item>
+      <table-label-value-item label="添加事件" content-colspan="3"
+        >2024-07-19 21:23:33</table-label-value-item
+      >
+    </table-label-value>
   </div>
 </template>
 
@@ -20,5 +33,7 @@ const int = async () => {
 
 <style lang="scss" scoped>
 .test {
+  background: #ffffff;
+  padding: 30px;
 }
 </style>

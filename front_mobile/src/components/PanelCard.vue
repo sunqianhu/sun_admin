@@ -37,7 +37,7 @@ const props = defineProps({
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--padding-sm) var(--padding-md) 0px var(--padding-md);
+    padding: var(--padding-md) var(--padding-md) 0px var(--padding-md);
     .title {
       position: relative;
       font-size: var(--font-size-lg);

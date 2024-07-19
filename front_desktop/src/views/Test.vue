@@ -1,6 +1,7 @@
 <template>
   <div style="margin: 50px">
-    <panel-inline title="标题" sub-title="子标题">内容</panel-inline>
+    <panel-card title="标题标题">内容</panel-card>
+    <panel-inline title="标题标题" style="margin-top: 16px">内容</panel-inline>
   </div>
 </template>
 

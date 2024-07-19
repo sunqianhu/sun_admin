@@ -34,17 +34,14 @@ const props = defineProps({
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
     .title {
-      color: var(--color-primary);
       position: relative;
       font-size: var(--font-size-lg);
       font-weight: bold;
-      line-height: 50px;
       &::before {
         content: "";
         display: inline-block;
-        vertical-align: -2px;
+        vertical-align: -3px;
         width: 4px;
         height: 18px;
         background-color: var(--color-primary);
@@ -64,6 +61,7 @@ const props = defineProps({
     }
   }
   .body {
+    margin-top: var(--margin-md);
   }
 }
 </style>

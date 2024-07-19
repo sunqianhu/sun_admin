@@ -37,16 +37,22 @@ const props = defineProps({
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 45px;
+    padding: var(--padding-md) var(--padding-md) 0px var(--padding-md);
     .title {
-      padding: 0px var(--padding-xs);
-      margin-left: var(--margin-xs);
       color: var(--color-primary);
-      border-bottom: 2px solid var(--color-primary);
       position: relative;
       font-size: var(--font-size-lg);
       font-weight: bold;
-      line-height: 43px;
+      &::before {
+        content: "";
+        display: inline-block;
+        vertical-align: -3px;
+        width: 4px;
+        height: 18px;
+        background-color: var(--color-primary);
+        margin-right: var(--margin-sm);
+        border-radius: 2px;
+      }
     }
     .sub-title {
       flex: 1;
