@@ -1,11 +1,7 @@
 <template>
   <div class="detail">
     <group-radius class="user">
-      <van-cell title="头像" center is-link>
-        <template #value>
-          <edit-avatar :url="user.avatar_url" @successed="init" class="avatar"></edit-avatar>
-        </template>
-      </van-cell>
+      <edit-avatar :url="user.avatar_url" @successed="init"></edit-avatar>
       <van-cell title="姓名" :value="user.name" />
       <van-cell title="所属部门" :value="user.department_name" />
       <van-cell title="手机号码" :value="user.phone" />
@@ -65,9 +61,6 @@ onMounted(() => {
 .detail {
   padding: var(--padding-md);
   .user {
-    .avatar {
-      display: inline-block;
-    }
   }
   .button-wrap {
     margin-top: var(--margin-md);

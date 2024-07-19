@@ -1,7 +1,17 @@
 <template>
   <div class="edit-avatar">
-    <van-uploader :multiple="false" :max-count="1" accept="image/*" :after-read="readAvatar">
-      <van-image :src="url" fit="cover" round class="avatar" />
+    <van-uploader
+      :multiple="false"
+      :max-count="1"
+      accept="image/*"
+      :after-read="readAvatar"
+      class="uploader"
+    >
+      <van-cell title="头像" center is-link>
+        <template #value>
+          <van-image :src="url" fit="cover" round class="avatar" />
+        </template>
+      </van-cell>
     </van-uploader>
 
     <!--裁剪头像-->
@@ -114,9 +124,15 @@ const save = async (base64Content) => {
 
 <style lang="scss" scoped>
 .edit-avatar {
-  .avatar {
-    width: 60px;
-    height: 60px;
+  .uploader {
+    width: 100%;
+    :deep(.van-uploader__wrapper) {
+      display: block;
+    }
+    .avatar {
+      width: 50px;
+      height: 50px;
+    }
   }
   .cropper-dialog {
     .crop-image {
