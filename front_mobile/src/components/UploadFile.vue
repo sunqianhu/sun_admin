@@ -1,0 +1,153 @@
+<template>
+  <div class="upload-file">
+    <van-uploader
+      v-model="files"
+      :multiple="multiple"
+      :after-read="upload"
+      :max-count="maxCount"
+      :accept="accept"
+      :disabled="disabled"
+      @delete="deleteFile"
+    >
+    </van-uploader>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, watch } from "vue";
+import axios from "@/helper/axios";
+
+const props = defineProps({
+  modelValue: {
+    type: Array,
+    default: []
+  },
+  name: {
+    type: String,
+    default: "file"
+  },
+  module: {
+    type: String,
+    default: "module1"
+  },
+  multiple: {
+    type: Boolean,
+    default: undefined
+  },
+  maxCount: {
+    type: Number,
+    default: undefined
+  },
+  accept: {
+    type: String,
+    default: undefined
+  },
+  disabled: {
+    type: Boolean,
+    default: undefined
+  }
+});
+const emits = defineEmits(["update:modelValue"]);
+const files = ref([]);
+
+/**
+ * 初始化
+ */
+const init = () => {
+  files.value = props.modelValue;
+};
+
+/**
+ * 上传
+ * @param file
+ */
+const upload = async (file) => {
+  const formData = new FormData();
+  formData.append(props.name, file.file);
+  formData.append("module", props.module);
+
+  file.status = "uploading";
+  const response = await axios.post("mobile/UploadFile/upload", formData);
+  file.status = "done";
+  if (response.code != 1) {
+    showFailToast(response.message);
+    deleteFile(file);
+    return;
+  }
+  updateFile(file, response.data);
+  emits("update:modelValue", getFiles());
+};
+
+/**
+ * 删除文件
+ * @param file
+ */
+const deleteFile = (file) => {
+  const index = files.value.indexOf(file);
+  if (index !== -1) {
+    files.value.splice(index, 1);
+  }
+  emits("update:modelValue", getFiles());
+};
+
+/**
+ * 更新文件
+ * @param file
+ * @param info
+ */
+const updateFile = (file, info) => {
+  const index = files.value.indexOf(file);
+  if (index !== -1) {
+    files.value[index].url = info.url;
+    files.value[index].path = info.path;
+  }
+};
+
+/**
+ * 得到文件集合
+ */
+const getFiles = () => {
+  const currentFiles = files.value;
+  if (currentFiles.length == 0) {
+    return [];
+  }
+
+  let finalFiles = [];
+  for (let currentFile of currentFiles) {
+    if (!currentFile.path) {
+      continue;
+    }
+    let name = currentFile.name ? currentFile.name : currentFile.file?.name;
+    let finalFile = {
+      name: name,
+      path: currentFile.path,
+      url: currentFile.url
+    };
+    finalFiles.push(finalFile);
+  }
+
+  return finalFiles;
+};
+
+/**
+ * 侦听props
+ */
+watch(
+  () => props.modelValue,
+  (newModelValue) => {
+    init();
+  },
+  {
+    deep: true
+  }
+);
+
+onMounted(() => {
+  init();
+});
+</script>
+
+<style lang="scss" scoped>
+.upload-file {
+}
+</style>

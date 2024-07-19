@@ -32,7 +32,11 @@ class UploadFile extends Base
 
         $fileHelper = new FileHelper();
         $file = $requestFile['file'];
-        $path = Filesystem::putFile($module, $file);
+        try{
+            $path = Filesystem::putFile($module, $file);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
         $path = str_replace('\\', '/', $path);
         $url = $fileHelper->getUrl($path);
 

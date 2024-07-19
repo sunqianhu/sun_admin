@@ -28,10 +28,6 @@
 import { ref, onMounted, watch } from "vue";
 
 const props = defineProps({
-  files: {
-    type: Array,
-    default: []
-  },
   modelValue: {
     type: Array,
     default: []
@@ -42,19 +38,19 @@ const props = defineProps({
   },
   multiple: {
     type: Boolean,
-    default: false
+    default: undefined
   },
   accept: {
     type: String,
-    default: ""
+    default: undefined
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: undefined
   },
   limit: {
     type: Number,
-    default: 10
+    default: undefined
   },
   module: {
     type: String,
