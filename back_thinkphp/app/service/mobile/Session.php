@@ -70,7 +70,8 @@ class Session
         $userModel->save();
 
         $sessionEntity = new SessionEntity();
-        $sessionEntity->user = $userEntity;
+        $sessionEntity->userId = $userEntity->id;
+        $sessionEntity->departmentId = $userEntity->departmentId;
         $sessionEntity->token = $token;
 
         return $sessionEntity;

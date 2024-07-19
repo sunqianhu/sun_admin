@@ -77,14 +77,10 @@ class Jwt
             throw new Exception('登录凭证错误');
         }
 
-        $userEntity = new UserEntity();
-        $userEntity->id = $userModel->id;
-        $userEntity->name = $userModel->name;
-        $userEntity->departmentId = $userModel->department_id;
-
         $sessionEntity = new SessionEntity();
+        $sessionEntity->userId = $userModel->id;
+        $sessionEntity->departmentId = $userModel->department_id;
         $sessionEntity->token = $token;
-        $sessionEntity->user = $userEntity;
 
         return $sessionEntity;
     }

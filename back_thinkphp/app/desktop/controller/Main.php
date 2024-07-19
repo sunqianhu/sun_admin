@@ -19,7 +19,7 @@ class Main extends Base
     public function getMenus()
     {
         $desktopService = new DesktopService();
-        $treeMenus = $desktopService->getMenus($this->session->user->id);
+        $treeMenus = $desktopService->getMenus($this->session->userId);
 
         return $this->success('获取成功', $treeMenus);
     }
@@ -33,7 +33,7 @@ class Main extends Base
      */
     public function getAvatar()
     {
-        $userModel = UserModel::field('avatar')->find($this->session->user->id);
+        $userModel = UserModel::field('avatar')->find($this->session->userId);
         $avatar = $userModel->avatar_url;
 
         return $this->success('获取成功', $avatar);
@@ -49,7 +49,7 @@ class Main extends Base
     public function getWatermark()
     {
         $watermarkService = new WatermarkService();
-        $watermarkEntity = $watermarkService->getWatermark($this->session->user->id);
+        $watermarkEntity = $watermarkService->getWatermark($this->session->userId);
         $watermark = $watermarkEntity->toArray();
 
         return $this->success('获取成功', $watermark);

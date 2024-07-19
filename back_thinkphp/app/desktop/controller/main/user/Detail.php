@@ -18,7 +18,7 @@ class Detail extends Base
     {
         $userModel = UserModel::field('id,account,name,phone,login_time,login_ip,department_id')
             ->append(['department_name'])
-            ->find($this->session->user->id);
+            ->find($this->session->userId);
         $user = $userModel->toArray();
         return $this->success('获取成功', $user);
     }

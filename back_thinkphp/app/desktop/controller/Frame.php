@@ -16,7 +16,7 @@ class Frame extends Base
     public function getRoutes()
     {
         $desktopService = new DesktopService();
-        $routes = $desktopService->getRoutes($this->session->user->id);
+        $routes = $desktopService->getRoutes($this->session->userId);
 
         return $this->success('获取成功', $routes);
     }
@@ -28,7 +28,7 @@ class Frame extends Base
     public function getPermissions()
     {
         $desktopService = new DesktopService();
-        $permissions = $desktopService->getPermissionKeys($this->session->user->id);
+        $permissions = $desktopService->getPermissionKeys($this->session->userId);
 
         return $this->success('获取成功', $permissions);
     }

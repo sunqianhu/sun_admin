@@ -52,7 +52,7 @@ class Base extends BaseController
 
         //路由
         try {
-            $sessionService->ruoteAuth($this->request, $this->session->user->id);
+            $sessionService->ruoteAuth($this->request, $this->session->userId);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
@@ -60,7 +60,7 @@ class Base extends BaseController
 
         //操作日志
         $operationLogService = new OperationLogService();
-        $operationLogService->add($this->session->user->id, $this->request->baseUrl(), $this->request->ip());
+        $operationLogService->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());
     }
 
 

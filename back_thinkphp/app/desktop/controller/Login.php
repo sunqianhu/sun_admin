@@ -50,7 +50,7 @@ class Login extends Base
         $loginFailChecker->resetFail();
 
         $data = [
-            'user_id'=>$sessionEntity->user->id,
+            'user_id'=>$sessionEntity->userId,
             'token'=>$sessionEntity->token
         ];
         return $this->success('登录成功', $data);

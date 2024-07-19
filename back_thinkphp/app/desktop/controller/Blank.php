@@ -16,7 +16,7 @@ class Blank extends Base
     public function getWatermark()
     {
         $watermarkService = new WatermarkService();
-        $watermarkEntity = $watermarkService->getWatermark($this->session->user->id);
+        $watermarkEntity = $watermarkService->getWatermark($this->session->userId);
         $watermark = $watermarkEntity->toArray();
 
         return $this->success('获取成功', $watermark);

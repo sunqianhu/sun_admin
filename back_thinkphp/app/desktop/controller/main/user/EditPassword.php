@@ -23,7 +23,7 @@ class EditPassword extends Base
         }
 
         $userService = new UserService();
-        $userService->editPassword($this->session->user->id, $post['password1']);
+        $userService->editPassword($this->session->userId, $post['password1']);
 
         return $this->success('修改成功');
     }
