@@ -94,11 +94,14 @@ function cancelCrop() {
  * 保存头像
  */
 const save = async (base64Content) => {
-  const toast = showLoadingToast();
+  showLoadingToast({
+    duration: 0,
+    forbidClick: true
+  });
   const response = await axios.post("mobile/my.user.EditAvatar/save", {
     avatar_base64_content: base64Content
   });
-  toast.close();
+  closeToast();
 
   if (response.code != 1) {
     showFailToast(response.message);
