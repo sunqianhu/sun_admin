@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-07-18 09:57:20
+Date: 2024-07-19 11:44:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -127,7 +127,7 @@ CREATE TABLE `desktop_permission` (
 -- Records of desktop_permission
 -- ----------------------------
 INSERT INTO `desktop_permission` VALUES ('1', '0', '系统管理', 'system', '', '99');
-INSERT INTO `desktop_permission` VALUES ('2', '1', '用户管理', 'system_user', '/desktop/system.user.Index/init\n/desktop/system.user.Index/getUsers', '3');
+INSERT INTO `desktop_permission` VALUES ('2', '1', '用户管理', 'system_user', '/desktop/system.user.Index/init\n/desktop/system.user.Index/getUsers\n/desktop/system.user.Detail/init', '3');
 INSERT INTO `desktop_permission` VALUES ('3', '2', '添加用户', 'system_user_add', '/desktop/system.user.Add/init\n/desktop/system.user.Add/save', '3');
 INSERT INTO `desktop_permission` VALUES ('4', '2', '修改用户', 'system_user_edit', '/desktop/system.user.Edit/init\n/desktop/system.user.Edit/save', '5');
 INSERT INTO `desktop_permission` VALUES ('5', '2', '修改密码', 'system_user_edit_password', '/desktop/system.user.EditPassword/save', '7');
@@ -218,7 +218,7 @@ CREATE TABLE `desktop_token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of desktop_token
@@ -230,7 +230,11 @@ INSERT INTO `desktop_token` VALUES ('4', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e
 INSERT INTO `desktop_token` VALUES ('5', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ2Nzc5NjAwIDE3MjExMDAzMzkifQ.xRhf8CAI6OioLvFZVVn2lZLWQrVDpKMW5RPt-g74Hk4', '1721103593', '1');
 INSERT INTO `desktop_token` VALUES ('6', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjY2NDYzMDAwIDE3MjExMDE3OTMifQ.7lLKIDqz6Px0VQuexH7ZumIpciUJYJ80Vr-9-0Diow0', '1721105933', '1');
 INSERT INTO `desktop_token` VALUES ('7', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjk5MDIzODAwIDE3MjExMDY4OTgifQ.MbS-7b0TZG9G7XngZxQ95W7HpOZA3pJNJibwhABfCzY', '1721108700', '1');
-INSERT INTO `desktop_token` VALUES ('8', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjk1NTQ1MDAwIDE3MjEyNjczMjkifQ.ahezvr09fBPAsNITy4Kshu_9GxjlXA4ehh80fYe3g28', '1721269605', '1');
+INSERT INTO `desktop_token` VALUES ('8', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjk1NTQ1MDAwIDE3MjEyNjczMjkifQ.ahezvr09fBPAsNITy4Kshu_9GxjlXA4ehh80fYe3g28', '1721277641', '1');
+INSERT INTO `desktop_token` VALUES ('9', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg2MDU4NzAwIDE3MjEyNzk4OTYifQ.Umh-GXjsDna6rJ72sWiwlMkM6ukL5IT3g11HW9aozyo', '1721281749', '1');
+INSERT INTO `desktop_token` VALUES ('11', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjQ4NDg1MTAwIDE3MjEyODMzMDgifQ.e5I3tdSU0EqSDDkXA9op8PeJaVkxHAsFFAJbD_O9fIQ', '1721287979', '1');
+INSERT INTO `desktop_token` VALUES ('12', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjkxODc3NjAwIDE3MjEzNTI2OTcifQ.pUCuyQbKeKCaDngYn85pmpWTE6JMT1BHGD9hH_I2_04', '1721354722', '1');
+INSERT INTO `desktop_token` VALUES ('13', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjE5MjE1MDAwIDE3MjEzNTY4ODAifQ.9obY6ihcZLVCDKXE21FFq-Q5ZxFRrJay-KEz2s9w234', '1721358693', '1');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -304,11 +308,36 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
 -- ----------------------------
+INSERT INTO `login_log` VALUES ('1', '1', '1721279896', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('2', '1', '1721281841', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('3', '1', '1721283308', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('4', '1', '1721295019', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('5', '1', '1721295056', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('6', '1', '1721295062', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('7', '1', '1721295119', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('8', '1', '1721295148', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('9', '1', '1721295260', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('10', '1', '1721295474', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('11', '1', '1721295550', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('12', '1', '1721295974', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('13', '1', '1721295982', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('14', '1', '1721296030', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('15', '1', '1721298728', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('16', '1', '1721352576', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('17', '1', '1721352698', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('18', '1', '1721354799', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('19', '1', '1721355327', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('20', '1', '1721356880', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('21', '1', '1721360261', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('22', '1', '1721360358', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('23', '1', '1721360399', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('24', '1', '1721360433', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('25', '1', '1721360563', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -350,10 +379,10 @@ INSERT INTO `mobile_permission` VALUES ('1', '0', '功能模块1', 'module1', 'x
 INSERT INTO `mobile_permission` VALUES ('2', '0', '功能模块2', 'module2', 'xxx/xxx/xxx', '3');
 
 -- ----------------------------
--- Table structure for module_token
+-- Table structure for mobile_token
 -- ----------------------------
-DROP TABLE IF EXISTS `module_token`;
-CREATE TABLE `module_token` (
+DROP TABLE IF EXISTS `mobile_token`;
+CREATE TABLE `mobile_token` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `token` text NOT NULL COMMENT 'token',
   `expires_in` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '有效期',
@@ -361,11 +390,26 @@ CREATE TABLE `module_token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
--- Records of module_token
+-- Records of mobile_token
 -- ----------------------------
+INSERT INTO `mobile_token` VALUES ('1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjY2MTA5MzAwIDE3MjEyOTUwMTkifQ.zaU_EfFM1iWzmVsppDd1PWB5Wn8Ti21Ih7CI-VLcQFY', '1752831056', '1');
+INSERT INTO `mobile_token` VALUES ('2', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjc3NDI3ODAwIDE3MjEyOTUwNTYifQ.mdRLnsBuEXMjeF0utpWpkJSScfWJ_jybqWFY2jmXL3k', '1752831062', '1');
+INSERT INTO `mobile_token` VALUES ('3', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjI3NzI2NTAwIDE3MjEyOTUwNjIifQ.VFCNc6Kzj4RFSdavLOkzUZduqZ0nfhZoHmCNOXuVxh8', '1752831119', '1');
+INSERT INTO `mobile_token` VALUES ('4', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjUyMjgwODAwIDE3MjEyOTUxMTkifQ.W6G867C2M_eEh1q_r5aYVCRTq2Jx4guUOW0Dw4AXTZo', '1752831147', '1');
+INSERT INTO `mobile_token` VALUES ('5', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjA4MDczNTAwIDE3MjEyOTUxNDgifQ.x6ICzKUvj-ClqaFy4SFQaD5p1fHgpROoZWBbK8J8i0w', '1752831260', '1');
+INSERT INTO `mobile_token` VALUES ('6', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjcyNTI0OTAwIDE3MjEyOTUyNjAifQ.o0zHk_YCy7Q3TY_Hcio5_MgAkntSeIIZND2WP_xt0_g', '1752831473', '1');
+INSERT INTO `mobile_token` VALUES ('7', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjI1MDUzMDAwIDE3MjEyOTU0NzQifQ.7S7G3rVXETWorz_GYclIf4xnd9MZZe1bpYArm05FQ6k', '1752831474', '1');
+INSERT INTO `mobile_token` VALUES ('8', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjU3MDc4MTAwIDE3MjEyOTU1NTAifQ.nLdajjpdrBexWZQB-CmMGfG4yv5Z3GFV6r-U_uASlVM', '1752831550', '1');
+INSERT INTO `mobile_token` VALUES ('9', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjUzODc3NTAwIDE3MjEyOTU5NzQifQ.Hkpx2eCtWj30rBRi4vKVDhVjx8a29VRn66L43oBmkRw', '1752831974', '1');
+INSERT INTO `mobile_token` VALUES ('10', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjk4MDE2NTAwIDE3MjEyOTU5ODEifQ.oN0Uh4KhksW2fg9ZLnkYJRGc_xBzyQ8N-ng8JQjmN6U', '1752831981', '1');
+INSERT INTO `mobile_token` VALUES ('11', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjE4NjE5ODAwIDE3MjEyOTYwMzAifQ.oxMZlEUzvN2gC6wtpIYMhMKBvLdC1pMASJhObPpURyQ', '1752834728', '1');
+INSERT INTO `mobile_token` VALUES ('12', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjkzMzI1NzAwIDE3MjEyOTg3MjgifQ.u7XQnB9zVt9TG5IVn7yeWhuEGDhUIZMymOQJqQ9E7Gw', '1752834729', '1');
+INSERT INTO `mobile_token` VALUES ('14', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjIwNzA4NjAwIDE3MjEzNTQ3OTkifQ.uCNHHviJJzX1UkYZSOjvFLMN4SKl8iNbhvCE57WgWPs', '1752891327', '1');
+INSERT INTO `mobile_token` VALUES ('18', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjM5ODA0NTAwIDE3MjEzNjAzOTkifQ.HK-rTSEViIR2qQyMWY6SLCAdO5aQs1QsUhspkH1ZJwU', '1752896467', '1');
+INSERT INTO `mobile_token` VALUES ('20', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjcyODY4OTAwIDE3MjEzNjA1NjMifQ.H6-o2ysVJ1vK586Frx-5yKCme5TciAQZJ6NxVyeUPdc', '1752896564', '1');
 
 -- ----------------------------
 -- Table structure for operation_log
@@ -378,11 +422,496 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=486 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
 -- ----------------------------
+INSERT INTO `operation_log` VALUES ('1', '1', '1721269753', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('2', '1', '1721269753', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('3', '1', '1721269757', '127.0.0.1', '/desktop/system.user.edit/init');
+INSERT INTO `operation_log` VALUES ('4', '1', '1721269779', '127.0.0.1', '/desktop/system.user.editpassword/save');
+INSERT INTO `operation_log` VALUES ('5', '1', '1721269804', '127.0.0.1', '/desktop/system.user.editpassword/save');
+INSERT INTO `operation_log` VALUES ('6', '1', '1721269818', '127.0.0.1', '/desktop/system.user.editpassword/save');
+INSERT INTO `operation_log` VALUES ('7', '1', '1721269869', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('8', '1', '1721269869', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('9', '1', '1721269886', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('10', '1', '1721269888', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('11', '1', '1721269888', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('12', '1', '1721269890', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('13', '1', '1721269891', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('14', '1', '1721269891', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('15', '1', '1721269901', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('16', '1', '1721269904', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('17', '1', '1721269913', '127.0.0.1', '/desktop/system.desktop.permission.edit/init');
+INSERT INTO `operation_log` VALUES ('18', '1', '1721269924', '127.0.0.1', '/desktop/system.desktop.permission.edit/save');
+INSERT INTO `operation_log` VALUES ('19', '1', '1721269925', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('20', '1', '1721269931', '127.0.0.1', '/desktop/system.user.detail/init');
+INSERT INTO `operation_log` VALUES ('21', '1', '1721269937', '127.0.0.1', '/desktop/system.user.detail/init');
+INSERT INTO `operation_log` VALUES ('22', '1', '1721270022', '127.0.0.1', '/desktop/system.user.detail/init');
+INSERT INTO `operation_log` VALUES ('23', '1', '1721270048', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('24', '1', '1721270052', '127.0.0.1', '/desktop/system.mobile.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('25', '1', '1721270053', '127.0.0.1', '/desktop/system.dictionary.index/getdictionarys');
+INSERT INTO `operation_log` VALUES ('26', '1', '1721270055', '127.0.0.1', '/desktop/system.login_log.index/getloginlogs');
+INSERT INTO `operation_log` VALUES ('27', '1', '1721270096', '127.0.0.1', '/desktop/system.operation_log.index/getoperationlogs');
+INSERT INTO `operation_log` VALUES ('28', '1', '1721272151', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('29', '1', '1721272160', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('30', '1', '1721272163', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('31', '1', '1721272166', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('32', '1', '1721272170', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('33', '1', '1721272170', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('34', '1', '1721272172', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('35', '1', '1721272174', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('36', '1', '1721272230', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('37', '1', '1721272258', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('38', '1', '1721272265', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('39', '1', '1721273686', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('40', '1', '1721273695', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('41', '1', '1721273716', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('42', '1', '1721273731', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('43', '1', '1721273806', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('44', '1', '1721274195', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('45', '1', '1721274195', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('46', '1', '1721274200', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('47', '1', '1721274207', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('48', '1', '1721274216', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('49', '1', '1721274221', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('50', '1', '1721274304', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('51', '1', '1721274317', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('52', '1', '1721274330', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('53', '1', '1721274353', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('54', '1', '1721274365', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('55', '1', '1721274395', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('56', '1', '1721274414', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('57', '1', '1721274426', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('58', '1', '1721274427', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('59', '1', '1721274452', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('60', '1', '1721274474', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('61', '1', '1721274496', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('62', '1', '1721274533', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('63', '1', '1721274563', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('64', '1', '1721274592', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('65', '1', '1721274624', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('66', '1', '1721274634', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('67', '1', '1721274654', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('68', '1', '1721274678', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('69', '1', '1721274699', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('70', '1', '1721274805', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('71', '1', '1721274820', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('72', '1', '1721274827', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('73', '1', '1721274834', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('74', '1', '1721274846', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('75', '1', '1721274909', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('76', '1', '1721274931', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('77', '1', '1721274955', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('78', '1', '1721274964', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('79', '1', '1721274968', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('80', '1', '1721274981', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('81', '1', '1721275071', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('82', '1', '1721275124', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('83', '1', '1721275189', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('84', '1', '1721275201', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('85', '1', '1721275307', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('86', '1', '1721275335', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('87', '1', '1721275406', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('88', '1', '1721275508', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('89', '1', '1721275518', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('90', '1', '1721275559', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('91', '1', '1721275740', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('92', '1', '1721279946', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('93', '1', '1721279949', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('94', '1', '1721282083', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('95', '1', '1721282085', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('96', '1', '1721282372', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('97', '1', '1721282785', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('98', '1', '1721282889', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('99', '1', '1721282967', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('100', '1', '1721283273', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('101', '1', '1721283312', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('102', '1', '1721283317', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('103', '1', '1721283362', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('104', '1', '1721283362', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('105', '1', '1721283383', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('106', '1', '1721283384', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('107', '1', '1721283588', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('108', '1', '1721283594', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('109', '1', '1721283596', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('110', '1', '1721283597', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('111', '1', '1721283598', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('112', '1', '1721283599', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('113', '1', '1721283600', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('114', '1', '1721283603', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('115', '1', '1721283605', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('116', '1', '1721283607', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('117', '1', '1721283610', '127.0.0.1', '/desktop/system.mobile.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('118', '1', '1721283612', '127.0.0.1', '/desktop/system.dictionary.index/getdictionarys');
+INSERT INTO `operation_log` VALUES ('119', '1', '1721283613', '127.0.0.1', '/desktop/system.login_log.index/getloginlogs');
+INSERT INTO `operation_log` VALUES ('120', '1', '1721283615', '127.0.0.1', '/desktop/system.operation_log.index/getoperationlogs');
+INSERT INTO `operation_log` VALUES ('121', '1', '1721283645', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('122', '1', '1721283652', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('123', '1', '1721283652', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('124', '1', '1721283711', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('125', '1', '1721283712', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('126', '1', '1721283826', '127.0.0.1', '/desktop/system.user.edit/init');
+INSERT INTO `operation_log` VALUES ('127', '1', '1721283851', '127.0.0.1', '/desktop/system.user.edit/init');
+INSERT INTO `operation_log` VALUES ('128', '1', '1721283854', '127.0.0.1', '/desktop/system.user.edit/save');
+INSERT INTO `operation_log` VALUES ('129', '1', '1721283861', '127.0.0.1', '/desktop/system.user.edit/save');
+INSERT INTO `operation_log` VALUES ('130', '1', '1721283876', '127.0.0.1', '/desktop/system.user.edit/save');
+INSERT INTO `operation_log` VALUES ('131', '1', '1721283924', '127.0.0.1', '/desktop/system.user.edit/save');
+INSERT INTO `operation_log` VALUES ('132', '1', '1721295056', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('133', '1', '1721295062', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('134', '1', '1721295119', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('135', '1', '1721295148', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('136', '1', '1721295201', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('137', '1', '1721295237', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('138', '1', '1721295250', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('139', '1', '1721295260', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('140', '1', '1721295474', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('141', '1', '1721296030', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('142', '1', '1721296038', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('143', '1', '1721296040', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('144', '1', '1721296059', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('145', '1', '1721296092', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('146', '1', '1721296100', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('147', '1', '1721296122', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('148', '1', '1721296126', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('149', '1', '1721296130', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('150', '1', '1721296144', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('151', '1', '1721296145', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('152', '1', '1721296170', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('153', '1', '1721296181', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('154', '1', '1721296184', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('155', '1', '1721296186', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('156', '1', '1721296187', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('157', '1', '1721296189', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('158', '1', '1721296220', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('159', '1', '1721296228', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('160', '1', '1721296258', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('161', '1', '1721296276', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('162', '1', '1721296290', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('163', '1', '1721296294', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('164', '1', '1721296299', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('165', '1', '1721296327', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('166', '1', '1721296331', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('167', '1', '1721296405', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('168', '1', '1721296410', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('169', '1', '1721296414', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('170', '1', '1721296424', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('171', '1', '1721296430', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('172', '1', '1721296433', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('173', '1', '1721296442', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('174', '1', '1721296454', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('175', '1', '1721296456', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('176', '1', '1721296473', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('177', '1', '1721296476', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('178', '1', '1721296604', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('179', '1', '1721296605', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('180', '1', '1721296606', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('181', '1', '1721296610', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('182', '1', '1721296612', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('183', '1', '1721296613', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('184', '1', '1721296618', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('185', '1', '1721296633', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('186', '1', '1721296636', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('187', '1', '1721296663', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('188', '1', '1721296680', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('189', '1', '1721296684', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('190', '1', '1721296691', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('191', '1', '1721296692', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('192', '1', '1721296701', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('193', '1', '1721296752', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('194', '1', '1721296771', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('195', '1', '1721296775', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('196', '1', '1721296802', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('197', '1', '1721296818', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('198', '1', '1721296821', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('199', '1', '1721296823', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('200', '1', '1721296840', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('201', '1', '1721296843', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('202', '1', '1721296847', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('203', '1', '1721296853', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('204', '1', '1721296861', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('205', '1', '1721296863', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('206', '1', '1721296871', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('207', '1', '1721296874', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('208', '1', '1721296900', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('209', '1', '1721296901', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('210', '1', '1721296906', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('211', '1', '1721296911', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('212', '1', '1721296947', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('213', '1', '1721296954', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('214', '1', '1721296955', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('215', '1', '1721296991', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('216', '1', '1721296993', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('217', '1', '1721296994', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('218', '1', '1721297003', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('219', '1', '1721297014', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('220', '1', '1721297015', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('221', '1', '1721297022', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('222', '1', '1721297029', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('223', '1', '1721297198', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('224', '1', '1721297279', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('225', '1', '1721297297', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('226', '1', '1721297299', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('227', '1', '1721297303', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('228', '1', '1721297305', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('229', '1', '1721297306', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('230', '1', '1721297308', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('231', '1', '1721297407', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('232', '1', '1721297586', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('233', '1', '1721297604', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('234', '1', '1721297612', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('235', '1', '1721297624', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('236', '1', '1721297637', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('237', '1', '1721297640', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('238', '1', '1721297643', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('239', '1', '1721297652', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('240', '1', '1721297656', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('241', '1', '1721297673', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('242', '1', '1721297685', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('243', '1', '1721297689', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('244', '1', '1721297699', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('245', '1', '1721297713', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('246', '1', '1721297738', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('247', '1', '1721297774', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('248', '1', '1721297779', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('249', '1', '1721297785', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('250', '1', '1721297790', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('251', '1', '1721297797', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('252', '1', '1721297801', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('253', '1', '1721297894', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('254', '1', '1721297900', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('255', '1', '1721297905', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('256', '1', '1721297913', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('257', '1', '1721297962', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('258', '1', '1721297976', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('259', '1', '1721297977', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('260', '1', '1721297989', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('261', '1', '1721297992', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('262', '1', '1721298028', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('263', '1', '1721298032', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('264', '1', '1721298061', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('265', '1', '1721298083', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('266', '1', '1721298089', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('267', '1', '1721298110', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('268', '1', '1721298118', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('269', '1', '1721298131', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('270', '1', '1721298133', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('271', '1', '1721298148', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('272', '1', '1721298168', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('273', '1', '1721298169', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('274', '1', '1721298185', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('275', '1', '1721298186', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('276', '1', '1721298201', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('277', '1', '1721298206', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('278', '1', '1721298208', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('279', '1', '1721298395', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('280', '1', '1721298403', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('281', '1', '1721298408', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('282', '1', '1721298420', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('283', '1', '1721298421', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('284', '1', '1721298434', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('285', '1', '1721298442', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('286', '1', '1721298466', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('287', '1', '1721298472', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('288', '1', '1721298474', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('289', '1', '1721298475', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('290', '1', '1721298484', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('291', '1', '1721298485', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('292', '1', '1721298487', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('293', '1', '1721298493', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('294', '1', '1721298504', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('295', '1', '1721298506', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('296', '1', '1721298509', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('297', '1', '1721298512', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('298', '1', '1721298522', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('299', '1', '1721298576', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('300', '1', '1721298578', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('301', '1', '1721298583', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('302', '1', '1721298602', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('303', '1', '1721298608', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('304', '1', '1721298613', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('305', '1', '1721298614', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('306', '1', '1721298616', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('307', '1', '1721298620', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('308', '1', '1721298623', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('309', '1', '1721298628', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('310', '1', '1721298631', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('311', '1', '1721298718', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('312', '1', '1721298720', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('313', '1', '1721298728', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('314', '1', '1721298729', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('315', '1', '1721352577', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('316', '1', '1721352670', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('317', '1', '1721352717', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('318', '1', '1721352718', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('319', '1', '1721352721', '127.0.0.1', '/desktop/system.user.detail/init');
+INSERT INTO `operation_log` VALUES ('320', '1', '1721352724', '127.0.0.1', '/desktop/system.user.detail/init');
+INSERT INTO `operation_log` VALUES ('321', '1', '1721352898', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('322', '1', '1721352899', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('323', '1', '1721352904', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('324', '1', '1721352905', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('325', '1', '1721352906', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('326', '1', '1721352910', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('327', '1', '1721352913', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('328', '1', '1721352913', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('329', '1', '1721352915', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('330', '1', '1721352917', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('331', '1', '1721352920', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('332', '1', '1721352922', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('333', '1', '1721352927', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('334', '1', '1721353416', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('335', '1', '1721353905', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('336', '1', '1721354323', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('337', '1', '1721354384', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('338', '1', '1721354577', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('339', '1', '1721354799', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('340', '1', '1721354810', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('341', '1', '1721354865', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('342', '1', '1721354951', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('343', '1', '1721355079', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('344', '1', '1721355079', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('345', '1', '1721355327', '127.0.0.1', '/mobile/login/login');
+INSERT INTO `operation_log` VALUES ('346', '1', '1721355327', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('347', '1', '1721355362', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('348', '1', '1721355741', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('349', '1', '1721355777', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('350', '1', '1721355777', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('351', '1', '1721355780', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('352', '1', '1721355780', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('353', '1', '1721355816', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('354', '1', '1721355817', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('355', '1', '1721355863', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('356', '1', '1721355863', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('357', '1', '1721355912', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('358', '1', '1721355913', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('359', '1', '1721355913', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('360', '1', '1721355925', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('361', '1', '1721355925', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('362', '1', '1721355976', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('363', '1', '1721355976', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('364', '1', '1721356040', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('365', '1', '1721356040', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('366', '1', '1721356049', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('367', '1', '1721356049', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('368', '1', '1721356111', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('369', '1', '1721356111', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('370', '1', '1721356116', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('371', '1', '1721356116', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('372', '1', '1721356250', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('373', '1', '1721356251', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('374', '1', '1721356251', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('375', '1', '1721356251', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('376', '1', '1721356256', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('377', '1', '1721356256', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('378', '1', '1721356260', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('379', '1', '1721356260', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('380', '1', '1721356261', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('381', '1', '1721356262', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('382', '1', '1721356266', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('383', '1', '1721356266', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('384', '1', '1721356267', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('385', '1', '1721356267', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('386', '1', '1721356280', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('387', '1', '1721356280', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('388', '1', '1721356280', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('389', '1', '1721356280', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('390', '1', '1721356288', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('391', '1', '1721356288', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('392', '1', '1721356288', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('393', '1', '1721356289', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('394', '1', '1721356293', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('395', '1', '1721356293', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('396', '1', '1721356293', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('397', '1', '1721356294', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('398', '1', '1721356307', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('399', '1', '1721356307', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('400', '1', '1721356308', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('401', '1', '1721356308', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('402', '1', '1721356315', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('403', '1', '1721356315', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('404', '1', '1721356315', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('405', '1', '1721356316', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('406', '1', '1721356320', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('407', '1', '1721356320', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('408', '1', '1721356321', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('409', '1', '1721356321', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('410', '1', '1721356328', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('411', '1', '1721356328', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('412', '1', '1721356329', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('413', '1', '1721356329', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('414', '1', '1721356709', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('415', '1', '1721356710', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('416', '1', '1721356714', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('417', '1', '1721356717', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('418', '1', '1721356791', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('419', '1', '1721356792', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('420', '1', '1721356841', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('421', '1', '1721356842', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('422', '1', '1721356843', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('423', '1', '1721357011', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('424', '1', '1721357195', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('425', '1', '1721357196', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('426', '1', '1721357299', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('427', '1', '1721357299', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('428', '1', '1721357302', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('429', '1', '1721357305', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('430', '1', '1721357306', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('431', '1', '1721357410', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('432', '1', '1721357415', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('433', '1', '1721357421', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('434', '1', '1721358500', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('435', '1', '1721359840', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('436', '1', '1721359843', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('437', '1', '1721359912', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('438', '1', '1721359914', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('439', '1', '1721359984', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('440', '1', '1721359984', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('441', '1', '1721360021', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('442', '1', '1721360049', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('443', '1', '1721360066', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('444', '1', '1721360089', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('445', '1', '1721360089', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('446', '1', '1721360170', '127.0.0.1', '/mobile/my.user.detail/logout');
+INSERT INTO `operation_log` VALUES ('447', '1', '1721360235', '127.0.0.1', '/mobile/my.user.detail/logout');
+INSERT INTO `operation_log` VALUES ('448', '1', '1721360261', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('449', '1', '1721360261', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('450', '1', '1721360263', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('451', '1', '1721360285', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('452', '1', '1721360286', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('453', '1', '1721360298', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('454', '1', '1721360301', '127.0.0.1', '/mobile/my.user.detail/logout');
+INSERT INTO `operation_log` VALUES ('455', '1', '1721360331', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('456', '1', '1721360350', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('457', '1', '1721360354', '127.0.0.1', '/mobile/my.user.detail/logout');
+INSERT INTO `operation_log` VALUES ('458', '1', '1721360358', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('459', '1', '1721360358', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('460', '1', '1721360360', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('461', '1', '1721360369', '127.0.0.1', '/mobile/my.user.detail/logout');
+INSERT INTO `operation_log` VALUES ('462', '1', '1721360399', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('463', '1', '1721360400', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('464', '1', '1721360434', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('465', '1', '1721360434', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('466', '1', '1721360438', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('467', '1', '1721360457', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('468', '1', '1721360457', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('469', '1', '1721360457', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('470', '1', '1721360457', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('471', '1', '1721360458', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('472', '1', '1721360458', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('473', '1', '1721360466', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('474', '1', '1721360467', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('475', '1', '1721360467', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('476', '1', '1721360467', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('477', '1', '1721360474', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('478', '1', '1721360476', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('479', '1', '1721360479', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('480', '1', '1721360517', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('481', '1', '1721360522', '127.0.0.1', '/mobile/index/init');
+INSERT INTO `operation_log` VALUES ('482', '1', '1721360523', '127.0.0.1', '/mobile/my.user.detail/init');
+INSERT INTO `operation_log` VALUES ('483', '1', '1721360542', '127.0.0.1', '/mobile/my.user.detail/logout');
+INSERT INTO `operation_log` VALUES ('484', '1', '1721360564', '127.0.0.1', '/mobile/frame/getpermissions');
+INSERT INTO `operation_log` VALUES ('485', '1', '1721360564', '127.0.0.1', '/mobile/index/init');
 
 -- ----------------------------
 -- Table structure for role
@@ -640,8 +1169,8 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', 'avatar/2024/06/29/a3acf6bdbe87981d4595e156a3cc9f27.png', '1684989244', '1716183018', '1721267330', '127.0.0.1');
-INSERT INTO `user` VALUES ('2', '1', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
+INSERT INTO `user` VALUES ('1', '1', '1', 'admin', '0cab5d23c4c5b214ebb63303d05fbe95', '张三', '15122222222', 'avatar/2024/06/29/a3acf6bdbe87981d4595e156a3cc9f27.png', '1684989244', '1716183018', '1721360563', '127.0.0.1');
+INSERT INTO `user` VALUES ('2', '1', '1', 'user', '0cab5d23c4c5b214ebb63303d05fbe95', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
 
 -- ----------------------------
 -- Table structure for user_role
