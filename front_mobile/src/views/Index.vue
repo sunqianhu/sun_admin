@@ -2,10 +2,10 @@
   <div class="index">
     <div class="header">
       <div class="avatar">
-        <van-image :src="user.avatar_url" fit="cover" round class="image" @click="openMyDetail" />
+        <van-image :src="user.avatar_url" fit="cover" round class="image" @click="openUserDetail" />
       </div>
       <div class="user">
-        <div class="name" @click="openMyDetail">{{ user.name }}</div>
+        <div class="name" @click="openUserDetail">{{ user.name }}</div>
         <div class="description">{{ user.department_name }}</div>
       </div>
     </div>
@@ -44,10 +44,10 @@ const init = async () => {
 };
 
 /**
- * 打开我的详情页面
+ * 打开用户详情页面
  */
-const openMyDetail = () => {
-  router.push("/my/detail");
+const openUserDetail = () => {
+  router.push("/my/user/detail");
 };
 
 onMounted(() => {

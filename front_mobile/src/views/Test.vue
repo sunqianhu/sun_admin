@@ -10,7 +10,7 @@
 
 <script setup>
 import { ref } from "vue";
-// import axios from "@/helper/axios.js";
+import axios from "@/helper/axios.js";
 
 const int = async () => {
   const response = await axios.get("desktop/statistic.Trend/init");

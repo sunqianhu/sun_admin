@@ -27,7 +27,9 @@ class Session
     public $noAuthUrls = [
         '/mobile/Frame/getPermissions',
         '/mobile/uploadFile/upload',
-        '/mobile/Index/init'
+        '/mobile/Index/init',
+        '/mobile/my.user.Detail/init',
+        '/mobile/my.user.Detail/logout'
     ];
 
     /**

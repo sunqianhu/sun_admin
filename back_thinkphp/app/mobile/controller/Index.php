@@ -4,9 +4,6 @@ namespace app\mobile\controller;
 
 use app\model\User as UserModel;
 
-/**
- * 框架
- */
 class Index extends Base
 {
     /**
