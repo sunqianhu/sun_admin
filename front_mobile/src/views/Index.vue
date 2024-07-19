@@ -13,7 +13,31 @@
       <panel-card title="功能导航" class="moudles">
         <van-row>
           <van-col span="6">
-            <div class="moudle">
+            <div class="moudle margin-bottom-md">
+              <div class="icon">
+                <van-icon name="user-o" />
+              </div>
+              <div class="text">用户管理</div>
+            </div>
+          </van-col>
+          <van-col span="6">
+            <div class="moudle margin-bottom-md">
+              <div class="icon">
+                <van-icon name="orders-o" />
+              </div>
+              <div class="text">订单管理</div>
+            </div>
+          </van-col>
+          <van-col span="6">
+            <div class="moudle margin-bottom-md">
+              <div class="icon">
+                <van-icon name="setting-o" />
+              </div>
+              <div class="text">系统设置</div>
+            </div>
+          </van-col>
+          <van-col span="6">
+            <div class="moudle margin-bottom-md">
               <div class="icon">
                 <van-icon name="user-o" />
               </div>
@@ -34,6 +58,22 @@
                 <van-icon name="setting-o" />
               </div>
               <div class="text">系统设置</div>
+            </div>
+          </van-col>
+          <van-col span="6">
+            <div class="moudle">
+              <div class="icon">
+                <van-icon name="user-o" />
+              </div>
+              <div class="text">用户管理</div>
+            </div>
+          </van-col>
+          <van-col span="6">
+            <div class="moudle">
+              <div class="icon">
+                <van-icon name="orders-o" />
+              </div>
+              <div class="text">订单管理</div>
             </div>
           </van-col>
         </van-row>
@@ -80,6 +120,7 @@ onMounted(() => {
 .index {
   padding: var(--padding-md);
   .header {
+    padding: var(--padding-md) 0px;
     display: flex;
     align-items: center;
     .avatar {
@@ -116,6 +157,9 @@ onMounted(() => {
         .text {
           margin-top: var(--margin-xs);
         }
+      }
+      .margin-bottom-md {
+        margin-bottom: var(--margin-md);
       }
     }
   }

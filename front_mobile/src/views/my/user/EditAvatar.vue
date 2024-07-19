@@ -115,8 +115,8 @@ const save = async (base64Content) => {
 <style lang="scss" scoped>
 .edit-avatar {
   .avatar {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
   }
   .cropper-dialog {
     .crop-image {

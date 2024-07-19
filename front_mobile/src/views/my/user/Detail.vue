@@ -66,8 +66,6 @@ onMounted(() => {
   padding: var(--padding-md);
   .user {
     .avatar {
-      width: 50px;
-      height: 50px;
       display: inline-block;
     }
   }
