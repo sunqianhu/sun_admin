@@ -29,7 +29,8 @@ class Session
         '/mobile/uploadFile/upload',
         '/mobile/Index/init',
         '/mobile/my.user.Detail/init',
-        '/mobile/my.user.Detail/logout'
+        '/mobile/my.user.Detail/logout',
+        '/mobile/my.user.EditAvatar/save'
     ];
 
     /**

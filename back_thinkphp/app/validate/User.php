@@ -40,6 +40,7 @@ class User extends Validate
         'desktop_main_edit_avatar' => ['avatar_base64_content'],
         'desktop_offline' => ['id'],
         'desktop_edit_avatar'=>['avatar_base64_content'],
+        'mobile_my_edit_avatar' => ['avatar_base64_content']
     ];
 
     /**

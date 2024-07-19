@@ -1,9 +1,9 @@
 <template>
   <div class="detail">
     <group-radius class="user">
-      <van-cell title="头像" center>
+      <van-cell title="头像" center is-link>
         <template #value>
-          <van-image :src="user.avatar_url" fit="cover" round class="avatar" />
+          <edit-avatar :url="user.avatar_url" @successed="init" class="avatar"></edit-avatar>
         </template>
       </van-cell>
       <van-cell title="姓名" :value="user.name" />
@@ -11,9 +11,9 @@
       <van-cell title="手机号码" :value="user.phone" />
     </group-radius>
     <div class="button-wrap">
-      <van-button type="primary" plain block :loading="logoutLoading" @click="logout"
-        >退出登录</van-button
-      >
+      <van-button type="primary" plain block :loading="logoutLoading" @click="logout">
+        退出登录
+      </van-button>
     </div>
   </div>
 </template>
@@ -22,6 +22,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "@/helper/axios";
+import EditAvatar from "./EditAvatar.vue";
 
 const router = useRouter();
 const user = ref({});
@@ -67,6 +68,7 @@ onMounted(() => {
     .avatar {
       width: 50px;
       height: 50px;
+      display: inline-block;
     }
   }
   .button-wrap {
