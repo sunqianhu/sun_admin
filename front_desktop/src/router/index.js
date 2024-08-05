@@ -4,6 +4,52 @@ import "nprogress/nprogress.css";
 import axios from "@/helper/axios";
 import { useAppStore } from "@/stores/app";
 
+const writeList = ["/login", "/404", "/test"];
+const routeConfig = [
+  {
+    path: "/",
+    name: "main",
+    component: () => import("../container/main/Index.vue"),
+    meta: {
+      name: "主容器"
+    },
+    children: []
+  },
+  {
+    path: "/blank",
+    name: "blank",
+    component: () => import("../container/blank/Index.vue"),
+    meta: {
+      name: "空白容器"
+    },
+    children: []
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/Login.vue"),
+    meta: {
+      name: "SunAdmin"
+    }
+  },
+  {
+    path: "/test",
+    name: "test",
+    component: () => import("../views/Test.vue"),
+    meta: {
+      name: "测试页面"
+    }
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "404",
+    component: () => import("../views/404.vue"),
+    meta: {
+      name: "没有找到页面"
+    }
+  }
+];
+
 /**
  * 得到登录路由路径
  * @returns
@@ -12,59 +58,85 @@ const getLoginRoutePath = () => {
   return "/login";
 };
 
-//路由对象
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/",
-      name: "main",
-      component: () => import("../views/main/Index.vue"),
-      meta: {
-        name: "首页"
-      },
-      children: []
-    },
-    {
-      path: "/blank",
-      name: "blank",
-      component: () => import("../views/blank/Index.vue"),
-      meta: {
-        name: "空白页面"
-      },
-      children: []
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: () => import("../views/Login.vue"),
-      meta: {
-        name: "SunAdmin"
-      }
-    },
-    {
-      path: "/test",
-      name: "test",
-      component: () => import("../views/Test.vue"),
-      meta: {
-        name: "测试页面"
-      }
-    },
-    {
-      path: "/:pathMatch(.*)*",
-      name: "404",
-      component: () => import("../views/404.vue"),
-      meta: {
-        name: "页面没有找到"
-      }
+/**
+ * 设置权限
+ * @returns
+ */
+const setPermissions = async () => {
+  const appStore = useAppStore();
+  if (appStore.isSetPermission) {
+    return true;
+  }
+
+  const response = await axios.get("desktop/frame/getPermissions");
+  if (response.code != 1) {
+    return getLoginRoutePath();
+  }
+  appStore.setPermissions(response.data);
+
+  return true;
+};
+
+/**
+ * 设置容器路由
+ * @param {*} to
+ * @returns
+ */
+const setContainerRoutes = async (path) => {
+  const appStore = useAppStore();
+  if (appStore.isSetRoute) {
+    return true;
+  }
+
+  const response = await axios.get("desktop/frame/getRoutes");
+  if (response.code != 1) {
+    return getLoginRoutePath();
+  }
+  if (response.data.length == 0) {
+    return getLoginRoutePath();
+  }
+  appStore.setRoutes(response.data);
+
+  let routes = router.getRoutes();
+  let mainRoute = routes.find((route) => route.name == "main");
+  let blankRoute = routes.find((route) => route.name == "blank");
+  const components = import.meta.glob([
+    "@/views/*.vue",
+    "@/views/*/*.vue",
+    "@/views/*/*/*.vue",
+    "@/views/*/*/*/*.vue"
+  ]);
+
+  let childRoutes = response.data;
+  childRoutes.forEach((childRoute) => {
+    if (!childRoute.component_path) {
+      return;
     }
-  ]
-});
+    childRoute.component = components["/src/views/" + childRoute.component_path];
+    if (childRoute.container == "main") {
+      mainRoute.children.push(childRoute);
+    } else if (childRoute.container == "blank") {
+      blankRoute.children.push(childRoute);
+    }
+  });
 
-const writeList = ["/login", "/404", "/test"];
+  if (mainRoute.children?.length > 0) {
+    mainRoute.redirect = mainRoute.children[0].path;
+  }
 
-//前置守卫
-router.beforeEach(async (to, from) => {
+  router.addRoute(mainRoute);
+  router.addRoute(blankRoute);
+
+  return path;
+};
+
+/**
+ * 路由前置守卫处理
+ * @param {*} to
+ * @param {*} from
+ * @returns
+ */
+const beforeHandle = async (to, from) => {
   NProgress.start();
 
   //白名单
@@ -78,70 +150,37 @@ router.beforeEach(async (to, from) => {
     return getLoginRoutePath();
   }
 
-  const appStore = useAppStore();
-  let response; //响应
-
   //权限
-  if (!appStore.isSetPermission) {
-    response = await axios.get("desktop/frame/getPermissions");
-    if (response.code != 1) {
-      return getLoginRoutePath();
-    }
-    appStore.setPermissions(response.data);
+  let result = await setPermissions();
+  if (result !== true) {
+    return result;
   }
 
   //动态路由
-  if (!appStore.isSetRoute) {
-    response = await axios.get("desktop/frame/getRoutes");
-    if (response.code != 1) {
-      return getLoginRoutePath();
-    }
-    appStore.setRoutes(response.data);
-
-    let allRoutes = router.getRoutes();
-    let mainRoute = allRoutes.find((route) => route.name == "main");
-    let blankRoute = allRoutes.find((route) => route.name == "blank");
-    let childRoutes = [];
-    const components = import.meta.glob([
-      "@/views/*.vue",
-      "@/views/*/*.vue",
-      "@/views/*/*/*.vue",
-      "@/views/*/*/*/*.vue"
-    ]);
-
-    if (response.data.length > 0) {
-      childRoutes = response.data;
-
-      childRoutes.forEach((childRoute) => {
-        if (!childRoute.component_path) {
-          return;
-        }
-        childRoute.component = components["/src/views/" + childRoute.component_path];
-        if (childRoute.layout == "main") {
-          mainRoute.children.push(childRoute);
-        } else if (childRoute.layout == "blank") {
-          blankRoute.children.push(childRoute);
-        }
-      });
-
-      if (mainRoute.children?.length > 0) {
-        mainRoute.redirect = mainRoute.children[0].path;
-      }
-
-      router.addRoute(mainRoute);
-      router.addRoute(blankRoute);
-    }
-
-    return to.fullPath;
+  result = await setContainerRoutes(to.path);
+  if (result !== true) {
+    return result;
   }
 
   return true;
-});
+};
 
-//后置钩子
-router.afterEach((to, from) => {
+/**
+ * 路由后置守卫处理
+ * @param {*} to
+ * @param {*} from
+ */
+const afterHandle = (to, from) => {
   NProgress.done();
   document.title = to.meta.name;
+};
+
+//路由对象
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: routeConfig
 });
+router.beforeEach(beforeHandle);
+router.afterEach(afterHandle);
 
 export default router;

@@ -1,6 +1,6 @@
 <?php
 
-namespace think\app\desktop\controller\template;
+namespace app\desktop\controller\template;
 
 use app\desktop\controller\Base;
 

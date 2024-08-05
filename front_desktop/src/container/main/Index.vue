@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-main">
+  <div class="container-main">
     <el-container :class="{ close: !appStore.siderStatus }" class="container">
       <el-aside class="aside" id="aside">
         <div class="system-name">
@@ -74,7 +74,7 @@ html {
 </style>
 
 <style lang="scss" scoped>
-.layout-main {
+.container-main {
   height: 100%;
 
   .container {
@@ -175,7 +175,7 @@ html {
 
 //暗黑模式
 .dark {
-  .layout-main {
+  .container-main {
     .container {
       .aside {
         background-color: #141414;

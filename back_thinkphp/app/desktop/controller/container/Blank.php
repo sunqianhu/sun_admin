@@ -1,7 +1,8 @@
 <?php
 
-namespace app\desktop\controller;
+namespace app\desktop\controller\container;
 
+use app\desktop\controller\Base;
 use app\service\Watermark as WatermarkService;
 
 class Blank extends Base

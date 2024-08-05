@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\main;
+namespace app\desktop\controller\container\main;
 
 use app\desktop\controller\Base;
 use app\model\Message as MessageModel;

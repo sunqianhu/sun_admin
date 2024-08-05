@@ -1,9 +1,10 @@
 <?php
 
-namespace app\desktop\controller;
+namespace app\desktop\controller\container;
 
-use app\service\desktop\Session as SessionService;
+use app\desktop\controller\Base;
 use app\model\User as UserModel;
+use app\service\desktop\Session as SessionService;
 use app\service\user\Desktop as DesktopService;
 use app\service\Watermark as WatermarkService;
 

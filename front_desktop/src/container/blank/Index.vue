@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-blank">
+  <div class="container-blank">
     <router-view v-slot="{ Component, route }">
       <keep-alive v-if="route.meta.keep_alive == true">
         <component :is="Component" />

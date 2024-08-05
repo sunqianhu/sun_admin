@@ -41,7 +41,7 @@ const user = ref({});
  */
 const init = async () => {
   dialogLoading.value = true;
-  const response = await axios.get("desktop/main.user.Detail/getUser");
+  const response = await axios.get("desktop/container.main.user.Detail/getUser");
   dialogLoading.value = false;
   if (response.code != 1) {
     ElMessage({

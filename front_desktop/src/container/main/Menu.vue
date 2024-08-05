@@ -28,7 +28,7 @@ const menus = ref([]);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/Main/getMenus");
+  const response = await axios.get("desktop/container.Main/getMenus");
   menus.value = response.data;
 };
 

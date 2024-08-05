@@ -83,7 +83,7 @@ const saveLoading = ref(false);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/main.user.EditAvatar/init");
+  const response = await axios.get("desktop/container.main.user.EditAvatar/init");
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -162,7 +162,7 @@ const save = () => {
     saveLoading.value = true;
     let response;
     try {
-      response = await axios.post("desktop/main.user.EditAvatar/save", {
+      response = await axios.post("desktop/container.main.user.EditAvatar/save", {
         avatar_base64_content: data
       });
     } catch (error) {

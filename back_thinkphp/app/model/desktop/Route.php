@@ -18,7 +18,7 @@ class Route extends Base
     public function getLayoutNameAttr($value, $data)
     {
         $dictionaryService = new DictionaryService();
-        return $dictionaryService->getValue('desktop_route_layout', $data['layout']);
+        return $dictionaryService->getValue('desktop_route_container', $data['container']);
     }
 
     /**

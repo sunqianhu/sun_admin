@@ -113,7 +113,7 @@ class Desktop
                 'path'=>$routeModel->path,
                 'name'=>$routeModel->key,
                 'component_path'=>$routeModel->component_path,
-                'layout'=>$routeModel->layout,
+                'container'=>$routeModel->container,
                 'meta'=>[
                     'name'=>$routeModel->name,
                     'keep_alive'=>$routeModel->keep_alive

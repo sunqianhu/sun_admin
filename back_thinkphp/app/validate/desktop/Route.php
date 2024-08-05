@@ -12,7 +12,7 @@ class Route extends Validate
         'key'  =>  'require',
         'path'  =>  'require',
         'component_path'  =>  'require',
-        'layout'  =>  'require',
+        'container'  =>  'require',
         'keep_alive'  =>  'require|number',
         'sort'  =>  'require|number',
     ];
@@ -23,15 +23,15 @@ class Route extends Validate
         'key.require' => '路由标识不能为空',
         'path.require' => '路由路径不能为空',
         'component_path.require' => '组件路径不能为空',
-        'layout.require' => '页面布局不能为空',
+        'container.require' => '布局容器不能为空',
         'keep_alive.require' => '保活不能为空',
         'keep_alive.number' => '保活必须是数字',
         'sort.require' => '排序不能为空',
         'sort.number' => '排序必须是数字',
     ];
     protected $scene = [
-        'desktop_add' => ['name', 'key', 'path', 'component_path', 'layout', 'keep_alive', 'sort'],
-        'desktop_edit' => ['id', 'name', 'key', 'path', 'component_path', 'layout', 'keep_alive', 'sort'],
+        'desktop_add' => ['name', 'key', 'path', 'component_path', 'container', 'keep_alive', 'sort'],
+        'desktop_edit' => ['id', 'name', 'key', 'path', 'component_path', 'container', 'keep_alive', 'sort'],
         'desktop_delete' => ['id']
     ];
 }

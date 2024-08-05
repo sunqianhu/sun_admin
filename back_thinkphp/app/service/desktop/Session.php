@@ -27,17 +27,17 @@ class Session
     public $noAuthUrls = [
         '/desktop/Frame/getRoutes',
         '/desktop/Frame/getPermissions',
-        '/desktop/Main/getMenus',
-        '/desktop/Main/getAvatar',
-        '/desktop/Main/getWatermark',
-        '/desktop/Main/logout',
-        '/desktop/Blank/getWatermark',
-        '/desktop/main.user.Detail/getUser',
-        '/desktop/main.user.EditAvatar/init',
-        '/desktop/main.user.EditAvatar/save',
-        '/desktop/main.user.EditPassword/save',
-        '/desktop/main.Message/readAll',
-        '/desktop/main.Message/getNoReads',
+        '/desktop/container.Main/getMenus',
+        '/desktop/container.Main/getAvatar',
+        '/desktop/container.Main/getWatermark',
+        '/desktop/container.Main/logout',
+        '/desktop/container.main.user.Detail/getUser',
+        '/desktop/container.main.user.EditAvatar/init',
+        '/desktop/container.main.user.EditAvatar/save',
+        '/desktop/container.main.user.EditPassword/save',
+        '/desktop/container.main.Message/readAll',
+        '/desktop/container.main.Message/getNoReads',
+        '/desktop/container.Blank/getWatermark',
         '/desktop/uploadFile/upload'
     ];
 
