@@ -10,12 +10,12 @@ class Route extends Base
     protected $name = 'desktop_route';
 
     /**
-     * 得到布局名称
+     * 得到容器名称
      * @param $value
      * @param $data
      * @return null
      */
-    public function getLayoutNameAttr($value, $data)
+    public function getContainerNameAttr($value, $data)
     {
         $dictionaryService = new DictionaryService();
         return $dictionaryService->getValue('desktop_route_container', $data['container']);
