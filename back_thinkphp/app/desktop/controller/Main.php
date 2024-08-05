@@ -1,8 +1,7 @@
 <?php
 
-namespace app\desktop\controller\container;
+namespace app\desktop\controller;
 
-use app\desktop\controller\Base;
 use app\model\User as UserModel;
 use app\service\desktop\Session as SessionService;
 use app\service\user\Desktop as DesktopService;

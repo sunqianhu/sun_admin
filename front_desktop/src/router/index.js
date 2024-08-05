@@ -9,7 +9,7 @@ const routeConfig = [
   {
     path: "/",
     name: "main",
-    component: () => import("../container/main/Index.vue"),
+    component: () => import("../views/main/Index.vue"),
     meta: {
       name: "主容器"
     },
@@ -18,7 +18,7 @@ const routeConfig = [
   {
     path: "/blank",
     name: "blank",
-    component: () => import("../container/blank/Index.vue"),
+    component: () => import("../views/blank/Index.vue"),
     meta: {
       name: "空白容器"
     },

@@ -53,7 +53,7 @@ const avatar = ref("");
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/container.main/getAvatar");
+  const response = await axios.get("desktop/main/getAvatar");
   if (response.code != 1) {
     return;
   }
@@ -89,7 +89,7 @@ const logout = async () => {
   const appStore = useAppStore();
   let url;
 
-  const response = await axios.get("desktop/container.Main/logout");
+  const response = await axios.get("desktop/Main/logout");
   if (response.code != 1) {
     ElMessage({
       message: response.message,
