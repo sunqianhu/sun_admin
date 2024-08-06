@@ -1,7 +1,7 @@
 <?php
 namespace app\model;
 
-use app\service\User as UserHelper;
+use app\service\User as UserService;
 
 class User extends Base
 {
@@ -47,7 +47,7 @@ class User extends Base
      */
     public function getAvatarUrlAttr($value, $data)
     {
-        $userService = new UserHelper();
+        $userService = new UserService();
         return $userService->getAvatarUrl($data['avatar']);
     }
 

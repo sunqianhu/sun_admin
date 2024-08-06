@@ -33,7 +33,7 @@ class Index extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['denied_ip_string']);
+        $post = $this->request->post(['denied_ip_string'=>'']);
 
         //验证
         try {
