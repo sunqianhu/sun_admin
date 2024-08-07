@@ -24,6 +24,7 @@ class Message
         if (empty($userIds) || empty($endIds) || $title === '') {
             return;
         }
+
         $stringHandler = new StringHandler();
         if($stringHandler->length($title) > 64){
             $title = $stringHandler->sub($title, 0, 64);
@@ -94,7 +95,7 @@ class Message
      * 全部已读
      * @return void
      */
-    public function readAll($userId, $endIds = [])
+    public function readAll($userId, $endIds = [1,2])
     {
         $messageModels = MessageModel::where('user_id', $userId)
             ->where('end_id', 'in', $endIds)

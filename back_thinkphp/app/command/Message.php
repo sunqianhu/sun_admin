@@ -5,6 +5,7 @@ namespace app\command;
 
 use app\service\desktop\session\Jwt as DesktopJwt;
 use app\service\mobile\session\Jwt as MobileJwt;
+use Exception;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
