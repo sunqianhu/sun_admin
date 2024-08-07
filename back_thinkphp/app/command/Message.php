@@ -3,6 +3,8 @@ declare (strict_types = 1);
 
 namespace app\command;
 
+use app\service\desktop\session\Jwt as DesktopJwt;
+use app\service\mobile\session\Jwt as MobileJwt;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -119,11 +121,11 @@ class Message extends Command
         switch ($decodeData['type']) {
             //绑定
             case 'bind':
-                $this->bind($connection, $decodeData['user_id']);
+                $this->bind($connection, $decodeData['end_id'], $decodeData['token']);
                 break;
             //发送
             case 'send':
-                $this->send($decodeData['user_ids'], $decodeData['data']);
+                $this->send($decodeData['user_ids'], $decodeData['end_ids'], $decodeData['data']);
                 break;
         }
     }
@@ -155,12 +157,35 @@ class Message extends Command
      * @param $userId
      * @return void
      */
-    public function bind(&$connection, $userId)
+    public function bind(&$connection, $endId, $token)
     {
-        if (empty($userId) && !is_numeric($userId)) {
+        if ($endId === '' || $token === '') {
             return;
         }
-        $connection->userId = $userId;
+
+        $connection->endId = $endId;
+
+        //桌面端
+        if($endId == 1){
+            $desktopJwt = new DesktopJwt();
+            try {
+                $session = $desktopJwt->resolverToken($token);
+                $connection->userId = $session->userId;
+            } catch (Exception $exception) {
+                return;
+            }
+        }
+
+        //移动端
+        if($endId == 2){
+            $mobileJwt = new MobileJwt();
+            try {
+                $session = $mobileJwt->resolverToken($token);
+                $connection->userId = $session->userId;
+            } catch (Exception $exception) {
+                return;
+            }
+        }
     }
 
     /**
@@ -169,7 +194,7 @@ class Message extends Command
      * @param $data
      * @return void
      */
-    public function send($userIds, $data)
+    public function send($userIds, $endIds, $data)
     {
         if(empty($userIds)){
             return;
@@ -184,6 +209,9 @@ class Message extends Command
                 continue;
             }
             if (!in_array($connection->userId, $userIds)) {
+                continue;
+            }
+            if (!in_array($connection->endId, $endIds)) {
                 continue;
             }
             $connection->send($encodeData);

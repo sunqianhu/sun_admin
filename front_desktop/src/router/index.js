@@ -78,21 +78,18 @@ const setPermissions = async () => {
 };
 
 /**
- * 设置布局路由
+ * 设置路由
  * @param {*} to
  * @returns
  */
-const setLayoutRoutes = async (path) => {
+const setRoutes = async (path) => {
   const appStore = useAppStore();
   if (appStore.isSetRoute) {
     return true;
   }
 
   const response = await axios.get("desktop/frame/getRoutes");
-  if (response.code != 1) {
-    return getLoginRoutePath();
-  }
-  if (response.data.length == 0) {
+  if (response.code != 1 || response.data.length == 0) {
     return getLoginRoutePath();
   }
   appStore.setRoutes(response.data);
@@ -100,19 +97,13 @@ const setLayoutRoutes = async (path) => {
   let routes = router.getRoutes();
   let sideRoute = routes.find((route) => route.name == "side");
   let blankRoute = routes.find((route) => route.name == "blank");
-  const components = import.meta.glob([
-    "@/views/*.vue",
-    "@/views/*/*.vue",
-    "@/views/*/*/*.vue",
-    "@/views/*/*/*/*.vue"
-  ]);
 
   let childRoutes = response.data;
-  childRoutes.forEach((childRoute) => {
+  childRoutes.forEach(async (childRoute) => {
     if (!childRoute.component_path) {
       return;
     }
-    childRoute.component = components["/src/views/" + childRoute.component_path];
+    childRoute.component = () => import("../views/" + childRoute.component_path);
     if (childRoute.layout == "side") {
       sideRoute.children.push(childRoute);
     } else if (childRoute.layout == "blank") {
@@ -157,7 +148,7 @@ const beforeHandle = async (to, from) => {
   }
 
   //动态路由
-  result = await setLayoutRoutes(to.path);
+  result = await setRoutes(to.path);
   if (result !== true) {
     return result;
   }

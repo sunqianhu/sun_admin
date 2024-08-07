@@ -62,7 +62,8 @@ const getNoReadMessages = async () => {
 const bind = () => {
   const data = {
     type: "bind",
-    user_id: localStorage.getItem("user_id")
+    end_id: 1,
+    token: localStorage.getItem("token")
   };
   const dataString = JSON.stringify(data);
   websocketClient.send(dataString);
@@ -80,7 +81,7 @@ const showMessage = async (data) => {
   messages.value.unshift(message);
   playAudio();
 
-  await axios.get("desktop/layouts.side.message/readAll");
+  await axios.get("desktop/layouts.side.Message/readAll");
 };
 
 /**
@@ -89,7 +90,7 @@ const showMessage = async (data) => {
 const close = async () => {
   messages.value = [];
   show.value = false;
-  await axios.get("desktop/message/readAll");
+  await axios.get("desktop/layouts.side.Message/readAll");
 };
 
 /**

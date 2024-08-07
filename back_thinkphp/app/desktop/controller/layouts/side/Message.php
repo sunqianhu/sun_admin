@@ -15,7 +15,7 @@ class Message extends Base
     public function readAll()
     {
         $messageService = new MessageService();
-        $messageService->readAll($this->session->userId);
+        $messageService->readAll($this->session->userId, [1]);
 
         return $this->success('设置成功');
     }
@@ -29,15 +29,16 @@ class Message extends Base
         //数据
         $messageModels = MessageModel::where("user_id", $this->session->userId)
             ->where("read", 0)
+            ->where("end_id", 1)
             ->order('id', 'desc')
-            ->limit(0, 50)
+            ->limit(0, 30)
             ->select();
         $messages = $messageModels->toArray();
 
         //设为已读
         if (!$messageModels->isEmpty()) {
             $messageService = new MessageService();
-            $messageService->readAll($this->session->userId);
+            $messageService->readAll($this->session->userId, [1]);
         }
 
         return $this->success('获取成功', $messages);

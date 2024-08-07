@@ -14,17 +14,16 @@ class Message
     /**
      * 发送消息
      * @param $userIds
+     * @param $endIds
      * @param $title
      * @param $url
      * @return void
-     * @throws Exception
      */
-    public function send($userIds, $title, $url = '')
+    public function send($userIds, $endIds, $title, $url = '')
     {
-        if (empty($userIds)) {
+        if (empty($userIds) || empty($endIds) || $title === '') {
             return;
         }
-
         $stringHandler = new StringHandler();
         if($stringHandler->length($title) > 64){
             $title = $stringHandler->sub($title, 0, 64);
@@ -32,13 +31,16 @@ class Message
 
         //入库
         foreach ($userIds as $userId) {
-            $data = [
-                'user_id' => $userId,
-                'title' => $title,
-                'url' => $userId,
-                'add_time' => time()
-            ];
-            $this->add($data);
+            foreach ($endIds as $endId) {
+                $data = [
+                    'user_id' => $userId,
+                    'end_id' => $endId,
+                    'title' => $title,
+                    'url' => $userId,
+                    'add_time' => time()
+                ];
+                $this->add($data);
+            }
         }
 
         //消息
@@ -46,6 +48,7 @@ class Message
         $data = [
             'type' => 'send',
             'user_ids' => $userIds,
+            'end_ids' => $endIds,
             'data' => [
                 'type' => 'message',
                 'title' => $title,
@@ -66,9 +69,10 @@ class Message
      * @param $url
      * @return void
      */
-    public function sendByQueue($userIds, $title, $url = ''){
+    public function sendByQueue($userIds, $endIds, $title, $url = ''){
         $data = [
             'user_ids'=>$userIds,
+            'end_ids'=>$endIds,
             'title'=>$title,
             'url'=>$url
         ];
@@ -90,18 +94,17 @@ class Message
      * 全部已读
      * @return void
      */
-    public function readAll($userId)
+    public function readAll($userId, $endIds = [])
     {
         $messageModels = MessageModel::where('user_id', $userId)
+            ->where('end_id', 'in', $endIds)
             ->where('read', 0)
             ->select();
         if ($messageModels->isEmpty()) {
             return;
         }
-        $messageModels->save([
+        $messageModels->update([
             'read' => 1
         ]);
     }
-
-
 }

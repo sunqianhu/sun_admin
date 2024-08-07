@@ -52,12 +52,12 @@ export const useAppStore = defineStore("app", {
       this.routes = [];
 
       const allRoutes = router.getRoutes();
-      let mainRoute = allRoutes.find((route) => route.name == "main");
+      let sideRoute = allRoutes.find((route) => route.name == "side");
       let blankRoute = allRoutes.find((route) => route.name == "blank");
 
-      mainRoute.redirect = undefined;
-      mainRoute.children = [];
-      router.addRoute(mainRoute);
+      sideRoute.redirect = undefined;
+      sideRoute.children = [];
+      router.addRoute(sideRoute);
 
       blankRoute.children = [];
       router.addRoute(blankRoute);
