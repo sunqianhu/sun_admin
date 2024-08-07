@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\main\user;
+namespace app\desktop\controller\layouts\side\user;
 
 use app\desktop\controller\Base;
 use app\service\User as UserService;

@@ -1,9 +1,10 @@
 <?php
 
-namespace app\desktop\controller\main;
+namespace app\desktop\controller\layouts\side;
 
 use app\desktop\controller\Base;
 use app\model\Message as MessageModel;
+use app\service\Message as MessageService;
 
 class Message extends Base
 {
@@ -13,15 +14,9 @@ class Message extends Base
      */
     public function readAll()
     {
-        $messageModels = MessageModel::where('user_id', $this->session->userId)
-            ->where('read', 0)
-            ->select();
-        if ($messageModels->isEmpty()) {
-            return $this->success('设置成功');
-        }
-        $messageModels->save([
-            'read' => 1
-        ]);
+        $messageService = new MessageService();
+        $messageService->readAll($this->session->userId);
+
         return $this->success('设置成功');
     }
 
@@ -41,12 +36,8 @@ class Message extends Base
 
         //设为已读
         if (!$messageModels->isEmpty()) {
-            $messageModels = MessageModel::where("user_id", $this->session->userId)
-                ->where("read", 0)
-                ->select();
-            $messageModels->save([
-                'read' => 1
-            ]);
+            $messageService = new MessageService();
+            $messageService->readAll($this->session->userId);
         }
 
         return $this->success('获取成功', $messages);

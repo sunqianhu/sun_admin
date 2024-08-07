@@ -84,4 +84,24 @@ class Message
         $messageModel = new MessageModel();
         $messageModel->save($data);
     }
+
+
+    /**
+     * 全部已读
+     * @return void
+     */
+    public function readAll($userId)
+    {
+        $messageModels = MessageModel::where('user_id', $userId)
+            ->where('read', 0)
+            ->select();
+        if ($messageModels->isEmpty()) {
+            return;
+        }
+        $messageModels->save([
+            'read' => 1
+        ]);
+    }
+
+
 }

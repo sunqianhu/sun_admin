@@ -15,12 +15,12 @@ class Index extends Base
     public function getRoutes()
     {
         $get = $this->request->get(['name']);
-        $query = RouteModel::field('id,name,key,path,component_path,container,keep_alive,sort');
+        $query = RouteModel::field('id,name,key,path,component_path,layout,keep_alive,sort');
         if (isset($get['name'])) {
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
         $query = $query->order('sort', 'asc')
-            ->append(['container_name', 'keep_alive_name']);
+            ->append(['layout_name', 'keep_alive_name']);
         $routeModels = $query->select();
         $routes = $routeModels->toArray();
 

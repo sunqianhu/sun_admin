@@ -18,7 +18,7 @@ const loading = ref(true);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/Main/getWatermark");
+  const response = await axios.get("desktop/layouts.Side/getWatermark");
   if (response.code != 1) {
     ElMessage({
       message: response.message,

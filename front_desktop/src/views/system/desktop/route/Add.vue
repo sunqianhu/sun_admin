@@ -22,13 +22,9 @@
         <el-form-item label="组件路径" prop="component_path">
           <el-input v-model="route.component_path" />
         </el-form-item>
-        <el-form-item label="布局容器" prop="container">
-          <el-select v-model="route.container" clearable>
-            <el-option
-              v-for="container in containers"
-              :label="container.value"
-              :value="container.key"
-            />
+        <el-form-item label="布局容器" prop="layout">
+          <el-select v-model="route.layout" clearable>
+            <el-option v-for="layout in layouts" :label="layout.value" :value="layout.key" />
           </el-select>
         </el-form-item>
         <el-form-item label="保活" prop="keep_alive">
@@ -69,11 +65,11 @@ const rules = {
   key: [{ required: true, message: "路由标识不能为空", trigger: "blur" }],
   path: [{ required: true, message: "路由路径不能为空", trigger: "blur" }],
   component_path: [{ required: true, message: "组件路径不能为空", trigger: "blur" }],
-  container: [{ required: true, message: "布局容器不能为空", trigger: "blur" }],
+  layout: [{ required: true, message: "布局容器不能为空", trigger: "blur" }],
   keep_alive: [{ required: true, message: "路由保活不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
-const containers = ref([]);
+const layouts = ref([]);
 const submitLoading = ref(false);
 
 /**
@@ -90,7 +86,7 @@ const init = async () => {
     });
     return;
   }
-  containers.value = response.data.containers;
+  layouts.value = response.data.layouts;
 };
 
 /**

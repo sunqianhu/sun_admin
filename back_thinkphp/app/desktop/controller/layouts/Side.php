@@ -1,7 +1,8 @@
 <?php
 
-namespace app\desktop\controller;
+namespace app\desktop\controller\layouts;
 
+use app\desktop\controller\Base;
 use app\model\User as UserModel;
 use app\service\desktop\Session as SessionService;
 use app\service\user\Desktop as DesktopService;
@@ -10,7 +11,7 @@ use app\service\Watermark as WatermarkService;
 /**
  * 主页
  */
-class Main extends Base
+class Side extends Base
 {
     /**
      * 得到菜单

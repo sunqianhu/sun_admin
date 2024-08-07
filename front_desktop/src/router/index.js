@@ -8,19 +8,19 @@ const writeList = ["/login", "/404", "/test"];
 const routeConfig = [
   {
     path: "/",
-    name: "main",
-    component: () => import("../views/main/Index.vue"),
+    name: "side",
+    component: () => import("../layouts/side/Index.vue"),
     meta: {
-      name: "主容器"
+      name: "主布局"
     },
     children: []
   },
   {
     path: "/blank",
     name: "blank",
-    component: () => import("../views/blank/Index.vue"),
+    component: () => import("../layouts/blank/Index.vue"),
     meta: {
-      name: "空白容器"
+      name: "空白布局"
     },
     children: []
   },
@@ -78,11 +78,11 @@ const setPermissions = async () => {
 };
 
 /**
- * 设置容器路由
+ * 设置布局路由
  * @param {*} to
  * @returns
  */
-const setContainerRoutes = async (path) => {
+const setLayoutRoutes = async (path) => {
   const appStore = useAppStore();
   if (appStore.isSetRoute) {
     return true;
@@ -98,7 +98,7 @@ const setContainerRoutes = async (path) => {
   appStore.setRoutes(response.data);
 
   let routes = router.getRoutes();
-  let mainRoute = routes.find((route) => route.name == "main");
+  let sideRoute = routes.find((route) => route.name == "side");
   let blankRoute = routes.find((route) => route.name == "blank");
   const components = import.meta.glob([
     "@/views/*.vue",
@@ -113,18 +113,18 @@ const setContainerRoutes = async (path) => {
       return;
     }
     childRoute.component = components["/src/views/" + childRoute.component_path];
-    if (childRoute.container == "main") {
-      mainRoute.children.push(childRoute);
-    } else if (childRoute.container == "blank") {
+    if (childRoute.layout == "side") {
+      sideRoute.children.push(childRoute);
+    } else if (childRoute.layout == "blank") {
       blankRoute.children.push(childRoute);
     }
   });
 
-  if (mainRoute.children?.length > 0) {
-    mainRoute.redirect = mainRoute.children[0].path;
+  if (sideRoute.children?.length > 0) {
+    sideRoute.redirect = sideRoute.children[0].path;
   }
 
-  router.addRoute(mainRoute);
+  router.addRoute(sideRoute);
   router.addRoute(blankRoute);
 
   return path;
@@ -157,7 +157,7 @@ const beforeHandle = async (to, from) => {
   }
 
   //动态路由
-  result = await setContainerRoutes(to.path);
+  result = await setLayoutRoutes(to.path);
   if (result !== true) {
     return result;
   }
