@@ -5,7 +5,7 @@ import axios from "@/helper/axios";
 import { useAppStore } from "@/stores/app";
 
 const writeList = ["/login", "/404", "/test"];
-const routeConfig = [
+const staticRoutes = [
   {
     path: "/",
     name: "side",
@@ -94,23 +94,26 @@ const setRoutes = async (path) => {
   }
   appStore.setRoutes(response.data);
 
-  let routes = router.getRoutes();
-  let sideRoute = routes.find((route) => route.name == "side");
-  let blankRoute = routes.find((route) => route.name == "blank");
-
+  let sideRoute = staticRoutes.find((route) => route.name == "side");
+  let blankRoute = staticRoutes.find((route) => route.name == "blank");
   let childRoutes = response.data;
-  childRoutes.forEach(async (childRoute) => {
+
+  childRoutes.forEach((childRoute) => {
     if (!childRoute.component_path) {
       return;
     }
     childRoute.component = () => import("../views/" + childRoute.component_path);
+
     if (childRoute.layout == "side") {
       sideRoute.children.push(childRoute);
     } else if (childRoute.layout == "blank") {
       blankRoute.children.push(childRoute);
+    } else {
+      router.addRoute(childRoute);
     }
   });
 
+  //跳转
   if (sideRoute.children?.length > 0) {
     sideRoute.redirect = sideRoute.children[0].path;
   }
@@ -169,7 +172,7 @@ const afterHandle = (to, from) => {
 //路由对象
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routeConfig
+  routes: staticRoutes
 });
 router.beforeEach(beforeHandle);
 router.afterEach(afterHandle);

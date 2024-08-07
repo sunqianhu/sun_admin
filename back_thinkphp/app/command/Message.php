@@ -1,10 +1,9 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app\command;
 
-use app\service\desktop\session\Jwt as DesktopJwt;
-use app\service\mobile\session\Jwt as MobileJwt;
+use app\service\desktop\session\Jwt;
 use Exception;
 use think\console\Command;
 use think\console\Input;
@@ -34,7 +33,7 @@ class Message extends Command
         $this->setName('Message')
             ->addArgument('action', Argument::OPTIONAL, "操作参数[start|stop|reload|restart|status]", 'start')
             ->addOption('daemon', null, Option::VALUE_OPTIONAL, '以守护进程运行')
-            ->setDescription('websocket系统消息服务端，windows启动命令：php think message，linux启动命令：php think message start --daemon true');
+            ->setDescription('websocket右下角消息服务端，windows启动命令：php think message，linux启动命令：php think message start --daemon true');
     }
 
     /**
@@ -74,7 +73,7 @@ class Message extends Command
 
         //容器
         $config = Config::get('message');
-        if(!isset($config['ip']) || !isset($config['port'])){
+        if (!isset($config['ip']) || !isset($config['port'])) {
             echo '还未配置监听ip或端口';
             exit;
         }
@@ -122,11 +121,11 @@ class Message extends Command
         switch ($decodeData['type']) {
             //绑定
             case 'bind':
-                $this->bind($connection, $decodeData['end_id'], $decodeData['token']);
+                $this->bind($connection, $decodeData['token']);
                 break;
             //发送
             case 'send':
-                $this->send($decodeData['user_ids'], $decodeData['end_ids'], $decodeData['data']);
+                $this->send($decodeData['user_ids'], $decodeData['data']);
                 break;
         }
     }
@@ -155,37 +154,21 @@ class Message extends Command
     /**
      * 绑定
      * @param $connection
-     * @param $userId
+     * @param $token
      * @return void
      */
-    public function bind(&$connection, $endId, $token)
+    public function bind(&$connection, $token)
     {
-        if ($endId === '' || $token === '') {
+        if ($token === '') {
             return;
         }
 
-        $connection->endId = $endId;
-
-        //桌面端
-        if($endId == 1){
-            $desktopJwt = new DesktopJwt();
-            try {
-                $session = $desktopJwt->resolverToken($token);
-                $connection->userId = $session->userId;
-            } catch (Exception $exception) {
-                return;
-            }
-        }
-
-        //移动端
-        if($endId == 2){
-            $mobileJwt = new MobileJwt();
-            try {
-                $session = $mobileJwt->resolverToken($token);
-                $connection->userId = $session->userId;
-            } catch (Exception $exception) {
-                return;
-            }
+        $jwt = new Jwt();
+        try {
+            $session = $jwt->resolverToken($token);
+            $connection->userId = $session->userId;
+        } catch (Exception $exception) {
+            return;
         }
     }
 
@@ -195,9 +178,9 @@ class Message extends Command
      * @param $data
      * @return void
      */
-    public function send($userIds, $endIds, $data)
+    public function send($userIds, $data)
     {
-        if(empty($userIds)){
+        if (empty($userIds)) {
             return;
         }
 
@@ -210,9 +193,6 @@ class Message extends Command
                 continue;
             }
             if (!in_array($connection->userId, $userIds)) {
-                continue;
-            }
-            if (!in_array($connection->endId, $endIds)) {
                 continue;
             }
             $connection->send($encodeData);

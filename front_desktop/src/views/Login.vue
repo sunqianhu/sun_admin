@@ -106,7 +106,6 @@ const submitForm = async () => {
   }
 
   localStorage.setItem("token", response.data.token);
-  localStorage.setItem("user_id", response.data.user_id);
   router.push("/");
 };
 </script>

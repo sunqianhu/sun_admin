@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-08-07 11:14:38
+Date: 2024-08-07 18:07:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -218,7 +218,7 @@ CREATE TABLE `desktop_token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of desktop_token
@@ -238,6 +238,10 @@ INSERT INTO `desktop_token` VALUES ('13', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
 INSERT INTO `desktop_token` VALUES ('15', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjA2Mzg3MjAwIDE3MjI4NTIxNjkifQ.ZT4Y4SU8oGcmbIwoEUYXpLJmW_NkzVItBqhwHgcAcSc', '1722854076', '1');
 INSERT INTO `desktop_token` VALUES ('16', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjIzMDIxNDAwIDE3MjI5OTk0MDkifQ.AZfYGaSEB6AfV6VGpsysGrwRP-33hkcRH5kkTAe7I1w', '1723001324', '1');
 INSERT INTO `desktop_token` VALUES ('17', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjE4MTE3ODAwIDE3MjI5OTk1MjQifQ.Po4TRIHHNkRtiiYLcqWUWfJ7O-eYqveLuCqCubY5h4k', '1723002212', '1');
+INSERT INTO `desktop_token` VALUES ('20', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg0NjAwOTAwIDE3MjMwMDM0MzYifQ.c9h77ylywbz-eCdRjT-QnWOVzHX-WC7y68e8vSTdVsI', '1723005648', '1');
+INSERT INTO `desktop_token` VALUES ('21', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjA2MzA5NjAwIDE3MjMwMDgzOTQifQ.b64SEd_2wuoVcYfHN3gGrmbuUjgzLUR0U-26D9c9y1E', '1723010407', '1');
+INSERT INTO `desktop_token` VALUES ('23', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjg4MzA1NTAwIDE3MjMwMTY5MzYifQ.XH19YHklQ8pp9SopA8MgbgR9URpZ4pAD0R5RWcDC6h0', '1723018892', '1');
+INSERT INTO `desktop_token` VALUES ('24', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjgzNjAxMzAwIDE3MjMwMTkzMzgifQ.nKONPUnhR__oIKiAjg0lDSDT_52-cWk6p93IfPy_JOM', '1723027005', '1');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -311,7 +315,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -351,6 +355,13 @@ INSERT INTO `login_log` VALUES ('32', '1', '1722840439', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('33', '1', '1722852169', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('34', '1', '1722999409', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('35', '1', '1722999524', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('36', '1', '1723002721', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('37', '1', '1723003404', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('38', '1', '1723003436', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('39', '1', '1723008394', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('40', '1', '1723008607', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('41', '1', '1723016937', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('42', '1', '1723019338', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -360,16 +371,25 @@ CREATE TABLE `message` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `title` varchar(64) NOT NULL DEFAULT '' COMMENT '消息标题',
-  `url` varchar(128) NOT NULL DEFAULT '' COMMENT '跳转地址',
+  `url` varchar(128) NOT NULL DEFAULT '' COMMENT '桌面端url',
   `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '消息时间',
   `read` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '已读',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='系统消息';
 
 -- ----------------------------
 -- Records of message
 -- ----------------------------
+INSERT INTO `message` VALUES ('1', '1', '测试消息', '1', '1723014347', '1');
+INSERT INTO `message` VALUES ('2', '1', '测试消息', '1', '1723014574', '1');
+INSERT INTO `message` VALUES ('3', '1', '测试消息', '1', '1723014799', '1');
+INSERT INTO `message` VALUES ('4', '1', '测试消息', '1', '1723014878', '1');
+INSERT INTO `message` VALUES ('5', '1', '测试消息', '1', '1723014935', '1');
+INSERT INTO `message` VALUES ('6', '1', '测试消息', '1', '1723014951', '1');
+INSERT INTO `message` VALUES ('7', '1', '测试消息', '1', '1723015741', '1');
+INSERT INTO `message` VALUES ('8', '1', '测试消息', '1', '1723015813', '1');
+INSERT INTO `message` VALUES ('9', '1', '测试消息', '1', '1723015856', '1');
 
 -- ----------------------------
 -- Table structure for mobile_permission
@@ -435,7 +455,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=928 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=987 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -1367,6 +1387,65 @@ INSERT INTO `operation_log` VALUES ('924', '1', '1723000283', '127.0.0.1', '/des
 INSERT INTO `operation_log` VALUES ('925', '1', '1723000284', '127.0.0.1', '/desktop/system.dictionary.index/getdictionarys');
 INSERT INTO `operation_log` VALUES ('926', '1', '1723000288', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
 INSERT INTO `operation_log` VALUES ('927', '1', '1723000413', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('928', '1', '1723002731', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('929', '1', '1723002807', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('930', '1', '1723002906', '127.0.0.1', '/desktop/system.desktop.menu.add/init');
+INSERT INTO `operation_log` VALUES ('931', '1', '1723002916', '127.0.0.1', '/desktop/system.desktop.menu.edit/init');
+INSERT INTO `operation_log` VALUES ('932', '1', '1723002921', '127.0.0.1', '/desktop/system.desktop.menu.edit/init');
+INSERT INTO `operation_log` VALUES ('933', '1', '1723002944', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('934', '1', '1723002985', '127.0.0.1', '/desktop/system.desktop.route.edit/init');
+INSERT INTO `operation_log` VALUES ('935', '1', '1723003152', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('936', '1', '1723003835', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('937', '1', '1723003836', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('938', '1', '1723003839', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('939', '1', '1723003841', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('940', '1', '1723003844', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('941', '1', '1723003847', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('942', '1', '1723003848', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('943', '1', '1723008872', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('944', '1', '1723009167', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('945', '1', '1723009181', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('946', '1', '1723009197', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('947', '1', '1723009206', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('948', '1', '1723009210', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('949', '1', '1723010783', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('950', '1', '1723010849', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('951', '1', '1723011289', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('952', '1', '1723011389', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('953', '1', '1723011398', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('954', '1', '1723011667', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('955', '1', '1723011670', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('956', '1', '1723011674', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('957', '1', '1723013181', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('958', '1', '1723013548', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('959', '1', '1723014278', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('960', '1', '1723014401', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('961', '1', '1723015806', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('962', '1', '1723015941', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('963', '1', '1723016884', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('964', '1', '1723016950', '127.0.0.1', '/desktop/statistic.trend.index/init');
+INSERT INTO `operation_log` VALUES ('965', '1', '1723016953', '127.0.0.1', '/desktop/statistic.department.index/init');
+INSERT INTO `operation_log` VALUES ('966', '1', '1723016956', '127.0.0.1', '/desktop/system.config.index/init');
+INSERT INTO `operation_log` VALUES ('967', '1', '1723016957', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('968', '1', '1723016958', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('969', '1', '1723016959', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('970', '1', '1723016960', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('971', '1', '1723016963', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('972', '1', '1723016964', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('973', '1', '1723016966', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('974', '1', '1723016968', '127.0.0.1', '/desktop/system.mobile.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('975', '1', '1723016970', '127.0.0.1', '/desktop/system.dictionary.index/getdictionarys');
+INSERT INTO `operation_log` VALUES ('976', '1', '1723016973', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('977', '1', '1723016976', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('978', '1', '1723016989', '127.0.0.1', '/desktop/system.desktop.menu.index/getmenus');
+INSERT INTO `operation_log` VALUES ('979', '1', '1723017070', '127.0.0.1', '/desktop/system.desktop.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('980', '1', '1723017072', '127.0.0.1', '/desktop/system.desktop.route.index/getroutes');
+INSERT INTO `operation_log` VALUES ('981', '1', '1723017076', '127.0.0.1', '/desktop/system.user.index/init');
+INSERT INTO `operation_log` VALUES ('982', '1', '1723017076', '127.0.0.1', '/desktop/system.user.index/getusers');
+INSERT INTO `operation_log` VALUES ('983', '1', '1723017080', '127.0.0.1', '/desktop/system.role.index/getroles');
+INSERT INTO `operation_log` VALUES ('984', '1', '1723017082', '127.0.0.1', '/desktop/system.department.index/getdepartments');
+INSERT INTO `operation_log` VALUES ('985', '1', '1723017089', '127.0.0.1', '/desktop/system.mobile.permission.index/getpermissions');
+INSERT INTO `operation_log` VALUES ('986', '1', '1723017092', '127.0.0.1', '/desktop/system.role.index/getroles');
 
 -- ----------------------------
 -- Table structure for role
@@ -1624,7 +1703,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', 'avatar/2024/08/07/88ca456f2901fb76edf49d3db48bbbc4.png', '1684989244', '1716183018', '1722999524', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', 'avatar/2024/08/07/88ca456f2901fb76edf49d3db48bbbc4.png', '1684989244', '1716183018', '1723019339', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
 
 -- ----------------------------

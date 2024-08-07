@@ -62,7 +62,6 @@ const getNoReadMessages = async () => {
 const bind = () => {
   const data = {
     type: "bind",
-    end_id: 1,
     token: localStorage.getItem("token")
   };
   const dataString = JSON.stringify(data);

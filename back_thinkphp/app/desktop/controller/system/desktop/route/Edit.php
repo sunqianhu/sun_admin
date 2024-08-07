@@ -29,11 +29,11 @@ class edit extends Base
         $route = $routeModel->toArray();
 
         $dictionaryService = new DictionaryService();
-        $containers = $dictionaryService->getList('desktop_route_container');
+        $layouts = $dictionaryService->getList('desktop_route_layout');
 
         $data = [
             'route' => $route,
-            'containers' => $containers
+            'layouts' => $layouts
         ];
         return $this->success('获取成功', $data);
     }
@@ -43,7 +43,7 @@ class edit extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['id', 'name'=>'', 'key'=>'', 'path'=>'', 'component_path'=>'', 'container'=>'', 'keep_alive'=>'', 'sort']);
+        $post = $this->request->post(['id', 'name'=>'', 'key'=>'', 'path'=>'', 'component_path'=>'', 'layout'=>'', 'keep_alive'=>'', 'sort']);
 
         //验证
         try {

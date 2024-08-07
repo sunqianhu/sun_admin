@@ -61,7 +61,6 @@ const rules = {
   key: [{ required: true, message: "路由标识不能为空", trigger: "blur" }],
   path: [{ required: true, message: "路由路径不能为空", trigger: "blur" }],
   component_path: [{ required: true, message: "组件路径不能为空", trigger: "blur" }],
-  layout: [{ required: true, message: "布局容器不能为空", trigger: "blur" }],
   keep_alive: [{ required: true, message: "路由保活不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
