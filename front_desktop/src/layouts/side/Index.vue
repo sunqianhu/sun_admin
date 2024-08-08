@@ -1,6 +1,6 @@
 <template>
   <div class="layout-main">
-    <el-container :class="{ close: !appStore.siderStatus }" class="container">
+    <el-container :class="{ close: sideStore.fold }" class="container">
       <el-aside class="aside" id="aside">
         <div class="system-name">
           <img src="@/assets/logo.png" class="logo" />
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { useAppStore } from "@/stores/app";
+import { useSideStore } from "@/stores/layouts/side";
 import Menu from "./Menu.vue";
 import LightDark from "./LightDark.vue";
 import Hamburger from "./Hamburger.vue";
@@ -42,7 +42,7 @@ import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 import Guide from "./Guide.vue";
 
-const appStore = useAppStore();
+const sideStore = useSideStore();
 const version = import.meta.env.VITE_VERSION;
 
 /**
@@ -50,9 +50,9 @@ const version = import.meta.env.VITE_VERSION;
  */
 window.onresize = () => {
   if (document.body.clientWidth < 768) {
-    appStore.setSiderStatus(false);
+    sideStore.setFold(false);
   } else {
-    appStore.setSiderStatus(true);
+    sideStore.setFold(true);
   }
 };
 </script>

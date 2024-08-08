@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import axios from "@/helper/axios";
-import { useAppStore } from "@/stores/app";
+import { usePermissionStore } from "@/stores/permission";
+import { useRouteStore } from "@/stores/route";
 
 const writeList = ["/login", "/404", "/test"];
 const staticRoutes = [
@@ -11,7 +12,7 @@ const staticRoutes = [
     name: "side",
     component: () => import("../layouts/side/Index.vue"),
     meta: {
-      name: "主布局"
+      name: "侧边布局"
     },
     children: []
   },
@@ -63,8 +64,8 @@ const getLoginRoutePath = () => {
  * @returns
  */
 const setPermissions = async () => {
-  const appStore = useAppStore();
-  if (appStore.isSetPermission) {
+  const permissionStore = usePermissionStore();
+  if (permissionStore.isSet) {
     return true;
   }
 
@@ -72,7 +73,7 @@ const setPermissions = async () => {
   if (response.code != 1) {
     return getLoginRoutePath();
   }
-  appStore.setPermissions(response.data);
+  permissionStore.set(response.data);
 
   return true;
 };
@@ -83,8 +84,8 @@ const setPermissions = async () => {
  * @returns
  */
 const setRoutes = async (path) => {
-  const appStore = useAppStore();
-  if (appStore.isSetRoute) {
+  const routeStore = useRouteStore();
+  if (routeStore.isSet) {
     return true;
   }
 
@@ -92,7 +93,7 @@ const setRoutes = async (path) => {
   if (response.code != 1 || response.data.length == 0) {
     return getLoginRoutePath();
   }
-  appStore.setRoutes(response.data);
+  routeStore.set(response.data);
 
   let sideRoute = staticRoutes.find((route) => route.name == "side");
   let blankRoute = staticRoutes.find((route) => route.name == "blank");
@@ -102,7 +103,7 @@ const setRoutes = async (path) => {
     if (!childRoute.component_path) {
       return;
     }
-    childRoute.component = () => import("../views/" + childRoute.component_path);
+    childRoute.component = () => /* @vite-ignore */ import("../views/" + childRoute.component_path);
 
     if (childRoute.layout == "side") {
       sideRoute.children.push(childRoute);

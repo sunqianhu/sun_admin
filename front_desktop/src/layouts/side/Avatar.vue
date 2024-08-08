@@ -37,7 +37,8 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Edit, SwitchButton, User } from "@element-plus/icons-vue";
-import { useAppStore } from "../../stores/app";
+import { usePermissionStore } from "@/stores/permission";
+import { useRouteStore } from "@/stores/route";
 import axios from "@/helper/axios";
 import Detail from "./user/Detail.vue";
 import EditAvatar from "./user/EditAvatar.vue";
@@ -86,7 +87,8 @@ const openEditPassword = async () => {
  * 退出登录
  */
 const logout = async () => {
-  const appStore = useAppStore();
+  const permissionStore = usePermissionStore();
+  const routeStore = useRouteStore();
   let url;
 
   const response = await axios.get("desktop/layouts.Side/logout");
@@ -98,8 +100,8 @@ const logout = async () => {
     return;
   }
 
-  appStore.clearRoutes();
-  appStore.clearPermissions();
+  permissionStore.clear();
+  routeStore.clear();
   localStorage.removeItem("token");
 
   router.replace("/login");

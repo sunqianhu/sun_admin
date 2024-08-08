@@ -1,6 +1,7 @@
 import axios from "axios";
 import router from "../router";
-import { useAppStore } from "../stores/app";
+import { usePermissionStore } from "@/stores/permission";
+import { useRouteStore } from "@/stores/route";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_PREFIX,
@@ -55,10 +56,12 @@ instance.interceptors.response.use(
  * 退出登录
  */
 const logout = () => {
-  const appStore = useAppStore();
+  const permissionStore = usePermissionStore();
+  const routeStore = useRouteStore();
+
   localStorage.removeItem("token");
-  appStore.clearRoutes();
-  appStore.clearPermissions();
+  permissionStore.clear();
+  routeStore.clear();
   router.replace("/login");
 };
 

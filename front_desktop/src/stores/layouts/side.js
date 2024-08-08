@@ -1,0 +1,31 @@
+import { defineStore } from "pinia";
+
+export const useSideStore = defineStore("side", {
+  state: () => {
+    return {
+      fold: false
+    };
+  },
+  actions: {
+    /**
+     * 切换折叠
+     */
+    toggleFold() {
+      let value = "1";
+      this.fold = this.fold ? false : true;
+      value = this.fold ? "1" : "0";
+      localStorage.setItem("layout_side_fold", value);
+    },
+
+    /**
+     * 设置折叠
+     * @param {boolean} status
+     */
+    setFold(status) {
+      let value = "1";
+      this.fold = status;
+      value = this.fold ? "1" : "0";
+      localStorage.setItem("layout_side_fold", value);
+    }
+  }
+});

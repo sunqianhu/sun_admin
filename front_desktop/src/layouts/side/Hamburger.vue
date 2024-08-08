@@ -1,20 +1,20 @@
 <template>
-  <div class="hamburger" @click="toggleSider">
-    <component :is="appStore.siderStatus ? Fold : Expand" class="icon"></component>
+  <div class="hamburger" @click="toggleFold">
+    <component :is="sideStore.fold ? Expand : Fold" class="icon"></component>
   </div>
 </template>
 
 <script setup>
-import { useAppStore } from "@/stores/app";
+import { useSideStore } from "@/stores/layouts/side.js";
 import { Fold, Expand } from "@element-plus/icons-vue";
 
-const appStore = useAppStore();
+const sideStore = useSideStore();
 
 /**
- * 切换左边
+ * 切换折叠
  */
-const toggleSider = () => {
-  appStore.toggleSiderStatus();
+const toggleFold = () => {
+  sideStore.toggleFold();
 };
 </script>
 

@@ -4,7 +4,7 @@
     text-color="rgba(255, 255, 255, 0.9)"
     active-text-color="#ffffff"
     :default-active="defaultActive"
-    :collapse="!appStore.siderStatus"
+    :collapse="sideStore.fold"
     :unique-opened="true"
     class="menu"
   >
@@ -15,11 +15,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useAppStore } from "@/stores/app";
+import { useSideStore } from "@/stores/layouts/side";
 import axios from "@/helper/axios";
 import MenuItem from "./MenuItem.vue";
 
-const appStore = useAppStore();
+const sideStore = useSideStore();
 const route = useRoute();
 const defaultActive = route.fullPath; //默认活跃项
 const menus = ref([]);
