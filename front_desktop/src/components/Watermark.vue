@@ -1,5 +1,5 @@
 <template>
-  <div class="watermark" v-if="!loading">
+  <div class="watermark" v-if="show">
     <div class="item" v-for="index in 100">
       <div class="name">{{ data.user_name + data.user_id }}</div>
       <div class="time">{{ data.date_time }}</div>
@@ -12,21 +12,18 @@ import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
 const data = ref({});
-const loading = ref(true);
+const show = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/layouts.Side/getWatermark");
+  show.value = false;
+  const response = await axios.get("desktop/Frame/getWatermark");
   if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
     return;
   }
-  loading.value = false;
+  show.value = true;
   data.value = response.data;
 };
 
@@ -49,7 +46,7 @@ onMounted(() => {
     float: left;
     margin: 50px;
     text-align: center;
-    opacity: 0.15;
+    opacity: 0.2;
     transform: rotate(-30deg);
     .name {
       font-size: var(--font-size-lg);

@@ -6,7 +6,7 @@
         <el-icon class="close" @click="close"><Close /></el-icon>
       </div>
       <div class="content">
-        <el-scrollbar max-height="250px" class="scrollbar">
+        <el-scrollbar max-height="300px" class="scrollbar">
           <div class="item" v-for="(message, index) in messages" :key="message.id">
             <a href="javascript:;" @click="navigateTo(index, message.url)"> {{ message.title }} </a>
           </div>
@@ -18,13 +18,11 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { Close } from "@element-plus/icons-vue";
 import WebsocketClient from "@/helper/WebsocketClient.js";
 import axios from "@/helper/axios";
 import audioPath from "@/assets/message.mp3";
 
-const router = useRouter();
 const messages = ref([]); //消息
 const show = ref(false); //显示
 
@@ -48,12 +46,22 @@ websocketClient.connect();
  * 获取未读消息
  */
 const getNoReadMessages = async () => {
-  const response = await axios.get("desktop/layouts.side.Message/getNoReads");
+  const response = await axios.get("desktop/frame.Message/getNoReadMessages");
+  if (response.code != 1) {
+    return;
+  }
   if (response.data.length == 0) {
     return;
   }
   messages.value = response.data;
   show.value = true;
+};
+
+/**
+ * 设置全部已读
+ */
+const setAllRead = async () => {
+  await axios.get("desktop/frame.Message/setAllRead");
 };
 
 /**
@@ -79,8 +87,7 @@ const showMessage = async (data) => {
   };
   messages.value.unshift(message);
   playAudio();
-
-  await axios.get("desktop/layouts.side.Message/readAll");
+  setAllRead();
 };
 
 /**
@@ -89,7 +96,7 @@ const showMessage = async (data) => {
 const close = async () => {
   messages.value = [];
   show.value = false;
-  await axios.get("desktop/layouts.side.Message/readAll");
+  setAllRead();
 };
 
 /**
@@ -124,11 +131,11 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .message {
-  background-color: #ffffff;
-  width: 330px;
+  background-color: var(--background-color-light);
+  width: 400px;
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: var(--margin-md);
+  bottom: var(--margin-md);
   z-index: 3001;
   box-shadow: var(--box-shadow-base);
   border-radius: var(--border-radius-md);
@@ -137,8 +144,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    padding: 16px 16px 0px 16px;
+    padding: var(--margin-md) var(--margin-md) 0px var(--margin-md);
     .close {
       cursor: pointer;
       color: var(--font-color-secondary);
@@ -149,10 +155,10 @@ onMounted(() => {
   }
   .content {
     .scrollbar {
-      padding: 16px;
+      padding: var(--padding-md);
       .item {
-        border-bottom: 1px solid var(--border-color-light);
-        padding: 8px 0px;
+        border-bottom: 1px solid var(--border-color-base);
+        padding: var(--padding-xs) 0px;
         &:last-child {
           border-bottom: none;
         }

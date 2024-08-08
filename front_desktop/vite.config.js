@@ -12,6 +12,7 @@ const viteConfig = ({ mode }) => {
   dotenv.config({ path: ".env." + mode });
 
   return defineConfig({
+    base: process.env.VITE_BASE_URL,
     plugins: [
       vue(),
       AutoImport({

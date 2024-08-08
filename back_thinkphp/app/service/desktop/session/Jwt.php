@@ -54,7 +54,11 @@ class Jwt
     function resolverToken($token)
     {
         FirebaseJWT::$leeway = $this->leeway;
-        $decoded = FirebaseJWT::decode($token, new Key($this->key, 'HS256'));
+        try{
+            $decoded = FirebaseJWT::decode($token, new Key($this->key, 'HS256'));
+        }catch (Exception $exception){
+            throw new Exception('登录凭证错误['.$exception->getMessage().']');
+        }
 
         //验证
         $tokenModel = TokenModel::where('token', $token)->find();

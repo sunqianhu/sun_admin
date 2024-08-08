@@ -18,6 +18,8 @@ class Session
      */
     public $noLoginUrls = [
         '/desktop/Login/login',
+        '/desktop/Frame/getWatermark',
+        '/desktop/frame.Message/getNoReadMessages',
         '/desktop/Test/index'
     ];
 
@@ -25,19 +27,16 @@ class Session
      * @var string[] 不鉴权网址
      */
     public $noAuthUrls = [
-        '/desktop/Frame/getRoutes',
         '/desktop/Frame/getPermissions',
+        '/desktop/Frame/getRoutes',
+        '/desktop/frame.Message/setAllRead',
         '/desktop/layouts.Side/getMenus',
         '/desktop/layouts.Side/getAvatar',
-        '/desktop/layouts.Side/getWatermark',
         '/desktop/layouts.Side/logout',
         '/desktop/layouts.side.user.Detail/getUser',
         '/desktop/layouts.side.user.EditAvatar/init',
         '/desktop/layouts.side.user.EditAvatar/save',
         '/desktop/layouts.side.user.EditPassword/save',
-        '/desktop/layouts.side.Message/readAll',
-        '/desktop/layouts.side.Message/getNoReads',
-        '/desktop/layouts.Blank/getWatermark',
         '/desktop/uploadFile/upload'
     ];
 

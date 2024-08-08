@@ -159,7 +159,7 @@ class Message extends Command
      */
     public function bind(&$connection, $token)
     {
-        if ($token === '') {
+        if (empty($token)) {
             return;
         }
 
@@ -170,6 +170,8 @@ class Message extends Command
         } catch (Exception $exception) {
             return;
         }
+        unset($jwt);
+        unset($session);
     }
 
     /**

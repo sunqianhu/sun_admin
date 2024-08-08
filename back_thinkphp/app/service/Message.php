@@ -86,10 +86,10 @@ class Message
 
 
     /**
-     * 全部已读
+     * 设置全部已读
      * @return void
      */
-    public function readAll($userId)
+    public function setAllRead($userId)
     {
         $messageModels = MessageModel::where('user_id', $userId)
             ->where('read', 0)

@@ -29,8 +29,6 @@
         </el-main>
       </el-container>
     </el-container>
-    <message></message>
-    <watermark />
     <guide />
   </div>
 </template>
@@ -42,8 +40,6 @@ import LightDark from "./LightDark.vue";
 import Hamburger from "./Hamburger.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
-import Message from "./Message.vue";
-import Watermark from "./Watermark.vue";
 import Guide from "./Guide.vue";
 
 const appStore = useAppStore();

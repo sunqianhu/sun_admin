@@ -20,6 +20,8 @@ class Test extends Command
 
     protected function execute(Input $input, Output $output)
     {
+        $message = new \app\service\Message();
+        $message->sendByQueue([1,2,3,4,5,6,7,8,9,10], '测试', '/desktop/Test/index');
         // 指令输出
         $output->writeln('test');
     }

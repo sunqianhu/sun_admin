@@ -62,11 +62,9 @@
 <script setup>
 import { ref } from "vue";
 import { User, Lock } from "@element-plus/icons-vue";
-import { useRouter } from "vue-router";
 import axios from "@/helper/axios";
 import Vcode from "vue3-puzzle-vcode";
 
-const router = useRouter();
 const session = ref({});
 const sessionRef = ref(null);
 const rules = {
@@ -106,7 +104,7 @@ const submitForm = async () => {
   }
 
   localStorage.setItem("token", response.data.token);
-  router.push("/");
+  location.replace("./");
 };
 </script>
 

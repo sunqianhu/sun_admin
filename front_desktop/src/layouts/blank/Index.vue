@@ -6,12 +6,10 @@
       </keep-alive>
       <component :is="Component" v-else />
     </router-view>
-    <watermark />
   </div>
 </template>
 
 <script setup>
-import Watermark from "./Watermark.vue";
 import { useDark, useToggle } from "@vueuse/core";
 
 const isDark = useDark();
