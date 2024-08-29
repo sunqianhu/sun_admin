@@ -49,17 +49,16 @@ class Desktop
      * @param $url
      * @return false|void
      */
-    public function hasPermission($userId, $url){
-        //return true;
+    public function hasPermissionByUrl($userId, $url){
         $apis = $this->getApis($userId);
         if(empty($apis)){
             return false;
         }
 
-        $apis = array_map('strtolower', $apis);
         $url = strtolower($url);
+        $apis = array_map('strtolower', $apis);
         foreach($apis as $api){
-            if($url === $api){
+            if($api === $url){
                 return true;
             }
         }
@@ -87,6 +86,20 @@ class Desktop
             ->group('key')
             ->column('key');
         return $keys;
+    }
+
+    /**
+     * 是否有权限
+     * @param $userId
+     * @param $key
+     * @return bool
+     */
+    public function hasPermission($userId, $key){
+        $keys = $this->getPermissionKeys($userId);
+        if(in_array($key, $keys)){
+            return true;
+        }
+        return false;
     }
 
     /**

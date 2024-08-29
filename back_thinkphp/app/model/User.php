@@ -1,6 +1,7 @@
 <?php
 namespace app\model;
 
+use app\model\User as UserModel;
 use app\service\User as UserService;
 
 class User extends Base
@@ -91,5 +92,24 @@ class User extends Base
         }
         $roles = $this->roles->toArray();
         return array_column($roles, 'name');
+    }
+
+    /**
+     * 得到基本的用户
+     * @param $id
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getBaseUser($id)
+    {
+        $userModel = UserModel::field('id,name,department_id,avatar')
+            ->append(['avatar_url', 'department_name'])
+            ->find($id);
+        if(empty($userModel)){
+            throw new Exception('没有找到用户记录');
+        }
+        return $userModel->toArray();
     }
 }

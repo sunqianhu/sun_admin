@@ -173,7 +173,7 @@ class Session
         }
 
         $desktopService = new DesktopService();
-        if(!$desktopService->hasPermission($userId, $url)){
+        if(!$desktopService->hasPermissionByUrl($userId, $url)){
             throw new Exception('无权限');
         }
     }

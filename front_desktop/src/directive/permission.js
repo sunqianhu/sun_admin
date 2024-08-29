@@ -3,8 +3,8 @@ import { hasPermission } from "../helper/permission";
 export default {
   //挂载完成后
   mounted(el, binding, vnode, prevVnode) {
-    let key = binding.value;
-    if (hasPermission(key)) {
+    let keys = binding.value;
+    if (hasPermission(keys)) {
       return;
     }
 

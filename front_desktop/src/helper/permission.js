@@ -5,11 +5,12 @@ import { usePermissionStore } from "@/stores/permission";
  * @param {*} key
  * @returns
  */
-export const hasPermission = (key) => {
+export const hasPermission = (keys) => {
   const permissionStore = usePermissionStore();
   const permissions = permissionStore.permissions;
   if (!permissions) {
     return false;
   }
-  return permissions.includes(key);
+
+  return keys.some((key) => permissions.includes(key));
 };

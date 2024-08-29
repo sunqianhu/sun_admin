@@ -48,6 +48,42 @@ class Menu
     }
 
     /**
+     * 得到子菜单id
+     * @param $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getChildMenuIds($id){
+        $menuModels = MenuModel::where('menu_id', $id)
+            ->select();
+        $ids = [];
+        foreach($menuModels as $menuModel){
+            $ids[] = $menuModel->id;
+            $ids = array_merge($ids, $this->getChildMenuIds($menuModel->id));
+        }
+        return $ids;
+    }
+
+    /**
+     * 通过菜单名称得到id
+     * @param $name
+     * @return int
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getIdByName($name){
+        $menuModel = MenuModel::where('name', $name)
+            ->find();
+        if(empty($menuModel)){
+            return 0;
+        }
+        return $menuModel->id;
+    }
+
+    /**
      * 添加
      * @param $data
      * @return void

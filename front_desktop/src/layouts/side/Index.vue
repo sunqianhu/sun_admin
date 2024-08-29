@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-main">
+  <div class="layout-side">
     <el-container :class="{ close: sideStore.fold }" class="container">
       <el-aside class="aside" id="aside">
         <div class="system-name">
@@ -70,7 +70,7 @@ html {
 </style>
 
 <style lang="scss" scoped>
-.layout-main {
+.layout-side {
   height: 100%;
 
   .container {
@@ -171,7 +171,7 @@ html {
 
 //暗黑模式
 .dark {
-  .layout-main {
+  .layout-side {
     .container {
       .aside {
         background-color: #141414;

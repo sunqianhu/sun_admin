@@ -46,17 +46,16 @@ class Mobile
      * @param $url
      * @return false|void
      */
-    public function hasPermission($userId, $url){
-        //return true;
+    public function hasPermissionByUrl($userId, $url){
         $apis = $this->getApis($userId);
         if(empty($apis)){
             return false;
         }
 
-        $apis = array_map('strtolower', $apis);
         $url = strtolower($url);
+        $apis = array_map('strtolower', $apis);
         foreach($apis as $api){
-            if($url === $api){
+            if($api === $url){
                 return true;
             }
         }

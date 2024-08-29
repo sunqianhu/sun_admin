@@ -3,6 +3,7 @@
 namespace app\service;
 
 use app\model\Department as DepartmentModel;
+use app\model\User as UserModel;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\facade\Cache;
@@ -105,5 +106,34 @@ class Department
         }
         $names = DepartmentModel::where('id', 'in', $ids)->column('name');
         return implode($glue, $names);
+    }
+
+    /**
+     * 得到用户
+     * @param $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getUsersById($id){
+        $users = UserModel::where('department_id', $id)->select();
+        return $users->toArray();
+    }
+
+    /**
+     * 通过类型得到部门集合
+     * @param $typeId
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getDepartmentsByTypeId($typeId) {
+        $departmentModels = DepartmentModel::field('id,name,type_id,department_id')
+            ->where('type_id', '=', $typeId)
+            ->order('sort', 'asc')
+            ->select();
+        return $departmentModels->toArray();
     }
 }

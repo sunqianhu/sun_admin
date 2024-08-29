@@ -73,12 +73,12 @@ class Message extends Command
 
         //容器
         $config = Config::get('message');
-        if (!isset($config['ip']) || !isset($config['port'])) {
+        if (!isset($config['listen_ip']) || !isset($config['port'])) {
             echo '还未配置监听ip或端口';
             exit;
         }
 
-        $url = 'websocket://' . $config['ip'] . ':' . $config['port'];
+        $url = 'websocket://' . $config['listen_ip'] . ':' . $config['port'];
         $this->worker = new Worker($url);
         $this->worker->name = 'message';
         $this->worker->count = 1;

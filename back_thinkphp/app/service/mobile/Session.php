@@ -167,7 +167,7 @@ class Session
         }
 
         $mobileService = new MobileService();
-        if(!$mobileService->hasPermission($userId, $url)){
+        if(!$mobileService->hasPermissionByUrl($userId, $url)){
             throw new Exception('无权限');
         }
     }

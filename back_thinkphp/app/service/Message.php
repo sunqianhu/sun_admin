@@ -52,7 +52,7 @@ class Message
             ]
         ];
         $encodeData = json_encode($data);
-        $url = 'ws://' . $config['ip'] . ':' . $config['port'];
+        $url = 'ws://' . $config['request_ip'] . ':' . $config['port'];
         $client = new Client($url);
         $client->text($encodeData);
         $client->close();
