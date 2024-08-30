@@ -9,7 +9,8 @@
     :accept="props.accept"
     :limit="props.limit"
     :disabled="props.disabled"
-    :data="data"
+    :show-file-list="props.showFileList"
+    :data="props.data"
     :on-success="success"
     :on-remove="remove"
     :on-change="change"
@@ -35,36 +36,13 @@ const props = defineProps({
   name: {
     type: String,
     default: "file"
-  },
-  multiple: {
-    type: Boolean,
-    default: undefined
-  },
-  accept: {
-    type: String,
-    default: undefined
-  },
-  disabled: {
-    type: Boolean,
-    default: undefined
-  },
-  limit: {
-    type: Number,
-    default: undefined
-  },
-  module: {
-    type: String,
-    default: "file"
   }
 });
-const emits = defineEmits(["update:modelValue"]);
+const emits = defineEmits(["update:modelValue", "success"]);
 const headers = { token: localStorage.getItem("token") };
 const files = ref([]);
-const data = {
-  module: props.module
-};
 const uploadRef = ref(null);
-const action = import.meta.env.VITE_API_PREFIX + "desktop/UploadFile/upload";
+const action = import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload";
 
 /**
  * 初始化
@@ -89,6 +67,7 @@ const success = (response, uploadFile, uploadFiles) => {
     return;
   }
 
+  emits("success", { response: response, uploadFile: uploadFile, uploadFiles: uploadFiles });
   emits("update:modelValue", getFiles());
 };
 
@@ -137,10 +116,9 @@ const getFiles = () => {
   for (fileValue of fileValues) {
     if (fileValue.response) {
       finalFiles.push(fileValue.response.data);
-      continue;
+    } else {
+      finalFiles.push(fileValue);
     }
-
-    finalFiles.push(fileValue);
   }
 
   return finalFiles;

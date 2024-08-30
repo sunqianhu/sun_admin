@@ -37,7 +37,7 @@ class Session
         '/desktop/layouts.side.user.EditAvatar/init',
         '/desktop/layouts.side.user.EditAvatar/save',
         '/desktop/layouts.side.user.EditPassword/save',
-        '/desktop/uploadFile/upload'
+        '/desktop/FileUpload/upload'
     ];
 
     /**
