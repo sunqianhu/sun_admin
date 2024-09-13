@@ -66,16 +66,16 @@ const getLoginRoutePath = () => {
 const setPermissions = async () => {
   const permissionStore = usePermissionStore();
   if (permissionStore.isSet) {
-    return true;
+    return "exist";
   }
 
   const response = await axios.get("desktop/frame/getPermissions");
   if (response.code != 1) {
-    return getLoginRoutePath();
+    throw new Error(response.message);
   }
   permissionStore.set(response.data);
 
-  return true;
+  return "complate";
 };
 
 /**
@@ -86,12 +86,12 @@ const setPermissions = async () => {
 const setRoutes = async (path) => {
   const routeStore = useRouteStore();
   if (routeStore.isSet) {
-    return true;
+    return "exist";
   }
 
   const response = await axios.get("desktop/frame/getRoutes");
   if (response.code != 1 || response.data.length == 0) {
-    return getLoginRoutePath();
+    throw new Error(response.message);
   }
   routeStore.set(response.data);
 
@@ -122,7 +122,7 @@ const setRoutes = async (path) => {
   router.addRoute(sideRoute);
   router.addRoute(blankRoute);
 
-  return path;
+  return "complate";
 };
 
 /**
@@ -145,16 +145,15 @@ const beforeHandle = async (to, from) => {
     return getLoginRoutePath();
   }
 
-  //权限
-  let result = await setPermissions();
-  if (result !== true) {
-    return result;
-  }
-
-  //动态路由
-  result = await setRoutes(to.path);
-  if (result !== true) {
-    return result;
+  //权限+路由
+  try {
+    await setPermissions();
+    let result = await setRoutes();
+    if (result == "complete") {
+      return to.fullPath;
+    }
+  } catch (error) {
+    return getLoginRoutePath();
   }
 
   return true;

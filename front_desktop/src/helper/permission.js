@@ -12,5 +12,5 @@ export const hasPermission = (keys) => {
     return false;
   }
 
-  return keys.some((key) => permissions.includes(key));
+  return keys.every((key) => permissions.includes(key));
 };
