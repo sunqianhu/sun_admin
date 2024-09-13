@@ -17,27 +17,27 @@ class Session
      * @var string[] 不登录网址
      */
     public $noLoginUrls = [
-        '/desktop/Login/login',
-        '/desktop/Frame/getWatermark',
-        '/desktop/frame.Message/getNoReadMessages',
-        '/desktop/Test/index'
+        'desktop/Login/login',
+        'desktop/Frame/getWatermark',
+        'desktop/frame.Message/getNoReadMessages',
+        'desktop/Test/index'
     ];
 
     /**
      * @var string[] 不鉴权网址
      */
     public $noAuthUrls = [
-        '/desktop/Frame/getPermissions',
-        '/desktop/Frame/getRoutes',
-        '/desktop/frame.Message/setAllRead',
-        '/desktop/layouts.Side/getMenus',
-        '/desktop/layouts.Side/getAvatar',
-        '/desktop/layouts.Side/logout',
-        '/desktop/layouts.side.user.Detail/getUser',
-        '/desktop/layouts.side.user.EditAvatar/init',
-        '/desktop/layouts.side.user.EditAvatar/save',
-        '/desktop/layouts.side.user.EditPassword/save',
-        '/desktop/FileUpload/upload'
+        'desktop/Frame/getPermissions',
+        'desktop/Frame/getRoutes',
+        'desktop/frame.Message/setAllRead',
+        'desktop/layouts.Side/getMenus',
+        'desktop/layouts.Side/getAvatar',
+        'desktop/layouts.Side/logout',
+        'desktop/layouts.side.user.Detail/getUser',
+        'desktop/layouts.side.user.EditAvatar/init',
+        'desktop/layouts.side.user.EditAvatar/save',
+        'desktop/layouts.side.user.EditPassword/save',
+        'desktop/FileUpload/upload'
     ];
 
     /**
@@ -159,6 +159,7 @@ class Session
 
         $url = $request->baseUrl();
         $url = strtolower($url);
+        $url = ltrim($url, '/');
 
         //登录
         $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
