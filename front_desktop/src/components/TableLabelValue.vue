@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, useSlots, watch, onMounted } from "vue";
+import { ref, useSlots, watchEffect, onMounted } from "vue";
 import VnodeRender from "./VnodeRender.js";
 
 const props = defineProps({
@@ -45,8 +45,10 @@ const createItem = (vnode) => {
   if (item["content-colspan"]) {
     item.contentColspan = item["content-colspan"];
   }
+
   item.contentVnodes =
     vnode && vnode.children && vnode.children.default ? vnode.children.default() : [];
+
   return item;
 };
 
@@ -55,30 +57,30 @@ const createItem = (vnode) => {
  */
 const getItems = () => {
   let items = [];
+
+  const processVNodes = (vnodes) => {
+    vnodes.forEach((vnode) => {
+      if (vnode.type.__name === "TableLabelValueItem") {
+        let item = createItem(vnode);
+        items.push(item);
+      } else if (vnode.children) {
+        if (typeof vnode.children === "function") {
+          processVNodes(vnode.children());
+        } else if (Array.isArray(vnode.children)) {
+          processVNodes(vnode.children);
+        }
+      }
+    });
+  };
+
   if (!slots || !slots.default) {
     return items;
   }
 
   let vnodes = slots.default();
-  if (vnodes.length === 0) {
-    return items;
+  if (vnodes.length > 0) {
+    processVNodes(vnodes);
   }
-
-  vnodes = vnodes.filter((vnode) => {
-    if (vnode.type.__name == "TableLabelValueItem") {
-      return true;
-    }
-    return false;
-  });
-  if (vnodes.length === 0) {
-    return items;
-  }
-
-  vnodes.forEach((vnode) => {
-    let item = createItem(vnode);
-    items.push(item);
-  });
-
   return items;
 };
 
@@ -113,22 +115,12 @@ const init = () => {
   setRows(items);
 };
 
-//监听插槽内容改变
-watch(
-  () => {
-    const allVnodes = [];
-    const vnodes = slots.default ? slots.default() : [];
-    vnodes.forEach((vnode) => {
-      if (vnode.children && vnode.children.default) {
-        allVnodes.push(...vnode.children.default());
-      }
-    });
-    return allVnodes;
-  },
-  () => {
-    init();
-  }
-);
+/**
+ * 监听
+ */
+watchEffect(() => {
+  init();
+});
 
 onMounted(() => {
   init();
