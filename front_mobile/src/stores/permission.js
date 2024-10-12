@@ -1,25 +1,25 @@
 import { defineStore } from "pinia";
 
-export const useAppStore = defineStore("app", {
+export const usePermissionStore = defineStore("permission", {
   state: () => ({
-    isSetPermission: false, //是否设置权限
+    isSet: false, //是否设置权限
     permissions: [] //权限
   }),
   actions: {
     /**
-     * 设置权限
+     * 设置
      * @param {array} permissions 权限数组
      */
-    setPermissions(permissions) {
-      this.isSetPermission = true;
+    set(permissions) {
+      this.isSet = true;
       this.permissions = permissions;
     },
 
     /**
-     * 清除权限
+     * 清除
      */
-    clearPermissions() {
-      this.isSetPermission = false;
+    clear() {
+      this.isSet = false;
       this.permissions = [];
     }
   }

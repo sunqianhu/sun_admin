@@ -131,6 +131,7 @@ class Session
         $token = $request->header('token', '');
         $url = $request->baseUrl();
         $url = strtolower($url);
+        $url = ltrim($url, '/');
         $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
 
         if (in_array($url, $this->noLoginUrls)) {
