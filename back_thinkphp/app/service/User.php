@@ -107,15 +107,13 @@ class User
 
     /**
      * id转账号
-     * @param $idString
-     * @param $fromDelimiter
-     * @param $toGlue
-     * @return string
+     * @param $use
+     * @param $exclude
+     * @return mixed|string
      */
-    public function idToAccount($idString, $fromDelimiter = ',', $toGlue = ',')
+    public function idsToAccountString($ids, $toDecollator = ',')
     {
-        $ids = explode($fromDelimiter, $idString);
-        if (empty($ids)) {
+        if(empty($ids)){
             return '';
         }
 
@@ -123,7 +121,8 @@ class User
         if (empty($accounts)) {
             return '';
         }
-        return implode($toGlue, $accounts);
+
+        return implode($toDecollator, $accounts);
     }
 
     /**

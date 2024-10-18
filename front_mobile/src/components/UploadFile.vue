@@ -7,6 +7,8 @@
       :max-count="maxCount"
       :accept="accept"
       :disabled="disabled"
+      :deletable="deletable"
+      :upload-icon="uploadIcon"
       @delete="deleteFile"
     >
     </van-uploader>
@@ -45,16 +47,24 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: undefined
+  },
+  deletable: {
+    type: Boolean,
+    default: undefined
+  },
+  uploadIcon: {
+    type: String,
+    default: undefined
   }
 });
-const emits = defineEmits(["update:modelValue"]);
+const emits = defineEmits(["update:modelValue", "uploaded"]);
 const files = ref([]);
 
 /**
  * 初始化
  */
 const init = () => {
-  files.value = props.modelValue;
+  files.value = props.modelValue ? props.modelValue : [];
 };
 
 /**
@@ -76,6 +86,7 @@ const upload = async (file) => {
   }
   updateFile(file, response.data);
   emits("update:modelValue", getFiles());
+  emits("uploaded", file);
 };
 
 /**
@@ -98,8 +109,12 @@ const deleteFile = (file) => {
 const updateFile = (file, info) => {
   const index = files.value.indexOf(file);
   if (index !== -1) {
-    files.value[index].url = info.url;
+    files.value[index].name = info.name;
+    files.value[index].type = info.type;
+    files.value[index].ext = info.ext;
+    files.value[index].size = info.size;
     files.value[index].path = info.path;
+    files.value[index].url = info.url;
   }
 };
 
