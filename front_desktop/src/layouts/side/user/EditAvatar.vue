@@ -150,8 +150,16 @@ const rotateRight = () => {
  */
 const realTimePreview = (data) => {
   preview.value = data;
-  let zoom = 100 / data.w;
-  preview.value.div.transform = "scale(" + zoom + ")";
+  let scale = 100 / data.w;
+  preview.value.div.transform = `scale(${scale})`;
+  preview.value.div = {
+    ...preview.value.div,
+    transform: `scale(${scale})`,
+    transformOrigin: "top left",
+    position: "absolute",
+    left: 0,
+    top: 0
+  };
 };
 
 /**
