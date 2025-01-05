@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\login_log;
 
 use app\desktop\controller\Base;
-use app\model\LoginLog as LoginLogModel;
+use app\model\LoginLogModel;
 
 class Index extends Base
 {

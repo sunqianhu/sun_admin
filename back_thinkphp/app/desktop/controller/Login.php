@@ -2,14 +2,16 @@
 
 namespace app\desktop\controller;
 
-use app\service\desktop\Session as SessionService;
+use app\service\desktop\Session;
 use app\service\LoginFailChecker;
-use app\validate\Session as SessionValidate;
+use app\validate\SessionValidate;
 use think\exception\ValidateException;
 use Exception;
 
 class Login extends Base
 {
+    public $isTokenAuth = false;
+
     /**
      * 登录
      * @return mixed
@@ -22,7 +24,7 @@ class Login extends Base
         $post = $this->request->post(['account' => '', 'password' => '']);
 
         try {
-            validate(SessionValidate::class)->scene('desktop_login')->check($post);
+            validate(SessionValidate::class)->scene('login')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
@@ -34,8 +36,8 @@ class Login extends Base
         }
 
         try{
-            $sessionService = new SessionService();
-            $sessionEntity = $sessionService->login($post['account'], $post['password'], $this->request->ip());
+            $session = new Session();
+            $sessionEntity = $session->login($post['account'], $post['password'], $this->request->ip());
         }catch (Exception $exception){
             $loginFailChecker->setFail();
             $availableNumber = $loginFailChecker->getAvailableNumber();
@@ -49,9 +51,6 @@ class Login extends Base
         }
         $loginFailChecker->resetFail();
 
-        $data = [
-            'token'=>$sessionEntity->token
-        ];
-        return $this->success('登录成功', $data);
+        return $this->success('登录成功', $sessionEntity->token);
     }
 }

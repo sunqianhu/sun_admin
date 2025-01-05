@@ -4,11 +4,11 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\Role as RoleModel;
-use app\model\User as UserModel;
+use app\model\UserModel;
 use app\service\Department as DepartmentService;
 use app\service\User as UserServer;
-use app\service\user\Desktop as DesktopService;
-use app\validate\User as UserValidate;
+use app\service\user\desktop\User;
+use app\validate\UserValidate as UserValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -80,7 +80,7 @@ class Index extends Base
 
         //验证
         try {
-            validate(UserValidate::class)->scene('desktop_edit_status')->check($post);
+            validate(UserValidate::class)->scene('edit_status')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
@@ -104,14 +104,14 @@ class Index extends Base
 
         //验证
         try {
-            validate(UserValidate::class)->scene('desktop_offline')->check($post);
+            validate(UserValidate::class)->scene('offline')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
         try{
-            $desktopService = new DesktopService();
-            $desktopService->offLine($post['id']);
+            $user = new User();
+            $user->offLine($post['id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

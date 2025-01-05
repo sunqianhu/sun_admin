@@ -11,10 +11,10 @@
     :disabled="props.disabled"
     :show-file-list="props.showFileList"
     :data="props.data"
-    :on-success="success"
-    :on-remove="remove"
-    :on-change="change"
-    :on-exceed="exceed"
+    :on-success="handleSuccess"
+    :on-remove="handleRemove"
+    :on-change="handleChange"
+    :on-exceed="handleExceed"
   >
     <template #default>
       <slot></slot>
@@ -52,12 +52,12 @@ const init = () => {
 };
 
 /**
- * 上传成功
+ * 处理上传成功
  * @param {*} response
  * @param {*} uploadFile
  * @param {*} uploadFiles
  */
-const success = (response, uploadFile, uploadFiles) => {
+const handleSuccess = (response, uploadFile, uploadFiles) => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -67,34 +67,34 @@ const success = (response, uploadFile, uploadFiles) => {
     return;
   }
 
-  emits("success", { response: response, uploadFile: uploadFile, uploadFiles: uploadFiles });
+  emits("success", response, uploadFile, uploadFiles);
   emits("update:modelValue", getFiles());
 };
 
 /**
- * 删除文件
+ * 处理删除文件
  * @param {*} file
  * @param {*} uploadFiles
  */
-const remove = (uploadFile, uploadFiles) => {
+const handleRemove = (uploadFile, uploadFiles) => {
   emits("update:modelValue", getFiles());
 };
 
 /**
- * 改变
+ * 处理改变
  * @param {*} file
  * @param {*} uploadFiles
  */
-const change = (uploadFile, uploadFiles) => {
+const handleChange = (uploadFile, uploadFiles) => {
   emits("update:modelValue", getFiles());
 };
 
 /**
- * 超出限制
+ * 处理超出限制
  * @param {Array} files 超出限制的文件
  * @param {Array} uploadFiles 已上传的文件
  */
-const exceed = (files, uploadFiles) => {
+const handleExceed = (files, uploadFiles) => {
   ElMessage({
     message: "最多上传" + props.limit + "个文件",
     type: "error"

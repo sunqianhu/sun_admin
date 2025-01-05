@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Menu as MenuModel;
+use app\model\desktop\MenuModel;
 use app\service\desktop\Menu as MenuService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;

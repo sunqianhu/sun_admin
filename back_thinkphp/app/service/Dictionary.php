@@ -2,7 +2,7 @@
 
 namespace app\service;
 
-use app\model\Dictionary as DictionaryModel;
+use app\model\DictionaryModel;
 use Exception;
 use think\facade\Cache;
 

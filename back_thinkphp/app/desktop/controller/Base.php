@@ -3,9 +3,8 @@
 namespace app\desktop\controller;
 
 use app\BaseController;
-use app\service\desktop\Session as SessionService;
-use app\entity\desktop\Session as SessionEntity;
-use app\service\OperationLog as OperationLogService;
+use app\service\desktop\Session;
+use app\service\OperationLog;
 use Exception;
 use think\Response;
 
@@ -15,9 +14,21 @@ use think\Response;
 class Base extends BaseController
 {
     /**
-     * @var SessionEntity 会话
+     * @var bool 是否ip认证
      */
-    public SessionEntity $session;
+    public $isIpAuth = true;
+    /**
+     * 是否登录认证
+     * @var bool
+     */
+    public $isTokenAuth = true;
+    /**
+     * 是否路由权限认证
+     * @var bool
+     */
+    public $isRouteAuth = true;
+
+    public $session;
 
     /**
      * 初始化
@@ -26,13 +37,14 @@ class Base extends BaseController
     function initialize()
     {
         parent::initialize();
-
-        $this->session = new SessionEntity();
-        $sessionService = new SessionService();
+        $session = new Session();
+        $session->isIpAuth = $this->isIpAuth;
+        $session->isTokenAuth = $this->isTokenAuth;
+        $session->isRouteAuth = $this->isRouteAuth;
 
         //ip
         try {
-            $sessionService->ipAuth($this->request->ip());
+            $session->ipAuth($this->request->ip());
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
@@ -40,11 +52,7 @@ class Base extends BaseController
 
         //token
         try {
-            $sessionEntity = $sessionService->tokenAuth($this->request);
-            if(empty($sessionEntity)) {
-                return;
-            }
-            $this->session = $sessionEntity;
+            $this->session = $session->tokenAuth($this->request);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 2)->send();
             exit;
@@ -52,45 +60,53 @@ class Base extends BaseController
 
         //路由
         try {
-            $sessionService->ruoteAuth($this->request, $this->session->userId);
+            $session->ruoteAuth($this->request, $this->session->userId);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
         }
 
         //操作日志
-        $operationLogService = new OperationLogService();
-        $operationLogService->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());
+        if($this->isTokenAuth) {
+            $operationLogService = new OperationLog();
+            $operationLogService->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());
+        }
     }
 
 
     /**
      * 成功响应
-     * @param string $message 提示消息
-     * @param mixed $data 返回数据
+     * @param string $message
+     * @param $data
+     * @param $code
+     * @param $actionCode
+     * @return Response
      */
-    public function success(string $message, $data = null)
+    public function success(string $message, $data = null, $code = 200, $actionCode = 1)
     {
         $result = [
-            'code' => 1,
+            'code' => $actionCode,
             'message' => $message,
             'data' => $data
         ];
-        return Response::create($result, 'json', 200);
+        return Response::create($result, 'json', $code);
     }
 
     /**
      * 失败响应
-     * @param string $message 提示消息
-     * @param mixed $data 返回数据
+     * @param string $message
+     * @param $data
+     * @param $code
+     * @param $actionCode
+     * @return Response
      */
-    public function error(string $message, $data = null, $code = 0)
+    public function error(string $message, $data = null, $code = 200, $actionCode = 0)
     {
         $result = [
-            'code' => $code,
+            'code' => $actionCode,
             'message' => $message,
             'data' => $data
         ];
-        return Response::create($result, 'json', 200);
+        return Response::create($result, 'json', $code);
     }
 }

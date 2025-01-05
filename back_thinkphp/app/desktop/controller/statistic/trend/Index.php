@@ -3,7 +3,7 @@
 namespace app\desktop\controller\statistic\trend;
 
 use app\desktop\controller\Base;
-use app\validate\statistic\Trend as TrendValidate;
+use app\validate\statistic\TrendValidate as TrendValidate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use think\exception\ValidateException;

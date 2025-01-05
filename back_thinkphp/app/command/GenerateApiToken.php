@@ -3,7 +3,6 @@ declare (strict_types = 1);
 
 namespace app\command;
 
-use app\entity\User as UserEntity;
 use app\service\api\session\Jwt as JwtService;
 use think\console\Command;
 use think\console\Input;

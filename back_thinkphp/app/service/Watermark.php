@@ -2,8 +2,7 @@
 
 namespace app\service;
 
-use app\model\User as UserModel;
-use app\entity\Watermark as WatermarkEntity;
+use app\model\UserModel;
 use Exception;
 
 class Watermark
@@ -11,7 +10,6 @@ class Watermark
     /**
      * 得到水印
      * @param $userId
-     * @return WatermarkEntity
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -22,10 +20,11 @@ class Watermark
         if (empty($userModel)) {
             throw new Exception('没有找到用户记录');
         }
-        $watermarkEntity = new WatermarkEntity();
-        $watermarkEntity->userId = $userModel->id;
-        $watermarkEntity->userName = $userModel->name;
-        $watermarkEntity->dateTime = date('Y-m-d H:i:s');
-        return $watermarkEntity;
+        $watermark = [
+            'user_id' => $userModel->id,
+            'user_name' => $userModel->name,
+            'date_time' => date('Y-m-d H:i:s')
+        ];
+        return $watermark;
     }
 }

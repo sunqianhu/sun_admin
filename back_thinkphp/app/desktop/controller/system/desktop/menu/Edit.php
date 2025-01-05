@@ -3,9 +3,9 @@
 namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Menu as MenuModel;
+use app\model\desktop\MenuModel;
 use app\service\desktop\Menu as MenuService;
-use app\validate\desktop\Menu as MenuValidate;
+use app\validate\desktop\MenuValidate as MenuValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -46,7 +46,7 @@ class Edit extends Base
 
         //验证
         try {
-            validate(MenuValidate::class)->scene('desktop_edit')->check($post);
+            validate(MenuValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

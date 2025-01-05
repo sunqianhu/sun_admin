@@ -3,8 +3,8 @@
 namespace app\desktop\controller\statistic\department;
 
 use app\desktop\controller\Base;
-use app\model\Department as DepartmentModel;
-use app\validate\statistic\Department as DepartmentValidate;
+use app\model\DepartmentModel;
+use app\validate\statistic\DepartmentValidate as DepartmentValidate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Sunqianhu\Helper\ArrayHandler;

@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
-use app\model\Department as DepartmentModel;
+use app\model\DepartmentModel;
 use app\service\Department as DepartmentService;
 use Sunqianhu\Helper\ArrayHandler;
 

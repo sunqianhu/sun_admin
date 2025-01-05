@@ -3,8 +3,8 @@
 namespace app\desktop\controller\system\config;
 
 use app\desktop\controller\Base;
-use app\service\Config as ConfigService;
-use app\validate\Config as ConfigValidate;
+use app\service\Config;
+use app\validate\ConfigValidate as ConfigValidate;
 use think\exception\ValidateException;
 
 class Index extends Base
@@ -18,9 +18,9 @@ class Index extends Base
      */
     public function init()
     {
-        $configService = new ConfigService();
+        $config = new Config();
         $config = [
-            'denied_ip_string'=>$configService->getValue('denied_ip_string')
+            'denied_ip_string'=>$config->getValue('denied_ip_string')
         ];
         $data = [
             'config' => $config
@@ -42,9 +42,9 @@ class Index extends Base
             return $this->error($exception->getError());
         }
 
-        $configService = new ConfigService();
+        $config = new Config();
         foreach($post as $key => $value){
-            $configService->setValue($key, $value);
+            $config->setValue($key, $value);
         }
 
         return $this->success('保存成功');

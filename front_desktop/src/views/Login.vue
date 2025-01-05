@@ -37,7 +37,13 @@
           />
         </el-form-item>
         <el-form-item class="submit">
-          <el-button type="primary" size="large" @click="verify" class="button" :loading="loading">
+          <el-button
+            type="primary"
+            size="large"
+            @click="verify"
+            class="button"
+            :loading="submitLoading"
+          >
             登录
           </el-button>
         </el-form-item>
@@ -71,7 +77,7 @@ const rules = {
   account: [{ required: true, message: "账号不能为空", trigger: "blur" }],
   password: [{ required: true, message: "密码不能为空", trigger: "blur" }]
 };
-const loading = ref(false);
+const submitLoading = ref(false);
 const vCodeFlag = ref(false);
 
 /**
@@ -86,15 +92,15 @@ const verify = async () => {
  * 提交表单
  */
 const submitForm = async () => {
-  loading.value = true;
+  submitLoading.value = true;
   let response;
   try {
     response = await axios.post("desktop/login/login", session.value);
   } catch (error) {
-    loading.value = false;
+    submitLoading.value = false;
     return;
   }
-  loading.value = false;
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -103,28 +109,16 @@ const submitForm = async () => {
     return;
   }
 
-  localStorage.setItem("token", response.data.token);
+  localStorage.setItem("token", response.data);
   location.replace("./");
 };
 </script>
 
-<style lang="scss">
-html {
-  height: 100%;
-  body {
-    height: 100%;
-    #app {
-      height: 100%;
-      overflow: hidden;
-    }
-  }
-}
-</style>
-
 <style lang="scss" scoped>
 .login {
-  height: 100%;
+  height: 100dvh;
   position: relative;
+  overflow: hidden;
   .background {
     position: absolute;
     left: 0px;
@@ -132,6 +126,7 @@ html {
     top: 0px;
     bottom: 0px;
     z-index: 1;
+    background: #001437;
     video {
       width: 100%;
       height: 100%;
@@ -163,7 +158,6 @@ html {
         }
       }
     }
-
     .form {
       margin-top: 50px;
       width: 300px;
@@ -177,9 +171,9 @@ html {
   }
   .footer {
     position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    left: var(--margin-md);
+    right: var(--margin-md);
+    bottom: var(--margin-md);
     z-index: 2;
     text-align: center;
     font-size: var(--font-size-sm);

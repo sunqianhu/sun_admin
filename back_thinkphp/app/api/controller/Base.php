@@ -2,8 +2,8 @@
 
 
 use app\BaseController;
-use app\service\api\Session as SessionService;
-use app\entity\api\Session as SessionEntity;
+use app\service\api\Session as Session;
+use app\entity\SessionEntity;
 use Exception;
 use think\Response;
 
@@ -27,10 +27,10 @@ class Base extends BaseController
 
         $this->session = new SessionEntity();
 
-        $sessionService = new SessionService();
+        $session = new Session();
         try {
-            $sessionService->ipAuth($this->request->ip());
-            $this->session = $sessionService->tokenAuth($this->request->header('token', ''));
+            $session->ipAuth($this->request->ip());
+            $this->session = $session->tokenAuth($this->request->header('token', ''));
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
@@ -40,31 +40,37 @@ class Base extends BaseController
 
     /**
      * 成功响应
-     * @param string $message 提示消息
-     * @param mixed $data 返回数据
+     * @param string $message
+     * @param $data
+     * @param $code
+     * @param $actionCode
+     * @return Response
      */
-    public function success(string $message, $data = null)
+    public function success(string $message, $data = null, $code = 200, $actionCode = 1)
     {
         $result = [
-            'code' => 1,
+            'code' => $actionCode,
             'message' => $message,
             'data' => $data
         ];
-        return Response::create($result, 'json', 200);
+        return Response::create($result, 'json', $code);
     }
 
     /**
      * 失败响应
-     * @param string $message 提示消息
-     * @param mixed $data 返回数据
+     * @param string $message
+     * @param $data
+     * @param $code
+     * @param $actionCode
+     * @return Response
      */
-    public function error(string $message, $data = null, $code = 0)
+    public function error(string $message, $data = null, $code = 200, $actionCode = 0)
     {
         $result = [
-            'code' => $code,
+            'code' => $actionCode,
             'message' => $message,
             'data' => $data
         ];
-        return Response::create($result, 'json', 200);
+        return Response::create($result, 'json', $code);
     }
 }

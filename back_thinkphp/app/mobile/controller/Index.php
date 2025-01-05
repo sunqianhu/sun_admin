@@ -2,7 +2,7 @@
 
 namespace app\mobile\controller;
 
-use app\model\User as UserModel;
+use app\model\UserModel;
 
 class Index extends Base
 {

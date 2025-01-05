@@ -3,9 +3,9 @@
 namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Permission as PermissionModel;
+use app\model\desktop\PermissionModel;
 use app\service\desktop\Permission as PermissionService;
-use app\validate\desktop\Permission as PermissionValidate;
+use app\validate\desktop\PermissionValidate as PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -46,7 +46,7 @@ class Edit extends Base
 
         //验证
         try {
-            validate(PermissionValidate::class)->scene('desktop_edit')->check($post);
+            validate(PermissionValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

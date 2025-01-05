@@ -2,7 +2,7 @@
 
 namespace app\service\desktop;
 
-use app\model\desktop\Route as RouteModel;
+use app\model\desktop\RouteModel;
 use Exception;
 
 class Route

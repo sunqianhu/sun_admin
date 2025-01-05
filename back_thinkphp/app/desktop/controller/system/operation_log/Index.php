@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\operation_log;
 
 use app\desktop\controller\Base;
-use app\model\OperationLog as OperationLogModel;
+use app\model\OperationLog;
 
 class Index extends Base
 {

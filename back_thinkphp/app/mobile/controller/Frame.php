@@ -2,7 +2,7 @@
 
 namespace app\mobile\controller;
 
-use app\service\user\Mobile as MobileService;
+use app\service\user\mobile\User as Mobile;
 
 /**
  * 框架
@@ -15,8 +15,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $mobileService = new MobileService();
-        $permissions = $mobileService->getPermissionKeys($this->session->userId);
+        $mobile = new Mobile();
+        $permissions = $mobile->getPermissionKeys($this->session->userId);
 
         return $this->success('获取成功', $permissions);
     }

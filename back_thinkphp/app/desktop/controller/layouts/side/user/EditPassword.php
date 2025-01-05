@@ -3,12 +3,14 @@
 namespace app\desktop\controller\layouts\side\user;
 
 use app\desktop\controller\Base;
-use app\service\User as UserService;
-use app\validate\user\EditPassword as EditPasswordValidate;
+use app\service\User;
+use app\validate\user\EditPasswordValidate as EditPasswordValidate;
 use think\exception\ValidateException;
 
 class EditPassword extends Base
 {
+    public $isRouteAuth = false;
+
     /**
      * 保存
      */
@@ -17,13 +19,13 @@ class EditPassword extends Base
         $post = $this->request->post(['password1', 'password2']);
 
         try {
-            validate(EditPasswordValidate::class)->scene('desktop_main_edit_password')->check($post);
+            validate(EditPasswordValidate::class)->scene('my_edit_password')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $userService = new UserService();
-        $userService->editPassword($this->session->userId, $post['password1']);
+        $user = new User();
+        $user->editPassword($this->session->userId, $post['password1']);
 
         return $this->success('修改成功');
     }

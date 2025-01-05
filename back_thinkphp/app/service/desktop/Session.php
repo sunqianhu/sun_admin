@@ -2,43 +2,18 @@
 
 namespace app\service\desktop;
 
-use app\entity\desktop\Session as SessionEntity;
-use app\entity\User as UserEntity;
-use app\model\User as UserModel;
-use app\service\Config as ConfigService;
-use app\service\desktop\session\Jwt;
-use app\service\LoginLog as LoginLogService;
-use app\service\user\Desktop as DesktopService;
+use app\entity\SessionEntity;
+use app\model\UserModel;
+use app\service\user\desktop\User;
+use app\service\Config;
+use app\service\LoginLog;
 use Exception;
 
 class Session
 {
-    /**
-     * @var string[] 不登录网址
-     */
-    public $noLoginUrls = [
-        'desktop/Login/login',
-        'desktop/Frame/getWatermark',
-        'desktop/frame.Message/getNoReadMessages',
-        'desktop/Test/index'
-    ];
-
-    /**
-     * @var string[] 不鉴权网址
-     */
-    public $noAuthUrls = [
-        'desktop/Frame/getPermissions',
-        'desktop/Frame/getRoutes',
-        'desktop/frame.Message/setAllRead',
-        'desktop/layouts.Side/getMenus',
-        'desktop/layouts.Side/getAvatar',
-        'desktop/layouts.Side/logout',
-        'desktop/layouts.side.user.Detail/getUser',
-        'desktop/layouts.side.user.EditAvatar/init',
-        'desktop/layouts.side.user.EditAvatar/save',
-        'desktop/layouts.side.user.EditPassword/save',
-        'desktop/FileUpload/upload'
-    ];
+    public $isIpAuth = true;
+    public $isTokenAuth = true;
+    public $isRouteAuth = true;
 
     /**
      * 登录
@@ -51,7 +26,7 @@ class Session
      * @throws \think\db\exception\ModelNotFoundException
      * @throws Exception
      */
-    public function login($account, $password, $ip)
+    public function login($account, $password, $ip = '')
     {
         $userModel = UserModel::field('id,department_id,status_id,name')
             ->where('account', $account)
@@ -65,27 +40,23 @@ class Session
         }
 
         $jwt = new Jwt();
-        $userEntity = new UserEntity();
-        $userEntity->id = $userModel->id;
-        $userEntity->name = $userModel->name;
-        $userEntity->departmentId = $userModel->department_id;
-        $token = $jwt->getToken($userEntity);
+        $token = $jwt->getToken($userModel->id);
 
         //登录日志
-        $loginLogService = new LoginLogService();
-        $loginLogService->add($userModel->id, $ip);
+        $loginLog = new LoginLog();
+        $loginLog->add($userModel->id, $ip);
 
         //用户表
         $userModel->login_time = time();
         $userModel->login_ip = $ip;
         $userModel->save();
 
-        $sessionEntity = new SessionEntity();
-        $sessionEntity->userId = $userEntity->id;
-        $sessionEntity->departmentId = $userEntity->departmentId;
-        $sessionEntity->token = $token;
+        $session = new SessionEntity();
+        $session->userId = $userModel->id;
+        $session->departmentId = $userModel->department_id;
+        $session->token = $token;
 
-        return $sessionEntity;
+        return $session;
     }
 
     /**
@@ -106,8 +77,11 @@ class Session
      * @throws Exception
      */
     function ipAuth($ip){
-        $configService = new ConfigService();
-        $deniedIpString = $configService->getValue('denied_ip_string');
+        if(!$this->isIpAuth){
+            return true;
+        }
+        $config = new Config();
+        $deniedIpString = $config->getValue('denied_ip_string');
         $deniedIps = explode("\r\n", $deniedIpString);
         if(empty($deniedIps)){
             return true;
@@ -121,7 +95,7 @@ class Session
     /**
      * token认证
      * @param $request
-     * @return SessionEntity|true
+     * @return SessionEntity
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -129,17 +103,8 @@ class Session
     function tokenAuth($request)
     {
         $token = $request->header('token', '');
-        $url = $request->baseUrl();
-        $url = strtolower($url);
-        $url = ltrim($url, '/');
-        $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
-
-        if (in_array($url, $this->noLoginUrls)) {
-            try{
-                $jwt = new Jwt();
-                return $jwt->resolverToken($token);
-            }catch (Exception $exception){}
-            return;
+        if(!$this->isTokenAuth){
+            return (new SessionEntity());
         }
 
         $jwt = new Jwt();
@@ -154,6 +119,9 @@ class Session
      */
     function ruoteAuth($request, $userId)
     {
+        if(!$this->isTokenAuth || !$this->isRouteAuth){
+            return;
+        }
         if(empty($userId)){
             throw new Exception('用户id不能为空');
         }
@@ -161,21 +129,8 @@ class Session
         $url = $request->baseUrl();
         $url = strtolower($url);
         $url = ltrim($url, '/');
-
-        //登录
-        $this->noLoginUrls = array_map('strtolower', $this->noLoginUrls);
-        if (in_array($url, $this->noLoginUrls)) {
-            return;
-        }
-
-        //鉴权
-        $this->noAuthUrls = array_map('strtolower', $this->noAuthUrls);
-        if (in_array($url, $this->noAuthUrls)) {
-            return;
-        }
-
-        $desktopService = new DesktopService();
-        if(!$desktopService->hasPermissionByUrl($userId, $url)){
+        $user = new User();
+        if(!$user->hasApiPermission($userId, $url)){
             throw new Exception('无权限');
         }
     }

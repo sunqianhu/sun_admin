@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
 use app\service\desktop\Permission as PermissionService;
-use app\validate\desktop\Permission as PermissionValidate;
+use app\validate\desktop\PermissionValidate as PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -33,7 +33,7 @@ class Add extends Base
 
         //验证
         try {
-            validate(PermissionValidate::class)->scene('desktop_add')->check($post);
+            validate(PermissionValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

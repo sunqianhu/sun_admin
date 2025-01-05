@@ -30,7 +30,7 @@ const staticRoutes = [
     name: "login",
     component: () => import("../views/Login.vue"),
     meta: {
-      name: "SunAdmin"
+      name: "sun admin"
     }
   },
   {
@@ -80,10 +80,9 @@ const setPermissions = async () => {
 
 /**
  * 设置路由
- * @param {*} to
  * @returns
  */
-const setRoutes = async (path) => {
+const setRoutes = async () => {
   const routeStore = useRouteStore();
   if (routeStore.isSet) {
     return "exist";
@@ -98,12 +97,18 @@ const setRoutes = async (path) => {
   let sideRoute = staticRoutes.find((route) => route.name == "side");
   let blankRoute = staticRoutes.find((route) => route.name == "blank");
   let childRoutes = response.data;
+  const componentFilePaths = import.meta.glob([
+    "@/views/*.vue",
+    "@/views/*/*.vue",
+    "@/views/*/*/*.vue",
+    "@/views/*/*/*/*.vue"
+  ]);
 
   childRoutes.forEach((childRoute) => {
     if (!childRoute.component_path) {
       return;
     }
-    childRoute.component = () => /* @vite-ignore */ import("../views/" + childRoute.component_path);
+    childRoute.component = componentFilePaths["/src/views/" + childRoute.component_path];
 
     if (childRoute.layout == "side") {
       sideRoute.children.push(childRoute);
@@ -153,6 +158,7 @@ const beforeHandle = async (to, from) => {
       return to.fullPath;
     }
   } catch (error) {
+    console.error(error);
     return getLoginRoutePath();
   }
 
@@ -166,7 +172,7 @@ const beforeHandle = async (to, from) => {
  */
 const afterHandle = (to, from) => {
   NProgress.done();
-  document.title = to.meta.name;
+  document.title = to.meta.name || "sun admin";
 };
 
 //路由对象

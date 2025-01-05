@@ -2,7 +2,6 @@
 
 namespace app\service;
 
-use Exception;
 use think\facade\Config;
 
 class Site

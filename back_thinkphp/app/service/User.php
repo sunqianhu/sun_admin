@@ -2,14 +2,13 @@
 
 namespace app\service;
 
-use app\model\desktop\Token as TokenModel;
-use app\model\User as UserModel;
-use app\model\UserRole as UserRoleModel;
+use app\model\UserModel;
+use app\model\UserRoleModel;
 use Exception;
-use Sunqianhu\Helper\Image as ImageHelper;
+use Sunqianhu\Helper\Image;
 use think\facade\Cache;
-use app\service\File as FileService;
-use app\service\Site as SiteService;
+use app\service\File;
+use app\service\Site;
 
 class User
 {
@@ -152,12 +151,12 @@ class User
     {
         if ($path === '') {
             $path = 'image/avatar.png';
-            $siteService = new SiteService();
-            return $siteService->getUrl($path);
+            $site = new Site();
+            return $site->getUrl($path);
         }
 
-        $fileService = new FileService();
-        return $fileService->getUrl($path);
+        $file = new File();
+        return $file->getUrl($path);
     }
 
     /**
@@ -184,12 +183,12 @@ class User
      */
     public function editAvatar($id, $base64Content)
     {
-        $fileService = new FileService();
-        $path = $fileService->saveBase64ContentToFile('avatar', $base64Content);
+        $file = new File();
+        $path = $file->saveBase64ContentToFile('avatar', $base64Content);
 
-        $fullPath = $fileService->getFullPath($path);
-        $imageHelper = new ImageHelper();
-        $imageHelper->thumbnail($fullPath, $fullPath, 100, 100);
+        $fullPath = $file->getFullPath($path);
+        $image = new Image();
+        $image->createThumbnail($fullPath, $fullPath, 100);
 
         $userModel = UserModel::find($id);
         if (empty($userModel)) {
@@ -225,8 +224,10 @@ class User
      * @param $departmentIds
      * @return array
      */
-    public function getIdsByDepartmentIds($departmentIds)
+    public function getDepartmentUserIds($departmentIds)
     {
-        return UserModel::where('department_id', 'in', $departmentIds)->column('id');
+        return UserModel::where('department_id', 'in', $departmentIds)
+            ->where('status_id', 1)
+            ->column('id');
     }
 }

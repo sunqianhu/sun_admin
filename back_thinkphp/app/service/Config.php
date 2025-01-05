@@ -1,7 +1,7 @@
 <?php
 namespace app\service;
 
-use app\model\Config as ConfigModel;
+use app\model\ConfigModel;
 
 class Config
 {
@@ -22,10 +22,7 @@ class Config
      * @return void
      */
     public function setValue($key, $value){
-        $configModel = ConfigModel::where('key', $key)->find();
-        if(empty($configModel)){
-            $configModel = new ConfigModel();
-        }
+        $configModel = ConfigModel::where('key', $key)->findOrEmpty();
         $configModel->key = $key;
         $configModel->value = $value;
         $configModel->save();

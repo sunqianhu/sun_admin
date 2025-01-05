@@ -3,8 +3,8 @@
 namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
-use app\model\User as UserModel;
-use app\service\mobile\Session as SessionService;
+use app\model\UserModel;
+use app\service\mobile\Session as Session;
 
 class Detail extends Base
 {
@@ -31,8 +31,8 @@ class Detail extends Base
      */
     public function logout()
     {
-        $sessionService = new SessionService();
-        $sessionService->logout($this->session->token);
+        $session = new Session();
+        $session->logout($this->session->token);
 
         return $this->success("退出成功");
     }

@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Permission as PermissionModel;
+use app\model\desktop\PermissionModel;
 use app\service\desktop\Permission as PermissionService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;

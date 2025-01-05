@@ -4,8 +4,8 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\service\Department as DepartmentService;
-use app\service\Dictionary as DictionaryService;
-use app\validate\Department as DepartmentValidate;
+use app\service\Dictionary;
+use app\validate\DepartmentValidate as DepartmentValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -19,8 +19,8 @@ class Add extends Base
         $departmentService = new DepartmentService();
         $treeDepartments = $departmentService->getTreeDepartments();
 
-        $dictionaryService = new DictionaryService();
-        $types = $dictionaryService->getList('department_type');
+        $dictionary = new Dictionary();
+        $types = $dictionary->getList('department_type');
 
         $data = [
             'tree_departments'=>$treeDepartments,
@@ -38,7 +38,7 @@ class Add extends Base
 
         //验证
         try {
-            validate(DepartmentValidate::class)->scene('desktop_add')->check($post);
+            validate(DepartmentValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

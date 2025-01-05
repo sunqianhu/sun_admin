@@ -6,7 +6,7 @@ use app\desktop\controller\Base;
 use app\model\Role as RoleModel;
 use app\service\Department as DepartmentService;
 use app\service\User as UserServer;
-use app\validate\User as UserValidate;
+use app\validate\UserValidate as UserValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -41,7 +41,7 @@ class Add extends Base
 
         //验证
         try {
-            validate(UserValidate::class)->scene('desktop_add')->check($post);
+            validate(UserValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

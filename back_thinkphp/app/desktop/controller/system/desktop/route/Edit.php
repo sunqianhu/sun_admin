@@ -3,10 +3,10 @@
 namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
-use app\model\desktop\Route as RouteModel;
+use app\model\desktop\RouteModel;
 use app\service\desktop\Route as RouteService;
-use app\service\Dictionary as DictionaryService;
-use app\validate\desktop\Route as RouteValidate;
+use app\service\Dictionary;
+use app\validate\desktop\RouteValidate as RouteValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -28,8 +28,8 @@ class edit extends Base
         }
         $route = $routeModel->toArray();
 
-        $dictionaryService = new DictionaryService();
-        $layouts = $dictionaryService->getList('desktop_route_layout');
+        $dictionary = new Dictionary();
+        $layouts = $dictionary->getList('desktop_route_layout');
 
         $data = [
             'route' => $route,
@@ -47,7 +47,7 @@ class edit extends Base
 
         //验证
         try {
-            validate(RouteValidate::class)->scene('desktop_edit')->check($post);
+            validate(RouteValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

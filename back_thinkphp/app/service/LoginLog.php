@@ -2,7 +2,7 @@
 
 namespace app\service;
 
-use app\model\LoginLog as LoginLogModel;
+use app\model\LoginLogModel;
 
 class LoginLog
 {

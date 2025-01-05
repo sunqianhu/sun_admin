@@ -2,8 +2,7 @@
 
 namespace app\service\api;
 
-use app\service\Config as ConfigService;
-use app\service\api\session\Jwt;
+use app\service\Config;
 use Exception;
 
 class Session
@@ -15,8 +14,8 @@ class Session
      * @throws Exception
      */
     function ipAuth($ip){
-        $configService = new ConfigService();
-        $deniedIpString = $configService->getValue('denied_ip_string');
+        $config = new Config();
+        $deniedIpString = $config->getValue('denied_ip_string');
         $deniedIps = explode("\r\n", $deniedIpString);
         if(empty($deniedIps)){
             return true;

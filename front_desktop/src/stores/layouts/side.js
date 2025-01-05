@@ -11,9 +11,8 @@ export const useSideStore = defineStore("side", {
      * 切换折叠
      */
     toggleFold() {
-      let value = "1";
       this.fold = this.fold ? false : true;
-      value = this.fold ? "1" : "0";
+      let value = this.fold ? "1" : "0";
       localStorage.setItem("layout_side_fold", value);
     },
 
@@ -22,9 +21,8 @@ export const useSideStore = defineStore("side", {
      * @param {boolean} status
      */
     setFold(status) {
-      let value = "1";
       this.fold = status;
-      value = this.fold ? "1" : "0";
+      let value = this.fold ? "1" : "0";
       localStorage.setItem("layout_side_fold", value);
     }
   }

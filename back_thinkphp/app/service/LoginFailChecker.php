@@ -27,7 +27,7 @@ class LoginFailChecker
      */
     public function __construct($account)
     {
-        $this->cacheKey = 'login_fail_checker_'.$account;
+        $this->cacheKey = 'login_fail_checker_'.md5($account);
     }
 
     /**

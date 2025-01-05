@@ -7,10 +7,9 @@ import App from "./App.vue";
 import router from "./router";
 import permission from "./directive/permission";
 
-const pinia = createPinia();
 const app = createApp(App);
 
-app.use(pinia);
+app.use(createPinia());
 app.use(router);
 app.directive("permission", permission);
 

@@ -3,9 +3,9 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\LoginLog as LoginLogModel;
-use app\model\OperationLog as OperationLogModel;
-use app\model\User as UserModel;
+use app\model\LoginLogModel;
+use app\model\OperationLog;
+use app\model\UserModel;
 
 class Detail extends Base
 {

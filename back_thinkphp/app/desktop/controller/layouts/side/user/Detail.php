@@ -3,10 +3,12 @@
 namespace app\desktop\controller\layouts\side\user;
 
 use app\desktop\controller\Base;
-use app\model\User as UserModel;
+use app\model\UserModel;
 
 class Detail extends Base
 {
+    public $isRouteAuth = false;
+
     /**
      * 得到用户
      * @return mixed

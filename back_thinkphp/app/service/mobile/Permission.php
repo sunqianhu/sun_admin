@@ -2,7 +2,7 @@
 
 namespace app\service\mobile;
 
-use app\model\mobile\Permission as PermissionModel;
+use app\model\mobile\PermissionModel;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 

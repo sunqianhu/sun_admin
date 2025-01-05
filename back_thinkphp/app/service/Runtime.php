@@ -1,7 +1,7 @@
 <?php
 namespace app\service;
 
-use app\model\Runtime as RuntimeModel;
+use app\model\RuntimeModel;
 
 class Runtime
 {
@@ -22,10 +22,7 @@ class Runtime
      * @return void
      */
     public function setValue($key, $value){
-        $runtimeModel = RuntimeModel::where('key', $key)->find();
-        if(empty($runtimeModel)){
-            $runtimeModel = new RuntimeModel();
-        }
+        $runtimeModel = RuntimeModel::where('key', $key)->findOrEmpty();
         $runtimeModel->key = $key;
         $runtimeModel->value = $value;
         $runtimeModel->save();

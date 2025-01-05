@@ -8,7 +8,7 @@ use app\service\desktop\Permission as DesktopPermissionService;
 use app\service\desktop\Route as DesktopRouteService;
 use app\service\mobile\Permission as MobilePermissionService;
 use app\service\Role as  RoleService;
-use app\validate\Role as RoleValidate;
+use app\validate\RoleValidate as RoleValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -49,7 +49,7 @@ class Add extends Base
 
         //验证
         try {
-            validate(RoleValidate::class)->scene('desktop_add')->check($post);
+            validate(RoleValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

@@ -2,7 +2,7 @@
 
 namespace app\service\desktop;
 
-use app\model\desktop\Menu as MenuModel;
+use app\model\desktop\MenuModel;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 

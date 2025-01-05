@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
 use app\service\desktop\Menu as MenuService;
-use app\validate\desktop\Menu as MenuValidate;
+use app\validate\desktop\MenuValidate as MenuValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -33,7 +33,7 @@ class Add extends Base
 
         //验证
         try {
-            validate(MenuValidate::class)->scene('desktop_add')->check($post);
+            validate(MenuValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

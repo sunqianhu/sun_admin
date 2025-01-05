@@ -1,6 +1,6 @@
-@import "element-plus/theme-chalk/dark/css-vars.css";
-@import "element_plus.scss";
-@import "dark.scss";
+@use "element-plus/theme-chalk/dark/css-vars.css";
+@use "element_plus.scss";
+@use "dark.scss";
 
 :root:root {
   //颜色
@@ -8,7 +8,6 @@
   --color-success: #67c23a;
   --color-warning: #e6a23c;
   --color-danger: #f56c6c;
-  --color-link: #409eff;
 
   //文字
   --font-family-base: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
@@ -25,6 +24,7 @@
   --font-size-md: 14px;
   --font-size-lg: 16px;
   --font-size-xl: 20px;
+  --font-size-xxl: 24px;
 
   --font-weight-thin: 400;
   --font-weight-base: 500;
@@ -36,11 +36,14 @@
   --line-height-md: 20px;
   --line-height-lg: 22px;
   --line-height-xl: 30px;
+  --line-height-xxl: 36px;
 
   //边框
   --border-color-light: #e4e7ed;
   --border-color-base: #e4e7ed;
   --border-color-dark: #d4d7de;
+
+  //圆角
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 16px;
@@ -53,7 +56,7 @@
   --background-color-opacity-light: rgba(255, 255, 255, 0.9);
 
   //内边距
-  --padding-base: 4px;
+  --padding-xxs: 4px;
   --padding-xs: 8px;
   --padding-sm: 12px;
   --padding-md: 16px;
@@ -61,7 +64,7 @@
   --padding-xl: 32px;
 
   //外边距
-  --margin-base: 4px;
+  --margin-xxs: 4px;
   --margin-xs: 8px;
   --margin-sm: 12px;
   --margin-md: 16px;
@@ -92,8 +95,8 @@
 
   //组件大小
   --component-size-sm: 24px;
-  --component-size-base: 32px;
-  --component-size-bg: 40px;
+  --component-size-md: 32px;
+  --component-size-lg: 40px;
 }
 
 html {
@@ -110,7 +113,7 @@ body {
   background-color: var(--background-color-light);
 }
 a {
-  color: var(--color-link);
+  color: #409eff;
   text-decoration: none;
   &:hover {
     text-decoration: underline;

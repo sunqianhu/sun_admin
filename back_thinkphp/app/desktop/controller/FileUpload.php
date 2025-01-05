@@ -3,7 +3,7 @@
 namespace app\desktop\controller;
 
 use app\service\File as FileHelper;
-use app\validate\FileUpload as FileUploadValidate;
+use app\validate\FileUploadValidate as FileUploadValidate;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
 

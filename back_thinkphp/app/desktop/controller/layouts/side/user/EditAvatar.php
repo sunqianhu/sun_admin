@@ -3,15 +3,17 @@
 namespace app\desktop\controller\layouts\side\user;
 
 use app\desktop\controller\Base;
-use app\model\User as UserModel;
-use app\service\File as FileService;
-use app\service\User as UserService;
-use app\validate\User as UserValidate;
+use app\model\UserModel;
+use app\service\File as File;
+use app\service\User;
+use app\validate\UserValidate as UserValidate;
 use Exception;
 use think\exception\ValidateException;
 
 class EditAvatar extends Base
 {
+    public $isRouteAuth = false;
+
     /**
      * 初始化
      * @return mixed
@@ -36,20 +38,20 @@ class EditAvatar extends Base
         $post = $this->request->post(['avatar_base64_content']);
 
         try {
-            validate(UserValidate::class)->scene('desktop_main_edit_avatar')->check($post);
+            validate(UserValidate::class)->scene('my_edit_avatar')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
         try {
-            $userService = new UserService();
-            $path = $userService->editAvatar($this->session->userId, $post['avatar_base64_content']);
+            $user = new User();
+            $path = $user->editAvatar($this->session->userId, $post['avatar_base64_content']);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }
 
-        $fileService = new FileService();
-        $url = $fileService->getUrl($path);
+        $file = new File();
+        $url = $file->getUrl($path);
 
         return $this->success('修改成功', $url);
     }

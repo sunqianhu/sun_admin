@@ -3,8 +3,8 @@
 namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
-use app\service\Dictionary as DictionaryService;
-use app\validate\Dictionary as DictionaryValidate;
+use app\service\Dictionary;
+use app\validate\DictionaryValidate as DictionaryValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -19,14 +19,14 @@ class Add extends Base
 
         //验证
         try {
-            validate(DictionaryValidate::class)->scene('desktop_add')->check($post);
+            validate(DictionaryValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
         try{
-            $dictionaryService = new DictionaryService();
-            $dictionaryService->add($post);
+            $dictionary = new Dictionary();
+            $dictionary->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

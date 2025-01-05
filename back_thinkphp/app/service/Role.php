@@ -3,11 +3,11 @@
 namespace app\service;
 
 use app\model\Role as RoleModel;
-use app\model\RoleDesktopMenu as RoleDesktopMenuModel;
-use app\model\RoleDesktopPermission as RoleDesktopPermissionModel;
-use app\model\RoleDesktopRoute as RoleDesktopRouteModel;
-use app\model\RoleMobilePermission as RoleMobilePermissionModel;
-use app\model\UserRole as UserRoleModel;
+use app\model\RoleDesktopMenuModel;
+use app\model\RoleDesktopPermissionModel;
+use app\model\RoleDesktopRouteModel;
+use app\model\RoleMobilePermissionModel;
+use app\model\UserRoleModel;
 use Exception;
 use think\facade\Db;
 

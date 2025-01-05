@@ -2,7 +2,7 @@
 
 namespace app\mobile\controller;
 
-use app\service\mobile\Session as SessionService;
+use app\service\mobile\Session as Session;
 use app\service\LoginFailChecker;
 use app\validate\Session as SessionValidate;
 use Exception;
@@ -34,8 +34,8 @@ class Login extends Base
         }
 
         try{
-            $sessionService = new SessionService();
-            $sessionEntity = $sessionService->login($post['account'], $post['password'], $this->request->ip());
+            $session = new Session();
+            $sessionEntity = $session->login($post['account'], $post['password'], $this->request->ip());
         }catch (Exception $exception){
             $loginFailChecker->setFail();
             $availableNumber = $loginFailChecker->getAvailableNumber();
