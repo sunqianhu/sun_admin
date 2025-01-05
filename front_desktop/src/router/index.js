@@ -89,7 +89,7 @@ const setRoutes = async () => {
   }
 
   const response = await axios.get("desktop/frame/getRoutes");
-  if (response.code != 1 || response.data.length == 0) {
+  if (response.code != 1) {
     throw new Error(response.message);
   }
   routeStore.set(response.data);

@@ -225,7 +225,7 @@ const openEdit = (id) => {
  * @param {number} id 记录id
  */
 const editStatus = async (row) => {
-  row.status_id = row.status_id == 1 ? 2 : 1;
+  row.status_id = row.status_id == 1 ? 0 : 1;
   const response = await axios.post("desktop/system.user.Index/editStatus", {
     id: row.id,
     status_id: row.status_id

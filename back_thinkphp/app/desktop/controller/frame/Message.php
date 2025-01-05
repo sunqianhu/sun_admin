@@ -3,11 +3,13 @@
 namespace app\desktop\controller\frame;
 
 use app\desktop\controller\Base;
-use app\model\Message as MessageModel;
+use app\model\MessageModel;
 use app\service\Message as MessageService;
 
 class Message extends Base
 {
+    public $isRouteAuth = false;
+
     /**
      * 设置全部已读
      * @return void

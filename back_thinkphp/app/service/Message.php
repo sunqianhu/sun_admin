@@ -2,7 +2,7 @@
 
 namespace app\service;
 
-use app\model\Message as MessageModel;
+use app\model\MessageModel;
 use Sunqianhu\Helper\StringHandler;
 use think\facade\Config;
 use think\facade\Queue;
