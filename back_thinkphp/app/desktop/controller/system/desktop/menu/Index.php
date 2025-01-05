@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
-use app\service\desktop\Menu as MenuService;
+use app\service\desktop\Menu;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
@@ -43,9 +43,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $menuService = new MenuService();
+        $menu = new Menu();
         try{
-            $menuService->delete($id);
+            $menu->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

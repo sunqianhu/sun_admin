@@ -3,11 +3,11 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\Role as RoleModel;
+use app\model\RoleModel;
 use app\model\UserModel;
-use app\service\Department as DepartmentService;
-use app\service\User as UserServer;
-use app\validate\UserValidate as UserValidate;
+use app\service\Department;
+use app\service\User;
+use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -33,8 +33,8 @@ class Edit extends Base
         $user = $userModel->toArray();
 
         //部门
-        $departmentService = new DepartmentService();
-        $treeDepartments = $departmentService->getTreeDepartments();
+        $department = new Department();
+        $treeDepartments = $department->getTreeDepartments();
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -63,8 +63,8 @@ class Edit extends Base
         }
 
         try{
-            $userServer = new UserServer();
-            $userServer->edit($post['id'], $post);
+            $user = new User();
+            $user->edit($post['id'], $post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -3,8 +3,8 @@
 namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Menu as MenuService;
-use app\validate\desktop\MenuValidate as MenuValidate;
+use app\service\desktop\Menu;
+use app\validate\desktop\MenuValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -15,8 +15,8 @@ class Add extends Base
      */
     public function init()
     {
-        $menuService = new MenuService();
-        $treeMenus = $menuService->getTreeMenus();
+        $menu = new Menu();
+        $treeMenus = $menu->getTreeMenus();
 
         $data = [
             'tree_menus' => $treeMenus
@@ -38,9 +38,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $menuService = new MenuService();
+        $menu = new Menu();
         try {
-            $menuService->add($post);
+            $menu->add($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
-use app\service\desktop\Route as RouteService;
+use app\service\desktop\Route;
 use Exception;
 
 class Index extends Base
@@ -40,9 +40,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $routeService = new RouteService();
+        $route = new Route();
         try{
-            $routeService->delete($id);
+            $route->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -3,12 +3,12 @@
 namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Menu as  DesktopMenuService;
-use app\service\desktop\Permission as DesktopPermissionService;
-use app\service\desktop\Route as DesktopRouteService;
-use app\service\mobile\Permission as MobilePermissionService;
-use app\service\Role as  RoleService;
-use app\validate\RoleValidate as RoleValidate;
+use app\service\desktop\Menu as DesktopMenu;
+use app\service\desktop\Permission as DesktopPermission;
+use app\service\desktop\Route as DesktopRoute;
+use app\service\mobile\Permission as MobilePermission;
+use app\service\Role;
+use app\validate\RoleValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -19,17 +19,17 @@ class Add extends Base
      */
     public function init()
     {
-        $desktopPermissionService = new DesktopPermissionService();
-        $desktopPermissions = $desktopPermissionService->getTreePermissionsWithNameKey();
+        $desktopPermission = new DesktopPermission();
+        $desktopPermissions = $desktopPermission->getTreePermissionsWithNameKey();
 
-        $desktopMenuService = new DesktopMenuService();
-        $desktopMenus = $desktopMenuService->getTreeMenusWithNameUrl();
+        $desktopMenu = new DesktopMenu();
+        $desktopMenus = $desktopMenu->getTreeMenusWithNameUrl();
 
-        $desktopRouteService = new DesktopRouteService();
-        $desktopRoutes = $desktopRouteService->getRoutesWithNamePath();
+        $desktopRoute = new DesktopRoute();
+        $desktopRoutes = $desktopRoute->getRoutesWithNamePath();
 
-        $mobilePermissionService = new MobilePermissionService();
-        $mobilePermissions = $mobilePermissionService->getTreePermissionsWithNameKey();
+        $mobilePermission = new MobilePermission();
+        $mobilePermissions = $mobilePermission->getTreePermissionsWithNameKey();
 
         $data = [
             'desktop_permissions'=>$desktopPermissions,
@@ -54,9 +54,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $roleService = new RoleService();
+        $role = new Role();
         try{
-            $roleService->add($post);
+            $role->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -4,8 +4,8 @@ namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
-use app\service\desktop\Menu as MenuService;
-use app\validate\desktop\MenuValidate as MenuValidate;
+use app\service\desktop\Menu;
+use app\validate\desktop\MenuValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -27,8 +27,8 @@ class Edit extends Base
         }
         $menu = $menuModel->toArray();
 
-        $menuService = new MenuService();
-        $treeMenus = $menuService->getTreeMenus();
+        $menu = new Menu();
+        $treeMenus = $menu->getTreeMenus();
 
         $data = [
             'menu' => $menu,
@@ -54,9 +54,9 @@ class Edit extends Base
             return $this->error('上级菜单不能和本菜单相同');
         }
 
-        $menuService = new MenuService();
+        $menu = new Menu();
         try{
-            $menuService->edit($post['id'], $post);
+            $menu->edit($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

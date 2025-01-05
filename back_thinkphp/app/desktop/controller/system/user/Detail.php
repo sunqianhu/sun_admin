@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\LoginLogModel;
-use app\model\OperationLog;
+use app\model\OperationLogModel;
 use app\model\UserModel;
 
 class Detail extends Base

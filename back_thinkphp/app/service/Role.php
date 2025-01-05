@@ -2,7 +2,7 @@
 
 namespace app\service;
 
-use app\model\Role as RoleModel;
+use app\model\RoleModel;
 use app\model\RoleDesktopMenuModel;
 use app\model\RoleDesktopPermissionModel;
 use app\model\RoleDesktopRouteModel;

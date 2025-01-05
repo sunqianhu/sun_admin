@@ -6,7 +6,7 @@ use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\service\File as File;
 use app\service\User;
-use app\validate\UserValidate as UserValidate;
+use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
 

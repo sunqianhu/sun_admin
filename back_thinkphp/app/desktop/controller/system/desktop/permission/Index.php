@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
 use app\model\desktop\PermissionModel;
-use app\service\desktop\Permission as PermissionService;
+use app\service\desktop\Permission;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
@@ -46,9 +46,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $permissionService = new PermissionService();
+        $permission = new Permission();
         try{
-            $permissionService->delete($id);
+            $permission->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

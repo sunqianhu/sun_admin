@@ -3,10 +3,10 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\Role as RoleModel;
-use app\service\Department as DepartmentService;
-use app\service\User as UserServer;
-use app\validate\UserValidate as UserValidate;
+use app\model\RoleModel;
+use app\service\Department;
+use app\service\User;
+use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -18,8 +18,8 @@ class Add extends Base
     public function init()
     {
         ///部门
-        $departmentService = new DepartmentService();
-        $treeDepartments = $departmentService->getTreeDepartments();
+        $department = new Department();
+        $treeDepartments = $department->getTreeDepartments();
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -47,8 +47,8 @@ class Add extends Base
         }
 
         try{
-            $userServer = new UserServer();
-            $userServer->add($post);
+            $user = new User();
+            $user->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

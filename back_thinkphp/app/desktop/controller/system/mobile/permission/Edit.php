@@ -4,8 +4,8 @@ namespace app\desktop\controller\system\mobile\permission;
 
 use app\desktop\controller\Base;
 use app\model\mobile\PermissionModel;
-use app\service\mobile\Permission as PermissionService;
-use app\validate\mobile\PermissionValidate as PermissionValidate;
+use app\service\mobile\Permission;
+use app\validate\mobile\PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -27,8 +27,8 @@ class Edit extends Base
         }
         $permission = $permissionModel->toArray();
 
-        $permissionService = new PermissionService();
-        $treePermissions = $permissionService->getTreePermissions();
+        $permission = new Permission();
+        $treePermissions = $permission->getTreePermissions();
 
         $data = [
             'permission' => $permission,
@@ -54,9 +54,9 @@ class Edit extends Base
             return $this->error('上级权限不能和权限单相同');
         }
 
-        $permissionService = new PermissionService();
+        $permission = new Permission();
         try{
-            $permissionService->edit($post['id'], $post);
+            $permission->edit($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

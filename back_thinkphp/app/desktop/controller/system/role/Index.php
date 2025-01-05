@@ -3,8 +3,8 @@
 namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
-use app\model\Role as RoleModel;
-use app\service\Role as RoleService;
+use app\model\RoleModel;
+use app\service\Role;
 use Exception;
 
 class Index extends Base
@@ -42,9 +42,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $roleService = new RoleService();
+        $role = new Role();
         try{
-            $roleService->delete($id);
+            $role->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

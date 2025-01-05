@@ -3,12 +3,12 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\Role as RoleModel;
+use app\model\RoleModel;
 use app\model\UserModel;
-use app\service\Department as DepartmentService;
-use app\service\User as UserServer;
-use app\service\user\desktop\User;
-use app\validate\UserValidate as UserValidate;
+use app\service\Department;
+use app\service\User;
+use app\service\user\desktop\User as DesktopUser;
+use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -20,8 +20,8 @@ class Index extends Base
     public function init()
     {
         //部门
-        $departmentService = new DepartmentService();
-        $treeDepartments = $departmentService->getTreeDepartments();
+        $department = new Department();
+        $treeDepartments = $department->getTreeDepartments();
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -86,8 +86,8 @@ class Index extends Base
         }
 
         try{
-            $userServer = new UserServer();
-            $userServer->editStatus($post['id'], $post['status_id']);
+            $user = new User();
+            $user->editStatus($post['id'], $post['status_id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }
@@ -110,7 +110,7 @@ class Index extends Base
         }
 
         try{
-            $user = new User();
+            $user = new DesktopUser();
             $user->offLine($post['id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());

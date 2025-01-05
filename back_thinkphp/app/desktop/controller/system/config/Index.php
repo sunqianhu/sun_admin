@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\config;
 
 use app\desktop\controller\Base;
 use app\service\Config;
-use app\validate\ConfigValidate as ConfigValidate;
+use app\validate\ConfigValidate;
 use think\exception\ValidateException;
 
 class Index extends Base

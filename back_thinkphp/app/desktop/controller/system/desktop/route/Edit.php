@@ -4,9 +4,9 @@ namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
-use app\service\desktop\Route as RouteService;
+use app\service\desktop\Route;
 use app\service\Dictionary;
-use app\validate\desktop\RouteValidate as RouteValidate;
+use app\validate\desktop\RouteValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -52,9 +52,9 @@ class edit extends Base
             return $this->error($exception->getError());
         }
 
-        $routeService = new RouteService();
+        $route = new Route();
         try{
-            $routeService->edit($post['id'], $post);
+            $route->edit($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

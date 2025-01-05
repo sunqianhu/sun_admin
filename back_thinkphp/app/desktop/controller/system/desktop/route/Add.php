@@ -3,9 +3,9 @@
 namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Route as RouteService;
+use app\service\desktop\Route;
 use app\service\Dictionary;
-use app\validate\desktop\RouteValidate as RouteValidate;
+use app\validate\desktop\RouteValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -38,9 +38,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $routeService = new RouteService();
+        $route = new Route();
         try{
-            $routeService->add($post);
+            $route->add($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

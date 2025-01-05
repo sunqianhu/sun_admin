@@ -4,9 +4,9 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
-use app\service\Department as DepartmentService;
+use app\service\Department;
 use app\service\Dictionary;
-use app\validate\DepartmentValidate as DepartmentValidate;
+use app\validate\DepartmentValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -29,8 +29,8 @@ class Edit extends Base
         }
         $department = $departmentModel->toArray();
 
-        $departmentService = new DepartmentService();
-        $treeDepartments = $departmentService->getTreeDepartments();
+        $department = new Department();
+        $treeDepartments = $department->getTreeDepartments();
 
         $dictionary = new Dictionary();
         $types = $dictionary->getList('department_type');
@@ -60,9 +60,9 @@ class Edit extends Base
             return $this->error('上级部门不能和本部门相同');
         }
 
-        $departmentService = new DepartmentService();
+        $department = new Department();
         try{
-            $departmentService->edit($post['id'], $post);
+            $department->edit($post['id'], $post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

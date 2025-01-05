@@ -3,9 +3,9 @@
 namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
-use app\service\Department as DepartmentService;
+use app\service\Department;
 use app\service\Dictionary;
-use app\validate\DepartmentValidate as DepartmentValidate;
+use app\validate\DepartmentValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -16,8 +16,8 @@ class Add extends Base
      */
     public function init()
     {
-        $departmentService = new DepartmentService();
-        $treeDepartments = $departmentService->getTreeDepartments();
+        $department = new Department();
+        $treeDepartments = $department->getTreeDepartments();
 
         $dictionary = new Dictionary();
         $types = $dictionary->getList('department_type');
@@ -43,9 +43,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $departmentService = new DepartmentService();
+        $department = new Department();
         try{
-            $departmentService->add($post);
+            $department->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

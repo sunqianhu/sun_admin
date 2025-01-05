@@ -3,8 +3,8 @@
 namespace app\desktop\controller\system\mobile\permission;
 
 use app\desktop\controller\Base;
-use app\service\mobile\Permission as PermissionService;
-use app\validate\mobile\PermissionValidate as PermissionValidate;
+use app\service\mobile\Permission;
+use app\validate\mobile\PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -15,8 +15,8 @@ class Add extends Base
      */
     public function init()
     {
-        $permissionService = new PermissionService();
-        $treePermissions = $permissionService->getTreePermissions();
+        $permission = new Permission();
+        $treePermissions = $permission->getTreePermissions();
 
         $data = [
             'tree_permissions' => $treePermissions
@@ -38,9 +38,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $permissionService = new PermissionService();
+        $permission = new Permission();
         try {
-            $permissionService->add($post);
+            $permission->add($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }
