@@ -5,7 +5,6 @@ namespace app\service\mobile;
 use app\entity\SessionEntity;
 use app\model\mobile\TokenModel;
 use app\model\UserModel;
-use app\service\api\token;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
@@ -18,7 +17,7 @@ class Jwt
 
     /**
      * 得到token
-     * @return token
+     * @return string
      */
     function getToken($userId)
     {

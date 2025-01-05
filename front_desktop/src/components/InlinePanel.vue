@@ -1,5 +1,5 @@
 <template>
-  <div class="panel-card">
+  <div class="inline-panel">
     <slot name="header">
       <div class="header" v-if="title || subTitle || $slots.actions">
         <div class="title" v-if="title">{{ title }}</div>
@@ -29,20 +29,17 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.panel-card {
-  background: var(--background-color-light);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--box-shadow-base);
+.inline-panel {
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--padding-md) var(--padding-md) 0px var(--padding-md);
     .title {
       color: var(--color-primary);
       position: relative;
       font-size: var(--font-size-lg);
       font-weight: bold;
+      padding: var(--padding-md) var(--padding-md) 0px 0;
       &::before {
         content: "";
         display: inline-block;
@@ -66,7 +63,7 @@ const props = defineProps({
     }
   }
   .body {
-    padding: var(--padding-md);
+    margin-top: var(--margin-md);
   }
 }
 </style>

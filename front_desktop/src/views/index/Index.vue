@@ -49,17 +49,17 @@
     <div class="modules">
       <el-row justify="space-between" :gutter="16">
         <el-col :md="12">
-          <panel-card title="module1" class="module">
+          <card-panel title="module1" class="module">
             <div class="chart" id="module1-chart"></div>
-          </panel-card>
+          </card-panel>
         </el-col>
         <el-col :sm="12">
-          <panel-card title="module2" class="module">
+          <card-panel title="module2" class="module">
             <div class="chart" id="module2-chart"></div>
-          </panel-card>
+          </card-panel>
         </el-col>
         <el-col :md="12">
-          <panel-card title="module3" class="module">
+          <card-panel title="module3" class="module">
             <template #actions>
               <a href="javascript:;">更多</a>
             </template>
@@ -68,10 +68,10 @@
               <el-table-column prop="name" label="Name" width="100" />
               <el-table-column prop="address" label="Address" />
             </el-table>
-          </panel-card>
+          </card-panel>
         </el-col>
         <el-col :sm="12">
-          <panel-card title="module4" class="module">
+          <card-panel title="module4" class="module">
             <template #actions>
               <a href="javascript:;">更多</a>
             </template>
@@ -80,7 +80,7 @@
               <el-table-column prop="name" label="Name" width="100" />
               <el-table-column prop="address" label="Address" />
             </el-table>
-          </panel-card>
+          </card-panel>
         </el-col>
       </el-row>
     </div>
@@ -93,7 +93,7 @@ import axios from "@/helper/axios";
 import * as echarts from "echarts";
 import blueTheme from "@/extend/echarts_theme/blue.json";
 import { Odometer, ChatSquare } from "@element-plus/icons-vue";
-import PanelCard from "@/components/PanelCard.vue";
+import CardPanel from "@/components/CardPanel.vue";
 
 const pageLoading = ref(false);
 const tableData = [

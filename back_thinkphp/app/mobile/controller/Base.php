@@ -3,9 +3,9 @@
 namespace app\mobile\controller;
 
 use app\BaseController;
-use app\service\mobile\Session as Session;
-use app\entity\mobile\Session as SessionEntity;
-use app\service\OperationLog as OperationLogService;
+use app\service\mobile\Session;
+use app\entity\SessionEntity;
+use app\service\OperationLog;
 use Exception;
 use think\Response;
 
@@ -14,9 +14,10 @@ use think\Response;
  */
 class Base extends BaseController
 {
-    /**
-     * @var SessionEntity 会话
-     */
+    public $isTokenAuth = true; //是否token认证
+    public $noTokenAuthActions = []; //不需要token认证的方法
+    public $isRouteAuth = true; //是否路由认证
+    public $noRouteAuthActions = []; //不需要路由认证的方法
     public SessionEntity $session;
 
     /**
@@ -26,41 +27,51 @@ class Base extends BaseController
     function initialize()
     {
         parent::initialize();
-
-        $this->session = new SessionEntity();
         $session = new Session();
+        $session->isTokenAuth = $this->isTokenAuth;
+        $session->noTokenAuthActions = $this->noTokenAuthActions;
+        $session->isRouteAuth = $this->isRouteAuth;
+        $session->noRouteAuthActions = $this->noRouteAuthActions;
 
         //ip
         try {
             $session->ipAuth($this->request->ip());
         } catch (Exception $exception) {
-            $this->error($exception->getMessage(), null, 0)->send();
+            $this->error($exception->getMessage(), null)->send();
             exit;
         }
 
+        $action = $this->request->action();
+
         //token
         try {
-            $sessionEntity = $session->tokenAuth($this->request);
-            if(empty($sessionEntity)) {
-                return;
-            }
-            $this->session = $sessionEntity;
+            $token = $this->request->header('token', '');
+            $this->session = $session->tokenAuth($token, $action);
         } catch (Exception $exception) {
-            $this->error($exception->getMessage(), null, 2)->send();
+            $this->error($exception->getMessage(), null, 200, 2)->send();
             exit;
         }
 
         //路由
         try {
-            $session->ruoteAuth($this->request, $this->session->userId);
+            $route = $this->request->baseUrl();
+            $route = ltrim($route, '/');
+            $session->ruoteAuth($this->session->userId, $route, $action);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
         }
 
         //操作日志
-        $operationLogService = new OperationLogService();
-        $operationLogService->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());
+        if(
+            $this->isTokenAuth &&
+            !in_array($action, $this->noTokenAuthActions) &&
+            $this->isRouteAuth &&
+            !in_array($action, $this->noRouteAuthActions)
+        ) {
+            $operationLog = new OperationLog();
+            $operationLog->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());
+        }
     }
 
     /**

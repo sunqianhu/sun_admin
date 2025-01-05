@@ -2,9 +2,9 @@
 
 namespace app\mobile\controller;
 
-use app\service\mobile\Session as Session;
+use app\service\mobile\Session;
 use app\service\LoginFailChecker;
-use app\validate\Session as SessionValidate;
+use app\validate\SessionValidate;
 use Exception;
 use think\exception\ValidateException;
 

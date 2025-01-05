@@ -43,19 +43,19 @@ class User
     /**
      * 是否有权限
      * @param $userId
-     * @param $url
+     * @param $api
      * @return false|void
      */
-    public function hasApiPermission($userId, $url){
+    public function hasApiPermission($userId, $api){
         $apis = $this->getApis($userId);
         if(empty($apis)){
             return false;
         }
 
-        $url = strtolower($url);
+        $api = strtolower($api);
         $apis = array_map('strtolower', $apis);
-        foreach($apis as $api){
-            if($api === $url){
+        foreach($apis as $forApi){
+            if($forApi === $api){
                 return true;
             }
         }

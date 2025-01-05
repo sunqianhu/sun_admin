@@ -11,9 +11,10 @@ use Exception;
 
 class Session
 {
-    public $isIpAuth = true;
-    public $isTokenAuth = true;
-    public $isRouteAuth = true;
+    public $isTokenAuth = true; //是否token认证
+    public $noTokenAuthActions = []; //不需要token认证的方法
+    public $isRouteAuth = true; //是否路由认证
+    public $noRouteAuthActions = []; //不需要路由认证的方法
 
     /**
      * 登录
@@ -35,7 +36,7 @@ class Session
         if (empty($userModel)) {
             throw new Exception('用户名或密码错误');
         }
-        if ($userModel->status_id == 2) {
+        if ($userModel->status_id == 0) {
             throw new Exception('账号已停用');
         }
 
@@ -76,17 +77,15 @@ class Session
      * @return true
      * @throws Exception
      */
-    function ipAuth($ip){
-        if(!$this->isIpAuth){
-            return true;
-        }
+    function ipAuth($ip)
+    {
         $config = new Config();
         $deniedIpString = $config->getValue('denied_ip_string');
         $deniedIps = explode("\r\n", $deniedIpString);
-        if(empty($deniedIps)){
+        if (empty($deniedIps)) {
             return true;
         }
-        if(in_array($ip, $deniedIps)){
+        if (in_array($ip, $deniedIps)) {
             throw new Exception('您的ip已被拒绝访问');
         }
         return true;
@@ -94,43 +93,55 @@ class Session
 
     /**
      * token认证
-     * @param $request
+     * @param $token
+     * @param $action
      * @return SessionEntity
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
-    function tokenAuth($request)
+    function tokenAuth($token, $action)
     {
-        $token = $request->header('token', '');
-        if(!$this->isTokenAuth){
-            return (new SessionEntity());
+        $jwt = new Jwt();
+        $isAuth = $this->isTokenAuth;
+        if (in_array($action, $this->noTokenAuthActions)) {
+            $isAuth = false;
+        }
+        if (!$isAuth) {
+            try {
+                return $jwt->resolverToken($token);
+            } catch (Exception $exception) {
+                return new SessionEntity();
+            }
         }
 
-        $jwt = new Jwt();
         return $jwt->resolverToken($token);
     }
 
     /**
      * 路由认证
-     * @param $request
+     * @param $userId
+     * @param $route
+     * @param $action
      * @return void
      * @throws Exception
      */
-    function ruoteAuth($request, $userId)
+    function ruoteAuth($userId, $route, $action)
     {
-        if(!$this->isTokenAuth || !$this->isRouteAuth){
+        $isAuth = $this->isTokenAuth && $this->isRouteAuth;
+        if (in_array($action, $this->noRouteAuthActions)) {
+            $isAuth = false;
+        }
+        if (!$isAuth) {
             return;
         }
-        if(empty($userId)){
-            throw new Exception('用户id不能为空');
+
+        if (empty($userId)) {
+            throw new Exception('路由认证，用户id不能为空');
+        }
+        if ($route === '') {
+            throw new Exception('路由认证，路由不能为空');
         }
 
-        $url = $request->baseUrl();
-        $url = strtolower($url);
-        $url = ltrim($url, '/');
         $user = new User();
-        if(!$user->hasApiPermission($userId, $url)){
+        if (!$user->hasApiPermission($userId, $route)) {
             throw new Exception('无权限');
         }
     }

@@ -4,7 +4,7 @@ namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
 use app\model\UserModel;
-use app\service\mobile\Session as Session;
+use app\service\mobile\Session;
 
 class Detail extends Base
 {

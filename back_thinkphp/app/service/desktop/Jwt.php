@@ -17,7 +17,7 @@ class Jwt
 
     /**
      * 得到token
-     * @return token
+     * @return string
      */
     function getToken($userId)
     {
