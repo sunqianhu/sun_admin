@@ -2,7 +2,7 @@
 
 namespace app\desktop\controller;
 
-use app\service\user\desktop\User as DesktopUser;
+use app\service\desktop\DesktopUser as DesktopUser;
 use app\service\Watermark;
 
 /**
@@ -10,7 +10,7 @@ use app\service\Watermark;
  */
 class Frame extends Base
 {
-    public $isRouteAuth = false;
+    public $isApiAuth = false;
 
     /**
      * 获取权限

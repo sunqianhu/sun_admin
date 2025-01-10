@@ -10,7 +10,7 @@ use Exception;
 class Index extends Base
 {
     /**
-     * 得到路由集合
+     * 得到路由列表
      */
     public function getRoutes()
     {

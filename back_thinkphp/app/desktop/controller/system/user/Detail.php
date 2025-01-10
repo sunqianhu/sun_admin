@@ -19,7 +19,7 @@ class Detail extends Base
             return $this->error('id参数错误');
         }
 
-        $userModel = UserModel::field('id,account,name,phone,department_id,add_time,status_id,edit_time,login_time,login_ip')
+        $userModel = UserModel::field('id,account,name,phone,department_id,add_time,status,edit_time,last_login_time,last_login_ip')
             ->with(['roles', 'department'])
             ->find($id);
         $userModel->append(['status_name', 'role_names']);

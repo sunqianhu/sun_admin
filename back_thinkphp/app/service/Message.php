@@ -9,8 +9,17 @@ use think\facade\Queue;
 use WebSocket\Client;
 use Exception;
 
-class Message
+class Message extends Curd
 {
+    /**
+     * 构造函数
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        parent::__construct(MessageModel::class);
+    }
+
     /**
      * 发送消息
      * @param $userIds
@@ -73,17 +82,6 @@ class Message
         ];
         Queue::push('app\job\Message', $data, 'message');
     }
-
-    /**
-     * 添加
-     * @param $data
-     * @return void
-     */
-    public function add($data){
-        $messageModel = new MessageModel();
-        $messageModel->save($data);
-    }
-
 
     /**
      * 设置全部已读

@@ -3,12 +3,22 @@
 namespace app\service\desktop;
 
 use app\model\desktop\RouteModel;
+use app\service\Curd;
 use Exception;
 
-class Route
+class Route extends Curd
 {
     /**
-     * 得到路由集合
+     * 构造函数
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        parent::__construct(RouteModel::class);
+    }
+
+    /**
+     * 得到路由列表
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -16,72 +26,23 @@ class Route
      */
     public function getRoutes()
     {
-        $routeModels = RouteModel::order('sort', 'asc')
+        $routes = RouteModel::order('sort', 'asc')
             ->select();
-        $routes = $routeModels->toArray();
-
-        return $routes;
+        return $routes->toArray();
     }
 
     /**
-     * 得到带名称路径的路由集合
+     * 得到名称路径的路由列表
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getRoutesWithNamePath()
+    public function getNamePathRoutes()
     {
-        $routeModels = RouteModel::order('sort', 'asc')
+        $routes = RouteModel::order('sort', 'asc')
             ->append(['name_path'])
             ->select();
-        $routes = $routeModels->toArray();
-
-        return $routes;
-    }
-
-    /**
-     * 添加
-     * @param $data
-     * @return void
-     */
-    public function add($data)
-    {
-        $routeModel = new RouteModel();
-        $routeModel->save($data);
-    }
-
-    /**
-     * 修改
-     * @param $id
-     * @param $data
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function edit($id, $data){
-        $routeModel = RouteModel::find($id);
-        if(empty($routeModel)){
-            throw new Exception('没有找到记录');
-        }
-        $routeModel->save($data);
-    }
-
-    /**
-     * 删除
-     * @param $id
-     * @return void
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     * @throws Exception
-     */
-    public function delete($id){
-        $routeModel = RouteModel::find($id);
-        if(empty($routeModel)){
-            throw new Exception('没有找到记录');
-        }
-        $routeModel->delete();
+        return $routes->toArray();
     }
 }

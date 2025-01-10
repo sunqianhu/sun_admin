@@ -11,7 +11,7 @@ use Sunqianhu\Helper\ArrayHandler;
 class Index extends Base
 {
     /**
-     * 得到权限集合
+     * 得到权限列表
      */
     public function getPermissions()
     {
@@ -24,13 +24,13 @@ class Index extends Base
             $query = $query->where('key', 'LIKE', '%' . $get['key'] . '%');
         }
         $query = $query->order('sort', 'asc');
-        $permissionModels = $query->select();
-        $permissions = $permissionModels->toArray();
+        $permissions = $query->select();
+        $permissions = $permissions->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treePermissions = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        $treePermission = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
 
-        return $this->success('获取成功', $treePermissions);
+        return $this->success('获取成功', $treePermission);
     }
 
     /**

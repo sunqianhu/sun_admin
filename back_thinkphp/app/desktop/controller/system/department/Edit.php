@@ -30,13 +30,13 @@ class Edit extends Base
         $department = $departmentModel->toArray();
 
         $department = new Department();
-        $treeDepartments = $department->getTreeDepartments();
+        $treeDepartment = $department->getTreeDepartment();
 
         $dictionary = new Dictionary();
         $types = $dictionary->getList('department_type');
 
         $data = [
-            'tree_departments' => $treeDepartments,
+            'tree_departments' => $treeDepartment,
             'department' => $department,
             'types'=>$types
         ];

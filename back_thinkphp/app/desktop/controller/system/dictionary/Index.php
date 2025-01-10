@@ -10,7 +10,7 @@ use Exception;
 class Index extends Base
 {
     /**
-     * 得到字典集合
+     * 得到字典列表
      */
     public function getDictionarys()
     {

@@ -11,7 +11,7 @@ use Sunqianhu\Helper\ArrayHandler;
 class Index extends Base
 {
     /**
-     * 得到菜单集合
+     * 得到菜单列表
      */
     public function getMenus()
     {
@@ -25,9 +25,9 @@ class Index extends Base
         $menus = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        $treeMenu = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
 
-        return $this->success('获取成功', $treeMenus);
+        return $this->success('获取成功', $treeMenu);
     }
 
     /**

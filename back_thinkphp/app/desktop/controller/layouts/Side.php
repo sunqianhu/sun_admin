@@ -5,14 +5,14 @@ namespace app\desktop\controller\layouts;
 use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\service\desktop\Session;
-use app\service\user\desktop\User;
+use app\service\desktop\DesktopUser;
 
 /**
  * 主页
  */
 class Side extends Base
 {
-    public $isRouteAuth = false;
+    public $isApiAuth = false;
 
     /**
      * 得到菜单
@@ -20,10 +20,10 @@ class Side extends Base
      */
     public function getMenus()
     {
-        $user = new User();
-        $treeMenus = $user->getMenus($this->session->userId);
+        $user = new DesktopUser();
+        $treeMenu = $user->getMenus($this->session->userId);
 
-        return $this->success('获取成功', $treeMenus);
+        return $this->success('获取成功', $treeMenu);
     }
 
     /**

@@ -16,8 +16,8 @@ class Base extends BaseController
 {
     public $isTokenAuth = true; //是否token认证
     public $noTokenAuthActions = []; //不需要token认证的方法
-    public $isRouteAuth = true; //是否路由认证
-    public $noRouteAuthActions = []; //不需要路由认证的方法
+    public $isApiAuth = true; //是否接口认证
+    public $noApiAuthActions = []; //不需要接口认证的方法
     public SessionEntity $session;
 
     /**
@@ -30,8 +30,8 @@ class Base extends BaseController
         $session = new Session();
         $session->isTokenAuth = $this->isTokenAuth;
         $session->noTokenAuthActions = $this->noTokenAuthActions;
-        $session->isRouteAuth = $this->isRouteAuth;
-        $session->noRouteAuthActions = $this->noRouteAuthActions;
+        $session->isApiAuth = $this->isApiAuth;
+        $session->noApiAuthActions = $this->noApiAuthActions;
 
         //ip
         try {
@@ -56,7 +56,7 @@ class Base extends BaseController
         try {
             $route = $this->request->baseUrl();
             $route = ltrim($route, '/');
-            $session->ruoteAuth($this->session->userId, $route, $action);
+            $session->apiAuth($this->session->userId, $route, $action);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
@@ -66,8 +66,8 @@ class Base extends BaseController
         if(
             $this->isTokenAuth &&
             !in_array($action, $this->noTokenAuthActions) &&
-            $this->isRouteAuth &&
-            !in_array($action, $this->noRouteAuthActions)
+            $this->isApiAuth &&
+            !in_array($action, $this->noApiAuthActions)
         ) {
             $operationLog = new OperationLog();
             $operationLog->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());

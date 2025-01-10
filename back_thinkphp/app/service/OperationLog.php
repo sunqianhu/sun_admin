@@ -5,26 +5,14 @@ namespace app\service;
 use app\model\OperationLogModel;
 use Exception;
 
-class OperationLog
+class OperationLog extends Curd
 {
     /**
-     * 添加
-     * @return void
+     * 构造函数
      * @throws Exception
      */
-    public function add($userId, $url, $ip)
+    public function __construct()
     {
-        if (empty($userId)) {
-            throw new Exception('用户id不能为空');
-        }
-        $url = strtolower($url);
-        $data = [
-            'user_id' => $userId,
-            'time' => time(),
-            'ip' => $ip,
-            'url' => $url
-        ];
-        $operationLogModel = new OperationLogModel();
-        $operationLogModel->save($data);
+        parent::__construct(OperationLogModel::class);
     }
 }

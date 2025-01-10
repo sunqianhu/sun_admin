@@ -8,8 +8,17 @@ use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\facade\Cache;
 
-class Department
+class Department extends Curd
 {
+    /**
+     * 构造函数
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        parent::__construct(DepartmentModel::class);
+    }
+
     /**
      * 得到树形部门
      * @return array
@@ -17,66 +26,18 @@ class Department
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTreeDepartments()
+    public function getTreeDepartment()
     {
-        $departmentModels = DepartmentModel::field('id, id, department_id, name')
+        $departments = DepartmentModel::field('id, id, department_id, name')
             ->order('sort', 'asc')
             ->select();
-        $departments = $departmentModels->toArray();
+        $departmentArrays = $departments->toArray();
         $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        return $arrayHandler->convertTree($departmentArrays, 'id', 'department_id', 'children');
     }
 
     /**
-     * 添加
-     * @param $data
-     * @return void
-     */
-    public function add($data)
-    {
-        $departmentModel = new DepartmentModel();
-        $departmentModel->save($data);
-    }
-
-    /**
-     * 修改
-     * @param $id
-     * @param $data
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws Exception
-     */
-    public function edit($id, $data)
-    {
-        $departmentModel = DepartmentModel::find($id);
-        if(empty($departmentModel)){
-            throw new Exception('没有找到记录');
-        }
-        $departmentModel->save($data);
-    }
-
-    /**
-     * 删除
-     * @param $id
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws Exception
-     */
-    public function delete($id)
-    {
-        $departmentModel = DepartmentModel::find($id);
-        if(empty($departmentModel)){
-            throw new Exception('没有找到记录');
-        }
-        $departmentModel->delete();
-    }
-
-    /**
-     * 得到姓名
+     * 得到名称
      * @param $id
      * @return mixed
      */
@@ -88,7 +49,7 @@ class Department
             return $name;
         }
 
-        $name = DepartmentModel::where('id', $id)->value('name');
+        $name = DepartmentModel::where('id', $id)->value('name') ?? '';
         Cache::set($key, $name, 600);
         return $name;
     }
@@ -117,12 +78,14 @@ class Department
      * @throws \think\db\exception\ModelNotFoundException
      */
     public function getUsers($id){
-        $users = UserModel::where('department_id', $id)->select();
+        $users = UserModel::field('id,name,department_id')
+            ->where('department_id', $id)
+            ->select();
         return $users->toArray();
     }
 
     /**
-     * 通过类型得到部门集合
+     * 通过类型得到部门列表
      * @param $typeId
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -130,10 +93,10 @@ class Department
      * @throws \think\db\exception\ModelNotFoundException
      */
     public function getTypeDepartments($typeId) {
-        $departmentModels = DepartmentModel::field('id,name,type_id,department_id')
+        $departments = DepartmentModel::field('id,name,type_id,department_id')
             ->where('type_id', $typeId)
             ->order('sort', 'asc')
             ->select();
-        return $departmentModels->toArray();
+        return $departments->toArray();
     }
 }

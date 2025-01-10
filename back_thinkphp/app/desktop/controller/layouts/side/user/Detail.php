@@ -7,7 +7,7 @@ use app\model\UserModel;
 
 class Detail extends Base
 {
-    public $isRouteAuth = false;
+    public $isApiAuth = false;
 
     /**
      * 得到用户
@@ -18,7 +18,7 @@ class Detail extends Base
      */
     public function getUser()
     {
-        $userModel = UserModel::field('id,account,name,phone,login_time,login_ip,department_id')
+        $userModel = UserModel::field('id,account,name,phone,last_login_time,last_login_ip,department_id')
             ->append(['department_name'])
             ->find($this->session->userId);
         $user = $userModel->toArray();

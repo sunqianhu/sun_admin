@@ -20,16 +20,16 @@ class Add extends Base
     public function init()
     {
         $desktopPermission = new DesktopPermission();
-        $desktopPermissions = $desktopPermission->getTreePermissionsWithNameKey();
+        $desktopPermissions = $desktopPermission->getNameKeyTreePermission();
 
         $desktopMenu = new DesktopMenu();
-        $desktopMenus = $desktopMenu->getTreeMenusWithNameUrl();
+        $desktopMenus = $desktopMenu->getNameUrlTreeMenu();
 
         $desktopRoute = new DesktopRoute();
-        $desktopRoutes = $desktopRoute->getRoutesWithNamePath();
+        $desktopRoutes = $desktopRoute->getNamePathRoutes();
 
         $mobilePermission = new MobilePermission();
-        $mobilePermissions = $mobilePermission->getTreePermissionsWithNameKey();
+        $mobilePermissions = $mobilePermission->getNameKeyTreePermission();
 
         $data = [
             'desktop_permissions'=>$desktopPermissions,

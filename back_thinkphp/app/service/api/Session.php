@@ -26,32 +26,32 @@ class Session
      */
     public function login($account, $password, $ip = '')
     {
-        $userModel = UserModel::field('id,department_id,status_id,name')
+        $user = UserModel::field('id,department_id,status,name')
             ->where('account', $account)
             ->where('password', md5($password))
             ->find();
-        if (empty($userModel)) {
-            throw new Exception('用户名或密码错误');
+        if (empty($user)) {
+            throw new Exception('账号或密码错误');
         }
-        if ($userModel->status_id == 0) {
+        if ($user->status == 0) {
             throw new Exception('账号已停用');
         }
 
         $jwt = new Jwt();
-        $token = $jwt->getToken($userModel->id);
+        $token = $jwt->createToken($user->id);
 
         //登录日志
         $loginLog = new LoginLog();
-        $loginLog->add($userModel->id, $ip);
+        $loginLog->add($user->id, $ip);
 
         //用户表
-        $userModel->login_time = time();
-        $userModel->login_ip = $ip;
-        $userModel->save();
+        $user->last_login_time = time();
+        $user->last_login_ip = $ip;
+        $user->save();
 
         $session = new SessionEntity();
-        $session->userId = $userModel->id;
-        $session->departmentId = $userModel->department_id;
+        $session->userId = $user->id;
+        $session->departmentId = $user->department_id;
         $session->token = $token;
 
         return $session;

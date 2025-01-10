@@ -26,9 +26,9 @@ class Index extends Base
         $departments = $departmentModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $treeDepartment = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
-        return $this->success('获取成功', $treeDepartments);
+        return $this->success('获取成功', $treeDepartment);
     }
 
     /**

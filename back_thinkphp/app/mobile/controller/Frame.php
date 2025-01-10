@@ -2,7 +2,7 @@
 
 namespace app\mobile\controller;
 
-use app\service\user\mobile\User as Mobile;
+use app\service\mobile\MobileUser as Mobile;
 
 /**
  * 框架

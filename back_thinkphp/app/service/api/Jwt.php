@@ -16,10 +16,10 @@ class Jwt
     public $expire = 60 * 60 * 24 * 365; //有效期
 
     /**
-     * 得到token
+     * 创建token
      * @return string
      */
-    function getToken($userId)
+    function createToken($userId)
     {
         $payload = [
             'id' => $userId,
@@ -32,8 +32,8 @@ class Jwt
             'user_id' => $userId,
             'expires_in' => time() + $this->expire
         ];
-        $tokenModel = new TokenModel();
-        $tokenModel->save($data);
+        $tokenService = new Token();
+        $tokenService->add($data);
 
         return $token;
     }
@@ -41,10 +41,10 @@ class Jwt
     /**
      * 解析token
      * @param $token
+     * @return SessionEntity
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @throws Exception
      */
     function resolverToken($token)
     {
@@ -91,7 +91,7 @@ class Jwt
      */
     function deleteToken($token)
     {
-        TokenModel::where('token', $token)->delete();
-        return true;
+        $tokenService = new Token();
+        $tokenService->tokenDelete($token);
     }
 }

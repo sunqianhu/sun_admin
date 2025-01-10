@@ -16,10 +16,10 @@ class Add extends Base
     public function init()
     {
         $permission = new Permission();
-        $treePermissions = $permission->getTreePermissions();
+        $treePermission = $permission->getTreePermission();
 
         $data = [
-            'tree_permissions' => $treePermissions
+            'tree_permissions' => $treePermission
         ];
         return $this->success('获取成功', $data);
     }

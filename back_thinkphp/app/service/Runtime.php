@@ -12,7 +12,7 @@ class Runtime
      */
     public function getValue($key)
     {
-        return RuntimeModel::where('key', $key)->value('value');
+        return RuntimeModel::where('key', $key)->value('value') ?? '';
     }
 
     /**
@@ -22,9 +22,9 @@ class Runtime
      * @return void
      */
     public function setValue($key, $value){
-        $runtimeModel = RuntimeModel::where('key', $key)->findOrEmpty();
-        $runtimeModel->key = $key;
-        $runtimeModel->value = $value;
-        $runtimeModel->save();
+        $runtime = RuntimeModel::where('key', $key)->findOrEmpty();
+        $runtime->key = $key;
+        $runtime->value = $value;
+        $runtime->save();
     }
 }

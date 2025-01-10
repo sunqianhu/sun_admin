@@ -17,13 +17,13 @@ class Add extends Base
     public function init()
     {
         $department = new Department();
-        $treeDepartments = $department->getTreeDepartments();
+        $treeDepartment = $department->getTreeDepartment();
 
         $dictionary = new Dictionary();
         $types = $dictionary->getList('department_type');
 
         $data = [
-            'tree_departments'=>$treeDepartments,
+            'tree_departments'=>$treeDepartment,
             'types'=>$types
         ];
         return $this->success('获取成功', $data);

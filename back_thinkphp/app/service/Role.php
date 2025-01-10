@@ -11,8 +11,17 @@ use app\model\UserRoleModel;
 use Exception;
 use think\facade\Db;
 
-class Role
+class Role extends Curd
 {
+    /**
+     * 构造函数
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        parent::__construct(RoleModel::class);
+    }
+
     /**
      * 添加
      * @param $data
@@ -27,8 +36,8 @@ class Role
 
             if (!empty($data['desktop_permission_ids'])) {
                 foreach ($data['desktop_permission_ids'] as $desktopPermissionId) {
-                    $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
-                    $roleDesktopPermissionModel->save([
+                    $roleDesktopPermission = new RoleDesktopPermissionModel();
+                    $roleDesktopPermission->save([
                         'role_id' => $roleModel->id,
                         'permission_id' => $desktopPermissionId
                     ]);
@@ -37,8 +46,8 @@ class Role
 
             if (!empty($data['desktop_menu_ids'])) {
                 foreach ($data['desktop_menu_ids'] as $desktopMenuId) {
-                    $roleDesktopMenuModel = new RoleDesktopMenuModel();
-                    $roleDesktopMenuModel->save([
+                    $roleDesktopMenu = new RoleDesktopMenuModel();
+                    $roleDesktopMenu->save([
                         'role_id' => $roleModel->id,
                         'menu_id' => $desktopMenuId
                     ]);
@@ -47,8 +56,8 @@ class Role
 
             if (!empty($data['desktop_route_ids'])) {
                 foreach ($data['desktop_route_ids'] as $desktopRouteId) {
-                    $roleDesktopRouteModel = new RoleDesktopRouteModel();
-                    $roleDesktopRouteModel->save([
+                    $roleDesktopRoute = new RoleDesktopRouteModel();
+                    $roleDesktopRoute->save([
                         'role_id' => $roleModel->id,
                         'route_id' => $desktopRouteId
                     ]);
@@ -57,8 +66,8 @@ class Role
 
             if (!empty($data['mobile_permission_ids'])) {
                 foreach ($data['mobile_permission_ids'] as $mobilePermissionId) {
-                    $roleMobilePermissionModel = new RoleMobilePermissionModel();
-                    $roleMobilePermissionModel->save([
+                    $roleMobilePermission = new RoleMobilePermissionModel();
+                    $roleMobilePermission->save([
                         'role_id' => $roleModel->id,
                         'permission_id' => $mobilePermissionId
                     ]);
@@ -91,8 +100,8 @@ class Role
             RoleDesktopPermissionModel::where('role_id', $roleModel->id)->delete();
             if (!empty($data['desktop_permission_ids'])) {
                 foreach ($data['desktop_permission_ids'] as $desktopPermissionId) {
-                    $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
-                    $roleDesktopPermissionModel->save([
+                    $roleDesktopPermission = new RoleDesktopPermissionModel();
+                    $roleDesktopPermission->save([
                         'role_id' => $roleModel->id,
                         'permission_id' => $desktopPermissionId
                     ]);
@@ -102,8 +111,8 @@ class Role
             RoleDesktopMenuModel::where('role_id', $roleModel->id)->delete();
             if (!empty($data['desktop_menu_ids'])) {
                 foreach ($data['desktop_menu_ids'] as $desktopMenuId) {
-                    $roleDesktopMenuModel = new RoleDesktopMenuModel();
-                    $roleDesktopMenuModel->save([
+                    $roleDesktopMenu = new RoleDesktopMenuModel();
+                    $roleDesktopMenu->save([
                         'role_id' => $roleModel->id,
                         'menu_id' => $desktopMenuId
                     ]);
@@ -113,8 +122,8 @@ class Role
             RoleDesktopRouteModel::where('role_id', $roleModel->id)->delete();
             if (!empty($data['desktop_route_ids'])) {
                 foreach ($data['desktop_route_ids'] as $desktopRouteId) {
-                    $roleDesktopRouteModel = new RoleDesktopRouteModel();
-                    $roleDesktopRouteModel->save([
+                    $roleDesktopRoute = new RoleDesktopRouteModel();
+                    $roleDesktopRoute->save([
                         'role_id' => $roleModel->id,
                         'route_id' => $desktopRouteId
                     ]);
@@ -124,8 +133,8 @@ class Role
             RoleMobilePermissionModel::where('role_id', $roleModel->id)->delete();
             if (!empty($data['mobile_permission_ids'])) {
                 foreach ($data['mobile_permission_ids'] as $mobilePermissionId) {
-                    $roleMobilePermissionModel = new RoleMobilePermissionModel();
-                    $roleMobilePermissionModel->save([
+                    $roleMobilePermission = new RoleMobilePermissionModel();
+                    $roleMobilePermission->save([
                         'role_id' => $roleModel->id,
                         'permission_id' => $mobilePermissionId
                     ]);
@@ -152,7 +161,7 @@ class Role
     {
         $roleModel = RoleModel::find($id);
         if(empty($roleModel)){
-            throw new Exception('没有找到记录');
+            throw new Exception('没有找到角色记录');
         }
 
         UserRoleModel::where('role_id', $roleModel->id)->delete();

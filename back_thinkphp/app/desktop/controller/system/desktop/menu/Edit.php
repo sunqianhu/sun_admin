@@ -28,11 +28,11 @@ class Edit extends Base
         $menu = $menuModel->toArray();
 
         $menu = new Menu();
-        $treeMenus = $menu->getTreeMenus();
+        $treeMenu = $menu->getTreeMenu();
 
         $data = [
             'menu' => $menu,
-            'tree_menus' => $treeMenus
+            'tree_menu' => $treeMenu
         ];
         return $this->success('获取成功', $data);
     }

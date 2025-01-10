@@ -6,7 +6,7 @@ use app\model\DictionaryModel;
 use Exception;
 use think\facade\Cache;
 
-class Dictionary
+class Dictionary extends Curd
 {
     /**
      * @var int 有效期
@@ -14,55 +14,16 @@ class Dictionary
     private $expire = 600;
 
     /**
-     * 添加
-     * @param $data
-     * @return void
-     */
-    public function add($data)
-    {
-        $dictionaryModel = new DictionaryModel();
-        $dictionaryModel->save($data);
-    }
-
-    /**
-     * 修改
-     * @param $id
-     * @param $data
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * 构造函数
      * @throws Exception
      */
-    public function edit($id, $data)
+    public function __construct()
     {
-        $dictionaryModel = DictionaryModel::find($id);
-        if(empty($dictionaryModel)){
-            throw new Exception('没有找到记录');
-        }
-        $dictionaryModel->save($data);
+        parent::__construct(DictionaryModel::class);
     }
 
     /**
-     * 删除
-     * @param $id
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws Exception
-     */
-    public function delete($id)
-    {
-        $dictionaryModel = DictionaryModel::find($id);
-        if(empty($dictionaryModel)){
-            throw new Exception('没有找到记录');
-        }
-        $dictionaryModel->delete();
-    }
-
-    /**
-     * 获取字典集合
+     * 获取字典列表
      * @param $type
      * @return array
      */
@@ -70,15 +31,15 @@ class Dictionary
     {
         $cacheKey = 'dictionary_' . $type;
         $list = Cache::get($cacheKey);
-        if (!empty($list)) {
+        if ($list !== null) {
             return $list;
         }
 
-        $dictionaryModels = DictionaryModel::where('type', '=', $type)
+        $dictionarys = DictionaryModel::where('type', '=', $type)
             ->field('key,value')
             ->order('sort', 'asc')
             ->select();
-        $list = $dictionaryModels->toArray();
+        $list = $dictionarys->toArray();
         Cache::set($cacheKey, $list, $this->expire);
 
         return $list;
@@ -94,7 +55,7 @@ class Dictionary
     {
         $cacheKey = 'dictionary_' . $type . '_' . $key;
         $value = Cache::get($cacheKey);
-        if (!empty($value)) {
+        if ($value !== null) {
             return $value;
         }
 
@@ -102,7 +63,7 @@ class Dictionary
             ->where('type', '=', $type)
             ->where('key', '=', $key)
             ->order('sort', 'asc')
-            ->value('value');
+            ->value('value') ?? '';
         Cache::set($cacheKey, $value, $this->expire);
 
         return $value;
@@ -112,14 +73,15 @@ class Dictionary
      * 获取值串
      * @param $type
      * @param $keys
-     * @return void
+     * @param $glue
+     * @return mixed|string
      */
     public function getValueString($type, $keys, $glue = '，')
     {
         $keyString = implode(',', $keys);
         $cacheKey = 'dictionary_' . $type . '_' . $keyString;
         $valueString = Cache::get($cacheKey);
-        if (!empty($valueString)) {
+        if ($valueString !== null) {
             return $valueString;
         }
 

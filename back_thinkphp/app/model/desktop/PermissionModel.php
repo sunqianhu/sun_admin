@@ -24,7 +24,7 @@ class PermissionModel extends BaseModel
         $apis = array_filter($apis, function($value) {
             return $value !== '' && $value !== null;
         });
-        return $apis;
+        return array_unique($apis);
     }
 
     /**

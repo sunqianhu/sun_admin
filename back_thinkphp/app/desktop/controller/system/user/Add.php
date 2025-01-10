@@ -19,14 +19,14 @@ class Add extends Base
     {
         ///部门
         $department = new Department();
-        $treeDepartments = $department->getTreeDepartments();
+        $treeDepartment = $department->getTreeDepartment();
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
         $roles = $roleModels->toArray();
 
         $data = [
-            'departments' => $treeDepartments,
+            'departments' => $treeDepartment,
             'roles' => $roles
         ];
         return $this->success('获取成功', $data);
@@ -37,7 +37,7 @@ class Add extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['account', 'password', 'name', 'phone', 'department_id', 'role_ids', 'status_id']);
+        $post = $this->request->post(['account', 'password', 'name', 'phone', 'department_id', 'role_ids', 'status']);
 
         //验证
         try {

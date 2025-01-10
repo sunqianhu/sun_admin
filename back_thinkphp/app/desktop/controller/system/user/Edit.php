@@ -34,7 +34,7 @@ class Edit extends Base
 
         //部门
         $department = new Department();
-        $treeDepartments = $department->getTreeDepartments();
+        $treeDepartment = $department->getTreeDepartment();
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -42,7 +42,7 @@ class Edit extends Base
 
         $data = [
             'user' => $user,
-            'departments' => $treeDepartments,
+            'departments' => $treeDepartment,
             'roles' => $roles
         ];
         return $this->success('获取成功', $data);

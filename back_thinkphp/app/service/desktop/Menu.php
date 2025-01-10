@@ -3,11 +3,21 @@
 namespace app\service\desktop;
 
 use app\model\desktop\MenuModel;
+use app\service\Curd;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
-class Menu
+class Menu extends Curd
 {
+    /**
+     * 构造函数
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        parent::__construct(MenuModel::class);
+    }
+
     /**
      * 得到树形菜单
      * @return array
@@ -15,36 +25,35 @@ class Menu
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTreeMenus()
+    public function getTreeMenu()
     {
-        $menuModels = MenuModel::field('id, menu_id, name, url')
+        $menus = MenuModel::field('id,menu_id,name,url')
             ->order('sort', 'asc')
             ->select();
-        $menus = $menuModels->toArray();
+        $menuArrays = $menus->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
-        return $treeMenus;
+        $treeMenu = $arrayHandler->convertTree($menuArrays, 'id', 'menu_id', 'children');
+        return $treeMenu;
     }
 
     /**
-     * 得到带名称和url的树形菜单
+     * 得到名称和url的树形菜单
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTreeMenusWithNameUrl()
+    public function getNameUrlTreeMenu()
     {
-        $menuModels = MenuModel::field('id, menu_id, name, url')
+        $menus = MenuModel::field('id, menu_id, name, url')
             ->order('sort', 'asc')
             ->append(['name_url'])
             ->select();
-        $menus = $menuModels->toArray();
+        $menuArrays = $menus->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
-        return $treeMenus;
+        return $arrayHandler->convertTree($menuArrays, 'id', 'menu_id', 'children');
     }
 
     /**
@@ -56,31 +65,31 @@ class Menu
      * @throws \think\db\exception\ModelNotFoundException
      */
     public function getChildMenuIds($id){
-        $menuModels = MenuModel::where('menu_id', $id)
+        $menus = MenuModel::where('menu_id', $id)
             ->select();
         $ids = [];
-        foreach($menuModels as $menuModel){
-            $ids[] = $menuModel->id;
-            $ids = array_merge($ids, $this->getChildMenuIds($menuModel->id));
+        foreach($menus as $menu){
+            $ids[] = $menu->id;
+            $ids = array_merge($ids, $this->getChildMenuIds($menu->id));
         }
         return $ids;
     }
 
     /**
-     * 通过菜单名称得到id
+     * 得到id
      * @param $name
      * @return int
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getIdByName($name){
-        $menuModel = MenuModel::where('name', $name)
+    public function getId($name){
+        $menu = MenuModel::where('name', $name)
             ->find();
-        if(empty($menuModel)){
+        if(empty($menu)){
             return 0;
         }
-        return $menuModel->id;
+        return $menu->id;
     }
 
     /**
@@ -90,8 +99,8 @@ class Menu
      */
     public function add($data)
     {
-        $menuModel = new MenuModel();
-        $menuModel->save($data);
+        $menu = new MenuModel();
+        $menu->save($data);
     }
 
     /**
@@ -105,11 +114,11 @@ class Menu
      * @throws Exception
      */
     public function edit($id, $data){
-        $menuModel = MenuModel::find($id);
-        if(empty($menuModel)){
+        $menu = MenuModel::find($id);
+        if(empty($menu)){
             throw new Exception('没有找到记录');
         }
-        $menuModel->save($data);
+        $menu->save($data);
     }
 
     /**
@@ -122,14 +131,14 @@ class Menu
      * @throws Exception
      */
     public function delete($id){
-        $menuModel = MenuModel::find($id);
-        if(empty($menuModel)){
-            throw new Exception('没有找到记录');
+        $menu = MenuModel::find($id);
+        if(empty($menu)){
+            throw new Exception('没有找到菜单记录');
         }
         if($this->hasChildrenMenu($id)){
-            throw new Exception('存在子菜单不能删除');
+            throw new Exception('该菜单存在子菜单不能删除');
         }
-        $menuModel->delete();
+        $menu->delete();
     }
 
     /**
@@ -138,10 +147,10 @@ class Menu
      * @return void
      */
     public function hasChildrenMenu($id){
-        $menuModel = MenuModel::where('menu_id', $id)
+        $menu = MenuModel::where('menu_id', $id)
             ->limit(0,1)
             ->find();
-        if(!empty($menuModel)){
+        if(!empty($menu)){
             return true;
         }
         return false;

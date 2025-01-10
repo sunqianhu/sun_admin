@@ -21,18 +21,18 @@ class Edit extends Base
             return $this->error('id参数错误');
         }
 
-        $permissionModel = PermissionModel::field('id,permission_id,name,key,api_string,sort')->find($id);
-        if (empty($permissionModel)) {
+        $permission = PermissionModel::field('id,permission_id,name,key,api_string,sort')->find($id);
+        if (empty($permission)) {
             return $this->error('没有找到记录');
         }
-        $permission = $permissionModel->toArray();
+        $permission = $permission->toArray();
 
         $permission = new Permission();
-        $treePermissions = $permission->getTreePermissions();
+        $treePermission = $permission->getTreePermission();
 
         $data = [
             'permission' => $permission,
-            'tree_permissions' => $treePermissions
+            'tree_permissions' => $treePermission
         ];
         return $this->success('获取成功', $data);
     }

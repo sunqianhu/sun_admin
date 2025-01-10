@@ -19,7 +19,7 @@ class Jwt
      * 得到token
      * @return string
      */
-    function getToken($userId)
+    function createToken($userId)
     {
         $payload = [
             'id' => $userId,
@@ -32,8 +32,8 @@ class Jwt
             'user_id' => $userId,
             'expires_in' => time() + $this->expire
         ];
-        $tokenModel = new TokenModel();
-        $tokenModel->save($data);
+        $tokenService = new Token();
+        $tokenService->add($data);
 
         return $token;
     }
@@ -71,14 +71,14 @@ class Jwt
         $tokenModel->expires_in = time() + $this->expire;
         $tokenModel->save();
 
-        $userModel = UserModel::find($tokenModel->user_id);
-        if (empty($userModel)) {
+        $user = UserModel::find($tokenModel->user_id);
+        if (empty($user)) {
             throw new Exception('没有找到用户记录');
         }
 
         $session = new SessionEntity();
-        $session->userId = $userModel->id;
-        $session->departmentId = $userModel->department_id;
+        $session->userId = $user->id;
+        $session->departmentId = $user->department_id;
         $session->token = $token;
 
         return $session;
@@ -91,7 +91,7 @@ class Jwt
      */
     function deleteToken($token)
     {
-        TokenModel::where('token', $token)->delete();
-        return true;
+        $token = new Token();
+        $token->tokenDelete($token);
     }
 }

@@ -12,7 +12,7 @@ class Config
      */
     public function getValue($key)
     {
-        return ConfigModel::where('key', $key)->value('value');
+        return ConfigModel::where('key', $key)->value('value') ?? '';
     }
 
     /**

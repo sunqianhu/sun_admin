@@ -16,10 +16,10 @@ class Add extends Base
     public function init()
     {
         $menu = new Menu();
-        $treeMenus = $menu->getTreeMenus();
+        $treeMenu = $menu->getTreeMenu();
 
         $data = [
-            'tree_menus' => $treeMenus
+            'tree_menu' => $treeMenu
         ];
         return $this->success('获取成功', $data);
     }

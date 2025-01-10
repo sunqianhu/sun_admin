@@ -4,7 +4,6 @@ namespace app\service\mobile;
 
 use app\entity\SessionEntity;
 use app\model\UserModel;
-use app\service\user\mobile\User;
 use app\service\Config;
 use app\service\LoginLog;
 use Exception;
@@ -13,8 +12,8 @@ class Session
 {
     public $isTokenAuth = true; //是否token认证
     public $noTokenAuthActions = []; //不需要token认证的方法
-    public $isRouteAuth = true; //是否路由认证
-    public $noRouteAuthActions = []; //不需要路由认证的方法
+    public $isApiAuth = true; //是否接口认证
+    public $noApiAuthActions = []; //不需要接口认证的方法
 
     /**
      * 登录
@@ -29,27 +28,27 @@ class Session
      */
     public function login($account, $password, $ip = '')
     {
-        $userModel = UserModel::field('id,department_id,status_id,name')
+        $userModel = UserModel::field('id,department_id,status,name')
             ->where('account', $account)
             ->where('password', md5($password))
             ->find();
         if (empty($userModel)) {
             throw new Exception('用户名或密码错误');
         }
-        if ($userModel->status_id == 0) {
+        if ($userModel->status == 0) {
             throw new Exception('账号已停用');
         }
 
         $jwt = new Jwt();
-        $token = $jwt->getToken($userModel->id);
+        $token = $jwt->createToken($userModel->id);
 
         //登录日志
         $loginLog = new LoginLog();
         $loginLog->add($userModel->id, $ip);
 
         //用户表
-        $userModel->login_time = time();
-        $userModel->login_ip = $ip;
+        $userModel->last_login_time = time();
+        $userModel->last_login_ip = $ip;
         $userModel->save();
 
         $session = new SessionEntity();
@@ -116,17 +115,17 @@ class Session
     }
 
     /**
-     * 路由认证
+     * 接口认证
      * @param $userId
      * @param $route
      * @param $action
      * @return void
      * @throws Exception
      */
-    function ruoteAuth($userId, $route, $action)
+    function apiAuth($userId, $route, $action)
     {
-        $isAuth = $this->isTokenAuth && $this->isRouteAuth;
-        if (in_array($action, $this->noRouteAuthActions)) {
+        $isAuth = $this->isTokenAuth && $this->isApiAuth;
+        if (in_array($action, $this->noApiAuthActions)) {
             $isAuth = false;
         }
         if (!$isAuth) {
@@ -134,13 +133,13 @@ class Session
         }
 
         if (empty($userId)) {
-            throw new Exception('路由认证，用户id不能为空');
+            throw new Exception('接口认证，用户id不能为空');
         }
         if ($route === '') {
-            throw new Exception('路由认证，路由不能为空');
+            throw new Exception('接口认证，路由不能为空');
         }
 
-        $user = new User();
+        $user = new MobileUser();
         if (!$user->hasApiPermission($userId, $route)) {
             throw new Exception('无权限');
         }

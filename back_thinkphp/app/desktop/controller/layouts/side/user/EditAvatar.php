@@ -12,7 +12,7 @@ use think\exception\ValidateException;
 
 class EditAvatar extends Base
 {
-    public $isRouteAuth = false;
+    public $isApiAuth = false;
 
     /**
      * 初始化

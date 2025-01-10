@@ -3,11 +3,21 @@
 namespace app\service\mobile;
 
 use app\model\mobile\PermissionModel;
+use app\service\Curd;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
-class Permission
+class Permission extends Curd
 {
+    /**
+     * 构造函数
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        parent::__construct(PermissionModel::class);
+    }
+
     /**
      * 得到树形权限
      * @return array
@@ -15,16 +25,16 @@ class Permission
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTreePermissions()
+    public function getTreePermission()
     {
-        $permissionModels = PermissionModel::field('id, permission_id, name')
+        $permissions = PermissionModel::field('id, permission_id, name')
             ->order('sort', 'asc')
             ->select();
-        $permissions = $permissionModels->toArray();
+        $permissions = $permissions->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treePermissions = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
-        return $treePermissions;
+        $treePermission = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        return $treePermission;
     }
 
     /**
@@ -34,61 +44,16 @@ class Permission
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTreePermissionsWithNameKey()
+    public function getNameKeyTreePermission()
     {
-        $permissionModels = PermissionModel::field('id, permission_id, name, key')
+        $permissions = PermissionModel::field('id, permission_id, name, key')
             ->order('sort', 'asc')
             ->append(['name_key'])
             ->select();
-        $permissions = $permissionModels->toArray();
+        $permissions = $permissions->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treePermissions = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
-        return $treePermissions;
-    }
-
-    /**
-     * 添加
-     * @param $data
-     * @return void
-     */
-    public function add($data)
-    {
-        $permissionModel = new PermissionModel();
-        $permissionModel->save($data);
-    }
-
-    /**
-     * 修改
-     * @param $id
-     * @param $data
-     * @return void
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function edit($id, $data){
-        $permissionModel = PermissionModel::find($id);
-        if(empty($permissionModel)){
-            throw new Exception('没有找到记录');
-        }
-        $permissionModel->save($data);
-    }
-
-    /**
-     * 删除
-     * @param $id
-     * @return void
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     * @throws Exception
-     */
-    public function delete($id){
-        $permissionModel = PermissionModel::find($id);
-        if(empty($permissionModel)){
-            throw new Exception('没有找到记录');
-        }
-        $permissionModel->delete();
+        $treePermission = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        return $treePermission;
     }
 }

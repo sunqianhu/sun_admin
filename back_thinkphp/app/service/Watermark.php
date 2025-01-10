@@ -16,13 +16,13 @@ class Watermark
      */
     public function getWatermark($userId)
     {
-        $userModel = UserModel::field('id,name')->find($userId);
-        if (empty($userModel)) {
+        $user = UserModel::field('id,name')->find($userId);
+        if (empty($user)) {
             throw new Exception('没有找到用户记录');
         }
         $watermark = [
-            'user_id' => $userModel->id,
-            'user_name' => $userModel->name,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
             'date_time' => date('Y-m-d H:i:s')
         ];
         return $watermark;

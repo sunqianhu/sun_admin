@@ -1,26 +1,25 @@
 <?php
 
-namespace app\service\user\mobile;
+namespace app\service\mobile;
 
 use app\model\mobile\PermissionModel;
-use app\model\mobile\TokenModel;
-use app\service\User as SystemUser;
+use app\service\User;
 
-class User
+class MobileUser
 {
     /**
-     * 得到接口集合
-     * @param $userId
+     * 得到接口列表
+     * @param $id
      * @return array
      */
-    public function getApis($userId){
-        $user = new SystemUser();
-        $roleIds = $user->getRoleIds($userId);
+    public function getApis($id){
+        $user = new User();
+        $roleIds = $user->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
 
-        $permissionModels = PermissionModel::alias('p')
+        $permissions = PermissionModel::alias('p')
             ->join('role_mobile_permission rmp', 'p.id = rmp.permission_id')
             ->field('p.api_string')
             ->where('rmp.role_id', 'in', $roleIds)
@@ -28,26 +27,25 @@ class User
             ->group('p.id')
             ->append(['apis'])
             ->select();
-        if ($permissionModels->isEmpty()) {
+        if ($permissions->isEmpty()) {
             return [];
         }
         $allApis = [];
-        foreach ($permissionModels as $permissionModel) {
-            $apis = $permissionModel->apis;
+        foreach ($permissions as $permission) {
+            $apis = $permission->apis;
             $allApis = array_merge($allApis, $apis);
         }
-        $allApis = array_unique($allApis);
-        return $allApis;
+        return array_unique($allApis);
     }
 
     /**
      * 是否有权限
-     * @param $userId
+     * @param $id
      * @param $api
      * @return false|void
      */
-    public function hasApiPermission($userId, $api){
-        $apis = $this->getApis($userId);
+    public function hasApiPermission($id, $api){
+        $apis = $this->getApis($id);
         if(empty($apis)){
             return false;
         }
@@ -64,13 +62,13 @@ class User
     }
 
     /**
-     * 得到权限key集合
-     * @param $userId
+     * 得到权限key列表
+     * @param $id
      * @return void
      */
-    public function getPermissionKeys($userId){
-        $user = new SystemUser();
-        $roleIds = $user->getRoleIds($userId);
+    public function getPermissionKeys($id){
+        $user = new User();
+        $roleIds = $user->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
@@ -91,6 +89,7 @@ class User
      * @return void
      */
     public function offLine($id){
-        TokenModel::where('user_id', '=', $id)->delete();
+        $token = new Token();
+        $token->userDelete($id);
     }
 }

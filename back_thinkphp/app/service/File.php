@@ -34,12 +34,12 @@ class File
     }
 
     /**
-     * 删除
+     * 删除文件
      * @param $path
      * @return void
      * @throws Exception
      */
-    public function unlink($path){
+    public function unlinkFile($path){
         if($path === ''){
             throw new Exception('路径参数不能为空');
         }
@@ -47,11 +47,14 @@ class File
         if(!file_exists($fullPath)){
             throw new Exception('文件不存在');
         }
+        if(!is_file($fullPath)){
+            throw new Exception('只能删除文件');
+        }
         unlink($fullPath);
     }
 
     /**
-     * 创建权限目录
+     * 创建模块目录
      * @param $module
      * @return string
      * @throws Exception
@@ -84,39 +87,34 @@ class File
      * @return string
      * @throws Exception
      */
-    public function saveBase64ContentToFile($module, $content)
+    public function saveBase64ImageContentToFile($module, $content)
     {
         $allowMimeTypes = [
             'image/jpg',
             'image/jpeg',
             'image/png',
-            'image/gif',
-            'text/plain'
+            'image/gif'
         ];
         $extMap = [
             'image/jpg'=>'jpg',
             'image/jpeg'=>'jpeg',
             'image/png'=>'png',
-            'image/gif'=>'gif',
-            'text/plain'=>'txt'
+            'image/gif'=>'gif'
         ];
         if (empty($content)) {
-            throw new Exception('base64内容不能为空');
+            throw new Exception('图片base64内容不能为空');
         }
         $contents = explode(';base64,', $content);
         $mimeType = $contents[0];
         $mimeType = str_replace('data:', '', $mimeType);
         if(empty($mimeType)){
-            throw new Exception('没有获取到mime类型');
+            throw new Exception('没有获取到图片的mime类型');
         }
         if(!in_array($mimeType, $allowMimeTypes)){
-            throw new Exception('此mime类型的内容不允许');
+            throw new Exception('此图片mime类型不支持');
         }
         $ext = $extMap[$mimeType];
         $base64Content = $contents[1] ?? '';
-        if(empty($base64Content)){
-            throw new Exception('没有得到内容');
-        }
         $decodeContent = base64_decode($base64Content);
 
         $relativeDir = $this->makeModuleDir($module);
@@ -125,7 +123,7 @@ class File
         $fullPath = $this->getFullPath($path); // 全文件路径
 
         if (!file_put_contents($fullPath, $decodeContent)) {
-            throw new Exception('文件保存失败');
+            throw new Exception('文件保存到磁盘失败');
         }
 
         return $path;

@@ -1,56 +1,54 @@
 <?php
 
-namespace app\service\user\desktop;
+namespace app\service\desktop;
 
 use app\model\desktop\MenuModel;
 use app\model\desktop\PermissionModel;
 use app\model\desktop\RouteModel;
-use app\model\desktop\TokenModel;
-use app\service\User as SystemUser;
+use app\service\User;
 use Sunqianhu\Helper\ArrayHandler;
 
-class User
+class DesktopUser
 {
     /**
-     * 得到接口集合
-     * @param $userId
+     * 得到接口列表
+     * @param $id
      * @return array
      */
-    public function getApis($userId){
-        $user = new SystemUser();
-        $roleIds = $user->getRoleIds($userId);
+    public function getApis($id){
+        $user = new User();
+        $roleIds = $user->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
 
-        $permissionModels = PermissionModel::alias('p')
+        $permissions = PermissionModel::alias('p')
             ->join('role_desktop_permission rdp', 'p.id = rdp.permission_id')
             ->field('p.api_string')
-            ->where('rdp.role_id', 'in', $roleIds)
+            ->whereIn('rdp.role_id', $roleIds)
             ->where('p.api_string', '<>', '')
             ->group('p.id')
             ->append(['apis'])
             ->select();
-        if ($permissionModels->isEmpty()) {
+        if ($permissions->isEmpty()) {
             return [];
         }
         $allApis = [];
-        foreach ($permissionModels as $permissionModel) {
-            $apis = $permissionModel->apis;
+        foreach ($permissions as $permission) {
+            $apis = $permission->apis;
             $allApis = array_merge($allApis, $apis);
         }
-        $allApis = array_unique($allApis);
-        return $allApis;
+        return array_unique($allApis);
     }
 
     /**
      * 是否有权限
-     * @param $userId
+     * @param $id
      * @param $api
      * @return false|void
      */
-    public function hasApiPermission($userId, $api){
-        $apis = $this->getApis($userId);
+    public function hasApiPermission($id, $api){
+        $apis = $this->getApis($id);
         if(empty($apis)){
             return false;
         }
@@ -67,13 +65,13 @@ class User
     }
 
     /**
-     * 得到权限key集合
-     * @param $userId
+     * 得到权限key列表
+     * @param $id
      * @return void
      */
-    public function getPermissionKeys($userId){
-        $user = new SystemUser();
-        $roleIds = $user->getRoleIds($userId);
+    public function getPermissionKeys($id){
+        $user = new User();
+        $roleIds = $user->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
@@ -85,17 +83,17 @@ class User
             ->order('p.sort', 'asc')
             ->group('key')
             ->column('key');
-        return $keys;
+        return array_unique($keys);
     }
 
     /**
      * 是否有权限
-     * @param $userId
+     * @param $id
      * @param $key
      * @return bool
      */
-    public function hasPermission($userId, $key){
-        $keys = $this->getPermissionKeys($userId);
+    public function hasPermission($id, $key){
+        $keys = $this->getPermissionKeys($id);
         if(in_array($key, $keys)){
             return true;
         }
@@ -104,58 +102,58 @@ class User
 
     /**
      * 得到路由
-     * @param $userId
+     * @param $id
      * @return array
      */
-    public function getRoutes($userId){
-        $user = new SystemUser();
-        $roleIds = $user->getRoleIds($userId);
+    public function getRoutes($id){
+        $user = new User();
+        $roleIds = $user->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
 
-        $routeModels = RouteModel::alias('r')
+        $routes = RouteModel::alias('r')
             ->join('role_desktop_route rdr', 'r.id = rdr.route_id')
             ->field('r.*')
             ->where('rdr.role_id', 'in', $roleIds)
             ->order('r.sort', 'asc')
             ->select();
-        $routes = [];
-        foreach($routeModels as $routeModel){
+        $routeArrs = [];
+        foreach($routes as $route){
             $route = [
-                'path'=>$routeModel->path,
-                'name'=>$routeModel->key,
-                'component_path'=>$routeModel->component_path,
-                'layout'=>$routeModel->layout,
+                'path'=>$route->path,
+                'name'=>$route->key,
+                'component_path'=>$route->component_path,
+                'layout'=>$route->layout,
                 'meta'=>[
-                    'name'=>$routeModel->name,
-                    'keep_alive'=>$routeModel->keep_alive
+                    'name'=>$route->name,
+                    'keep_alive'=>$route->keep_alive
                 ]
             ];
-            $routes[] = $route;
+            $routeArrs[] = $route;
         }
-        return $routes;
+        return $routeArrs;
     }
 
     /**
      * 得到菜单
-     * @param $userId
+     * @param $id
      * @return array
      */
-    public function getMenus($userId){
-        $user = new SystemUser();
-        $roleIds = $user->getRoleIds($userId);
+    public function getMenus($id){
+        $user = new User();
+        $roleIds = $user->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
 
-        $menuModels = MenuModel::alias('m')
+        $menus = MenuModel::alias('m')
             ->field('m.*')
             ->join('role_desktop_menu rdm', 'm.id = rdm.menu_id')
             ->where('rdm.role_id', 'in', $roleIds)
             ->order('m.sort', 'asc')
             ->select();
-        $menus = $menuModels->toArray();
+        $menus = $menus->toArray();
 
         $arrayHandler = new ArrayHandler();
         return $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
@@ -167,6 +165,7 @@ class User
      * @return void
      */
     public function offLine($id){
-        TokenModel::where('user_id', '=', $id)->delete();
+        $token = new Token();
+        $token->userDelete($id);
     }
 }

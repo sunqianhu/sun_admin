@@ -26,7 +26,7 @@ class GenerateApiToken extends Command
         $userEntity->name = '张三';
         $userEntity->departmentId = 1;
         $jwtService = new JwtService();
-        $token = $jwtService->getToken($userEntity);
+        $token = $jwtService->createToken($userEntity);
         $userEntity = $jwtService->resolverToken($token);
         //print_r($userEntity);
     }

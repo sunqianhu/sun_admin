@@ -6,8 +6,8 @@ use app\desktop\controller\Base;
 use app\model\RoleModel;
 use app\model\UserModel;
 use app\service\Department;
+use app\service\desktop\DesktopUser as DesktopUser;
 use app\service\User;
-use app\service\user\desktop\User as DesktopUser;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -21,14 +21,14 @@ class Index extends Base
     {
         //部门
         $department = new Department();
-        $treeDepartments = $department->getTreeDepartments();
+        $treeDepartment = $department->getTreeDepartment();
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
         $roles = $roleModels->toArray();
 
         $data = [
-            'tree_departments' => $treeDepartments,
+            'tree_departments' => $treeDepartment,
             'roles' => $roles
         ];
         return $this->success('获取成功', $data);
@@ -43,7 +43,7 @@ class Index extends Base
 
         $query = UserModel::alias('u')
             ->leftJoin('user_role ur', 'u.id = ur.user_id')
-            ->field('u.id,u.account,u.name,u.phone,u.status_id,u.add_time,u.department_id')
+            ->field('u.id,u.account,u.name,u.phone,u.status,u.add_time,u.department_id')
             ->with('department');
         if (!empty($get['department_id'])) {
             $query = $query->where('u.department_id', '=', $get['department_id']);
@@ -76,7 +76,7 @@ class Index extends Base
      */
     function editStatus()
     {
-        $post = $this->request->post(['id', 'status_id' => 0]);
+        $post = $this->request->post(['id', 'status' => 0]);
 
         //验证
         try {
@@ -87,7 +87,7 @@ class Index extends Base
 
         try{
             $user = new User();
-            $user->editStatus($post['id'], $post['status_id']);
+            $user->editStatus($post['id'], $post['status']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

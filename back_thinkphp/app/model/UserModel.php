@@ -35,7 +35,7 @@ class UserModel extends BaseModel
     public function getStatusNameAttr($value, $data)
     {
         $name = '启用';
-        if($data['status_id'] == 0){
+        if($data['status'] == 0){
             $name = '停用';
         }
 
@@ -68,7 +68,7 @@ class UserModel extends BaseModel
     }
 
     /**
-     * 得到角色id集合
+     * 得到角色id列表
      * @param $value
      * @param $data
      * @return array
@@ -82,7 +82,7 @@ class UserModel extends BaseModel
     }
 
     /**
-     * 得到角色名称集合
+     * 得到角色名称列表
      * @param $value
      * @param $data
      * @return array

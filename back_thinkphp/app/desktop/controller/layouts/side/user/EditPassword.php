@@ -9,7 +9,7 @@ use think\exception\ValidateException;
 
 class EditPassword extends Base
 {
-    public $isRouteAuth = false;
+    public $isApiAuth = false;
 
     /**
      * 保存

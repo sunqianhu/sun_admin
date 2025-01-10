@@ -7,11 +7,18 @@ use app\model\UserRoleModel;
 use Exception;
 use Sunqianhu\Helper\Image;
 use think\facade\Cache;
-use app\service\File;
-use app\service\Site;
 
-class User
+class User extends Curd
 {
+    /**
+     * 构造函数
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        parent::__construct(UserModel::class);
+    }
+
     /**
      * 添加
      * @param $data
@@ -21,27 +28,26 @@ class User
     public function add($data)
     {
         //账号
-        $userModel = UserModel::where('account', $data['account'])->find();
-        if (!empty($userModel)) {
+        $user = UserModel::where('account', $data['account'])->find();
+        if (!empty($user)) {
             throw new Exception('账号已经存在');
         }
 
         //手机号码
-        $userModel = UserModel::where('phone', $data['phone'])->find();
-        if (!empty($userModel)) {
+        $user = UserModel::where('phone', $data['phone'])->find();
+        if (!empty($user)) {
             throw new Exception('手机号码已经存在');
         }
 
         $data['password'] = md5($data['password']);
-        $data['add_time'] = time();
-        $userModel = new UserModel();
-        $userModel->save($data);
+        $user = new UserModel();
+        $user->save($data);
 
         if (!empty($data['role_ids'])) {
             foreach ($data['role_ids'] as $roleId) {
-                $userRoleModel = new UserRoleModel();
-                $userRoleModel->save([
-                    'user_id' => $userModel->id,
+                $userRole = new UserRoleModel();
+                $userRole->save([
+                    'user_id' => $user->id,
                     'role_id' => $roleId
                 ]);
             }
@@ -52,32 +58,31 @@ class User
      * 修改
      * @param $data
      * @return void
+     * @throws Exception
      */
     public function edit($id, $data)
     {
         //手机号码
-        $userModel = UserModel::where('id', '<>', $id)
+        $user = UserModel::where('id', '<>', $id)
             ->where('phone', '=', $data['phone'])
             ->find();
-        if (!empty($userModel)) {
+        if (!empty($user)) {
             throw new Exception('手机号码已经存在');
         }
 
         //账号
-        $userModel = UserModel::find($data['id']);
-        if (empty($userModel)) {
-            throw new Exception('没有找到记录');
+        $user = UserModel::find($data['id']);
+        if (empty($user)) {
+            throw new Exception('没有找到用户记录');
         }
+        $user->save($data);
 
-        $data['edit_time'] = time();
-        $userModel->save($data);
-
-        UserRoleModel::where('user_id', $userModel->id)->delete();
+        UserRoleModel::where('user_id', $user->id)->delete();
         if (!empty($data['role_ids'])) {
             foreach ($data['role_ids'] as $roleId) {
-                $userRoleModel = new UserRoleModel();
-                $userRoleModel->save([
-                    'user_id' => $userModel->id,
+                $userRole = new UserRoleModel();
+                $userRole->save([
+                    'user_id' => $user->id,
                     'role_id' => $roleId
                 ]);
             }
@@ -96,12 +101,12 @@ class User
      */
     public function editPassword($id, $password)
     {
-        $userModel = UserModel::find($id);
-        if (empty($userModel)) {
-            throw new Exception('没有找到记录');
+        $user = UserModel::find($id);
+        if (empty($user)) {
+            throw new Exception('没有找到用户记录');
         }
-        $userModel->password = md5($password);
-        $userModel->save();
+        $user->password = md5($password);
+        $user->save();
     }
 
     /**
@@ -110,18 +115,18 @@ class User
      * @param $exclude
      * @return mixed|string
      */
-    public function idsToAccountString($ids, $toDecollator = ',')
+    public function idsToAccountString($ids, $glue = ',')
     {
         if(empty($ids)){
             return '';
         }
 
-        $accounts = UserModel::where('id', 'in', $ids)->column('account');
+        $accounts = UserModel::whereIn('id', $ids)->column('account');
         if (empty($accounts)) {
             return '';
         }
 
-        return implode($toDecollator, $accounts);
+        return implode($glue, $accounts);
     }
 
     /**
@@ -137,7 +142,7 @@ class User
             return $name;
         }
 
-        $name = UserModel::where('id', $id)->value('name');
+        $name = UserModel::where('id', $id)->value('name') ?? '';
         Cache::set($key, $name, 600);
         return $name;
     }
@@ -160,7 +165,7 @@ class User
     }
 
     /**
-     * 得到角色id集合
+     * 得到角色id列表
      * @param $userId
      * @return mixed
      */
@@ -169,65 +174,58 @@ class User
         $roleIds = UserRoleModel::where('user_id', $userId)
             ->group('role_id')
             ->column('role_id');
-        return $roleIds;
+        return array_unique($roleIds);
     }
 
     /**
      * 修改头像
      * @param $id
-     * @param $base64Content
+     * @param $base64ImageContent
      * @return void
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function editAvatar($id, $base64Content)
+    public function editAvatar($id, $base64ImageContent)
     {
         $file = new File();
-        $path = $file->saveBase64ContentToFile('avatar', $base64Content);
+        $path = $file->saveBase64ImageContentToFile('avatar', $base64ImageContent);
 
         $fullPath = $file->getFullPath($path);
         $image = new Image();
         $image->createThumbnail($fullPath, $fullPath, 100);
 
-        $userModel = UserModel::find($id);
-        if (empty($userModel)) {
-            throw new Exception('没有找到用户记录');
-        }
-        $userModel->avatar = $path;
-        $userModel->save();
-
+        $this->edit($id, [
+            'avatar' => $path
+        ]);
         return $path;
     }
 
     /**
      * 修改状态
      * @param $id
-     * @param $statusId
+     * @param $status
      * @return void
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function editStatus($id, $statusId)
+    public function editStatus($id, $status)
     {
-        $userModel = UserModel::find($id);
-        if (empty($userModel)) {
-            throw new Exception('没有找到记录');
-        }
-        $userModel->status_id = $statusId;
-        $userModel->save();
+        $this->edit($id, [
+            'status' => $status
+        ]);
     }
 
     /**
-     * 通过部门id集合得到id集合
+     * 通过部门id列表得到id列表
      * @param $departmentIds
      * @return array
      */
     public function getDepartmentUserIds($departmentIds)
     {
-        return UserModel::where('department_id', 'in', $departmentIds)
-            ->where('status_id', 1)
+        return UserModel::whereIn('department_id', $departmentIds)
+            ->where('status', 1)
             ->column('id');
     }
 }

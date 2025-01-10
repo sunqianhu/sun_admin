@@ -47,7 +47,7 @@ class RoleModel extends BaseModel
     }
 
     /**
-     * 得到桌面端权限id集合
+     * 得到桌面端权限id列表
      * @param $value
      * @param $data
      * @return array
@@ -61,7 +61,7 @@ class RoleModel extends BaseModel
     }
 
     /**
-     * 得到桌面端菜单id集合
+     * 得到桌面端菜单id列表
      * @param $value
      * @param $data
      * @return array
@@ -75,7 +75,7 @@ class RoleModel extends BaseModel
     }
 
     /**
-     * 得到桌面端路由id集合
+     * 得到桌面端路由id列表
      * @param $value
      * @param $data
      * @return array
@@ -89,7 +89,7 @@ class RoleModel extends BaseModel
     }
 
     /**
-     * 得到移动端路由id集合
+     * 得到移动端路由id列表
      * @param $value
      * @param $data
      * @return array

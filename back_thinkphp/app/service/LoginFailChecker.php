@@ -2,7 +2,7 @@
 
 namespace app\service;
 
-use Sunqianhu\Helper\Time as TimeHelper;
+use Sunqianhu\Helper\Time;
 use think\facade\Cache;
 
 class LoginFailChecker
@@ -11,7 +11,6 @@ class LoginFailChecker
      * @var string
      */
     public $cacheKey = '';
-
     /**
      * @var int 次数
      */
@@ -87,7 +86,7 @@ class LoginFailChecker
      * @return string|null
      */
     public function getResetReadableTime(){
-        $timeHelper = new TimeHelper();
-        return $timeHelper->getSecondToReadableTime($this->time);
+        $time = new Time();
+        return $time->getSecondToReadableTime($this->time);
     }
 }

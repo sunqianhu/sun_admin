@@ -8,7 +8,7 @@ use app\service\Message as MessageService;
 
 class Message extends Base
 {
-    public $isRouteAuth = false;
+    public $isApiAuth = false;
 
     /**
      * 设置全部已读
@@ -23,7 +23,7 @@ class Message extends Base
     }
 
     /**
-     * 得到未读消息集合
+     * 得到未读消息列表
      * @return void
      */
     public function getNoReadMessages()
