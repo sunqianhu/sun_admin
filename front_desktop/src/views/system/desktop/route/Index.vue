@@ -32,9 +32,6 @@
         </el-table-column>
         <el-table-column prop="key" label="路由标识" show-overflow-tooltip />
         <el-table-column prop="path" label="路由路径" show-overflow-tooltip />
-        <el-table-column prop="component_path" label="组件路径" show-overflow-tooltip />
-        <el-table-column prop="layout_name" label="布局容器" width="120" show-overflow-tooltip />
-        <el-table-column prop="keep_alive_name" label="保活" width="60" show-overflow-tooltip />
         <el-table-column prop="sort" label="排序" width="60" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
