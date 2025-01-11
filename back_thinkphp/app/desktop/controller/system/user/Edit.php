@@ -3,9 +3,7 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\RoleModel;
 use app\model\UserModel;
-use app\service\Department;
 use app\service\User;
 use app\validate\UserValidate;
 use Exception;
@@ -23,29 +21,16 @@ class Edit extends Base
             return $this->error('id参数错误');
         }
 
-        $userModel = UserModel::field('id,name,phone,department_id')
+        $user = UserModel::field('id,name,phone,department_id')
             ->with(['roles'])
             ->append(['role_ids'])
             ->find($id);
-        if (empty($userModel)) {
+        if (empty($user)) {
             return $this->error('没有找到记录');
         }
-        $user = $userModel->toArray();
+        $userArray = $user->toArray();
 
-        //部门
-        $department = new Department();
-        $treeDepartment = $department->getTreeDepartment();
-
-        //角色
-        $roleModels = RoleModel::field('id,name')->select();
-        $roles = $roleModels->toArray();
-
-        $data = [
-            'user' => $user,
-            'departments' => $treeDepartment,
-            'roles' => $roles
-        ];
-        return $this->success('获取成功', $data);
+        return $this->success('获取成功', $userArray);
     }
 
     /**

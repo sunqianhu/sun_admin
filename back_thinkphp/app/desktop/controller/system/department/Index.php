@@ -12,21 +12,21 @@ class Index extends Base
     /**
      * 得到部门
      */
-    public function getDepartments()
+    public function getTreeDepartment()
     {
         $get = $this->request->get(['name'=>'']);
 
-        $query = DepartmentModel::field('id,department_id,type_id,name,sort');
+        $query = DepartmentModel::field('id,department_id,type,name,sort');
         if ($get['name'] !== '') {
-            $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
+            $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
-        $query = $query->order('sort', 'asc');
+        $query->order('sort', 'asc');
         $query->append(['type_name']);
-        $departmentModels = $query->select();
-        $departments = $departmentModels->toArray();
+        $departments = $query->select();
+        $departmentArrays = $departments->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeDepartment = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $treeDepartment = $arrayHandler->convertTree($departmentArrays, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartment);
     }

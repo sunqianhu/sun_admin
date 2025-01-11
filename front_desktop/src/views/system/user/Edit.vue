@@ -16,25 +16,16 @@
           <el-input v-model="user.phone" />
         </el-form-item>
         <el-form-item label="所属部门" prop="department_id">
-          <el-tree-select
-            v-model="user.department_id"
-            :data="departments"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
-          />
+          <tree-department-select v-model="user.department_id"></tree-department-select>
         </el-form-item>
         <el-form-item label="角色">
-          <el-select v-model="user.role_ids" multiple collapse-tags collapse-tags-tooltip>
-            <el-option v-for="role in roles" :label="role.name" :value="role.id" />
-          </el-select>
+          <role-select v-model="user.role_ids" multiple></role-select>
         </el-form-item>
       </el-form>
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :Loading="submitLoading" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -55,8 +46,7 @@ const rules = {
   phone: [{ required: true, message: "手机号码不能为空", trigger: "blur" }],
   department_id: [{ required: true, message: "所属部门还未选择", trigger: "blur" }]
 };
-const departments = ref([]);
-const roles = ref([]);
+const submitLoading = ref(false);
 
 /**
  * 初始化
@@ -72,10 +62,7 @@ const init = async () => {
     });
     return;
   }
-  departments.value = response.data.departments;
-  roles.value = response.data.roles;
-  await nextTick();
-  user.value = response.data.user;
+  user.value = response.data;
 };
 
 /**
@@ -91,7 +78,9 @@ const close = () => {
 const submitForm = async () => {
   await userRef.value.validate();
 
+  submitLoading.value = true;
   const response = await axios.post("desktop/system.user.Edit/save", user.value);
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -99,7 +88,6 @@ const submitForm = async () => {
     });
     return;
   }
-
   ElMessage({
     message: response.message,
     type: "success"

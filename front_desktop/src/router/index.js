@@ -66,7 +66,7 @@ const getLoginRoutePath = () => {
 const setPermissions = async () => {
   const permissionStore = usePermissionStore();
   if (permissionStore.isSet) {
-    return "exist";
+    return;
   }
 
   const response = await axios.get("desktop/frame/getPermissions");
@@ -74,8 +74,6 @@ const setPermissions = async () => {
     throw new Error(response.message);
   }
   permissionStore.set(response.data);
-
-  return "complate";
 };
 
 /**
@@ -109,6 +107,9 @@ const setRoutes = async () => {
       return;
     }
     childRoute.component = componentFilePaths["/src/views/" + childRoute.component_path];
+    if (!childRoute.component) {
+      return;
+    }
 
     if (childRoute.layout == "side") {
       sideRoute.children.push(childRoute);
@@ -119,15 +120,30 @@ const setRoutes = async () => {
     }
   });
 
-  //跳转
-  if (sideRoute.children?.length > 0) {
-    sideRoute.redirect = sideRoute.children[0].path;
-  }
-
   router.addRoute(sideRoute);
   router.addRoute(blankRoute);
 
-  return "complate";
+  return "load";
+};
+
+/**
+ * 得到侧边栏布局重定向路由
+ * @param {*} currentRoutePath
+ * @returns
+ */
+const getSideRedirectRoute = (currentRoutePath) => {
+  if (currentRoutePath !== "/") {
+    throw new Error("当前路由路径不是首页");
+  }
+  let sideRoute = staticRoutes.find((route) => route.name == "side");
+  if (!sideRoute.children?.length) {
+    throw new Error("侧边栏布局没有子路由");
+  }
+  let path = sideRoute.children[0]?.path;
+  if (path === "") {
+    throw new Error("侧边栏布局第一个子路由path为空");
+  }
+  return { path: path, replace: true };
 };
 
 /**
@@ -154,13 +170,18 @@ const beforeHandle = async (to, from) => {
   try {
     await setPermissions();
     let result = await setRoutes();
-    if (result == "complete") {
+    if (result === "load") {
       return to.fullPath;
     }
   } catch (error) {
     console.error(error);
     return getLoginRoutePath();
   }
+
+  //跳转
+  try {
+    return getSideRedirectRoute(to.path);
+  } catch (error) {}
 
   return true;
 };

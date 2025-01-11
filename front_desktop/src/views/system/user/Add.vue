@@ -23,44 +23,35 @@
           <el-input v-model="user.phone" />
         </el-form-item>
         <el-form-item label="所属部门" prop="department_id">
-          <el-tree-select
-            v-model="user.department_id"
-            :data="departments"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
-          />
+          <tree-department-select v-model="user.department_id"></tree-department-select>
         </el-form-item>
         <el-form-item label="角色">
-          <el-select v-model="user.role_ids" multiple collapse-tags collapse-tags-tooltip>
-            <el-option v-for="role in roles" :label="role.name" :value="role.id" />
-          </el-select>
+          <role-select v-model="user.role_ids" multiple></role-select>
         </el-form-item>
-        <el-form-item label="状态" prop="status_id">
-          <el-radio-group v-model="user.status_id">
-            <el-radio label="1">启用</el-radio>
-            <el-radio label="2">停用</el-radio>
+        <el-form-item label="状态" prop="status">
+          <el-radio-group v-model="user.status">
+            <el-radio value="1">启用</el-radio>
+            <el-radio value="0">停用</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 
 const user = ref({
-  status_id: "1"
+  status: "1"
 });
 const userRef = ref();
 const rules = {
@@ -69,26 +60,9 @@ const rules = {
   name: [{ required: true, message: "姓名不能为空", trigger: "blur" }],
   phone: [{ required: true, message: "手机号码不能为空", trigger: "blur" }],
   department_id: [{ required: true, message: "所属部门还未选择", trigger: "blur" }],
-  status_id: [{ required: true, message: "状态还未选择", trigger: "blur" }]
+  status: [{ required: true, message: "状态还未选择", trigger: "blur" }]
 };
-const departments = ref([]);
-const roles = ref([]);
-
-/**
- * 初始化
- */
-const init = async () => {
-  const response = await axios.get("desktop/system.user.Add/init");
-  if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
-    return;
-  }
-  departments.value = response.data.departments;
-  roles.value = response.data.roles;
-};
+const submitLoading = ref(false);
 
 /**
  * 关闭
@@ -103,7 +77,9 @@ const close = () => {
 const submitForm = async () => {
   await userRef.value.validate();
 
+  submitLoading.value = true;
   const response = await axios.post("desktop/system.user.Add/save", user.value);
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -118,10 +94,6 @@ const submitForm = async () => {
   });
   emits("submited", true);
 };
-
-onMounted(() => {
-  init();
-});
 </script>
 <style lang="scss" scoped>
 .add {

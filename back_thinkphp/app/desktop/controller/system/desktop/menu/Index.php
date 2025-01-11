@@ -11,21 +11,21 @@ use Sunqianhu\Helper\ArrayHandler;
 class Index extends Base
 {
     /**
-     * 得到菜单列表
+     * 树得到菜单
      */
-    public function getMenus()
+    public function getTreeMenu()
     {
         $get = $this->request->get(['name']);
         $query = MenuModel::field('id,menu_id,name,url,icon,sort');
         if (isset($get['name'])) {
-            $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
+            $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
-        $query = $query->order('sort', 'asc');
+        $query->order('sort', 'asc');
         $menuModels = $query->select();
-        $menus = $menuModels->toArray();
+        $menuArrays = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeMenu = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        $treeMenu = $arrayHandler->convertTree($menuArrays, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenu);
     }

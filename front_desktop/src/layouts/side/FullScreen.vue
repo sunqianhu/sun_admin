@@ -27,13 +27,13 @@ const toggleFullScreen = () => {
 
 <style lang="scss" scoped>
 .full-screen {
-  line-height: 1px;
+  line-height: 0px;
   .icon {
     width: 20px;
     height: 20px;
     cursor: pointer;
     &:hover {
-      opacity: var(--opacity);
+      opacity: var(--active-opacity);
     }
   }
 }

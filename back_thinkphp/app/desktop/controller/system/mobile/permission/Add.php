@@ -11,20 +11,6 @@ use think\exception\ValidateException;
 class Add extends Base
 {
     /**
-     * 初始化
-     */
-    public function init()
-    {
-        $permission = new Permission();
-        $treePermission = $permission->getTreePermission();
-
-        $data = [
-            'tree_permissions' => $treePermission
-        ];
-        return $this->success('获取成功', $data);
-    }
-
-    /**
      * 保存
      */
     public function save()

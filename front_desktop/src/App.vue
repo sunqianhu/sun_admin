@@ -1,8 +1,6 @@
 <template>
   <el-config-provider :locale="zhCn">
     <RouterView />
-    <watermark />
-    <message />
   </el-config-provider>
 </template>
 

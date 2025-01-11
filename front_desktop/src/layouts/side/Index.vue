@@ -1,6 +1,6 @@
 <template>
-  <div class="layout-side">
-    <el-container :class="{ close: sideStore.fold }" class="container">
+  <div class="side-layout">
+    <el-container :class="{ fold: sideStore.fold }" class="container">
       <el-aside class="aside" id="aside">
         <div class="system-name">
           <img src="@/assets/logo.png" class="logo" />
@@ -11,7 +11,9 @@
       </el-aside>
       <el-container class="workspace">
         <el-header class="header">
-          <hamburger class="hamburger"></hamburger>
+          <div class="left">
+            <hamburger class="hamburger"></hamburger>
+          </div>
           <div class="right">
             <light-dark class="light-dark"></light-dark>
             <full-screen class="fullscreen"></full-screen>
@@ -21,14 +23,16 @@
         <el-main class="body">
           <router-view v-slot="{ Component, route }">
             <keep-alive>
-              <component :is="Component" v-if="route.meta.keep_alive == true" />
+              <component :is="Component" v-if="route.meta?.keep_alive == true" />
             </keep-alive>
-            <component :is="Component" v-if="route.meta.keep_alive != true" />
+            <component :is="Component" v-if="route.meta?.keep_alive != true" />
           </router-view>
           <el-backtop :right="15" :bottom="15" target=".workspace .body"> UP </el-backtop>
         </el-main>
       </el-container>
     </el-container>
+    <watermark />
+    <message />
     <guide />
   </div>
 </template>
@@ -50,36 +54,20 @@ const version = import.meta.env.VITE_VERSION;
  */
 window.onresize = () => {
   if (document.body.clientWidth < 768) {
-    sideStore.setFold(false);
-  } else {
     sideStore.setFold(true);
   }
 };
 </script>
 
-<style lang="scss">
-html {
-  height: 100%;
-  body {
-    height: 100%;
-    #app {
-      height: 100%;
-    }
-  }
-}
-</style>
-
 <style lang="scss" scoped>
-.layout-side {
-  height: 100%;
-
+.side-layout {
+  height: 100dvh;
   .container {
     height: 100%;
-
     .aside {
       width: 220px;
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
-      background-color: #1d1e72;
+      background-color: #141414;
       color: #ffffff;
       z-index: 2;
       transition: width 0.5s;
@@ -98,8 +86,8 @@ html {
           vertical-align: text-bottom;
         }
         .name {
-          font-size: 20px;
-          font-weight: bold;
+          font-size: var(--font-size-xl);
+          font-weight: var(font-weight-bold);
           margin-left: 8px;
           display: inline-block;
           transition: all 0.5s;
@@ -109,7 +97,7 @@ html {
         flex: 1;
       }
       .version {
-        padding-left: 16px;
+        padding-left: var(--margin-xs);
         font-size: var(--font-size-sm);
         color: var(--font-color-secondary);
       }
@@ -120,21 +108,23 @@ html {
       .header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         height: 50px;
         background-color: #ffffff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
         padding: 0px;
+        .left {
+        }
         .right {
-          flex: 1;
           display: flex;
           align-items: center;
           justify-content: flex-end;
-          margin-right: 16px;
+          margin-right: var(--margin-md);
           .light-dark {
-            margin-right: 16px;
+            margin-right: var(--margin-md);
           }
           .fullscreen {
-            margin-right: 16px;
+            margin-right: var(--margin-md);
           }
         }
       }
@@ -142,7 +132,7 @@ html {
         padding: var(--padding-md);
       }
     }
-    &.close {
+    &.fold {
       .aside {
         width: 64px;
         .system-name {
@@ -160,7 +150,7 @@ html {
 
   @media (max-width: 768px) {
     .container {
-      &.close {
+      &.fold {
         .aside {
           width: 0px;
         }
@@ -171,7 +161,7 @@ html {
 
 //暗黑模式
 .dark {
-  .layout-side {
+  .side-layout {
     .container {
       .aside {
         background-color: #141414;

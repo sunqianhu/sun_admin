@@ -5,7 +5,6 @@ namespace app\desktop\controller\system\department;
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
 use app\service\Department;
-use app\service\Dictionary;
 use app\validate\DepartmentValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -23,24 +22,13 @@ class Edit extends Base
         }
 
         //部门
-        $departmentModel = DepartmentModel::field('id,name,department_id,type_id,sort')->find($id);
+        $departmentModel = DepartmentModel::field('id,name,department_id,type,sort')->find($id);
         if (empty($departmentModel)) {
             return $this->error('没有找到记录');
         }
-        $department = $departmentModel->toArray();
+        $departmentArray = $departmentModel->toArray();
 
-        $department = new Department();
-        $treeDepartment = $department->getTreeDepartment();
-
-        $dictionary = new Dictionary();
-        $types = $dictionary->getList('department_type');
-
-        $data = [
-            'tree_departments' => $treeDepartment,
-            'department' => $department,
-            'types'=>$types
-        ];
-        return $this->success('获取成功', $data);
+        return $this->success('获取成功', $departmentArray);
     }
 
     /**
@@ -48,7 +36,7 @@ class Edit extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['id', 'department_id' => 0, 'type_id', 'name', 'sort']);
+        $post = $this->request->post(['id', 'department_id' => 0, 'type', 'name', 'sort']);
 
         //验证
         try {

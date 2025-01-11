@@ -5,7 +5,6 @@ namespace app\desktop\controller\system\desktop\route;
 use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
 use app\service\desktop\Route;
-use app\service\Dictionary;
 use app\validate\desktop\RouteValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -22,20 +21,13 @@ class edit extends Base
             return $this->error('id参数错误');
         }
 
-        $routeModel = RouteModel::field('*')->find($id);
-        if (empty($routeModel)) {
+        $route = RouteModel::field('*')->find($id);
+        if (empty($route)) {
             return $this->error('没有找到记录');
         }
-        $route = $routeModel->toArray();
+        $routeArray = $route->toArray();
 
-        $dictionary = new Dictionary();
-        $layouts = $dictionary->getList('desktop_route_layout');
-
-        $data = [
-            'route' => $route,
-            'layouts' => $layouts
-        ];
-        return $this->success('获取成功', $data);
+        return $this->success('获取成功', $routeArray);
     }
 
     /**

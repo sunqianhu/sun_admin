@@ -19,7 +19,7 @@
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
     <div class="list">
-      <el-table :data="permissions" v-loading="loading" row-key="id" class="table">
+      <el-table :data="treePermission" v-loading="listLoading" row-key="id" class="table">
         <el-table-column v-slot="{ row }" prop="name" label="权限名称">
           {{ row.name }}
         </el-table-column>
@@ -39,7 +39,7 @@
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getPermissions();
+        getTreePermission();
         addFlag = false;
       "
       v-if="addFlag"
@@ -48,7 +48,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getPermissions();
+        getTreePermission();
         editFlag = false;
       "
       :id="rowId"
@@ -66,20 +66,20 @@ import Edit from "./Edit.vue";
 
 const rowId = ref(0);
 const query = ref({});
-const permissions = ref([]);
-const loading = ref(true);
+const treePermission = ref([]);
+const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 
 /**
- * 得到权限
+ * 得到树权限
  */
-const getPermissions = async () => {
-  loading.value = true;
-  const response = await axios.get("desktop/system.mobile.permission.Index/getPermissions", {
+const getTreePermission = async () => {
+  listLoading.value = true;
+  const response = await axios.get("desktop/system.mobile.permission.Index/getTreePermission", {
     params: query.value
   });
-  loading.value = false;
+  listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -87,14 +87,14 @@ const getPermissions = async () => {
     });
     return;
   }
-  permissions.value = response.data;
+  treePermission.value = response.data;
 };
 
 /**
  * 搜索
  */
 const search = () => {
-  getPermissions();
+  getTreePermission();
 };
 
 /**
@@ -131,11 +131,11 @@ const del = async (id) => {
     message: response.message,
     type: "success"
   });
-  getPermissions();
+  getTreePermission();
 };
 
 onMounted(() => {
-  getPermissions();
+  getTreePermission();
 });
 </script>
 
@@ -146,8 +146,8 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-name {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(font-weight-bold);
   }
   .search {
     margin-top: var(--margin-md);

@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\config;
 
 use app\desktop\controller\Base;
 use app\service\Config;
-use app\validate\ConfigValidate;
+use app\validate\ConfigFormValidate;
 use think\exception\ValidateException;
 
 class Index extends Base
@@ -19,13 +19,10 @@ class Index extends Base
     public function init()
     {
         $config = new Config();
-        $config = [
+        $configForm = [
             'denied_ip_string'=>$config->getValue('denied_ip_string')
         ];
-        $data = [
-            'config' => $config
-        ];
-        return $this->success('获取成功', $data);
+        return $this->success('获取成功', $configForm);
     }
 
     /**
@@ -37,7 +34,7 @@ class Index extends Base
 
         //验证
         try {
-            validate(ConfigValidate::class)->scene('desktop_index')->check($post);
+            validate(ConfigFormValidate::class)->scene('save')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

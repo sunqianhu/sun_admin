@@ -1,6 +1,8 @@
 <template>
   <div class="hamburger" @click="toggleFold">
-    <component :is="sideStore.fold ? Expand : Fold" class="icon"></component>
+    <el-tooltip effect="dark" content="折叠或展开侧边栏" placement="bottom">
+      <component :is="sideStore.fold ? Expand : Fold" class="icon"></component>
+    </el-tooltip>
   </div>
 </template>
 
@@ -27,13 +29,13 @@ const toggleFold = () => {
   align-items: center;
   justify-content: center;
   .icon {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
   }
   &:hover {
     background: rgba(0, 0, 0, 0.025);
     .icon {
-      opacity: var(--opacity);
+      opacity: var(--active-opacity);
     }
   }
 }

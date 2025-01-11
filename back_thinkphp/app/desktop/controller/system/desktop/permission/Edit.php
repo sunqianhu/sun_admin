@@ -25,16 +25,9 @@ class Edit extends Base
         if (empty($permission)) {
             return $this->error('没有找到记录');
         }
-        $permission = $permission->toArray();
+        $permissionArray = $permission->toArray();
 
-        $permission = new Permission();
-        $treePermission = $permission->getTreePermission();
-
-        $data = [
-            'permission' => $permission,
-            'tree_permissions' => $treePermission
-        ];
-        return $this->success('获取成功', $data);
+        return $this->success('获取成功', $permissionArray);
     }
 
     /**
@@ -51,7 +44,7 @@ class Edit extends Base
             return $this->error($exception->getError());
         }
         if($post['id'] == $post['permission_id']){
-            return $this->error('上级权限不能和权限单相同');
+            return $this->error('上级权限不能和本权限相同');
         }
 
         $permission = new Permission();

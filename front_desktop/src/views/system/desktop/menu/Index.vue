@@ -17,12 +17,12 @@
     </div>
 
     <div class="list">
-      <el-table :data="menus" v-loading="loading" row-key="id" class="table">
+      <el-table :data="menus" v-loading="listLoading" row-key="id" class="table">
         <el-table-column v-slot="{ row }" prop="name" label="菜单名称">
           {{ row.name }}
         </el-table-column>
+        <el-table-column prop="icon" label="菜单图标" show-overflow-tooltip />
         <el-table-column prop="url" label="菜单网址" show-overflow-tooltip />
-        <el-table-column prop="icon" label="菜单图标" width="200" show-overflow-tooltip />
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
@@ -39,7 +39,7 @@
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getMenus();
+        getTreeMenu();
         addFlag = false;
       "
       v-if="addFlag"
@@ -48,7 +48,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getMenus();
+        getTreeMenu();
         editFlag = false;
       "
       :id="rowId"
@@ -67,19 +67,19 @@ import Edit from "./Edit.vue";
 const rowId = ref(0);
 const query = ref({});
 const menus = ref([]);
-const loading = ref(true);
+const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 
 /**
  * 得到菜单
  */
-const getMenus = async () => {
-  loading.value = true;
-  const response = await axios.get("desktop/system.desktop.menu.Index/getMenus", {
+const getTreeMenu = async () => {
+  listLoading.value = true;
+  const response = await axios.get("desktop/system.desktop.menu.Index/getTreeMenu", {
     params: query.value
   });
-  loading.value = false;
+  listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -94,7 +94,7 @@ const getMenus = async () => {
  * 搜索
  */
 const search = () => {
-  getMenus();
+  getTreeMenu();
 };
 
 /**
@@ -131,11 +131,11 @@ const del = async (id) => {
     message: response.message,
     type: "success"
   });
-  getMenus();
+  getTreeMenu();
 };
 
 onMounted(() => {
-  getMenus();
+  getTreeMenu();
 });
 </script>
 
@@ -146,8 +146,8 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-name {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(font-weight-bold);
   }
   .search {
     margin-top: var(--margin-md);

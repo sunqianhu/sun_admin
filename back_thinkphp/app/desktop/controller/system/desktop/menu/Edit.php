@@ -21,20 +21,13 @@ class Edit extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::field('id,menu_id,name,url,icon,target,sort')->find($id);
-        if (empty($menuModel)) {
+        $menu = MenuModel::field('id,menu_id,name,url,icon,target,sort')->find($id);
+        if (empty($menu)) {
             return $this->error('没有找到记录');
         }
-        $menu = $menuModel->toArray();
+        $menuArray = $menu->toArray();
 
-        $menu = new Menu();
-        $treeMenu = $menu->getTreeMenu();
-
-        $data = [
-            'menu' => $menu,
-            'tree_menu' => $treeMenu
-        ];
-        return $this->success('获取成功', $data);
+        return $this->success('获取成功', $menuArray);
     }
 
     /**

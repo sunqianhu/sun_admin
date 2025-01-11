@@ -8,7 +8,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="400px" class="scrollbar" v-loading="dialogLoading">
+    <el-scrollbar max-height="400px" class="scrollbar" v-loading="initLoading">
       <el-form
         :model="permission"
         :rules="rules"
@@ -17,16 +17,10 @@
         label-width="120px"
       >
         <el-form-item label="上级权限" prop="permission_id">
-          <el-tree-select
+          <tree-permission-select
             v-model="permission.permission_id"
-            :data="treePermissions"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
             placeholder="无"
-            clearable
-          />
+          ></tree-permission-select>
         </el-form-item>
         <el-form-item label="权限名称" prop="name">
           <el-input v-model="permission.name" />
@@ -53,6 +47,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
+import TreePermissionSelect from "@/components/mobile/TreePermissionSelect.vue";
 
 const props = defineProps(["open", "id"]);
 const emits = defineEmits(["close", "submited"]);
@@ -64,18 +59,18 @@ const rules = {
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
 const treePermissions = ref([]);
-const dialogLoading = ref(true);
+const initLoading = ref(true);
 const submitLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
-  dialogLoading.value = true;
+  initLoading.value = true;
   const response = await axios.get("desktop/system.mobile.permission.Edit/init", {
     params: { id: props.id }
   });
-  dialogLoading.value = false;
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -83,15 +78,11 @@ const init = async () => {
     });
     return;
   }
-
-  treePermissions.value = response.data.tree_permissions;
-  await nextTick();
-
   let data = response.data;
-  if (data.permission.permission_id == 0) {
-    data.permission.permission_id = "";
+  if (data.permission_id == 0) {
+    data.permission_id = "";
   }
-  permission.value = data.permission;
+  permission.value = data;
 };
 
 /**
@@ -108,13 +99,7 @@ const submitForm = async () => {
   await permissionRef.value.validate();
 
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post("desktop/system.mobile.permission.Edit/save", permission.value);
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post("desktop/system.mobile.permission.Edit/save", permission.value);
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

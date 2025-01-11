@@ -9,16 +9,16 @@
   >
     <div v-loading="dialogLoading">
       <label-value>
-        <label-value-item label="账号" :sm="24">{{ user.account }}</label-value-item>
-        <label-value-item label="姓名" :sm="24">{{ user.name }}</label-value-item>
-        <label-value-item label="手机号码" :sm="24">{{ user.phone }}</label-value-item>
-        <label-value-item label="所属部门" :sm="24">
+        <label-value-item label="账号">{{ user.account }}</label-value-item>
+        <label-value-item label="姓名">{{ user.name }}</label-value-item>
+        <label-value-item label="手机号码">{{ user.phone }}</label-value-item>
+        <label-value-item label="所属部门">
           {{ user.department_name }}
         </label-value-item>
-        <label-value-item label="最后登录时间" :sm="24">
+        <label-value-item label="最后登录时间">
           {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
-        <label-value-item label="最后登录ip" :sm="24">{{ user.login_ip }}</label-value-item>
+        <label-value-item label="最后登录ip">{{ user.login_ip }}</label-value-item>
       </label-value>
     </div>
   </el-dialog>

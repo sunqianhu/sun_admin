@@ -8,7 +8,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="400px" v-loading="dialogLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
       <el-form :model="route" :rules="rules" scroll-to-error ref="routeRef" label-width="120px">
         <el-form-item label="路由名称" prop="name">
           <el-input v-model="route.name" />
@@ -23,9 +23,7 @@
           <el-input v-model="route.component_path" />
         </el-form-item>
         <el-form-item label="布局容器" prop="layout">
-          <el-select v-model="route.layout" clearable>
-            <el-option v-for="layout in layouts" :label="layout.value" :value="layout.key" />
-          </el-select>
+          <layout-select v-model="route.layout"></layout-select>
         </el-form-item>
         <el-form-item label="保活" prop="keep_alive">
           <el-radio-group v-model="route.keep_alive">
@@ -48,10 +46,11 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
+import LayoutSelect from "@/components/desktop/route/LayoutSelect.vue";
 
 const props = defineProps(["open", "id"]);
 const emits = defineEmits(["close", "submited"]);
-const dialogLoading = ref(false);
+const initLoading = ref(false);
 const route = ref({
   sort: 1
 });
@@ -71,11 +70,11 @@ const submitLoading = ref(false);
  * 初始化
  */
 const init = async () => {
-  dialogLoading.value = true;
+  initLoading.value = true;
   const response = await axios.get("desktop/system.desktop.route.Edit/init", {
     params: { id: props.id }
   });
-  dialogLoading.value = false;
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -83,13 +82,11 @@ const init = async () => {
     });
     return;
   }
-  layouts.value = response.data.layouts;
-  await nextTick();
   let data = response.data;
-  if (data.route.route_id == 0) {
-    data.route.route_id = "";
+  if (data.route_id == 0) {
+    data.route_id = "";
   }
-  route.value = data.route;
+  route.value = data;
 };
 
 /**
@@ -106,13 +103,7 @@ const submitForm = async () => {
   await routeRef.value.validate();
 
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post("desktop/system.desktop.route.Edit/save", route.value);
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post("desktop/system.desktop.route.Edit/save", route.value);
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

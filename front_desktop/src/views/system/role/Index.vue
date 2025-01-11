@@ -15,7 +15,7 @@
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
     <div class="list">
-      <el-table :data="roles" v-loading="loading" row-key="id" class="table">
+      <el-table :data="roles" v-loading="listLoading" row-key="id" class="table">
         <el-table-column prop="name" label="角色名称" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
@@ -44,7 +44,7 @@
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getRoles();
+        getRolePaginate();
         addFlag = false;
       "
       v-if="addFlag"
@@ -53,7 +53,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getRoles();
+        getRolePaginate();
         editFlag = false;
       "
       :id="rowId"
@@ -75,20 +75,20 @@ const query = ref({
   page: 1
 });
 const roles = ref([]);
-const loading = ref(true);
+const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
 
 /**
- * 获取角色
+ * 获取角色分页
  */
-const getRoles = async () => {
-  loading.value = true;
-  const response = await axios.get("desktop/system.role.Index/getRoles", {
+const getRolePaginate = async () => {
+  listLoading.value = true;
+  const response = await axios.get("desktop/system.role.Index/getRolePaginate", {
     params: query.value
   });
-  loading.value = false;
+  listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -105,7 +105,7 @@ const getRoles = async () => {
  * 搜索
  */
 const search = () => {
-  getRoles();
+  getRolePaginate();
 };
 
 /**
@@ -143,7 +143,7 @@ const del = async (id) => {
     message: response.message,
     type: "success"
   });
-  getRoles();
+  getRolePaginate();
 };
 
 /**
@@ -153,7 +153,7 @@ const del = async (id) => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getRoles();
+  getRolePaginate();
 };
 
 /**
@@ -162,11 +162,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getRoles();
+  getRolePaginate();
 };
 
 onMounted(() => {
-  getRoles();
+  getRolePaginate();
 });
 </script>
 
@@ -177,8 +177,8 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-name {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(font-weight-bold);
   }
   .search {
     margin-top: var(--margin-md);

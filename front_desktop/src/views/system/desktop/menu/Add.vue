@@ -8,19 +8,10 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar max-height="400px" v-loading="dialogLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
       <el-form :model="menu" :rules="rules" scroll-to-error ref="menuRef" label-width="120px">
         <el-form-item label="上级菜单" prop="menu_id">
-          <el-tree-select
-            v-model="menu.menu_id"
-            :data="treeMenus"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
-            placeholder="无"
-            clearable
-          />
+          <tree-menu-select v-model="menu.menu_id" placeholder="无"></tree-menu-select>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="menu.name" />
@@ -52,10 +43,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
+import TreeMenuSelect from "@/components/desktop/TreeMenuSelect.vue";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const dialogLoading = ref(false);
+const initLoading = ref(false);
 const menu = ref({
   target: 1,
   sort: 1
@@ -65,25 +57,7 @@ const rules = {
   name: [{ required: true, message: "菜单名称不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
-const treeMenus = ref([]);
 const submitLoading = ref(false);
-
-/**
- * 初始化
- */
-const init = async () => {
-  dialogLoading.value = true;
-  const response = await axios.get("desktop/system.desktop.menu.Add/init");
-  dialogLoading.value = false;
-  if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
-    return;
-  }
-  treeMenus.value = response.data.tree_menus;
-};
 
 /**
  * 关闭

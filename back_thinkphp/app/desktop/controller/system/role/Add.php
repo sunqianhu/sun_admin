@@ -20,22 +20,22 @@ class Add extends Base
     public function init()
     {
         $desktopPermission = new DesktopPermission();
-        $desktopPermissions = $desktopPermission->getNameKeyTreePermission();
+        $desktopTreePermission = $desktopPermission->getNameKeyTreePermission();
 
         $desktopMenu = new DesktopMenu();
-        $desktopMenus = $desktopMenu->getNameUrlTreeMenu();
+        $desktopTreeMenu = $desktopMenu->getNameUrlTreeMenu();
 
         $desktopRoute = new DesktopRoute();
         $desktopRoutes = $desktopRoute->getNamePathRoutes();
 
         $mobilePermission = new MobilePermission();
-        $mobilePermissions = $mobilePermission->getNameKeyTreePermission();
+        $mobileTreePermission = $mobilePermission->getNameKeyTreePermission();
 
         $data = [
-            'desktop_permissions'=>$desktopPermissions,
-            'desktop_menus'=>$desktopMenus,
+            'desktop_tree_permission' => $desktopTreePermission,
+            'desktop_tree_menu'=>$desktopTreeMenu,
             'desktop_routes'=>$desktopRoutes,
-            'mobile_permissions'=>$mobilePermissions,
+            'mobile_tree_permission'=>$mobileTreePermission
         ];
         return $this->success('获取成功', $data);
     }

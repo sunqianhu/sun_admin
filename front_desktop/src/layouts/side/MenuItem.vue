@@ -1,5 +1,5 @@
 <template>
-  <template v-for="menu in menus" :key="menu.id">
+  <template v-for="menu in treeMenu" :key="menu.id">
     <template v-if="!menu.children">
       <el-menu-item :index="menu.url" @click="navigateTo(menu.url, menu.target)">
         <el-icon v-if="menu.icon">
@@ -15,7 +15,7 @@
         </el-icon>
         <span>{{ menu.name }}</span>
       </template>
-      <menu-item :menus="menu.children"></menu-item>
+      <menu-item :tree-menu="menu.children"></menu-item>
     </el-sub-menu>
   </template>
 </template>
@@ -26,7 +26,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const props = defineProps({
-  menus: {
+  treeMenu: {
     type: Array,
     default: []
   }

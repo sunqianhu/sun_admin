@@ -13,22 +13,22 @@ class Index extends Base
     /**
      * 得到权限列表
      */
-    public function getPermissions()
+    public function getTreePermission()
     {
         $get = $this->request->get(['name', 'key']);
         $query = PermissionModel::field('id,permission_id,name,key,sort');
         if (isset($get['name'])) {
-            $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
+            $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
         if (isset($get['key'])) {
-            $query = $query->where('key', 'LIKE', '%' . $get['key'] . '%');
+            $query->where('key', 'LIKE', '%' . $get['key'] . '%');
         }
-        $query = $query->order('sort', 'asc');
+        $query->order('sort', 'asc');
         $permissions = $query->select();
-        $permissions = $permissions->toArray();
+        $permissionArrays = $permissions->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treePermission = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        $treePermission = $arrayHandler->convertTree($permissionArrays, 'id', 'permission_id', 'children');
 
         return $this->success('获取成功', $treePermission);
     }

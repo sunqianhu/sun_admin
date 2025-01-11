@@ -14,10 +14,10 @@ use think\Response;
  */
 class Base extends BaseController
 {
-    public $isTokenAuth = true; //是否token认证
-    public $noTokenAuthActions = []; //不需要token认证的方法
-    public $isApiAuth = true; //是否接口认证
-    public $noApiAuthActions = []; //不需要接口认证的方法
+    public $isTokenAuth = true;
+    public $noTokenAuthActions = [];
+    public $isApiAuth = true;
+    public $noApiAuthActions = [];
     public SessionEntity $session;
 
     /**
@@ -52,11 +52,11 @@ class Base extends BaseController
             exit;
         }
 
-        //路由
+        //接口
         try {
-            $route = $this->request->baseUrl();
-            $route = ltrim($route, '/');
-            $session->apiAuth($this->session->userId, $route, $action);
+            $api = $this->request->baseUrl();
+            $api = ltrim($api, '/');
+            $session->apiAuth($this->session->userId, $api, $action);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
@@ -70,7 +70,13 @@ class Base extends BaseController
             !in_array($action, $this->noApiAuthActions)
         ) {
             $operationLog = new OperationLog();
-            $operationLog->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());
+            $data = [
+                'user_id' => $this->session->userId,
+                'api' => $this->request->baseUrl(),
+                'ip' => $this->request->ip(),
+                'time' => time()
+            ];
+            $operationLog->add($data);
         }
     }
 

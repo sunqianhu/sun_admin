@@ -15,26 +15,26 @@
         </el-form-item>
         <el-form-item label="桌面端权限" prop="desktop_permission_ids">
           <el-tree
-            :data="desktopPermissions"
+            :data="desktopTreePermission"
             :props="{ children: 'children', label: 'name_key' }"
             node-key="id"
             show-checkbox
-            ref="desktopPermissionRef"
+            ref="desktopTreePermissionRef"
             empty-text="无权限"
-            :default-checked-keys="desktopPermissionDefaultCheckKeys"
-            @check="checkDesktopPermission"
+            :default-checked-keys="desktopTreePermissionDefaultCheckKeys"
+            @check="checkDesktopTreePermission"
           />
         </el-form-item>
         <el-form-item label="桌面端菜单" prop="desktop_menu_ids">
           <el-tree
-            :data="desktopMenus"
+            :data="desktopTreeMenu"
             :props="{ children: 'children', label: 'name_url' }"
             node-key="id"
             show-checkbox
-            ref="desktopMenuRef"
+            ref="desktopTreeMenuRef"
             empty-text="无菜单"
-            :default-checked-keys="desktopMenuDefaultCheckKeys"
-            @check="checkDesktopMenu"
+            :default-checked-keys="desktopTreeMenuDefaultCheckKeys"
+            @check="checkDesktopTreeMenu"
           />
         </el-form-item>
         <el-form-item label="桌面端路由" prop="desktop_route_ids">
@@ -51,14 +51,14 @@
         </el-form-item>
         <el-form-item label="移动端权限" prop="mobile_permission_ids">
           <el-tree
-            :data="mobilePermissions"
+            :data="mobileTreePermission"
             :props="{ children: 'children', label: 'name_key' }"
             node-key="id"
             show-checkbox
-            ref="mobilePermissionRef"
+            ref="mobileTreePermissionRef"
             empty-text="无权限"
-            :default-checked-keys="mobilePermissionDefaultCheckKeys"
-            @check="checkMobilePermission"
+            :default-checked-keys="mobileTreePermissionDefaultCheckKeys"
+            @check="checkMobileTreePermission"
           />
         </el-form-item>
       </el-form>
@@ -88,18 +88,19 @@ const rules = {
 };
 const dialogLoading = ref(true);
 const submitLoading = ref(false);
-const desktopPermissions = ref([]);
-const desktopPermissionRef = ref(null);
-const desktopMenus = ref([]);
-const desktopMenuRef = ref(null);
+const desktopTreePermission = ref([]);
+const desktopTreePermissionRef = ref(null);
+const desktopTreeMenu = ref([]);
+const desktopTreeMenuRef = ref(null);
 const desktopRoutes = ref([]);
 const desktopRouteRef = ref([]);
-const mobilePermissions = ref([]);
-const mobilePermissionRef = ref(null);
-const desktopPermissionDefaultCheckKeys = ref([]);
-const desktopMenuDefaultCheckKeys = ref([]);
+const mobileTreePermission = ref([]);
+const mobileTreePermissionRef = ref(null);
+
+const desktopTreePermissionDefaultCheckKeys = ref([]);
+const desktopTreeMenuDefaultCheckKeys = ref([]);
 const desktopRouteDefaultCheckKeys = ref([]);
-const mobilePermissionDefaultCheckKeys = ref([]);
+const mobileTreePermissionDefaultCheckKeys = ref([]);
 
 /**
  * 初始化
@@ -118,23 +119,23 @@ const init = async () => {
     return;
   }
 
-  desktopPermissions.value = response.data.desktop_permissions;
-  desktopMenus.value = response.data.desktop_menus;
+  desktopTreePermission.value = response.data.desktop_tree_permission;
+  desktopTreeMenu.value = response.data.desktop_tree_menu;
   desktopRoutes.value = response.data.desktop_routes;
-  mobilePermissions.value = response.data.mobile_permissions;
+  mobileTreePermission.value = response.data.mobile_tree_permission;
   await nextTick();
 
   role.value = response.data.role;
-  desktopPermissionDefaultCheckKeys.value = getDesktopPermissionDefaultCheckKeys(
+  desktopTreePermissionDefaultCheckKeys.value = getDesktopTreePermissionDefaultCheckKeys(
     response.data.role.desktop_permission_ids
   );
-  desktopMenuDefaultCheckKeys.value = getDesktopMenuDefaultCheckKeys(
+  desktopTreeMenuDefaultCheckKeys.value = getDesktopTreeMenuDefaultCheckKeys(
     response.data.role.desktop_menu_ids
   );
   desktopRouteDefaultCheckKeys.value = getDesktopRouteDefaultCheckKeys(
     response.data.role.desktop_route_ids
   );
-  mobilePermissionDefaultCheckKeys.value = getMobilePermissionDefaultCheckKeys(
+  mobileTreePermissionDefaultCheckKeys.value = getMobileTreePermissionDefaultCheckKeys(
     response.data.role.mobile_permission_ids
   );
 };
@@ -150,11 +151,11 @@ const close = () => {
  * 得到桌面端权限默认选中的key(排除父节点)
  * @param {array} desktopPermissionIds
  */
-const getDesktopPermissionDefaultCheckKeys = (desktopPermissionIds) => {
+const getDesktopTreePermissionDefaultCheckKeys = (desktopPermissionIds) => {
   let finalPermissionIds = [];
   for (let i in desktopPermissionIds) {
     let desktopPermissionId = desktopPermissionIds[i];
-    let node = desktopPermissionRef.value.getNode(desktopPermissionId);
+    let node = desktopTreePermissionRef.value.getNode(desktopPermissionId);
     if (!node) {
       continue;
     }
@@ -169,9 +170,9 @@ const getDesktopPermissionDefaultCheckKeys = (desktopPermissionIds) => {
 /**
  * 选择桌面端权限
  */
-const checkDesktopPermission = () => {
-  const allKeys = desktopPermissionRef.value.getCheckedKeys(); //全选中
-  const halfKeys = desktopPermissionRef.value.getHalfCheckedKeys(); //半选中
+const checkDesktopTreePermission = () => {
+  const allKeys = desktopTreePermissionRef.value.getCheckedKeys(); //全选中
+  const halfKeys = desktopTreePermissionRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
   role.value.desktop_permission_ids = keys;
 };
@@ -180,11 +181,11 @@ const checkDesktopPermission = () => {
  * 得到桌面端菜单默认选中的key(排除父节点)
  * @param {array} desktopMenuIds
  */
-const getDesktopMenuDefaultCheckKeys = (desktopMenuIds) => {
+const getDesktopTreeMenuDefaultCheckKeys = (desktopMenuIds) => {
   let finalMenuIds = [];
   for (let i in desktopMenuIds) {
     let desktopMenuId = desktopMenuIds[i];
-    let node = desktopMenuRef.value.getNode(desktopMenuId);
+    let node = desktopTreeMenuRef.value.getNode(desktopMenuId);
     if (!node) {
       continue;
     }
@@ -199,9 +200,9 @@ const getDesktopMenuDefaultCheckKeys = (desktopMenuIds) => {
 /**
  * 选择桌面端菜单
  */
-const checkDesktopMenu = () => {
-  const allKeys = desktopMenuRef.value.getCheckedKeys(); //全选中
-  const halfKeys = desktopMenuRef.value.getHalfCheckedKeys(); //半选中
+const checkDesktopTreeMenu = () => {
+  const allKeys = desktopTreeMenuRef.value.getCheckedKeys(); //全选中
+  const halfKeys = desktopTreeMenuRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
   role.value.desktop_menu_ids = keys;
 };
@@ -240,11 +241,11 @@ const checkDesktopRoute = () => {
  * 得到移动端权限默认选中的key(排除父节点)
  * @param {array} desktopPermissionIds
  */
-const getMobilePermissionDefaultCheckKeys = (mobilePermissionIds) => {
+const getMobileTreePermissionDefaultCheckKeys = (mobilePermissionIds) => {
   let finalPermissionIds = [];
   for (let i in mobilePermissionIds) {
     let mobilePermissionId = mobilePermissionIds[i];
-    let node = mobilePermissionRef.value.getNode(mobilePermissionId);
+    let node = mobileTreePermissionRef.value.getNode(mobilePermissionId);
     if (!node) {
       continue;
     }
@@ -259,9 +260,9 @@ const getMobilePermissionDefaultCheckKeys = (mobilePermissionIds) => {
 /**
  * 选择移动端权限
  */
-const checkMobilePermission = () => {
-  const allKeys = mobilePermissionRef.value.getCheckedKeys(); //全选中
-  const halfKeys = mobilePermissionRef.value.getHalfCheckedKeys(); //半选中
+const checkMobileTreePermission = () => {
+  const allKeys = mobileTreePermissionRef.value.getCheckedKeys(); //全选中
+  const halfKeys = mobileTreePermissionRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
   role.value.mobile_permission_ids = keys;
 };

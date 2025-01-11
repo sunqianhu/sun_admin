@@ -1,9 +1,9 @@
 <template>
   <div class="index" v-loading="pageLoading">
     <div class="page-name">系统设置</div>
-    <el-form :model="config" label-width="120px" ref="configRef" class="form">
+    <el-form :model="configForm" label-width="120px" ref="configFormRef" class="form">
       <el-form-item label="禁止访问IP" prop="denied_ip_string">
-        <el-input v-model="config.denied_ip_string" type="textarea" :rows="3" />
+        <el-input v-model="configForm.denied_ip_string" type="textarea" :rows="5" />
         <div class="form-tip">一行一个</div>
       </el-form-item>
       <el-form-item>
@@ -16,11 +16,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
-const configRef = ref({});
-const config = ref({});
+const configForm = ref({});
+const configFormRef = ref({});
 const pageLoading = ref(true);
 const submitLoading = ref(false);
 
@@ -38,19 +38,19 @@ const init = async () => {
     return;
   }
 
-  config.value = response.data.config;
+  configForm.value = response.data;
 };
 
 /**
  * 提交表单
  */
 const submitForm = async () => {
-  await configRef.value.validate();
+  await configFormRef.value.validate();
 
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.config.Index/save", config.value);
+    response = await axios.post("desktop/system.config.Index/save", configForm.value);
   } catch (error) {
     submitLoading.value = false;
     return;
@@ -82,8 +82,8 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-name {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(font-weight-bold);
   }
   .form {
     width: 500px;

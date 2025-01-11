@@ -38,7 +38,7 @@ const props = defineProps({
       color: var(--color-primary);
       position: relative;
       font-size: var(--font-size-lg);
-      font-weight: bold;
+      font-weight: var(font-weight-bold);
       padding: var(--padding-md) var(--padding-md) 0px 0;
       &::before {
         content: "";

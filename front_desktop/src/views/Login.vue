@@ -154,7 +154,7 @@ const submitForm = async () => {
         .name {
           margin-left: 12px;
           font-size: 24px;
-          font-weight: bold;
+          font-weight: var(font-weight-bold);
         }
       }
     }

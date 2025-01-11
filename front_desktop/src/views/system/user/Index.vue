@@ -5,21 +5,10 @@
     <div class="search">
       <el-form :model="query" :inline="true">
         <el-form-item label="部门">
-          <el-tree-select
-            v-model="query.department_id"
-            :data="treeDepartments"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
-            placeholder="不限"
-            clearable
-          />
+          <tree-department-select v-model="query.department_ids" multiple></tree-department-select>
         </el-form-item>
         <el-form-item label="角色">
-          <el-select v-model="query.role_id" clearable>
-            <el-option v-for="role in roles" :label="role.name" :value="role.id" />
-          </el-select>
+          <role-select v-model="query.role_id"></role-select>
         </el-form-item>
         <el-form-item label="账号">
           <el-input v-model="query.account" />
@@ -41,25 +30,26 @@
     </div>
 
     <div class="list">
-      <el-table :data="users" v-loading="loading" stripe class="table">
+      <el-table :data="users" v-loading="listLoading" stripe table-layout="auto" class="table">
         <el-table-column v-slot="{ row }" prop="account" label="账号">
           <el-link :href="'/system/user/detail-' + row.id" type="primary" target="_blank">
             {{ row.account }}
           </el-link>
         </el-table-column>
         <el-table-column prop="name" label="姓名" />
-        <el-table-column prop="department.name" label="部门" />
+        <el-table-column v-slot="{ row }" prop="department_name" label="部门">
+          {{ row.department?.name }}
+        </el-table-column>
         <el-table-column prop="phone" label="手机号码" />
-        <el-table-column v-slot="{ row }" prop="add_time" label="添加日期">
-          {{ dayjs.unix(row.add_time).format("YYYY-MM-DD") }}
+        <el-table-column v-slot="{ row }" prop="add_time" label="添加时间">
+          {{ dayjs.unix(row.add_time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
         <el-table-column v-slot="{ row }" prop="status" label="状态">
-          <el-switch :model-value="row.status_id == 1 ? true : false" @change="editStatus(row)" />
+          <el-switch :model-value="row.status == 1 ? true : false" @change="editStatus(row)" />
         </el-table-column>
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="170">
-          <!--<el-button size="small">详情</el-button>-->
+        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="150">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
-          <el-dropdown style="margin-left: 12px">
+          <el-dropdown style="margin-left: 16px">
             <el-button size="small">
               更多
               <el-icon><arrow-down /></el-icon>
@@ -91,7 +81,7 @@
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getUsers();
+        getUserPaginate();
         addFlag = false;
       "
       v-if="addFlag"
@@ -100,7 +90,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getUsers();
+        getUserPaginate();
         editFlag = false;
       "
       :id="rowId"
@@ -129,9 +119,7 @@ const query = ref({
   size: 30,
   page: 1
 });
-const loading = ref(true);
-const treeDepartments = ref([]);
-const roles = ref([]);
+const listLoading = ref(true);
 const users = ref([]);
 const total = ref(0);
 const rowId = ref(0);
@@ -140,33 +128,14 @@ const editFlag = ref(false);
 const editPasswordFlag = ref(false);
 
 /**
- * 初始化
+ * 得到用户分页
  */
-const init = async () => {
-  const response = await axios.get("desktop/system.user.Index/init");
-  if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
-    return;
-  }
-
-  treeDepartments.value = response.data.tree_departments;
-  roles.value = response.data.roles;
-  await nextTick();
-  getUsers();
-};
-
-/**
- * 得到用户数据
- */
-const getUsers = async () => {
-  loading.value = true;
-  const response = await axios.get("desktop/system.user.Index/getUsers", {
+const getUserPaginate = async () => {
+  listLoading.value = true;
+  const response = await axios.get("desktop/system.user.Index/getUserPaginate", {
     params: query.value
   });
-  loading.value = false;
+  listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -183,7 +152,7 @@ const getUsers = async () => {
  */
 const search = () => {
   query.page = 1;
-  getUsers();
+  getUserPaginate();
 };
 
 /**
@@ -193,7 +162,7 @@ const search = () => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.page = 1;
-  getUsers();
+  getUserPaginate();
 };
 
 /**
@@ -202,7 +171,7 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getUsers();
+  getUserPaginate();
 };
 
 /**
@@ -225,10 +194,10 @@ const openEdit = (id) => {
  * @param {number} id 记录id
  */
 const editStatus = async (row) => {
-  row.status_id = row.status_id == 1 ? 0 : 1;
+  row.status = row.status == 1 ? 0 : 1;
   const response = await axios.post("desktop/system.user.Index/editStatus", {
     id: row.id,
-    status_id: row.status_id
+    status: row.status
   });
   if (response.code != 1) {
     ElMessage({
@@ -276,7 +245,7 @@ const offLine = async (id) => {
 };
 
 onMounted(() => {
-  init();
+  getUserPaginate();
 });
 </script>
 
@@ -287,8 +256,8 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-name {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(font-weight-bold);
   }
   .search {
     margin-top: var(--margin-md);

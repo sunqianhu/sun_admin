@@ -8,7 +8,7 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar max-height="400px" v-loading="dialogLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
       <el-form
         :model="permission"
         :rules="rules"
@@ -17,22 +17,17 @@
         label-width="120px"
       >
         <el-form-item label="上级权限" prop="permission_id">
-          <el-tree-select
+          <tree-permission-select
             v-model="permission.permission_id"
-            :data="treePermissions"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
             placeholder="无"
-            clearable
-          />
+          ></tree-permission-select>
         </el-form-item>
         <el-form-item label="权限名称" prop="name">
           <el-input v-model="permission.name" />
         </el-form-item>
         <el-form-item label="权限标识" prop="key">
           <el-input v-model="permission.key" />
+          <div class="form-tip">全局定位标识，下划线分隔</div>
         </el-form-item>
         <el-form-item label="接口地址" prop="api_string">
           <el-input v-model="permission.api_string" type="textarea" rows="3" />
@@ -56,7 +51,7 @@ import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const dialogLoading = ref(false);
+const initLoading = ref(false);
 const permission = ref({
   sort: 1
 });
@@ -66,25 +61,7 @@ const rules = {
   key: [{ required: true, message: "权限标识不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
-const treePermissions = ref([]);
 const submitLoading = ref(false);
-
-/**
- * 初始化
- */
-const init = async () => {
-  dialogLoading.value = true;
-  const response = await axios.get("desktop/system.desktop.permission.Add/init");
-  dialogLoading.value = false;
-  if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
-    return;
-  }
-  treePermissions.value = response.data.tree_permissions;
-};
 
 /**
  * 关闭
@@ -100,13 +77,7 @@ const submitForm = async () => {
   await permissionRef.value.validate();
 
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post("desktop/system.desktop.permission.Add/save", permission.value);
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post("desktop/system.desktop.permission.Add/save", permission.value);
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

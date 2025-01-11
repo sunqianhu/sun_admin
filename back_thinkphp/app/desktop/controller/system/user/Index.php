@@ -3,9 +3,7 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\RoleModel;
 use app\model\UserModel;
-use app\service\Department;
 use app\service\desktop\DesktopUser as DesktopUser;
 use app\service\User;
 use app\validate\UserValidate;
@@ -15,60 +13,40 @@ use think\exception\ValidateException;
 class Index extends Base
 {
     /**
-     * 初始化
+     * 获取用户分页
      */
-    public function init()
+    public function getUserPaginate()
     {
-        //部门
-        $department = new Department();
-        $treeDepartment = $department->getTreeDepartment();
-
-        //角色
-        $roleModels = RoleModel::field('id,name')->select();
-        $roles = $roleModels->toArray();
-
-        $data = [
-            'tree_departments' => $treeDepartment,
-            'roles' => $roles
-        ];
-        return $this->success('获取成功', $data);
-    }
-
-    /**
-     * 获取用户
-     */
-    public function getUsers()
-    {
-        $get = $this->request->get(['department_id', 'role_id', 'account', 'name', 'phone', 'size' => 30, 'page' => 1]);
+        $get = $this->request->get(['department_ids'=>[], 'role_id', 'account', 'name', 'phone', 'size' => 30, 'page' => 1]);
 
         $query = UserModel::alias('u')
             ->leftJoin('user_role ur', 'u.id = ur.user_id')
             ->field('u.id,u.account,u.name,u.phone,u.status,u.add_time,u.department_id')
             ->with('department');
-        if (!empty($get['department_id'])) {
-            $query = $query->where('u.department_id', '=', $get['department_id']);
+        if (!empty($get['department_ids'])) {
+            $query->whereIn('u.department_id', $get['department_ids']);
         }
         if (!empty($get['role_id'])) {
-            $query = $query->where('ur.role_id', '=', $get['role_id']);
+            $query->where('ur.role_id', '=', $get['role_id']);
         }
         if (isset($get['account']) && $get['account'] !== '') {
-            $query = $query->where('u.account', 'LIKE', '%' . $get['account'] . '%');
+            $query->where('u.account', 'LIKE', '%' . $get['account'] . '%');
         }
         if (isset($get['name']) && $get['name'] !== '') {
-            $query = $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');
+            $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');
         }
         if (isset($get['phone']) && $get['phone'] !== '') {
-            $query = $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
+            $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
-        $query = $query->group('u.id')
+        $query->group('u.id')
             ->order('u.id', 'desc');
         $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page']
         ]);
-        $user = $paginate->toArray();
+        $userPaginate = $paginate->toArray();
 
-        return $this->success('获取成功', $user);
+        return $this->success('获取成功', $userPaginate);
     }
 
     /**
@@ -85,6 +63,7 @@ class Index extends Base
             return $this->error($exception->getError());
         }
 
+        $post['status'] = $post['status'] == 1 ? 1 : 0;
         try{
             $user = new User();
             $user->editStatus($post['id'], $post['status']);

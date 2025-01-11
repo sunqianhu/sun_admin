@@ -17,16 +17,10 @@
         label-width="120px"
       >
         <el-form-item label="上级权限" prop="permission_id">
-          <el-tree-select
+          <tree-permission-select
             v-model="permission.permission_id"
-            :data="treePermissions"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
             placeholder="无"
-            clearable
-          />
+          ></tree-permission-select>
         </el-form-item>
         <el-form-item label="权限名称" prop="name">
           <el-input v-model="permission.name" />
@@ -53,6 +47,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
+import TreePermissionSelect from "@/components/mobile/TreePermissionSelect.vue";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
@@ -66,22 +61,6 @@ const rules = {
   name: [{ required: true, message: "权限名称不能为空", trigger: "blur" }],
   key: [{ required: true, message: "权限标识不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
-};
-const treePermissions = ref([]);
-
-/**
- * 初始化
- */
-const init = async () => {
-  const response = await axios.get("desktop/system.mobile.permission.Add/init");
-  if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
-    return;
-  }
-  treePermissions.value = response.data.tree_permissions;
 };
 
 /**
@@ -98,13 +77,7 @@ const submitForm = async () => {
   await permissionRef.value.validate();
 
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post("desktop/system.mobile.permission.Add/save", permission.value);
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post("desktop/system.mobile.permission.Add/save", permission.value);
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

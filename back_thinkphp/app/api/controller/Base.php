@@ -51,7 +51,13 @@ class Base extends BaseController
         //操作日志
         if($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             $operationLog = new OperationLog();
-            $operationLog->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());
+            $data = [
+                'user_id' => $this->session->userId,
+                'api' => $this->request->baseUrl(),
+                'ip' => $this->request->ip(),
+                'time' => time()
+            ];
+            $operationLog->add($data);
         }
     }
 

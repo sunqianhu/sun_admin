@@ -11,20 +11,6 @@ use think\exception\ValidateException;
 class Add extends Base
 {
     /**
-     * 初始化
-     */
-    public function init()
-    {
-        $menu = new Menu();
-        $treeMenu = $menu->getTreeMenu();
-
-        $data = [
-            'tree_menu' => $treeMenu
-        ];
-        return $this->success('获取成功', $data);
-    }
-
-    /**
      * 保存
      */
     public function save()

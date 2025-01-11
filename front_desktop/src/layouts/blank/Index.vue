@@ -6,6 +6,8 @@
       </keep-alive>
       <component :is="Component" v-else />
     </router-view>
+    <watermark />
+    <message />
   </div>
 </template>
 

@@ -4,7 +4,7 @@ namespace app\validate;
 
 use think\Validate;
 
-class ConfigValidate extends Validate
+class ConfigFormValidate extends Validate
 {
     protected $rule = [
     ];
@@ -12,6 +12,5 @@ class ConfigValidate extends Validate
     ];
 
     protected $scene = [
-        'save' => []
     ];
 }

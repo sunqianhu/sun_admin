@@ -1,10 +1,10 @@
 <template>
   <div class="trend" v-loading="pageLoading">
     <div class="page-header">
-      <span class="name">趋势统计</span>
-      <span class="description">订单趋势统计</span>
-      <div class="operation">
-        <el-button type="primary" @click="exportExcel" :loading="exportExcelLoading">
+      <span class="name">订单趋势统计</span>
+      <span class="description">查看一段时间内订单趋势</span>
+      <div class="action">
+        <el-button type="primary" :icon="Download" :loading="expLoading" @click="exp">
           导出
         </el-button>
       </div>
@@ -30,16 +30,16 @@
       </el-form>
     </div>
     <div class="chart" id="chart"></div>
-    <el-table :data="days" row-key="name" class="list">
+    <el-table :data="trend" row-key="name" class="list">
       <el-table-column prop="full_name" label="日期" />
-      <el-table-column prop="number" label="订单数量" />
+      <el-table-column prop="count" label="订单数量" />
     </el-table>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Search } from "@element-plus/icons-vue";
+import { Download, Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
@@ -51,16 +51,17 @@ const query = ref({
     dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix()
   ]
 });
-const days = ref([]);
+const trend = ref([]);
+let trendChart;
 const pageLoading = ref(true);
-const exportExcelLoading = ref(false);
+const expLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
   pageLoading.value = true;
-  const response = await axios.get("desktop/statistic.trend.Index/init", {
+  const response = await axios.get("desktop/statistic.OrderTrend/init", {
     params: query.value
   });
   pageLoading.value = false;
@@ -72,7 +73,7 @@ const init = async () => {
     return;
   }
 
-  days.value = response.data;
+  trend.value = response.data;
   drawChart();
 };
 
@@ -80,8 +81,6 @@ const init = async () => {
  * 画图
  */
 const drawChart = () => {
-  let chartElement = document.getElementById("chart");
-  let chart;
   let option = {
     tooltip: {},
     grid: {
@@ -129,49 +128,38 @@ const drawChart = () => {
       }
     ]
   };
-  let dayValues = days.value;
+  let trendValue = trend.value;
 
   //数据
-  dayValues.forEach((day) => {
+  trendValue.forEach((day) => {
     option.xAxis.data.push(day.name);
-    option.series[0].data.push(day.number);
+    option.series[0].data.push(day.count);
   });
 
   //画
-  chart = echarts.init(chartElement, "blue_theme");
-  chart.setOption(option);
+  if (!trendChart) {
+    let chartElement = document.getElementById("chart");
+    trendChart = echarts.init(chartElement, "blue_theme");
+  }
+  trendChart.setOption(option);
 };
 
 /**
- * 导出excel
+ * 导出
  */
-const exportExcel = async () => {
-  exportExcelLoading.value = true;
-  let response;
-  try {
-    response = await axios.get("desktop/statistic.trend.Index/exportExcel", {
-      params: query.value,
-      responseType: "blob"
-    });
-  } catch (error) {
-    exportExcelLoading.value = false;
-    return;
-  }
-  exportExcelLoading.value = false;
-
-  const blob = new Blob([response], {
-    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+const exp = async () => {
+  expLoading.value = true;
+  const response = await axios.get("desktop/statistic.OrderTrend/exp", {
+    params: query.value
   });
-  const url = window.URL.createObjectURL(blob);
-
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "趋势统计.xlsx";
-  document.body.appendChild(link);
-  link.click();
-
-  window.URL.revokeObjectURL(url);
-  link.remove();
+  expLoading.value = false;
+  if (response.code != 1) {
+    ElMessage({
+      message: response.message,
+      type: "error"
+    });
+  }
+  location.href = response.data + "?file_name=" + encodeURIComponent("订单趋势.xlsx");
 };
 
 /**
@@ -196,8 +184,8 @@ onMounted(() => {
   .page-header {
     display: flex;
     .name {
-      font-size: 20px;
-      font-weight: bold;
+      font-size: var(--font-size-xl);
+      font-weight: var(font-weight-bold);
     }
     .description {
       color: var(--font-color-secondary);
@@ -205,7 +193,7 @@ onMounted(() => {
       font-size: var(--font-size-sm);
       flex: 1;
     }
-    .operation {
+    .action {
     }
   }
   .search {

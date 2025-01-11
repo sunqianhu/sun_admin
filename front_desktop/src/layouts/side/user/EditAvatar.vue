@@ -64,7 +64,10 @@ import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 
 const props = defineProps(["open"]);
-const emits = defineEmits(["close", "saved"]);
+const emits = defineEmits(["close", "submited"]);
+const user = ref({
+  id: props.id
+});
 const cropperRef = ref();
 const option = ref({
   img: "",
@@ -74,7 +77,8 @@ const option = ref({
   fixed: true,
   fixedNumber: [1, 1],
   limitMinSize: 100,
-  centerBox: true
+  centerBox: false,
+  fillColor: "white"
 });
 const preview = ref({});
 const saveLoading = ref(false);
@@ -83,7 +87,9 @@ const saveLoading = ref(false);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/layouts.side.user.EditAvatar/init");
+  const response = await axios.get("desktop/layouts.side.user.EditAvatar/init", {
+    params: user.value
+  });
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -167,12 +173,11 @@ const realTimePreview = (data) => {
  */
 const save = () => {
   cropperRef.value.getCropData(async (data) => {
+    user.value.avatar_base64_image_content = data;
     saveLoading.value = true;
     let response;
     try {
-      response = await axios.post("desktop/layouts.side.user.EditAvatar/save", {
-        avatar_base64_content: data
-      });
+      response = await axios.post("desktop/layouts.side.user.EditAvatar/save", user.value);
     } catch (error) {
       saveLoading.value = false;
       return;
@@ -190,7 +195,7 @@ const save = () => {
       message: response.message,
       type: "success"
     });
-    emits("saved", true);
+    emits("submited", true);
   });
 };
 
@@ -232,9 +237,7 @@ onMounted(() => {
         height: 100px;
         overflow: hidden;
         border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: relative;
       }
     }
     .save-wrap {

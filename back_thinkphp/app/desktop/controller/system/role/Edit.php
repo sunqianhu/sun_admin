@@ -28,34 +28,34 @@ class Edit extends Base
         }
 
         //角色
-        $roleModel = RoleModel::with(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions'])
+        $role = RoleModel::with(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions'])
             ->field('id,name')
             ->append(['desktop_permission_ids', 'desktop_menu_ids', 'desktop_route_ids', 'mobile_permission_ids'])
             ->find($id);
-        if (empty($roleModel)) {
+        if (empty($role)) {
             return $this->error('没有找到记录');
         }
-        $roleModel->hidden(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions']);
-        $role = $roleModel->toArray();
+        $role->hidden(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions']);
+        $roleArray = $role->toArray();
 
         $desktopPermission = new DesktopPermission();
-        $desktopPermissions = $desktopPermission->getNameKeyTreePermission();
+        $desktopTreePermission = $desktopPermission->getNameKeyTreePermission();
 
         $desktopMenu = new DesktopMenu();
-        $desktopMenus = $desktopMenu->getNameUrlTreeMenu();
+        $desktopTreeMenu = $desktopMenu->getNameUrlTreeMenu();
 
         $desktopRoute = new DesktopRoute();
         $desktopRoutes = $desktopRoute->getNamePathRoutes();
 
         $mobilePermission = new MobilePermission();
-        $mobilePermissions = $mobilePermission->getNameKeyTreePermission();
+        $mobileTreePermission = $mobilePermission->getNameKeyTreePermission();
 
         $data = [
-            'role' => $role,
-            'desktop_permissions' => $desktopPermissions,
-            'desktop_menus'=>$desktopMenus,
+            'role' => $roleArray,
+            'desktop_tree_permission' => $desktopTreePermission,
+            'desktop_tree_menu'=>$desktopTreeMenu,
             'desktop_routes'=>$desktopRoutes,
-            'mobile_permissions'=>$mobilePermissions
+            'mobile_tree_permission'=>$mobileTreePermission
         ];
         return $this->success('获取成功', $data);
     }

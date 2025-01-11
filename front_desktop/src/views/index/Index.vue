@@ -5,7 +5,7 @@
       <div class="name">你好张三上午好，欢迎回来！</div>
     </div>
 
-    <div class="statistic">
+    <div class="count-row">
       <el-row justify="space-between" :gutter="16">
         <el-col :sm="12" :md="6">
           <div class="item today-local-opinion">
@@ -348,12 +348,12 @@ onMounted(() => {
     }
     .name {
       font-size: var(--font-size-lg);
-      font-weight: bold;
+      font-weight: var(font-weight-bold);
       color: var(--color-primary);
       margin-left: 16px;
     }
   }
-  .statistic {
+  .count-row {
     margin-top: var(--margin-md);
     .item {
       padding: var(--padding-md);
@@ -365,12 +365,12 @@ onMounted(() => {
       .number-wrap {
         margin-top: var(--margin-md);
         .icon {
-          font-size: 20px;
+          font-size: var(--font-size-xl);
           color: #8595f4;
         }
         .number {
           font-size: 32px;
-          font-weight: bold;
+          font-weight: var(font-weight-bold);
           margin-left: 8px;
           margin-right: 4px;
         }

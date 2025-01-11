@@ -1,6 +1,7 @@
 <?php
 namespace app\model;
 
+use app\service\SingletonFactory;
 use app\service\User;
 
 class UserModel extends BaseModel
@@ -14,7 +15,7 @@ class UserModel extends BaseModel
     public function department()
     {
         return $this->belongsTo(DepartmentModel::class, 'department_id', 'id')
-            ->field('id,type_id,department_id,name');
+            ->field('id,type,department_id,name');
     }
 
     /**
@@ -49,7 +50,7 @@ class UserModel extends BaseModel
      */
     public function getAvatarUrlAttr($value, $data)
     {
-        $user = new User();
+        $user = SingletonFactory::getInstance(User::class);
         return $user->getAvatarUrl($data['avatar']);
     }
 

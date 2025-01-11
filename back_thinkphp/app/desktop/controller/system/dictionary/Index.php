@@ -10,30 +10,31 @@ use Exception;
 class Index extends Base
 {
     /**
-     * 得到字典列表
+     * 得到字典分页
      */
-    public function getDictionarys()
+    public function getDictionaryPaginate()
     {
         $get = $this->request->get(['type' => '', 'key' => '', 'value' => '', 'size' => '30', 'page' => '1']);
         $query = DictionaryModel::field('id,type,key,value,sort');
         if ($get['type'] !== '') {
-            $query = $query->where('type', 'LIKE', '%' . $get['type'] . '%');
+            $query->where('type', 'LIKE', '%' . $get['type'] . '%');
         }
         if ($get['key'] !== '') {
-            $query = $query->where('key', 'LIKE', '%' . $get['key'] . '%');
+            $query->where('key', 'LIKE', '%' . $get['key'] . '%');
         }
         if ($get['value'] !== '') {
-            $query = $query->where('value', 'LIKE', '%' . $get['value'] . '%');
+            $query->where('value', 'LIKE', '%' . $get['value'] . '%');
         }
-        $query = $query->order([
+        $query->order([
             'type' => 'asc',
             'sort' => 'asc'
         ]);
-        $dictionarys = $query->paginate([
+        $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        return $this->success('获取成功', $dictionarys);
+        $dictionaryPaginate = $paginate->toArray();
+        return $this->success('获取成功', $dictionaryPaginate);
     }
 
     /**

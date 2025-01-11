@@ -23,7 +23,7 @@
     </div>
 
     <div class="list">
-      <el-table :data="dictionarys" v-loading="loading" row-key="id" class="table">
+      <el-table :data="dictionarys" v-loading="listLoading" row-key="id" class="table">
         <el-table-column prop="type" label="字典类型" />
         <el-table-column prop="key" label="字典键" />
         <el-table-column prop="value" label="字典值" />
@@ -55,7 +55,7 @@
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getDictionarys();
+        getDictionaryPaginate();
         addFlag = false;
       "
       v-if="addFlag"
@@ -64,7 +64,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getDictionarys();
+        getDictionaryPaginate();
         editFlag = false;
       "
       :id="rowId"
@@ -86,20 +86,20 @@ const query = ref({
   page: 1
 });
 const dictionarys = ref([]);
-const loading = ref(true);
+const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
 
 /**
- * 得到字典集合
+ * 得到字典分页
  */
-const getDictionarys = async () => {
-  loading.value = true;
-  const response = await axios.get("desktop/system.dictionary.Index/getDictionarys", {
+const getDictionaryPaginate = async () => {
+  listLoading.value = true;
+  const response = await axios.get("desktop/system.dictionary.Index/getDictionaryPaginate", {
     params: query.value
   });
-  loading.value = false;
+  listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -116,7 +116,7 @@ const getDictionarys = async () => {
  * 搜索
  */
 const search = () => {
-  getDictionarys();
+  getDictionaryPaginate();
 };
 
 /**
@@ -154,7 +154,7 @@ const del = async (id) => {
     message: response.message,
     type: "success"
   });
-  getDictionarys();
+  getDictionaryPaginate();
 };
 
 /**
@@ -164,7 +164,7 @@ const del = async (id) => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getDictionarys();
+  getDictionaryPaginate();
 };
 
 /**
@@ -173,11 +173,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getDictionarys();
+  getDictionaryPaginate();
 };
 
 onMounted(() => {
-  getDictionarys();
+  getDictionaryPaginate();
 });
 </script>
 
@@ -188,8 +188,8 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-name {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(font-weight-bold);
   }
   .search {
     margin-top: var(--margin-md);

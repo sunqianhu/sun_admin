@@ -15,13 +15,13 @@ class Side extends Base
     public $isApiAuth = false;
 
     /**
-     * 得到菜单
+     * 得到树形菜单
      * @return void
      */
-    public function getMenus()
+    public function getTreeMenu()
     {
         $user = new DesktopUser();
-        $treeMenu = $user->getMenus($this->session->userId);
+        $treeMenu = $user->getTreeMenu($this->session->userId);
 
         return $this->success('获取成功', $treeMenu);
     }

@@ -8,7 +8,7 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar max-height="400px" v-loading="dialogLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
       <el-form :model="route" :rules="rules" scroll-to-error ref="routeRef" label-width="120px">
         <el-form-item label="路由名称" prop="name">
           <el-input v-model="route.name" />
@@ -23,9 +23,7 @@
           <el-input v-model="route.component_path" />
         </el-form-item>
         <el-form-item label="布局容器" prop="layout">
-          <el-select v-model="route.layout" clearable>
-            <el-option v-for="layout in layouts" :label="layout.value" :value="layout.key" />
-          </el-select>
+          <layout-select v-model="route.layout"></layout-select>
         </el-form-item>
         <el-form-item label="保活" prop="keep_alive">
           <div>
@@ -51,10 +49,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
+import LayoutSelect from "@/components/desktop/route/LayoutSelect.vue";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const dialogLoading = ref(false);
+const initLoading = ref(false);
 const route = ref({
   sort: 1,
   keep_alive: 2
@@ -68,25 +67,7 @@ const rules = {
   keep_alive: [{ required: true, message: "路由保活不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
-const layouts = ref([]);
 const submitLoading = ref(false);
-
-/**
- * 初始化
- */
-const init = async () => {
-  dialogLoading.value = true;
-  const response = await axios.get("desktop/system.desktop.route.Add/init");
-  dialogLoading.value = false;
-  if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
-    return;
-  }
-  layouts.value = response.data.layouts;
-};
 
 /**
  * 关闭

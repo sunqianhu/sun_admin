@@ -8,19 +8,10 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="400px" v-loading="dialogLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
       <el-form :model="menu" :rules="rules" scroll-to-error ref="menuRef" label-width="120px">
         <el-form-item label="上级菜单" prop="menu_id">
-          <el-tree-select
-            v-model="menu.menu_id"
-            :data="treeMenus"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
-            placeholder="无"
-            clearable
-          />
+          <tree-menu-select v-model="menu.menu_id" placeholder="无"></tree-menu-select>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="menu.name" />
@@ -50,12 +41,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
+import TreeMenuSelect from "@/components/desktop/TreeMenuSelect.vue";
 
 const props = defineProps(["open", "id"]);
 const emits = defineEmits(["close", "submited"]);
-const dialogLoading = ref(false);
+const initLoading = ref(false);
 const menu = ref({
   sort: 1
 });
@@ -64,18 +56,17 @@ const rules = {
   name: [{ required: true, message: "菜单名称不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
-const treeMenus = ref([]);
 const submitLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
-  dialogLoading.value = true;
+  initLoading.value = true;
   const response = await axios.get("desktop/system.desktop.menu.Edit/init", {
     params: { id: props.id }
   });
-  dialogLoading.value = false;
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -83,13 +74,12 @@ const init = async () => {
     });
     return;
   }
-  treeMenus.value = response.data.tree_menus;
-  await nextTick();
+
   let data = response.data;
-  if (data.menu.menu_id == 0) {
-    data.menu.menu_id = "";
+  if (data.menu_id == 0) {
+    data.menu_id = "";
   }
-  menu.value = data.menu;
+  menu.value = data;
 };
 
 /**

@@ -35,7 +35,7 @@ class EditAvatar extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['avatar_base64_content']);
+        $post = $this->request->post(['avatar_base64_image_content']);
 
         try {
             validate(UserValidate::class)->scene('my_edit_avatar')->check($post);
@@ -45,7 +45,7 @@ class EditAvatar extends Base
 
         try {
             $user = new User();
-            $path = $user->editAvatar($this->session->userId, $post['avatar_base64_content']);
+            $path = $user->editAvatar($this->session->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

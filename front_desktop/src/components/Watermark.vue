@@ -35,7 +35,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .watermark {
   pointer-events: none;
-  position: absolute;
+  position: fixed;
   left: 0px;
   top: 0px;
   right: 0px;

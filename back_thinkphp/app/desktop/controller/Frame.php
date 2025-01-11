@@ -2,7 +2,7 @@
 
 namespace app\desktop\controller;
 
-use app\service\desktop\DesktopUser as DesktopUser;
+use app\service\desktop\DesktopUser;
 use app\service\Watermark;
 
 /**

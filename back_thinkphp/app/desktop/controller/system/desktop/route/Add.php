@@ -4,26 +4,12 @@ namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
 use app\service\desktop\Route;
-use app\service\Dictionary;
 use app\validate\desktop\RouteValidate;
 use Exception;
 use think\exception\ValidateException;
 
 class Add extends Base
 {
-    /**
-     * 初始化
-     */
-    public function init()
-    {
-        $dictionary = new Dictionary();
-        $layouts = $dictionary->getList('desktop_route_layout');
-
-        $data = [
-            'layouts' => $layouts
-        ];
-        return $this->success('获取成功', $data);
-    }
     /**
      * 保存
      */

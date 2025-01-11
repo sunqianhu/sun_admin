@@ -29,13 +29,19 @@
     </div>
 
     <div class="list">
-      <el-table :data="operationLogs" v-loading="loading" row-key="id" class="table">
+      <el-table
+        :data="operationLogs"
+        v-loading="listLoading"
+        row-key="id"
+        table-layout="auto"
+        class="table"
+      >
         <el-table-column prop="name" label="用户姓名" />
+        <el-table-column prop="api" label="请求接口" width="450" />
+        <el-table-column prop="ip" label="操作ip" />
         <el-table-column label="操作时间" v-slot="{ row }">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
-        <el-table-column prop="url" label="操作地址" width="450" />
-        <el-table-column prop="ip" label="操作ip" />
       </el-table>
     </div>
 
@@ -68,18 +74,18 @@ const query = ref({
   page: 1
 });
 const operationLogs = ref([]);
-const loading = ref(true);
+const listLoading = ref(true);
 const total = ref(0);
 
 /**
  * 获取操作日志
  */
-const getOperationLogs = async () => {
-  loading.value = true;
-  const response = await axios.get("desktop/system.operation_log.Index/getOperationLogs", {
+const getOperationLogPaginate = async () => {
+  listLoading.value = true;
+  const response = await axios.get("desktop/system.operation_log.Index/getOperationLogPaginate", {
     params: query.value
   });
-  loading.value = false;
+  listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -96,7 +102,7 @@ const getOperationLogs = async () => {
  * 搜索
  */
 const search = () => {
-  getOperationLogs();
+  getOperationLogPaginate();
 };
 
 /**
@@ -106,7 +112,7 @@ const search = () => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getOperationLogs();
+  getOperationLogPaginate();
 };
 
 /**
@@ -115,11 +121,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getOperationLogs();
+  getOperationLogPaginate();
 };
 
 onMounted(() => {
-  getOperationLogs();
+  getOperationLogPaginate();
 });
 </script>
 
@@ -130,8 +136,8 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-name {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(font-weight-bold);
   }
   .search {
     margin-top: var(--margin-md);

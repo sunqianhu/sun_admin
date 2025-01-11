@@ -71,7 +71,7 @@ class User extends Curd
     public function edit($id, $data)
     {
         //账号
-        $user = UserModel::find($data['id']);
+        $user = UserModel::find($id);
         if (empty($user)) {
             throw new Exception('没有找到用户记录');
         }
@@ -207,7 +207,7 @@ class User extends Curd
 
         $fullPath = $file->getFullPath($path);
         $image = new Image();
-        $image->createThumbnail($fullPath, $fullPath, 100);
+        $image->createThumbnail($fullPath, $fullPath, 200);
 
         $this->edit($id, [
             'avatar' => $path

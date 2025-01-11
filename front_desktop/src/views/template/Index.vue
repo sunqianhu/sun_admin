@@ -189,8 +189,8 @@ onMounted(() => {
   .page-header {
     display: flex;
     .name {
-      font-size: 20px;
-      font-weight: bold;
+      font-size: var(--font-size-xl);
+      font-weight: var(font-weight-bold);
     }
     .description {
       color: var(--font-color-secondary);

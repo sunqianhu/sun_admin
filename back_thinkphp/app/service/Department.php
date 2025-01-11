@@ -86,15 +86,15 @@ class Department extends Curd
 
     /**
      * 通过类型得到部门列表
-     * @param $typeId
+     * @param $type
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getTypeDepartments($typeId) {
-        $departments = DepartmentModel::field('id,name,type_id,department_id')
-            ->where('type_id', $typeId)
+    public function getTypeDepartments($type) {
+        $departments = DepartmentModel::field('id,name,type,department_id')
+            ->where('type', $type)
             ->order('sort', 'asc')
             ->select();
         return $departments->toArray();
@@ -102,13 +102,13 @@ class Department extends Curd
 
     /**
      * 得到分类名称
-     * @param $typeId
+     * @param $type
      * @return mixed
      * @throws Exception
      */
-    public function getTypeName($typeId)
+    public function getTypeName($type)
     {
         $dictionary = SingletonFactory::getInstance(Dictionary::class);
-        return $dictionary->getValue('department_type', $typeId);
+        return $dictionary->getValue('department_type', $type);
     }
 }

@@ -18,8 +18,8 @@
 
     <div class="list">
       <el-table
-        :data="departments"
-        v-loading="loading"
+        :data="treeDepartment"
+        v-loading="listLoading"
         row-key="id"
         default-expand-all
         class="table"
@@ -41,7 +41,7 @@
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getDepartments();
+        getTreeDepartment();
         addFlag = false;
       "
       v-if="addFlag"
@@ -50,7 +50,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getDepartments();
+        getTreeDepartment();
         editFlag = false;
       "
       :id="rowId"
@@ -68,20 +68,20 @@ import Edit from "./Edit.vue";
 
 const rowId = ref(0);
 const query = ref({});
-const departments = ref([]);
-const loading = ref(true);
+const treeDepartment = ref([]);
+const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 
 /**
  * 得到部门集合
  */
-const getDepartments = async () => {
-  loading.value = true;
-  const response = await axios.get("desktop/system.department.Index/getDepartments", {
+const getTreeDepartment = async () => {
+  listLoading.value = true;
+  const response = await axios.get("desktop/system.department.Index/getTreeDepartment", {
     params: query.value
   });
-  loading.value = false;
+  listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -90,14 +90,14 @@ const getDepartments = async () => {
     return;
   }
 
-  departments.value = response.data;
+  treeDepartment.value = response.data;
 };
 
 /**
  * 搜索
  */
 const search = () => {
-  getDepartments();
+  getTreeDepartment();
 };
 
 /**
@@ -134,11 +134,11 @@ const del = async (id) => {
     message: response.message,
     type: "success"
   });
-  getDepartments();
+  getTreeDepartment();
 };
 
 onMounted(() => {
-  getDepartments();
+  getTreeDepartment();
 });
 </script>
 
@@ -149,8 +149,8 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-name {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(font-weight-bold);
   }
   .search {
     margin-top: var(--margin-md);

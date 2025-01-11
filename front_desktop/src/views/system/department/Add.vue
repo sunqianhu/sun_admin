@@ -16,21 +16,10 @@
         label-width="120px"
       >
         <el-form-item label="上级部门">
-          <el-tree-select
-            v-model="department.department_id"
-            :data="treeDepartments"
-            :props="{ label: 'name' }"
-            node-key="id"
-            :render-after-expand="false"
-            check-strictly
-            placeholder="无"
-            clearable
-          />
+          <tree-department-select v-model="department.department_id"></tree-department-select>
         </el-form-item>
         <el-form-item label="部门类型" prop="type_id">
-          <el-select v-model="department.type_id">
-            <el-option v-for="type in types" :label="type.value" :value="parseInt(type.key)" />
-          </el-select>
+          <type-select v-model="department.type"></type-select>
         </el-form-item>
         <el-form-item label="部门名称" prop="name">
           <el-input v-model="department.name" />
@@ -50,6 +39,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
+import TypeSelect from "@/components/department/TypeSelect.vue";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
@@ -62,25 +52,6 @@ const rules = {
   type_id: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
   name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
-};
-const treeDepartments = ref([]);
-const types = ref([]);
-
-/**
- * 初始化
- */
-const init = async () => {
-  const response = await axios.get("desktop/system.department.Add/init");
-  if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
-    return;
-  }
-
-  treeDepartments.value = response.data.tree_departments;
-  types.value = response.data.types;
 };
 
 /**

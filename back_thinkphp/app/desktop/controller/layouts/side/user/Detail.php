@@ -18,10 +18,10 @@ class Detail extends Base
      */
     public function getUser()
     {
-        $userModel = UserModel::field('id,account,name,phone,last_login_time,last_login_ip,department_id')
+        $user = UserModel::field('id,account,name,phone,last_login_time,last_login_ip,department_id')
             ->append(['department_name'])
             ->find($this->session->userId);
-        $user = $userModel->toArray();
-        return $this->success('获取成功', $user);
+        $userArray = $user->toArray();
+        return $this->success('获取成功', $userArray);
     }
 }

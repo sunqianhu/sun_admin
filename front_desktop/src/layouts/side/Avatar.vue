@@ -18,7 +18,7 @@
     <edit-avatar
       :open="editAvatarFlag"
       @close="editAvatarFlag = false"
-      @saved="
+      @submited="
         editAvatarFlag = false;
         init();
       "

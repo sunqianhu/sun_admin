@@ -8,9 +8,9 @@ use app\model\LoginLogModel;
 class Index extends Base
 {
     /**
-     * 得到首页登录日志
+     * 得到登录日志分页
      */
-    public function getLoginLogs()
+    public function getLoginLogPaginate()
     {
         $get = $this->request->get(['time' =>[], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
 
@@ -18,21 +18,22 @@ class Index extends Base
             ->field('ll.*,u.name')
             ->leftJoin("user u", "ll.user_id = u.id");
         if (!empty($get['time']) && count($get['time']) == 2) {
-            $query = $query->where('ll.time', '>', $get['time'][0]);
-            $query = $query->where('ll.time', '<', $get['time'][1]);
+            $query->whereBetweenTime('ll.time', intval($get['time'][0]), intval($get['time'][1]));
         }
         if ($get['name'] !== '') {
-            $query = $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');
+            $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');
         }
         if ($get['phone'] !== '') {
-            $query = $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
+            $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
-        $query = $query->order('ll.id', 'desc');
+        $query->order('ll.id', 'desc');
 
-        $loginLogs = $query->paginate([
+        $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        return $this->success('获取成功', $loginLogs);
+        $loginLogPaginate = $paginate->toArray();
+
+        return $this->success('获取成功', $loginLogPaginate);
     }
 }

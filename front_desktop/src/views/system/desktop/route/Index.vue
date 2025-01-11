@@ -20,7 +20,13 @@
     </div>
 
     <div class="list">
-      <el-table :data="routes" v-loading="loading" row-key="id" class="table">
+      <el-table
+        :data="routes"
+        v-loading="listLoading"
+        row-key="id"
+        table-layout="auto"
+        class="table"
+      >
         <el-table-column v-slot="{ row }" prop="name" label="路由名称">
           {{ row.name }}
         </el-table-column>
@@ -73,19 +79,19 @@ import Edit from "./Edit.vue";
 const rowId = ref(0);
 const query = ref({});
 const routes = ref([]);
-const loading = ref(true);
+const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 
 /**
- * 得到路由
+ * 得到路由列表
  */
 const getRoutes = async () => {
-  loading.value = true;
+  listLoading.value = true;
   const response = await axios.get("desktop/system.desktop.route.Index/getRoutes", {
     params: query.value
   });
-  loading.value = false;
+  listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -153,8 +159,8 @@ onMounted(() => {
   box-shadow: var(--box-shadow-base);
   .page-header {
     .name {
-      font-size: 20px;
-      font-weight: bold;
+      font-size: var(--font-size-xl);
+      font-weight: var(font-weight-bold);
     }
     .description {
       color: var(--font-color-secondary);
@@ -174,7 +180,6 @@ onMounted(() => {
     }
     .table {
       width: 100%;
-
       .remark {
         font-size: var(--font-size-sm);
         color: var(--font-color-secondary);

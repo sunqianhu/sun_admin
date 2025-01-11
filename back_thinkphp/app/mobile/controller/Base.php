@@ -70,7 +70,13 @@ class Base extends BaseController
             !in_array($action, $this->noApiAuthActions)
         ) {
             $operationLog = new OperationLog();
-            $operationLog->add($this->session->userId, $this->request->baseUrl(), $this->request->ip());
+            $data = [
+                'user_id' => $this->session->userId,
+                'api' => $this->request->baseUrl(),
+                'ip' => $this->request->ip(),
+                'time' => time()
+            ];
+            $operationLog->add($data);
         }
     }
 

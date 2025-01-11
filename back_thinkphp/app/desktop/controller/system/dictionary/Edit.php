@@ -23,14 +23,13 @@ class Edit extends Base
             return $this->error('id参数错误');
         }
 
-        //部门
         $dictionaryModel = DictionaryModel::field('id,type,key,value,sort')->find($id);
         if (empty($dictionaryModel)) {
             return $this->error('没有找到记录');
         }
-        $dictionary = $dictionaryModel->toArray();
+        $dictionaryArray = $dictionaryModel->toArray();
 
-        return $this->success('获取成功', $dictionary);
+        return $this->success('获取成功', $dictionaryArray);
     }
 
     /**
