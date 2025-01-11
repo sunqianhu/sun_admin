@@ -4,6 +4,8 @@ namespace app\service\desktop;
 
 use app\model\desktop\RouteModel;
 use app\service\Curd;
+use app\service\Dictionary;
+use app\service\SingletonFactory;
 use Exception;
 
 class Route extends Curd
@@ -44,5 +46,30 @@ class Route extends Curd
             ->append(['name_path'])
             ->select();
         return $routes->toArray();
+    }
+
+
+    /**
+     * 得到布局名称
+     * @param $layout
+     * @return mixed
+     * @throws Exception
+     */
+    public function getLayoutName($layout)
+    {
+        $dictionary = SingletonFactory::getInstance(Dictionary::class);
+        return $dictionary->getValue('desktop_route_layout', $layout);
+    }
+
+    /**
+     * 得到保活名称
+     * @param $layout
+     * @return mixed
+     * @throws Exception
+     */
+    public function getKeepAliveName($layout)
+    {
+        $dictionary = SingletonFactory::getInstance(Dictionary::class);
+        return $dictionary->getValue('desktop_route_keep_alive', $layout);
     }
 }

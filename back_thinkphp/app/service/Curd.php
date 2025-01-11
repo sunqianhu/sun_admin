@@ -27,7 +27,7 @@ class Curd
     /**
      * 添加
      * @param $data
-     * @return mixed
+     * @return int
      */
     public function add($data)
     {
@@ -57,6 +57,47 @@ class Curd
     }
 
     /**
+     * 通过字段修改
+     * @param $field
+     * @param $value
+     * @param $data
+     * @return void
+     * @throws Exception
+     */
+    public function fieldEdit($field, $value, $data)
+    {
+        if(isset($data[$field])){
+            unset($data[$field]);
+        }
+
+        $model = $this->curdModelClass::where($field, $value)
+            ->find();
+        if (empty($model)) {
+            throw new Exception('没有找到记录');
+        }
+        $model->save($data);
+    }
+
+    /**
+     * 修改或添加
+     * @param $field
+     * @param $value
+     * @param $data
+     * @return void
+     * @throws Exception
+     */
+    public function upsert($field, $value, $data)
+    {
+        if(isset($data[$field])){
+            unset($data[$field]);
+        }
+
+        $model = $this->curdModelClass::where($field, $value)
+            ->findOrEmpty();
+        $model->save($data);
+    }
+
+    /**
      * 删除
      * @param $id
      * @return void
@@ -74,53 +115,146 @@ class Curd
     }
 
     /**
-     * 查找
+     * 通过字段删除
+     * @param $field
+     * @param $value
+     * @return void
+     */
+    public function fieldDelete($field, $value)
+    {
+        $models = $this->curdModelClass::where($field, $value)
+            ->select();
+        $models->delete();
+    }
+
+    /**
+     * 得到一行记录
      * @param int $id
      * @return array
      */
-    public function find(int $id)
+    public function fetch(int $id)
     {
         $model = $this->curdModelClass::findOrEmpty($id);
         return $model->toArray();
     }
 
     /**
-     * 查找值
+     * 通过字段得到一行
+     * @param $field
+     * @param $value
+     * @return mixed
+     */
+    public function fieldFetch($field, $value)
+    {
+        $model = $this->curdModelClass::where($field, $value)
+            ->findOrEmpty();
+        return $model->toArray();
+    }
+
+    /**
+     * 得到一行记录的一个字段的值
      * @param $id
      * @param $field
      * @return mixed
      */
-    public function findValue($id, $field = 'name')
+    public function fetchValue($id, $field = 'name')
     {
-        $model = $this->curdModelClass::findOrEmpty($id);
+        $model = $this->curdModelClass::field($field)
+            ->findOrEmpty($id);
         return $model->$field;
     }
 
     /**
-     * 查找部分
+     * 得到一列
+     * @param $field
+     * @param $sortField
+     * @param $sortDirection
+     * @return array
+     */
+    public function fetchColumn($field, $sortField = 'id', $sortDirection = 'asc')
+    {
+        return $this->curdModelClass::field($field)
+            ->order($sortField, $sortDirection)
+            ->column($field);
+    }
+
+    /**
+     * 通过字段得到一列
+     * @param $whereField
+     * @param $value
+     * @param $columnField
+     * @param $sortField
+     * @param $sortDirection
+     * @return mixed
+     */
+    public function fieldFetchColumn($whereField, $value, $columnField, $sortField = 'id', $sortDirection = 'asc')
+    {
+        return $this->curdModelClass::field($columnField)
+            ->where($whereField, $value)
+            ->order($sortField, $sortDirection)
+            ->column($columnField);
+    }
+
+    /**
+     * 得到部分
      * @param $offset
      * @param $length
      * @param $sortField
      * @param $sortDirection
      * @return mixed
      */
-    public function findLimit($offset, $length, $sortField = 'id', $sortDirection = 'asc')
+    public function fetchLimit($offset, $length, $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::limit($offset, $length)
-            ->order($sortField, $sortDirection)
+        $models = $this->curdModelClass::order($sortField, $sortDirection)
+            ->limit($offset, $length)
             ->select();
         return $models->toArray();
     }
 
     /**
-     * 查找全部
+     * 通过字段得到部分
+     * @param $field
+     * @param $value
+     * @param $offset
+     * @param $length
      * @param $sortField
      * @param $sortDirection
      * @return mixed
      */
-    public function findAll($sortField = 'id', $sortDirection = 'asc')
+    public function fieldFetchLimit($field, $value, $offset, $length, $sortField = 'id', $sortDirection = 'asc')
+    {
+        $models = $this->curdModelClass::where($field, $value)
+            ->order($sortField, $sortDirection)
+            ->limit($offset, $length)
+            ->select();
+        return $models->toArray();
+    }
+
+    /**
+     * 得到全部
+     * @param $sortField
+     * @param $sortDirection
+     * @return mixed
+     */
+    public function fetchAll($sortField = 'id', $sortDirection = 'asc')
     {
         $models = $this->curdModelClass::order($sortField, $sortDirection)
+            ->select();
+        return $models->toArray();
+    }
+
+    /**
+     * 通过字段得到全部
+     * @param $field
+     * @param $value
+     * @param $sortField
+     * @param $sortDirection
+     * @return mixed
+     */
+    public function fieldFetchAll($field, $value, $sortField = 'id', $sortDirection = 'asc')
+    {
+        $models = $this->curdModelClass::where($field, $value)
+            ->order($sortField, $sortDirection)
             ->select();
         return $models->toArray();
     }

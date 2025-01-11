@@ -136,11 +136,11 @@ class DesktopUser
     }
 
     /**
-     * 得到菜单
+     * 得到树形菜单
      * @param $id
      * @return array
      */
-    public function getMenus($id){
+    public function getTreeMenu($id){
         $user = new User();
         $roleIds = $user->getRoleIds($id);
         if(empty($roleIds)){
@@ -166,6 +166,6 @@ class DesktopUser
      */
     public function offLine($id){
         $token = new Token();
-        $token->userDelete($id);
+        $token->fieldDelete('user_id', $id);
     }
 }

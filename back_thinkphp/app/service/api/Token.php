@@ -16,38 +16,4 @@ class Token extends Curd
     {
         parent::__construct(TokenModel::class);
     }
-
-    /**
-     * token删除
-     * @param $token
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function tokenDelete($token)
-    {
-        $token = TokenModel::where('token', $token)->find();
-        if(empty($token)){
-            throw new Exception('没有找到token记录');
-        }
-        $token->delete();
-    }
-
-    /**
-     * 用户删除
-     * @param $userId
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function userDelete($userId)
-    {
-        $token = TokenModel::where('user_id', $userId)->find();
-        if(empty($token)){
-            throw new Exception('没有找到token记录');
-        }
-        $token->delete();
-    }
 }

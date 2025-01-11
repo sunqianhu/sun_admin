@@ -65,7 +65,7 @@ class Department extends Curd
         if (empty($ids)) {
             return '';
         }
-        $names = DepartmentModel::where('id', 'in', $ids)->column('name');
+        $names = DepartmentModel::whereIn('id', $ids)->column('name');
         return implode($glue, $names);
     }
 
@@ -98,5 +98,17 @@ class Department extends Curd
             ->order('sort', 'asc')
             ->select();
         return $departments->toArray();
+    }
+
+    /**
+     * 得到分类名称
+     * @param $typeId
+     * @return mixed
+     * @throws Exception
+     */
+    public function getTypeName($typeId)
+    {
+        $dictionary = SingletonFactory::getInstance(Dictionary::class);
+        return $dictionary->getValue('department_type', $typeId);
     }
 }

@@ -22,7 +22,7 @@ class PermissionModel extends BaseModel
         $apiString = str_replace("\r\n", "\n", $data['api_string']);
         $apis = explode("\n", $apiString);
         $apis = array_filter($apis, function($value) {
-            return $value !== '' && $value !== null;
+            return $value !== '';
         });
         return array_unique($apis);
     }

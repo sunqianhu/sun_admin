@@ -3,8 +3,7 @@
 namespace app\service\api;
 
 use app\entity\SessionEntity;
-use app\model\api\TokenModel;
-use app\model\UserModel;
+use app\service\User;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
@@ -45,6 +44,7 @@ class Jwt
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     function resolverToken($token)
     {
@@ -56,29 +56,33 @@ class Jwt
         }
 
         //验证
-        $tokenModel = TokenModel::where('token', $token)->find();
-        if (empty($tokenModel)) {
+        $tokenService = new Token();
+        $tokenRecord = $tokenService->fieldFetch('token', $token);
+        if (empty($tokenRecord)) {
             throw new Exception('未登录');
         }
-        if ($tokenModel->expires_in < time()) {
+        if ($tokenRecord['expires_in'] < time()) {
             throw new Exception('登录已过期');
         }
-        if ($tokenModel->user_id != $decoded->id) {
+        if ($tokenRecord['user_id'] != $decoded->id) {
             throw new Exception('登录凭证错误');
         }
 
         //有效期
-        $tokenModel->expires_in = time() + $this->expire;
-        $tokenModel->save();
+        $data = [
+            'expires_in'=>time() + $this->expire
+        ];
+        $tokenService->edit($tokenRecord['id'], $data);
 
-        $userModel = UserModel::find($tokenModel->user_id);
-        if (empty($userModel)) {
+        $user = new User();
+        $userRecord = $user->fetch($tokenRecord['user_id']);
+        if (empty($userRecord)) {
             throw new Exception('没有找到用户记录');
         }
 
         $session = new SessionEntity();
-        $session->userId = $userModel->id;
-        $session->departmentId = $userModel->department_id;
+        $session->userId = $userRecord['id'];
+        $session->departmentId = $userRecord['department_id'];
         $session->token = $token;
 
         return $session;
@@ -92,6 +96,6 @@ class Jwt
     function deleteToken($token)
     {
         $tokenService = new Token();
-        $tokenService->tokenDelete($token);
+        $tokenService->fieldDelete('token', $token);
     }
 }

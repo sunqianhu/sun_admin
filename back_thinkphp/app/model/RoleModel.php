@@ -1,10 +1,10 @@
 <?php
 namespace app\model;
 
-use app\model\desktop\DesktopMenuModel;
-use app\model\desktop\DesktopPermissionModel;
-use app\model\desktop\DesktopRouteModel;
-use app\model\mobile\MobilePermissionModel;
+use app\model\desktop\MenuModel as DesktopMenuModel;
+use app\model\desktop\PermissionModel as DesktopPermissionModel;
+use app\model\desktop\RouteModel as DesktopRouteModel;
+use app\model\mobile\PermissionModel as MobilePermissionModel;
 
 class RoleModel extends BaseModel
 {
@@ -57,7 +57,8 @@ class RoleModel extends BaseModel
             return [];
         }
         $desktopPermissions = $this->desktopPermissions->toArray();
-        return array_column($desktopPermissions, 'id');
+        $ids = array_column($desktopPermissions, 'id');
+        return array_unique($ids);
     }
 
     /**
@@ -71,7 +72,8 @@ class RoleModel extends BaseModel
             return [];
         }
         $desktopMenus = $this->desktopMenus->toArray();
-        return array_column($desktopMenus, 'id');
+        $ids = array_column($desktopMenus, 'id');
+        return array_unique($ids);
     }
 
     /**
@@ -85,7 +87,8 @@ class RoleModel extends BaseModel
             return [];
         }
         $desktopRoutes = $this->desktopRoutes->toArray();
-        return array_column($desktopRoutes, 'id');
+        $ids = array_column($desktopRoutes, 'id');
+        return array_unique($ids);
     }
 
     /**
@@ -99,6 +102,7 @@ class RoleModel extends BaseModel
             return [];
         }
         $mobilePermissions = $this->mobilePermissions->toArray();
-        return array_column($mobilePermissions, 'id');
+        $ids = array_column($mobilePermissions, 'id');
+        return array_unique($ids);
     }
 }

@@ -90,6 +90,6 @@ class MobileUser
      */
     public function offLine($id){
         $token = new Token();
-        $token->userDelete($id);
+        $token->fieldDelete('user_id', $id);
     }
 }

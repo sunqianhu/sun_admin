@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-use app\service\Dictionary;
+use app\service\Department;
 
 class DepartmentModel extends BaseModel
 {
@@ -15,7 +15,7 @@ class DepartmentModel extends BaseModel
      */
     public function getTypeNameAttr($value, $data)
     {
-        $dictionary = new Dictionary();
-        return $dictionary->getValue('department_type', $data['type_id']);
+        $department = SingletonFactory::getInstance(Department::class);
+        return $department->getTypeName($data['type_id']);
     }
 }

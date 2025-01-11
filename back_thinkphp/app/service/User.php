@@ -7,6 +7,7 @@ use app\model\UserRoleModel;
 use Exception;
 use Sunqianhu\Helper\Image;
 use think\facade\Cache;
+use think\facade\Db;
 
 class User extends Curd
 {
@@ -30,7 +31,7 @@ class User extends Curd
         //账号
         $user = UserModel::where('account', $data['account'])->find();
         if (!empty($user)) {
-            throw new Exception('账号已经存在');
+            throw new Exception('此账号已经存在');
         }
 
         //手机号码
@@ -39,18 +40,25 @@ class User extends Curd
             throw new Exception('手机号码已经存在');
         }
 
-        $data['password'] = md5($data['password']);
-        $user = new UserModel();
-        $user->save($data);
+        Db::startTrans();
+        try {
+            $data['password'] = md5($data['password']);
+            $user = new UserModel();
+            $user->save($data);
 
-        if (!empty($data['role_ids'])) {
-            foreach ($data['role_ids'] as $roleId) {
-                $userRole = new UserRoleModel();
-                $userRole->save([
-                    'user_id' => $user->id,
-                    'role_id' => $roleId
-                ]);
+            if (!empty($data['role_ids'])) {
+                $userRole = new UserRole();
+                foreach ($data['role_ids'] as $roleId) {
+                    $userRole->add([
+                        'user_id' => $user->id,
+                        'role_id' => $roleId
+                    ]);
+                }
             }
+            Db::commit();
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+            Db::rollback();
         }
     }
 
@@ -62,30 +70,40 @@ class User extends Curd
      */
     public function edit($id, $data)
     {
-        //手机号码
-        $user = UserModel::where('id', '<>', $id)
-            ->where('phone', '=', $data['phone'])
-            ->find();
-        if (!empty($user)) {
-            throw new Exception('手机号码已经存在');
-        }
-
         //账号
         $user = UserModel::find($data['id']);
         if (empty($user)) {
             throw new Exception('没有找到用户记录');
         }
-        $user->save($data);
 
-        UserRoleModel::where('user_id', $user->id)->delete();
-        if (!empty($data['role_ids'])) {
-            foreach ($data['role_ids'] as $roleId) {
-                $userRole = new UserRoleModel();
-                $userRole->save([
-                    'user_id' => $user->id,
-                    'role_id' => $roleId
-                ]);
+        //手机号码
+        if (isset($data['phone'])) {
+            $phoneUser = UserModel::where('id', '<>', $id)
+                ->where('phone', '=', $data['phone'])
+                ->find();
+            if (!empty($phoneUser)) {
+                throw new Exception('此手机号码已经存在');
             }
+        }
+
+        Db::startTrans();
+        try {
+            $user->save($data);
+
+            $userRole = new UserRole();
+            $userRole->fieldDelete('user_id', $user->id);
+            if (isset($data['role_ids'])) {
+                foreach ($data['role_ids'] as $roleId) {
+                    $userRole->add([
+                        'user_id' => $user->id,
+                        'role_id' => $roleId
+                    ]);
+                }
+            }
+            Db::commit();
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+            Db::rollback();
         }
     }
 
@@ -101,12 +119,9 @@ class User extends Curd
      */
     public function editPassword($id, $password)
     {
-        $user = UserModel::find($id);
-        if (empty($user)) {
-            throw new Exception('没有找到用户记录');
-        }
-        $user->password = md5($password);
-        $user->save();
+        $this->edit($id, [
+            'password' => md5($password)
+        ]);
     }
 
     /**
@@ -117,7 +132,7 @@ class User extends Curd
      */
     public function idsToAccountString($ids, $glue = ',')
     {
-        if(empty($ids)){
+        if (empty($ids)) {
             return '';
         }
 
@@ -167,14 +182,13 @@ class User extends Curd
     /**
      * 得到角色id列表
      * @param $userId
-     * @return mixed
+     * @return array
      */
     public function getRoleIds($userId)
     {
-        $roleIds = UserRoleModel::where('user_id', $userId)
+        return UserRoleModel::where('user_id', $userId)
             ->group('role_id')
             ->column('role_id');
-        return array_unique($roleIds);
     }
 
     /**

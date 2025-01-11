@@ -53,7 +53,6 @@ class Permission extends Curd
         $permissions = $permissions->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treePermission = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
-        return $treePermission;
+        return $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
     }
 }

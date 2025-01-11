@@ -44,7 +44,12 @@ class Session
 
         //登录日志
         $loginLog = new LoginLog();
-        $loginLog->add($user->id, $ip);
+        $data = [
+            'user_id' => $user->id,
+            'ip' => $ip,
+            'time' => time()
+        ];
+        $loginLog->add($data);
 
         //用户表
         $user->last_login_time = time();
@@ -67,7 +72,7 @@ class Session
     public function logout($token)
     {
         $token = new Token();
-        $token->tokenDelete($token);
+        $token->fieldDelete('token', $token);
     }
 
     /**

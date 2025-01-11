@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\command;
 
+use app\model\RoleModel;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -20,9 +21,8 @@ class Test extends Command
 
     protected function execute(Input $input, Output $output)
     {
-        $message = new \app\service\Message();
-        $message->sendByQueue([1,2,3,4,5,6,7,8,9,10], '测试', '/desktop/Test/index');
-        // 指令输出
-        $output->writeln('test');
+        $roleModel = RoleModel::with(['desktopPermissions'])->find(3);
+
+        print_r($roleModel->desktop_permission_ids);
     }
 }

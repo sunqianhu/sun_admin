@@ -3,11 +3,6 @@
 namespace app\service;
 
 use app\model\RoleModel;
-use app\model\RoleDesktopMenuModel;
-use app\model\RoleDesktopPermissionModel;
-use app\model\RoleDesktopRouteModel;
-use app\model\RoleMobilePermissionModel;
-use app\model\UserRoleModel;
 use Exception;
 use think\facade\Db;
 
@@ -26,49 +21,54 @@ class Role extends Curd
      * 添加
      * @param $data
      * @return void
+     * @throws Exception
      */
     public function add($data)
     {
         Db::startTrans();
         try {
-            $roleModel = new RoleModel();
-            $roleModel->save($data);
+            $role = new RoleModel();
+            $role->save($data);
 
+            //桌面端权限
             if (!empty($data['desktop_permission_ids'])) {
+                $roleDesktopPermission = new RoleDesktopPermission();
                 foreach ($data['desktop_permission_ids'] as $desktopPermissionId) {
-                    $roleDesktopPermission = new RoleDesktopPermissionModel();
-                    $roleDesktopPermission->save([
-                        'role_id' => $roleModel->id,
+                    $roleDesktopPermission->add([
+                        'role_id' => $role->id,
                         'permission_id' => $desktopPermissionId
                     ]);
                 }
             }
 
+            //桌面端菜单
             if (!empty($data['desktop_menu_ids'])) {
+                $roleDesktopMenu = new RoleDesktopMenu();
                 foreach ($data['desktop_menu_ids'] as $desktopMenuId) {
-                    $roleDesktopMenu = new RoleDesktopMenuModel();
-                    $roleDesktopMenu->save([
-                        'role_id' => $roleModel->id,
+                    $roleDesktopMenu->add([
+                        'role_id' => $role->id,
                         'menu_id' => $desktopMenuId
                     ]);
                 }
             }
 
+            //桌面端路由
             if (!empty($data['desktop_route_ids'])) {
+                $roleDesktopRoute = new RoleDesktopRoute();
                 foreach ($data['desktop_route_ids'] as $desktopRouteId) {
-                    $roleDesktopRoute = new RoleDesktopRouteModel();
-                    $roleDesktopRoute->save([
-                        'role_id' => $roleModel->id,
+                    $roleDesktopRoute->add([
+                        'role_id' => $role->id,
                         'route_id' => $desktopRouteId
                     ]);
                 }
             }
 
+            //移动端权限
             if (!empty($data['mobile_permission_ids'])) {
+                $roleMobilePermission = new RoleMobilePermission();
                 foreach ($data['mobile_permission_ids'] as $mobilePermissionId) {
-                    $roleMobilePermission = new RoleMobilePermissionModel();
-                    $roleMobilePermission->save([
-                        'role_id' => $roleModel->id,
+                    $roleMobilePermission->add([
+                        'role_id' => $role->id,
                         'permission_id' => $mobilePermissionId
                     ]);
                 }
@@ -86,56 +86,61 @@ class Role extends Curd
      * @param $id
      * @param $data
      * @return void
+     * @throws Exception
      */
     public function edit($id, $data)
     {
         Db::startTrans();
         try {
-            $roleModel = RoleModel::find($id);
-            if (empty($roleModel)) {
+            $role = RoleModel::find($id);
+            if (empty($role)) {
                 throw new Exception('没有找到记录');
             }
-            $roleModel->save($data);
+            $role->save($data);
 
-            RoleDesktopPermissionModel::where('role_id', $roleModel->id)->delete();
-            if (!empty($data['desktop_permission_ids'])) {
+            //桌面端权限
+            if (isset($data['desktop_permission_ids'])) {
+                $roleDesktopPermission = new RoleDesktopPermission();
+                $roleDesktopPermission->fieldDelete('role_id', $role->id);
                 foreach ($data['desktop_permission_ids'] as $desktopPermissionId) {
-                    $roleDesktopPermission = new RoleDesktopPermissionModel();
-                    $roleDesktopPermission->save([
-                        'role_id' => $roleModel->id,
+                    $roleDesktopPermission->add([
+                        'role_id' => $role->id,
                         'permission_id' => $desktopPermissionId
                     ]);
                 }
             }
 
-            RoleDesktopMenuModel::where('role_id', $roleModel->id)->delete();
-            if (!empty($data['desktop_menu_ids'])) {
+            //桌面端菜单
+            if (isset($data['desktop_menu_ids'])) {
+                $roleDesktopMenu = new RoleDesktopMenu();
+                $roleDesktopMenu->fieldDelete('role_id', $role->id);
                 foreach ($data['desktop_menu_ids'] as $desktopMenuId) {
-                    $roleDesktopMenu = new RoleDesktopMenuModel();
-                    $roleDesktopMenu->save([
-                        'role_id' => $roleModel->id,
+                    $roleDesktopMenu->add([
+                        'role_id' => $role->id,
                         'menu_id' => $desktopMenuId
                     ]);
                 }
             }
 
-            RoleDesktopRouteModel::where('role_id', $roleModel->id)->delete();
-            if (!empty($data['desktop_route_ids'])) {
+            //桌面端路由
+            if (isset($data['desktop_route_ids'])) {
+                $roleDesktopRoute = new RoleDesktopRoute();
+                $roleDesktopRoute->fieldDelete('role_id', $role->id);
                 foreach ($data['desktop_route_ids'] as $desktopRouteId) {
-                    $roleDesktopRoute = new RoleDesktopRouteModel();
-                    $roleDesktopRoute->save([
-                        'role_id' => $roleModel->id,
+                    $roleDesktopRoute->add([
+                        'role_id' => $role->id,
                         'route_id' => $desktopRouteId
                     ]);
                 }
             }
 
-            RoleMobilePermissionModel::where('role_id', $roleModel->id)->delete();
-            if (!empty($data['mobile_permission_ids'])) {
+            //移动端权限
+            if (isset($data['mobile_permission_ids'])) {
+                $roleMobilePermission = new RoleMobilePermission();
+                $roleMobilePermission->fieldDelete('role_id', $role->id);
                 foreach ($data['mobile_permission_ids'] as $mobilePermissionId) {
-                    $roleMobilePermission = new RoleMobilePermissionModel();
-                    $roleMobilePermission->save([
-                        'role_id' => $roleModel->id,
+                    $roleMobilePermission->add([
+                        'role_id' => $role->id,
                         'permission_id' => $mobilePermissionId
                     ]);
                 }
@@ -146,25 +151,5 @@ class Role extends Curd
             throw new Exception($exception->getMessage());
             Db::rollback();
         }
-    }
-
-    /**
-     * 删除
-     * @param $id
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws Exception
-     */
-    public function delete($id)
-    {
-        $roleModel = RoleModel::find($id);
-        if(empty($roleModel)){
-            throw new Exception('没有找到角色记录');
-        }
-
-        UserRoleModel::where('role_id', $roleModel->id)->delete();
-        $roleModel->delete();
     }
 }
