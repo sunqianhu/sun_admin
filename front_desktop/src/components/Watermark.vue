@@ -1,8 +1,8 @@
 <template>
   <div class="watermark" v-if="show">
-    <div class="item" v-for="index in 100">
-      <div class="name">{{ data.user_name + data.user_id }}</div>
-      <div class="time">{{ data.date_time }}</div>
+    <div class="watermark__item" v-for="index in 100">
+      <div class="watermark__name">{{ data.user_name + data.user_id }}</div>
+      <div class="watermark__time">{{ data.date_time }}</div>
     </div>
   </div>
 </template>
@@ -42,13 +42,13 @@ onMounted(() => {
   bottom: 0px;
   z-index: 3002;
   overflow: hidden;
-  .item {
+  .watermark__item {
     float: left;
     margin: 50px;
     text-align: center;
     opacity: 0.2;
     transform: rotate(-30deg);
-    .name {
+    .watermark__name {
       font-size: var(--font-size-lg);
     }
   }

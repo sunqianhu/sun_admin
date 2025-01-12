@@ -7,7 +7,9 @@
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">查询</el-button>
+          <el-button type="primary" :icon="Search" @click="search"
+            >查询</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -17,14 +19,24 @@
     </div>
 
     <div class="list">
-      <el-table :data="menus" v-loading="listLoading" row-key="id" class="table">
+      <el-table
+        :data="menus"
+        v-loading="listLoading"
+        row-key="id"
+        class="table"
+      >
         <el-table-column v-slot="{ row }" prop="name" label="菜单名称">
           {{ row.name }}
         </el-table-column>
         <el-table-column prop="icon" label="菜单图标" show-overflow-tooltip />
         <el-table-column prop="url" label="菜单网址" show-overflow-tooltip />
         <el-table-column prop="sort" label="排序" width="100" />
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="140"
+        >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
@@ -76,9 +88,12 @@ const editFlag = ref(false);
  */
 const getTreeMenu = async () => {
   listLoading.value = true;
-  const response = await axios.get("desktop/system.desktop.menu.Index/getTreeMenu", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.desktop.menu.Index/getTreeMenu",
+    {
+      params: query.value
+    }
+  );
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -117,9 +132,12 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.desktop.menu.Index/delete", {
-    id: id
-  });
+  const response = await axios.post(
+    "desktop/system.desktop.menu.Index/delete",
+    {
+      id: id
+    }
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -161,17 +179,7 @@ onMounted(() => {
     }
     .table {
       width: 100%;
-
-      .remark {
-        font-size: var(--font-size-sm);
-        color: var(--font-color-secondary);
-      }
     }
-  }
-  .explain {
-    margin-top: var(--margin-md);
-    font-size: var(--font-size-sm);
-    color: var(--font-color-secondary);
   }
 }
 </style>

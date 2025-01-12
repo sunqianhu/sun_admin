@@ -1,6 +1,11 @@
 <template>
   <div class="rich-editor">
-    <Toolbar :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" class="toolbar" />
+    <Toolbar
+      :editor="editorRef"
+      :defaultConfig="toolbarConfig"
+      :mode="mode"
+      class="rich-editor__toolbar"
+    />
     <Editor
       v-model="html"
       :defaultConfig="editorConfig"
@@ -162,7 +167,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .rich-editor {
   border: 1px solid var(--border-color-base);
-  .toolbar {
+  .rich-editor__toolbar {
     border-bottom: 1px solid var(--border-color-base);
   }
 }

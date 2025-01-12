@@ -1,7 +1,10 @@
 <template>
   <template v-for="menu in treeMenu" :key="menu.id">
     <template v-if="!menu.children">
-      <el-menu-item :index="menu.url" @click="navigateTo(menu.url, menu.target)">
+      <el-menu-item
+        :index="menu.url"
+        @click="navigateTo(menu.url, menu.target)"
+      >
         <el-icon v-if="menu.icon">
           <component :is="icons[menu.icon]"></component>
         </el-icon>

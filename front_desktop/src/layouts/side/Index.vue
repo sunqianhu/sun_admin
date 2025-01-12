@@ -1,33 +1,45 @@
 <template>
   <div class="side-layout">
-    <el-container :class="{ fold: sideStore.fold }" class="container">
-      <el-aside class="aside" id="aside">
+    <el-container
+      :class="{ 'side-layout__container--fold': sideStore.fold }"
+      class="side-layout__container"
+    >
+      <el-aside class="side-layout__aside">
         <div class="system-name">
-          <img src="@/assets/logo.png" class="logo" />
-          <span class="name">SunAdmin</span>
+          <img src="@/assets/logo.png" class="system-name__logo" />
+          <span class="system-name__name">SunAdmin</span>
         </div>
         <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>
         <div class="version">版本：{{ version }}</div>
       </el-aside>
-      <el-container class="workspace">
+      <el-container class="side-layout__workspace">
         <el-header class="header">
-          <div class="left">
-            <hamburger class="hamburger"></hamburger>
+          <div class="header__left">
+            <hamburger class="header__hamburger"></hamburger>
           </div>
-          <div class="right">
-            <light-dark class="light-dark"></light-dark>
-            <full-screen class="fullscreen"></full-screen>
-            <avatar class="avatar"></avatar>
+          <div class="header__right">
+            <light-dark class="header__light-dark"></light-dark>
+            <full-screen class="header__fullscreen"></full-screen>
+            <avatar class="header__avatar"></avatar>
           </div>
         </el-header>
         <el-main class="body">
           <router-view v-slot="{ Component, route }">
             <keep-alive>
-              <component :is="Component" v-if="route.meta?.keep_alive == true" />
+              <component
+                :is="Component"
+                v-if="route.meta?.keep_alive == true"
+              />
             </keep-alive>
             <component :is="Component" v-if="route.meta?.keep_alive != true" />
           </router-view>
-          <el-backtop :right="15" :bottom="15" target=".workspace .body"> UP </el-backtop>
+          <el-backtop
+            :right="15"
+            :bottom="15"
+            target=".side-layout__workspace body"
+          >
+            UP
+          </el-backtop>
         </el-main>
       </el-container>
     </el-container>
@@ -62,9 +74,9 @@ window.onresize = () => {
 <style lang="scss" scoped>
 .side-layout {
   height: 100dvh;
-  .container {
+  .side-layout__container {
     height: 100%;
-    .aside {
+    .side-layout__aside {
       width: 220px;
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
       background-color: #141414;
@@ -81,11 +93,11 @@ window.onresize = () => {
         overflow: hidden;
         transition: all 0.5s;
         padding-left: 19px;
-        .logo {
+        .system-name__logo {
           height: 25px;
           vertical-align: text-bottom;
         }
-        .name {
+        .system-name__name {
           font-size: var(--font-size-xl);
           font-weight: var(font-weight-bold);
           margin-left: 8px;
@@ -103,7 +115,7 @@ window.onresize = () => {
       }
     }
 
-    .workspace {
+    .side-layout__workspace {
       background-color: var(--background-color-base);
       .header {
         display: flex;
@@ -113,17 +125,15 @@ window.onresize = () => {
         background-color: #ffffff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
         padding: 0px;
-        .left {
-        }
-        .right {
+        .header__right {
           display: flex;
           align-items: center;
           justify-content: flex-end;
           margin-right: var(--margin-md);
-          .light-dark {
+          .header__light-dark {
             margin-right: var(--margin-md);
           }
-          .fullscreen {
+          .header__fullscreen {
             margin-right: var(--margin-md);
           }
         }
@@ -132,12 +142,12 @@ window.onresize = () => {
         padding: var(--padding-md);
       }
     }
-    &.fold {
+    &.side-layout__container--fold {
       .aside {
         width: 64px;
         .system-name {
           padding-left: 19px;
-          .name {
+          .system-name__name {
             margin-left: 30px;
           }
         }
@@ -149,26 +159,10 @@ window.onresize = () => {
   }
 
   @media (max-width: 768px) {
-    .container {
-      &.fold {
+    .side-layout__container {
+      &.side-layout__container--fold {
         .aside {
           width: 0px;
-        }
-      }
-    }
-  }
-}
-
-//暗黑模式
-.dark {
-  .side-layout {
-    .container {
-      .aside {
-        background-color: #141414;
-      }
-      .workspace {
-        .header {
-          background-color: #141414;
         }
       }
     }

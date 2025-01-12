@@ -5,7 +5,7 @@
     width="500"
     :draggable="true"
     @close="close"
-    class="info"
+    class="detail"
   >
     <div v-loading="dialogLoading">
       <label-value>
@@ -18,7 +18,9 @@
         <label-value-item label="最后登录时间">
           {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
-        <label-value-item label="最后登录ip">{{ user.login_ip }}</label-value-item>
+        <label-value-item label="最后登录ip">{{
+          user.login_ip
+        }}</label-value-item>
       </label-value>
     </div>
   </el-dialog>
@@ -65,6 +67,6 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
-.info {
+.detail {
 }
 </style>

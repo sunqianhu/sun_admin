@@ -30,7 +30,9 @@
         </el-form-item>
         <el-form-item label="接口地址" prop="api_string">
           <el-input v-model="permission.api_string" type="textarea" rows="3" />
-          <div class="form-tip">后端接口地址一行一个，格式：应用/控制器/方法</div>
+          <div class="form-tip">
+            后端接口地址一行一个，格式：应用/控制器/方法
+          </div>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="permission.sort" type="number" />
@@ -39,7 +41,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -49,7 +53,7 @@ import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 import TreePermissionSelect from "@/components/mobile/TreePermissionSelect.vue";
 
-defineProps(["open"]);
+const props = defineProps("open");
 const emits = defineEmits(["close", "submited"]);
 const submitLoading = ref(false);
 
@@ -77,7 +81,10 @@ const submitForm = async () => {
   await permissionRef.value.validate();
 
   submitLoading.value = true;
-  const response = await axios.post("desktop/system.mobile.permission.Add/save", permission.value);
+  const response = await axios.post(
+    "desktop/system.mobile.permission.Add/save",
+    permission.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

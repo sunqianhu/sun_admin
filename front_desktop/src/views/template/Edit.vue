@@ -23,7 +23,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -32,13 +34,14 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps("open", "id");
 const emits = defineEmits(["close", "submited"]);
 const dictionary = ref({});
 const dictionaryRef = ref();
 const rules = {
   type: [{ required: true, message: "字典类型不能为空", trigger: "blur" }]
 };
+const submitLoading = ref(false);
 
 /**
  * 初始化
@@ -69,7 +72,12 @@ const close = () => {
  */
 const submitForm = async () => {
   await dictionaryRef.value.validate();
-  const response = await axios.post("desktop/system.dictionary.Edit/save", dictionary.value);
+  submitLoading.value = true;
+  const response = await axios.post(
+    "desktop/system.dictionary.Edit/save",
+    dictionary.value
+  );
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -77,7 +85,6 @@ const submitForm = async () => {
     });
     return;
   }
-
   ElMessage({
     message: response.message,
     type: "success"

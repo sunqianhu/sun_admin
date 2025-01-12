@@ -16,7 +16,9 @@
         label-width="120px"
       >
         <el-form-item label="所属部门">
-          <tree-department-select v-model="department.department_id"></tree-department-select>
+          <tree-department-select
+            v-model="department.department_id"
+          ></tree-department-select>
         </el-form-item>
         <el-form-item label="部门类型" prop="type_id">
           <type-select v-model="department.type"></type-select>
@@ -41,7 +43,7 @@ import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 import TypeSelect from "@/components/department/TypeSelect.vue";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps("open", "id");
 const emits = defineEmits(["close", "submited"]);
 const department = ref({});
 const departmentRef = ref();
@@ -81,7 +83,10 @@ const close = () => {
  */
 const submitForm = async () => {
   await departmentRef.value.validate();
-  const response = await axios.post("desktop/system.department.Edit/save", department.value);
+  const response = await axios.post(
+    "desktop/system.department.Edit/save",
+    department.value
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,

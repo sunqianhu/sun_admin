@@ -1,8 +1,8 @@
 <template>
   <div class="index">
     <div class="page-header">
-      <span class="name">路由管理</span>
-      <span class="description">前端路由管理</span>
+      <span class="page-header__name">路由管理</span>
+      <span class="page-header__description">前端路由管理</span>
     </div>
     <div class="search">
       <el-form :model="query" :inline="true">
@@ -10,7 +10,9 @@
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">查询</el-button>
+          <el-button type="primary" :icon="Search" @click="search"
+            >查询</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -33,7 +35,12 @@
         <el-table-column prop="key" label="路由标识" show-overflow-tooltip />
         <el-table-column prop="path" label="路由路径" show-overflow-tooltip />
         <el-table-column prop="sort" label="排序" width="60" />
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="140"
+        >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
@@ -85,9 +92,12 @@ const editFlag = ref(false);
  */
 const getRoutes = async () => {
   listLoading.value = true;
-  const response = await axios.get("desktop/system.desktop.route.Index/getRoutes", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.desktop.route.Index/getRoutes",
+    {
+      params: query.value
+    }
+  );
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -126,9 +136,12 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.desktop.route.Index/delete", {
-    id: id
-  });
+  const response = await axios.post(
+    "desktop/system.desktop.route.Index/delete",
+    {
+      id: id
+    }
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -155,11 +168,11 @@ onMounted(() => {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-header {
-    .name {
+    .page-header__name {
       font-size: var(--font-size-xl);
       font-weight: var(font-weight-bold);
     }
-    .description {
+    .page-header__description {
       color: var(--font-color-secondary);
       margin-left: var(--margin-md);
       font-size: var(--font-size-sm);
@@ -182,11 +195,6 @@ onMounted(() => {
         color: var(--font-color-secondary);
       }
     }
-  }
-  .explain {
-    margin-top: var(--margin-md);
-    font-size: var(--font-size-sm);
-    color: var(--font-color-secondary);
   }
 }
 </style>

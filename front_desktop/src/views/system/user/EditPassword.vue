@@ -1,7 +1,19 @@
 <template>
-  <el-dialog :model-value="open" title="修改密码" width="500" :draggable="true" @close="close">
+  <el-dialog
+    :model-value="open"
+    title="修改密码"
+    width="500"
+    :draggable="true"
+    @close="close"
+  >
     <div class="edit-password">
-      <el-form :model="user" :rules="rules" scroll-to-error ref="userRef" label-width="120px">
+      <el-form
+        :model="user"
+        :rules="rules"
+        scroll-to-error
+        ref="userRef"
+        label-width="120px"
+      >
         <el-form-item label="新密码" prop="password1">
           <el-input type="password" show-password v-model="user.password1" />
         </el-form-item>
@@ -21,7 +33,7 @@
 import { ref } from "vue";
 import axios from "@/helper/axios";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps("open", "id");
 const emits = defineEmits(["close", "submited"]);
 const user = ref({
   id: props.id
@@ -29,7 +41,9 @@ const user = ref({
 const userRef = ref();
 const rules = {
   password1: [{ required: true, message: "新密码不能为空", trigger: "blur" }],
-  password2: [{ required: true, message: "确认新密码不能为空", trigger: "blur" }]
+  password2: [
+    { required: true, message: "确认新密码不能为空", trigger: "blur" }
+  ]
 };
 
 /**
@@ -44,7 +58,10 @@ const close = () => {
  */
 const submitForm = async () => {
   await userRef.value.validate();
-  const response = await axios.post("desktop/system.user.EditPassword/save", user.value);
+  const response = await axios.post(
+    "desktop/system.user.EditPassword/save",
+    user.value
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,

@@ -1,7 +1,13 @@
 <template>
-  <el-col :xs="props.xs" :sm="props.sm" :md="props.md" :lg="props.lg" class="col">
-    <div class="label">{{ label }}：</div>
-    <div class="value"><slot></slot></div>
+  <el-col
+    :xs="props.xs"
+    :sm="props.sm"
+    :md="props.md"
+    :lg="props.lg"
+    class="label-value-item"
+  >
+    <div class="label-value-item__label">{{ label }}：</div>
+    <div class="label-value-item__value"><slot></slot></div>
   </el-col>
 </template>
 
@@ -15,13 +21,13 @@ const props = defineProps({
 </script>
 
 <style scoped lang="scss">
-.col {
+.label-value-item {
   display: flex;
-  .label {
+  .label-value-item__label {
     white-space: nowrap;
     color: var(--font-color-secondary);
   }
-  .value {
+  .label-value-item__value {
     flex: 1;
   }
 }

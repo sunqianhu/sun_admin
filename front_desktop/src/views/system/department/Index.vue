@@ -7,7 +7,9 @@
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
+          <el-button type="primary" :icon="Search" @click="search"
+            >搜索</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -27,7 +29,12 @@
         <el-table-column prop="name" label="部门名称" />
         <el-table-column prop="type_name" label="部门类型" />
         <el-table-column prop="sort" label="排序" width="100" />
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="140"
+        >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
@@ -78,9 +85,12 @@ const editFlag = ref(false);
  */
 const getTreeDepartment = async () => {
   listLoading.value = true;
-  const response = await axios.get("desktop/system.department.Index/getTreeDepartment", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.department.Index/getTreeDepartment",
+    {
+      params: query.value
+    }
+  );
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({

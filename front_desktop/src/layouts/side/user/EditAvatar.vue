@@ -9,7 +9,7 @@
   >
     <div class="edit-avatar">
       <el-row>
-        <el-col :span="16" class="left">
+        <el-col :span="16" class="edit-avatar__left">
           <div class="cropper">
             <vue-cropper
               :img="option.img"
@@ -24,7 +24,7 @@
               ref="cropperRef"
             ></vue-cropper>
           </div>
-          <div class="operation">
+          <div class="actions">
             <el-upload
               :before-upload="uploadImageBefore"
               :show-file-list="false"
@@ -38,17 +38,19 @@
             <el-button :icon="RefreshRight" @click="rotateRight" />
           </div>
         </el-col>
-        <el-col :span="8" class="right">
+        <el-col :span="8" class="edit-avatar__right">
           <div class="title">预览头像</div>
           <div class="preview">
-            <div class="show-preview">
+            <div class="preview__show">
               <div :style="preview.div">
                 <img :src="preview.url" :style="preview.img" />
               </div>
             </div>
           </div>
-          <div class="save-wrap">
-            <el-button type="primary" @click="save" :loading="saveLoading"> 保存 </el-button>
+          <div class="save">
+            <el-button type="primary" @click="save" :loading="saveLoading">
+              保存
+            </el-button>
           </div>
         </el-col>
       </el-row>
@@ -59,7 +61,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
-import { Upload, ZoomOut, ZoomIn, RefreshLeft, RefreshRight } from "@element-plus/icons-vue";
+import {
+  Upload,
+  ZoomOut,
+  ZoomIn,
+  RefreshLeft,
+  RefreshRight
+} from "@element-plus/icons-vue";
 import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 
@@ -87,9 +95,12 @@ const saveLoading = ref(false);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/layouts.side.user.EditAvatar/init", {
-    params: user.value
-  });
+  const response = await axios.get(
+    "desktop/layouts.side.user.EditAvatar/init",
+    {
+      params: user.value
+    }
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -177,7 +188,10 @@ const save = () => {
     saveLoading.value = true;
     let response;
     try {
-      response = await axios.post("desktop/layouts.side.user.EditAvatar/save", user.value);
+      response = await axios.post(
+        "desktop/layouts.side.user.EditAvatar/save",
+        user.value
+      );
     } catch (error) {
       saveLoading.value = false;
       return;
@@ -206,7 +220,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .edit-avatar {
-  .left {
+  .edit-avatar__left {
     .cropper {
       height: 350px;
       background-color: #888888;
@@ -215,7 +229,7 @@ onMounted(() => {
         max-height: 100%;
       }
     }
-    .operation {
+    .actions {
       margin-top: var(--margin-md);
       .upload-image {
         display: inline-block;
@@ -224,7 +238,7 @@ onMounted(() => {
       }
     }
   }
-  .right {
+  .edit-avatar__right {
     padding-left: 16px;
     .preview {
       height: 329px;
@@ -232,7 +246,7 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      .show-preview {
+      .preview__show {
         width: 100px;
         height: 100px;
         overflow: hidden;
@@ -240,7 +254,7 @@ onMounted(() => {
         position: relative;
       }
     }
-    .save-wrap {
+    .save {
       margin-top: var(--margin-md);
       text-align: center;
     }

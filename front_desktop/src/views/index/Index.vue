@@ -1,45 +1,45 @@
 <template>
   <div class="index" v-loading="pageLoading">
     <div class="welcome">
-      <img src="@/assets/index/welcome.svg" class="img" />
-      <div class="name">你好张三上午好，欢迎回来！</div>
+      <img src="@/assets/index/welcome.svg" class="welcome__icon" />
+      <div class="welcome__name">你好张三上午好，欢迎回来！</div>
     </div>
 
-    <div class="count-row">
+    <div class="count-statistic">
       <el-row justify="space-between" :gutter="16">
         <el-col :sm="12" :md="6">
-          <div class="item today-local-opinion">
-            <div class="name">name1</div>
-            <div class="number-wrap">
-              <el-icon class="icon"><Odometer /></el-icon>
-              <span class="number">21</span>条
+          <div class="count-item">
+            <div class="count-item__name">name1</div>
+            <div class="count-item__count">
+              <el-icon class="count-item__icon"><Odometer /></el-icon>
+              <span class="count-item__number">21</span>条
             </div>
           </div>
         </el-col>
         <el-col :sm="12" :md="6">
-          <div class="item today-push-street">
-            <div class="name">name2</div>
-            <div class="number-wrap">
-              <el-icon class="icon"><ChatSquare /></el-icon>
-              <span class="number">17</span>条
+          <div class="count-item">
+            <div class="count-item__name">name2</div>
+            <div class="count-item__count">
+              <el-icon class="count-item__icon"><Odometer /></el-icon>
+              <span class="count-item__number">17</span>条
             </div>
           </div>
         </el-col>
         <el-col :sm="12" :md="6">
-          <div class="item today-push-street">
-            <div class="name">name3</div>
-            <div class="number-wrap">
-              <el-icon class="icon"><ChatSquare /></el-icon>
-              <span class="number">25</span>条
+          <div class="count-item">
+            <div class="count-item__name">name3</div>
+            <div class="count-item__count">
+              <el-icon class="count-item__icon"><Odometer /></el-icon>
+              <span class="count-item__number">25</span>条
             </div>
           </div>
         </el-col>
         <el-col :sm="12" :md="6">
-          <div class="item today-push-street">
-            <div class="name">name3</div>
-            <div class="number-wrap">
-              <el-icon class="icon"><ChatSquare /></el-icon>
-              <span class="number">25</span>条
+          <div class="count-item">
+            <div class="count-item__name">name4</div>
+            <div class="count-item__count">
+              <el-icon class="count-item__icon"><Odometer /></el-icon>
+              <span class="count-item__number">14</span>条
             </div>
           </div>
         </el-col>
@@ -50,12 +50,12 @@
       <el-row justify="space-between" :gutter="16">
         <el-col :md="12">
           <card-panel title="module1" class="module">
-            <div class="chart" id="module1-chart"></div>
+            <div id="module1-chart" class="module__chart"></div>
           </card-panel>
         </el-col>
         <el-col :sm="12">
           <card-panel title="module2" class="module">
-            <div class="chart" id="module2-chart"></div>
+            <div id="module2-chart" class="module__chart"></div>
           </card-panel>
         </el-col>
         <el-col :md="12">
@@ -218,9 +218,9 @@ const drawLineChart = () => {
   ];
 
   //数据
-  data.forEach((item) => {
-    option.xAxis.data.push(item.name);
-    option.series[0].data.push(item.number);
+  data.forEach((count-item) => {
+    option.xAxis.data.push(count-item.name);
+    option.series[0].data.push(count-item.number);
   });
 
   //画
@@ -296,16 +296,16 @@ const drawBarChart = () => {
     }
   ];
   let length = data.length;
-  let item;
+  let count-item;
 
   //数据
   for (let index = 0; index < length; index++) {
-    item = data[index];
+    count-item = data[index];
     if (index >= 10) {
       break;
     }
-    option.xAxis.data.push(item.name);
-    option.series[0].data.push(item.number);
+    option.xAxis.data.push(count-item.name);
+    option.series[0].data.push(count-item.number);
   }
 
   //画
@@ -342,33 +342,33 @@ onMounted(() => {
     padding: var(--padding-md);
     display: flex;
     align-items: center;
-    .img {
+    .welcome__icon {
       width: 50px;
       display: inline-block;
     }
-    .name {
+    .welcome__name {
       font-size: var(--font-size-lg);
       font-weight: var(font-weight-bold);
       color: var(--color-primary);
       margin-left: 16px;
     }
   }
-  .count-row {
+  .count-statistic {
     margin-top: var(--margin-md);
-    .item {
+    .count-item {
       padding: var(--padding-md);
       background-color: var(--background-color-light);
       border-radius: var(--border-radius-sm);
       margin-bottom: var(--margin-md);
-      .name {
+      .count-item__name {
       }
-      .number-wrap {
+      .count-item__count {
         margin-top: var(--margin-md);
-        .icon {
+        .count-item__icon {
           font-size: var(--font-size-xl);
           color: #8595f4;
         }
-        .number {
+        .count-item__number {
           font-size: 32px;
           font-weight: var(font-weight-bold);
           margin-left: 8px;
@@ -380,8 +380,7 @@ onMounted(() => {
   .modules {
     .module {
       margin-bottom: var(--margin-md);
-      #module1-chart,
-      #module2-chart {
+      .module__chart {
         width: 100%;
         height: 250px;
       }

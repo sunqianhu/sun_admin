@@ -40,7 +40,7 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps("open", "id");
 const emits = defineEmits(["close", "submited"]);
 const dictionary = ref({});
 const dictionaryRef = ref();
@@ -81,7 +81,10 @@ const close = () => {
 const submitForm = async () => {
   await dictionaryRef.value.validate();
 
-  const response = await axios.post("desktop/system.dictionary.Edit/save", dictionary.value);
+  const response = await axios.post(
+    "desktop/system.dictionary.Edit/save",
+    dictionary.value
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,

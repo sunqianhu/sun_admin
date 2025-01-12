@@ -31,7 +31,9 @@
         </el-form-item>
         <el-form-item label="接口地址" prop="api_string">
           <el-input v-model="permission.api_string" type="textarea" rows="3" />
-          <div class="form-tip">后端接口地址一行一个，格式：应用/控制器/方法</div>
+          <div class="form-tip">
+            后端接口地址一行一个，格式：应用/控制器/方法
+          </div>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="permission.sort" type="number" />
@@ -40,7 +42,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -50,7 +54,7 @@ import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 import TreePermissionSelect from "@/components/desktop/TreePermissionSelect.vue";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps("open", "id");
 const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
 const permission = ref({
@@ -69,9 +73,12 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   initLoading.value = true;
-  const response = await axios.get("desktop/system.desktop.permission.Edit/init", {
-    params: { id: props.id }
-  });
+  const response = await axios.get(
+    "desktop/system.desktop.permission.Edit/init",
+    {
+      params: { id: props.id }
+    }
+  );
   initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -104,7 +111,10 @@ const submitForm = async () => {
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.desktop.permission.Edit/save", permission.value);
+    response = await axios.post(
+      "desktop/system.desktop.permission.Edit/save",
+      permission.value
+    );
   } catch (error) {
     submitLoading.value = false;
     return;

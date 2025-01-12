@@ -1,15 +1,20 @@
 <template>
   <div class="inline-panel">
     <slot name="header">
-      <div class="header" v-if="title || subTitle || $slots.actions">
-        <div class="title" v-if="title">{{ title }}</div>
-        <div class="sub-title" v-if="subTitle">{{ subTitle }}</div>
-        <div class="actions" v-if="$slots.actions">
+      <div
+        class="inline-panel__header"
+        v-if="title || subTitle || $slots.actions"
+      >
+        <div class="inline-panel__title" v-if="title">{{ title }}</div>
+        <div class="inline-panel__sub-title" v-if="subTitle">
+          {{ subTitle }}
+        </div>
+        <div class="inline-panel__actions" v-if="$slots.actions">
           <slot name="actions"></slot>
         </div>
       </div>
     </slot>
-    <div class="body">
+    <div class="inline-panel__body">
       <slot name="default"></slot>
     </div>
   </div>
@@ -30,11 +35,11 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .inline-panel {
-  .header {
+  .inline-panel__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .title {
+    .inline-panel__title {
       color: var(--color-primary);
       position: relative;
       font-size: var(--font-size-lg);
@@ -51,18 +56,18 @@ const props = defineProps({
         border-radius: 2px;
       }
     }
-    .sub-title {
+    .inline-panel__sub-title {
       flex: 1;
       margin-left: var(--margin-md);
       color: var(--font-color-secondary);
       font-size: var(--font-size-sm);
     }
-    .actions {
+    .inline-panel__actions {
       margin-left: auto;
       margin-right: var(--margin-md);
     }
   }
-  .body {
+  .inline-panel__body {
     margin-top: var(--margin-md);
   }
 }

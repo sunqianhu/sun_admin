@@ -9,7 +9,13 @@
     class="edit"
   >
     <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
-      <el-form :model="route" :rules="rules" scroll-to-error ref="routeRef" label-width="120px">
+      <el-form
+        :model="route"
+        :rules="rules"
+        scroll-to-error
+        ref="routeRef"
+        label-width="120px"
+      >
         <el-form-item label="路由名称" prop="name">
           <el-input v-model="route.name" />
         </el-form-item>
@@ -38,7 +44,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -48,7 +56,7 @@ import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 import LayoutSelect from "@/components/desktop/route/LayoutSelect.vue";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps("open", "id");
 const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
 const route = ref({
@@ -59,8 +67,12 @@ const rules = {
   name: [{ required: true, message: "路由名称不能为空", trigger: "blur" }],
   key: [{ required: true, message: "路由标识不能为空", trigger: "blur" }],
   path: [{ required: true, message: "路由路径不能为空", trigger: "blur" }],
-  component_path: [{ required: true, message: "组件路径不能为空", trigger: "blur" }],
-  keep_alive: [{ required: true, message: "路由保活不能为空", trigger: "blur" }],
+  component_path: [
+    { required: true, message: "组件路径不能为空", trigger: "blur" }
+  ],
+  keep_alive: [
+    { required: true, message: "路由保活不能为空", trigger: "blur" }
+  ],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
 const layouts = ref([]);
@@ -103,7 +115,10 @@ const submitForm = async () => {
   await routeRef.value.validate();
 
   submitLoading.value = true;
-  const response = await axios.post("desktop/system.desktop.route.Edit/save", route.value);
+  const response = await axios.post(
+    "desktop/system.desktop.route.Edit/save",
+    route.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

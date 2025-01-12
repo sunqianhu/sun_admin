@@ -10,7 +10,9 @@
           <el-input v-model="query.key" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">查询</el-button>
+          <el-button type="primary" :icon="Search" @click="search"
+            >查询</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -19,13 +21,28 @@
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
     <div class="list">
-      <el-table :data="treePermission" v-loading="listLoading" row-key="id" class="table">
+      <el-table
+        :data="treePermission"
+        v-loading="listLoading"
+        row-key="id"
+        class="table"
+      >
         <el-table-column v-slot="{ row }" prop="name" label="权限名称">
           {{ row.name }}
         </el-table-column>
-        <el-table-column prop="key" label="权限标识" width="300" show-overflow-tooltip />
+        <el-table-column
+          prop="key"
+          label="权限标识"
+          width="300"
+          show-overflow-tooltip
+        />
         <el-table-column prop="sort" label="排序" width="100" />
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="140"
+        >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
@@ -76,9 +93,12 @@ const editFlag = ref(false);
  */
 const getTreePermission = async () => {
   listLoading.value = true;
-  const response = await axios.get("desktop/system.mobile.permission.Index/getTreePermission", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.mobile.permission.Index/getTreePermission",
+    {
+      params: query.value
+    }
+  );
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -117,9 +137,12 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.mobile.permission.Index/delete", {
-    id: id
-  });
+  const response = await axios.post(
+    "desktop/system.mobile.permission.Index/delete",
+    {
+      id: id
+    }
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -161,11 +184,6 @@ onMounted(() => {
     }
     .table {
       width: 100%;
-
-      .remark {
-        font-size: var(--font-size-sm);
-        color: var(--font-color-secondary);
-      }
     }
   }
 }
