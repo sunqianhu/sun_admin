@@ -1,5 +1,6 @@
 <template>
   <el-col
+    :span="props.span"
     :xs="props.xs"
     :sm="props.sm"
     :md="props.md"

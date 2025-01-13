@@ -16,11 +16,11 @@
           {{ user.department_name }}
         </label-value-item>
         <label-value-item label="最后登录时间">
-          {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
+          {{ dayjs.unix(user.last_login_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
-        <label-value-item label="最后登录ip">{{
-          user.login_ip
-        }}</label-value-item>
+        <label-value-item label="最后登录ip">
+          {{ user.last_login_ip }}
+        </label-value-item>
       </label-value>
     </div>
   </el-dialog>
