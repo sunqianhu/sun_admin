@@ -36,7 +36,7 @@ class Detail extends Base
             ->leftJoin("user u", "ll.user_id = u.id")
             ->where('u.id', $userModel->id)
             ->order('ll.id', 'desc')
-            ->limit(10)
+            ->limit(5)
             ->select();
         $loginLogs = $loginLogModels->toArray();
 
@@ -46,7 +46,7 @@ class Detail extends Base
             ->leftJoin("user u", "ol.user_id = u.id")
             ->where('u.id', $userModel->id)
             ->order('ol.id', 'desc')
-            ->limit(10)
+            ->limit(5)
             ->select();
         $operationLogs = $operationLogModels->toArray();
 

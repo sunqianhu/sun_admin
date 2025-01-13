@@ -32,9 +32,9 @@
     <div class="list">
       <el-table :data="users" v-loading="listLoading" stripe table-layout="auto" class="table">
         <el-table-column v-slot="{ row }" prop="account" label="账号">
-          <el-link :href="'/system/user/detail-' + row.id" type="primary" target="_blank">
+          <a :href="'/system/user/detail-' + row.id" target="_blank">
             {{ row.account }}
-          </el-link>
+          </a>
         </el-table-column>
         <el-table-column prop="name" label="姓名" />
         <el-table-column v-slot="{ row }" prop="department_name" label="部门">

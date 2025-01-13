@@ -7,7 +7,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="300px" class="scrollbar">
+    <el-scrollbar max-height="300px" v-loading="initLoading" class="scrollbar">
       <el-form
         :model="department"
         :rules="rules"
@@ -16,9 +16,12 @@
         label-width="120px"
       >
         <el-form-item label="所属部门">
-          <tree-department-select v-model="department.department_id"></tree-department-select>
+          <tree-department-select
+            v-model="department.department_id"
+            placeholder="无"
+          ></tree-department-select>
         </el-form-item>
-        <el-form-item label="部门类型" prop="type_id">
+        <el-form-item label="部门类型" prop="type">
           <type-select v-model="department.type"></type-select>
         </el-form-item>
         <el-form-item label="部门名称" prop="name">
@@ -31,7 +34,7 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -46,18 +49,22 @@ const emits = defineEmits(["close", "submited"]);
 const department = ref({});
 const departmentRef = ref();
 const rules = {
-  type_id: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
+  type: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
   name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
+const initLoading = ref(false);
+const submitLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
+  initLoading.value = true;
   const response = await axios.get("desktop/system.department.Edit/init", {
     params: { id: props.id }
   });
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -81,7 +88,9 @@ const close = () => {
  */
 const submitForm = async () => {
   await departmentRef.value.validate();
+  submitLoading.value = true;
   const response = await axios.post("desktop/system.department.Edit/save", department.value);
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,

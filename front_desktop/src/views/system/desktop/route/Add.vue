@@ -8,7 +8,7 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" class="scrollbar">
       <el-form :model="route" :rules="rules" scroll-to-error ref="routeRef" label-width="120px">
         <el-form-item label="路由名称" prop="name">
           <el-input v-model="route.name" />
@@ -47,13 +47,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "@/helper/axios";
 import LayoutSelect from "@/components/desktop/route/LayoutSelect.vue";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const initLoading = ref(false);
 const route = ref({
   sort: 1,
   keep_alive: 2
@@ -104,10 +103,6 @@ const submitForm = async () => {
   });
   emits("submited", true);
 };
-
-onMounted(() => {
-  init();
-});
 </script>
 
 <style lang="scss" scoped>

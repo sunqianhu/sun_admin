@@ -8,7 +8,7 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" class="scrollbar">
       <el-form :model="menu" :rules="rules" scroll-to-error ref="menuRef" label-width="120px">
         <el-form-item label="上级菜单" prop="menu_id">
           <tree-menu-select v-model="menu.menu_id" placeholder="无"></tree-menu-select>
@@ -47,7 +47,6 @@ import TreeMenuSelect from "@/components/desktop/TreeMenuSelect.vue";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const initLoading = ref(false);
 const menu = ref({
   target: 1,
   sort: 1
@@ -94,10 +93,6 @@ const submitForm = async () => {
   });
   emits("submited", true);
 };
-
-onMounted(() => {
-  init();
-});
 </script>
 
 <style lang="scss" scoped>

@@ -16,9 +16,12 @@
         label-width="120px"
       >
         <el-form-item label="上级部门">
-          <tree-department-select v-model="department.department_id"></tree-department-select>
+          <tree-department-select
+            v-model="department.department_id"
+            placeholder="无"
+          ></tree-department-select>
         </el-form-item>
-        <el-form-item label="部门类型" prop="type_id">
+        <el-form-item label="部门类型" prop="type">
           <type-select v-model="department.type"></type-select>
         </el-form-item>
         <el-form-item label="部门名称" prop="name">
@@ -49,7 +52,7 @@ const department = ref({
 });
 const departmentRef = ref({});
 const rules = {
-  type_id: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
+  type: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
   name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
@@ -82,10 +85,6 @@ const submitForm = async () => {
   });
   emits("submited", true);
 };
-
-onMounted(() => {
-  init();
-});
 </script>
 
 <style lang="scss" scoped>

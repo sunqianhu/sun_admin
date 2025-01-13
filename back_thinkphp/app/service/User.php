@@ -90,9 +90,9 @@ class User extends Curd
         try {
             $user->save($data);
 
-            $userRole = new UserRole();
-            $userRole->fieldDelete('user_id', $user->id);
             if (isset($data['role_ids'])) {
+                $userRole = new UserRole();
+                $userRole->fieldDelete('user_id', $user->id);
                 foreach ($data['role_ids'] as $roleId) {
                     $userRole->add([
                         'user_id' => $user->id,

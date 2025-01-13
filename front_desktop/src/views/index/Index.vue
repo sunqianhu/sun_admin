@@ -49,17 +49,17 @@
     <div class="modules">
       <el-row justify="space-between" :gutter="16">
         <el-col :md="12">
-          <card-panel title="module1" class="module">
+          <card-panel title="模块1" class="module">
             <div class="chart" id="module1-chart"></div>
           </card-panel>
         </el-col>
         <el-col :sm="12">
-          <card-panel title="module2" class="module">
+          <card-panel title="模块2" class="module">
             <div class="chart" id="module2-chart"></div>
           </card-panel>
         </el-col>
         <el-col :md="12">
-          <card-panel title="module3" class="module">
+          <card-panel title="模块3" class="module">
             <template #actions>
               <a href="javascript:;">更多</a>
             </template>
@@ -71,7 +71,7 @@
           </card-panel>
         </el-col>
         <el-col :sm="12">
-          <card-panel title="module4" class="module">
+          <card-panel title="模块4" class="module">
             <template #actions>
               <a href="javascript:;">更多</a>
             </template>

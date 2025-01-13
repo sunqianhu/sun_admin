@@ -7,6 +7,7 @@
     :render-after-expand="false"
     check-strictly
     :multiple="multiple"
+    :placeholder="placeholder"
     clearable
   />
 </template>
@@ -23,6 +24,10 @@ const props = defineProps({
   multiple: {
     type: Boolean,
     default: false
+  },
+  placeholder: {
+    type: String,
+    default: undefined
   }
 });
 const emits = defineEmits(["update:modelValue"]);

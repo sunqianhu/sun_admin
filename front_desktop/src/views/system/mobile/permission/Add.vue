@@ -45,14 +45,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "@/helper/axios";
 import TreePermissionSelect from "@/components/mobile/TreePermissionSelect.vue";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const submitLoading = ref(false);
-
 const permission = ref({
   sort: 1
 });
@@ -92,10 +91,6 @@ const submitForm = async () => {
   });
   emits("submited", true);
 };
-
-onMounted(() => {
-  init();
-});
 </script>
 
 <style lang="scss" scoped>

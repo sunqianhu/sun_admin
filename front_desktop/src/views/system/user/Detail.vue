@@ -1,8 +1,8 @@
 <template>
   <div class="detail" v-loading="loading">
-    <card-panel title="用户信息" class="moudle">
+    <card-panel title="用户信息" class="panel">
       <label-value>
-        <label-value-item label="用户id" :md="8">{{ user.id }}</label-value-item>
+        <label-value-item label="用户ID" :md="8">{{ user.id }}</label-value-item>
         <label-value-item label="账号" :md="8">{{ user.account }}</label-value-item>
         <label-value-item label="姓名" :md="8">{{ user.name }}</label-value-item>
         <label-value-item label="手机号码" :md="8">{{ user.phone }}</label-value-item>
@@ -16,15 +16,15 @@
           {{ dayjs.unix(user.edit_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
         <label-value-item label="最后登录时间" :md="8">
-          {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
+          {{ dayjs.unix(user.last_login_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
-        <label-value-item label="最后登录ip" :md="8">{{ user.login_ip }}</label-value-item>
+        <label-value-item label="最后登录ip" :md="8">{{ user.last_login_ip }}</label-value-item>
       </label-value>
     </card-panel>
 
-    <card-panel title="登录日志" class="moudle">
+    <card-panel title="登录日志" class="panel">
       <template #actions>
-        <el-link href="/system/login_log" type="primary" target="_blank"> 更多 </el-link>
+        <el-link href="/system/login-log" type="primary" target="_blank"> 更多 </el-link>
       </template>
       <el-table :data="loginLogs" row-key="id" style="width: 100%">
         <el-table-column prop="ip" label="登录ip" />
@@ -34,15 +34,15 @@
       </el-table>
     </card-panel>
 
-    <card-panel title="操作日志" class="moudle">
+    <card-panel title="操作日志" class="panel">
       <template #actions>
-        <el-link href="/system/operation_log" type="primary" target="_blank"> 更多 </el-link>
+        <el-link href="/system/operation-log" type="primary" target="_blank"> 更多 </el-link>
       </template>
       <el-table :data="operationLogs" row-key="id" style="width: 100%">
         <el-table-column label="操作时间" v-slot="{ row }">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
-        <el-table-column prop="url" label="操作地址" width="450" />
+        <el-table-column prop="api" label="请求接口" width="450" />
         <el-table-column prop="ip" label="操作ip" />
       </el-table>
     </card-panel>
@@ -99,7 +99,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .detail {
   padding: var(--padding-md);
-  .moudle {
+  .panel {
     margin-top: var(--margin-md);
     &:first-child {
       margin-top: 0px;

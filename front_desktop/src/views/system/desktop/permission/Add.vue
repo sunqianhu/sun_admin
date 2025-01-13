@@ -8,7 +8,7 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" class="scrollbar">
       <el-form
         :model="permission"
         :rules="rules"
@@ -46,12 +46,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const initLoading = ref(false);
 const permission = ref({
   sort: 1
 });
@@ -92,10 +91,6 @@ const submitForm = async () => {
   });
   emits("submited", true);
 };
-
-onMounted(() => {
-  init();
-});
 </script>
 
 <style lang="scss" scoped>

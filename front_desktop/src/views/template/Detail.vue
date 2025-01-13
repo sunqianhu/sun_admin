@@ -2,7 +2,7 @@
   <div class="detail" v-loading="pageLoading">
     <card-panel title="用户信息" class="moudle">
       <label-value>
-        <label-value-item label="用户id" :md="8">{{ user.id }}</label-value-item>
+        <label-value-item label="用户ID" :md="8">{{ user.id }}</label-value-item>
         <label-value-item label="添加时间" :md="8">
           {{ dayjs.unix(user.add_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>

@@ -7,7 +7,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="300px" class="scrollbar">
+    <el-scrollbar max-height="300px" v-loading="initLoading" class="scrollbar">
       <el-form :model="user" :rules="rules" scroll-to-error ref="userRef" label-width="120px">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="user.name" />
@@ -46,15 +46,18 @@ const rules = {
   phone: [{ required: true, message: "手机号码不能为空", trigger: "blur" }],
   department_id: [{ required: true, message: "所属部门还未选择", trigger: "blur" }]
 };
+const initLoading = ref(false);
 const submitLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
+  initLoading.value = true;
   let response = await axios.get("desktop/system.user.Edit/init", {
     params: { id: props.id }
   });
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
