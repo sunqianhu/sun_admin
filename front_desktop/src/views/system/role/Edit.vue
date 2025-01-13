@@ -8,8 +8,18 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="400px" class="scrollbar" v-loading="dialogLoading">
-      <el-form :model="role" :rules="rules" scroll-to-error ref="roleRef" label-width="120px">
+    <el-scrollbar
+      max-height="400px"
+      class="scrollbar"
+      v-loading="dialogLoading"
+    >
+      <el-form
+        :model="role"
+        :rules="rules"
+        scroll-to-error
+        ref="roleRef"
+        label-width="120px"
+      >
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
@@ -65,7 +75,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm" :loading="submitLoading"> 提交 </el-button>
+      <el-button type="primary" @click="submitForm" :loading="submitLoading">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -80,11 +92,11 @@ const role = ref({
   desktop_permission_ids: [],
   desktop_menu_ids: [],
   desktop_route_ids: [],
-  mobile_permission_ids: []
+  mobile_permission_ids: [],
 });
 const roleRef = ref();
 const rules = {
-  name: [{ required: true, message: "角色名称不能为空", trigger: "blur" }]
+  name: [{ required: true, message: "角色名称不能为空", trigger: "blur" }],
 };
 const dialogLoading = ref(true);
 const submitLoading = ref(false);
@@ -108,13 +120,13 @@ const mobileTreePermissionDefaultCheckKeys = ref([]);
 const init = async () => {
   dialogLoading.value = true;
   const response = await axios.get("desktop/system.role.Edit/init", {
-    params: { id: props.id }
+    params: { id: props.id },
   });
   dialogLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -126,18 +138,20 @@ const init = async () => {
   await nextTick();
 
   role.value = response.data.role;
-  desktopTreePermissionDefaultCheckKeys.value = getDesktopTreePermissionDefaultCheckKeys(
-    response.data.role.desktop_permission_ids
-  );
+  desktopTreePermissionDefaultCheckKeys.value =
+    getDesktopTreePermissionDefaultCheckKeys(
+      response.data.role.desktop_permission_ids
+    );
   desktopTreeMenuDefaultCheckKeys.value = getDesktopTreeMenuDefaultCheckKeys(
     response.data.role.desktop_menu_ids
   );
   desktopRouteDefaultCheckKeys.value = getDesktopRouteDefaultCheckKeys(
     response.data.role.desktop_route_ids
   );
-  mobileTreePermissionDefaultCheckKeys.value = getMobileTreePermissionDefaultCheckKeys(
-    response.data.role.mobile_permission_ids
-  );
+  mobileTreePermissionDefaultCheckKeys.value =
+    getMobileTreePermissionDefaultCheckKeys(
+      response.data.role.mobile_permission_ids
+    );
 };
 
 /**
@@ -273,19 +287,22 @@ const checkMobileTreePermission = () => {
 const submitForm = async () => {
   await roleRef.value.validate();
   submitLoading.value = true;
-  const response = await axios.post("desktop/system.role.Edit/save", role.value);
+  const response = await axios.post(
+    "desktop/system.role.Edit/save",
+    role.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   emits("submited", true);
 };

@@ -4,24 +4,24 @@
 const props = defineProps({
   label: {
     type: String,
-    default: ""
+    default: "",
   },
   labelWidth: {
     type: String,
-    default: ""
+    default: "",
   },
   labelColspan: {
     type: Number,
-    default: 1
+    default: 1,
   },
   contentWidth: {
     type: String,
-    default: ""
+    default: "",
   },
   contentColspan: {
     type: Number,
-    default: 1
-  }
+    default: 1,
+  },
 });
 </script>
 

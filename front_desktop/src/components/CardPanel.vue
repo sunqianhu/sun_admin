@@ -1,15 +1,18 @@
 <template>
   <div class="card-panel">
     <slot name="header">
-      <div class="header" v-if="title || subTitle || $slots.actions">
-        <div class="title" v-if="title">{{ title }}</div>
-        <div class="sub-title" v-if="subTitle">{{ subTitle }}</div>
-        <div class="actions" v-if="$slots.actions">
+      <div
+        class="card-panel__header"
+        v-if="title || subTitle || $slots.actions"
+      >
+        <div class="card-panel__title" v-if="title">{{ title }}</div>
+        <div class="card-panel__sub-title" v-if="subTitle">{{ subTitle }}</div>
+        <div class="card-panel__actions" v-if="$slots.actions">
           <slot name="actions"></slot>
         </div>
       </div>
     </slot>
-    <div class="body">
+    <div class="card-panel__body">
       <slot name="default"></slot>
     </div>
   </div>
@@ -19,12 +22,12 @@
 const props = defineProps({
   title: {
     type: String,
-    default: ""
+    default: "",
   },
   subTitle: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 </script>
 
@@ -33,12 +36,12 @@ const props = defineProps({
   background: var(--background-color-light);
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
-  .header {
+  .card-panel__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: var(--padding-md) var(--padding-md) 0px var(--padding-md);
-    .title {
+    .card-panel__title {
       color: var(--color-primary);
       position: relative;
       font-size: var(--font-size-lg);
@@ -54,18 +57,18 @@ const props = defineProps({
         border-radius: 2px;
       }
     }
-    .sub-title {
+    .card-panel__sub-title {
       flex: 1;
       margin-left: var(--margin-md);
       color: var(--font-color-secondary);
       font-size: var(--font-size-sm);
     }
-    .actions {
+    .card-panel__actions {
       margin-left: auto;
       margin-right: var(--margin-md);
     }
   }
-  .body {
+  .card-panel__body {
     padding: var(--padding-md);
   }
 }

@@ -31,12 +31,12 @@ import { ref, onMounted, watch } from "vue";
 const props = defineProps({
   modelValue: {
     type: Array,
-    default: []
+    default: [],
   },
   name: {
     type: String,
-    default: "file"
-  }
+    default: "file",
+  },
 });
 const emits = defineEmits(["update:modelValue", "success"]);
 const headers = { token: localStorage.getItem("token") };
@@ -61,7 +61,7 @@ const handleSuccess = (response, uploadFile, uploadFiles) => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     uploadRef.value.handleRemove(uploadFile);
     return;
@@ -97,7 +97,7 @@ const handleChange = (uploadFile, uploadFiles) => {
 const handleExceed = (files, uploadFiles) => {
   ElMessage({
     message: "最多上传" + props.limit + "个文件",
-    type: "error"
+    type: "error",
   });
 };
 
@@ -133,7 +133,7 @@ watch(
     init();
   },
   {
-    deep: true
+    deep: true,
   }
 );
 

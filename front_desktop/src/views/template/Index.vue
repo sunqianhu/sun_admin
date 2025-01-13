@@ -1,8 +1,9 @@
 <template>
   <div class="index">
     <div class="page-header">
-      <span class="name">字典管理</span>
-      <span class="description">字典管理描述</span>
+      <div class="page-header__name">字典管理</div>
+      <div class="page-header__description">字典管理描述</div>
+      <div class="page-header__actions"></div>
     </div>
     <div class="search">
       <el-form :model="query" :inline="true">
@@ -10,7 +11,9 @@
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
+          <el-button type="primary" :icon="Search" @click="search">
+            搜索
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -20,14 +23,25 @@
     </div>
 
     <div class="list">
-      <el-table :data="dictionarys" v-loading="loading" row-key="id" class="table">
+      <el-table
+        :data="dictionarys"
+        v-loading="loading"
+        row-key="id"
+        table-layout="auto"
+        class="table"
+      >
         <el-table-column v-slot="{ row }" prop="account" label="账号">
-          <el-link :href="'/system/user/detail-' + row.id" type="primary" target="_blank">
+          <a :href="'/system/user/detail-' + row.id" target="_blank">
             {{ row.account }}
-          </el-link>
+          </a>
         </el-table-column>
         <el-table-column prop="sort" label="排序" width="100" />
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="140"
+        >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
@@ -54,7 +68,7 @@
       :open="addFlag"
       @close="addFlag = false"
       @submited="
-        getDictionarys();
+        getDictionaryPaginate();
         addFlag = false;
       "
       v-if="addFlag"
@@ -63,7 +77,7 @@
       :open="editFlag"
       @close="editFlag = false"
       @submited="
-        getDictionarys();
+        getDictionaryPaginate();
         editFlag = false;
       "
       :id="rowId"
@@ -82,7 +96,7 @@ import Edit from "./Edit.vue";
 const rowId = ref(0);
 const query = ref({
   size: 30,
-  page: 1
+  page: 1,
 });
 const dictionarys = ref([]);
 const loading = ref(true);
@@ -91,18 +105,21 @@ const editFlag = ref(false);
 const total = ref(0);
 
 /**
- * 得到字典集合
+ * 得到字典分页
  */
-const getDictionarys = async () => {
+const getDictionaryPaginate = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.dictionary.Index/getDictionarys", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.dictionary.Index/getDictionaryPaginate",
+    {
+      params: query.value,
+    }
+  );
   loading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -115,7 +132,7 @@ const getDictionarys = async () => {
  * 搜索
  */
 const search = () => {
-  getDictionarys();
+  getDictionaryPaginate();
 };
 
 /**
@@ -139,21 +156,21 @@ const openEdit = (id) => {
  */
 const del = async (id) => {
   const response = await axios.post("desktop/system.dictionary.Index/delete", {
-    id: id
+    id: id,
   });
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
-  getDictionarys();
+  getDictionaryPaginate();
 };
 
 /**
@@ -163,7 +180,7 @@ const del = async (id) => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getDictionarys();
+  getDictionaryPaginate();
 };
 
 /**
@@ -172,11 +189,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getDictionarys();
+  getDictionaryPaginate();
 };
 
 onMounted(() => {
-  getDictionarys();
+  getDictionaryPaginate();
 });
 </script>
 
@@ -188,17 +205,17 @@ onMounted(() => {
   box-shadow: var(--box-shadow-base);
   .page-header {
     display: flex;
-    .name {
+    .page-header__name {
       font-size: var(--font-size-xl);
       font-weight: var(font-weight-bold);
     }
-    .description {
+    .page-header__description {
       color: var(--font-color-secondary);
       margin-left: var(--margin-md);
       font-size: var(--font-size-sm);
       flex: 1;
     }
-    .operation {
+    .actions {
     }
   }
   .search {

@@ -12,43 +12,43 @@ const staticRoutes = [
     name: "side",
     component: () => import("../layouts/side/Index.vue"),
     meta: {
-      name: "侧边布局"
+      name: "侧边布局",
     },
-    children: []
+    children: [],
   },
   {
     path: "/blank",
     name: "blank",
     component: () => import("../layouts/blank/Index.vue"),
     meta: {
-      name: "空白布局"
+      name: "空白布局",
     },
-    children: []
+    children: [],
   },
   {
     path: "/login",
     name: "login",
     component: () => import("../views/Login.vue"),
     meta: {
-      name: "sun admin"
-    }
+      name: "sun admin",
+    },
   },
   {
     path: "/test",
     name: "test",
     component: () => import("../views/Test.vue"),
     meta: {
-      name: "测试页面"
-    }
+      name: "测试页面",
+    },
   },
   {
     path: "/:pathMatch(.*)*",
     name: "404",
     component: () => import("../views/404.vue"),
     meta: {
-      name: "没有找到页面"
-    }
-  }
+      name: "没有找到页面",
+    },
+  },
 ];
 
 /**
@@ -99,14 +99,15 @@ const setRoutes = async () => {
     "@/views/*.vue",
     "@/views/*/*.vue",
     "@/views/*/*/*.vue",
-    "@/views/*/*/*/*.vue"
+    "@/views/*/*/*/*.vue",
   ]);
 
   childRoutes.forEach((childRoute) => {
     if (!childRoute.component_path) {
       return;
     }
-    childRoute.component = componentFilePaths["/src/views/" + childRoute.component_path];
+    childRoute.component =
+      componentFilePaths["/src/views/" + childRoute.component_path];
     if (!childRoute.component) {
       return;
     }
@@ -199,7 +200,7 @@ const afterHandle = (to, from) => {
 //路由对象
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: staticRoutes
+  routes: staticRoutes,
 });
 router.beforeEach(beforeHandle);
 router.afterEach(afterHandle);

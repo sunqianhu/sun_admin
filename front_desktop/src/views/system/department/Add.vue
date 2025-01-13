@@ -18,7 +18,6 @@
         <el-form-item label="上级部门">
           <tree-department-select
             v-model="department.department_id"
-            placeholder="无"
           ></tree-department-select>
         </el-form-item>
         <el-form-item label="部门类型" prop="type">
@@ -40,21 +39,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "@/helper/axios";
 import TypeSelect from "@/components/department/TypeSelect.vue";
 
-defineProps(["open"]);
+const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-
 const department = ref({
-  sort: 1
+  sort: 1,
 });
 const departmentRef = ref({});
 const rules = {
   type: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
   name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
 };
 
 /**
@@ -70,18 +68,21 @@ const close = () => {
 const submitForm = async () => {
   await departmentRef.value.validate();
 
-  const response = await axios.post("desktop/system.department.Add/save", department.value);
+  const response = await axios.post(
+    "desktop/system.department.Add/save",
+    department.value
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   emits("submited", true);
 };

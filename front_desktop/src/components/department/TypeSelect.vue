@@ -1,6 +1,10 @@
 <template>
   <el-select v-model="ids" filterable clearable :multiple="multiple">
-    <el-option v-for="type in types" :label="type.value" :value="parseInt(type.key)" />
+    <el-option
+      v-for="type in types"
+      :label="type.value"
+      :value="parseInt(type.key)"
+    />
   </el-select>
 </template>
 
@@ -11,12 +15,12 @@ import axios from "@/helper/axios";
 const props = defineProps({
   modelValue: {
     type: [Number, String],
-    default: ""
+    default: "",
   },
   multiple: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 const emits = defineEmits(["update:modelValue"]);
 const types = ref([]);
@@ -26,11 +30,13 @@ const ids = ref(props.modelValue);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/components.department.TypeSelect/getTypes");
+  const response = await axios.get(
+    "desktop/components.department.TypeSelect/getTypes"
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -43,7 +49,7 @@ watch(
     ids.value = newValue;
   },
   {
-    deep: true
+    deep: true,
   }
 );
 watch(
@@ -52,7 +58,7 @@ watch(
     emits("update:modelValue", newValue);
   },
   {
-    deep: true
+    deep: true,
   }
 );
 

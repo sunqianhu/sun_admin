@@ -9,7 +9,13 @@
     class="add"
   >
     <el-scrollbar max-height="400px" class="scrollbar" v-loading="initLoading">
-      <el-form :model="role" :rules="rules" scroll-to-error ref="roleRef" label-width="120px">
+      <el-form
+        :model="role"
+        :rules="rules"
+        scroll-to-error
+        ref="roleRef"
+        label-width="120px"
+      >
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
@@ -61,7 +67,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm" :loading="submitLoading"> 提交 </el-button>
+      <el-button type="primary" @click="submitForm" :loading="submitLoading">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -70,17 +78,17 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
-defineProps(["open"]);
+const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const role = ref({
   desktop_permission_ids: [],
   desktop_menu_ids: [],
   desktop_route_ids: [],
-  mobile_permission_ids: []
+  mobile_permission_ids: [],
 });
 const roleRef = ref({});
 const rules = {
-  name: [{ required: true, message: "角色名称不能为空", trigger: "blur" }]
+  name: [{ required: true, message: "角色名称不能为空", trigger: "blur" }],
 };
 const initLoading = ref(true);
 const submitLoading = ref(false);
@@ -103,7 +111,7 @@ const init = async () => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -172,14 +180,14 @@ const submitForm = async () => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   emits("submited", true);
 };

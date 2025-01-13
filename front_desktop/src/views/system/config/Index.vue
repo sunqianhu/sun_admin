@@ -1,13 +1,27 @@
 <template>
   <div class="index" v-loading="pageLoading">
     <div class="page-name">系统设置</div>
-    <el-form :model="configForm" label-width="120px" ref="configFormRef" class="form">
+    <el-form
+      :model="configForm"
+      label-width="120px"
+      ref="configFormRef"
+      class="form"
+    >
       <el-form-item label="禁止访问IP" prop="denied_ip_string">
-        <el-input v-model="configForm.denied_ip_string" type="textarea" :rows="5" />
+        <el-input
+          v-model="configForm.denied_ip_string"
+          type="textarea"
+          :rows="5"
+        />
         <div class="form-tip">一行一个</div>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" class="button" @click="submitForm" :loading="submitLoading">
+        <el-button
+          type="primary"
+          class="button"
+          @click="submitForm"
+          :loading="submitLoading"
+        >
           保存
         </el-button>
       </el-form-item>
@@ -33,7 +47,7 @@ const init = async () => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -50,7 +64,10 @@ const submitForm = async () => {
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.config.Index/save", configForm.value);
+    response = await axios.post(
+      "desktop/system.config.Index/save",
+      configForm.value
+    );
   } catch (error) {
     submitLoading.value = false;
     return;
@@ -59,14 +76,14 @@ const submitForm = async () => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
 };
 

@@ -1,17 +1,21 @@
 <template>
   <div class="detail" v-loading="pageLoading">
-    <card-panel title="用户信息" class="moudle">
+    <card-panel title="用户信息" class="panel">
       <label-value>
-        <label-value-item label="用户ID" :md="8">{{ user.id }}</label-value-item>
+        <label-value-item label="用户ID" :md="8">
+          {{ user.id }}
+        </label-value-item>
         <label-value-item label="添加时间" :md="8">
           {{ dayjs.unix(user.add_time).format("YYYY-MM-DD HH:mm:ss") }}
         </label-value-item>
       </label-value>
     </card-panel>
 
-    <card-panel title="登录日志" class="moudle">
+    <card-panel title="登录日志" class="panel">
       <template #actions>
-        <el-link href="/system/login_log" type="primary" target="_blank"> 更多 </el-link>
+        <el-link href="/system/login_log" type="primary" target="_blank">
+          更多
+        </el-link>
       </template>
       <el-table :data="loginLogs" row-key="id" style="width: 100%">
         <el-table-column prop="ip" label="登录ip" />
@@ -45,7 +49,7 @@ const init = async () => {
   let response;
   try {
     response = await axios.get("desktop/system.user.Detail/init", {
-      params: { id: route.params.id }
+      params: { id: route.params.id },
     });
   } catch (error) {
     pageLoading.value = false;
@@ -55,7 +59,7 @@ const init = async () => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -71,7 +75,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .detail {
   padding: var(--padding-md);
-  .moudle {
+  .panel {
     margin-top: var(--margin-md);
     &:first-child {
       margin-top: 0px;

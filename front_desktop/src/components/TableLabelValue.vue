@@ -2,11 +2,24 @@
   <table class="table-label-value">
     <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
       <template v-for="item in row">
-        <td valign="top" :width="item.labelWidth" :colspan="item.labelColspan" class="label">
+        <td
+          valign="top"
+          :width="item.labelWidth"
+          :colspan="item.labelColspan"
+          class="table-label-value__label"
+        >
           {{ item.label }}
         </td>
-        <td valign="top" :width="item.contentWidth" :colspan="item.contentColspan" class="content">
-          <vnode-render :vnode="item.contentVnodes" v-if="item.contentVnodes"></vnode-render>
+        <td
+          valign="top"
+          :width="item.valueWidth"
+          :colspan="item.valueColspan"
+          class="table-label-value__value"
+        >
+          <vnode-render
+            :vnode="item.valueVnodes"
+            v-if="item.valueVnodes"
+          ></vnode-render>
         </td>
       </template>
     </tr>
@@ -20,8 +33,8 @@ import VnodeRender from "./VnodeRender.js";
 const props = defineProps({
   column: {
     type: Number,
-    default: 6
-  }
+    default: 6,
+  },
 });
 const slots = useSlots();
 let rows = ref([]); //行
@@ -39,15 +52,17 @@ const createItem = (vnode) => {
   if (item["label-colspan"]) {
     item.labelColspan = item["label-colspan"];
   }
-  if (item["content-width"]) {
-    item.contentWidth = item["content-width"];
+  if (item["value-width"]) {
+    item.valueWidth = item["value-width"];
   }
-  if (item["content-colspan"]) {
-    item.contentColspan = item["content-colspan"];
+  if (item["value-colspan"]) {
+    item.valueColspan = item["value-colspan"];
   }
 
-  item.contentVnodes =
-    vnode && vnode.children && vnode.children.default ? vnode.children.default() : [];
+  item.valueVnodes =
+    vnode && vnode.children && vnode.children.default
+      ? vnode.children.default()
+      : [];
 
   return item;
 };
@@ -95,8 +110,8 @@ const setRows = (items) => {
   rows.value = [];
   items.forEach((item, index) => {
     let labelColspan = item.labelColspan ? item.labelColspan : 1;
-    let contentColspan = item.contentColspan ? item.contentColspan : 1;
-    columnNumber += parseInt(labelColspan) + parseInt(contentColspan);
+    let valueColspan = item.valueColspan ? item.valueColspan : 1;
+    columnNumber += parseInt(labelColspan) + parseInt(valueColspan);
 
     row.push(item);
     if (props.column - columnNumber < 2 || index == items.length - 1) {
@@ -131,12 +146,14 @@ onMounted(() => {
 .table-label-value {
   width: 100%;
   border-collapse: collapse;
-  td {
+  .table-label-value__label {
     border: 1px solid var(--border-color-base);
     padding: var(--padding-xs) var(--padding-sm);
-  }
-  .label {
     background-color: var(--background-color-base);
+  }
+  .table-label-value__value {
+    border: 1px solid var(--border-color-base);
+    padding: var(--padding-xs) var(--padding-sm);
   }
 }
 </style>

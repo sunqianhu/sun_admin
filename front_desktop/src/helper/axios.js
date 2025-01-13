@@ -5,7 +5,7 @@ import { useRouteStore } from "@/stores/route";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_PREFIX,
-  timeout: 1000 * 60
+  timeout: 1000 * 60,
 });
 
 //请求拦截器
@@ -22,7 +22,7 @@ instance.interceptors.request.use(
   function (error) {
     ElMessage({
       message: error.message,
-      type: "error"
+      type: "error",
     });
     return Promise.reject(error);
   }
@@ -35,7 +35,7 @@ instance.interceptors.response.use(
     if (data && data.code == 2) {
       ElMessage({
         message: data.message,
-        type: "error"
+        type: "error",
       });
       logout();
       return Promise.reject(data);
@@ -46,7 +46,7 @@ instance.interceptors.response.use(
   function (error) {
     ElMessage({
       message: error.message,
-      type: "error"
+      type: "error",
     });
     return Promise.reject(error);
   }

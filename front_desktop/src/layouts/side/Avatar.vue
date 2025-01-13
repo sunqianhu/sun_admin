@@ -1,20 +1,32 @@
 <template>
   <div class="avatar">
     <el-dropdown>
-      <span class="link">
+      <span class="avatar__link">
         <el-avatar shape="circle" :size="40" :src="avatar"></el-avatar>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item :icon="User" @click="openDetail"> 账号信息 </el-dropdown-item>
-          <el-dropdown-item :icon="User" @click="openEditAvatar"> 修改头像 </el-dropdown-item>
-          <el-dropdown-item :icon="Edit" @click="openEditPassword"> 修改密码 </el-dropdown-item>
-          <el-dropdown-item :icon="SwitchButton" @click="logout"> 退出登录 </el-dropdown-item>
+          <el-dropdown-item :icon="User" @click="openDetail">
+            账号信息
+          </el-dropdown-item>
+          <el-dropdown-item :icon="User" @click="openEditAvatar">
+            修改头像
+          </el-dropdown-item>
+          <el-dropdown-item :icon="Edit" @click="openEditPassword">
+            修改密码
+          </el-dropdown-item>
+          <el-dropdown-item :icon="SwitchButton" @click="logout">
+            退出登录
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
 
-    <detail :open="detailFlag" @close="detailFlag = false" v-if="detailFlag"></detail>
+    <detail
+      :open="detailFlag"
+      @close="detailFlag = false"
+      v-if="detailFlag"
+    ></detail>
     <edit-avatar
       :open="editAvatarFlag"
       @close="editAvatarFlag = false"
@@ -95,7 +107,7 @@ const logout = async () => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -113,7 +125,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.avatar .link {
-  cursor: pointer;
+.avatar {
+  .avatar__link {
+    cursor: pointer;
+  }
 }
 </style>

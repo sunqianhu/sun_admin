@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useSideStore = defineStore("side", {
   state: () => {
     return {
-      fold: false
+      fold: false,
     };
   },
   actions: {
@@ -24,6 +24,6 @@ export const useSideStore = defineStore("side", {
       this.fold = status;
       let value = this.fold ? "1" : "0";
       localStorage.setItem("layout_side_fold", value);
-    }
-  }
+    },
+  },
 });

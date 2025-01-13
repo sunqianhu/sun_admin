@@ -5,10 +5,10 @@ export default defineComponent({
   props: {
     vnode: {
       type: Object,
-      require: true
-    }
+      require: true,
+    },
   },
   render() {
     return this.vnode;
-  }
+  },
 });

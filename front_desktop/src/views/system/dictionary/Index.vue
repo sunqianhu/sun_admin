@@ -13,7 +13,9 @@
           <el-input v-model="query.value" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
+          <el-button type="primary" :icon="Search" @click="search"
+            >搜索</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -23,12 +25,22 @@
     </div>
 
     <div class="list">
-      <el-table :data="dictionarys" v-loading="listLoading" row-key="id" class="table">
+      <el-table
+        :data="dictionarys"
+        v-loading="listLoading"
+        row-key="id"
+        class="table"
+      >
         <el-table-column prop="type" label="字典类型" />
         <el-table-column prop="key" label="字典键" />
         <el-table-column prop="value" label="字典值" />
         <el-table-column prop="sort" label="排序" width="100" />
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="140"
+        >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
@@ -83,7 +95,7 @@ import Edit from "./Edit.vue";
 const rowId = ref(0);
 const query = ref({
   size: 30,
-  page: 1
+  page: 1,
 });
 const dictionarys = ref([]);
 const listLoading = ref(true);
@@ -96,14 +108,17 @@ const total = ref(0);
  */
 const getDictionaryPaginate = async () => {
   listLoading.value = true;
-  const response = await axios.get("desktop/system.dictionary.Index/getDictionaryPaginate", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.dictionary.Index/getDictionaryPaginate",
+    {
+      params: query.value,
+    }
+  );
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -140,19 +155,19 @@ const openEdit = (id) => {
  */
 const del = async (id) => {
   const response = await axios.post("desktop/system.dictionary.Index/delete", {
-    id: id
+    id: id,
   });
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   getDictionaryPaginate();
 };

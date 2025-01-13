@@ -1,6 +1,11 @@
 <template>
   <div class="rich-editor">
-    <Toolbar :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" class="toolbar" />
+    <Toolbar
+      :editor="editorRef"
+      :defaultConfig="toolbarConfig"
+      :mode="mode"
+      class="rich-editor__toolbar"
+    />
     <Editor
       v-model="html"
       :defaultConfig="editorConfig"
@@ -20,24 +25,24 @@ import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 const props = defineProps({
   modelValue: {
     type: String,
-    default: ""
+    default: "",
   },
   mode: {
     type: String,
-    default: "default"
+    default: "default",
   },
   height: {
     type: Number,
-    default: 350
+    default: 350,
   },
   toolbarConfig: {
     type: Object,
-    default: {}
+    default: {},
   },
   editorConfig: {
     type: Object,
-    default: {}
-  }
+    default: {},
+  },
 });
 const emits = defineEmits(["update:modelValue"]);
 const editorRef = shallowRef(); // 编辑器实例，必须用 shallowRef
@@ -62,50 +67,50 @@ const editorConfig = Object.assign(
         fieldName: "file",
         maxFileSize: 1024 * 1024 * 20,
         headers: {
-          token: token
+          token: token,
         },
         meta: {
-          module: "rich_editor"
+          module: "rich_editor",
         },
         timeout: 1000 * 15,
         customInsert(response, insertFn) {
           if (response.code != 1) {
             ElMessage({
               message: response.message,
-              type: "error"
+              type: "error",
             });
             return;
           }
 
           let responseData = response.data;
           insertFn(responseData.url, responseData.name, responseData.url);
-        }
+        },
       },
       uploadVideo: {
         server: import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload",
         fieldName: "file",
         maxFileSize: 1024 * 1024 * 200,
         headers: {
-          token: token
+          token: token,
         },
         meta: {
-          module: "rich_editor"
+          module: "rich_editor",
         },
         timeout: 1000 * 60,
         customInsert(response, insertFn) {
           if (response.code != 1) {
             ElMessage({
               message: response.message,
-              type: "error"
+              type: "error",
             });
             return;
           }
 
           let responseData = response.data;
           insertFn(responseData.url, responseData.name, responseData.url);
-        }
-      }
-    }
+        },
+      },
+    },
   },
   props.editorConfig
 );
@@ -135,7 +140,7 @@ watch(
     setHtml(newModelValue);
   },
   {
-    deep: true
+    deep: true,
   }
 );
 
@@ -148,7 +153,7 @@ watch(
     emits("update:modelValue", newHtml);
   },
   {
-    deep: true
+    deep: true,
   }
 );
 
@@ -162,7 +167,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .rich-editor {
   border: 1px solid var(--border-color-base);
-  .toolbar {
+  .rich-editor__toolbar {
     border-bottom: 1px solid var(--border-color-base);
   }
 }

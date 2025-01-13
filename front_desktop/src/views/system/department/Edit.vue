@@ -18,7 +18,6 @@
         <el-form-item label="所属部门">
           <tree-department-select
             v-model="department.department_id"
-            placeholder="无"
           ></tree-department-select>
         </el-form-item>
         <el-form-item label="部门类型" prop="type">
@@ -34,7 +33,7 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -51,10 +50,9 @@ const departmentRef = ref();
 const rules = {
   type: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
   name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
 };
 const initLoading = ref(false);
-const submitLoading = ref(false);
 
 /**
  * 初始化
@@ -62,13 +60,13 @@ const submitLoading = ref(false);
 const init = async () => {
   initLoading.value = true;
   const response = await axios.get("desktop/system.department.Edit/init", {
-    params: { id: props.id }
+    params: { id: props.id },
   });
   initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -88,20 +86,21 @@ const close = () => {
  */
 const submitForm = async () => {
   await departmentRef.value.validate();
-  submitLoading.value = true;
-  const response = await axios.post("desktop/system.department.Edit/save", department.value);
-  submitLoading.value = false;
+  const response = await axios.post(
+    "desktop/system.department.Edit/save",
+    department.value
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   emits("submited", true);
 };

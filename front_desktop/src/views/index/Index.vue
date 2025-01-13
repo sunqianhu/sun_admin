@@ -1,45 +1,45 @@
 <template>
   <div class="index" v-loading="pageLoading">
     <div class="welcome">
-      <img src="@/assets/index/welcome.svg" class="img" />
-      <div class="name">你好张三上午好，欢迎回来！</div>
+      <img src="@/assets/index/welcome.svg" class="welcome__icon" />
+      <div class="welcome__name">你好张三上午好，欢迎回来！</div>
     </div>
 
-    <div class="count-row">
+    <div class="count-statistic">
       <el-row justify="space-between" :gutter="16">
         <el-col :sm="12" :md="6">
-          <div class="item today-local-opinion">
-            <div class="name">name1</div>
-            <div class="number-wrap">
-              <el-icon class="icon"><Odometer /></el-icon>
-              <span class="number">21</span>条
+          <div class="count-item">
+            <div class="count-item__name">name1</div>
+            <div class="count-item__count">
+              <el-icon class="count-item__icon"><Odometer /></el-icon>
+              <span class="count-item__number">21</span>条
             </div>
           </div>
         </el-col>
         <el-col :sm="12" :md="6">
-          <div class="item today-push-street">
-            <div class="name">name2</div>
-            <div class="number-wrap">
-              <el-icon class="icon"><ChatSquare /></el-icon>
-              <span class="number">17</span>条
+          <div class="count-item">
+            <div class="count-item__name">name2</div>
+            <div class="count-item__count">
+              <el-icon class="count-item__icon"><Odometer /></el-icon>
+              <span class="count-item__number">17</span>条
             </div>
           </div>
         </el-col>
         <el-col :sm="12" :md="6">
-          <div class="item today-push-street">
-            <div class="name">name3</div>
-            <div class="number-wrap">
-              <el-icon class="icon"><ChatSquare /></el-icon>
-              <span class="number">25</span>条
+          <div class="count-item">
+            <div class="count-item__name">name3</div>
+            <div class="count-item__count">
+              <el-icon class="count-item__icon"><Odometer /></el-icon>
+              <span class="count-item__number">25</span>条
             </div>
           </div>
         </el-col>
         <el-col :sm="12" :md="6">
-          <div class="item today-push-street">
-            <div class="name">name3</div>
-            <div class="number-wrap">
-              <el-icon class="icon"><ChatSquare /></el-icon>
-              <span class="number">25</span>条
+          <div class="count-item">
+            <div class="count-item__name">name4</div>
+            <div class="count-item__count">
+              <el-icon class="count-item__icon"><Odometer /></el-icon>
+              <span class="count-item__number">14</span>条
             </div>
           </div>
         </el-col>
@@ -49,17 +49,17 @@
     <div class="modules">
       <el-row justify="space-between" :gutter="16">
         <el-col :md="12">
-          <card-panel title="模块1" class="module">
-            <div class="chart" id="module1-chart"></div>
+          <card-panel title="module1" class="module">
+            <div id="module1-chart" class="module__chart"></div>
           </card-panel>
         </el-col>
         <el-col :sm="12">
-          <card-panel title="模块2" class="module">
-            <div class="chart" id="module2-chart"></div>
+          <card-panel title="module2" class="module">
+            <div id="module2-chart" class="module__chart"></div>
           </card-panel>
         </el-col>
         <el-col :md="12">
-          <card-panel title="模块3" class="module">
+          <card-panel title="module3" class="module">
             <template #actions>
               <a href="javascript:;">更多</a>
             </template>
@@ -71,7 +71,7 @@
           </card-panel>
         </el-col>
         <el-col :sm="12">
-          <card-panel title="模块4" class="module">
+          <card-panel title="module4" class="module">
             <template #actions>
               <a href="javascript:;">更多</a>
             </template>
@@ -100,23 +100,23 @@ const tableData = [
   {
     date: "2016-05-03",
     name: "Tom",
-    address: "No. 189, Grove St, Los Angeles"
+    address: "No. 189, Grove St, Los Angeles",
   },
   {
     date: "2016-05-02",
     name: "Tom",
-    address: "No. 189, Grove St, Los Angeles"
+    address: "No. 189, Grove St, Los Angeles",
   },
   {
     date: "2016-05-04",
     name: "Tom",
-    address: "No. 189, Grove St, Los Angeles"
+    address: "No. 189, Grove St, Los Angeles",
   },
   {
     date: "2016-05-01",
     name: "Tom",
-    address: "No. 189, Grove St, Los Angeles"
-  }
+    address: "No. 189, Grove St, Los Angeles",
+  },
 ];
 
 /**
@@ -154,18 +154,18 @@ const drawLineChart = () => {
       right: "10",
       top: "10",
       bottom: "0",
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: "category",
       boundaryGap: false, // 坐标轴两边留白策略
-      data: []
+      data: [],
     },
     yAxis: {
       type: "value",
       axisLabel: {
-        formatter: "{value}条"
-      }
+        formatter: "{value}条",
+      },
     },
     series: [
       {
@@ -181,40 +181,40 @@ const drawLineChart = () => {
             colorStops: [
               {
                 offset: 0,
-                color: "#3fb1e3" // 0% 处的颜色
+                color: "#3fb1e3", // 0% 处的颜色
               },
               {
                 offset: 1,
-                color: "rgba(255,255,255,0)" // 100% 处的颜色
-              }
-            ]
-          }
+                color: "rgba(255,255,255,0)", // 100% 处的颜色
+              },
+            ],
+          },
         }, // 区域填充样式
-        data: []
-      }
-    ]
+        data: [],
+      },
+    ],
   };
   let data = [
     {
       name: "18日",
-      number: 12
+      number: 12,
     },
     {
       name: "19日",
-      number: 18
+      number: 18,
     },
     {
       name: "20日",
-      number: 15
+      number: 15,
     },
     {
       name: "21日",
-      number: 24
+      number: 24,
     },
     {
       name: "22日",
-      number: 19
-    }
+      number: 19,
+    },
   ];
 
   //数据
@@ -241,25 +241,25 @@ const drawBarChart = () => {
     tooltip: {
       trigger: "axis",
       axisPointer: {
-        type: "shadow"
-      }
+        type: "shadow",
+      },
     },
     grid: {
       left: "0",
       right: "10",
       top: "10",
       bottom: "0",
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: "category",
-      data: []
+      data: [],
     },
     yAxis: {
       type: "value",
       axisLabel: {
-        formatter: "{value}条"
-      }
+        formatter: "{value}条",
+      },
     },
     series: [
       {
@@ -267,33 +267,33 @@ const drawBarChart = () => {
         type: "bar",
         label: {
           show: true,
-          color: "#ffffff"
+          color: "#ffffff",
         },
-        data: []
-      }
-    ]
+        data: [],
+      },
+    ],
   };
   let data = [
     {
       name: "bar1",
-      number: Math.round(Math.random() * 100)
+      number: Math.round(Math.random() * 100),
     },
     {
       name: "bar1",
-      number: Math.round(Math.random() * 100)
+      number: Math.round(Math.random() * 100),
     },
     {
       name: "bar1",
-      number: Math.round(Math.random() * 100)
+      number: Math.round(Math.random() * 100),
     },
     {
       name: "bar1",
-      number: Math.round(Math.random() * 100)
+      number: Math.round(Math.random() * 100),
     },
     {
       name: "bar1",
-      number: Math.round(Math.random() * 100)
-    }
+      number: Math.round(Math.random() * 100),
+    },
   ];
   let length = data.length;
   let item;
@@ -342,33 +342,33 @@ onMounted(() => {
     padding: var(--padding-md);
     display: flex;
     align-items: center;
-    .img {
+    .welcome__icon {
       width: 50px;
       display: inline-block;
     }
-    .name {
+    .welcome__name {
       font-size: var(--font-size-lg);
       font-weight: var(font-weight-bold);
       color: var(--color-primary);
       margin-left: 16px;
     }
   }
-  .count-row {
+  .count-statistic {
     margin-top: var(--margin-md);
-    .item {
+    .count-item {
       padding: var(--padding-md);
       background-color: var(--background-color-light);
       border-radius: var(--border-radius-sm);
       margin-bottom: var(--margin-md);
-      .name {
+      .count-item__name {
       }
-      .number-wrap {
+      .count-item__count {
         margin-top: var(--margin-md);
-        .icon {
+        .count-item__icon {
           font-size: var(--font-size-xl);
           color: #8595f4;
         }
-        .number {
+        .count-item__number {
           font-size: 32px;
           font-weight: var(font-weight-bold);
           margin-left: 8px;
@@ -380,8 +380,7 @@ onMounted(() => {
   .modules {
     .module {
       margin-bottom: var(--margin-md);
-      #module1-chart,
-      #module2-chart {
+      .module__chart {
         width: 100%;
         height: 250px;
       }

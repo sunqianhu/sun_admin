@@ -50,7 +50,9 @@
       </el-form>
     </div>
     <div class="footer">
-      <div class="browser">浏览器支持：Edge ≥ 85 Firefox≥79 Chrome≥85 Safari≥14.1</div>
+      <div class="browser">
+        浏览器支持：Edge ≥ 85 Firefox≥79 Chrome≥85 Safari≥14.1
+      </div>
       <div class="copyright">Copyright &copy; 2024 asun</div>
     </div>
 
@@ -75,7 +77,7 @@ const session = ref({});
 const sessionRef = ref(null);
 const rules = {
   account: [{ required: true, message: "账号不能为空", trigger: "blur" }],
-  password: [{ required: true, message: "密码不能为空", trigger: "blur" }]
+  password: [{ required: true, message: "密码不能为空", trigger: "blur" }],
 };
 const submitLoading = ref(false);
 const vCodeFlag = ref(false);
@@ -104,7 +106,7 @@ const submitForm = async () => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }

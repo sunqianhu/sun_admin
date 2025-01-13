@@ -152,4 +152,41 @@ class Role extends Curd
             Db::rollback();
         }
     }
+
+    /**
+     * 删除
+     * @param $id
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function delete($id)
+    {
+        $role = RoleModel::find($id);
+        if (empty($role)) {
+            throw new Exception('没有找到记录');
+        }
+
+        Db::startTrans();
+        try {
+            $roleDesktopPermission = new RoleDesktopPermission();
+            $roleDesktopPermission->fieldDelete('role_id', $role->id);
+
+            $roleDesktopMenu = new RoleDesktopMenu();
+            $roleDesktopMenu->fieldDelete('role_id', $role->id);
+
+            $roleDesktopRoute = new RoleDesktopRoute();
+            $roleDesktopRoute->fieldDelete('role_id', $role->id);
+
+            $roleMobilePermission = new RoleMobilePermission();
+            $roleMobilePermission->fieldDelete('role_id', $role->id);
+
+            $role->delete();
+            Db::commit();
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+            Db::rollback();
+        }
+    }
 }

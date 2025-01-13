@@ -40,17 +40,17 @@
 import { ref } from "vue";
 import axios from "@/helper/axios";
 
-defineProps(["open"]);
+const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const dictionary = ref({
-  sort: 1
+  sort: 1,
 });
 const dictionaryRef = ref({});
 const rules = {
   type: [{ required: true, message: "字典类型不能为空", trigger: "blur" }],
   key: [{ required: true, message: "字典键不能为空", trigger: "blur" }],
   value: [{ required: true, message: "字典值不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
 };
 
 /**
@@ -65,18 +65,21 @@ const close = () => {
  */
 const submitForm = async () => {
   await dictionaryRef.value.validate();
-  const response = await axios.post("desktop/system.dictionary.Add/save", dictionary.value);
+  const response = await axios.post(
+    "desktop/system.dictionary.Add/save",
+    dictionary.value
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   emits("submited", true);
 };

@@ -4,7 +4,7 @@ export const useRouteStore = defineStore("route", {
   state: () => {
     return {
       isSet: false,
-      routes: []
+      routes: [],
     };
   },
   actions: {
@@ -23,6 +23,6 @@ export const useRouteStore = defineStore("route", {
     clear() {
       this.isSet = false;
       this.routes = [];
-    }
-  }
+    },
+  },
 });

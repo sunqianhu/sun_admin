@@ -5,7 +5,10 @@
     <div class="search">
       <el-form :model="query" :inline="true">
         <el-form-item label="部门">
-          <tree-department-select v-model="query.department_ids" multiple></tree-department-select>
+          <tree-department-select
+            v-model="query.department_ids"
+            multiple
+          ></tree-department-select>
         </el-form-item>
         <el-form-item label="角色">
           <role-select v-model="query.role_id"></role-select>
@@ -20,7 +23,9 @@
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
+          <el-button type="primary" :icon="Search" @click="search"
+            >搜索</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -30,7 +35,13 @@
     </div>
 
     <div class="list">
-      <el-table :data="users" v-loading="listLoading" stripe table-layout="auto" class="table">
+      <el-table
+        :data="users"
+        v-loading="listLoading"
+        stripe
+        table-layout="auto"
+        class="table"
+      >
         <el-table-column v-slot="{ row }" prop="account" label="账号">
           <a :href="'/system/user/detail-' + row.id" target="_blank">
             {{ row.account }}
@@ -45,9 +56,17 @@
           {{ dayjs.unix(row.add_time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
         <el-table-column v-slot="{ row }" prop="status" label="状态">
-          <el-switch :model-value="row.status == 1 ? true : false" @change="editStatus(row)" />
+          <el-switch
+            :model-value="row.status == 1 ? true : false"
+            @change="editStatus(row)"
+          />
         </el-table-column>
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="150">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="150"
+        >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-dropdown style="margin-left: 16px">
             <el-button size="small">
@@ -56,8 +75,12 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="openEditPassword(row.id)">修改密码</el-dropdown-item>
-                <el-dropdown-item @click="offLine(row.id)"> 踢下线 </el-dropdown-item>
+                <el-dropdown-item @click="openEditPassword(row.id)"
+                  >修改密码</el-dropdown-item
+                >
+                <el-dropdown-item @click="offLine(row.id)">
+                  踢下线
+                </el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -117,7 +140,7 @@ import EditPassword from "./EditPassword.vue";
 
 const query = ref({
   size: 30,
-  page: 1
+  page: 1,
 });
 const listLoading = ref(true);
 const users = ref([]);
@@ -132,14 +155,17 @@ const editPasswordFlag = ref(false);
  */
 const getUserPaginate = async () => {
   listLoading.value = true;
-  const response = await axios.get("desktop/system.user.Index/getUserPaginate", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.user.Index/getUserPaginate",
+    {
+      params: query.value,
+    }
+  );
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -197,18 +223,18 @@ const editStatus = async (row) => {
   row.status = row.status == 1 ? 0 : 1;
   const response = await axios.post("desktop/system.user.Index/editStatus", {
     id: row.id,
-    status: row.status
+    status: row.status,
   });
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
 };
 
@@ -226,21 +252,23 @@ const openEditPassword = async (id) => {
  * @param {number} id 记录id
  */
 const offLine = async (id) => {
-  let response = await ElMessageBox.confirm("确定将用户踢下线吗？", "提示", { draggable: true });
+  let response = await ElMessageBox.confirm("确定将用户踢下线吗？", "提示", {
+    draggable: true,
+  });
 
   response = await axios.post("desktop/system.user.Index/offLine", {
-    id: id
+    id: id,
   });
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
 };
 

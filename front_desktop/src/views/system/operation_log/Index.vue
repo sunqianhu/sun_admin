@@ -23,7 +23,9 @@
           <el-input v-model="query.phone" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
+          <el-button type="primary" :icon="Search" @click="search">
+            搜索
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -67,11 +69,13 @@ import axios from "@/helper/axios";
 
 const query = ref({
   time: [
-    dayjs(dayjs().subtract(3, "month").format("YYYY-MM-DD") + " 00:00:00").unix(),
-    dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix()
+    dayjs(
+      dayjs().subtract(3, "month").format("YYYY-MM-DD") + " 00:00:00"
+    ).unix(),
+    dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix(),
   ],
   size: 30,
-  page: 1
+  page: 1,
 });
 const operationLogs = ref([]);
 const listLoading = ref(true);
@@ -82,14 +86,17 @@ const total = ref(0);
  */
 const getOperationLogPaginate = async () => {
   listLoading.value = true;
-  const response = await axios.get("desktop/system.operation_log.Index/getOperationLogPaginate", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.operation_log.Index/getOperationLogPaginate",
+    {
+      params: query.value,
+    }
+  );
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }

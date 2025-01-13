@@ -1,10 +1,15 @@
 <template>
-  <div class="trend" v-loading="pageLoading">
+  <div class="order-trend" v-loading="pageLoading">
     <div class="page-header">
-      <span class="name">订单趋势统计</span>
-      <span class="description">查看一段时间内订单趋势</span>
-      <div class="action">
-        <el-button type="primary" :icon="Download" :loading="expLoading" @click="exp">
+      <span class="page-header__name">订单趋势统计</span>
+      <span class="page-header__description">查看一段时间内订单趋势</span>
+      <div class="page-header__actions">
+        <el-button
+          type="primary"
+          :icon="Download"
+          :loading="expLoading"
+          @click="exp"
+        >
           导出
         </el-button>
       </div>
@@ -25,7 +30,9 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
+          <el-button type="primary" :icon="Search" @click="search">
+            搜索
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -47,9 +54,11 @@ import blueTheme from "@/extend/echarts_theme/blue.json";
 
 const query = ref({
   add_times: [
-    dayjs(dayjs().subtract(1, "month").format("YYYY-MM-DD") + " 00:00:00").unix(),
-    dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix()
-  ]
+    dayjs(
+      dayjs().subtract(1, "month").format("YYYY-MM-DD") + " 00:00:00"
+    ).unix(),
+    dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix(),
+  ],
 });
 const trend = ref([]);
 let trendChart;
@@ -62,13 +71,13 @@ const expLoading = ref(false);
 const init = async () => {
   pageLoading.value = true;
   const response = await axios.get("desktop/statistic.OrderTrend/init", {
-    params: query.value
+    params: query.value,
   });
   pageLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -88,18 +97,18 @@ const drawChart = () => {
       right: "10",
       top: "10",
       bottom: "0",
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: "category",
       boundaryGap: false, // 坐标轴两边留白策略
-      data: []
+      data: [],
     },
     yAxis: {
       type: "value",
       axisLabel: {
-        formatter: "{value}条"
-      }
+        formatter: "{value}条",
+      },
     },
     series: [
       {
@@ -115,18 +124,18 @@ const drawChart = () => {
             colorStops: [
               {
                 offset: 0,
-                color: "#3fb1e3" // 0% 处的颜色
+                color: "#3fb1e3", // 0% 处的颜色
               },
               {
                 offset: 1,
-                color: "rgba(255,255,255,0)" // 100% 处的颜色
-              }
-            ]
-          }
+                color: "rgba(255,255,255,0)", // 100% 处的颜色
+              },
+            ],
+          },
         }, // 区域填充样式
-        data: []
-      }
-    ]
+        data: [],
+      },
+    ],
   };
   let trendValue = trend.value;
 
@@ -150,16 +159,17 @@ const drawChart = () => {
 const exp = async () => {
   expLoading.value = true;
   const response = await axios.get("desktop/statistic.OrderTrend/exp", {
-    params: query.value
+    params: query.value,
   });
   expLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
   }
-  location.href = response.data + "?file_name=" + encodeURIComponent("订单趋势.xlsx");
+  location.href =
+    response.data + "?file_name=" + encodeURIComponent("订单趋势.xlsx");
 };
 
 /**
@@ -176,24 +186,24 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.trend {
+.order-trend {
   background-color: var(--background-color-light);
   padding: var(--padding-md);
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-base);
   .page-header {
     display: flex;
-    .name {
+    .page-header__name {
       font-size: var(--font-size-xl);
       font-weight: var(font-weight-bold);
     }
-    .description {
+    .page-header__description {
       color: var(--font-color-secondary);
       margin-left: var(--margin-md);
       font-size: var(--font-size-sm);
       flex: 1;
     }
-    .action {
+    .page-header__actions {
     }
   }
   .search {

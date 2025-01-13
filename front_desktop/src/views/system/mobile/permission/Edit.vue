@@ -30,7 +30,9 @@
         </el-form-item>
         <el-form-item label="接口地址" prop="api_string">
           <el-input v-model="permission.api_string" type="textarea" rows="3" />
-          <div class="form-tip">后端接口地址一行一个，格式：应用/控制器/方法</div>
+          <div class="form-tip">
+            后端接口地址一行一个，格式：应用/控制器/方法
+          </div>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="permission.sort" type="number" />
@@ -39,7 +41,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm" :loading="submitLoading"> 提交 </el-button>
+      <el-button type="primary" @click="submitForm" :loading="submitLoading">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -56,7 +60,7 @@ const permissionRef = ref();
 const rules = {
   name: [{ required: true, message: "权限名称不能为空", trigger: "blur" }],
   key: [{ required: true, message: "权限标识不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
 };
 const treePermissions = ref([]);
 const initLoading = ref(true);
@@ -67,14 +71,17 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   initLoading.value = true;
-  const response = await axios.get("desktop/system.mobile.permission.Edit/init", {
-    params: { id: props.id }
-  });
+  const response = await axios.get(
+    "desktop/system.mobile.permission.Edit/init",
+    {
+      params: { id: props.id },
+    }
+  );
   initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -99,19 +106,22 @@ const submitForm = async () => {
   await permissionRef.value.validate();
 
   submitLoading.value = true;
-  const response = await axios.post("desktop/system.mobile.permission.Edit/save", permission.value);
+  const response = await axios.post(
+    "desktop/system.mobile.permission.Edit/save",
+    permission.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   emits("submited", true);
 };

@@ -7,8 +7,14 @@
       </div>
       <div class="content">
         <el-scrollbar max-height="300px" class="scrollbar">
-          <div class="item" v-for="(message, index) in messages" :key="message.id">
-            <a href="javascript:;" @click="navigateTo(index, message.url)"> {{ message.title }} </a>
+          <div
+            class="item"
+            v-for="(message, index) in messages"
+            :key="message.id"
+          >
+            <a href="javascript:;" @click="navigateTo(index, message.url)">
+              {{ message.title }}
+            </a>
           </div>
         </el-scrollbar>
       </div>
@@ -27,7 +33,9 @@ const messages = ref([]); //消息
 const show = ref(false); //显示
 
 //websocket客户端
-const websocketClient = new WebsocketClient(import.meta.env.VITE_WEBSOCKET_MESSAGE);
+const websocketClient = new WebsocketClient(
+  import.meta.env.VITE_WEBSOCKET_MESSAGE
+);
 websocketClient.onOpen = () => {
   bind();
 };
@@ -70,7 +78,7 @@ const setAllRead = async () => {
 const bind = () => {
   const data = {
     type: "bind",
-    token: localStorage.getItem("token")
+    token: localStorage.getItem("token"),
   };
   const dataString = JSON.stringify(data);
   websocketClient.send(dataString);
@@ -83,7 +91,7 @@ const showMessage = async (data) => {
   show.value = true;
   const message = {
     title: data.title,
-    url: data.url
+    url: data.url,
   };
   messages.value.unshift(message);
   playAudio();

@@ -19,16 +19,16 @@ import axios from "@/helper/axios";
 const props = defineProps({
   modelValue: {
     type: [Number, String, Array],
-    default: ""
+    default: "",
   },
   multiple: {
     type: Boolean,
-    default: false
+    default: false,
   },
   placeholder: {
     type: String,
-    default: undefined
-  }
+    default: undefined,
+  },
 });
 const emits = defineEmits(["update:modelValue"]);
 const treeDepartment = ref([]);
@@ -38,11 +38,13 @@ const ids = ref(props.modelValue);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/components.TreeDepartmentSelect/getTreeDepartment");
+  const response = await axios.get(
+    "desktop/components.TreeDepartmentSelect/getTreeDepartment"
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -55,7 +57,7 @@ watch(
     ids.value = newValue;
   },
   {
-    deep: true
+    deep: true,
   }
 );
 watch(
@@ -64,7 +66,7 @@ watch(
     emits("update:modelValue", newValue);
   },
   {
-    deep: true
+    deep: true,
   }
 );
 

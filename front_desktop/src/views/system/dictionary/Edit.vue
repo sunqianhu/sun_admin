@@ -48,7 +48,7 @@ const rules = {
   type: [{ required: true, message: "字典类型不能为空", trigger: "blur" }],
   key: [{ required: true, message: "字典键不能为空", trigger: "blur" }],
   value: [{ required: true, message: "字典值不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
 };
 const initLoading = ref(false);
 
@@ -58,13 +58,13 @@ const initLoading = ref(false);
 const init = async () => {
   initLoading.value = true;
   const response = await axios.get("desktop/system.dictionary.Edit/init", {
-    params: { id: props.id }
+    params: { id: props.id },
   });
   initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -84,18 +84,21 @@ const close = () => {
 const submitForm = async () => {
   await dictionaryRef.value.validate();
 
-  const response = await axios.post("desktop/system.dictionary.Edit/save", dictionary.value);
+  const response = await axios.post(
+    "desktop/system.dictionary.Edit/save",
+    dictionary.value
+  );
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   emits("submited", true);
 };

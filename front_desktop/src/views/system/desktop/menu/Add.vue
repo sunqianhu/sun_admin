@@ -8,10 +8,19 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar max-height="400px" class="scrollbar">
-      <el-form :model="menu" :rules="rules" scroll-to-error ref="menuRef" label-width="120px">
+    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
+      <el-form
+        :model="menu"
+        :rules="rules"
+        scroll-to-error
+        ref="menuRef"
+        label-width="120px"
+      >
         <el-form-item label="上级菜单" prop="menu_id">
-          <tree-menu-select v-model="menu.menu_id" placeholder="无"></tree-menu-select>
+          <tree-menu-select
+            v-model="menu.menu_id"
+            placeholder="无"
+          ></tree-menu-select>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="menu.name" />
@@ -35,26 +44,29 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :loading="submitLoading" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "@/helper/axios";
 import TreeMenuSelect from "@/components/desktop/TreeMenuSelect.vue";
 
-defineProps(["open"]);
+const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
+const initLoading = ref(false);
 const menu = ref({
   target: 1,
-  sort: 1
+  sort: 1,
 });
 const menuRef = ref();
 const rules = {
   name: [{ required: true, message: "菜单名称不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
 };
 const submitLoading = ref(false);
 
@@ -74,7 +86,10 @@ const submitForm = async () => {
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.desktop.menu.Add/save", menu.value);
+    response = await axios.post(
+      "desktop/system.desktop.menu.Add/save",
+      menu.value
+    );
   } catch (error) {
     submitLoading.value = false;
     return;
@@ -83,13 +98,13 @@ const submitForm = async () => {
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   emits("submited", true);
 };

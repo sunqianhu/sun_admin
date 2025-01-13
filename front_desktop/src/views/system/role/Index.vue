@@ -7,7 +7,9 @@
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
+          <el-button type="primary" :icon="Search" @click="search">
+            搜索
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -15,9 +17,19 @@
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
     <div class="list">
-      <el-table :data="roles" v-loading="listLoading" row-key="id" class="table">
+      <el-table
+        :data="roles"
+        v-loading="listLoading"
+        row-key="id"
+        class="table"
+      >
         <el-table-column prop="name" label="角色名称" />
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="140"
+        >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
@@ -72,7 +84,7 @@ import Edit from "./Edit.vue";
 const rowId = ref(0);
 const query = ref({
   size: 30,
-  page: 1
+  page: 1,
 });
 const roles = ref([]);
 const listLoading = ref(true);
@@ -85,14 +97,17 @@ const total = ref(0);
  */
 const getRolePaginate = async () => {
   listLoading.value = true;
-  const response = await axios.get("desktop/system.role.Index/getRolePaginate", {
-    params: query.value
-  });
+  const response = await axios.get(
+    "desktop/system.role.Index/getRolePaginate",
+    {
+      params: query.value,
+    }
+  );
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
@@ -129,19 +144,19 @@ const openEdit = (id) => {
  */
 const del = async (id) => {
   const response = await axios.post("desktop/system.role.Index/delete", {
-    id: id
+    id: id,
   });
   if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: response.message,
-    type: "success"
+    type: "success",
   });
   getRolePaginate();
 };
