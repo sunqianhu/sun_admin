@@ -109,6 +109,7 @@ const setRoutes = async () => {
     childRoute.component =
       componentFilePaths["/src/views/" + childRoute.component_path];
     if (!childRoute.component) {
+      console.error("没有找到组件路径：" + childRoute.component_path);
       return;
     }
 
@@ -120,7 +121,6 @@ const setRoutes = async () => {
       router.addRoute(childRoute);
     }
   });
-
   router.addRoute(sideRoute);
   router.addRoute(blankRoute);
 

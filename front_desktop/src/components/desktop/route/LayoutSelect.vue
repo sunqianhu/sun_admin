@@ -3,7 +3,7 @@
     <el-option
       v-for="layout in layouts"
       :label="layout.value"
-      :value="parseInt(layout.key)"
+      :value="layout.key"
     />
   </el-select>
 </template>

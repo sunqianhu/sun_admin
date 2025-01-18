@@ -22,6 +22,6 @@ class Test extends Command
     protected function execute(Input $input, Output $output)
     {
         $message = new \app\service\Message();
-        echo $message->queueSendAllRead(1);
+        echo $message->queueSends([1], '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com');
     }
 }

@@ -28,13 +28,10 @@
         </el-header>
         <el-main class="body">
           <router-view v-slot="{ Component, route }">
-            <keep-alive>
-              <component
-                :is="Component"
-                v-if="route.meta?.keep_alive == true"
-              />
+            <keep-alive v-if="route.meta?.keep_alive == 1">
+              <component :is="Component" v-if="route.meta?.keep_alive == 1" />
             </keep-alive>
-            <component :is="Component" v-if="route.meta?.keep_alive != true" />
+            <component :is="Component" v-if="route.meta?.keep_alive != 1" />
           </router-view>
           <el-backtop
             :right="15"

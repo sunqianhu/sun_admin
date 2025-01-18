@@ -13,7 +13,7 @@ class PopupMessage extends Base
     public $isApiAuth = false;
 
     /**
-     * 设置全部已读
+     * 设置已读
      * @return void
      */
     public function setRead()

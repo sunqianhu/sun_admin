@@ -34,7 +34,7 @@
         <el-form-item label="保活" prop="keep_alive">
           <el-radio-group v-model="route.keep_alive">
             <el-radio :value="1">是</el-radio>
-            <el-radio :value="2">否</el-radio>
+            <el-radio :value="0">否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="排序" prop="sort">

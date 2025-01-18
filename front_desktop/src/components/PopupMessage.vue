@@ -72,7 +72,7 @@ const removeFirstMessageIfOverLimit = () => {
 const showMessage = async (data) => {
   let content = data.content;
   if (data.url) {
-    content += ` <a href="${data.url}" target="_blank">【详情】</a>`;
+    content += ` <a href="${data.url}" target="_blank" style="white-space: nowrap;">【详情】</a>`;
   }
   let messageInstance = ElNotification({
     title: data.title,
