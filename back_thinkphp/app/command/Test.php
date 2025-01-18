@@ -21,8 +21,7 @@ class Test extends Command
 
     protected function execute(Input $input, Output $output)
     {
-        $roleModel = RoleModel::with(['desktopPermissions'])->find(3);
-
-        print_r($roleModel->desktop_permission_ids);
+        $message = new \app\service\Message();
+        echo $message->queueSends([1], '标题', '内容', 'https:/www.baidu.com');
     }
 }

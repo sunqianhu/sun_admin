@@ -3,7 +3,7 @@ declare (strict_types=1);
 
 namespace app\command;
 
-use app\service\desktop\session\Jwt;
+use app\service\desktop\Jwt;
 use Exception;
 use think\console\Command;
 use think\console\Input;
@@ -30,10 +30,10 @@ class Message extends Command
     protected function configure()
     {
         // 指令配置
-        $this->setName('Message')
+        $this->setName('message')
             ->addArgument('action', Argument::OPTIONAL, "操作参数[start|stop|reload|restart|status]", 'start')
             ->addOption('daemon', null, Option::VALUE_OPTIONAL, '以守护进程运行')
-            ->setDescription('websocket右下角消息服务端，windows启动命令：php think message，linux启动命令：php think message start --daemon true');
+            ->setDescription('系统消息，windows启动命令：php think message，linux启动命令：php think message start --daemon true');
     }
 
     /**
@@ -55,8 +55,7 @@ class Message extends Command
             global $argv;
             $action = trim($input->getArgument('action'));
             if (!in_array($action, $this->actions)) {
-                echo 'action参数错误';
-                exit;
+                throw new Exception('action参数错误');
             }
             $argv[0] = 'message';
             $argv[1] = $action;
@@ -74,8 +73,7 @@ class Message extends Command
         //容器
         $config = Config::get('message');
         if (!isset($config['listen_ip']) || !isset($config['port'])) {
-            echo '还未配置监听ip或端口';
-            exit;
+            throw new Exception('还未配置监听ip或端口');
         }
 
         $url = 'websocket://' . $config['listen_ip'] . ':' . $config['port'];
@@ -97,7 +95,11 @@ class Message extends Command
      */
     public function onWorkerStart($worker)
     {
-        $this->clear($worker);
+        try {
+            $this->clear($worker);
+        } catch (Exception $exception) {
+            echo $exception->getMessage() . PHP_EOL;
+        }
     }
 
     /**
@@ -108,25 +110,29 @@ class Message extends Command
      */
     public function onMessage(TcpConnection $connection, $data)
     {
-        //活跃时间
-        $connection->activeTime = time();
+        try {
+            //活跃时间
+            $connection->activeTime = time();
 
-        //消息
-        $decodeData = json_decode($data, true);
-        if (empty($decodeData) || empty($decodeData['type'])) {
-            return;
-        }
+            //消息
+            $decodeData = json_decode($data, true);
+            if (empty($decodeData) || empty($decodeData['type'])) {
+                throw new Exception('data数据格式错误，数据：'.$data);
+            }
 
-        //处理
-        switch ($decodeData['type']) {
-            //绑定
-            case 'bind':
-                $this->bind($connection, $decodeData['token']);
-                break;
-            //发送
-            case 'send':
-                $this->send($decodeData['user_ids'], $decodeData['data']);
-                break;
+            //处理
+            switch ($decodeData['type']) {
+                //绑定
+                case 'bind':
+                    $this->bind($connection, $decodeData['token']);
+                    break;
+                //发送
+                case 'send':
+                    $this->send($decodeData['user_ids'], $decodeData['data']);
+                    break;
+            }
+        } catch (Exception $exception) {
+            echo $exception->getMessage() . PHP_EOL;
         }
     }
 
@@ -156,20 +162,18 @@ class Message extends Command
      * @param $connection
      * @param $token
      * @return void
+     * @throws Exception
      */
     public function bind(&$connection, $token)
     {
         if (empty($token)) {
-            return;
+            throw new Exception('token不能为空');
         }
 
         $jwt = new Jwt();
-        try {
-            $session = $jwt->resolverToken($token);
-            $connection->userId = $session->userId;
-        } catch (Exception $exception) {
-            return;
-        }
+        $session = $jwt->resolverToken($token);
+        $connection->userId = $session->userId;
+
         unset($jwt);
         unset($session);
     }
@@ -179,11 +183,12 @@ class Message extends Command
      * @param $userIds
      * @param $data
      * @return void
+     * @throws Exception
      */
     public function send($userIds, $data)
     {
         if (empty($userIds)) {
-            return;
+            throw new Exception('接收消息userIds不能为空');
         }
 
         //消息

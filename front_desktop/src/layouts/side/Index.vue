@@ -44,7 +44,7 @@
       </el-container>
     </el-container>
     <watermark />
-    <message />
+    <popup-message />
     <guide />
   </div>
 </template>

@@ -2,23 +2,23 @@
 
 namespace app\job;
 
-use app\service\Message as MessageService;
+use app\service\Message;
 use Exception;
 use think\queue\Job;
 
-class Message
+class MessageJob
 {
     public function fire(Job $job, $data)
     {
         $job->delete();
 
-        if (empty($data) || empty($data['user_ids']) || !isset($data['title']) || !isset($data['url'])) {
+        if (empty($data) || empty($data['user_ids']) || !isset($data['title'])) {
             return;
         }
 
-        $messageHelper = new MessageService();
+        $message = new Message();
         try {
-            $messageHelper->send($data['user_ids'], $data['title'], $data['url']);
+            $message->sends($data['user_ids'], $data['title'], $data['content'], $data['url']);
         } catch (Exception $exception) {
             echo $exception->getMessage()."\r\n";
         }
