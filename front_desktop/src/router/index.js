@@ -121,6 +121,18 @@ const setRoutes = async () => {
       router.addRoute(childRoute);
     }
   });
+
+  //系统消息
+  let messageRoute = {
+    path: "/system/message",
+    name: "system_message",
+    component: () => import("../views/system/message/Index.vue"),
+    meta: {
+      name: "系统消息",
+    },
+  };
+  sideRoute.children.push(messageRoute);
+
   router.addRoute(sideRoute);
   router.addRoute(blankRoute);
 
