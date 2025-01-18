@@ -3,11 +3,8 @@
 namespace app\service;
 
 use app\model\MessageModel;
-use Sunqianhu\Helper\StringHandler;
-use think\facade\Config;
 use think\facade\Db;
 use think\facade\Queue;
-use WebSocket\Client;
 use Exception;
 
 class Message extends Curd
@@ -22,49 +19,7 @@ class Message extends Curd
     }
 
     /**
-     * 设置用户单条已读
-     * @param $userId
-     * @param $id
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function setUserItemRead($userId, $id)
-    {
-        $message = MessageModel::where('user_id', $userId)
-            ->where('id', $id)
-            ->find();
-        if (empty($message)) {
-            throw new Exception('没有找到记录');
-        }
-        $message->save(['is_read' => 1, 'read_time' => time()]);
-    }
-
-    /**
-     * 发送多条
-     * @param $userIds
-     * @param $title
-     * @param $content
-     * @param $url
-     * @return void
-     */
-    public function sends($userIds, $title, $content = '', $url = '')
-    {
-        if (empty($userIds) || $title === '') {
-            throw new Exception('消息接收用户和消息标题不能为空');
-        }
-
-        $messageIds = [];
-        foreach ($userIds as $userId) {
-            $messageIds[] = $this->send($userId, $title, $content, $url);
-        }
-
-        return $messageIds;
-    }
-
-    /**
-     * 发送一条
+     * 发送消息
      * @param $userId
      * @param $title
      * @param $content
@@ -90,24 +45,17 @@ class Message extends Curd
             ];
             $messageId = $this->add($data);
 
-            $config = Config::get('message');
             $data = [
-                'type' => 'send',
-                'user_ids' => [$userId],
-                'data' => [
-                    'type' => 'new',
-                    'id' => $messageId,
-                    'title' => $title,
-                    'content' => $content,
-                    'url' => $url,
-                    'add_time' => $time
-                ]
+                'type' => 'message',
+                'id' => $messageId,
+                'title' => $title,
+                'content' => $content,
+                'url' => $url,
+                'add_time' => $time
             ];
-            $encodeData = json_encode($data);
-            $url = 'ws://' . $config['request_ip'] . ':' . $config['port'];
-            $client = new Client($url);
-            $client->text($encodeData);
-            $client->close();
+            $websocketMessage = new WebsocketMessage();
+            $websocketMessage->send([$userId], $data);
+
             Db::commit();
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
@@ -117,7 +65,29 @@ class Message extends Curd
     }
 
     /**
-     * 通过队列发送消息
+     * 发送多用户消息
+     * @param $userIds
+     * @param $title
+     * @param $content
+     * @param $url
+     * @return void
+     */
+    public function sends($userIds, $title, $content = '', $url = '')
+    {
+        if (empty($userIds) || $title === '') {
+            throw new Exception('消息接收用户和消息标题不能为空');
+        }
+
+        $messageIds = [];
+        foreach ($userIds as $userId) {
+            $messageIds[] = $this->send($userId, $title, $content, $url);
+        }
+
+        return $messageIds;
+    }
+
+    /**
+     * 通过队列发送消息列表
      * @param $userIds
      * @param $title
      * @param $content
@@ -131,10 +101,131 @@ class Message extends Curd
         }
 
         $data = [
-            'user_ids' => $userIds,
-            'content' => $content,
-            'title' => $title,
-            'url' => $url
+            'type' => 'message',
+            'data' => [
+                'type'=>'message',
+                'user_ids' => $userIds,
+                'title' => $title,
+                'content' => $content,
+                'url' => $url
+            ]
+        ];
+        Queue::push('app\job\MessageJob', $data, 'message');
+    }
+
+    /**
+     * 得到未读数
+     * @param $userId
+     * @return int
+     */
+    public function getNoReadCount($userId)
+    {
+        $count = MessageModel::where('user_id', $userId)
+            ->where('is_read', 0)
+            ->count();
+        return $count;
+    }
+
+    /**
+     * 设置已读
+     * @param $userId
+     * @param $id
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function setRead($userId, $id)
+    {
+        $message = MessageModel::where('user_id', $userId)
+            ->where('id', $id)
+            ->find();
+        if (empty($message)) {
+            throw new Exception('没有找到记录');
+        }
+        $message->save(['is_read' => 1, 'read_time' => time()]);
+    }
+
+    /**
+     * 发送已读
+     * @param $userId
+     * @param $id
+     * @return void
+     */
+    public function sendRead($userId, $id)
+    {
+        $data = [
+            'type' => 'read',
+            'id' => $id
+        ];
+        $websocketMessage = new WebsocketMessage();
+        $websocketMessage->send([$userId], $data);
+    }
+
+    /**
+     * 队列发送已读
+     * @param $userId
+     * @param $id
+     * @return void
+     */
+    public function queueSendRead($userId, $id)
+    {
+        $data = [
+            'type' => 'read',
+            'data' => [
+                'type' => 'read',
+                'user_id' => $userId,
+                'id' => $id
+            ]
+        ];
+        Queue::push('app\job\MessageJob', $data, 'message');
+    }
+
+    /**
+     * 设置全部已读
+     * @param $userId
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function setAllRead($userId)
+    {
+        $messages = MessageModel::where('user_id', $userId)
+            ->select();
+        if ($messages->isEmpty()) {
+            return;
+        }
+        $messages->update(['is_read' => 1, 'read_time' => time()]);
+    }
+
+    /**
+     * 发送全部已读
+     * @param $userId
+     * @return void
+     */
+    public function sendAllRead($userId)
+    {
+        $data = [
+            'type' => 'all_read'
+        ];
+        $websocketMessage = new WebsocketMessage();
+        $websocketMessage->send([$userId], $data);
+    }
+
+    /**
+     * 队列发送已读
+     * @param $userId
+     * @return void
+     */
+    public function queueSendAllRead($userId)
+    {
+        $data = [
+            'type' => 'read',
+            'data' => [
+                'type' => 'all_read',
+                'user_id'=>$userId
+            ]
         ];
         Queue::push('app\job\MessageJob', $data, 'message');
     }

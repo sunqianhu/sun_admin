@@ -19,7 +19,7 @@ websocketClient.onMessage = (event) => {
   if (!data) {
     throw new Error("消息格式错误，消息：" + event.data);
   }
-  if (data.type == "new") {
+  if (data.type == "message") {
     removeFirstMessageIfOverLimit();
     showMessage(data);
     playAudio();

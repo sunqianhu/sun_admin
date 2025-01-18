@@ -18,8 +18,11 @@
             <hamburger class="header__hamburger"></hamburger>
           </div>
           <div class="header__right">
-            <light-dark class="header__light-dark"></light-dark>
+            <message-navigation
+              class="header__message-navigation"
+            ></message-navigation>
             <full-screen class="header__fullscreen"></full-screen>
+            <light-dark class="header__light-dark"></light-dark>
             <avatar class="header__avatar"></avatar>
           </div>
         </el-header>
@@ -54,6 +57,7 @@ import { useSideStore } from "@/stores/layouts/side";
 import Menu from "./Menu.vue";
 import LightDark from "./LightDark.vue";
 import Hamburger from "./Hamburger.vue";
+import MessageNavigation from "./MessageNavigation.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 import Guide from "./Guide.vue";
@@ -129,12 +133,12 @@ window.onresize = () => {
           display: flex;
           align-items: center;
           justify-content: flex-end;
-          margin-right: var(--margin-md);
-          .header__light-dark {
-            margin-right: var(--margin-md);
-          }
-          .header__fullscreen {
-            margin-right: var(--margin-md);
+          padding-right: var(--padding-md);
+          .header__message-navigation,
+          .header__fullscreen,
+          .header__light-dark,
+          .header__avatar {
+            margin-left: var(--margin-md);
           }
         }
       }

@@ -70,12 +70,12 @@ class Curd
             unset($data[$field]);
         }
 
-        $model = $this->curdModelClass::where($field, $value)
-            ->find();
-        if (empty($model)) {
-            throw new Exception('没有找到记录');
+        $models = $this->curdModelClass::where($field, $value)
+            ->select();
+        if($models->isEmpty()){
+            return;
         }
-        $model->save($data);
+        $models->update($data);
     }
 
     /**

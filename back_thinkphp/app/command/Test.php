@@ -22,6 +22,6 @@ class Test extends Command
     protected function execute(Input $input, Output $output)
     {
         $message = new \app\service\Message();
-        echo $message->queueSends([1], '标题', '内容', 'https:/www.baidu.com');
+        echo $message->queueSendAllRead(1);
     }
 }
