@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\service\User;
+use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -25,7 +25,7 @@ class EditPassword extends Base
         }
 
         try{
-            $user = new User();
+            $user = new UserService();
             $user->editPassword($post['id'], $post['password1']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());

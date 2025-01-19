@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Permission;
+use app\service\desktop\PermissionService;
 use app\validate\desktop\PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -24,7 +24,7 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $permission = new Permission();
+        $permission = new PermissionService();
         try {
             $permission->add($post);
         } catch (Exception $exception) {

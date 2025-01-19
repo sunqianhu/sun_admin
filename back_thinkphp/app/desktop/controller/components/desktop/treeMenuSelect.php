@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components\desktop;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Menu;
+use app\service\desktop\MenuService;
 
 class treeMenuSelect extends Base
 {
@@ -20,7 +20,7 @@ class treeMenuSelect extends Base
      */
     public function getTreeMenu()
     {
-        $menu = new Menu();
+        $menu = new MenuService();
         $treeMenu = $menu->getTreeMenu();
         return $this->success('获取成功', $treeMenu);
     }

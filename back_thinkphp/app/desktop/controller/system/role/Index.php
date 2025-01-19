@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
 use app\model\RoleModel;
-use app\service\Role;
+use app\service\RoleService;
 use Exception;
 
 class Index extends Base
@@ -43,7 +43,7 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $role = new Role();
+        $role = new RoleService();
         try{
             $role->delete($id);
         }catch (Exception $exception){

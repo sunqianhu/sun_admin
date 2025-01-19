@@ -2,7 +2,7 @@
 
 namespace app\mobile\controller;
 
-use app\service\File as FileHelper;
+use app\service\FileService as FileHelper;
 use app\validate\FileUploadValidate as FileUploadValidate;
 use Exception;
 use think\exception\ValidateException;

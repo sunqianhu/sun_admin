@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
-use app\service\Department;
+use app\service\DepartmentService;
 use app\validate\DepartmentValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -48,7 +48,7 @@ class Edit extends Base
             return $this->error('上级部门不能和本部门相同');
         }
 
-        $department = new Department();
+        $department = new DepartmentService();
         try{
             $department->edit($post['id'], $post);
         }catch (Exception $exception){

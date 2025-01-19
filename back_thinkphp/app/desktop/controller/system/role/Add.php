@@ -3,11 +3,11 @@
 namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Menu as DesktopMenu;
-use app\service\desktop\Permission as DesktopPermission;
-use app\service\desktop\Route as DesktopRoute;
-use app\service\mobile\Permission as MobilePermission;
-use app\service\Role;
+use app\service\desktop\MenuService as DesktopMenu;
+use app\service\desktop\PermissionService as DesktopPermission;
+use app\service\desktop\RouteService as DesktopRoute;
+use app\service\mobile\PermissionService as MobilePermission;
+use app\service\RoleService;
 use app\validate\RoleValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -54,7 +54,7 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $role = new Role();
+        $role = new RoleService();
         try{
             $role->add($post);
         }catch (Exception $exception){

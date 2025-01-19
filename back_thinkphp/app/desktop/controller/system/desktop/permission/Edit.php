@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
 use app\model\desktop\PermissionModel;
-use app\service\desktop\Permission;
+use app\service\desktop\PermissionService;
 use app\validate\desktop\PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -47,7 +47,7 @@ class Edit extends Base
             return $this->error('上级权限不能和本权限相同');
         }
 
-        $permission = new Permission();
+        $permission = new PermissionService();
         try{
             $permission->edit($post['id'], $post);
         } catch (Exception $exception) {

@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
-use app\service\Dictionary;
+use app\service\DictionaryService;
 use app\validate\DictionaryValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -25,7 +25,7 @@ class Add extends Base
         }
 
         try{
-            $dictionary = new Dictionary();
+            $dictionary = new DictionaryService();
             $dictionary->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());

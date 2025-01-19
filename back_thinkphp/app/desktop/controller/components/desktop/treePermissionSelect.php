@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components\desktop;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Permission;
+use app\service\desktop\PermissionService;
 
 class treePermissionSelect extends Base
 {
@@ -20,7 +20,7 @@ class treePermissionSelect extends Base
      */
     public function getTreePermission()
     {
-        $permission = new Permission();
+        $permission = new PermissionService();
         $treePermission = $permission->getTreePermission();
         return $this->success('获取成功', $treePermission);
     }

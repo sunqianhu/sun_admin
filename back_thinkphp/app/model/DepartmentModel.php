@@ -2,8 +2,8 @@
 
 namespace app\model;
 
-use app\service\Department;
-use app\service\SingletonFactory;
+use app\service\DepartmentService;
+use app\service\SingletonFactoryService;
 
 class DepartmentModel extends BaseModel
 {
@@ -16,7 +16,7 @@ class DepartmentModel extends BaseModel
      */
     public function getTypeNameAttr($value, $data)
     {
-        $department = SingletonFactory::getInstance(Department::class);
+        $department = SingletonFactoryService::getInstance(DepartmentService::class);
         return $department->getTypeName($data['type']);
     }
 }

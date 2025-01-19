@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Menu;
+use app\service\desktop\MenuService;
 use app\validate\desktop\MenuValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -24,7 +24,7 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $menu = new Menu();
+        $menu = new MenuService();
         try {
             $menu->add($post);
         } catch (Exception $exception) {

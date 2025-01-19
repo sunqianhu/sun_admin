@@ -19,7 +19,7 @@ return [
     'channels'     => [
         'file' => [
             // 日志记录方式
-            'type'           => 'File',
+            'type'           => 'FileService',
             // 日志保存目录
             'path'           => '',
             // 单文件日志写入

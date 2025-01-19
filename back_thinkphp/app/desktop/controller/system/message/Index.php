@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\message;
 
 use app\desktop\controller\Base;
 use app\model\MessageModel;
-use app\service\Message;
+use app\service\MessageService;
 
 class Index extends Base
 {
@@ -37,7 +37,7 @@ class Index extends Base
      */
     public function setAllRead()
     {
-        $message = new Message();
+        $message = new MessageService();
         try{
             $message->setAllRead($this->session->userId);
             $message->queueSendAllRead($this->session->userId);

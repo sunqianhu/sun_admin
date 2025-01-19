@@ -3,7 +3,7 @@
 namespace app\desktop\controller\layouts\side\user;
 
 use app\desktop\controller\Base;
-use app\service\User;
+use app\service\UserService;
 use app\validate\UserValidate;
 use think\exception\ValidateException;
 
@@ -24,7 +24,7 @@ class EditPassword extends Base
             return $this->error($exception->getError());
         }
 
-        $user = new User();
+        $user = new UserService();
         $user->editPassword($this->session->userId, $post['password1']);
 
         return $this->success('修改成功');

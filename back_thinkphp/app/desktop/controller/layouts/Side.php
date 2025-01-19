@@ -4,8 +4,8 @@ namespace app\desktop\controller\layouts;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\desktop\Session;
-use app\service\desktop\DesktopUser;
+use app\service\desktop\SessionService;
+use app\service\desktop\DesktopUserService;
 
 /**
  * 主页
@@ -20,7 +20,7 @@ class Side extends Base
      */
     public function getTreeMenu()
     {
-        $user = new DesktopUser();
+        $user = new DesktopUserService();
         $treeMenu = $user->getTreeMenu($this->session->userId);
 
         return $this->success('获取成功', $treeMenu);
@@ -47,7 +47,7 @@ class Side extends Base
      */
     public function logout()
     {
-        $session = new Session();
+        $session = new SessionService();
         $session->logout($this->session->token);
 
         return $this->success("退出成功");

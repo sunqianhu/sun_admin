@@ -4,8 +4,8 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\desktop\DesktopUser as DesktopUser;
-use app\service\User;
+use app\service\desktop\DesktopUserService as DesktopUser;
+use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -65,7 +65,7 @@ class Index extends Base
 
         $post['status'] = $post['status'] == 1 ? 1 : 0;
         try{
-            $user = new User();
+            $user = new UserService();
             $user->editStatus($post['id'], $post['status']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
@@ -89,7 +89,7 @@ class Index extends Base
         }
 
         try{
-            $user = new DesktopUser();
+            $user = new DesktopUserService();
             $user->offLine($post['id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());

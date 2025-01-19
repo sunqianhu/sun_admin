@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\service\Department;
+use app\service\DepartmentService;
 
 class TreeDepartmentSelect extends Base
 {
@@ -20,7 +20,7 @@ class TreeDepartmentSelect extends Base
      */
     public function getTreeDepartment()
     {
-        $department = new Department();
+        $department = new DepartmentService();
         $treeDepartment = $department->getTreeDepartment();
         return $this->success('获取成功', $treeDepartment);
     }

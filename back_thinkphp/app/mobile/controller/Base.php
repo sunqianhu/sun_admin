@@ -3,9 +3,9 @@
 namespace app\mobile\controller;
 
 use app\BaseController;
-use app\service\mobile\Session;
+use app\service\mobile\SessionService;
 use app\entity\SessionEntity;
-use app\service\OperationLog;
+use app\service\OperationLogService;
 use Exception;
 use think\Response;
 
@@ -27,7 +27,7 @@ class Base extends BaseController
     function initialize()
     {
         parent::initialize();
-        $session = new Session();
+        $session = new SessionService();
         $session->isTokenAuth = $this->isTokenAuth;
         $session->noTokenAuthActions = $this->noTokenAuthActions;
         $session->isApiAuth = $this->isApiAuth;
@@ -69,7 +69,7 @@ class Base extends BaseController
             $this->isApiAuth &&
             !in_array($action, $this->noApiAuthActions)
         ) {
-            $operationLog = new OperationLog();
+            $operationLog = new OperationLogService();
             $data = [
                 'user_id' => $this->session->userId,
                 'api' => $this->request->baseUrl(),

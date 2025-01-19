@@ -3,7 +3,7 @@ declare (strict_types = 1);
 
 namespace app\command;
 
-use app\service\api\Jwt;
+use app\service\api\JwtService;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -24,7 +24,7 @@ class GenerateApiToken extends Command
     {
         $userId = trim($input->getArgument('user_id')) ?? 1;
 
-        $jwt = new Jwt();
+        $jwt = new JwtService();
         echo $token = $jwt->createToken($userId);
     }
 }

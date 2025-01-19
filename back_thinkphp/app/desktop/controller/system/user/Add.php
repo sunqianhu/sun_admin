@@ -4,8 +4,8 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\RoleModel;
-use app\service\Department;
-use app\service\User;
+use app\service\DepartmentService;
+use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -27,7 +27,7 @@ class Add extends Base
         }
 
         try{
-            $user = new User();
+            $user = new UserService();
             $user->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());

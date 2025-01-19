@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\config;
 
 use app\desktop\controller\Base;
-use app\service\Config;
+use app\service\ConfigService;
 use app\validate\ConfigFormValidate;
 use think\exception\ValidateException;
 
@@ -18,7 +18,7 @@ class Index extends Base
      */
     public function init()
     {
-        $config = new Config();
+        $config = new ConfigService();
         $configForm = [
             'denied_ip_string'=>$config->getValue('denied_ip_string')
         ];
@@ -39,7 +39,7 @@ class Index extends Base
             return $this->error($exception->getError());
         }
 
-        $config = new Config();
+        $config = new ConfigService();
         foreach($post as $key => $value){
             $config->setValue($key, $value);
         }

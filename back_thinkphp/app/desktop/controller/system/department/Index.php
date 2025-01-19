@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
-use app\service\Department;
+use app\service\DepartmentService;
 use Sunqianhu\Helper\ArrayHandler;
 
 class Index extends Base
@@ -44,7 +44,7 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $department = new Department();
+        $department = new DepartmentService();
         try{
             $department->delete($id);
         }catch (Exception $exception){

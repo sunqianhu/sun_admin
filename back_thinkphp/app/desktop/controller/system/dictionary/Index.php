@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
-use app\service\Dictionary;
+use app\service\DictionaryService;
 use app\model\DictionaryModel;
 use Exception;
 
@@ -50,7 +50,7 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $dictionary = new Dictionary();
+        $dictionary = new DictionaryService();
         try{
             $dictionary->delete($id);
         }catch (Exception $exception){

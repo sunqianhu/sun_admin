@@ -2,8 +2,8 @@
 
 namespace app\desktop\controller;
 
-use app\service\desktop\DesktopUser;
-use app\service\Watermark;
+use app\service\desktop\DesktopUserService;
+use app\service\WatermarkService;
 
 /**
  * 框架
@@ -18,7 +18,7 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $desktopUser = new DesktopUser();
+        $desktopUser = new DesktopUserService();
         $permissions = $desktopUser->getPermissionKeys($this->session->userId);
 
         return $this->success('获取成功', $permissions);
@@ -30,7 +30,7 @@ class Frame extends Base
      */
     public function getRoutes()
     {
-        $desktopUser = new DesktopUser();
+        $desktopUser = new DesktopUserService();
         $routes = $desktopUser->getRoutes($this->session->userId);
 
         return $this->success('获取成功', $routes);
@@ -49,7 +49,7 @@ class Frame extends Base
             return $this->error('还没有登录');
         }
 
-        $watermark = new Watermark();
+        $watermark = new WatermarkService();
         $watermark = $watermark->getWatermark($this->session->userId);
 
         return $this->success('获取成功', $watermark);

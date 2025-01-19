@@ -3,9 +3,9 @@
 namespace app\model\desktop;
 
 use app\model\BaseModel;
-use app\service\desktop\Route;
-use app\service\Dictionary;
-use app\service\SingletonFactory;
+use app\service\desktop\RouteService;
+use app\service\DictionaryService;
+use app\service\SingletonFactoryService;
 
 class RouteModel extends BaseModel
 {
@@ -19,7 +19,7 @@ class RouteModel extends BaseModel
      */
     public function getLayoutNameAttr($value, $data)
     {
-        $route = SingletonFactory::getInstance(Route::class);
+        $route = SingletonFactoryService::getInstance(RouteService::class);
         return $route->getLayoutName($data['layout']);
     }
 
@@ -31,7 +31,7 @@ class RouteModel extends BaseModel
      */
     public function getKeepAliveNameAttr($value, $data)
     {
-        $route = SingletonFactory::getInstance(Route::class);
+        $route = SingletonFactoryService::getInstance(RouteService::class);
         return $route->getKeepAliveName($data['keep_alive']);
     }
 

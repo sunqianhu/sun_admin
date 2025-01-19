@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\service\Role;
+use app\service\RoleService;
 
 class RoleSelect extends Base
 {
@@ -20,7 +20,7 @@ class RoleSelect extends Base
      */
     public function getRoles()
     {
-        $role = new Role();
+        $role = new RoleService();
         $roles = $role->fetchAll();
         return $this->success('获取成功', $roles);
     }

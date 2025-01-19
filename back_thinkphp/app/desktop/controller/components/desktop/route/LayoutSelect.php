@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components\desktop\route;
 
 use app\desktop\controller\Base;
-use app\service\Dictionary;
+use app\service\DictionaryService;
 
 class LayoutSelect extends Base
 {
@@ -17,7 +17,7 @@ class LayoutSelect extends Base
      */
     public function getLayouts()
     {
-        $dictionary = new Dictionary();
+        $dictionary = new DictionaryService();
         $layouts = $dictionary->getList('desktop_route_layout');
 
         return $this->success('获取成功', $layouts);

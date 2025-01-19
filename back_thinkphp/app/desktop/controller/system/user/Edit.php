@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\User;
+use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -48,7 +48,7 @@ class Edit extends Base
         }
 
         try{
-            $user = new User();
+            $user = new UserService();
             $user->edit($post['id'], $post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());

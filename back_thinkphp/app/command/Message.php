@@ -3,7 +3,7 @@ declare (strict_types=1);
 
 namespace app\command;
 
-use app\service\desktop\Jwt;
+use app\service\desktop\JwtService;
 use Exception;
 use think\console\Command;
 use think\console\Input;
@@ -170,7 +170,7 @@ class Message extends Command
             throw new Exception('token不能为空');
         }
 
-        $jwt = new Jwt();
+        $jwt = new JwtService();
         $session = $jwt->resolverToken($token);
         $connection->userId = $session->userId;
 

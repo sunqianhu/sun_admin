@@ -3,9 +3,9 @@
 namespace app\desktop\controller\statistic;
 
 use app\desktop\controller\Base;
-use app\service\File;
-use app\service\order\Excel;
-use app\service\order\Statistic;
+use app\service\FileService;
+use app\service\order\ExcelService;
+use app\service\order\StatisticService;
 use app\validate\OrderValidate;
 use app\validate\statistic\TrendValidate;
 use Exception;
@@ -34,7 +34,7 @@ class OrderTrend extends Base
         $startTime = $get['add_times'][0];
         $endTime = $get['add_times'][1];
 
-        $statistic = new Statistic();
+        $statistic = new StatisticService();
         try{
             $trend = $statistic->getTimeRangeTrend($startTime, $endTime);
         }catch (Exception $exception){
@@ -65,14 +65,14 @@ class OrderTrend extends Base
         $startTime = $get['add_times'][0];
         $endTime = $get['add_times'][1];
 
-        $excel = new Excel();
+        $excel = new ExcelService();
         try{
             $path = $excel->createTimeRangeTrendExcel($startTime, $endTime);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }
 
-        $file = new File();
+        $file = new FileService();
         $url = $file->getUrl($path);
 
         return $this->success('获取成功', $url);

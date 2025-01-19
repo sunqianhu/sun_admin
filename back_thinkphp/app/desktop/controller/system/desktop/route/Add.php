@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
-use app\service\desktop\Route;
+use app\service\desktop\RouteService;
 use app\validate\desktop\RouteValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -24,7 +24,7 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $route = new Route();
+        $route = new RouteService();
         try{
             $route->add($post);
         } catch (Exception $exception) {

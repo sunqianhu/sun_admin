@@ -3,9 +3,9 @@
 namespace app\api\controller;
 
 use app\BaseController;
-use app\service\api\Session;
+use app\service\api\SessionService;
 use app\entity\SessionEntity;
-use app\service\OperationLog;
+use app\service\OperationLogService;
 use Exception;
 use think\Response;
 
@@ -25,7 +25,7 @@ class Base extends BaseController
     function initialize()
     {
         parent::initialize();
-        $session = new Session();
+        $session = new SessionService();
         $session->isTokenAuth = $this->isTokenAuth;
         $session->noTokenAuthActions = $this->noTokenAuthActions;
 
@@ -50,7 +50,7 @@ class Base extends BaseController
 
         //操作日志
         if($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
-            $operationLog = new OperationLog();
+            $operationLog = new OperationLogService();
             $data = [
                 'user_id' => $this->session->userId,
                 'api' => $this->request->baseUrl(),

@@ -4,8 +4,8 @@ namespace app\desktop\controller\layouts\side\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\File as File;
-use app\service\User;
+use app\service\FileService as File;
+use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -44,13 +44,13 @@ class EditAvatar extends Base
         }
 
         try {
-            $user = new User();
+            $user = new UserService();
             $path = $user->editAvatar($this->session->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }
 
-        $file = new File();
+        $file = new FileService();
         $url = $file->getUrl($path);
 
         return $this->success('修改成功', $url);

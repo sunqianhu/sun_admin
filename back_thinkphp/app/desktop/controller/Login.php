@@ -2,8 +2,8 @@
 
 namespace app\desktop\controller;
 
-use app\service\desktop\Session;
-use app\service\LoginFailChecker;
+use app\service\desktop\SessionService;
+use app\service\LoginFailCheckerService;
 use app\validate\SessionValidate;
 use think\exception\ValidateException;
 use Exception;
@@ -30,13 +30,13 @@ class Login extends Base
         }
 
         //登录次数
-        $loginFailChecker = new LoginFailChecker($post['account']);
+        $loginFailChecker = new LoginFailCheckerService($post['account']);
         if(!$loginFailChecker->check()){
             return $this->error('连续登录失败'.$loginFailChecker->number.'次，请'.$loginFailChecker->getResetReadableTime().'后再试');
         }
 
         try{
-            $session = new Session();
+            $session = new SessionService();
             $sessionEntity = $session->login($post['account'], $post['password'], $this->request->ip());
         }catch (Exception $exception){
             $loginFailChecker->setFail();
