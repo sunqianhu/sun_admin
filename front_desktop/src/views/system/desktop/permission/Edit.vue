@@ -88,11 +88,7 @@ const init = async () => {
     return;
   }
 
-  let data = response.data;
-  if (data.permission_id == 0) {
-    data.permission_id = "";
-  }
-  permission.value = data;
+  permission.value = response.data;
 };
 
 /**

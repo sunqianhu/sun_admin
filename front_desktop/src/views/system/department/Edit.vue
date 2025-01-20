@@ -20,7 +20,11 @@
             v-model="department.department_id"
           ></tree-department-select>
         </el-form-item>
-        <el-form-item label="部门类型" prop="type">
+        <el-form-item
+          label="部门类型"
+          prop="type"
+          :empty-values="[0, '', undefined]"
+        >
           <type-select v-model="department.type"></type-select>
         </el-form-item>
         <el-form-item label="部门名称" prop="name">

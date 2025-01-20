@@ -62,7 +62,6 @@ const rules = {
   key: [{ required: true, message: "权限标识不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
 };
-const treePermissions = ref([]);
 const initLoading = ref(true);
 const submitLoading = ref(false);
 
@@ -85,11 +84,7 @@ const init = async () => {
     });
     return;
   }
-  let data = response.data;
-  if (data.permission_id == 0) {
-    data.permission_id = "";
-  }
-  permission.value = data;
+  permission.value = response.data;
 };
 
 /**
