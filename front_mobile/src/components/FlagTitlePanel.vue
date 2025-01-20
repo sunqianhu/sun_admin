@@ -1,20 +1,15 @@
 <template>
-  <div class="panel-inline">
-    <slot name="header">
-      <div
-        class="panel-inline__header"
-        v-if="title || subTitle || $slots.actions"
-      >
-        <div class="panel-inline__title" v-if="title">{{ title }}</div>
-        <div class="panel-inline__sub-title" v-if="subTitle">
-          {{ subTitle }}
-        </div>
-        <div class="panel-inline__actions" v-if="$slots.actions">
-          <slot name="actions"></slot>
-        </div>
+  <div class="flag-title-panel">
+    <div class="flag-title-panel__header">
+      <div class="flag-title-panel__title">{{ title }}</div>
+      <div class="flag-title-panel__sub-title">
+        {{ subTitle }}
       </div>
-    </slot>
-    <div class="panel-inline__body">
+      <div class="flag-title-panel__actions">
+        <slot name="actions"></slot>
+      </div>
+    </div>
+    <div class="flag-title-panel__body">
       <slot name="default"></slot>
     </div>
   </div>
@@ -34,12 +29,12 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.panel-inline {
-  .panel-inline__header {
+.flag-title-panel {
+  .flag-title-panel__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .panel-inline__title {
+    .flag-title-panel__title {
       position: relative;
       font-size: var(--font-size-lg);
       font-weight: var(--font-wieht-bold);
@@ -54,17 +49,17 @@ const props = defineProps({
         border-radius: 2px;
       }
     }
-    .panel-inline__sub-title {
+    .flag-title-panel__sub-title {
       flex: 1;
       margin-left: var(--margin-md);
       color: var(--font-color-secondary);
       font-size: var(--font-size-sm);
     }
-    .panel-inline__actions {
+    .flag-title-panel__actions {
       margin-left: auto;
     }
   }
-  .panel-inline__body {
+  .flag-title-panel__body {
     margin-top: var(--margin-md);
   }
 }
