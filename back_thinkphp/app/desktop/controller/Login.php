@@ -21,7 +21,6 @@ class Login extends Base
      */
     public function login()
     {
-        exit;
         $post = $this->request->post(['account' => '', 'password' => '']);
 
         try {

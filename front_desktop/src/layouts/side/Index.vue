@@ -144,7 +144,7 @@ window.onresize = () => {
       }
     }
     &.side-layout__container--fold {
-      .aside {
+      .side-layout__aside {
         width: 64px;
         .system-name {
           padding-left: 19px;
