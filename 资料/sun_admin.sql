@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2025-01-18 19:58:22
+Date: 2025-01-20 17:00:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -218,7 +218,7 @@ CREATE TABLE `desktop_token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of desktop_token
@@ -271,7 +271,8 @@ INSERT INTO `desktop_token` VALUES ('55', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1
 INSERT INTO `desktop_token` VALUES ('56', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNjc1Mzg1MX0.Cj2m4x7UFca4zld5aVUsVRwAfaQWEvg9jEqP-9e8kgI', '1736757502');
 INSERT INTO `desktop_token` VALUES ('57', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzE4MjQ1OH0.pl-Sl4dbeFsGNMMbGADxwHcaLocW3BuKt6qbI797Naw', '1737184265');
 INSERT INTO `desktop_token` VALUES ('58', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzE4ODUzMH0.nQkja_qah_3GQDDI74Mfe70H7VmUmFjRHH2NVtlwzBk', '1737193034');
-INSERT INTO `desktop_token` VALUES ('59', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzE5NTA2N30._ui0xAtokprAutoXxh3cnVzPieT_3_16ZcQA-BM23XY', '1737203238');
+INSERT INTO `desktop_token` VALUES ('59', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzE5NTA2N30._ui0xAtokprAutoXxh3cnVzPieT_3_16ZcQA-BM23XY', '1737203468');
+INSERT INTO `desktop_token` VALUES ('60', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzM0MzkzNH0.K8QUnRjfJpxHz7LfAJrEX8XXe97hjYYBXvbtalfK0t0', '1737346067');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -329,11 +330,12 @@ CREATE TABLE `jobs` (
   `create_time` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `queue` (`queue`(191)) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of jobs
 -- ----------------------------
+INSERT INTO `jobs` VALUES ('43', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1737344270', '1737344270');
 
 -- ----------------------------
 -- Table structure for login_log
@@ -345,7 +347,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -426,6 +428,13 @@ INSERT INTO `login_log` VALUES ('73', '1', '1736753852', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('74', '1', '1737182458', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('75', '1', '1737188530', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('76', '1', '1737195067', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('77', '1', '1737343934', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('78', '1', '1737356550', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('79', '1', '1737356555', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('80', '1', '1737356700', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('81', '1', '1737356719', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('82', '1', '1737359169', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('83', '1', '1737359282', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -448,30 +457,30 @@ CREATE TABLE `message` (
 -- ----------------------------
 -- Records of message
 -- ----------------------------
-INSERT INTO `message` VALUES ('1', '1', '标题', '内容', 'https:/www.baidu.com', '1737189131', '1', '1737201433');
-INSERT INTO `message` VALUES ('2', '1', '标题', '内容', 'https:/www.baidu.com', '1737189150', '1', '1737201433');
-INSERT INTO `message` VALUES ('3', '1', '标题', '内容', 'https:/www.baidu.com', '1737189193', '1', '1737201433');
-INSERT INTO `message` VALUES ('4', '1', '标题', '内容', 'https:/www.baidu.com', '1737189194', '1', '1737201433');
-INSERT INTO `message` VALUES ('5', '1', '标题', '内容', 'https:/www.baidu.com', '1737189230', '1', '1737201433');
-INSERT INTO `message` VALUES ('6', '1', '标题', '内容', 'https:/www.baidu.com', '1737189235', '1', '1737201433');
-INSERT INTO `message` VALUES ('7', '1', '标题', '内容', 'https:/www.baidu.com', '1737189285', '1', '1737201433');
-INSERT INTO `message` VALUES ('8', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1737201433');
-INSERT INTO `message` VALUES ('9', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1737201433');
-INSERT INTO `message` VALUES ('10', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1737201433');
-INSERT INTO `message` VALUES ('11', '1', '标题', '内容', 'https:/www.baidu.com', '1737189307', '1', '1737201433');
-INSERT INTO `message` VALUES ('12', '1', '标题', '内容', 'https:/www.baidu.com', '1737189371', '1', '1737201433');
-INSERT INTO `message` VALUES ('13', '1', '标题', '内容', 'https:/www.baidu.com', '1737189428', '1', '1737201433');
-INSERT INTO `message` VALUES ('14', '1', '标题', '内容', 'https:/www.baidu.com', '1737191011', '1', '1737201433');
-INSERT INTO `message` VALUES ('15', '1', '标题', '内容', 'https:/www.baidu.com', '1737191015', '1', '1737201433');
-INSERT INTO `message` VALUES ('16', '1', '标题', '内容', 'https:/www.baidu.com', '1737191063', '1', '1737201433');
-INSERT INTO `message` VALUES ('17', '1', '标题', '内容', 'https:/www.baidu.com', '1737195121', '1', '1737201433');
-INSERT INTO `message` VALUES ('18', '1', '标题', '内容', 'https:/www.baidu.com', '1737195154', '1', '1737201433');
-INSERT INTO `message` VALUES ('19', '1', '标题', '内容', 'https:/www.baidu.com', '1737195166', '1', '1737201433');
-INSERT INTO `message` VALUES ('20', '1', '标题', '内容', 'https:/www.baidu.com', '1737195528', '1', '1737201433');
-INSERT INTO `message` VALUES ('21', '1', '标题', '内容', 'https:/www.baidu.com', '1737195649', '1', '1737201433');
-INSERT INTO `message` VALUES ('22', '1', '标题', '内容', 'https:/www.baidu.com', '1737195670', '1', '1737201433');
-INSERT INTO `message` VALUES ('23', '1', '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com', '1737196101', '1', '1737201433');
-INSERT INTO `message` VALUES ('24', '1', '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com', '1737196183', '1', '1737201433');
+INSERT INTO `message` VALUES ('1', '1', '标题', '内容', 'https:/www.baidu.com', '1737189131', '1', '1737344267');
+INSERT INTO `message` VALUES ('2', '1', '标题', '内容', 'https:/www.baidu.com', '1737189150', '1', '1737344267');
+INSERT INTO `message` VALUES ('3', '1', '标题', '内容', 'https:/www.baidu.com', '1737189193', '1', '1737344267');
+INSERT INTO `message` VALUES ('4', '1', '标题', '内容', 'https:/www.baidu.com', '1737189194', '1', '1737344267');
+INSERT INTO `message` VALUES ('5', '1', '标题', '内容', 'https:/www.baidu.com', '1737189230', '1', '1737344267');
+INSERT INTO `message` VALUES ('6', '1', '标题', '内容', 'https:/www.baidu.com', '1737189235', '1', '1737344267');
+INSERT INTO `message` VALUES ('7', '1', '标题', '内容', 'https:/www.baidu.com', '1737189285', '1', '1737344267');
+INSERT INTO `message` VALUES ('8', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1737344267');
+INSERT INTO `message` VALUES ('9', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1737344267');
+INSERT INTO `message` VALUES ('10', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1737344267');
+INSERT INTO `message` VALUES ('11', '1', '标题', '内容', 'https:/www.baidu.com', '1737189307', '1', '1737344267');
+INSERT INTO `message` VALUES ('12', '1', '标题', '内容', 'https:/www.baidu.com', '1737189371', '1', '1737344267');
+INSERT INTO `message` VALUES ('13', '1', '标题', '内容', 'https:/www.baidu.com', '1737189428', '1', '1737344267');
+INSERT INTO `message` VALUES ('14', '1', '标题', '内容', 'https:/www.baidu.com', '1737191011', '1', '1737344267');
+INSERT INTO `message` VALUES ('15', '1', '标题', '内容', 'https:/www.baidu.com', '1737191015', '1', '1737344267');
+INSERT INTO `message` VALUES ('16', '1', '标题', '内容', 'https:/www.baidu.com', '1737191063', '1', '1737344267');
+INSERT INTO `message` VALUES ('17', '1', '标题', '内容', 'https:/www.baidu.com', '1737195121', '1', '1737344267');
+INSERT INTO `message` VALUES ('18', '1', '标题', '内容', 'https:/www.baidu.com', '1737195154', '1', '1737344267');
+INSERT INTO `message` VALUES ('19', '1', '标题', '内容', 'https:/www.baidu.com', '1737195166', '1', '1737344267');
+INSERT INTO `message` VALUES ('20', '1', '标题', '内容', 'https:/www.baidu.com', '1737195528', '1', '1737344267');
+INSERT INTO `message` VALUES ('21', '1', '标题', '内容', 'https:/www.baidu.com', '1737195649', '1', '1737344267');
+INSERT INTO `message` VALUES ('22', '1', '标题', '内容', 'https:/www.baidu.com', '1737195670', '1', '1737344267');
+INSERT INTO `message` VALUES ('23', '1', '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com', '1737196101', '1', '1737344267');
+INSERT INTO `message` VALUES ('24', '1', '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com', '1737196183', '1', '1737344267');
 
 -- ----------------------------
 -- Table structure for mobile_permission
@@ -505,7 +514,7 @@ CREATE TABLE `mobile_token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of mobile_token
@@ -525,6 +534,10 @@ INSERT INTO `mobile_token` VALUES ('12', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e
 INSERT INTO `mobile_token` VALUES ('14', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjIwNzA4NjAwIDE3MjEzNTQ3OTkifQ.uCNHHviJJzX1UkYZSOjvFLMN4SKl8iNbhvCE57WgWPs', '1752891327', '1');
 INSERT INTO `mobile_token` VALUES ('25', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjE0MDQ4OTAwIDE3MjEzNzU3MDEifQ.g3acVvKBpCr5UxInXjjKi7d1qfTU32C8C0zy2PLe3gA', '1752918757', '1');
 INSERT INTO `mobile_token` VALUES ('26', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjIxNTkxNTAwIDE3MjEzNzY2NTkifQ.uNBGAO4lyZEL0-ARLMlvFzwZVunMjGBMHBQMEdyBz8M', '1752920285', '1');
+INSERT INTO `mobile_token` VALUES ('27', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzM1NjU1MH0.MYI6Uiz4zwF1KqxrHskKxxCj2aJ7P-81lmgGc7n24f4', '1739948550', '1');
+INSERT INTO `mobile_token` VALUES ('28', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzM1NjU1NX0.HcK_Rrd8YyNfQlS6IGI4T1OegbA74VE64QGO6eXG3xQ', '1739948700', '1');
+INSERT INTO `mobile_token` VALUES ('29', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzM1NjcwMH0.j0zIWsDge3vQMNTyRnmhqIeM_GX0toLehIaFslTXCFM', '1739948719', '1');
+INSERT INTO `mobile_token` VALUES ('32', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTczNzM1OTI4Mn0.4qW3qZgsFBXei3xh89SHPpkvK589jzPw4e_ra46LRJg', '1739955557', '1');
 
 -- ----------------------------
 -- Table structure for operation_log
@@ -537,7 +550,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '操作ip',
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1755 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1776 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -2296,6 +2309,27 @@ INSERT INTO `operation_log` VALUES ('1751', '1', '/desktop/system.role.Edit/init
 INSERT INTO `operation_log` VALUES ('1752', '1', '/desktop/system.role.Edit/save', '127.0.0.1', '1737201414');
 INSERT INTO `operation_log` VALUES ('1753', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1737201415');
 INSERT INTO `operation_log` VALUES ('1754', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1737201421');
+INSERT INTO `operation_log` VALUES ('1755', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1737201564');
+INSERT INTO `operation_log` VALUES ('1756', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1737201586');
+INSERT INTO `operation_log` VALUES ('1757', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1737201592');
+INSERT INTO `operation_log` VALUES ('1758', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1737201593');
+INSERT INTO `operation_log` VALUES ('1759', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1737201663');
+INSERT INTO `operation_log` VALUES ('1760', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1737201664');
+INSERT INTO `operation_log` VALUES ('1761', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1737201666');
+INSERT INTO `operation_log` VALUES ('1762', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1737201668');
+INSERT INTO `operation_log` VALUES ('1763', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1737343956');
+INSERT INTO `operation_log` VALUES ('1764', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1737344212');
+INSERT INTO `operation_log` VALUES ('1765', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1737344216');
+INSERT INTO `operation_log` VALUES ('1766', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1737344218');
+INSERT INTO `operation_log` VALUES ('1767', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1737344221');
+INSERT INTO `operation_log` VALUES ('1768', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1737344223');
+INSERT INTO `operation_log` VALUES ('1769', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1737344225');
+INSERT INTO `operation_log` VALUES ('1770', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1737344227');
+INSERT INTO `operation_log` VALUES ('1771', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1737344229');
+INSERT INTO `operation_log` VALUES ('1772', '1', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1737344231');
+INSERT INTO `operation_log` VALUES ('1773', '1', '/desktop/system.dictionary.Index/getDictionaryPaginate', '127.0.0.1', '1737344233');
+INSERT INTO `operation_log` VALUES ('1774', '1', '/desktop/system.login_log.Index/getLoginLogPaginate', '127.0.0.1', '1737344257');
+INSERT INTO `operation_log` VALUES ('1775', '1', '/desktop/system.operation_log.Index/getOperationLogPaginate', '127.0.0.1', '1737344263');
 
 -- ----------------------------
 -- Table structure for role
@@ -2503,7 +2537,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', 'e0eb969fb7f476ee3f6721ec5947d735', '1', '张三', '15122222222', 'avatar/2025/01/13/bcad16a96c6097fe95db90ade4d22ac7.png', '1684989244', '1716183018', '1737195067', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', 'admin', 'e0eb969fb7f476ee3f6721ec5947d735', '1', '张三', '15122222222', 'avatar/2025/01/20/6ce8cd8ed64767d6ebe035766258e4b6.png', '1684989244', '1716183018', '1737359282', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '1', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
 
 -- ----------------------------
