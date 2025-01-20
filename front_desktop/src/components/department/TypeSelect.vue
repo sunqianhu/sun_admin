@@ -1,5 +1,11 @@
 <template>
-  <el-select v-model="ids" filterable clearable :multiple="multiple">
+  <el-select
+    v-model="ids"
+    filterable
+    clearable
+    :multiple="multiple"
+    :empty-values="[0, '', undefined]"
+  >
     <el-option
       v-for="type in types"
       :label="type.value"

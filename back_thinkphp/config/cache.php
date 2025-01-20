@@ -12,7 +12,7 @@ return [
     'stores'  => [
         'file' => [
             // 驱动方式
-            'type'       => 'FileService',
+            'type'       => 'File',
             // 缓存保存目录
             'path'       => '',
             // 缓存前缀

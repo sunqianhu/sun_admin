@@ -1,5 +1,11 @@
 <template>
-  <el-select v-model="ids" filterable clearable :multiple="multiple">
+  <el-select
+    v-model="ids"
+    filterable
+    clearable
+    :multiple="multiple"
+    :empty-values="[0, '', undefined]"
+  >
     <el-option v-for="role in roles" :label="role.name" :value="role.id" />
   </el-select>
 </template>

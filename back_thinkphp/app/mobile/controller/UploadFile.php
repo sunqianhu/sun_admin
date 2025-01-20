@@ -2,8 +2,8 @@
 
 namespace app\mobile\controller;
 
-use app\service\FileService as FileHelper;
-use app\validate\FileUploadValidate as FileUploadValidate;
+use app\service\FileService;
+use app\validate\FileUploadValidate;
 use Exception;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
@@ -18,12 +18,12 @@ class FileUpload extends Base
      */
     public function upload()
     {
-        $requestFile = $this->request->file();
+        $requestFiles = $this->request->file();
         $module = $this->request->post('module', ''); //权限
 
         //验证
         try {
-            validate(FileUploadValidate::class)->check($requestFile);
+            validate(FileUploadValidate::class)->check($requestFiles);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
@@ -31,21 +31,21 @@ class FileUpload extends Base
             return $this->error('权限参数不允许');
         }
 
-        $fileHelper = new FileHelper();
-        $file = $requestFile['file'];
+        $requestFile = $requestFiles['file'];
         try{
-            $path = Filesystem::putFile($module, $file);
+            $path = Filesystem::putFile($module, $requestFile);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }
+        $file = new FileService();
         $path = str_replace('\\', '/', $path);
-        $url = $fileHelper->getUrl($path);
+        $url = $file->getUrl($path);
 
         $data = [
-            'name' => $file->getOriginalName(),
-            'type' => $file->getOriginalMime(),
-            'ext' => $file->getOriginalExtension(),
-            'size' => $file->getSize(),
+            'name' => $requestFile->getOriginalName(),
+            'type' => $requestFile->getOriginalMime(),
+            'ext' => $requestFile->getOriginalExtension(),
+            'size' => $requestFile->getSize(),
             'path' => $path,
             'url' => $url
         ];

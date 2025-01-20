@@ -4,7 +4,6 @@ namespace app\desktop\controller\layouts\side\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\FileService as File;
 use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;

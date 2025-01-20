@@ -8,6 +8,7 @@
     check-strictly
     :multiple="multiple"
     :placeholder="placeholder"
+    :empty-values="[0, '', undefined]"
     clearable
   />
 </template>
