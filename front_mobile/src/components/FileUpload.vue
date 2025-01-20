@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-file">
+  <div class="file-upload">
     <van-uploader
       v-model="files"
       :multiple="multiple"
@@ -11,6 +11,12 @@
       :upload-icon="uploadIcon"
       @delete="deleteFile"
     >
+      <template #default>
+        <slot></slot>
+      </template>
+      <template #tip>
+        <slot name="tip"></slot>
+      </template>
     </van-uploader>
   </div>
 </template>
@@ -104,18 +110,14 @@ const deleteFile = (file) => {
 /**
  * 更新文件
  * @param file
- * @param info
+ * @param serverFile
  */
-const updateFile = (file, info) => {
+const updateFile = (file, serverFile) => {
   const index = files.value.indexOf(file);
-  if (index !== -1) {
-    files.value[index].name = info.name;
-    files.value[index].type = info.type;
-    files.value[index].ext = info.ext;
-    files.value[index].size = info.size;
-    files.value[index].path = info.path;
-    files.value[index].url = info.url;
+  if (index === -1) {
+    return;
   }
+  files.push(serverFile);
 };
 
 /**
@@ -132,13 +134,7 @@ const getFiles = () => {
     if (!currentFile.path) {
       continue;
     }
-    let name = currentFile.name ? currentFile.name : currentFile.file?.name;
-    let finalFile = {
-      name: name,
-      path: currentFile.path,
-      url: currentFile.url,
-    };
-    finalFiles.push(finalFile);
+    finalFiles.push(currentFile);
   }
 
   return finalFiles;
@@ -163,6 +159,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.upload-file {
+.file-upload {
 }
 </style>

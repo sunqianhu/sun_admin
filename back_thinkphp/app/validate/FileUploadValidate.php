@@ -4,7 +4,7 @@ namespace app\validate;
 
 use think\Validate;
 
-class UploadFileValidate extends Validate
+class FileUploadValidate extends Validate
 {
     protected $rule = [
         'file' => 'file|fileExt:png,jpg,jpeg,gif,doc,docx,xls,xlsx,ppt,pptx,zip,gz,rar,mp3,mp4|fileSize:'.(1024 * 1024 * 200)

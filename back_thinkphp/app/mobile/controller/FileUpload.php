@@ -3,12 +3,12 @@
 namespace app\mobile\controller;
 
 use app\service\FileService;
-use app\validate\UploadFileValidate;
+use app\validate\FileUploadValidate;
 use Exception;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
 
-class UploadFile extends Base
+class FileUpload extends Base
 {
     private $allowModules = ['rich_editor'];
 
@@ -23,7 +23,7 @@ class UploadFile extends Base
 
         //验证
         try {
-            validate(UploadFileValidate::class)->check($requestFiles);
+            validate(FileUploadValidate::class)->check($requestFiles);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
