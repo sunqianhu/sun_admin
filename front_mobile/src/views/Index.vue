@@ -1,83 +1,28 @@
 <template>
   <div class="index">
     <div class="header">
-      <div class="avatar">
-        <van-image :src="user.avatar_url" fit="cover" round class="image" @click="openUserDetail" />
+      <div class="header__avatar">
+        <van-image
+          :src="user.avatar_url"
+          fit="cover"
+          round
+          class="header__image"
+          @click="openUserDetail"
+        />
       </div>
-      <div class="user">
-        <div class="name" @click="openUserDetail">{{ user.name }}</div>
-        <div class="description">{{ user.department_name }}</div>
+      <div class="header__user">
+        <div class="header__name" @click="openUserDetail">{{ user.name }}</div>
+        <div class="header__description">{{ user.department_name }}</div>
       </div>
     </div>
     <div class="body">
-      <panel-card title="功能导航" class="moudles">
-        <van-row>
-          <van-col span="6">
-            <div class="moudle margin-bottom-md">
-              <div class="icon">
-                <van-icon name="user-o" />
-              </div>
-              <div class="text">用户管理</div>
-            </div>
-          </van-col>
-          <van-col span="6">
-            <div class="moudle margin-bottom-md">
-              <div class="icon">
-                <van-icon name="orders-o" />
-              </div>
-              <div class="text">订单管理</div>
-            </div>
-          </van-col>
-          <van-col span="6">
-            <div class="moudle margin-bottom-md">
-              <div class="icon">
-                <van-icon name="setting-o" />
-              </div>
-              <div class="text">系统设置</div>
-            </div>
-          </van-col>
-          <van-col span="6">
-            <div class="moudle margin-bottom-md">
-              <div class="icon">
-                <van-icon name="user-o" />
-              </div>
-              <div class="text">用户管理</div>
-            </div>
-          </van-col>
-          <van-col span="6">
-            <div class="moudle">
-              <div class="icon">
-                <van-icon name="orders-o" />
-              </div>
-              <div class="text">订单管理</div>
-            </div>
-          </van-col>
-          <van-col span="6">
-            <div class="moudle">
-              <div class="icon">
-                <van-icon name="setting-o" />
-              </div>
-              <div class="text">系统设置</div>
-            </div>
-          </van-col>
-          <van-col span="6">
-            <div class="moudle">
-              <div class="icon">
-                <van-icon name="user-o" />
-              </div>
-              <div class="text">用户管理</div>
-            </div>
-          </van-col>
-          <van-col span="6">
-            <div class="moudle">
-              <div class="icon">
-                <van-icon name="orders-o" />
-              </div>
-              <div class="text">订单管理</div>
-            </div>
-          </van-col>
-        </van-row>
-      </panel-card>
+      <van-cell-group inset>
+        <van-cell title="功能1" icon="location-o" is-link />
+        <van-cell title="功能2" icon="location-o" is-link />
+        <van-cell title="功能3" icon="location-o" is-link />
+        <van-cell title="功能4" icon="location-o" is-link />
+        <van-cell title="功能5" icon="location-o" is-link />
+      </van-cell-group>
     </div>
   </div>
 </template>
@@ -85,7 +30,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import PanelCard from "@/components/PanelCard.vue";
 import axios from "@/helper/axios";
 
 const router = useRouter();
@@ -118,25 +62,24 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .index {
-  padding: var(--padding-md);
   .header {
-    padding: var(--padding-md) 0px;
+    padding: var(--padding-md);
     display: flex;
     align-items: center;
-    .avatar {
-      .image {
+    .header__avatar {
+      .header__image {
         width: 80px;
         height: 80px;
         border: 2px solid #ffffff;
       }
     }
-    .user {
+    .header__user {
       margin-left: var(--margin-md);
-      .name {
+      .header__name {
         font-size: var(--font-size-xl);
         font-weight: var(--font-bold-bold);
       }
-      .description {
+      .header__description {
         margin-top: var(--margin-sm);
       }
     }

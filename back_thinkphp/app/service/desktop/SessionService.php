@@ -71,8 +71,8 @@ class SessionService
      */
     public function logout($token)
     {
-        $token = new TokenService();
-        $token->fieldDelete('token', $token);
+        $tokenService = new TokenService();
+        $tokenService->fieldDelete('token', $token);
     }
 
     /**

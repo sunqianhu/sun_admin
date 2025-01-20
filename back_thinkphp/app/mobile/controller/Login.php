@@ -10,6 +10,8 @@ use think\exception\ValidateException;
 
 class Login extends Base
 {
+    public $isTokenAuth = false;
+
     /**
      * 登录
      * @return mixed
@@ -22,7 +24,7 @@ class Login extends Base
         $post = $this->request->post(['account' => '', 'password' => '']);
 
         try {
-            validate(SessionValidate::class)->scene('desktop_login')->check($post);
+            validate(SessionValidate::class)->scene('login')->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
@@ -49,9 +51,7 @@ class Login extends Base
         }
         $loginFailChecker->resetFail();
 
-        $data = [
-            'token'=>$sessionEntity->token
-        ];
-        return $this->success('登录成功', $data);
+        $token = $sessionEntity->token;
+        return $this->success('登录成功', $token);
     }
 }

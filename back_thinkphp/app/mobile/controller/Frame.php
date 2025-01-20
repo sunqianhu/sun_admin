@@ -9,6 +9,8 @@ use app\service\mobile\MobileUserService;
  */
 class Frame extends Base
 {
+    public $isApiAuth = false;
+
     /**
      * 获取权限
      * @return void

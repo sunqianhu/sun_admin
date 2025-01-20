@@ -7,7 +7,7 @@
       <van-cell title="手机号码" :value="user.phone" />
     </group-radius>
     <div class="button-wrap">
-      <van-button type="primary" plain block :loading="logoutLoading" @click="logout">
+      <van-button type="primary" block :loading="logoutLoading" @click="logout">
         退出登录
       </van-button>
     </div>
@@ -59,11 +59,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .detail {
-  padding: var(--padding-md);
   .user {
   }
   .button-wrap {
-    margin-top: var(--margin-md);
+    padding: var(--padding-md);
   }
 }
 </style>

@@ -124,6 +124,9 @@ class CurdService
     {
         $models = $this->curdModelClass::where($field, $value)
             ->select();
+        if($models->isEmpty()){
+            return;
+        }
         $models->delete();
     }
 

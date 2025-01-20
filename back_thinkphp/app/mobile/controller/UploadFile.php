@@ -3,12 +3,12 @@
 namespace app\mobile\controller;
 
 use app\service\FileService;
-use app\validate\FileUploadValidate;
+use app\validate\UploadFileValidate;
 use Exception;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
 
-class FileUpload extends Base
+class UploadFile extends Base
 {
     private $allowModules = ['rich_editor'];
 
@@ -19,16 +19,16 @@ class FileUpload extends Base
     public function upload()
     {
         $requestFiles = $this->request->file();
-        $module = $this->request->post('module', ''); //权限
+        $module = $this->request->post('module', '');
 
         //验证
         try {
-            validate(FileUploadValidate::class)->check($requestFiles);
+            validate(UploadFileValidate::class)->check($requestFiles);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
         if (!in_array($module, $this->allowModules)) {
-            return $this->error('权限参数不允许');
+            return $this->error('模块文件夹不支持上传');
         }
 
         $requestFile = $requestFiles['file'];

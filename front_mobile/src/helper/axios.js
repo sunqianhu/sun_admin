@@ -1,10 +1,9 @@
 import axios from "axios";
 import router from "../router";
-import { useAppStore } from "../stores/app";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_PREFIX,
-  timeout: 1000 * 30
+  timeout: 1000 * 60,
 });
 
 //请求拦截器
@@ -46,10 +45,7 @@ instance.interceptors.response.use(
  * 退出登录
  */
 const logout = () => {
-  const appStore = useAppStore();
-
   localStorage.removeItem("token");
-  //appStore.clearRoutes();
   router.replace("/login");
 };
 

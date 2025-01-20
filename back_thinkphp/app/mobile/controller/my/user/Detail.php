@@ -8,19 +8,24 @@ use app\service\mobile\SessionService;
 
 class Detail extends Base
 {
+    public $isApiAuth = false;
+
     /**
      * 初始化
      * @return void
      */
     public function init()
     {
-        $userModel = UserModel::field('id,avatar,name,department_id,phone')
+        $user = UserModel::field('id,avatar,name,department_id,phone')
             ->append(['avatar_url', 'department_name'])
             ->find($this->session->userId);
-        $user = $userModel->toArray();
+        if(empty($user)){
+            return $this->error('用户不存在');
+        }
+        $userArray = $user->toArray();
 
         $data = [
-            'user'=>$user
+            'user'=>$userArray
         ];
         return $this->success('获取成功', $data);
     }
@@ -34,6 +39,6 @@ class Detail extends Base
         $session = new SessionService();
         $session->logout($this->session->token);
 
-        return $this->success("退出成功");
+        return $this->success("退出登录成功");
     }
 }

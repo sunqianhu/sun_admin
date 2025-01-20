@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const usePermissionStore = defineStore("permission", {
   state: () => ({
     isSet: false, //是否设置权限
-    permissions: [] //权限
+    permissions: [], //权限
   }),
   actions: {
     /**
@@ -21,6 +21,6 @@ export const usePermissionStore = defineStore("permission", {
     clear() {
       this.isSet = false;
       this.permissions = [];
-    }
-  }
+    },
+  },
 });

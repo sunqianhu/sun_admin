@@ -6,12 +6,13 @@
   --color-success: #07c160;
   --color-danger: #ee0a24;
   --color-warning: #ff976a;
-  --color-link: #1989fa;
 
   //文字
-  --font-family-base: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Segoe UI,
-    Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
-  --font-family-price: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial, sans-serif;
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    Helvetica, Segoe UI, Arial, Roboto, "PingFang SC", "miui",
+    "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+  --font-family-price: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial,
+    sans-serif;
 
   --font-color-base: #323233;
   --font-color-regular: #646566;
@@ -26,8 +27,8 @@
   --font-size-xl: 20px;
 
   --font-bold-thin: 400;
-  --font-bold-base: 600;
-  --font-bold-bold: 800;
+  --font-bold-base: 500;
+  --font-bold-bold: bold;
 
   //行高
   --line-height-xs: 14px;
@@ -40,6 +41,8 @@
   --border-color-light: #f2f3f5;
   --border-color-base: #ebedf0;
   --border-color-dark: #dcdee0;
+
+  //圆角
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 16px;
@@ -72,16 +75,26 @@
   --index-popper: 3000;
 
   //活跃
-  --active-color: #f2f3f5;
+  --active-color: #969799;
   --active-opacity: 0.6;
 
   //禁用
   --disabled-color: #ebedf0;
   --disabled-opacity: 0.5;
 
+  //阴影
+  --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
+  --box-shadow-base: 0px 0px 16px rgba(0, 0, 0, 0.12);
+  --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
+
   //动画
   --animation-duration-base: 0.3s;
   --animation-duration-fast: 0.2s;
+
+  //组件大小
+  --component-size-sm: 24px;
+  --component-size-md: 32px;
+  --component-size-lg: 40px;
 }
 
 html {
@@ -98,7 +111,7 @@ body {
   color: var(--font-color-base);
 }
 a {
-  color: var(--color-link);
+  color: #1989fa;
   text-decoration: none;
   &:active {
     opacity: var(--active-opacity);

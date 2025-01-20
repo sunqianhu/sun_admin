@@ -22,42 +22,42 @@ import axios from "@/helper/axios";
 const props = defineProps({
   modelValue: {
     type: Array,
-    default: []
+    default: [],
   },
   name: {
     type: String,
-    default: "file"
+    default: "file",
   },
   module: {
     type: String,
-    default: "module1"
+    default: "module1",
   },
   multiple: {
     type: Boolean,
-    default: undefined
+    default: undefined,
   },
   maxCount: {
     type: Number,
-    default: undefined
+    default: undefined,
   },
   accept: {
     type: String,
-    default: undefined
+    default: undefined,
   },
   disabled: {
     type: Boolean,
-    default: undefined
+    default: undefined,
   },
   deletable: {
     type: Boolean,
-    default: undefined
+    default: undefined,
   },
   uploadIcon: {
     type: String,
-    default: undefined
-  }
+    default: undefined,
+  },
 });
-const emits = defineEmits(["update:modelValue", "uploaded"]);
+const emits = defineEmits(["update:modelValue", "success"]);
 const files = ref([]);
 
 /**
@@ -77,7 +77,7 @@ const upload = async (file) => {
   formData.append("module", props.module);
 
   file.status = "uploading";
-  const response = await axios.post("mobile/UploadFile/upload", formData);
+  const response = await axios.post("mobile/FileUpload/upload", formData);
   file.status = "done";
   if (response.code != 1) {
     showFailToast(response.message);
@@ -86,7 +86,7 @@ const upload = async (file) => {
   }
   updateFile(file, response.data);
   emits("update:modelValue", getFiles());
-  emits("uploaded", file);
+  emits("success", file);
 };
 
 /**
@@ -136,7 +136,7 @@ const getFiles = () => {
     let finalFile = {
       name: name,
       path: currentFile.path,
-      url: currentFile.url
+      url: currentFile.url,
     };
     finalFiles.push(finalFile);
   }
@@ -153,7 +153,7 @@ watch(
     init();
   },
   {
-    deep: true
+    deep: true,
   }
 );
 

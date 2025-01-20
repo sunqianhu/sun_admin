@@ -54,9 +54,9 @@ class Base extends BaseController
 
         //路由
         try {
-            $route = $this->request->baseUrl();
-            $route = ltrim($route, '/');
-            $session->apiAuth($this->session->userId, $route, $action);
+            $api = $this->request->baseUrl();
+            $api = ltrim($api, '/');
+            $session->apiAuth($this->session->userId, $api, $action);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;

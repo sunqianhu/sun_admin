@@ -6,19 +6,24 @@ use app\model\UserModel;
 
 class Index extends Base
 {
+    public $noApiAuthActions = ['init'];
+
     /**
      * 初始化
      * @return void
      */
     public function init()
     {
-        $userModel = UserModel::field('avatar,name,department_id')
+        $user = UserModel::field('avatar,name,department_id')
             ->append(['avatar_url', 'department_name'])
             ->find($this->session->userId);
-        $user = $userModel->toArray();
+        if(empty($user)){
+            return $this->error('用户不存在');
+        }
+        $userArray = $user->toArray();
 
         $data = [
-            'user'=>$user
+            'user'=>$userArray
         ];
         return $this->success('获取成功', $data);
     }
