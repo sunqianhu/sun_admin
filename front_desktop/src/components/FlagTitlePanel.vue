@@ -35,19 +35,17 @@ const props = defineProps({
     justify-content: space-between;
     align-items: center;
     .flag-title-panel__title {
-      color: var(--color-primary);
       position: relative;
       font-size: var(--font-size-lg);
       font-weight: var(font-weight-bold);
-      padding: var(--padding-md) var(--padding-md) 0px 0;
       &::before {
         content: "";
         display: inline-block;
         vertical-align: -3px;
         width: 4px;
-        height: 18px;
+        height: 16px;
         background-color: var(--color-primary);
-        margin-right: var(--margin-sm);
+        margin-right: var(--margin-xs);
         border-radius: 2px;
       }
     }
@@ -55,15 +53,12 @@ const props = defineProps({
       flex: 1;
       margin-left: var(--margin-md);
       color: var(--font-color-secondary);
-      font-size: var(--font-size-sm);
     }
     .flag-title-panel__actions {
-      margin-left: auto;
-      margin-right: var(--margin-md);
     }
   }
   .flag-title-panel__body {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin-xs);
   }
 }
 </style>

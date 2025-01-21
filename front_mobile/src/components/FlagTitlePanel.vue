@@ -43,7 +43,7 @@ const props = defineProps({
         display: inline-block;
         vertical-align: -3px;
         width: 4px;
-        height: 18px;
+        height: 16px;
         background-color: var(--color-primary);
         margin-right: var(--margin-sm);
         border-radius: 2px;
@@ -53,14 +53,12 @@ const props = defineProps({
       flex: 1;
       margin-left: var(--margin-md);
       color: var(--font-color-secondary);
-      font-size: var(--font-size-sm);
     }
     .flag-title-panel__actions {
-      margin-left: auto;
     }
   }
   .flag-title-panel__body {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin-xs);
   }
 }
 </style>
