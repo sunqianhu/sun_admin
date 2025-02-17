@@ -33,6 +33,10 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+  action: {
+    type: String,
+    default: "",
+  },
   name: {
     type: String,
     default: "file",
@@ -42,7 +46,11 @@ const emits = defineEmits(["update:modelValue", "success"]);
 const headers = { token: localStorage.getItem("token") };
 const files = ref([]);
 const uploadRef = ref(null);
-const action = import.meta.env.VITE_API_PREFIX + "desktop/UploadFile/upload";
+let action = import.meta.env.VITE_API_PREFIX + "desktop/UploadFile/upload";
+
+if (props.action) {
+  action = import.meta.env.VITE_API_PREFIX + props.action;
+}
 
 /**
  * 初始化
