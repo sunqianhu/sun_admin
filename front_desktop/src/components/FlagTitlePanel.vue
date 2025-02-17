@@ -41,7 +41,7 @@ const props = defineProps({
       &::before {
         content: "";
         display: inline-block;
-        vertical-align: -3px;
+        vertical-align: -2px;
         width: 4px;
         height: 16px;
         background-color: var(--color-primary);
