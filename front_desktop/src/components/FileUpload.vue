@@ -51,11 +51,51 @@ const props = defineProps({
   },
   action: {
     type: String,
-    default: "",
+    default: undefined,
   },
   name: {
     type: String,
     default: "file",
+  },
+  multiple: {
+    type: Boolean,
+    default: undefined,
+  },
+  accept: {
+    type: String,
+    default: undefined,
+  },
+  limit: {
+    type: Number,
+    default: undefined,
+  },
+  disabled: {
+    type: Boolean,
+    default: undefined,
+  },
+  showFileList: {
+    type: Boolean,
+    default: undefined,
+  },
+  data: {
+    type: Object,
+    default: undefined,
+  },
+  listType: {
+    type: String,
+    default: undefined,
+  },
+  withCredentials: {
+    type: Boolean,
+    default: undefined,
+  },
+  crossorigin: {
+    type: String,
+    default: undefined,
+  },
+  drag: {
+    type: Boolean,
+    default: undefined,
   },
 });
 const emits = defineEmits([
@@ -72,7 +112,7 @@ const headers = { token: localStorage.getItem("token") };
 const files = ref(props.modelValue);
 const uploadRef = ref(null);
 let action = import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload";
-if (props.action !== "") {
+if (props.action) {
   action = import.meta.env.VITE_API_PREFIX + props.action;
 }
 
@@ -134,7 +174,7 @@ const handleChange = (uploadFile, uploadFiles) => {
  */
 const handleExceed = (files, uploadFiles) => {
   ElMessage({
-    message: "最多上传" + props.limit + "个文件",
+    message: "最多只能上传" + props.limit + "个文件",
     type: "error",
   });
   emits("exceed", files, uploadFiles);
