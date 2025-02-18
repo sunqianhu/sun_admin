@@ -9,6 +9,7 @@ use think\facade\Filesystem;
 
 class FileUpload extends Base
 {
+    public $isApiAuth = false;
     private $allowModules = ['rich_editor'];
 
     /**
