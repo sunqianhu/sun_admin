@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  sun_admin_front_desktop:
+    build:
+      context: ./front_desktop
+      dockerfile: Dockerfile
+    image: sun_admin_front_desktop:1.0.0 #镜像名版本号
+    container_name: sun_admin_front_desktop #容器名
+    ports:
+      - "80:80"
+    volumes:
+      - .:/data/www/sun_admin.sunqianhu.cc/front_desktop
+    networks:
+      - sun_admin
+
+networks:
+  sun_admin:
+    driver: bridge
