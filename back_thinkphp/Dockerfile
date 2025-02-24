@@ -12,9 +12,12 @@ WORKDIR /var/www/html
 RUN apt-get update && apt-get install -y \
 	libzip-dev \
 	zip \
+	libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
 	nginx \
 	supervisor \
-	&& docker-php-ext-install pdo pdo_mysql zip pcntl\
+	&& docker-php-ext-install pdo pdo_mysql zip gd pcntl\
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=composer /usr/bin/composer /usr/bin/composer
