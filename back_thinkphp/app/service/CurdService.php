@@ -164,11 +164,25 @@ class CurdService
      * @param $field
      * @return mixed
      */
-    public function fetchValue($id, $field = 'name')
+    public function fetchValue($id, $field)
     {
         $model = $this->curdModelClass::field($field)
             ->findOrEmpty($id);
         return $model->$field;
+    }
+
+    /**
+     * 通过字段得到一行记录的一个字段的值
+     * @param $whereField
+     * @param $whereValue
+     * @param $selectField
+     * @return mixed
+     */
+    public function fieldFetchValue($whereField, $whereValue, $selectField)
+    {
+        return $this->curdModelClass::field($selectField)
+            ->where($whereField, $whereValue)
+            ->value($selectField) ?? '';
     }
 
     /**
@@ -206,13 +220,15 @@ class CurdService
      * 得到部分
      * @param $offset
      * @param $length
+     * @param $selectField
      * @param $sortField
      * @param $sortDirection
      * @return mixed
      */
-    public function fetchLimit($offset, $length, $sortField = 'id', $sortDirection = 'asc')
+    public function fetchLimit($offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::order($sortField, $sortDirection)
+        $models = $this->curdModelClass::field($selectField)
+            ->order($sortField, $sortDirection)
             ->limit($offset, $length)
             ->select();
         return $models->toArray();
@@ -224,13 +240,15 @@ class CurdService
      * @param $whereValue
      * @param $offset
      * @param $length
+     * @param $selectField
      * @param $sortField
      * @param $sortDirection
      * @return mixed
      */
-    public function fieldFetchLimit($whereField, $whereValue, $offset, $length, $sortField = 'id', $sortDirection = 'asc')
+    public function fieldFetchLimit($whereField, $whereValue, $offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::where($whereField, $whereValue)
+        $models = $this->curdModelClass::field($selectField)
+            ->where($whereField, $whereValue)
             ->order($sortField, $sortDirection)
             ->limit($offset, $length)
             ->select();
@@ -239,13 +257,15 @@ class CurdService
 
     /**
      * 得到全部
+     * @param $selectField
      * @param $sortField
      * @param $sortDirection
      * @return mixed
      */
-    public function fetchAll($sortField = 'id', $sortDirection = 'asc')
+    public function fetchAll($selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::order($sortField, $sortDirection)
+        $models = $this->curdModelClass::field($selectField)
+            ->order($sortField, $sortDirection)
             ->select();
         return $models->toArray();
     }
@@ -254,13 +274,15 @@ class CurdService
      * 通过字段得到全部
      * @param $whereField
      * @param $whereValue
+     * @param $selectField
      * @param $sortField
      * @param $sortDirection
      * @return mixed
      */
-    public function fieldFetchAll($whereField, $whereValue, $sortField = 'id', $sortDirection = 'asc')
+    public function fieldFetchAll($whereField, $whereValue, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::where($whereField, $whereValue)
+        $models = $this->curdModelClass::field($selectField)
+            ->where($whereField, $whereValue)
             ->order($sortField, $sortDirection)
             ->select();
         return $models->toArray();
