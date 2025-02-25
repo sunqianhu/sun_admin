@@ -3,10 +3,7 @@ version: '3.8'
 services:
   #前端
   sun_admin_front_desktop:
-    build:
-      context: ./front_desktop
-      dockerfile: Dockerfile
-    image: sun_admin_front_desktop:1.0.0 #镜像名版本号
+    image: sun_admin_front_desktop:latest #镜像名版本号
     container_name: sun_admin_front_desktop #容器名
     ports:
       - "80:80"
@@ -15,10 +12,7 @@ services:
     restart: always
   #后端
   sun_admin_back_thinkphp:
-    build:
-      context: ./back_thinkphp
-      dockerfile: Dockerfile
-    image: sun_admin_back_thinkphp:1.0.0
+    image: sun_admin_back_thinkphp:latest
     container_name: sun_admin_back_thinkphp
     volumes:
       - /data/www/sun_admin.sunqianhu.cc/back_thinkphp/public/storage:/var/www/html/public/storage
