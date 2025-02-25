@@ -45,6 +45,7 @@ package_images:
   artifacts:
     paths:
       - sun_admin.tar.gz
+    expire_in: 1 week
   only:
     - master
   tags:

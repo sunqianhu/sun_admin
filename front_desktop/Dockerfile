@@ -1,6 +1,5 @@
 #构建应用
 FROM node:lts-alpine as build
-
 WORKDIR /app
 
 COPY . .

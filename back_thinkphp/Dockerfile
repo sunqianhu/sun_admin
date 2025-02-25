@@ -5,22 +5,8 @@ COPY ./composer.json ./composer.lock .
 RUN composer install --no-interaction --ignore-platform-reqs --no-scripts
 
 #环境
-FROM php:8.2-fpm
+FROM sunqianhu/php_nginx:1.0.0
 WORKDIR /var/www/html
-
-#系统依赖
-RUN apt-get update && apt-get install -y \
-	libzip-dev \
-	zip \
-	libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-	nginx \
-	supervisor \
-	&& docker-php-ext-install pdo pdo_mysql zip gd pcntl\
-	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
-COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 COPY . .
 COPY ./docker/.env .
