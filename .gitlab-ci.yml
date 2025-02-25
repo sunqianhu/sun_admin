@@ -1,33 +1,44 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
 stages:
   - build
+  - package
 
-image: docker
-
-variables:
-  DOCKER_TLS_CERTDIR: ""
-  IMAGE_NAME: $DOCKER_REGISTRY/inspection/inspection_server:test
-  LOCAL_NAME: inspection_server:test
-  PROD_IMAGE_NAME: $DOCKER_REGISTRY/inspection/inspection_server:prod
-  PROD_LOCAL_NAME: inspection_server:prod
-
-build_prod:
+build_back_thinkphp:
   stage: build
-  services:
-    - name: docker:dind
-  before_script:
-    - docker info
-    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_REGISTRY
   script:
-    - docker build --cache-from $PROD_IMAGE_NAME -t $PROD_IMAGE_NAME -t $PROD_LOCAL_NAME .
-    - docker push $PROD_IMAGE_NAME
-    - docker save $PROD_LOCAL_NAME | gzip > inspection_server.tar.gz
-  artifacts:
-    name: inspection_server_prod
-    expire_in: "86400"
-    paths:
-      - inspection_server.tar.gz
-    when: on_success
+    - cd back_thinkphp
+    - docker build -t sun_admin_back_thinkphp .
+    - docker tag sun_admin_back_thinkphp sunqianhu/sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA
   only:
-    - prod
+    - main
   tags:
-    - "219"
+    - computer172
+
+build_front_desktop:
+  stage: build
+  script:
+    - cd front_desktop
+    - docker build -t sun_admin_front_desktop .
+    - docker tag sun_admin_front_desktop sunqianhu/sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA
+  only:
+    - main
+  tags:
+    - computer172
+
+package_images:
+  stage: package
+  script:
+    - docker save -o sun_admin_back_thinkphp.tar sun_admin_back_thinkphp
+    - docker save -o sun_admin_front_desktop.tar sun_admin_front_desktop
+    - tar -czvf sun_admin.tar.gz sun_admin_back_thinkphp.tar sun_admin_front_desktop.tar
+  artifacts:
+    paths:
+      - sun_admin.tar.gz
+  only:
+    - main
+  tags:
+    - computer172
