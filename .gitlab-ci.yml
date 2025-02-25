@@ -6,6 +6,10 @@ services:
 stages:
   - build
   - package
+  
+before_script:
+  - echo "Checking Docker daemon status..."
+  - docker info || (echo "Docker daemon is not running!" && exit 1)
 
 build_back_thinkphp:
   stage: build
