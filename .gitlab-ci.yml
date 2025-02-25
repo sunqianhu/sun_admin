@@ -6,7 +6,10 @@ services:
 stages:
   - build
   - package
-  
+
+variables:
+  GIT_DEPTH: "0"  #禁用浅克隆
+
 before_script:
   - echo "Checking Docker daemon status..."
   - docker info || (echo "Docker daemon is not running!" && exit 1)
