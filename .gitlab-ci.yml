@@ -43,6 +43,7 @@ package_images:
     - docker save -o sun_admin_front_desktop.tar sun_admin_front_desktop
     - tar -czvf sun_admin.tar.gz sun_admin_back_thinkphp.tar sun_admin_front_desktop.tar
   artifacts:
+    name: sun_admin
     paths:
       - sun_admin.tar.gz
     expire_in: 1 week
