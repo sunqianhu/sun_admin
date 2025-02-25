@@ -21,7 +21,7 @@ build_back_thinkphp:
     - docker build -t sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA .
     #- docker tag sun_admin_back_thinkphp sunqianhu/sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA
   only:
-    - master
+    - product
   tags:
     - computer172
 
@@ -32,7 +32,7 @@ build_front_desktop:
     - docker build -t sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA .
     #- docker tag sun_admin_front_desktop sunqianhu/sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA
   only:
-    - master
+    - product
   tags:
     - computer172
 
@@ -48,6 +48,6 @@ package_images:
       - sun_admin.tar.gz
     expire_in: 1 week
   only:
-    - master
+    - product
   tags:
     - computer172
