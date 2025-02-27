@@ -3,6 +3,9 @@ version: '3.8'
 services:
   #前端
   sun_admin_front_desktop:
+    #build:
+    #  context: ./front_desktop/
+    #  dockerfile: Dockerfile
     image: sun_admin_front_desktop:latest #镜像名版本号
     container_name: sun_admin_front_desktop #容器名
     ports:
@@ -12,13 +15,13 @@ services:
     restart: always
   #后端
   sun_admin_back_thinkphp:
+    #build:
+    #  context: ./back_thinkphp/
+    #  dockerfile: Dockerfile
     image: sun_admin_back_thinkphp:latest
     container_name: sun_admin_back_thinkphp
     volumes:
       - /data/www/sun_admin.sunqianhu.cc/back_thinkphp/public/storage:/var/www/html/public/storage
-      - /data/www/sun_admin.sunqianhu.cc/back_thinkphp/log:/var/log/
-    ports:
-      - "9002:80"
     depends_on:
       - sun_admin_front_desktop # 确保前端服务先启动
     networks:
