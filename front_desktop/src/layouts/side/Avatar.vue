@@ -22,13 +22,8 @@
       </template>
     </el-dropdown>
 
-    <detail
-      :open="detailFlag"
-      @close="detailFlag = false"
-      v-if="detailFlag"
-    ></detail>
+    <detail @close="detailFlag = false" v-if="detailFlag"></detail>
     <edit-avatar
-      :open="editAvatarFlag"
       @close="editAvatarFlag = false"
       @submited="
         editAvatarFlag = false;
@@ -37,7 +32,6 @@
       v-if="editAvatarFlag"
     ></edit-avatar>
     <edit-password
-      :open="editPasswordFlag"
       @close="editPasswordFlag = false"
       @submited="editPasswordFlag = false"
       v-if="editPasswordFlag"

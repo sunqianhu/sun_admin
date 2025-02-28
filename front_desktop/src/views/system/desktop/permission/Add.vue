@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="添加权限"
     :draggable="true"
     align-center
@@ -53,7 +53,6 @@
 import { ref } from "vue";
 import axios from "@/helper/axios";
 
-const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const permission = ref({
   sort: 1,

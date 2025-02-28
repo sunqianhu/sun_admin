@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="修改部门"
     width="500"
     :draggable="true"
@@ -47,7 +47,7 @@ import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 import TypeSelect from "@/components/department/TypeSelect.vue";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const department = ref({});
 const departmentRef = ref();

@@ -48,7 +48,6 @@
     </div>
 
     <add
-      :open="addFlag"
       @close="addFlag = false"
       @submited="
         getTreeMenu();
@@ -57,7 +56,6 @@
       v-if="addFlag"
     ></add>
     <edit
-      :open="editFlag"
       @close="editFlag = false"
       @submited="
         getTreeMenu();

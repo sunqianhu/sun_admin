@@ -55,7 +55,6 @@
     </div>
 
     <add
-      :open="addFlag"
       @close="addFlag = false"
       @submited="
         getTreePermission();
@@ -64,7 +63,6 @@
       v-if="addFlag"
     ></add>
     <edit
-      :open="editFlag"
       @close="editFlag = false"
       @submited="
         getTreePermission();

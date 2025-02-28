@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="账号信息"
     width="500"
     :draggable="true"
@@ -33,7 +33,6 @@ import dayjs from "dayjs";
 import LabelValue from "@/components/LabelValue.vue";
 import LabelValueItem from "@/components/LabelValueItem.vue";
 
-const props = defineProps(["open"]);
 const emits = defineEmits(["close"]);
 const dialogLoading = ref(false);
 const user = ref({});

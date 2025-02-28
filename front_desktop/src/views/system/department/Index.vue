@@ -45,7 +45,6 @@
       </el-table>
     </div>
     <add
-      :open="addFlag"
       @close="addFlag = false"
       @submited="
         getTreeDepartment();
@@ -54,7 +53,6 @@
       v-if="addFlag"
     ></add>
     <edit
-      :open="editFlag"
       @close="editFlag = false"
       @submited="
         getTreeDepartment();

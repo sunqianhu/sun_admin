@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="添加字典"
     width="500"
     :draggable="true"
@@ -40,7 +40,6 @@
 import { ref } from "vue";
 import axios from "@/helper/axios";
 
-const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const dictionary = ref({
   sort: 1,

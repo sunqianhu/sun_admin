@@ -65,7 +65,6 @@
     </div>
 
     <add
-      :open="addFlag"
       @close="addFlag = false"
       @submited="
         getDictionaryPaginate();
@@ -74,7 +73,6 @@
       v-if="addFlag"
     ></add>
     <edit
-      :open="editFlag"
       @close="editFlag = false"
       @submited="
         getDictionaryPaginate();

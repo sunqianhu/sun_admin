@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="修改密码"
     width="500"
     :draggable="true"
@@ -33,7 +33,7 @@
 import { ref } from "vue";
 import axios from "@/helper/axios";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const user = ref({
   id: props.id,

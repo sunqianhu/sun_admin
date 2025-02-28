@@ -101,7 +101,6 @@
     </div>
 
     <add
-      :open="addFlag"
       @close="addFlag = false"
       @submited="
         getUserPaginate();
@@ -110,7 +109,6 @@
       v-if="addFlag"
     ></add>
     <edit
-      :open="editFlag"
       @close="editFlag = false"
       @submited="
         getUserPaginate();

@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="添加角色"
     width="700"
     :draggable="true"
@@ -78,7 +78,6 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
-const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const role = ref({
   desktop_permission_ids: [],

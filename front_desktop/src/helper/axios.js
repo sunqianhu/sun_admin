@@ -44,8 +44,19 @@ instance.interceptors.response.use(
     return data;
   },
   function (error) {
+    let message =
+      "状态码：" +
+      error.status +
+      "，错误码：" +
+      error.code +
+      "，错误描述：" +
+      error.message +
+      "，响应消息：" +
+      error.response?.data?.message +
+      "，请求网址：" +
+      error.config?.url;
     ElMessage({
-      message: error.message,
+      message: message,
       type: "error",
     });
     return Promise.reject(error);

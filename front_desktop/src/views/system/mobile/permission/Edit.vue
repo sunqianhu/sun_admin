@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="修改权限"
     width="600"
     :draggable="true"
@@ -53,7 +53,7 @@ import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 import TreePermissionSelect from "@/components/mobile/TreePermissionSelect.vue";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const permission = ref({});
 const permissionRef = ref();

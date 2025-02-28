@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="添加菜单"
     :draggable="true"
     align-center
@@ -56,7 +56,6 @@ import { ref } from "vue";
 import axios from "@/helper/axios";
 import TreeMenuSelect from "@/components/desktop/TreeMenuSelect.vue";
 
-const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
 const menu = ref({

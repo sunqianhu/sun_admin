@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="修改头像"
     width="800"
     :draggable="true"
@@ -71,11 +71,8 @@ import {
 import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 
-const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
-const user = ref({
-  id: props.id,
-});
+const user = ref({});
 const cropperRef = ref();
 const option = ref({
   img: "",

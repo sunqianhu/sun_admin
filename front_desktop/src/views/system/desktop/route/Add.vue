@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="添加路由"
     :draggable="true"
     align-center
@@ -59,7 +59,6 @@ import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 import LayoutSelect from "@/components/desktop/route/LayoutSelect.vue";
 
-const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
 const route = ref({

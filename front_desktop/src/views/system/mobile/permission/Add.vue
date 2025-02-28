@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="添加权限"
     width="600"
     :draggable="true"
@@ -53,7 +53,6 @@ import { ref } from "vue";
 import axios from "@/helper/axios";
 import TreePermissionSelect from "@/components/mobile/TreePermissionSelect.vue";
 
-const props = defineProps(["open"]);
 const emits = defineEmits(["close", "submited"]);
 const submitLoading = ref(false);
 const permission = ref({

@@ -52,7 +52,6 @@
     </div>
 
     <add
-      :open="addFlag"
       @close="addFlag = false"
       @submited="
         getRoutes();
@@ -61,7 +60,6 @@
       v-if="addFlag"
     ></add>
     <edit
-      :open="editFlag"
       @close="editFlag = false"
       @submited="
         getRoutes();

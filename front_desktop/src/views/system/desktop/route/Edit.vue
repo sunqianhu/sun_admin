@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="open"
+    :model-value="true"
     title="修改路由"
     :draggable="true"
     align-center
@@ -56,7 +56,7 @@ import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 import LayoutSelect from "@/components/desktop/route/LayoutSelect.vue";
 
-const props = defineProps(["open", "id"]);
+const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
 const route = ref({
