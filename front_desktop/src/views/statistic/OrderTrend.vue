@@ -158,9 +158,15 @@ const drawChart = () => {
  */
 const exp = async () => {
   expLoading.value = true;
-  const response = await axios.get("desktop/statistic.OrderTrend/exp", {
-    params: query.value,
-  });
+  let response;
+  try {
+    response = await axios.get("desktop/statistic.OrderTrend/exp", {
+      params: query.value,
+    });
+  } catch (error) {
+    expLoading.value = false;
+    return;
+  }
   expLoading.value = false;
   if (response.code != 1) {
     ElMessage({

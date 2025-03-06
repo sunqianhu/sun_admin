@@ -174,7 +174,13 @@ const submitForm = async () => {
   await roleRef.value.validate();
 
   submitLoading.value = true;
-  const response = await axios.post("desktop/system.role.Add/save", role.value);
+  let response;
+  try {
+    response = await axios.post("desktop/system.role.Add/save", role.value);
+  } catch (error) {
+    submitLoading.value = false;
+    return;
+  }
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
