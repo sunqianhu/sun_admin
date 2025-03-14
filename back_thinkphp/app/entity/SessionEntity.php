@@ -4,7 +4,18 @@ namespace app\entity;
 
 class SessionEntity
 {
-    public $userId = 0;
-    public $departmentId = 0;
-    public $token = '';
+    /**
+     * @var int 用户id
+     */
+    public int $userId = 0;
+
+    /**
+     * @var int 部门id
+     */
+    public int $departmentId = 0;
+
+    /**
+     * @var string 访问凭证
+     */
+    public string $token = '';
 }
