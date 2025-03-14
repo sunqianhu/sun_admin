@@ -2,6 +2,7 @@
 
 namespace app\service;
 
+use app\model\UserModel;
 use Exception;
 
 class CurdService
@@ -14,12 +15,13 @@ class CurdService
 
     /**
      * 构造函数
-     * @param $model
+     * @param $modelClass
+     * @throws Exception
      */
     public function __construct($modelClass)
     {
         if (!class_exists($modelClass)) {
-            throw new Exception('curd模型类不存在');
+            throw new Exception("Model class not found: {$modelClass}");
         }
         $this->curdModelClass = $modelClass;
     }
@@ -40,7 +42,7 @@ class CurdService
      * 修改
      * @param $id
      * @param $data
-     * @return void
+     * @return array
      * @throws Exception
      */
     public function edit($id, $data)
@@ -48,12 +50,15 @@ class CurdService
         if(isset($data['id'])){
             unset($data['id']);
         }
-
         $model = $this->curdModelClass::find($id);
         if (empty($model)) {
             throw new Exception('没有找到记录');
         }
+        if(empty($data)){
+            throw new Exception('没有修改任何字段');
+        }
         $model->save($data);
+        return $model->toArray();
     }
 
     /**
@@ -61,7 +66,7 @@ class CurdService
      * @param $field
      * @param $value
      * @param $data
-     * @return void
+     * @return int
      * @throws Exception
      */
     public function fieldEdit($field, $value, $data)
@@ -73,9 +78,10 @@ class CurdService
         $models = $this->curdModelClass::where($field, $value)
             ->select();
         if($models->isEmpty()){
-            return;
+            return 0;
         }
         $models->update($data);
+        return count($models);
     }
 
     /**
@@ -83,18 +89,21 @@ class CurdService
      * @param $field
      * @param $value
      * @param $data
-     * @return void
+     * @return int
      * @throws Exception
      */
     public function upsert($field, $value, $data)
     {
-        if(isset($data[$field])){
-            unset($data[$field]);
+        if(isset($data['id'])){
+            unset($data['id']);
         }
-
+        if(empty($data)){
+            throw new Exception('没有修改任何字段');
+        }
         $model = $this->curdModelClass::where($field, $value)
             ->findOrEmpty();
         $model->save($data);
+        return $model->id;
     }
 
     /**
@@ -104,6 +113,7 @@ class CurdService
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     public function delete($id)
     {
@@ -118,23 +128,25 @@ class CurdService
      * 通过字段删除
      * @param $field
      * @param $value
-     * @return void
+     * @return int
      */
     public function fieldDelete($field, $value)
     {
         $models = $this->curdModelClass::where($field, $value)
             ->select();
         if($models->isEmpty()){
-            return;
+            return 0;
         }
+        $count = count($models);
         $models->delete();
+        return $count;
     }
 
     /**
      * 得到一行记录
      * @param $id
      * @param $field
-     * @return mixed
+     * @return array
      */
     public function fetch($id, $field = '*')
     {
@@ -148,7 +160,7 @@ class CurdService
      * @param $whereField
      * @param $whereValue
      * @param $selectField
-     * @return mixed
+     * @return array
      */
     public function fieldFetch($whereField, $whereValue, $selectField = '*')
     {
@@ -168,7 +180,7 @@ class CurdService
     {
         $model = $this->curdModelClass::field($field)
             ->findOrEmpty($id);
-        return $model->$field;
+        return $model->{$field} ?? '';
     }
 
     /**
@@ -206,7 +218,7 @@ class CurdService
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
-     * @return mixed
+     * @return array
      */
     public function fieldFetchColumn($whereField, $whereValue, $selectField, $sortField = 'id', $sortDirection = 'asc')
     {
@@ -223,7 +235,7 @@ class CurdService
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
-     * @return mixed
+     * @return array
      */
     public function fetchLimit($offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
@@ -243,7 +255,7 @@ class CurdService
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
-     * @return mixed
+     * @return array
      */
     public function fieldFetchLimit($whereField, $whereValue, $offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
@@ -260,7 +272,7 @@ class CurdService
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
-     * @return mixed
+     * @return array
      */
     public function fetchAll($selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
@@ -277,7 +289,7 @@ class CurdService
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
-     * @return mixed
+     * @return array
      */
     public function fieldFetchAll($whereField, $whereValue, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
