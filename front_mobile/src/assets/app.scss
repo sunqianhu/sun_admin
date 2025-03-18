@@ -1,5 +1,3 @@
-@import "vant.scss";
-
 :root:root {
   //颜色
   --color-primary: #1989fa;
@@ -8,79 +6,51 @@
   --color-warning: #ff976a;
 
   //文字
-  --font-family-base: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-    Helvetica, Segoe UI, Arial, Roboto, "PingFang SC", "miui",
-    "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica,
+    Segoe UI, Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB",
+    "Microsoft Yahei", sans-serif;
   --font-family-price: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial,
     sans-serif;
 
-  --font-color-base: #323233;
-  --font-color-regular: #646566;
+  --font-color: #323233;
   --font-color-secondary: #969799;
   --font-color-placeholder: #c8c9cc;
   --font-color-disabled: #dcdee0;
 
-  --font-size-xs: 10px;
+  --font-size: 14px;
   --font-size-sm: 12px;
-  --font-size-md: 14px;
   --font-size-lg: 16px;
   --font-size-xl: 20px;
 
+  --font-bold: 500;
   --font-bold-thin: 400;
-  --font-bold-base: 500;
   --font-bold-bold: bold;
 
-  //行高
-  --line-height-xs: 14px;
-  --line-height-sm: 18px;
-  --line-height-md: 20px;
-  --line-height-lg: 22px;
-  --line-height-xl: 30px;
-
   //边框
+  --border-color: #ebedf0;
   --border-color-light: #f2f3f5;
-  --border-color-base: #ebedf0;
   --border-color-dark: #dcdee0;
 
   //圆角
+  --border-radius: 8px;
   --border-radius-sm: 4px;
-  --border-radius-md: 8px;
   --border-radius-lg: 16px;
   --border-radius-max: 999px;
 
   //背景
+  --background-color: #f2f3f5;
   --background-color-light: #ffffff;
-  --background-color-base: #f2f3f5;
   --background-color-dark: #ebedf0;
 
   //内边距
-  --padding-base: 4px;
-  --padding-xs: 8px;
-  --padding-sm: 12px;
-  --padding-md: 16px;
-  --padding-lg: 24px;
-  --padding-xl: 32px;
+  --padding: 16px;
+  --padding-sm: 8px;
+  --padding-lg: 32px;
 
   //外边距
-  --margin-base: 4px;
-  --margin-xs: 8px;
-  --margin-sm: 12px;
-  --margin-md: 16px;
-  --margin-lg: 24px;
-  --margin-xl: 32px;
-
-  //层级
-  --index-base: 1;
-  --index-top: 2000;
-  --index-popper: 3000;
-
-  //活跃
-  --active-color: #969799;
-  --active-opacity: 0.6;
-
-  //禁用
-  --disabled-color: #ebedf0;
-  --disabled-opacity: 0.5;
+  --margin: 16px;
+  --margin-sm: 8px;
+  --margin-lg: 32px;
 
   //阴影
   --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
@@ -88,12 +58,12 @@
   --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
 
   //动画
-  --animation-duration-base: 0.3s;
+  --animation-duration: 0.3s;
   --animation-duration-fast: 0.2s;
 
   //组件大小
+  --component-size: 32px;
   --component-size-sm: 24px;
-  --component-size-md: 32px;
   --component-size-lg: 40px;
 }
 
@@ -104,30 +74,29 @@ html {
 body {
   margin: 0px;
   padding: 0px;
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-md);
-  background-color: var(--background-color-base);
-  color: var(--font-color-base);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: 150%;
+  background-color: var(--background-color);
+  color: var(--font-color);
 }
 a {
-  color: #1989fa;
+  color: var(--color-primary);
   text-decoration: none;
   &:active {
     opacity: var(--active-opacity);
   }
 }
-
 pre,
 textarea {
   white-space: pre-wrap;
   word-wrap: break-word;
-  font-family: var(--font-family-base);
+  font-family: var(--font-family);
   margin: 0px;
   padding: 0px;
-  line-height: var(--line-height-md);
+  line-height: 150%;
 }
-.form-tip {
+.text-tip {
   color: var(--font-color-secondary);
   font-size: var(--font-size-sm);
 }

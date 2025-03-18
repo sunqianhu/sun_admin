@@ -13,7 +13,7 @@
           type="textarea"
           :rows="5"
         />
-        <div class="form-tip">一行一个</div>
+        <div class="text-tip">一行一个</div>
       </el-form-item>
       <el-form-item>
         <el-button
@@ -95,9 +95,9 @@ onMounted(() => {
 <style lang="scss" scoped>
 .index {
   background-color: var(--background-color-light);
-  padding: var(--padding-md);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--box-shadow-base);
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   .page-name {
     font-size: var(--font-size-xl);
     font-weight: var(font-weight-bold);

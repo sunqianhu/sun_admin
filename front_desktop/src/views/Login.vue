@@ -173,9 +173,9 @@ const submitForm = async () => {
   }
   .footer {
     position: absolute;
-    left: var(--margin-md);
-    right: var(--margin-md);
-    bottom: var(--margin-md);
+    left: var(--margin);
+    right: var(--margin);
+    bottom: var(--margin);
     z-index: 2;
     text-align: center;
     font-size: var(--font-size-sm);

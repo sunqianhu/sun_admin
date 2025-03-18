@@ -166,9 +166,9 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .rich-editor {
-  border: 1px solid var(--border-color-base);
+  border: 1px solid var(--border-color);
   .rich-editor__toolbar {
-    border-bottom: 1px solid var(--border-color-base);
+    border-bottom: 1px solid var(--border-color);
   }
 }
 </style>

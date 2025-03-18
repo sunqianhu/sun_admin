@@ -63,7 +63,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .index {
   .header {
-    padding: var(--padding-md);
+    padding: var(--padding);
     display: flex;
     align-items: center;
     .header__avatar {
@@ -74,7 +74,7 @@ onMounted(() => {
       }
     }
     .header__user {
-      margin-left: var(--margin-md);
+      margin-left: var(--margin);
       .header__name {
         font-size: var(--font-size-xl);
         font-weight: var(--font-bold-bold);
@@ -85,24 +85,24 @@ onMounted(() => {
     }
   }
   .body {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
     .moudles {
       .moudle {
         text-align: center;
-        border-radius: var(--border-radius-md);
-        padding: var(--padding-xs) 0px;
+        border-radius: var(--border-radius);
+        padding: var(--padding-sm) 0px;
         &:active {
-          background-color: var(--background-color-base);
+          background-color: var(--background-color);
         }
         .icon {
           font-size: 24px;
         }
         .text {
-          margin-top: var(--margin-xs);
+          margin-top: var(--margin-sm);
         }
       }
       .margin-bottom-md {
-        margin-bottom: var(--margin-md);
+        margin-bottom: var(--margin);
       }
     }
   }

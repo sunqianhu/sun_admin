@@ -27,11 +27,11 @@
         </el-form-item>
         <el-form-item label="权限标识" prop="key">
           <el-input v-model="permission.key" />
-          <div class="form-tip">全局定位标识，下划线分隔</div>
+          <div class="text-tip">全局定位标识，下划线分隔</div>
         </el-form-item>
         <el-form-item label="接口地址" prop="api_string">
           <el-input v-model="permission.api_string" type="textarea" rows="3" />
-          <div class="form-tip">
+          <div class="text-tip">
             后端接口地址一行一个，格式：应用/控制器/方法
           </div>
         </el-form-item>

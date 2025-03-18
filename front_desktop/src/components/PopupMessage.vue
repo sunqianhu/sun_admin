@@ -99,31 +99,31 @@ function playAudio() {
   background-color: var(--background-color-light);
   width: 400px;
   position: fixed;
-  right: var(--margin-md);
-  bottom: var(--margin-md);
+  right: var(--margin);
+  bottom: var(--margin);
   z-index: 3001;
-  box-shadow: var(--box-shadow-base);
-  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
 
   .popup-message__title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--margin-md) var(--margin-md) 0px var(--margin-md);
+    padding: var(--margin) var(--margin) 0px var(--margin);
     .popup-message__close {
       cursor: pointer;
       color: var(--font-color-secondary);
       &:hover {
-        color: var(--font-color-base);
+        color: var(--font-color);
       }
     }
   }
   .popup-message__content {
     .scrollbar {
-      padding: var(--padding-md);
+      padding: var(--padding);
       .item {
-        border-bottom: 1px solid var(--border-color-base);
-        padding: var(--padding-xs) 0px;
+        border-bottom: 1px solid var(--border-color);
+        padding: var(--padding-sm) 0px;
         &:last-child {
           border-bottom: none;
         }

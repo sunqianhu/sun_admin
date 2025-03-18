@@ -162,9 +162,9 @@ onMounted(() => {
 <style lang="scss" scoped>
 .index {
   background-color: var(--background-color-light);
-  padding: var(--padding-md);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--box-shadow-base);
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   .page-header {
     .page-header__name {
       font-size: var(--font-size-xl);
@@ -172,17 +172,17 @@ onMounted(() => {
     }
     .page-header__description {
       color: var(--font-color-secondary);
-      margin-left: var(--margin-md);
+      margin-left: var(--margin);
       font-size: var(--font-size-sm);
     }
   }
   .search {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
   }
   .toolbar {
   }
   .list {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
     :deep(th.el-table__cell) {
       background-color: var(--background-color-dark);
     }

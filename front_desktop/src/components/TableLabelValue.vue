@@ -147,13 +147,13 @@ onMounted(() => {
   width: 100%;
   border-collapse: collapse;
   .table-label-value__label {
-    border: 1px solid var(--border-color-base);
-    padding: var(--padding-xs) var(--padding-sm);
-    background-color: var(--background-color-base);
+    border: 1px solid var(--border-color);
+    padding: var(--padding-sm) var(--padding);
+    background-color: var(--background-color);
   }
   .table-label-value__value {
-    border: 1px solid var(--border-color-base);
-    padding: var(--padding-xs) var(--padding-sm);
+    border: 1px solid var(--border-color);
+    padding: var(--padding-sm) var(--padding);
   }
 }
 </style>

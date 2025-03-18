@@ -45,20 +45,19 @@ const props = defineProps({
         width: 4px;
         height: 16px;
         background-color: var(--color-primary);
-        margin-right: var(--margin-xs);
+        margin-right: 4px;
         border-radius: 2px;
       }
     }
     .flag-title-panel__sub-title {
       flex: 1;
-      margin-left: var(--margin-md);
+      margin-left: var(--margin);
       color: var(--font-color-secondary);
     }
     .flag-title-panel__actions {
     }
   }
   .flag-title-panel__body {
-    margin-top: var(--margin-xs);
   }
 }
 </style>

@@ -29,8 +29,8 @@ const props = defineProps({
 <style lang="scss" scoped>
 .card-panel {
   background: var(--background-color-light);
-  border-radius: var(--border-radius-md);
-  padding: var(--padding-md);
+  border-radius: var(--border-radius);
+  padding: var(--padding);
   .card-panel__header {
     display: flex;
     justify-content: space-between;
@@ -41,11 +41,11 @@ const props = defineProps({
     }
     .card-panel__actions {
       margin-left: auto;
-      margin-right: var(--margin-md);
+      margin-right: var(--margin);
     }
   }
   .card-panel__body {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
   }
 }
 </style>

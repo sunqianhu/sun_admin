@@ -110,14 +110,14 @@ window.onresize = () => {
         flex: 1;
       }
       .version {
-        padding-left: var(--margin-xs);
+        padding-left: var(--margin-sm);
         font-size: var(--font-size-sm);
         color: var(--font-color-secondary);
       }
     }
 
     .side-layout__workspace {
-      background-color: var(--background-color-base);
+      background-color: var(--background-color);
       .header {
         display: flex;
         align-items: center;
@@ -130,17 +130,17 @@ window.onresize = () => {
           display: flex;
           align-items: center;
           justify-content: flex-end;
-          padding-right: var(--padding-md);
+          padding-right: var(--padding);
           .header__message-navigation,
           .header__fullscreen,
           .header__light-dark,
           .header__avatar {
-            margin-left: var(--margin-md);
+            margin-left: var(--margin);
           }
         }
       }
       .body {
-        padding: var(--padding-md);
+        padding: var(--padding);
       }
     }
     &.side-layout__container--fold {

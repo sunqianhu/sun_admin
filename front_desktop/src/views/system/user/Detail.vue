@@ -112,9 +112,9 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .detail {
-  padding: var(--padding-md);
+  padding: var(--padding);
   .panel {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
     &:first-child {
       margin-top: 0px;
     }

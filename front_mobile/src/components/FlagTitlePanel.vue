@@ -51,14 +51,14 @@ const props = defineProps({
     }
     .flag-title-panel__sub-title {
       flex: 1;
-      margin-left: var(--margin-md);
+      margin-left: var(--margin);
       color: var(--font-color-secondary);
     }
     .flag-title-panel__actions {
     }
   }
   .flag-title-panel__body {
-    margin-top: var(--margin-xs);
+    margin-top: var(--margin-sm);
   }
 }
 </style>

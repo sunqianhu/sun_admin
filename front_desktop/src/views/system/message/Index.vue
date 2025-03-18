@@ -139,20 +139,20 @@ onMounted(() => {
 <style lang="scss" scoped>
 .index {
   background-color: var(--background-color-light);
-  padding: var(--padding-md);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--box-shadow-base);
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   .page-name {
     font-size: var(--font-size-xl);
     font-weight: var(font-weight-bold);
   }
   .search {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
   }
   .list {
     .message {
-      padding: var(--padding-md);
-      border-bottom: 1px solid var(--border-color-base);
+      padding: var(--padding);
+      border-bottom: 1px solid var(--border-color);
       .message__header {
         .message__no-read {
           color: var(--color-danger);
@@ -162,17 +162,17 @@ onMounted(() => {
           font-weight: var(--font-weight-bold);
         }
         .message__time {
-          margin-left: var(--margin-md);
+          margin-left: var(--margin);
           color: var(--font-color-secondary);
         }
       }
       .message__content {
-        margin-top: var(--margin-md);
+        margin-top: var(--margin);
       }
     }
   }
   .pagination {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
   }
 }
 </style>

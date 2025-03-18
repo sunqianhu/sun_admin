@@ -20,6 +20,6 @@ useToggle(isDark);
 
 <style lang="scss">
 body {
-  background-color: var(--background-color-base);
+  background-color: var(--background-color);
 }
 </style>

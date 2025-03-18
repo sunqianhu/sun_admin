@@ -71,7 +71,7 @@ const submitForm = async () => {
 .login {
   .form {
     .button-wrap {
-      padding: var(--padding-md);
+      padding: var(--padding);
     }
   }
 }

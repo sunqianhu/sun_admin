@@ -37,7 +37,7 @@
               <el-radio :value="1">是</el-radio>
               <el-radio :value="0">否</el-radio>
             </el-radio-group>
-            <div class="form-tip">返回页后页面不重新载入数据</div>
+            <div class="text-tip">返回页后页面不重新载入数据</div>
           </div>
         </el-form-item>
         <el-form-item label="排序" prop="sort">

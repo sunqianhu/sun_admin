@@ -227,11 +227,11 @@ onMounted(() => {
       }
     }
     .actions {
-      margin-top: var(--margin-md);
+      margin-top: var(--margin);
       .upload-image {
         display: inline-block;
         vertical-align: middle;
-        margin-right: var(--margin-md);
+        margin-right: var(--margin);
       }
     }
   }
@@ -252,7 +252,7 @@ onMounted(() => {
       }
     }
     .save {
-      margin-top: var(--margin-md);
+      margin-top: var(--margin);
       text-align: center;
     }
   }

@@ -6,26 +6,27 @@
   --color-danger: #f56c6c;
 
   //文字
-  --font-color-base: #e5eaf3;
-  --font-color-regular: #cfd3dc;
+  --font-color: #e5eaf3;
   --font-color-secondary: #a3a6ad;
   --font-color-placeholder: #8d9095;
   --font-color-disabled: #6c6e72;
 
   //边框
+  --border-color: #4c4d4f;
   --border-color-light: #414243;
-  --border-color-base: #4c4d4f;
   --border-color-dark: #58585b;
 
   //背景
+  --background-color: #303030;
   --background-color-light: #0a0a0a;
-  --background-color-base: #303030;
   --background-color-dark: #39393a;
+  --background-color-opacity: rgba(10, 10, 10, 0.8);
   --background-color-opacity-light: rgba(10, 10, 10, 0.9);
+  --background-color-opacity-dark: rgba(10, 10, 10, 0.7);
+}
 
-  //活跃
-  --active-color: #a3a6ad;
-
-  //禁用
-  --disabled-color: #6c6e72;
+.dark {
+  .el-dialog {
+    background-color: var(--background-color-light);
+  }
 }

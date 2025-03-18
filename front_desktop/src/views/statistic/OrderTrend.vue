@@ -194,9 +194,9 @@ onMounted(() => {
 <style lang="scss" scoped>
 .order-trend {
   background-color: var(--background-color-light);
-  padding: var(--padding-md);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--box-shadow-base);
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   .page-header {
     display: flex;
     .page-header__name {
@@ -205,7 +205,7 @@ onMounted(() => {
     }
     .page-header__description {
       color: var(--font-color-secondary);
-      margin-left: var(--margin-md);
+      margin-left: var(--margin);
       font-size: var(--font-size-sm);
       flex: 1;
     }
@@ -213,14 +213,14 @@ onMounted(() => {
     }
   }
   .search {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
   }
   .chart {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
     height: 200px;
   }
   .list {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
     width: 100%;
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-dark);

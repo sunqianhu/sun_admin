@@ -62,7 +62,7 @@ onMounted(() => {
   .user {
   }
   .button-wrap {
-    padding: var(--padding-md);
+    padding: var(--padding);
   }
 }
 </style>

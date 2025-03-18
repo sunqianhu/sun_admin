@@ -339,7 +339,7 @@ onMounted(() => {
   .welcome {
     background: var(--background-color-light);
     border-radius: var(--border-radius-sm);
-    padding: var(--padding-md);
+    padding: var(--padding);
     display: flex;
     align-items: center;
     .welcome__icon {
@@ -354,16 +354,16 @@ onMounted(() => {
     }
   }
   .count-statistic {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin);
     .count-item {
-      padding: var(--padding-md);
+      padding: var(--padding);
       background-color: var(--background-color-light);
       border-radius: var(--border-radius-sm);
-      margin-bottom: var(--margin-md);
+      margin-bottom: var(--margin);
       .count-item__name {
       }
       .count-item__count {
-        margin-top: var(--margin-md);
+        margin-top: var(--margin);
         .count-item__icon {
           font-size: var(--font-size-xl);
           color: #8595f4;
@@ -379,7 +379,7 @@ onMounted(() => {
   }
   .modules {
     .module {
-      margin-bottom: var(--margin-md);
+      margin-bottom: var(--margin);
       .module__chart {
         width: 100%;
         height: 250px;

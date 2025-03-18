@@ -11,7 +11,7 @@ const props = defineProps({});
 <style lang="scss" scoped>
 .no-header-panel {
   background: var(--background-color-light);
-  border-radius: var(--border-radius-md);
-  padding: var(--padding-md);
+  border-radius: var(--border-radius);
+  padding: var(--padding);
 }
 </style>
