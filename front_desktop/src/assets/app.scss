@@ -1,5 +1,8 @@
-@use "element-plus/theme-chalk/dark/css-vars.css";
-@use "dark.scss";
+@use "element_plus/light/css-vars.scss" as *;
+@use "light.scss" as *;
+@use "element-plus/theme-chalk/dark/css-vars.css" as *;
+@use "element_plus/dark/css-vars.scss" as *;
+@use "dark.scss" as *;
 
 :root:root {
   //颜色
@@ -103,9 +106,6 @@ pre {
 .text-tip {
   color: var(--font-color-secondary);
   font-size: var(--font-size-sm);
-}
-.el-dialog {
-  background-color: var(--background-color-light);
 }
 .text-ellipsis {
   overflow: hidden;

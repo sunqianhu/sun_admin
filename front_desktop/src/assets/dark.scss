@@ -24,9 +24,3 @@
   --background-color-opacity-light: rgba(10, 10, 10, 0.9);
   --background-color-opacity-dark: rgba(10, 10, 10, 0.7);
 }
-
-.dark {
-  .el-dialog {
-    background-color: var(--background-color-light);
-  }
-}
