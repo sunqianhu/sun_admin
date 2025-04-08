@@ -20,7 +20,7 @@ class CrudService
     public function __construct($modelClass)
     {
         if (!class_exists($modelClass)) {
-            throw new Exception("Model class not found: {$modelClass}");
+            throw new Exception("模型类不存在：{$modelClass}");
         }
         $this->crudModelClass = $modelClass;
     }
@@ -41,7 +41,7 @@ class CrudService
      * 修改
      * @param $id
      * @param $data
-     * @return array
+     * @return boolean
      * @throws Exception
      */
     public function edit($id, $data)
@@ -49,16 +49,14 @@ class CrudService
         if(isset($data['id'])){
             unset($data['id']);
         }
+        if(empty($data)){
+            throw new Exception('修改的数据不能为空');
+        }
         $model = $this->crudModelClass::find($id);
         if (empty($model)) {
-            throw new Exception('没有找到记录');
+            throw new Exception('没有找到待修改的记录');
         }
-        if(empty($data)){
-            throw new Exception('没有修改任何字段');
-        }
-
-        $model->save($data);
-        return $model->toArray();
+        return $model->save($data);
     }
 
     /**
@@ -66,22 +64,17 @@ class CrudService
      * @param $field
      * @param $value
      * @param $data
-     * @return int
+     * @return boolean
      * @throws Exception
      */
     public function fieldEdit($field, $value, $data)
     {
-        if(isset($data[$field])){
-            unset($data[$field]);
-        }
-
         $models = $this->crudModelClass::where($field, $value)
             ->select();
         if($models->isEmpty()){
-            return 0;
+            throw new Exception('没有找到待修改的记录');
         }
-        $models->update($data);
-        return count($models);
+        return $models->update($data);
     }
 
     /**
@@ -94,12 +87,6 @@ class CrudService
      */
     public function upsert($field, $value, $data)
     {
-        if(isset($data['id'])){
-            unset($data['id']);
-        }
-        if(empty($data)){
-            throw new Exception('没有修改任何字段');
-        }
         $model = $this->crudModelClass::where($field, $value)
             ->findOrEmpty();
         $model->save($data);
@@ -109,37 +96,32 @@ class CrudService
     /**
      * 删除
      * @param $id
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return boolean
      * @throws Exception
      */
     public function delete($id)
     {
         $model = $this->crudModelClass::find($id);
         if (empty($model)) {
-            throw new Exception('没有找到记录');
+            throw new Exception('没有找到待删除的记录');
         }
-        $model->delete();
+        return $model->delete();
     }
 
     /**
      * 通过字段删除
      * @param $field
      * @param $value
-     * @return int
+     * @return boolean
      */
     public function fieldDelete($field, $value)
     {
         $models = $this->crudModelClass::where($field, $value)
             ->select();
         if($models->isEmpty()){
-            return 0;
+            throw new Exception('没有找到待删除的记录');
         }
-        $count = count($models);
-        $models->delete();
-        return $count;
+        return $models->delete();
     }
 
     /**
@@ -178,9 +160,7 @@ class CrudService
      */
     public function fetchValue($id, $field)
     {
-        $model = $this->crudModelClass::field($field)
-            ->findOrEmpty($id);
-        return $model->{$field} ?? '';
+        return $this->fieldFetchValue('id', $id, $field);
     }
 
     /**
