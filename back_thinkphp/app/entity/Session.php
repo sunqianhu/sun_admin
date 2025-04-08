@@ -2,7 +2,7 @@
 
 namespace app\entity;
 
-class SessionEntity
+class Session
 {
     /**
      * @var int 用户id

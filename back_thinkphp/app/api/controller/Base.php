@@ -4,7 +4,7 @@ namespace app\api\controller;
 
 use app\BaseController;
 use app\service\api\SessionService;
-use app\entity\SessionEntity;
+use app\entity\Session;
 use app\service\OperationLogService;
 use Exception;
 use think\Response;
@@ -16,7 +16,7 @@ class Base extends BaseController
 {
     public $isTokenAuth = true; //是否token认证
     public $noTokenAuthActions = []; //不需要token认证的方法
-    public SessionEntity $session;
+    public Session $session;
 
     /**
      * 初始化
@@ -25,13 +25,13 @@ class Base extends BaseController
     function initialize()
     {
         parent::initialize();
-        $session = new SessionService();
-        $session->isTokenAuth = $this->isTokenAuth;
-        $session->noTokenAuthActions = $this->noTokenAuthActions;
+        $sessionService = new SessionService();
+        $sessionService->isTokenAuth = $this->isTokenAuth;
+        $sessionService->noTokenAuthActions = $this->noTokenAuthActions;
 
         //ip
         try {
-            $session->ipAuth($this->request->ip());
+            $sessionService->ipAuth($this->request->ip());
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null)->send();
             exit;
@@ -42,7 +42,7 @@ class Base extends BaseController
         //token
         try {
             $token = $this->request->header('token', '');
-            $this->session = $session->tokenAuth($token, $action);
+            $this->session = $sessionService->tokenAuth($token, $action);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 200, 2)->send();
             exit;

@@ -2,7 +2,7 @@
 
 namespace app\service\api;
 
-use app\entity\SessionEntity;
+use app\entity\Session;
 use app\model\UserModel;
 use app\service\ConfigService;
 use app\service\LoginLogService;
@@ -18,7 +18,7 @@ class SessionService
      * @param $account
      * @param $password
      * @param $ip
-     * @return SessionEntity
+     * @return Session
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -54,7 +54,7 @@ class SessionService
         $user->last_login_ip = $ip;
         $user->save();
 
-        $session = new SessionEntity();
+        $session = new Session();
         $session->userId = $user->id;
         $session->departmentId = $user->department_id;
         $session->token = $token;
@@ -97,7 +97,7 @@ class SessionService
      * token认证
      * @param $token
      * @param $action
-     * @return SessionEntity
+     * @return Session
      */
     function tokenAuth($token, $action)
     {
@@ -110,7 +110,7 @@ class SessionService
             try {
                 return $jwt->resolverToken($token);
             } catch (Exception $exception) {
-                return new SessionEntity();
+                return new Session();
             }
         }
 

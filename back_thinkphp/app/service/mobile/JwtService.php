@@ -2,9 +2,7 @@
 
 namespace app\service\mobile;
 
-use app\entity\SessionEntity;
-use app\model\mobile\TokenModel;
-use app\model\UserModel;
+use app\entity\Session;
 use app\service\UserService;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
@@ -81,7 +79,7 @@ class JwtService
             throw new Exception('没有找到用户记录');
         }
 
-        $session = new SessionEntity();
+        $session = new Session();
         $session->userId = $userRecord['id'];
         $session->departmentId = $userRecord['department_id'];
         $session->token = $token;

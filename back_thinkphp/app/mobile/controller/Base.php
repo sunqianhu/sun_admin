@@ -4,7 +4,7 @@ namespace app\mobile\controller;
 
 use app\BaseController;
 use app\service\mobile\SessionService;
-use app\entity\SessionEntity;
+use app\entity\Session;
 use app\service\OperationLogService;
 use Exception;
 use think\Response;
@@ -18,7 +18,7 @@ class Base extends BaseController
     public $noTokenAuthActions = []; //不需要token认证的方法
     public $isApiAuth = true; //是否接口认证
     public $noApiAuthActions = []; //不需要接口认证的方法
-    public SessionEntity $session;
+    public Session $session;
 
     /**
      * 初始化
@@ -27,15 +27,15 @@ class Base extends BaseController
     function initialize()
     {
         parent::initialize();
-        $session = new SessionService();
-        $session->isTokenAuth = $this->isTokenAuth;
-        $session->noTokenAuthActions = $this->noTokenAuthActions;
-        $session->isApiAuth = $this->isApiAuth;
-        $session->noApiAuthActions = $this->noApiAuthActions;
+        $sessionService = new SessionService();
+        $sessionService->isTokenAuth = $this->isTokenAuth;
+        $sessionService->noTokenAuthActions = $this->noTokenAuthActions;
+        $sessionService->isApiAuth = $this->isApiAuth;
+        $sessionService->noApiAuthActions = $this->noApiAuthActions;
 
         //ip
         try {
-            $session->ipAuth($this->request->ip());
+            $sessionService->ipAuth($this->request->ip());
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null)->send();
             exit;
@@ -46,7 +46,7 @@ class Base extends BaseController
         //token
         try {
             $token = $this->request->header('token', '');
-            $this->session = $session->tokenAuth($token, $action);
+            $this->session = $sessionService->tokenAuth($token, $action);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 200, 2)->send();
             exit;
@@ -56,7 +56,7 @@ class Base extends BaseController
         try {
             $api = $this->request->baseUrl();
             $api = ltrim($api, '/');
-            $session->apiAuth($this->session->userId, $api, $action);
+            $sessionService->apiAuth($this->session->userId, $api, $action);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
