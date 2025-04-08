@@ -5,7 +5,7 @@ namespace app\desktop\controller\layouts\side\user;
 use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\service\UserService;
-use app\service\FileService;
+use Sunqianhu\Helper\File;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -50,7 +50,7 @@ class EditAvatar extends Base
             return $this->error($exception->getMessage());
         }
 
-        $file = new FileService();
+        $file = new File();
         $url = $file->getUrl($path);
 
         return $this->success('修改成功', $url);

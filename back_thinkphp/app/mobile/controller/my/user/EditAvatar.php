@@ -3,7 +3,7 @@
 namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
-use app\service\FileService;
+use Sunqianhu\Helper\File;
 use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
@@ -34,7 +34,7 @@ class EditAvatar extends Base
             return $this->error($exception->getMessage());
         }
 
-        $file = new FileService();
+        $file = new File();
         $url = $file->getUrl($path);
         return $this->success('修改成功', $url);
     }

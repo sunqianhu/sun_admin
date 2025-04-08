@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b977dc2d512986c490a0e0687793d168",
+    "content-hash": "495057b62bdda09077b267e28814efc4",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -1373,23 +1373,17 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.2.1",
+            "version": "1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "8a8771e556fc9a12e2568f4a3ee6386c53d8e802"
+                "reference": "89731128060037f26d03ccaf0370db4e4ea3200c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/8a8771e556fc9a12e2568f4a3ee6386c53d8e802",
-                "reference": "8a8771e556fc9a12e2568f4a3ee6386c53d8e802",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/89731128060037f26d03ccaf0370db4e4ea3200c",
+                "reference": "89731128060037f26d03ccaf0370db4e4ea3200c",
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -1407,12 +1401,12 @@
                     "email": "469661426@qq.com"
                 }
             ],
-            "description": "php助手类包含项目开发过程中各种常用的类",
+            "description": "php助手类包含项目开发过程中各种常用的工具类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.2.1"
+                "source": "https://github.com/sunqianhu/helper/tree/1.2.5"
             },
-            "time": "2025-04-08T06:47:23+00:00"
+            "time": "2025-04-08T10:03:54+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

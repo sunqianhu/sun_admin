@@ -3,7 +3,7 @@
 namespace app\desktop\controller\statistic;
 
 use app\desktop\controller\Base;
-use app\service\FileService;
+use Sunqianhu\Helper\File;
 use app\service\order\ExcelService;
 use app\service\order\StatisticService;
 use app\validate\OrderValidate;
@@ -72,7 +72,7 @@ class OrderTrend extends Base
             return $this->error($exception->getMessage());
         }
 
-        $file = new FileService();
+        $file = new File();
         $url = $file->getUrl($path);
 
         return $this->success('获取成功', $url);

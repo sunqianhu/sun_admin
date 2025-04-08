@@ -2,7 +2,7 @@
 
 namespace app\service\order;
 
-use app\service\FileService;
+use Sunqianhu\Helper\File;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -35,7 +35,7 @@ class ExcelService
         $activeSheet->getColumnDimension('A')->setAutoSize(true);
         $activeSheet->getColumnDimension('B')->setAutoSize(true);
 
-        $file = new FileService();
+        $file = new File();
         $dir = $file->makeModuleDir('order');
         $fileName = md5(time().'_sun_'.rand(1000, 9999)).'.xlsx';
         $path = $dir.$fileName;

@@ -5,6 +5,7 @@ namespace app\service;
 use app\model\UserModel;
 use app\model\UserRoleModel;
 use Exception;
+use Sunqianhu\Helper\File;
 use Sunqianhu\Helper\Image;
 use think\facade\Cache;
 use think\facade\Db;
@@ -175,7 +176,7 @@ class UserService extends CrudService
             return $site->getUrl($path);
         }
 
-        $file = new FileService();
+        $file = new File();
         return $file->getUrl($path);
     }
 
@@ -202,11 +203,11 @@ class UserService extends CrudService
      */
     public function editAvatar($id, $base64ImageContent)
     {
-        $file = new FileService();
-        $path = $file->saveBase64ImageContentToFile('avatar', $base64ImageContent);
-
-        $fullPath = $file->getFullPath($path);
         $image = new Image();
+        $path = $image->saveBase64ContentToFile('avatar', $base64ImageContent);
+
+        $file = new File();
+        $fullPath = $file->getFullPath($path);
         $image->createThumbnail($fullPath, $fullPath, 200);
 
         $this->edit($id, [

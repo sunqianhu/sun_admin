@@ -2,7 +2,7 @@
 
 namespace app\desktop\controller;
 
-use app\service\FileService;
+use Sunqianhu\Helper\File;
 use app\validate\FileUploadValidate;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
@@ -38,7 +38,7 @@ class FileUpload extends Base
             return $this->error($exception->getMessage());
         }
 
-        $file = new FileService();
+        $file = new File();
         $path = str_replace('\\', '/', $path);
         $url = $file->getUrl($path);
 
