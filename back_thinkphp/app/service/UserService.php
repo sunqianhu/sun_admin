@@ -196,7 +196,7 @@ class UserService extends CrudService
      * 修改头像
      * @param $id
      * @param $base64ImageContent
-     * @return void
+     * @return string
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException

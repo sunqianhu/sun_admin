@@ -20,7 +20,5 @@ return [
             'visibility' => 'public',
         ],
         // 更多的磁盘配置信息
-    ],
-    'root_path'=>env('FILESYSTEM_ROOT_PATH', app()->getRootPath() . 'public/storage/'), // 根目录
-    'access_prefix'=>env('FILESYSTEM_ACCESS_PREFIX', '/api/storage/') // 访问前缀
+    ]
 ];
