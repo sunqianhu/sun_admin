@@ -208,8 +208,8 @@ class UserService extends CrudService
 
         $file = new File();
         $fullPath = $file->getFullPath($path);
-        $image->createThumbnail($fullPath, $fullPath, 200);
-
+        $image->generateThumbnail($fullPath, $fullPath, 200);
+        
         $this->edit($id, [
             'avatar' => $path
         ]);
