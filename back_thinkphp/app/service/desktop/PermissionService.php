@@ -3,11 +3,11 @@
 namespace app\service\desktop;
 
 use app\model\desktop\PermissionModel;
-use app\service\CurdService;
+use app\service\CrudService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
-class PermissionService extends CurdService
+class PermissionService extends CrudService
 {
     /**
      * 构造函数

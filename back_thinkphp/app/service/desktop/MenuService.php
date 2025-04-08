@@ -3,11 +3,11 @@
 namespace app\service\desktop;
 
 use app\model\desktop\MenuModel;
-use app\service\CurdService;
+use app\service\CrudService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
-class MenuService extends CurdService
+class MenuService extends CrudService
 {
     /**
      * 构造函数

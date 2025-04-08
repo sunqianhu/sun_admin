@@ -4,7 +4,7 @@ namespace app\service;
 
 use app\model\LoginLogModel;
 
-class LoginLogService extends CurdService
+class LoginLogService extends CrudService
 {
     /**
      * 构造函数

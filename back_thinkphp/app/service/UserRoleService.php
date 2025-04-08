@@ -5,7 +5,7 @@ namespace app\service;
 use app\model\UserRoleModel;
 use Exception;
 
-class UserRoleService extends CurdService
+class UserRoleService extends CrudService
 {
     /**
      * 构造函数

@@ -6,7 +6,7 @@ use app\model\RoleModel;
 use Exception;
 use think\facade\Db;
 
-class RoleService extends CurdService
+class RoleService extends CrudService
 {
     /**
      * 构造函数

@@ -5,7 +5,7 @@ namespace app\service;
 use app\model\OperationLogModel;
 use Exception;
 
-class OperationLogService extends CurdService
+class OperationLogService extends CrudService
 {
     /**
      * 构造函数

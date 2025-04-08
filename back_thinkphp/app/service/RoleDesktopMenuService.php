@@ -4,7 +4,7 @@ namespace app\service;
 
 use app\model\RoleDesktopMenuModel;
 
-class RoleDesktopMenuService extends CurdService
+class RoleDesktopMenuService extends CrudService
 {
     /**
      * 构造函数

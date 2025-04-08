@@ -6,7 +6,7 @@ namespace app\command;
 use app\model\ConfigModel;
 use app\model\RoleModel;
 use app\model\UserModel;
-use app\service\CurdService;
+use app\service\CrudService;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;

@@ -9,7 +9,7 @@ use Sunqianhu\Helper\Image;
 use think\facade\Cache;
 use think\facade\Db;
 
-class UserService extends CurdService
+class UserService extends CrudService
 {
     /**
      * 构造函数

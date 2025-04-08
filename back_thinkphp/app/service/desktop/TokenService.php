@@ -3,10 +3,10 @@
 namespace app\service\desktop;
 
 use app\model\desktop\TokenModel;
-use app\service\CurdService;
+use app\service\CrudService;
 use Exception;
 
-class TokenService extends CurdService
+class TokenService extends CrudService
 {
     /**
      * 构造函数

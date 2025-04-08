@@ -36,8 +36,8 @@ class Detail extends Base
      */
     public function logout()
     {
-        $session = new SessionService();
-        $session->logout($this->session->token);
+        $sessionService = new SessionService();
+        $sessionService->logout($this->session->token);
 
         return $this->success("退出登录成功");
     }

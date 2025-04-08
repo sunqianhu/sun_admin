@@ -4,7 +4,7 @@ namespace app\service;
 
 use app\model\RoleDesktopRouteModel;
 
-class RoleDesktopRouteService extends CurdService
+class RoleDesktopRouteService extends CrudService
 {
     /**
      * 构造函数

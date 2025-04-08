@@ -7,7 +7,7 @@ use think\facade\Db;
 use think\facade\Queue;
 use Exception;
 
-class MessageService extends CurdService
+class MessageService extends CrudService
 {
     /**
      * 构造函数

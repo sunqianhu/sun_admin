@@ -3,12 +3,12 @@
 namespace app\service\desktop;
 
 use app\model\desktop\RouteModel;
-use app\service\CurdService;
+use app\service\CrudService;
 use app\service\DictionaryService;
 use app\service\SingletonFactoryService;
 use Exception;
 
-class RouteService extends CurdService
+class RouteService extends CrudService
 {
     /**
      * 构造函数

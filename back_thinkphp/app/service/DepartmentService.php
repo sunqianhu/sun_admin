@@ -8,7 +8,7 @@ use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\facade\Cache;
 
-class DepartmentService extends CurdService
+class DepartmentService extends CrudService
 {
     /**
      * 构造函数

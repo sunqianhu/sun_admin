@@ -4,7 +4,7 @@ namespace app\service;
 
 use app\model\RoleDesktopPermissionModel;
 
-class RoleDesktopPermissionService extends CurdService
+class RoleDesktopPermissionService extends CrudService
 {
     /**
      * 构造函数

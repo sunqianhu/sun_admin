@@ -4,7 +4,7 @@ namespace app\service;
 
 use app\model\RoleMobilePermissionModel;
 
-class RoleMobilePermissionService extends CurdService
+class RoleMobilePermissionService extends CrudService
 {
     /**
      * 构造函数

@@ -6,7 +6,7 @@ use app\model\DictionaryModel;
 use Exception;
 use think\facade\Cache;
 
-class DictionaryService extends CurdService
+class DictionaryService extends CrudService
 {
     /**
      * @var int 有效期

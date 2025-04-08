@@ -2,16 +2,15 @@
 
 namespace app\service;
 
-use app\model\UserModel;
 use Exception;
 
-class CurdService
+class CrudService
 {
     /**
-     * curd模型类
+     * crud模型类
      * @var string
      */
-    protected string $curdModelClass;
+    protected string $crudModelClass;
 
     /**
      * 构造函数
@@ -23,7 +22,7 @@ class CurdService
         if (!class_exists($modelClass)) {
             throw new Exception("Model class not found: {$modelClass}");
         }
-        $this->curdModelClass = $modelClass;
+        $this->crudModelClass = $modelClass;
     }
 
     /**
@@ -33,7 +32,7 @@ class CurdService
      */
     public function add($data)
     {
-        $model = new $this->curdModelClass();
+        $model = new $this->crudModelClass();
         $model->save($data);
         return $model->id;
     }
@@ -50,13 +49,14 @@ class CurdService
         if(isset($data['id'])){
             unset($data['id']);
         }
-        $model = $this->curdModelClass::find($id);
+        $model = $this->crudModelClass::find($id);
         if (empty($model)) {
             throw new Exception('没有找到记录');
         }
         if(empty($data)){
             throw new Exception('没有修改任何字段');
         }
+
         $model->save($data);
         return $model->toArray();
     }
@@ -75,7 +75,7 @@ class CurdService
             unset($data[$field]);
         }
 
-        $models = $this->curdModelClass::where($field, $value)
+        $models = $this->crudModelClass::where($field, $value)
             ->select();
         if($models->isEmpty()){
             return 0;
@@ -100,7 +100,7 @@ class CurdService
         if(empty($data)){
             throw new Exception('没有修改任何字段');
         }
-        $model = $this->curdModelClass::where($field, $value)
+        $model = $this->crudModelClass::where($field, $value)
             ->findOrEmpty();
         $model->save($data);
         return $model->id;
@@ -117,7 +117,7 @@ class CurdService
      */
     public function delete($id)
     {
-        $model = $this->curdModelClass::find($id);
+        $model = $this->crudModelClass::find($id);
         if (empty($model)) {
             throw new Exception('没有找到记录');
         }
@@ -132,7 +132,7 @@ class CurdService
      */
     public function fieldDelete($field, $value)
     {
-        $models = $this->curdModelClass::where($field, $value)
+        $models = $this->crudModelClass::where($field, $value)
             ->select();
         if($models->isEmpty()){
             return 0;
@@ -150,7 +150,7 @@ class CurdService
      */
     public function fetch($id, $field = '*')
     {
-        $model = $this->curdModelClass::field($field)
+        $model = $this->crudModelClass::field($field)
             ->findOrEmpty($id);
         return $model->toArray();
     }
@@ -164,7 +164,7 @@ class CurdService
      */
     public function fieldFetch($whereField, $whereValue, $selectField = '*')
     {
-        $model = $this->curdModelClass::field($selectField)
+        $model = $this->crudModelClass::field($selectField)
             ->where($whereField, $whereValue)
             ->findOrEmpty();
         return $model->toArray();
@@ -178,7 +178,7 @@ class CurdService
      */
     public function fetchValue($id, $field)
     {
-        $model = $this->curdModelClass::field($field)
+        $model = $this->crudModelClass::field($field)
             ->findOrEmpty($id);
         return $model->{$field} ?? '';
     }
@@ -192,7 +192,7 @@ class CurdService
      */
     public function fieldFetchValue($whereField, $whereValue, $selectField)
     {
-        return $this->curdModelClass::field($selectField)
+        return $this->crudModelClass::field($selectField)
             ->where($whereField, $whereValue)
             ->value($selectField) ?? '';
     }
@@ -206,7 +206,7 @@ class CurdService
      */
     public function fetchColumn($field, $sortField = 'id', $sortDirection = 'asc')
     {
-        return $this->curdModelClass::field($field)
+        return $this->crudModelClass::field($field)
             ->order($sortField, $sortDirection)
             ->column($field);
     }
@@ -222,7 +222,7 @@ class CurdService
      */
     public function fieldFetchColumn($whereField, $whereValue, $selectField, $sortField = 'id', $sortDirection = 'asc')
     {
-        return $this->curdModelClass::field($selectField)
+        return $this->crudModelClass::field($selectField)
             ->where($whereField, $whereValue)
             ->order($sortField, $sortDirection)
             ->column($selectField);
@@ -239,7 +239,7 @@ class CurdService
      */
     public function fetchLimit($offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::field($selectField)
+        $models = $this->crudModelClass::field($selectField)
             ->order($sortField, $sortDirection)
             ->limit($offset, $length)
             ->select();
@@ -259,7 +259,7 @@ class CurdService
      */
     public function fieldFetchLimit($whereField, $whereValue, $offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::field($selectField)
+        $models = $this->crudModelClass::field($selectField)
             ->where($whereField, $whereValue)
             ->order($sortField, $sortDirection)
             ->limit($offset, $length)
@@ -276,7 +276,7 @@ class CurdService
      */
     public function fetchAll($selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::field($selectField)
+        $models = $this->crudModelClass::field($selectField)
             ->order($sortField, $sortDirection)
             ->select();
         return $models->toArray();
@@ -293,7 +293,7 @@ class CurdService
      */
     public function fieldFetchAll($whereField, $whereValue, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->curdModelClass::field($selectField)
+        $models = $this->crudModelClass::field($selectField)
             ->where($whereField, $whereValue)
             ->order($sortField, $sortDirection)
             ->select();
