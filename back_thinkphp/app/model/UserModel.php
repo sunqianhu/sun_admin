@@ -10,7 +10,7 @@ class UserModel extends BaseModel
 
     /**
      * 部门
-     * @return \think\model\relation\BelongsToMany
+     * @return \think\model\relation\BelongsTo
      */
     public function department()
     {
@@ -58,7 +58,7 @@ class UserModel extends BaseModel
      * 得到部门名字
      * @param $value
      * @param $data
-     * @return array
+     * @return string
      */
     public function getDepartmentNameAttr($value, $data){
         if(empty($this->department)){
