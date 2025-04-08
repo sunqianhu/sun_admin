@@ -5,7 +5,7 @@ namespace app\service\desktop;
 use app\model\desktop\RouteModel;
 use app\service\CrudService;
 use app\service\DictionaryService;
-use app\service\SingletonFactoryService;
+use Sunqianhu\Helper\SingletonFactory;
 use Exception;
 
 class RouteService extends CrudService
@@ -57,7 +57,7 @@ class RouteService extends CrudService
      */
     public function getLayoutName($layout)
     {
-        $dictionary = SingletonFactoryService::getInstance(DictionaryService::class);
+        $dictionary = SingletonFactory::getInstance(DictionaryService::class);
         return $dictionary->getValue('desktop_route_layout', $layout);
     }
 
@@ -69,7 +69,7 @@ class RouteService extends CrudService
      */
     public function getKeepAliveName($layout)
     {
-        $dictionary = SingletonFactoryService::getInstance(DictionaryService::class);
+        $dictionary = SingletonFactory::getInstance(DictionaryService::class);
         return $dictionary->getValue('desktop_route_keep_alive', $layout);
     }
 }

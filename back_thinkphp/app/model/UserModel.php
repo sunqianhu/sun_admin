@@ -1,7 +1,7 @@
 <?php
 namespace app\model;
 
-use app\service\SingletonFactoryService;
+use Sunqianhu\Helper\SingletonFactory;
 use app\service\UserService;
 
 class UserModel extends BaseModel
@@ -50,7 +50,7 @@ class UserModel extends BaseModel
      */
     public function getAvatarUrlAttr($value, $data)
     {
-        $user = SingletonFactoryService::getInstance(UserService::class);
+        $user = SingletonFactory::getInstance(UserService::class);
         return $user->getAvatarUrl($data['avatar']);
     }
 

@@ -6,6 +6,7 @@ use app\model\DepartmentModel;
 use app\model\UserModel;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
+use Sunqianhu\Helper\SingletonFactory;
 use think\facade\Cache;
 
 class DepartmentService extends CrudService
@@ -108,7 +109,7 @@ class DepartmentService extends CrudService
      */
     public function getTypeName($type)
     {
-        $dictionary = SingletonFactoryService::getInstance(DictionaryService::class);
+        $dictionary = SingletonFactory::getInstance(DictionaryService::class);
         return $dictionary->getValue('department_type', $type);
     }
 }
