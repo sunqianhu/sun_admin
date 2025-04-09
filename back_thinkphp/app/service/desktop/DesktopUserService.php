@@ -5,6 +5,8 @@ namespace app\service\desktop;
 use app\model\desktop\MenuModel;
 use app\model\desktop\PermissionModel;
 use app\model\desktop\RouteModel;
+use app\model\desktop\TokenModel;
+use app\service\CrudService;
 use app\service\UserService;
 use Sunqianhu\Helper\ArrayHandler;
 
@@ -22,7 +24,7 @@ class DesktopUserService
             return [];
         }
 
-        $permissions = PermissionModel::alias('p')
+        $permissionModels = PermissionModel::alias('p')
             ->join('role_desktop_permission rdp', 'p.id = rdp.permission_id')
             ->field('p.api_string')
             ->whereIn('rdp.role_id', $roleIds)
@@ -30,12 +32,12 @@ class DesktopUserService
             ->group('p.id')
             ->append(['apis'])
             ->select();
-        if ($permissions->isEmpty()) {
+        if ($permissionModels->isEmpty()) {
             return [];
         }
         $allApis = [];
-        foreach ($permissions as $permission) {
-            $apis = $permissionService->apis;
+        foreach ($permissionModels as $permissionModel) {
+            $apis = $permissionModel->apis;
             $allApis = array_merge($allApis, $apis);
         }
         return array_unique($allApis);
@@ -60,7 +62,6 @@ class DesktopUserService
                 return true;
             }
         }
-
         return false;
     }
 
@@ -112,27 +113,27 @@ class DesktopUserService
             return [];
         }
 
-        $routes = RouteModel::alias('r')
+        $routeModels = RouteModel::alias('r')
             ->join('role_desktop_route rdr', 'r.id = rdr.route_id')
             ->field('r.*')
             ->where('rdr.role_id', 'in', $roleIds)
             ->order('r.sort', 'asc')
             ->select();
-        $routeArrs = [];
-        foreach($routes as $route){
+        $routes = [];
+        foreach($routeModels as $routeModel){
             $route = [
-                'path'=>$route->path,
-                'name'=>$route->key,
-                'component_path'=>$route->component_path,
-                'layout'=>$route->layout,
+                'path'=>$routeModel->path,
+                'name'=>$routeModel->key,
+                'component_path'=>$routeModel->component_path,
+                'layout'=>$routeModel->layout,
                 'meta'=>[
-                    'name'=>$route->name,
-                    'keep_alive'=>$route->keep_alive
+                    'name'=>$routeModel->name,
+                    'keep_alive'=>$routeModel->keep_alive
                 ]
             ];
-            $routeArrs[] = $route;
+            $routes[] = $route;
         }
-        return $routeArrs;
+        return $routes;
     }
 
     /**
@@ -147,13 +148,13 @@ class DesktopUserService
             return [];
         }
 
-        $menus = MenuModel::alias('m')
+        $menuModels = MenuModel::alias('m')
             ->field('m.*')
             ->join('role_desktop_menu rdm', 'm.id = rdm.menu_id')
             ->where('rdm.role_id', 'in', $roleIds)
             ->order('m.sort', 'asc')
             ->select();
-        $menus = $menus->toArray();
+        $menus = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
         return $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
@@ -165,7 +166,7 @@ class DesktopUserService
      * @return void
      */
     public function offLine($id){
-        $token = new TokenService();
-        $token->fieldDelete('user_id', $id);
+        $tokenCrudService = new CrudService(TokenModel::class);
+        $tokenCrudService->fieldDelete('user_id', $id);
     }
 }

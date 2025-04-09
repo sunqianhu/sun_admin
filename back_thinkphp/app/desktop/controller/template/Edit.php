@@ -7,6 +7,7 @@ use app\model\DictionaryModel;
 use app\service\CrudService;
 use app\service\DictionaryService;
 use app\validate\DictionaryValidate;
+use app\validate\IdValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -14,15 +15,17 @@ class Edit extends Base
 {
     /**
      * 初始化
-     *
-     * @return void
+     * @return \think\Response
      */
     public function init()
     {
-        $id = $this->request->get('id', 0);
-        if ($id <= 0 || !is_numeric($id)) {
-            return $this->error('id参数错误');
+        $get = $this->request->get(['id'=>0]);
+        try {
+            validate(IdValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
+        $id = $get['id'];
 
         $dictionaryModel = DictionaryModel::field('id,type,key,value,sort')->find($id);
         if (empty($dictionaryModel)) {
@@ -40,7 +43,6 @@ class Edit extends Base
     {
         $post = $this->request->post(['id', 'type', 'key', 'value', 'sort']);
 
-        //验证
         try {
             validate(DictionaryValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {

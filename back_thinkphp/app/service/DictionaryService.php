@@ -3,7 +3,6 @@
 namespace app\service;
 
 use app\model\DictionaryModel;
-use Exception;
 use think\facade\Cache;
 
 class DictionaryService

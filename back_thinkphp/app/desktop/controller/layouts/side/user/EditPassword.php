@@ -5,7 +5,6 @@ namespace app\desktop\controller\layouts\side\user;
 use app\desktop\controller\Base;
 use app\service\UserService;
 use app\validate\user\TwoPasswordValidate;
-use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
 

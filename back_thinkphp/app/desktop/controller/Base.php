@@ -4,8 +4,9 @@ namespace app\desktop\controller;
 
 use app\BaseController;
 use app\entity\Session;
+use app\model\OperationLogModel;
+use app\service\CrudService;
 use app\service\desktop\SessionService;
-use app\service\OperationLogService;
 use Exception;
 use think\Response;
 
@@ -69,14 +70,14 @@ class Base extends BaseController
             $this->isApiAuth &&
             !in_array($action, $this->noApiAuthActions)
         ) {
-            $operationLog = new OperationLogService();
+            $operationLogCrudService = new CrudService(OperationLogModel::class);
             $data = [
                 'user_id' => $this->session->userId,
                 'api' => $this->request->baseUrl(),
                 'ip' => $this->request->ip(),
                 'time' => time()
             ];
-            $operationLog->add($data);
+            $operationLogCrudService->add($data);
         }
     }
 

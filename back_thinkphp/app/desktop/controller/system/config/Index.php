@@ -3,8 +3,9 @@
 namespace app\desktop\controller\system\config;
 
 use app\desktop\controller\Base;
-use app\service\ConfigService;
-use app\validate\ConfigFormValidate;
+use app\model\ConfigModel;
+use app\service\CrudService;
+use app\validate\ConfigValidate;
 use think\exception\ValidateException;
 
 class Index extends Base
@@ -15,11 +16,9 @@ class Index extends Base
      */
     public function init()
     {
-        $configService = new ConfigService();
-        $configForm = [
-            'denied_ip_string'=>$configService->getValue('denied_ip_string')
-        ];
-        return $this->success('获取成功', $configForm);
+        $configCrudService = new CrudService(ConfigModel::class);
+        $config = $configCrudService->fetch(1);
+        return $this->success('获取成功', $config);
     }
 
     /**
@@ -27,20 +26,17 @@ class Index extends Base
      */
     public function save()
     {
-        $keys = ['denied_ip_string'];
         $post = $this->request->post(['denied_ip_string'=>'']);
 
         //验证
         try {
-            validate(ConfigFormValidate::class)->scene('save')->check($post);
+            validate(ConfigValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $config = new ConfigService();
-        foreach($keys as $key){
-            $config->setValue($key, $post[$key]);
-        }
+        $configCrudService = new CrudService(ConfigModel::class);
+        $configCrudService->upsert('id', 1, $post);
 
         return $this->success('保存成功');
     }

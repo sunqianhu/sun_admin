@@ -50,11 +50,11 @@ class PermissionService
      * @return bool
      */
     public function hasChildrenPermission($id){
-        $permission = PermissionModel::field('id')
+        $permissionModel = PermissionModel::field('id')
             ->where('permission_id', $id)
             ->limit(0,1)
             ->find();
-        if(!empty($permission)){
+        if(!empty($permissionModel)){
             return true;
         }
         return false;

@@ -4,8 +4,10 @@ namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
+use app\service\CrudService;
 use app\service\desktop\RouteService;
 use app\validate\desktop\RouteValidate;
+use app\validate\IdValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -16,18 +18,21 @@ class edit extends Base
      */
     public function init()
     {
-        $id = $this->request->get('id', 0);
-        if ($id <= 0 || !is_numeric($id)) {
-            return $this->error('id参数错误');
+        $get = $this->request->get(['id'=>0]);
+        try {
+            validate(IdValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
+        $id = $get['id'];
 
-        $route = RouteModel::field('*')->find($id);
-        if (empty($route)) {
+        $routeModel = RouteModel::field('*')->find($id);
+        if (empty($routeModel)) {
             return $this->error('没有找到记录');
         }
-        $routeArray = $route->toArray();
+        $route = $routeModel->toArray();
 
-        return $this->success('获取成功', $routeArray);
+        return $this->success('获取成功', $route);
     }
 
     /**
@@ -44,9 +49,9 @@ class edit extends Base
             return $this->error($exception->getError());
         }
 
-        $route = new RouteService();
+        $routeCrudService = new CrudService(RouteModel::class);
         try{
-            $route->edit($post['id'], $post);
+            $routeCrudService->edit($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

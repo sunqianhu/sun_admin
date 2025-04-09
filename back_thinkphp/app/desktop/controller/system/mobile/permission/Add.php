@@ -3,6 +3,8 @@
 namespace app\desktop\controller\system\mobile\permission;
 
 use app\desktop\controller\Base;
+use app\model\mobile\PermissionModel;
+use app\service\CrudService;
 use app\service\mobile\PermissionService;
 use app\validate\mobile\PermissionValidate;
 use Exception;
@@ -24,9 +26,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $permissionService = new PermissionService();
+        $permissionCrudService = new CrudService(PermissionModel::class);
         try {
-            $permissionService->add($post);
+            $permissionCrudService->add($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

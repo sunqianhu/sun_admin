@@ -3,7 +3,8 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\service\RoleService;
+use app\model\RoleModel;
+use app\service\CrudService;
 
 class RoleSelect extends Base
 {
@@ -20,8 +21,8 @@ class RoleSelect extends Base
      */
     public function getRoles()
     {
-        $roleService = new RoleService();
-        $roles = $roleService->fetchAll();
+        $roleCrudService = new CrudService(RoleModel::class);
+        $roles = $roleCrudService->fetchAll();
         return $this->success('获取成功', $roles);
     }
 }

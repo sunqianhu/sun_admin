@@ -7,7 +7,6 @@ use app\model\UserModel;
 use app\service\UserService;
 use app\validate\user\AvatarBase64ImageContentValidate;
 use Sunqianhu\Helper\File;
-use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -44,8 +43,8 @@ class EditAvatar extends Base
             return $this->error($exception->getError());
         }
 
+        $userService = new UserService();
         try {
-            $userService = new UserService();
             $path = $userService->editAvatarByBase64ImageContent($this->session->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());

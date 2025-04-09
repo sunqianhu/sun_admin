@@ -4,10 +4,13 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
+use app\model\UserRoleModel;
+use app\service\CrudService;
 use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
+use think\facade\Db;
 
 class Edit extends Base
 {
@@ -21,16 +24,16 @@ class Edit extends Base
             return $this->error('id参数错误');
         }
 
-        $user = UserModel::field('id,name,phone,department_id')
+        $userModel = UserModel::field('id,name,phone,department_id')
             ->with(['roles'])
             ->append(['role_ids'])
             ->find($id);
-        if (empty($user)) {
+        if (empty($userModel)) {
             return $this->error('没有找到记录');
         }
-        $userArray = $userService->toArray();
+        $user = $userModel->toArray();
 
-        return $this->success('获取成功', $userArray);
+        return $this->success('获取成功', $user);
     }
 
     /**
@@ -47,10 +50,24 @@ class Edit extends Base
             return $this->error($exception->getError());
         }
 
+        Db::startTrans();
         try{
-            $userService = new UserService();
-            $userService->edit($post['id'], $post);
+            $userCrudService = new CrudService(UserModel::class);
+            $userCrudService->edit($post['id'], $post);
+            $id = $post['id'];
+
+            $userRoleCrudService = new CrudService(UserRoleModel::class);
+            $userRoleCrudService->fieldDelete('user_id', $id);
+            foreach ($post['role_ids'] as $roleId){
+                $userRoleCrudService->add([
+                    'user_id' => $id,
+                    'role_id' => $roleId
+                ]);
+            }
+
+            Db::commit();
         }catch (Exception $exception){
+            Db::rollback();
             return $this->error($exception->getMessage());
         }
 

@@ -4,10 +4,12 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\RoleModel;
+use app\model\UserModel;
 use app\model\UserRoleModel;
 use app\service\CrudService;
 use app\service\DepartmentService;
 use app\service\UserService;
+use app\validate\IdArrayValidate;
 use app\validate\IdValidate;
 use app\validate\UserValidate;
 use Exception;
@@ -26,17 +28,15 @@ class Add extends Base
         //验证
         try {
             validate(UserValidate::class)->scene('add')->check($post);
-            foreach ($post['role_ids'] as $roleId){
-                validate(IdValidate::class)->check(['id'=>$roleId]);
-            }
+            IdArrayValidate::check($post['role_ids'], '角色');
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
         Db::startTrans();
         try{
-            $userService = new UserService();
-            $id = $userService->add($post);
+            $userCrudService = new CrudService(UserModel::class);
+            $id = $userCrudService->add($post);
 
             if (!empty($post['role_ids'])) {
                 $userRoleCrudService = new CrudService(UserRoleModel::class);

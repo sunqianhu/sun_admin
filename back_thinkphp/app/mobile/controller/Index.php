@@ -10,20 +10,20 @@ class Index extends Base
 
     /**
      * 初始化
-     * @return void
+     * @return \think\Response
      */
     public function init()
     {
-        $user = UserModel::field('avatar,name,department_id')
+        $userModel = UserModel::field('avatar,name,department_id')
             ->append(['avatar_url', 'department_name'])
             ->find($this->session->userId);
         if(empty($user)){
             return $this->error('用户不存在');
         }
-        $userArray = $userService->toArray();
+        $user = $userModel->toArray();
 
         $data = [
-            'user'=>$userArray
+            'user'=>$user
         ];
         return $this->success('获取成功', $data);
     }

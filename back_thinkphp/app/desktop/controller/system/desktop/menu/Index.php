@@ -4,6 +4,7 @@ namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
+use app\service\CrudService;
 use app\service\desktop\MenuService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
@@ -22,10 +23,10 @@ class Index extends Base
         }
         $query->order('sort', 'asc');
         $menuModels = $query->select();
-        $menuArray = $menuModels->toArray();
+        $menus = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeMenu = $arrayHandler->convertTree($menuArray, 'id', 'menu_id', 'children');
+        $treeMenu = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenu);
     }
@@ -43,9 +44,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $menuService = new MenuService();
+        $menuCrudService = new CrudService(MenuModel::class);
         try{
-            $menuService->delete($id);
+            $menuCrudService->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -4,7 +4,7 @@ namespace app\validate;
 
 use think\Validate;
 
-class ConfigFormValidate extends Validate
+class ConfigValidate extends Validate
 {
     protected $rule = [
     ];

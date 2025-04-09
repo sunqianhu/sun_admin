@@ -4,11 +4,10 @@ namespace app\service\api;
 
 use app\entity\Session;
 use app\model\api\TokenModel;
+use app\model\ConfigModel;
 use app\model\LoginLogModel;
 use app\model\UserModel;
-use app\service\ConfigService;
 use app\service\CrudService;
-use app\service\LoginLogService;
 use Exception;
 
 class SessionService
@@ -46,7 +45,7 @@ class SessionService
         //登录日志
         $loginLogCrudService = new CrudService(LoginLogModel::class);
         $data = [
-            'user_id' => $userService->id,
+            'user_id' => $userModel->id,
             'ip' => $ip,
             'time' => time()
         ];
@@ -58,8 +57,8 @@ class SessionService
         $userModel->save();
 
         $session = new Session();
-        $session->userId = $userService->id;
-        $session->departmentId = $userService->department_id;
+        $session->userId = $userModel->id;
+        $session->departmentId = $userModel->department_id;
         $session->token = $token;
 
         return $session;
@@ -84,8 +83,8 @@ class SessionService
      */
     function ipAuth($ip)
     {
-        $configService = new ConfigService();
-        $deniedIpString = $configService->getValue('denied_ip_string');
+        $configCrudService = new CrudService(ConfigModel::class);
+        $deniedIpString = $configCrudService->fetchValue(1, 'denied_ip_string');
         $deniedIps = explode("\r\n", $deniedIpString);
         $deniedIps = array_filter($deniedIps);
         if (empty($deniedIps)) {
@@ -111,11 +110,7 @@ class SessionService
             $isAuth = false;
         }
         if (!$isAuth) {
-            try {
-                return $jwtService->resolverToken($token);
-            } catch (Exception $exception) {
-                return new Session();
-            }
+            return null;
         }
 
         return $jwtService->resolverToken($token);

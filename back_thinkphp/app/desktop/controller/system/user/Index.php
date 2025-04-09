@@ -4,7 +4,8 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\desktop\DesktopUserService as DesktopUser;
+use app\service\desktop\DesktopUserService;
+use app\service\mobile\MobileUserService;
 use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
@@ -89,8 +90,11 @@ class Index extends Base
         }
 
         try{
-            $user = new DesktopUserService();
-            $userService->offLine($post['id']);
+            $DesktopUserService = new DesktopUserService();
+            $DesktopUserService->offLine($post['id']);
+
+            $mobileUserService = new MobileUserService();
+            $mobileUserService->offLine($post['id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

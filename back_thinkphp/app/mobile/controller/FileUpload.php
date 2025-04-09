@@ -14,7 +14,7 @@ class FileUpload extends Base
 
     /**
      * 上传
-     * @return void
+     * @return \think\Response
      */
     public function upload()
     {

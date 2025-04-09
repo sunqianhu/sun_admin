@@ -69,11 +69,11 @@ class MenuService
      * @return bool
      */
     public function hasChildrenMenu($id){
-        $menu = MenuModel::field('id')
+        $menuModel = MenuModel::field('id')
             ->where('menu_id', $id)
             ->limit(0,1)
             ->find();
-        if(!empty($menu)){
+        if(!empty($menuModel)){
             return true;
         }
         return false;

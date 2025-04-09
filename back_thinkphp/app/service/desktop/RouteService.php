@@ -41,7 +41,7 @@ class RouteService
      */
     public function getLayoutName($layout)
     {
-        $dictionary = SingletonFactory::getInstance(DictionaryService::class);
+        $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
         return $dictionaryService->getValue('desktop_route_layout', $layout);
     }
 
@@ -53,7 +53,7 @@ class RouteService
      */
     public function getKeepAliveName($layout)
     {
-        $dictionary = SingletonFactory::getInstance(DictionaryService::class);
+        $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
         return $dictionaryService->getValue('desktop_route_keep_alive', $layout);
     }
 }

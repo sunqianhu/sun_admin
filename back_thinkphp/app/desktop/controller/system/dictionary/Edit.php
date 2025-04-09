@@ -7,6 +7,7 @@ use app\model\DictionaryModel;
 use app\service\CrudService;
 use app\service\DictionaryService;
 use app\validate\DictionaryValidate;
+use app\validate\IdValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -19,18 +20,21 @@ class Edit extends Base
      */
     public function init()
     {
-        $id = $this->request->get('id', 0);
-        if ($id <= 0 || !is_numeric($id)) {
-            return $this->error('id参数错误');
+        $get = $this->request->get(['id'=>0]);
+        try {
+            validate(IdValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
+        $id = $get['id'];
 
         $dictionaryModel = DictionaryModel::field('id,type,key,value,sort')->find($id);
         if (empty($dictionaryModel)) {
             return $this->error('没有找到记录');
         }
-        $dictionaryArray = $dictionaryModel->toArray();
+        $dictionary = $dictionaryModel->toArray();
 
-        return $this->success('获取成功', $dictionaryArray);
+        return $this->success('获取成功', $dictionary);
     }
 
     /**

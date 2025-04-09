@@ -33,7 +33,7 @@ class Index extends Base
 
     /**
      * 设置全部已读
-     * @return void
+     * @return \think\Response
      */
     public function setAllRead()
     {

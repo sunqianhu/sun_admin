@@ -6,6 +6,8 @@ use app\desktop\controller\Base;
 use app\model\LoginLogModel;
 use app\model\OperationLogModel;
 use app\model\UserModel;
+use app\validate\IdValidate;
+use think\exception\ValidateException;
 
 class Detail extends Base
 {
@@ -14,10 +16,13 @@ class Detail extends Base
      */
     public function init()
     {
-        $id = $this->request->get('id', 0);
-        if ($id <= 0 || !is_numeric($id)) {
-            return $this->error('id参数错误');
+        $get = $this->request->get(['id'=>0]);
+        try {
+            validate(IdValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
+        $id = $get['id'];
 
         $userModel = UserModel::field('id,account,name,phone,department_id,add_time,status,edit_time,last_login_time,last_login_ip')
             ->with(['roles', 'department'])

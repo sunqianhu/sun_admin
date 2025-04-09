@@ -6,7 +6,6 @@ use app\entity\Session;
 use app\model\mobile\TokenModel;
 use app\model\UserModel;
 use app\service\CrudService;
-use app\service\UserService;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;

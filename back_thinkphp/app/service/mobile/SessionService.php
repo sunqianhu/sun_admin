@@ -3,12 +3,11 @@
 namespace app\service\mobile;
 
 use app\entity\Session;
+use app\model\ConfigModel;
 use app\model\LoginLogModel;
 use app\model\mobile\TokenModel;
 use app\model\UserModel;
-use app\service\ConfigService;
 use app\service\CrudService;
-use app\service\LoginLogService;
 use Exception;
 
 class SessionService
@@ -86,8 +85,8 @@ class SessionService
      */
     function ipAuth($ip)
     {
-        $configService = new ConfigService();
-        $deniedIpString = $configService->getValue('denied_ip_string');
+        $configCrudService = new CrudService(ConfigModel::class);
+        $deniedIpString = $configCrudService->fetchValue(1, 'denied_ip_string');
         $deniedIps = explode("\r\n", $deniedIpString);
         $deniedIps = array_filter($deniedIps);
         if (empty($deniedIps)) {
@@ -113,13 +112,8 @@ class SessionService
             $isAuth = false;
         }
         if (!$isAuth) {
-            try {
-                return $jwtService->resolverToken($token);
-            } catch (Exception $exception) {
-                return new Session();
-            }
+            return null;
         }
-
         return $jwtService->resolverToken($token);
     }
 

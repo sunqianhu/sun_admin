@@ -3,7 +3,8 @@
 namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
-use app\service\desktop\MenuService;
+use app\model\desktop\MenuModel;
+use app\service\CrudService;
 use app\validate\desktop\MenuValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -24,9 +25,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $menuService = new MenuService();
+        $menuCrudService = new CrudService(MenuModel::class);
         try {
-            $menuService->add($post);
+            $menuCrudService->add($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

@@ -3,9 +3,14 @@
 namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
+use app\model\RoleDesktopMenuModel;
+use app\model\RoleDesktopPermissionModel;
+use app\model\RoleDesktopRouteModel;
+use app\model\RoleMobilePermissionModel;
 use app\model\RoleModel;
-use app\service\RoleService;
+use app\service\CrudService;
 use Exception;
+use think\facade\Db;
 
 class Index extends Base
 {
@@ -43,10 +48,26 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $roleService = new RoleService();
+        Db::startTrans();
         try{
-            $roleService->delete($id);
+            $roleCrudService = new CrudService(RoleModel::class);
+            $roleCrudService->delete($id);
+
+            $roleDesktopPermissionCrudService = new CrudService(RoleDesktopPermissionModel::class);
+            $roleDesktopPermissionCrudService->fieldDelete('role_id', $id);
+
+            $roleDesktopMenuCrudService = new CrudService(RoleDesktopMenuModel::class);
+            $roleDesktopMenuCrudService->fieldDelete('role_id', $id);
+
+            $roleDesktopRouteCrudService = new CrudService(RoleDesktopRouteModel::class);
+            $roleDesktopRouteCrudService->fieldDelete('role_id', $id);
+
+            $roleMobilePermissionCrudService = new CrudService(RoleMobilePermissionModel::class);
+            $roleMobilePermissionCrudService->fieldDelete('role_id', $id);
+
+            Db::commit();
         }catch (Exception $exception){
+            Db::rollback();
             return $this->error($exception->getMessage());
         }
 

@@ -3,6 +3,7 @@
 namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
+use app\validate\user\AvatarBase64ImageContentValidate;
 use Sunqianhu\Helper\File;
 use app\service\UserService;
 use app\validate\UserValidate;
@@ -22,7 +23,7 @@ class EditAvatar extends Base
         $post = $this->request->post(['avatar_base64_image_content']);
 
         try {
-            validate(UserValidate::class)->scene('my_edit_avatar')->check($post);
+            validate(AvatarBase64ImageContentValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

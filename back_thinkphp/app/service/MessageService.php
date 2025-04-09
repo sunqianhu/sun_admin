@@ -35,11 +35,11 @@ class MessageService
                 'url' => $url,
                 'add_time' => $time
             ];
-            $messageId = $messageCrudService->add($data);
+            $id = $messageCrudService->add($data);
 
             $data = [
                 'type' => 'message',
-                'id' => $messageId,
+                'id' => $id,
                 'title' => $title,
                 'content' => $content,
                 'url' => $url,
@@ -53,7 +53,7 @@ class MessageService
             Db::rollback();
             throw new Exception($exception->getMessage());
         }
-        return $messageId;
+        return $id;
     }
 
     /**
@@ -62,7 +62,7 @@ class MessageService
      * @param $title
      * @param $content
      * @param $url
-     * @return void
+     * @return array
      */
     public function sends($userIds, $title, $content = '', $url = '')
     {
@@ -70,12 +70,12 @@ class MessageService
             throw new Exception('消息接收用户和消息标题不能为空');
         }
 
-        $messageIds = [];
+        $ids = [];
         foreach ($userIds as $userId) {
-            $messageIds[] = $this->send($userId, $title, $content, $url);
+            $ids[] = $this->send($userId, $title, $content, $url);
         }
 
-        return $messageIds;
+        return $ids;
     }
 
     /**

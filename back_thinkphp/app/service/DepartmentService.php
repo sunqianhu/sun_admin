@@ -94,7 +94,7 @@ class DepartmentService
      */
     public function getTypeName($type)
     {
-        $dictionary = SingletonFactory::getInstance(DictionaryService::class);
+        $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
         return $dictionaryService->getValue('department_type', $type);
     }
 }

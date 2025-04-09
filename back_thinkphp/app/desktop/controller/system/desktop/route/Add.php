@@ -3,6 +3,8 @@
 namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
+use app\model\desktop\RouteModel;
+use app\service\CrudService;
 use app\service\desktop\RouteService;
 use app\validate\desktop\RouteValidate;
 use Exception;
@@ -24,9 +26,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $route = new RouteService();
+        $routeCrudService = new CrudService(RouteModel::class);
         try{
-            $route->add($post);
+            $routeCrudService->add($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

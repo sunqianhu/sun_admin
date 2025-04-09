@@ -4,8 +4,10 @@ namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
 use app\model\desktop\PermissionModel;
+use app\service\CrudService;
 use app\service\desktop\PermissionService;
 use app\validate\desktop\PermissionValidate;
+use app\validate\IdValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -16,18 +18,21 @@ class Edit extends Base
      */
     public function init()
     {
-        $id = $this->request->get('id', 0);
-        if ($id <= 0 || !is_numeric($id)) {
-            return $this->error('id参数错误');
+        $get = $this->request->get(['id'=>0]);
+        try {
+            validate(IdValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
+        $id = $get['id'];
 
-        $permission = PermissionModel::field('id,permission_id,name,key,api_string,sort')->find($id);
-        if (empty($permission)) {
+        $permissionModel = PermissionModel::field('id,permission_id,name,key,api_string,sort')->find($id);
+        if (empty($permissionModel)) {
             return $this->error('没有找到记录');
         }
-        $permissionArray = $permissionService->toArray();
+        $permission = $permissionModel->toArray();
 
-        return $this->success('获取成功', $permissionArray);
+        return $this->success('获取成功', $permission);
     }
 
     /**
@@ -47,9 +52,9 @@ class Edit extends Base
             return $this->error('上级权限不能和本权限相同');
         }
 
-        $permissionService = new PermissionService();
+        $permissionCrudService = new CrudService(PermissionModel::class);
         try{
-            $permissionService->edit($post['id'], $post);
+            $permissionCrudService->edit($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

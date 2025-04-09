@@ -13,13 +13,12 @@ class Frame extends Base
 
     /**
      * 获取权限
-     * @return void
+     * @return \think\Response
      */
     public function getPermissions()
     {
-        $mobileUser = new MobileUserService();
-        $permissions = $mobileUser->getPermissionKeys($this->session->userId);
-
+        $mobileUserService = new MobileUserService();
+        $permissions = $mobileUserService->getPermissionKeys($this->session->userId);
         return $this->success('获取成功', $permissions);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace app\desktop\controller;
 
+use Exception;
 use Sunqianhu\Helper\File;
 use app\validate\FileUploadValidate;
 use think\exception\ValidateException;

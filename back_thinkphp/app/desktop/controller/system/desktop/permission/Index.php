@@ -4,6 +4,7 @@ namespace app\desktop\controller\system\desktop\permission;
 
 use app\desktop\controller\Base;
 use app\model\desktop\PermissionModel;
+use app\service\CrudService;
 use app\service\desktop\PermissionService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
@@ -24,11 +25,11 @@ class Index extends Base
             $query->where('key', 'LIKE', '%' . $get['key'] . '%');
         }
         $query->order('sort', 'asc');
-        $permissions = $query->select();
-        $permissionArrays = $permissions->toArray();
+        $permissionModels = $query->select();
+        $permissions = $permissionModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treePermission = $arrayHandler->convertTree($permissionArrays, 'id', 'permission_id', 'children');
+        $treePermission = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
 
         return $this->success('获取成功', $treePermission);
     }
@@ -46,9 +47,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $permissionService = new PermissionService();
+        $permissionCrudService = new CrudService(PermissionModel::class);
         try{
-            $permissionService->delete($id);
+            $permissionCrudService->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

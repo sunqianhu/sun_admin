@@ -14,31 +14,29 @@ class Frame extends Base
 
     /**
      * 获取权限
-     * @return void
+     * @return \think\Response
      */
     public function getPermissions()
     {
-        $desktopUser = new DesktopUserService();
-        $permissions = $desktopUser->getPermissionKeys($this->session->userId);
-
+        $desktopUserService = new DesktopUserService();
+        $permissions = $desktopUserService->getPermissionKeys($this->session->userId);
         return $this->success('获取成功', $permissions);
     }
 
     /**
      * 获取路由
-     * @return void
+     * @return \think\Response
      */
     public function getRoutes()
     {
-        $desktopUser = new DesktopUserService();
-        $routes = $desktopUser->getRoutes($this->session->userId);
-
+        $desktopUserService = new DesktopUserService();
+        $routes = $desktopUserService->getRoutes($this->session->userId);
         return $this->success('获取成功', $routes);
     }
 
     /**
      * 得到水印
-     * @return void
+     * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -49,8 +47,8 @@ class Frame extends Base
             return $this->error('还没有登录');
         }
 
-        $watermark = new WatermarkService();
-        $watermark = $watermark->getWatermark($this->session->userId);
+        $watermarkService = new WatermarkService();
+        $watermark = $watermarkService->getWatermark($this->session->userId);
 
         return $this->success('获取成功', $watermark);
     }

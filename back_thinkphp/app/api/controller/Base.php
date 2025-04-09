@@ -5,7 +5,6 @@ namespace app\api\controller;
 use app\BaseController;
 use app\service\api\SessionService;
 use app\entity\Session;
-use app\service\OperationLogService;
 use Exception;
 use think\Response;
 
