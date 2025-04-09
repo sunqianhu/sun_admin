@@ -35,8 +35,8 @@ class Edit extends Base
         if (empty($role)) {
             return $this->error('没有找到记录');
         }
-        $role->hidden(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions']);
-        $roleArray = $role->toArray();
+        $roleService->hidden(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions']);
+        $roleArray = $roleService->toArray();
 
         $desktopPermission = new DesktopPermission();
         $desktopTreePermission = $desktopPermission->getNameKeyTreePermission();
@@ -74,9 +74,9 @@ class Edit extends Base
             return $this->error($exception->getError());
         }
 
-        $role = new RoleService();
+        $roleService = new RoleService();
         try{
-            $role->edit($post['id'], $post);
+            $roleService->edit($post['id'], $post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

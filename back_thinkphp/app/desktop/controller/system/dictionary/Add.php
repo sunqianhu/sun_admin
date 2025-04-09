@@ -3,6 +3,8 @@
 namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
+use app\model\DictionaryModel;
+use app\service\CrudService;
 use app\service\DictionaryService;
 use app\validate\DictionaryValidate;
 use Exception;
@@ -24,9 +26,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
+        $dictionaryCrudService = new CrudService(DictionaryModel::class);
         try{
-            $dictionary = new DictionaryService();
-            $dictionary->add($post);
+            $dictionaryCrudService->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

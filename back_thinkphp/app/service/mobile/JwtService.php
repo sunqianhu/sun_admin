@@ -3,6 +3,9 @@
 namespace app\service\mobile;
 
 use app\entity\Session;
+use app\model\mobile\TokenModel;
+use app\model\UserModel;
+use app\service\CrudService;
 use app\service\UserService;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
@@ -31,8 +34,8 @@ class JwtService
             'user_id' => $userId,
             'expires_in' => time() + $this->expire
         ];
-        $tokenService = new TokenService();
-        $tokenService->add($data);
+        $tokenCrudService = new CrudService(TokenModel::class);
+        $tokenCrudService->add($data);
 
         return $token;
     }
@@ -55,8 +58,8 @@ class JwtService
         }
 
         //验证
-        $tokenService = new TokenService();
-        $tokenRecord = $tokenService->fieldFetch('token', $token);
+        $tokenCrudService = new CrudService(TokenModel::class);
+        $tokenRecord = $tokenCrudService->fieldFetch('token', $token);
         if (empty($tokenRecord)) {
             throw new Exception('未登录');
         }
@@ -71,17 +74,17 @@ class JwtService
         $data = [
             'expires_in'=>time() + $this->expire
         ];
-        $tokenService->edit($tokenRecord['id'], $data);
+        $tokenCrudService->edit($tokenRecord['id'], $data);
 
-        $user = new UserService();
-        $userRecord = $user->fetch($tokenRecord['user_id']);
-        if (empty($userRecord)) {
+        $userCrudService = new CrudService(UserModel::class);
+        $user = $userCrudService->fetch($tokenRecord['user_id']);
+        if (empty($user)) {
             throw new Exception('没有找到用户记录');
         }
 
         $session = new Session();
-        $session->userId = $userRecord['id'];
-        $session->departmentId = $userRecord['department_id'];
+        $session->userId = $user['id'];
+        $session->departmentId = $user['department_id'];
         $session->token = $token;
 
         return $session;
@@ -94,7 +97,7 @@ class JwtService
      */
     function deleteToken($token)
     {
-        $token = new TokenService();
-        $token->fieldDelete('token', $token);
+        $tokenCrudService = new CrudService(TokenModel::class);
+        $tokenCrudService->fieldDelete('token', $token);
     }
 }

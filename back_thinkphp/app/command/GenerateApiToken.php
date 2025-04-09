@@ -24,7 +24,7 @@ class GenerateApiToken extends Command
     {
         $userId = trim($input->getArgument('user_id')) ?? 1;
 
-        $jwt = new JwtService();
-        echo $token = $jwt->createToken($userId);
+        $jwtService = new JwtService();
+        echo $token = $jwtService->createToken($userId);
     }
 }

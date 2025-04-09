@@ -65,8 +65,8 @@ class Index extends Base
 
         $post['status'] = $post['status'] == 1 ? 1 : 0;
         try{
-            $user = new UserService();
-            $user->editStatus($post['id'], $post['status']);
+            $userService = new UserService();
+            $userService->editStatus($post['id'], $post['status']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }
@@ -90,7 +90,7 @@ class Index extends Base
 
         try{
             $user = new DesktopUserService();
-            $user->offLine($post['id']);
+            $userService->offLine($post['id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

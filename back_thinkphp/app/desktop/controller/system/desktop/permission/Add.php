@@ -24,9 +24,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $permission = new PermissionService();
+        $permissionService = new PermissionService();
         try {
-            $permission->add($post);
+            $permissionService->add($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

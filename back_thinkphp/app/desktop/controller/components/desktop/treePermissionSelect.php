@@ -20,8 +20,8 @@ class treePermissionSelect extends Base
      */
     public function getTreePermission()
     {
-        $permission = new PermissionService();
-        $treePermission = $permission->getTreePermission();
+        $permissionService = new PermissionService();
+        $treePermission = $permissionService->getTreePermission();
         return $this->success('获取成功', $treePermission);
     }
 }

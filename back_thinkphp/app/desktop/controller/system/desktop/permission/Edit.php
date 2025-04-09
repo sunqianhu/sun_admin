@@ -25,7 +25,7 @@ class Edit extends Base
         if (empty($permission)) {
             return $this->error('没有找到记录');
         }
-        $permissionArray = $permission->toArray();
+        $permissionArray = $permissionService->toArray();
 
         return $this->success('获取成功', $permissionArray);
     }
@@ -47,9 +47,9 @@ class Edit extends Base
             return $this->error('上级权限不能和本权限相同');
         }
 
-        $permission = new PermissionService();
+        $permissionService = new PermissionService();
         try{
-            $permission->edit($post['id'], $post);
+            $permissionService->edit($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

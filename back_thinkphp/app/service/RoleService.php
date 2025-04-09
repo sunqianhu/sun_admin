@@ -6,17 +6,8 @@ use app\model\RoleModel;
 use Exception;
 use think\facade\Db;
 
-class RoleService extends CrudService
+class RoleService
 {
-    /**
-     * 构造函数
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct(RoleModel::class);
-    }
-
     /**
      * 添加
      * @param $data
@@ -28,14 +19,14 @@ class RoleService extends CrudService
         Db::startTrans();
         try {
             $role = new RoleModel();
-            $role->save($data);
+            $roleService->save($data);
 
             //桌面端权限
             if (!empty($data['desktop_permission_ids'])) {
                 $roleDesktopPermission = new RoleDesktopPermissionService();
                 foreach ($data['desktop_permission_ids'] as $desktopPermissionId) {
                     $roleDesktopPermission->add([
-                        'role_id' => $role->id,
+                        'role_id' => $roleService->id,
                         'permission_id' => $desktopPermissionId
                     ]);
                 }
@@ -46,7 +37,7 @@ class RoleService extends CrudService
                 $roleDesktopMenu = new RoleDesktopMenuService();
                 foreach ($data['desktop_menu_ids'] as $desktopMenuId) {
                     $roleDesktopMenu->add([
-                        'role_id' => $role->id,
+                        'role_id' => $roleService->id,
                         'menu_id' => $desktopMenuId
                     ]);
                 }
@@ -57,7 +48,7 @@ class RoleService extends CrudService
                 $roleDesktopRoute = new RoleDesktopRouteService();
                 foreach ($data['desktop_route_ids'] as $desktopRouteId) {
                     $roleDesktopRoute->add([
-                        'role_id' => $role->id,
+                        'role_id' => $roleService->id,
                         'route_id' => $desktopRouteId
                     ]);
                 }
@@ -68,7 +59,7 @@ class RoleService extends CrudService
                 $roleMobilePermission = new RoleMobilePermissionService();
                 foreach ($data['mobile_permission_ids'] as $mobilePermissionId) {
                     $roleMobilePermission->add([
-                        'role_id' => $role->id,
+                        'role_id' => $roleService->id,
                         'permission_id' => $mobilePermissionId
                     ]);
                 }
@@ -96,15 +87,15 @@ class RoleService extends CrudService
             if (empty($role)) {
                 throw new Exception('没有找到记录');
             }
-            $role->save($data);
+            $roleService->save($data);
 
             //桌面端权限
             if (isset($data['desktop_permission_ids'])) {
                 $roleDesktopPermission = new RoleDesktopPermissionService();
-                $roleDesktopPermission->fieldDelete('role_id', $role->id);
+                $roleDesktopPermission->fieldDelete('role_id', $roleService->id);
                 foreach ($data['desktop_permission_ids'] as $desktopPermissionId) {
                     $roleDesktopPermission->add([
-                        'role_id' => $role->id,
+                        'role_id' => $roleService->id,
                         'permission_id' => $desktopPermissionId
                     ]);
                 }
@@ -113,10 +104,10 @@ class RoleService extends CrudService
             //桌面端菜单
             if (isset($data['desktop_menu_ids'])) {
                 $roleDesktopMenu = new RoleDesktopMenuService();
-                $roleDesktopMenu->fieldDelete('role_id', $role->id);
+                $roleDesktopMenu->fieldDelete('role_id', $roleService->id);
                 foreach ($data['desktop_menu_ids'] as $desktopMenuId) {
                     $roleDesktopMenu->add([
-                        'role_id' => $role->id,
+                        'role_id' => $roleService->id,
                         'menu_id' => $desktopMenuId
                     ]);
                 }
@@ -125,10 +116,10 @@ class RoleService extends CrudService
             //桌面端路由
             if (isset($data['desktop_route_ids'])) {
                 $roleDesktopRoute = new RoleDesktopRouteService();
-                $roleDesktopRoute->fieldDelete('role_id', $role->id);
+                $roleDesktopRoute->fieldDelete('role_id', $roleService->id);
                 foreach ($data['desktop_route_ids'] as $desktopRouteId) {
                     $roleDesktopRoute->add([
-                        'role_id' => $role->id,
+                        'role_id' => $roleService->id,
                         'route_id' => $desktopRouteId
                     ]);
                 }
@@ -137,10 +128,10 @@ class RoleService extends CrudService
             //移动端权限
             if (isset($data['mobile_permission_ids'])) {
                 $roleMobilePermission = new RoleMobilePermissionService();
-                $roleMobilePermission->fieldDelete('role_id', $role->id);
+                $roleMobilePermission->fieldDelete('role_id', $roleService->id);
                 foreach ($data['mobile_permission_ids'] as $mobilePermissionId) {
                     $roleMobilePermission->add([
-                        'role_id' => $role->id,
+                        'role_id' => $roleService->id,
                         'permission_id' => $mobilePermissionId
                     ]);
                 }
@@ -171,18 +162,18 @@ class RoleService extends CrudService
         Db::startTrans();
         try {
             $roleDesktopPermission = new RoleDesktopPermissionService();
-            $roleDesktopPermission->fieldDelete('role_id', $role->id);
+            $roleDesktopPermission->fieldDelete('role_id', $roleService->id);
 
             $roleDesktopMenu = new RoleDesktopMenuService();
-            $roleDesktopMenu->fieldDelete('role_id', $role->id);
+            $roleDesktopMenu->fieldDelete('role_id', $roleService->id);
 
             $roleDesktopRoute = new RoleDesktopRouteService();
-            $roleDesktopRoute->fieldDelete('role_id', $role->id);
+            $roleDesktopRoute->fieldDelete('role_id', $roleService->id);
 
             $roleMobilePermission = new RoleMobilePermissionService();
-            $roleMobilePermission->fieldDelete('role_id', $role->id);
+            $roleMobilePermission->fieldDelete('role_id', $roleService->id);
 
-            $role->delete();
+            $roleService->delete();
             Db::commit();
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());

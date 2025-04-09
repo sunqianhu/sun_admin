@@ -25,8 +25,8 @@ class EditPassword extends Base
         }
 
         try{
-            $user = new UserService();
-            $user->editPassword($post['id'], $post['password1']);
+            $userService = new UserService();
+            $userService->editPassword($post['id'], $post['password1']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -54,9 +54,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $role = new RoleService();
+        $roleService = new RoleService();
         try{
-            $role->add($post);
+            $roleService->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -16,17 +16,17 @@ class Message
         }
 
         $data = $data['data'];
-        $message = new MessageService();
+        $messageService = new MessageService();
         try {
             switch ($data['type']) {
                 case 'message':
-                    $message->sends($data['user_ids'], $data['title'], $data['content'], $data['url']);
+                    $messageService->sends($data['user_ids'], $data['title'], $data['content'], $data['url']);
                     break;
                 case 'read':
-                    $message->sendRead($data['user_id'], $data['id']);
+                    $messageService->sendRead($data['user_id'], $data['id']);
                     break;
                 case 'all_read':
-                    $message->sendAllRead($data['user_id']);
+                    $messageService->sendAllRead($data['user_id']);
                     break;
                 default:
                     throw new Exception('未知的消息类型');

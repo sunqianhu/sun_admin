@@ -20,8 +20,8 @@ class treeMenuSelect extends Base
      */
     public function getTreeMenu()
     {
-        $menu = new MenuService();
-        $treeMenu = $menu->getTreeMenu();
+        $menuService = new MenuService();
+        $treeMenu = $menuService->getTreeMenu();
         return $this->success('获取成功', $treeMenu);
     }
 }

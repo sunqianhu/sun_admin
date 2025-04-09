@@ -22,10 +22,10 @@ class Index extends Base
         }
         $query->order('sort', 'asc');
         $menuModels = $query->select();
-        $menuArrays = $menuModels->toArray();
+        $menuArray = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeMenu = $arrayHandler->convertTree($menuArrays, 'id', 'menu_id', 'children');
+        $treeMenu = $arrayHandler->convertTree($menuArray, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenu);
     }
@@ -43,9 +43,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $menu = new MenuService();
+        $menuService = new MenuService();
         try{
-            $menu->delete($id);
+            $menuService->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

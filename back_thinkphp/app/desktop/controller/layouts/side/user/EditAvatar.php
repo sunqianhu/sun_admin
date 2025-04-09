@@ -5,6 +5,7 @@ namespace app\desktop\controller\layouts\side\user;
 use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\service\UserService;
+use app\validate\user\AvatarBase64ImageContentValidate;
 use Sunqianhu\Helper\File;
 use app\validate\UserValidate;
 use Exception;
@@ -38,14 +39,14 @@ class EditAvatar extends Base
         $post = $this->request->post(['avatar_base64_image_content']);
 
         try {
-            validate(UserValidate::class)->scene('my_edit_avatar')->check($post);
+            validate(AvatarBase64ImageContentValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
         try {
-            $user = new UserService();
-            $path = $user->editAvatar($this->session->userId, $post['avatar_base64_image_content']);
+            $userService = new UserService();
+            $path = $userService->editAvatarByBase64ImageContent($this->session->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

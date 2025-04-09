@@ -28,7 +28,7 @@ class Edit extends Base
         if (empty($user)) {
             return $this->error('没有找到记录');
         }
-        $userArray = $user->toArray();
+        $userArray = $userService->toArray();
 
         return $this->success('获取成功', $userArray);
     }
@@ -48,8 +48,8 @@ class Edit extends Base
         }
 
         try{
-            $user = new UserService();
-            $user->edit($post['id'], $post);
+            $userService = new UserService();
+            $userService->edit($post['id'], $post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

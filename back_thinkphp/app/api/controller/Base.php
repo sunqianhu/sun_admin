@@ -14,8 +14,8 @@ use think\Response;
  */
 class Base extends BaseController
 {
-    public $isTokenAuth = true; //是否token认证
-    public $noTokenAuthActions = []; //不需要token认证的方法
+    public bool $isTokenAuth = true; //是否token认证
+    public array $noTokenAuthActions = []; //不需要token认证的方法
     public Session $session;
 
     /**
@@ -50,14 +50,14 @@ class Base extends BaseController
 
         //操作日志
         if($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
-            $operationLog = new OperationLogService();
+            $operationLogService = new OperationLogService();
             $data = [
                 'user_id' => $this->session->userId,
                 'api' => $this->request->baseUrl(),
                 'ip' => $this->request->ip(),
                 'time' => time()
             ];
-            $operationLog->add($data);
+            $operationLogService->add($data);
         }
     }
 

@@ -4,7 +4,9 @@ namespace app\desktop\controller\layouts\side\user;
 
 use app\desktop\controller\Base;
 use app\service\UserService;
+use app\validate\user\TwoPasswordValidate;
 use app\validate\UserValidate;
+use Exception;
 use think\exception\ValidateException;
 
 class EditPassword extends Base
@@ -19,13 +21,17 @@ class EditPassword extends Base
         $post = $this->request->post(['password1', 'password2']);
 
         try {
-            validate(UserValidate::class)->scene('my_edit_password')->check($post);
+            validate(TwoPasswordValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $user = new UserService();
-        $user->editPassword($this->session->userId, $post['password1']);
+        $userService = new UserService();
+        try{
+            $userService->editPassword($this->session->userId, $post['password1']);
+        }catch (Exception $exception){
+            return $this->error($exception->getMessage());
+        }
 
         return $this->success('修改成功');
     }

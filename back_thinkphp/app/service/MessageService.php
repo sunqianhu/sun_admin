@@ -7,17 +7,8 @@ use think\facade\Db;
 use think\facade\Queue;
 use Exception;
 
-class MessageService extends CrudService
+class MessageService
 {
-    /**
-     * 构造函数
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct(MessageModel::class);
-    }
-
     /**
      * 发送消息
      * @param $userId
@@ -33,6 +24,7 @@ class MessageService extends CrudService
             throw new Exception('消息接收用户和消息标题不能为空');
         }
 
+        $messageCrudService = new CrudService(MessageModel::class);
         Db::startTrans();
         try {
             $time = time();
@@ -43,7 +35,7 @@ class MessageService extends CrudService
                 'url' => $url,
                 'add_time' => $time
             ];
-            $messageId = $this->add($data);
+            $messageId = $messageCrudService->add($data);
 
             $data = [
                 'type' => 'message',
@@ -53,13 +45,13 @@ class MessageService extends CrudService
                 'url' => $url,
                 'add_time' => $time
             ];
-            $websocketMessage = new WebsocketMessageService();
-            $websocketMessage->send([$userId], $data);
+            $websocketMessageService = new WebsocketMessageService();
+            $websocketMessageService->send([$userId], $data);
 
             Db::commit();
         } catch (Exception $exception) {
-            throw new Exception($exception->getMessage());
             Db::rollback();
+            throw new Exception($exception->getMessage());
         }
         return $messageId;
     }
@@ -93,6 +85,7 @@ class MessageService extends CrudService
      * @param $content
      * @param $url
      * @return void
+     * @throws Exception
      */
     public function queueSends($userIds, $title, $content = '', $url = '')
     {
@@ -120,10 +113,9 @@ class MessageService extends CrudService
      */
     public function getNoReadCount($userId)
     {
-        $count = MessageModel::where('user_id', $userId)
+        return MessageModel::where('user_id', $userId)
             ->where('is_read', 0)
             ->count();
-        return $count;
     }
 
     /**
@@ -134,16 +126,17 @@ class MessageService extends CrudService
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
      */
     public function setRead($userId, $id)
     {
-        $message = MessageModel::where('user_id', $userId)
+        $messageModel = MessageModel::where('user_id', $userId)
             ->where('id', $id)
             ->find();
-        if (empty($message)) {
+        if (empty($messageModel)) {
             throw new Exception('没有找到记录');
         }
-        $message->save(['is_read' => 1, 'read_time' => time()]);
+        $messageModel->save(['is_read' => 1, 'read_time' => time()]);
     }
 
     /**
@@ -158,8 +151,8 @@ class MessageService extends CrudService
             'type' => 'read',
             'id' => $id
         ];
-        $websocketMessage = new WebsocketMessageService();
-        $websocketMessage->send([$userId], $data);
+        $websocketMessageService = new WebsocketMessageService();
+        $websocketMessageService->send([$userId], $data);
     }
 
     /**
@@ -185,18 +178,15 @@ class MessageService extends CrudService
      * 设置全部已读
      * @param $userId
      * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function setAllRead($userId)
     {
-        $messages = MessageModel::where('user_id', $userId)
+        $messageModels = MessageModel::where('user_id', $userId)
             ->select();
-        if ($messages->isEmpty()) {
+        if ($messageModels->isEmpty()) {
             return;
         }
-        $messages->update(['is_read' => 1, 'read_time' => time()]);
+        $messageModels->update(['is_read' => 1, 'read_time' => time()]);
     }
 
     /**
@@ -209,8 +199,8 @@ class MessageService extends CrudService
         $data = [
             'type' => 'all_read'
         ];
-        $websocketMessage = new WebsocketMessageService();
-        $websocketMessage->send([$userId], $data);
+        $websocketMessageService = new WebsocketMessageService();
+        $websocketMessageService->send([$userId], $data);
     }
 
     /**

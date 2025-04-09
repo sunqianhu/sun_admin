@@ -6,21 +6,12 @@ use app\model\DictionaryModel;
 use Exception;
 use think\facade\Cache;
 
-class DictionaryService extends CrudService
+class DictionaryService
 {
     /**
      * @var int 有效期
      */
     private $expire = 600;
-
-    /**
-     * 构造函数
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct(DictionaryModel::class);
-    }
 
     /**
      * 获取字典列表
@@ -35,11 +26,11 @@ class DictionaryService extends CrudService
             return $list;
         }
 
-        $dictionarys = DictionaryModel::where('type', '=', $type)
+        $dictionaryModels = DictionaryModel::where('type', '=', $type)
             ->field('key,value')
             ->order('sort', 'asc')
             ->select();
-        $list = $dictionarys->toArray();
+        $list = $dictionaryModels->toArray();
         Cache::set($cacheKey, $list, $this->expire);
 
         return $list;
@@ -74,7 +65,7 @@ class DictionaryService extends CrudService
      * @param $type
      * @param $keys
      * @param $glue
-     * @return mixed|string
+     * @return string
      */
     public function getValueString($type, $keys, $glue = '，')
     {

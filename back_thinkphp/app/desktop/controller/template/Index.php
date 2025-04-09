@@ -3,6 +3,7 @@
 namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
+use app\service\CrudService;
 use app\service\DictionaryService;
 use app\model\DictionaryModel;
 use Exception;
@@ -50,9 +51,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $dictionary = new DictionaryService();
+        $dictionaryCrudService = new CrudService(DictionaryModel::class);
         try{
-            $dictionary->delete($id);
+            $dictionaryCrudService->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

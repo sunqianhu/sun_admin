@@ -3,6 +3,8 @@
 namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
+use app\model\DepartmentModel;
+use app\service\CrudService;
 use app\service\DepartmentService;
 use app\validate\DepartmentValidate;
 use Exception;
@@ -24,9 +26,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $department = new DepartmentService();
+        $departmentCrudService = new CrudService(DepartmentModel::class);
         try{
-            $department->add($post);
+            $departmentCrudService->add($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

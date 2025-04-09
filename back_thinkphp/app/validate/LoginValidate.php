@@ -4,7 +4,7 @@ namespace app\validate;
 
 use think\Validate;
 
-class SessionValidate extends Validate
+class LoginValidate extends Validate
 {
     protected $rule = [
         'account'  =>  'require',
@@ -13,8 +13,5 @@ class SessionValidate extends Validate
     protected $message = [
         'account.require' => '账号不能为空',
         'password.require' => '密码不能为空'
-    ];
-    protected $scene = [
-        'login' => ['account', 'password']
     ];
 }

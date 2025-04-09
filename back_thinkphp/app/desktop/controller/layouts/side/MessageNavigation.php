@@ -4,6 +4,7 @@ namespace app\desktop\controller\layouts\side;
 
 use app\desktop\controller\Base;
 use app\service\MessageService;
+use Exception;
 
 class MessageNavigation extends Base
 {
@@ -18,9 +19,9 @@ class MessageNavigation extends Base
      */
     public function getNoReadCount()
     {
-        $message = new MessageService();
+        $messageService = new MessageService();
         try{
-            $count = $message->getNoReadCount($this->session->userId);
+            $count = $messageService->getNoReadCount($this->session->userId);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

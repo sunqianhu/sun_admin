@@ -25,7 +25,7 @@ class Edit extends Base
         if (empty($menu)) {
             return $this->error('没有找到记录');
         }
-        $menuArray = $menu->toArray();
+        $menuArray = $menuService->toArray();
 
         return $this->success('获取成功', $menuArray);
     }
@@ -47,9 +47,9 @@ class Edit extends Base
             return $this->error('上级菜单不能和本菜单相同');
         }
 
-        $menu = new MenuService();
+        $menuService = new MenuService();
         try{
-            $menu->edit($post['id'], $post);
+            $menuService->edit($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

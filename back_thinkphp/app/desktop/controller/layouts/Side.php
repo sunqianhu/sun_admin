@@ -16,12 +16,12 @@ class Side extends Base
 
     /**
      * 得到树形菜单
-     * @return void
+     * @return \think\Response
      */
     public function getTreeMenu()
     {
-        $user = new DesktopUserService();
-        $treeMenu = $user->getTreeMenu($this->session->userId);
+        $desktopUserService = new DesktopUserService();
+        $treeMenu = $desktopUserService->getTreeMenu($this->session->userId);
 
         return $this->success('获取成功', $treeMenu);
     }
@@ -43,7 +43,7 @@ class Side extends Base
 
     /**
      * 退出
-     * @return void
+     * @return \think\Response
      */
     public function logout()
     {

@@ -4,7 +4,9 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
+use app\service\CrudService;
 use app\service\DepartmentService;
+use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
 class Index extends Base
@@ -23,10 +25,10 @@ class Index extends Base
         $query->order('sort', 'asc');
         $query->append(['type_name']);
         $departments = $query->select();
-        $departmentArrays = $departments->toArray();
+        $departments = $departments->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeDepartment = $arrayHandler->convertTree($departmentArrays, 'id', 'department_id', 'children');
+        $treeDepartment = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartment);
     }
@@ -44,9 +46,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $department = new DepartmentService();
+        $departmentCrudService = new CrudService(DepartmentModel::class);
         try{
-            $department->delete($id);
+            $departmentCrudService->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

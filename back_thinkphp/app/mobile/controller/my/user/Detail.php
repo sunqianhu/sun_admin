@@ -22,7 +22,7 @@ class Detail extends Base
         if(empty($user)){
             return $this->error('用户不存在');
         }
-        $userArray = $user->toArray();
+        $userArray = $userService->toArray();
 
         $data = [
             'user'=>$userArray

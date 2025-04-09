@@ -16,7 +16,7 @@ class DepartmentModel extends BaseModel
      */
     public function getTypeNameAttr($value, $data)
     {
-        $department = SingletonFactory::getInstance(DepartmentService::class);
-        return $department->getTypeName($data['type']);
+        $departmentService = SingletonFactory::getInstance(DepartmentService::class);
+        return $departmentService->getTypeName($data['type']);
     }
 }

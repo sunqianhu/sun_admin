@@ -3,21 +3,10 @@
 namespace app\service\desktop;
 
 use app\model\desktop\MenuModel;
-use app\service\CrudService;
-use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
-class MenuService extends CrudService
+class MenuService
 {
-    /**
-     * 构造函数
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct(MenuModel::class);
-    }
-
     /**
      * 得到树形菜单
      * @return array
@@ -27,14 +16,13 @@ class MenuService extends CrudService
      */
     public function getTreeMenu()
     {
-        $menus = MenuModel::field('id,menu_id,name,url')
+        $menuModels = MenuModel::field('id,menu_id,name,url')
             ->order('sort', 'asc')
             ->select();
-        $menuArrays = $menus->toArray();
+        $menus = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treeMenu = $arrayHandler->convertTree($menuArrays, 'id', 'menu_id', 'children');
-        return $treeMenu;
+        return $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
     }
 
     /**
@@ -46,14 +34,14 @@ class MenuService extends CrudService
      */
     public function getNameUrlTreeMenu()
     {
-        $menus = MenuModel::field('id, menu_id, name, url')
+        $menuModels = MenuModel::field('id, menu_id, name, url')
             ->order('sort', 'asc')
             ->append(['name_url'])
             ->select();
-        $menuArrays = $menus->toArray();
+        $menus = $menuModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($menuArrays, 'id', 'menu_id', 'children');
+        return $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
     }
 
     /**
@@ -65,12 +53,12 @@ class MenuService extends CrudService
      * @throws \think\db\exception\ModelNotFoundException
      */
     public function getChildMenuIds($id){
-        $menus = MenuModel::where('menu_id', $id)
+        $menuModels = MenuModel::where('menu_id', $id)
             ->select();
         $ids = [];
-        foreach($menus as $menu){
-            $ids[] = $menu->id;
-            $ids = array_merge($ids, $this->getChildMenuIds($menu->id));
+        foreach($menuModels as $menuModel){
+            $ids[] = $menuModel->id;
+            $ids = array_merge($ids, $this->getChildMenuIds($menuModel->id));
         }
         return $ids;
     }
@@ -78,10 +66,11 @@ class MenuService extends CrudService
     /**
      * 是否有子菜单
      * @param $id
-     * @return void
+     * @return bool
      */
     public function hasChildrenMenu($id){
-        $menu = MenuModel::where('menu_id', $id)
+        $menu = MenuModel::field('id')
+            ->where('menu_id', $id)
             ->limit(0,1)
             ->find();
         if(!empty($menu)){

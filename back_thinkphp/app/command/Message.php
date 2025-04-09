@@ -18,14 +18,14 @@ use Workerman\Worker;
 class Message extends Command
 {
     /**
-     * @var object 容器
+     * @var Worker 容器
      */
-    public $worker;
+    public Worker $worker;
 
     /**
-     * @var string[] 命令参数
+     * @var array|string[] 命令参数
      */
-    private $actions = ['start', 'stop', 'reload', 'restart', 'status'];
+    private array $actions = ['start', 'stop', 'reload', 'restart', 'status'];
 
     protected function configure()
     {
@@ -41,6 +41,7 @@ class Message extends Command
      * @param Input $input
      * @param Output $output
      * @return int|void|null
+     * @throws Exception
      */
     protected function execute(Input $input, Output $output)
     {

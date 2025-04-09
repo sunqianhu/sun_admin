@@ -18,7 +18,6 @@ class PermissionModel extends BaseModel
         if(!isset($data['api_string'])){
             return [];
         }
-
         $apiString = str_replace("\r\n", "\n", $data['api_string']);
         $apis = explode("\n", $apiString);
         $apis = array_filter($apis, function($value) {

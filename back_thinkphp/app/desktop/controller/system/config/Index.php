@@ -11,16 +11,13 @@ class Index extends Base
 {
     /**
      * 初始化
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return \think\Response
      */
     public function init()
     {
-        $config = new ConfigService();
+        $configService = new ConfigService();
         $configForm = [
-            'denied_ip_string'=>$config->getValue('denied_ip_string')
+            'denied_ip_string'=>$configService->getValue('denied_ip_string')
         ];
         return $this->success('获取成功', $configForm);
     }
@@ -30,6 +27,7 @@ class Index extends Base
      */
     public function save()
     {
+        $keys = ['denied_ip_string'];
         $post = $this->request->post(['denied_ip_string'=>'']);
 
         //验证
@@ -40,8 +38,8 @@ class Index extends Base
         }
 
         $config = new ConfigService();
-        foreach($post as $key => $value){
-            $config->setValue($key, $value);
+        foreach($keys as $key){
+            $config->setValue($key, $post[$key]);
         }
 
         return $this->success('保存成功');

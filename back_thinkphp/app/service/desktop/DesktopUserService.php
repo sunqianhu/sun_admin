@@ -16,8 +16,8 @@ class DesktopUserService
      * @return array
      */
     public function getApis($id){
-        $user = new UserService();
-        $roleIds = $user->getRoleIds($id);
+        $userService = new UserService();
+        $roleIds = $userService->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
@@ -35,7 +35,7 @@ class DesktopUserService
         }
         $allApis = [];
         foreach ($permissions as $permission) {
-            $apis = $permission->apis;
+            $apis = $permissionService->apis;
             $allApis = array_merge($allApis, $apis);
         }
         return array_unique($allApis);
@@ -45,7 +45,7 @@ class DesktopUserService
      * 是否有权限
      * @param $id
      * @param $api
-     * @return false|void
+     * @return bool
      */
     public function hasApiPermission($id, $api){
         $apis = $this->getApis($id);
@@ -67,11 +67,11 @@ class DesktopUserService
     /**
      * 得到权限key列表
      * @param $id
-     * @return void
+     * @return array
      */
     public function getPermissionKeys($id){
-        $user = new UserService();
-        $roleIds = $user->getRoleIds($id);
+        $userService = new UserService();
+        $roleIds = $userService->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
@@ -106,8 +106,8 @@ class DesktopUserService
      * @return array
      */
     public function getRoutes($id){
-        $user = new UserService();
-        $roleIds = $user->getRoleIds($id);
+        $userService = new UserService();
+        $roleIds = $userService->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
@@ -141,8 +141,8 @@ class DesktopUserService
      * @return array
      */
     public function getTreeMenu($id){
-        $user = new UserService();
-        $roleIds = $user->getRoleIds($id);
+        $userService = new UserService();
+        $roleIds = $userService->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }

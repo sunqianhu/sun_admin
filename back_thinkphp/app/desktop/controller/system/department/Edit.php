@@ -4,6 +4,7 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
+use app\service\CrudService;
 use app\service\DepartmentService;
 use app\validate\DepartmentValidate;
 use Exception;
@@ -48,9 +49,9 @@ class Edit extends Base
             return $this->error('上级部门不能和本部门相同');
         }
 
-        $department = new DepartmentService();
+        $departmentCrudService = new CrudService(DepartmentModel::class);
         try{
-            $department->edit($post['id'], $post);
+            $departmentCrudService->edit($post['id'], $post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

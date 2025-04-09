@@ -3,6 +3,8 @@
 namespace app\service\mobile;
 
 use app\model\mobile\PermissionModel;
+use app\model\mobile\TokenModel;
+use app\service\CrudService;
 use app\service\UserService;
 
 class MobileUserService
@@ -13,13 +15,13 @@ class MobileUserService
      * @return array
      */
     public function getApis($id){
-        $user = new UserService();
-        $roleIds = $user->getRoleIds($id);
+        $userService = new UserService();
+        $roleIds = $userService->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
 
-        $permissions = PermissionModel::alias('p')
+        $permissionModels = PermissionModel::alias('p')
             ->join('role_mobile_permission rmp', 'p.id = rmp.permission_id')
             ->field('p.api_string')
             ->where('rmp.role_id', 'in', $roleIds)
@@ -27,12 +29,12 @@ class MobileUserService
             ->group('p.id')
             ->append(['apis'])
             ->select();
-        if ($permissions->isEmpty()) {
+        if ($permissionModels->isEmpty()) {
             return [];
         }
         $allApis = [];
-        foreach ($permissions as $permission) {
-            $apis = $permission->apis;
+        foreach ($permissionModels as $permissionModel) {
+            $apis = $permissionModel->apis;
             $allApis = array_merge($allApis, $apis);
         }
         return array_unique($allApis);
@@ -42,7 +44,7 @@ class MobileUserService
      * 是否有权限
      * @param $id
      * @param $api
-     * @return false|void
+     * @return bool
      */
     public function hasApiPermission($id, $api){
         $apis = $this->getApis($id);
@@ -64,11 +66,11 @@ class MobileUserService
     /**
      * 得到权限key列表
      * @param $id
-     * @return void
+     * @return array
      */
     public function getPermissionKeys($id){
-        $user = new UserService();
-        $roleIds = $user->getRoleIds($id);
+        $userService = new UserService();
+        $roleIds = $userService->getRoleIds($id);
         if(empty($roleIds)){
             return [];
         }
@@ -89,7 +91,7 @@ class MobileUserService
      * @return void
      */
     public function offLine($id){
-        $token = new TokenService();
-        $token->fieldDelete('user_id', $id);
+        $tokenCrudService = new CrudService(TokenModel::class);
+        $tokenCrudService->fieldDelete('user_id', $id);
     }
 }

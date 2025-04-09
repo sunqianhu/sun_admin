@@ -30,8 +30,8 @@ class RouteModel extends BaseModel
      */
     public function getKeepAliveNameAttr($value, $data)
     {
-        $route = SingletonFactory::getInstance(RouteService::class);
-        return $route->getKeepAliveName($data['keep_alive']);
+        $routeService = SingletonFactory::getInstance(RouteService::class);
+        return $routeService->getKeepAliveName($data['keep_alive']);
     }
 
     /**

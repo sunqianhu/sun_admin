@@ -17,8 +17,8 @@ class TypeSelect extends Base
      */
     public function getTypes()
     {
-        $dictionary = new DictionaryService();
-        $types = $dictionary->getList('department_type');
+        $dictionaryService = new DictionaryService();
+        $types = $dictionaryService->getList('department_type');
 
         return $this->success('获取成功', $types);
     }

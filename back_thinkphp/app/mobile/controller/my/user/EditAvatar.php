@@ -28,8 +28,8 @@ class EditAvatar extends Base
         }
 
         try {
-            $user = new UserService();
-            $path = $user->editAvatar($this->session->userId, $post['avatar_base64_image_content']);
+            $userService = new UserService();
+            $path = $userService->editAvatarByBase64ImageContent($this->session->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

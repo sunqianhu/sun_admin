@@ -3,12 +3,12 @@
 namespace app\desktop\controller\statistic;
 
 use app\desktop\controller\Base;
-use Sunqianhu\Helper\File;
 use app\service\order\ExcelService;
 use app\service\order\StatisticService;
-use app\validate\OrderValidate;
+use app\validate\order\IndexSearchValidate;
 use app\validate\statistic\TrendValidate;
 use Exception;
+use Sunqianhu\Helper\File;
 use think\exception\ValidateException;
 use function app\desktop\controller\statistic\trend\rand;
 
@@ -23,7 +23,7 @@ class OrderTrend extends Base
         $get = $this->request->get(['add_times' => []]);
 
         try {
-            validate(OrderValidate::class)->scene('trend')->check($get);
+            validate(IndexSearchValidate::class)->check($get);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
@@ -34,9 +34,9 @@ class OrderTrend extends Base
         $startTime = $get['add_times'][0];
         $endTime = $get['add_times'][1];
 
-        $statistic = new StatisticService();
+        $statisticService = new StatisticService();
         try{
-            $trend = $statistic->getTimeRangeTrend($startTime, $endTime);
+            $trend = $statisticService->getTimeRangeTrend($startTime, $endTime);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }
@@ -46,7 +46,7 @@ class OrderTrend extends Base
 
     /**
      * 导出
-     * @return void
+     * @return \think\Response
      */
     public function exp()
     {
@@ -54,7 +54,7 @@ class OrderTrend extends Base
 
         // 验证
         try {
-            validate(OrderValidate::class)->scene('exp')->check($get);
+            validate(IndexSearchValidate::class)->check($get);
         } catch (ValidateException $e) {
             return $this->error($e->getError());
         }
@@ -65,9 +65,9 @@ class OrderTrend extends Base
         $startTime = $get['add_times'][0];
         $endTime = $get['add_times'][1];
 
-        $excel = new ExcelService();
+        $excelService = new ExcelService();
         try{
-            $path = $excel->createTimeRangeTrendExcel($startTime, $endTime);
+            $path = $excelService->createTimeRangeTrendExcel($startTime, $endTime);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -20,8 +20,8 @@ class RoleSelect extends Base
      */
     public function getRoles()
     {
-        $role = new RoleService();
-        $roles = $role->fetchAll();
+        $roleService = new RoleService();
+        $roles = $roleService->fetchAll();
         return $this->success('获取成功', $roles);
     }
 }

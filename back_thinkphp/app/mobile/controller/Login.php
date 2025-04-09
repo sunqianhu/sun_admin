@@ -4,7 +4,7 @@ namespace app\mobile\controller;
 
 use app\service\mobile\SessionService;
 use app\service\LoginFailCheckerService;
-use app\validate\SessionValidate;
+use app\validate\LoginValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -24,7 +24,7 @@ class Login extends Base
         $post = $this->request->post(['account' => '', 'password' => '']);
 
         try {
-            validate(SessionValidate::class)->scene('login')->check($post);
+            validate(LoginValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }

@@ -13,11 +13,7 @@ class UserValidate extends Validate
         'name' =>  'require',
         'phone' =>  'require|mobile',
         'department_id'=>'require|number',
-        'role_ids'=>'array',
-        'status' =>  'require',
-        'avatar_base64_image_content'=>'require',
-        'password1' =>  'require|min:10|passwordStrength',
-        'password2' =>  'require|confirm:password1'
+        'status' =>  'require'
     ];
     protected $message = [
         'id.require' => 'id参数错误',
@@ -31,24 +27,13 @@ class UserValidate extends Validate
         'phone.mobile' => '手机号码无效',
         'department_id.require' => '所属部门不能为空',
         'department_id.number' => '所属部门必须是数字',
-        'role_ids.array' => '角色必须是数组',
         'status.require' => '请选择状态',
-        'avatar_base64_image_content.require' => '头像内容不能为空',
-        'password1.require' => '新密码不能为空',
-        'password1.min' => '密码长度不能小于10位',
-        'password1.passwordStrength' => '密码必须包含字母数字，长度大于10位',
-        'password2.require' => '确认新密码不能为空',
-        'password2.confirm' => '两次输入密码不相同'
     ];
     protected $scene = [
-        'add' => ['account', 'password', 'name', 'phone', 'department_id', 'role_ids', 'status'],
-        'edit' => ['id', 'name', 'phone', 'department_id', 'role_ids'],
+        'add' => ['account', 'password', 'name', 'phone', 'department_id', 'status'],
+        'edit' => ['id', 'name', 'phone', 'department_id'],
         'edit_status' => ['id', 'status'],
-        'my_edit_avatar' => ['avatar_base64_image_content'],
-        'edit_avatar'=>['id', 'avatar_base64_image_content'],
-        'offline' => ['id'],
-        'edit_password' => ['id', 'password1', 'password2'],
-        'my_edit_password' => ['password1', 'password2'],
+        'offline' => ['id']
     ];
 
     /**

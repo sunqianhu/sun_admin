@@ -32,9 +32,6 @@ class LoginFailCheckerService
     /**
      * 设置失败
      * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function setFail()
     {
@@ -53,10 +50,7 @@ class LoginFailCheckerService
 
     /**
      * 检查
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return bool
      */
     public function check()
     {
@@ -64,16 +58,12 @@ class LoginFailCheckerService
         if($number < $this->number){
             return true;
         }
-
         return false;
     }
 
     /**
      * 得到可用次数
-     * @return true|void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return int
      */
     public function getAvailableNumber()
     {
@@ -83,7 +73,7 @@ class LoginFailCheckerService
 
     /**
      * 得到重置可读时间
-     * @return string|null
+     * @return string
      */
     public function getResetReadableTime(){
         $time = new Time();

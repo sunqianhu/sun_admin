@@ -50,8 +50,8 @@ class UserModel extends BaseModel
      */
     public function getAvatarUrlAttr($value, $data)
     {
-        $user = SingletonFactory::getInstance(UserService::class);
-        return $user->getAvatarUrl($data['avatar']);
+        $userService = SingletonFactory::getInstance(UserService::class);
+        return $userService->getAvatarUrl($data['avatar']);
     }
 
     /**

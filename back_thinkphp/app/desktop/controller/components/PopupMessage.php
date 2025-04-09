@@ -4,6 +4,7 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\service\MessageService;
+use app\validate\IdValidate;
 use app\validate\MessageValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -14,22 +15,22 @@ class PopupMessage extends Base
 
     /**
      * 设置已读
-     * @return void
+     * @return \think\Response
      */
     public function setRead()
     {
         $post = $this->request->post(['id']);
 
         try {
-            validate(MessageValidate::class)->scene('set_read')->check($post);
+            validate(IdValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->error($exception->getError());
         }
 
-        $message = new MessageService();
+        $messageService = new MessageService();
         try{
-            $message->setRead($this->session->userId, $post['id']);
-            $message->queueSendRead($this->session->userId, $post['id']);
+            $messageService->setRead($this->session->userId, $post['id']);
+            $messageService->queueSendRead($this->session->userId, $post['id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

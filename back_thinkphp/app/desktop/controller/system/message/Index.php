@@ -37,10 +37,10 @@ class Index extends Base
      */
     public function setAllRead()
     {
-        $message = new MessageService();
+        $messageService = new MessageService();
         try{
-            $message->setAllRead($this->session->userId);
-            $message->queueSendAllRead($this->session->userId);
+            $messageService->setAllRead($this->session->userId);
+            $messageService->queueSendAllRead($this->session->userId);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

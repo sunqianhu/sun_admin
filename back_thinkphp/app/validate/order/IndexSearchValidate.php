@@ -1,10 +1,10 @@
 <?php
 
-namespace app\validate;
+namespace app\validate\order;
 
 use think\Validate;
 
-class OrderValidate extends Validate
+class IndexSearchValidate extends Validate
 {
     protected $rule = [
         'add_times' => 'require|array'

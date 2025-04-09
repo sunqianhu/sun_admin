@@ -10,17 +10,8 @@ use Sunqianhu\Helper\Image;
 use think\facade\Cache;
 use think\facade\Db;
 
-class UserService extends CrudService
+class UserService
 {
-    /**
-     * 构造函数
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct(UserModel::class);
-    }
-
     /**
      * 添加
      * @param $data
@@ -30,37 +21,22 @@ class UserService extends CrudService
     public function add($data)
     {
         //账号
-        $user = UserModel::where('account', $data['account'])->find();
-        if (!empty($user)) {
+        $userModel = UserModel::where('account', $data['account'])->find();
+        if (!empty($userModel)) {
             throw new Exception('此账号已经存在');
         }
 
         //手机号码
-        $user = UserModel::where('phone', $data['phone'])->find();
-        if (!empty($user)) {
+        $userModel = UserModel::where('phone', $data['phone'])->find();
+        if (!empty($userModel)) {
             throw new Exception('手机号码已经存在');
         }
 
-        Db::startTrans();
-        try {
-            $data['password'] = md5($data['password']);
-            $user = new UserModel();
-            $user->save($data);
+        $data['password'] = md5($data['password']);
+        $userModel = new UserModel();
+        $userModel->save($data);
 
-            if (!empty($data['role_ids'])) {
-                $userRole = new UserRoleService();
-                foreach ($data['role_ids'] as $roleId) {
-                    $userRole->add([
-                        'user_id' => $user->id,
-                        'role_id' => $roleId
-                    ]);
-                }
-            }
-            Db::commit();
-        } catch (Exception $exception) {
-            throw new Exception($exception->getMessage());
-            Db::rollback();
-        }
+        return $userModel->id;
     }
 
     /**
@@ -72,40 +48,22 @@ class UserService extends CrudService
     public function edit($id, $data)
     {
         //账号
-        $user = UserModel::find($id);
-        if (empty($user)) {
+        $userModel = UserModel::find($id);
+        if (empty($userModel)) {
             throw new Exception('没有找到用户记录');
         }
 
         //手机号码
         if (isset($data['phone'])) {
-            $phoneUser = UserModel::where('id', '<>', $id)
+            $phoneUserModel = UserModel::where('id', '<>', $id)
                 ->where('phone', '=', $data['phone'])
                 ->find();
-            if (!empty($phoneUser)) {
+            if (!empty($phoneUserModel)) {
                 throw new Exception('此手机号码已经存在');
             }
         }
 
-        Db::startTrans();
-        try {
-            $user->save($data);
-
-            if (isset($data['role_ids'])) {
-                $userRole = new UserRoleService();
-                $userRole->fieldDelete('user_id', $user->id);
-                foreach ($data['role_ids'] as $roleId) {
-                    $userRole->add([
-                        'user_id' => $user->id,
-                        'role_id' => $roleId
-                    ]);
-                }
-            }
-            Db::commit();
-        } catch (Exception $exception) {
-            throw new Exception($exception->getMessage());
-            Db::rollback();
-        }
+        $userModel->save($data);
     }
 
     /**
@@ -120,7 +78,8 @@ class UserService extends CrudService
      */
     public function editPassword($id, $password)
     {
-        $this->edit($id, [
+        $userCrudService = new CrudService(UserModel::class);
+        $userCrudService->edit($id, [
             'password' => md5($password)
         ]);
     }
@@ -172,8 +131,8 @@ class UserService extends CrudService
     {
         if ($path === '') {
             $path = 'image/avatar.png';
-            $site = new SiteService();
-            return $site->getUrl($path);
+            $siteService = new SiteService();
+            return $siteService->getUrl($path);
         }
 
         $file = new File();
@@ -193,7 +152,7 @@ class UserService extends CrudService
     }
 
     /**
-     * 修改头像
+     * 通过base64图片内容修改头像
      * @param $id
      * @param $base64ImageContent
      * @return string
@@ -201,7 +160,7 @@ class UserService extends CrudService
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function editAvatar($id, $base64ImageContent)
+    public function editAvatarByBase64ImageContent($id, $base64ImageContent)
     {
         $image = new Image();
         $path = $image->saveBase64ContentToFile('avatar', $base64ImageContent);
@@ -209,11 +168,24 @@ class UserService extends CrudService
         $file = new File();
         $fullPath = $file->getFullPath($path);
         $image->generateThumbnail($fullPath, $fullPath, 200);
-        
-        $this->edit($id, [
+
+        $this->editAvatar($id, $path);
+        return $path;
+    }
+
+    /**
+     * 修改头像
+     * @param $id
+     * @param $path
+     * @return void
+     * @throws Exception
+     */
+    public function editAvatar($id, $path)
+    {
+        $userCrudService = new CrudService(UserModel::class);
+        $userCrudService->edit($id, [
             'avatar' => $path
         ]);
-        return $path;
     }
 
     /**
@@ -227,20 +199,9 @@ class UserService extends CrudService
      */
     public function editStatus($id, $status)
     {
-        $this->edit($id, [
+        $userCrudService = new CrudService(UserModel::class);
+        $userCrudService->edit($id, [
             'status' => $status
         ]);
-    }
-
-    /**
-     * 通过部门id列表得到id列表
-     * @param $departmentIds
-     * @return array
-     */
-    public function getDepartmentUserIds($departmentIds)
-    {
-        return UserModel::whereIn('department_id', $departmentIds)
-            ->where('status', 1)
-            ->column('id');
     }
 }

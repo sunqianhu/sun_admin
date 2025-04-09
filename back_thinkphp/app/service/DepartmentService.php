@@ -9,32 +9,20 @@ use Sunqianhu\Helper\ArrayHandler;
 use Sunqianhu\Helper\SingletonFactory;
 use think\facade\Cache;
 
-class DepartmentService extends CrudService
+class DepartmentService
 {
-    /**
-     * 构造函数
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct(DepartmentModel::class);
-    }
-
     /**
      * 得到树形部门
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getTreeDepartment()
     {
-        $departments = DepartmentModel::field('id, id, department_id, name')
+        $departmentModels = DepartmentModel::field('id, id, department_id, name')
             ->order('sort', 'asc')
             ->select();
-        $departmentArrays = $departments->toArray();
+        $departments = $departmentModels->toArray();
         $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($departmentArrays, 'id', 'department_id', 'children');
+        return $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
     }
 
     /**
@@ -79,26 +67,23 @@ class DepartmentService extends CrudService
      * @throws \think\db\exception\ModelNotFoundException
      */
     public function getUsers($id){
-        $users = UserModel::field('id,name,department_id')
+        $userModels = UserModel::field('id,name,department_id')
             ->where('department_id', $id)
             ->select();
-        return $users->toArray();
+        return $userModels->toArray();
     }
 
     /**
      * 通过类型得到部门列表
      * @param $type
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getTypeDepartments($type) {
-        $departments = DepartmentModel::field('id,name,type,department_id')
+        $departmentModels = DepartmentModel::field('id,name,type,department_id')
             ->where('type', $type)
             ->order('sort', 'asc')
             ->select();
-        return $departments->toArray();
+        return $departmentModels->toArray();
     }
 
     /**
@@ -110,6 +95,6 @@ class DepartmentService extends CrudService
     public function getTypeName($type)
     {
         $dictionary = SingletonFactory::getInstance(DictionaryService::class);
-        return $dictionary->getValue('department_type', $type);
+        return $dictionaryService->getValue('department_type', $type);
     }
 }

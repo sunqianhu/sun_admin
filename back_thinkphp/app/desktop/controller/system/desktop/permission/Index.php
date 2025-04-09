@@ -46,9 +46,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $permission = new PermissionService();
+        $permissionService = new PermissionService();
         try{
-            $permission->delete($id);
+            $permissionService->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

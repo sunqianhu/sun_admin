@@ -7,17 +7,8 @@ use app\service\CrudService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
-class PermissionService extends CrudService
+class PermissionService
 {
-    /**
-     * 构造函数
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct(PermissionModel::class);
-    }
-
     /**
      * 得到树形权限
      * @return array
@@ -27,14 +18,13 @@ class PermissionService extends CrudService
      */
     public function getTreePermission()
     {
-        $permissions = PermissionModel::field('id, permission_id, name')
+        $permissionModels = PermissionModel::field('id, permission_id, name')
             ->order('sort', 'asc')
             ->select();
-        $permissions = $permissions->toArray();
+        $permissions = $permissionModels->toArray();
 
         $arrayHandler = new ArrayHandler();
-        $treePermission = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
-        return $treePermission;
+        return $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
     }
 
     /**
@@ -46,11 +36,11 @@ class PermissionService extends CrudService
      */
     public function getNameKeyTreePermission()
     {
-        $permissions = PermissionModel::field('id, permission_id, name, key')
+        $permissionModels = PermissionModel::field('id, permission_id, name, key')
             ->order('sort', 'asc')
             ->append(['name_key'])
             ->select();
-        $permissions = $permissions->toArray();
+        $permissions = $permissionModels->toArray();
 
         $arrayHandler = new ArrayHandler();
         return $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');

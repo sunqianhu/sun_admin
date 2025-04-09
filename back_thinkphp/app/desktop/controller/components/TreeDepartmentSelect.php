@@ -20,8 +20,8 @@ class TreeDepartmentSelect extends Base
      */
     public function getTreeDepartment()
     {
-        $department = new DepartmentService();
-        $treeDepartment = $department->getTreeDepartment();
+        $departmentService = new DepartmentService();
+        $treeDepartment = $departmentService->getTreeDepartment();
         return $this->success('获取成功', $treeDepartment);
     }
 }

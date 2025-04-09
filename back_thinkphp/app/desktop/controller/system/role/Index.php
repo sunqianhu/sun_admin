@@ -43,9 +43,9 @@ class Index extends Base
             return $this->error('id参数错误');
         }
 
-        $role = new RoleService();
+        $roleService = new RoleService();
         try{
-            $role->delete($id);
+            $roleService->delete($id);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

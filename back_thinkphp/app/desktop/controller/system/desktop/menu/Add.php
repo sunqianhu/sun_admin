@@ -24,9 +24,9 @@ class Add extends Base
             return $this->error($exception->getError());
         }
 
-        $menu = new MenuService();
+        $menuService = new MenuService();
         try {
-            $menu->add($post);
+            $menuService->add($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }
