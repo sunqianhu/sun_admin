@@ -110,7 +110,11 @@ class SessionService
             $isAuth = false;
         }
         if (!$isAuth) {
-            return null;
+            try{
+                return $jwtService->resolverToken($token);
+            }catch (Exception $exception){
+                return new Session();
+            }
         }
 
         return $jwtService->resolverToken($token);

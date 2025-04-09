@@ -63,7 +63,7 @@ const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
 const route = ref({
   sort: 1,
-  keep_alive: 2,
+  keep_alive: 0,
 });
 const routeRef = ref();
 const rules = {

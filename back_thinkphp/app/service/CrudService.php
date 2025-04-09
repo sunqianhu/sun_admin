@@ -103,7 +103,7 @@ class CrudService
     {
         $model = $this->crudModelClass::find($id);
         if (empty($model)) {
-            throw new Exception('没有找到待删除的记录');
+            return true; //相对于该模型没有此条件的记录，所以相当于删除成功
         }
         return $model->delete();
     }
@@ -119,7 +119,7 @@ class CrudService
         $models = $this->crudModelClass::where($field, $value)
             ->select();
         if($models->isEmpty()){
-            throw new Exception('没有找到待删除的记录');
+            return true; //相对于该模型没有此条件的记录，所以相当于删除成功
         }
         return $models->delete();
     }

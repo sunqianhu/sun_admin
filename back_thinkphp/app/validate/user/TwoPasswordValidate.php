@@ -17,4 +17,23 @@ class TwoPasswordValidate extends Validate
         'password2.require' => '确认新密码不能为空',
         'password2.confirm' => '两次输入密码不相同'
     ];
+
+    /**
+     * 密码强度
+     * @param $value
+     * @param $rule
+     * @param $data
+     * @return bool
+     */
+    protected function passwordStrength($value, $rule, $data)
+    {
+        $pattern = '/^(?=.*[a-zA-Z])(?=.*\d).+$/';
+        if (!preg_match($pattern, $value)) {
+            return false;
+        }
+        if(strlen($value) < 10){
+            return false;
+        }
+        return true;
+    }
 }

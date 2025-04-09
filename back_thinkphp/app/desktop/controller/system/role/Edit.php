@@ -37,14 +37,14 @@ class Edit extends Base
         $id = $get['id'];
 
         //角色
-        $roleModel = RoleModel::with(['desktopPermissionServices', 'desktopRouteServices', 'desktopMenuServices', 'mobilePermissionServices'])
+        $roleModel = RoleModel::with(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions'])
             ->field('id,name')
             ->append(['desktop_permission_ids', 'desktop_menu_ids', 'desktop_route_ids', 'mobile_permission_ids'])
             ->find($id);
         if (empty($roleModel)) {
             return $this->error('没有找到记录');
         }
-        $roleModel->hidden(['desktopPermissionServices', 'desktopRouteServices', 'desktopMenuServices', 'mobilePermissionServices']);
+        $roleModel->hidden(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions']);
         $role = $roleModel->toArray();
 
         $desktopPermissionService = new DesktopPermissionService();

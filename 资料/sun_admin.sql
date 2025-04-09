@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2025-03-14 15:57:57
+Date: 2025-04-09 18:20:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,15 +44,14 @@ INSERT INTO `api_token` VALUES ('5', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZ
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `key` varchar(127) NOT NULL DEFAULT '' COMMENT '键',
-  `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
+  `denied_ip_string` text NOT NULL COMMENT '拒绝登录ip串',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='配置';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统配置';
 
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('1', 'denied_ip_string', '');
+INSERT INTO `config` VALUES ('1', 'fdsfdsf ');
 
 -- ----------------------------
 -- Table structure for department
@@ -65,7 +64,7 @@ CREATE TABLE `department` (
   `name` varchar(67) NOT NULL DEFAULT '' COMMENT '部门名称',
   `sort` int(255) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
 
 -- ----------------------------
 -- Records of department
@@ -87,7 +86,7 @@ CREATE TABLE `desktop_menu` (
   `target` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '打开方式',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of desktop_menu
@@ -123,7 +122,7 @@ CREATE TABLE `desktop_permission` (
   `api_string` text COMMENT '接口地址串',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COMMENT='权限';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COMMENT='权限';
 
 -- ----------------------------
 -- Records of desktop_permission
@@ -186,7 +185,7 @@ CREATE TABLE `desktop_route` (
   `keep_alive` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '路由保活',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COMMENT='路由';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='路由';
 
 -- ----------------------------
 -- Records of desktop_route
@@ -218,7 +217,7 @@ CREATE TABLE `desktop_token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of desktop_token
@@ -283,6 +282,9 @@ INSERT INTO `desktop_token` VALUES ('67', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1
 INSERT INTO `desktop_token` VALUES ('68', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTc0MDYyOTc4MH0.4PRyrPqUTzW338JWzYhTEv6NsbKnlSQtS2F15ARxuyk', '1740631580');
 INSERT INTO `desktop_token` VALUES ('69', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTc0MDYyOTc4Nn0.O3w5FSCIwW3AIVbW41PS2kyLTKJH158kjH6oczb-tdA', '1740632189');
 INSERT INTO `desktop_token` VALUES ('70', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTc0MDcyNzQwMX0.9J2BI0_pzZ5kio4hLtABdH9KKndgtNGO5Mc_ATLwk-g', '1740732137');
+INSERT INTO `desktop_token` VALUES ('71', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTc0NDEwNzc3N30.9cSRkUaD29XQpwtCmKc8rvqkYe0VKahXeS0eGPF8L-4', '1744110166');
+INSERT INTO `desktop_token` VALUES ('72', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTc0NDE4MzUyOX0.l36R-QPgFlC4fsiiRqvyCOiEqkwgFlKjstkUhk8HnRM', '1744185486');
+INSERT INTO `desktop_token` VALUES ('73', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTc0NDE5MjE2NX0.n5QeN_S6ig6gOq4xfqZhHHHkpJkW5SeGrfO7Yyy6moU', '1744195811');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -295,7 +297,7 @@ CREATE TABLE `dictionary` (
   `value` varchar(63) NOT NULL DEFAULT '' COMMENT '字典值',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COMMENT='字典';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COMMENT='字典';
 
 -- ----------------------------
 -- Records of dictionary
@@ -356,7 +358,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -454,6 +456,9 @@ INSERT INTO `login_log` VALUES ('90', '1', '1740566322', '172.18.0.2');
 INSERT INTO `login_log` VALUES ('91', '1', '1740629780', '172.18.0.2');
 INSERT INTO `login_log` VALUES ('92', '1', '1740629786', '172.18.0.2');
 INSERT INTO `login_log` VALUES ('93', '1', '1740727401', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('94', '1', '1744107778', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('95', '1', '1744183529', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('96', '1', '1744192165', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -513,7 +518,7 @@ CREATE TABLE `mobile_permission` (
   `api_string` text COMMENT '接口地址串',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='权限';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='权限';
 
 -- ----------------------------
 -- Records of mobile_permission
@@ -569,7 +574,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '操作ip',
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1839 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1946 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -2412,6 +2417,113 @@ INSERT INTO `operation_log` VALUES ('1835', '1', '/desktop/system.user.Index/get
 INSERT INTO `operation_log` VALUES ('1836', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1740729499');
 INSERT INTO `operation_log` VALUES ('1837', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1740730330');
 INSERT INTO `operation_log` VALUES ('1838', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1740730337');
+INSERT INTO `operation_log` VALUES ('1839', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1744108301');
+INSERT INTO `operation_log` VALUES ('1840', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1744108304');
+INSERT INTO `operation_log` VALUES ('1841', '1', '/desktop/statistic.OrderTrend/exp', '127.0.0.1', '1744108306');
+INSERT INTO `operation_log` VALUES ('1842', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1744108317');
+INSERT INTO `operation_log` VALUES ('1843', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1744108320');
+INSERT INTO `operation_log` VALUES ('1844', '1', '/desktop/system.user.Index/editStatus', '127.0.0.1', '1744108325');
+INSERT INTO `operation_log` VALUES ('1845', '1', '/desktop/system.user.Index/editStatus', '127.0.0.1', '1744108326');
+INSERT INTO `operation_log` VALUES ('1846', '1', '/desktop/system.user.Edit/init', '127.0.0.1', '1744108328');
+INSERT INTO `operation_log` VALUES ('1847', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1744108332');
+INSERT INTO `operation_log` VALUES ('1848', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1744108336');
+INSERT INTO `operation_log` VALUES ('1849', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1744108340');
+INSERT INTO `operation_log` VALUES ('1850', '1', '/desktop/system.department.Edit/init', '127.0.0.1', '1744108343');
+INSERT INTO `operation_log` VALUES ('1851', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1744108348');
+INSERT INTO `operation_log` VALUES ('1852', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1744108351');
+INSERT INTO `operation_log` VALUES ('1853', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1744108354');
+INSERT INTO `operation_log` VALUES ('1854', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1744108356');
+INSERT INTO `operation_log` VALUES ('1855', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1744108358');
+INSERT INTO `operation_log` VALUES ('1856', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1744108360');
+INSERT INTO `operation_log` VALUES ('1857', '1', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1744108362');
+INSERT INTO `operation_log` VALUES ('1858', '1', '/desktop/system.dictionary.Index/getDictionaryPaginate', '127.0.0.1', '1744108363');
+INSERT INTO `operation_log` VALUES ('1859', '1', '/desktop/system.login_log.Index/getLoginLogPaginate', '127.0.0.1', '1744108365');
+INSERT INTO `operation_log` VALUES ('1860', '1', '/desktop/system.operation_log.Index/getOperationLogPaginate', '127.0.0.1', '1744108366');
+INSERT INTO `operation_log` VALUES ('1861', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1744192180');
+INSERT INTO `operation_log` VALUES ('1862', '1', '/desktop/statistic.OrderTrend/exp', '127.0.0.1', '1744192182');
+INSERT INTO `operation_log` VALUES ('1863', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1744192191');
+INSERT INTO `operation_log` VALUES ('1864', '1', '/desktop/system.config.Index/save', '127.0.0.1', '1744192194');
+INSERT INTO `operation_log` VALUES ('1865', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1744192198');
+INSERT INTO `operation_log` VALUES ('1866', '1', '/desktop/system.config.Index/save', '127.0.0.1', '1744192248');
+INSERT INTO `operation_log` VALUES ('1867', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1744192277');
+INSERT INTO `operation_log` VALUES ('1868', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1744192279');
+INSERT INTO `operation_log` VALUES ('1869', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1744192316');
+INSERT INTO `operation_log` VALUES ('1870', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1744192334');
+INSERT INTO `operation_log` VALUES ('1871', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1744192367');
+INSERT INTO `operation_log` VALUES ('1872', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1744192475');
+INSERT INTO `operation_log` VALUES ('1873', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1744192481');
+INSERT INTO `operation_log` VALUES ('1874', '1', '/desktop/system.user.Add/save', '127.0.0.1', '1744192532');
+INSERT INTO `operation_log` VALUES ('1875', '1', '/desktop/system.user.Add/save', '127.0.0.1', '1744192540');
+INSERT INTO `operation_log` VALUES ('1876', '1', '/desktop/system.user.Add/save', '127.0.0.1', '1744192548');
+INSERT INTO `operation_log` VALUES ('1877', '1', '/desktop/system.user.Add/save', '127.0.0.1', '1744192575');
+INSERT INTO `operation_log` VALUES ('1878', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1744192577');
+INSERT INTO `operation_log` VALUES ('1879', '1', '/desktop/system.user.Edit/init', '127.0.0.1', '1744192581');
+INSERT INTO `operation_log` VALUES ('1880', '1', '/desktop/system.user.Edit/save', '127.0.0.1', '1744192585');
+INSERT INTO `operation_log` VALUES ('1881', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1744192586');
+INSERT INTO `operation_log` VALUES ('1882', '1', '/desktop/system.user.Edit/init', '127.0.0.1', '1744192588');
+INSERT INTO `operation_log` VALUES ('1883', '1', '/desktop/system.user.Index/editStatus', '127.0.0.1', '1744192591');
+INSERT INTO `operation_log` VALUES ('1884', '1', '/desktop/system.user.Index/editStatus', '127.0.0.1', '1744192592');
+INSERT INTO `operation_log` VALUES ('1885', '1', '/desktop/system.user.EditPassword/save', '127.0.0.1', '1744192604');
+INSERT INTO `operation_log` VALUES ('1886', '1', '/desktop/system.user.EditPassword/save', '127.0.0.1', '1744192615');
+INSERT INTO `operation_log` VALUES ('1887', '1', '/desktop/system.user.EditPassword/save', '127.0.0.1', '1744192645');
+INSERT INTO `operation_log` VALUES ('1888', '1', '/desktop/system.user.EditPassword/save', '127.0.0.1', '1744192717');
+INSERT INTO `operation_log` VALUES ('1889', '1', '/desktop/system.user.Index/offLine', '127.0.0.1', '1744192723');
+INSERT INTO `operation_log` VALUES ('1890', '1', '/desktop/system.user.Index/offLine', '127.0.0.1', '1744192779');
+INSERT INTO `operation_log` VALUES ('1891', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1744192785');
+INSERT INTO `operation_log` VALUES ('1892', '1', '/desktop/system.department.Add/save', '127.0.0.1', '1744192793');
+INSERT INTO `operation_log` VALUES ('1893', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1744192793');
+INSERT INTO `operation_log` VALUES ('1894', '1', '/desktop/system.department.Edit/init', '127.0.0.1', '1744192795');
+INSERT INTO `operation_log` VALUES ('1895', '1', '/desktop/system.department.Edit/save', '127.0.0.1', '1744192798');
+INSERT INTO `operation_log` VALUES ('1896', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1744192798');
+INSERT INTO `operation_log` VALUES ('1897', '1', '/desktop/system.department.Index/delete', '127.0.0.1', '1744192801');
+INSERT INTO `operation_log` VALUES ('1898', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1744192801');
+INSERT INTO `operation_log` VALUES ('1899', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1744192803');
+INSERT INTO `operation_log` VALUES ('1900', '1', '/desktop/system.role.Add/init', '127.0.0.1', '1744192804');
+INSERT INTO `operation_log` VALUES ('1901', '1', '/desktop/system.role.Add/save', '127.0.0.1', '1744192813');
+INSERT INTO `operation_log` VALUES ('1902', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1744192814');
+INSERT INTO `operation_log` VALUES ('1903', '1', '/desktop/system.role.Edit/init', '127.0.0.1', '1744192815');
+INSERT INTO `operation_log` VALUES ('1904', '1', '/desktop/system.role.Edit/init', '127.0.0.1', '1744192824');
+INSERT INTO `operation_log` VALUES ('1905', '1', '/desktop/system.role.Edit/init', '127.0.0.1', '1744192999');
+INSERT INTO `operation_log` VALUES ('1906', '1', '/desktop/system.role.Edit/save', '127.0.0.1', '1744193006');
+INSERT INTO `operation_log` VALUES ('1907', '1', '/desktop/system.role.Index/delete', '127.0.0.1', '1744193883');
+INSERT INTO `operation_log` VALUES ('1908', '1', '/desktop/system.role.Index/getRolePaginate', '127.0.0.1', '1744193883');
+INSERT INTO `operation_log` VALUES ('1909', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1744193887');
+INSERT INTO `operation_log` VALUES ('1910', '1', '/desktop/system.desktop.menu.Add/save', '127.0.0.1', '1744193894');
+INSERT INTO `operation_log` VALUES ('1911', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1744193894');
+INSERT INTO `operation_log` VALUES ('1912', '1', '/desktop/system.desktop.menu.Edit/init', '127.0.0.1', '1744193896');
+INSERT INTO `operation_log` VALUES ('1913', '1', '/desktop/system.desktop.menu.Edit/save', '127.0.0.1', '1744193897');
+INSERT INTO `operation_log` VALUES ('1914', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1744193898');
+INSERT INTO `operation_log` VALUES ('1915', '1', '/desktop/system.desktop.menu.Index/delete', '127.0.0.1', '1744193900');
+INSERT INTO `operation_log` VALUES ('1916', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1744193900');
+INSERT INTO `operation_log` VALUES ('1917', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1744193902');
+INSERT INTO `operation_log` VALUES ('1918', '1', '/desktop/system.desktop.permission.Add/save', '127.0.0.1', '1744193913');
+INSERT INTO `operation_log` VALUES ('1919', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1744193914');
+INSERT INTO `operation_log` VALUES ('1920', '1', '/desktop/system.desktop.permission.Index/delete', '127.0.0.1', '1744193916');
+INSERT INTO `operation_log` VALUES ('1921', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1744193916');
+INSERT INTO `operation_log` VALUES ('1922', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1744193918');
+INSERT INTO `operation_log` VALUES ('1923', '1', '/desktop/system.desktop.route.Add/save', '127.0.0.1', '1744193932');
+INSERT INTO `operation_log` VALUES ('1924', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1744193932');
+INSERT INTO `operation_log` VALUES ('1925', '1', '/desktop/system.desktop.route.Edit/init', '127.0.0.1', '1744193937');
+INSERT INTO `operation_log` VALUES ('1926', '1', '/desktop/system.desktop.route.Index/delete', '127.0.0.1', '1744193940');
+INSERT INTO `operation_log` VALUES ('1927', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1744193941');
+INSERT INTO `operation_log` VALUES ('1928', '1', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1744193983');
+INSERT INTO `operation_log` VALUES ('1929', '1', '/desktop/system.mobile.permission.Add/save', '127.0.0.1', '1744193989');
+INSERT INTO `operation_log` VALUES ('1930', '1', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1744193989');
+INSERT INTO `operation_log` VALUES ('1931', '1', '/desktop/system.mobile.permission.Edit/init', '127.0.0.1', '1744193991');
+INSERT INTO `operation_log` VALUES ('1932', '1', '/desktop/system.mobile.permission.Edit/save', '127.0.0.1', '1744193993');
+INSERT INTO `operation_log` VALUES ('1933', '1', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1744193993');
+INSERT INTO `operation_log` VALUES ('1934', '1', '/desktop/system.mobile.permission.Index/delete', '127.0.0.1', '1744193995');
+INSERT INTO `operation_log` VALUES ('1935', '1', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1744193995');
+INSERT INTO `operation_log` VALUES ('1936', '1', '/desktop/system.dictionary.Index/getDictionaryPaginate', '127.0.0.1', '1744193997');
+INSERT INTO `operation_log` VALUES ('1937', '1', '/desktop/system.dictionary.Add/save', '127.0.0.1', '1744194003');
+INSERT INTO `operation_log` VALUES ('1938', '1', '/desktop/system.dictionary.Index/getDictionaryPaginate', '127.0.0.1', '1744194003');
+INSERT INTO `operation_log` VALUES ('1939', '1', '/desktop/system.dictionary.Edit/init', '127.0.0.1', '1744194005');
+INSERT INTO `operation_log` VALUES ('1940', '1', '/desktop/system.dictionary.Edit/save', '127.0.0.1', '1744194006');
+INSERT INTO `operation_log` VALUES ('1941', '1', '/desktop/system.dictionary.Index/getDictionaryPaginate', '127.0.0.1', '1744194007');
+INSERT INTO `operation_log` VALUES ('1942', '1', '/desktop/system.dictionary.Index/delete', '127.0.0.1', '1744194009');
+INSERT INTO `operation_log` VALUES ('1943', '1', '/desktop/system.dictionary.Index/getDictionaryPaginate', '127.0.0.1', '1744194009');
+INSERT INTO `operation_log` VALUES ('1944', '1', '/desktop/system.login_log.Index/getLoginLogPaginate', '127.0.0.1', '1744194010');
+INSERT INTO `operation_log` VALUES ('1945', '1', '/desktop/system.operation_log.Index/getOperationLogPaginate', '127.0.0.1', '1744194012');
 
 -- ----------------------------
 -- Table structure for role
@@ -2421,7 +2533,7 @@ CREATE TABLE `role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
   `name` varchar(63) NOT NULL DEFAULT '' COMMENT '名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of role
@@ -2439,7 +2551,7 @@ CREATE TABLE `role_desktop_menu` (
   `menu_id` int(10) unsigned NOT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=493 DEFAULT CHARSET=utf8 COMMENT='角色桌面端菜单关系';
+) ENGINE=InnoDB AUTO_INCREMENT=497 DEFAULT CHARSET=utf8 COMMENT='角色桌面端菜单关系';
 
 -- ----------------------------
 -- Records of role_desktop_menu
@@ -2476,7 +2588,7 @@ CREATE TABLE `role_desktop_permission` (
   `permission_id` int(10) unsigned NOT NULL COMMENT '权限id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=683 DEFAULT CHARSET=utf8 COMMENT='角色桌面端权限关系';
+) ENGINE=InnoDB AUTO_INCREMENT=689 DEFAULT CHARSET=utf8 COMMENT='角色桌面端权限关系';
 
 -- ----------------------------
 -- Records of role_desktop_permission
@@ -2570,7 +2682,7 @@ CREATE TABLE `role_mobile_permission` (
   `permission_id` int(10) unsigned NOT NULL COMMENT '权限id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8 COMMENT='角色移动端权限关系';
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COMMENT='角色移动端权限关系';
 
 -- ----------------------------
 -- Records of role_mobile_permission
@@ -2589,11 +2701,12 @@ CREATE TABLE `runtime` (
   `key` varchar(127) NOT NULL DEFAULT '' COMMENT '键',
   `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='运行时';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='运行时';
 
 -- ----------------------------
 -- Records of runtime
 -- ----------------------------
+INSERT INTO `runtime` VALUES ('1', 'key1', 'value2');
 
 -- ----------------------------
 -- Table structure for user
@@ -2614,13 +2727,14 @@ CREATE TABLE `user` (
   `last_login_ip` varchar(31) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`),
   KEY `department_id` (`department_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理用户';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='管理用户';
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '张三', '15122222222', 'avatar/2025/02/28/fd5879d1b30b38ecff0840bcb277c102.png', '1684989244', '1716183018', '1740727401', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '张三', '15122222222', 'avatar/2025/04/08/a6748e0fd20912cad64355baf91e8ce8.png', '1684989244', '1716183018', '1744192165', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '1', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
+INSERT INTO `user` VALUES ('3', '1', 'test1', 'ea7d67381ace4fcd68e90985645aa69d', '1', 'test1', '15108273575', '', '0', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -2632,10 +2746,12 @@ CREATE TABLE `user_role` (
   `role_id` int(10) unsigned NOT NULL COMMENT '角色id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='用户角色';
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COMMENT='用户角色';
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('64', '1', '3');
 INSERT INTO `user_role` VALUES ('65', '2', '4');
+INSERT INTO `user_role` VALUES ('67', '3', '3');
+INSERT INTO `user_role` VALUES ('68', '3', '4');
