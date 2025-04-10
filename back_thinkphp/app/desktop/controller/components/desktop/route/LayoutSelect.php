@@ -7,9 +7,7 @@ use app\service\DictionaryService;
 
 class LayoutSelect extends Base
 {
-    public $noApiAuthActions = [
-        'getLayouts'
-    ];
+    public $isApiAuth = false;
 
     /**
      * 得到路由

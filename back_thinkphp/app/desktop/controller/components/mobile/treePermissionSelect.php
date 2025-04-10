@@ -7,9 +7,7 @@ use app\service\mobile\PermissionService;
 
 class treePermissionSelect extends Base
 {
-    public $noApiAuthActions = [
-        'getTreePermission'
-    ];
+    public $isApiAuth = false;
 
     /**
      * 得到树权限

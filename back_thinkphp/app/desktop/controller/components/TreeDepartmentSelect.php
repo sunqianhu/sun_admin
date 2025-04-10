@@ -7,9 +7,7 @@ use app\service\DepartmentService;
 
 class TreeDepartmentSelect extends Base
 {
-    public $noApiAuthActions = [
-        'getTreeDepartment'
-    ];
+    public $isApiAuth = false;
 
     /**
      * 得到树型单位列表

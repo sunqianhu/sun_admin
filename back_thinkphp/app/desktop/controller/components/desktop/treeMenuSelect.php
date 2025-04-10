@@ -7,9 +7,7 @@ use app\service\desktop\MenuService;
 
 class treeMenuSelect extends Base
 {
-    public $noApiAuthActions = [
-        'getTreeMenu'
-    ];
+    public $isApiAuth = false;
 
     /**
      * 得到树权限

@@ -8,9 +8,7 @@ use app\service\CrudService;
 
 class RoleSelect extends Base
 {
-    public $noApiAuthActions = [
-        'getRoles'
-    ];
+    public $isApiAuth = false;
 
     /**
      * 得到角色列表

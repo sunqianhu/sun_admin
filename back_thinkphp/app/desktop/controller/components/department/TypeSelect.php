@@ -7,9 +7,7 @@ use app\service\DictionaryService;
 
 class TypeSelect extends Base
 {
-    public $noApiAuthActions = [
-        'getTypes'
-    ];
+    public $isApiAuth = false;
 
     /**
      * 得到路由
