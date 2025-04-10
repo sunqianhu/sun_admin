@@ -14,12 +14,12 @@ class Add extends Base
 {
     /**
      * 保存
+     * @return \think\Response
      */
     public function save()
     {
         $post = $this->request->post(['type', 'key', 'value', 'sort']);
 
-        //验证
         try {
             validate(DictionaryValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
