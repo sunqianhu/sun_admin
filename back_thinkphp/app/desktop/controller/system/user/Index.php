@@ -41,13 +41,13 @@ class Index extends Base
         }
         $query->group('u.id')
             ->order('u.id', 'desc');
-        $paginate = $query->paginate([
+        $userPaginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page']
         ]);
-        $userPaginate = $paginate->toArray();
+        $userPaginateArray = $userPaginate->toArray();
 
-        return $this->success('获取成功', $userPaginate);
+        return $this->success('获取成功', $userPaginateArray);
     }
 
     /**

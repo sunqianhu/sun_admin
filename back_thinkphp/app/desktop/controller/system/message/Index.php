@@ -22,13 +22,13 @@ class Index extends Base
             $query->whereBetweenTime('add_time', intval($get['times'][0]), intval($get['times'][1]));
         }
         $query->order('id', 'desc');
-        $paginate = $query->paginate([
+        $messagePaginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $messagePaginate = $paginate->toArray();
+        $messagePaginateArray = $messagePaginate->toArray();
 
-        return $this->success('获取成功', $messagePaginate);
+        return $this->success('获取成功', $messagePaginateArray);
     }
 
     /**

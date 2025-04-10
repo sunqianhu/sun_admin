@@ -30,12 +30,12 @@ class Index extends Base
             'type' => 'asc',
             'sort' => 'asc'
         ]);
-        $paginate = $query->paginate([
+        $dictionaryPaginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $dictionaryPaginate = $paginate->toArray();
-        return $this->success('获取成功', $dictionaryPaginate);
+        $dictionaryPaginateArray = $dictionaryPaginate->toArray();
+        return $this->success('获取成功', $dictionaryPaginateArray);
     }
 
     /**

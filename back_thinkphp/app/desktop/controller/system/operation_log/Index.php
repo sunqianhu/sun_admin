@@ -28,12 +28,12 @@ class Index extends Base
             $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
         $query->order('ol.id', 'desc');
-        $paginate = $query->paginate([
+        $operationLogPaginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $operationLogPaginate = $paginate->toArray();
+        $operationLogPaginateArray = $operationLogPaginate->toArray();
 
-        return $this->success('获取成功', $operationLogPaginate);
+        return $this->success('获取成功', $operationLogPaginateArray);
     }
 }

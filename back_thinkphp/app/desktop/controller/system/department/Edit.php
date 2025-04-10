@@ -26,7 +26,6 @@ class Edit extends Base
         }
         $id = $get['id'];
 
-        //部门
         $departmentModel = DepartmentModel::field('id,name,department_id,type,sort')->find($id);
         if (empty($departmentModel)) {
             return $this->error('没有找到记录');

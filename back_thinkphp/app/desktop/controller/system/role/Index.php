@@ -26,13 +26,13 @@ class Index extends Base
             $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
         $query->order('id', 'asc');
-        $paginate = $query->paginate([
+        $rolePaginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $rolePaginate = $paginate->toArray();
+        $rolePaginateArray = $rolePaginate->toArray();
 
-        return $this->success('获取成功', $rolePaginate);
+        return $this->success('获取成功', $rolePaginateArray);
     }
 
     /**

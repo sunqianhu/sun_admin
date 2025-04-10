@@ -12,6 +12,8 @@ class Index extends Base
 {
     /**
      * 得到字典分页
+     * @return \think\Response
+     * @throws \think\db\exception\DbException
      */
     public function getDictionaryPaginate()
     {
@@ -30,20 +32,17 @@ class Index extends Base
             'type' => 'asc',
             'sort' => 'asc'
         ]);
-        $paginate = $query->paginate([
+        $dictionaryPaginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $dictionaryPaginate = $paginate->toArray();
-        return $this->success('获取成功', $dictionaryPaginate);
+        $dictionaryPaginateArray = $dictionaryPaginate->toArray();
+        return $this->success('获取成功', $dictionaryPaginateArray);
     }
 
     /**
      * 删除
-     * @return \think\Response|void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return \think\Response
      */
     public function delete(){
         $id = $this->request->post('id', 0);

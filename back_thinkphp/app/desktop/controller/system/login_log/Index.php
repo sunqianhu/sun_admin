@@ -28,12 +28,12 @@ class Index extends Base
         }
         $query->order('ll.id', 'desc');
 
-        $paginate = $query->paginate([
+        $loginLogPaginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $loginLogPaginate = $paginate->toArray();
+        $loginLogPaginateArray = $loginLogPaginate->toArray();
 
-        return $this->success('获取成功', $loginLogPaginate);
+        return $this->success('获取成功', $loginLogPaginateArray);
     }
 }
