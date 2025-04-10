@@ -94,6 +94,24 @@ class CrudService
     }
 
     /**
+     * 多条件修改或添加
+     * @param $wheres
+     * @param $data
+     * @return mixed
+     * @throws Exception
+     */
+    public function wheresUpsert($wheres, $data)
+    {
+        if(empty($wheres)){
+            throw new Exception('查询条件不能为空');
+        }
+        $model = $this->crudModelClass::where($wheres)
+            ->findOrEmpty();
+        $model->save($data);
+        return $model->id;
+    }
+
+    /**
      * 删除
      * @param $id
      * @return boolean
