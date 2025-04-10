@@ -74,7 +74,7 @@ class SessionService
     public function logout($token)
     {
         $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenCrudService->fieldDelete('token', $token);
+        $tokenCrudService->deleteByField('token', $token);
     }
 
     /**
@@ -86,7 +86,7 @@ class SessionService
     function ipAuth($ip)
     {
         $configCrudService = new CrudService(ConfigModel::class);
-        $deniedIpString = $configCrudService->fetchValue(1,'denied_ip_string');
+        $deniedIpString = $configCrudService->getValue(1,'denied_ip_string');
         $deniedIps = explode("\r\n", $deniedIpString);
         $deniedIps = array_filter($deniedIps);
         if (empty($deniedIps)) {

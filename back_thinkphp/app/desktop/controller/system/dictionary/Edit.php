@@ -5,7 +5,6 @@ namespace app\desktop\controller\system\dictionary;
 use app\desktop\controller\Base;
 use app\model\DictionaryModel;
 use app\service\CrudService;
-use app\service\DictionaryService;
 use app\validate\DictionaryValidate;
 use app\validate\IdValidate;
 use Exception;

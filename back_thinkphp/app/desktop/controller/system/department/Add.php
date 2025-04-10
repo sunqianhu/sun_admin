@@ -5,7 +5,6 @@ namespace app\desktop\controller\system\department;
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
 use app\service\CrudService;
-use app\service\DepartmentService;
 use app\validate\DepartmentValidate;
 use Exception;
 use think\exception\ValidateException;

@@ -17,6 +17,6 @@ class ApiUserService
     public function offLine($id)
     {
         $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenCrudService->fieldDelete('user_id', $id);
+        $tokenCrudService->deleteByField('user_id', $id);
     }
 }

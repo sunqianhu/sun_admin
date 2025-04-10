@@ -20,7 +20,7 @@ class RoleSelect extends Base
     public function getRoles()
     {
         $roleCrudService = new CrudService(RoleModel::class);
-        $roles = $roleCrudService->fetchAll();
+        $roles = $roleCrudService->getAll();
         return $this->success('获取成功', $roles);
     }
 }

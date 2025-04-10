@@ -58,7 +58,7 @@ class JwtService
 
         //验证
         $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenRecord = $tokenCrudService->fieldFetch('token', $token);
+        $tokenRecord = $tokenCrudService->findByField('token', $token);
         if (empty($tokenRecord)) {
             throw new Exception('未登录');
         }
@@ -76,7 +76,7 @@ class JwtService
         $tokenCrudService->edit($tokenRecord['id'], $data);
 
         $userCrudService = new CrudService(UserModel::class);
-        $user = $userCrudService->fetch($tokenRecord['user_id']);
+        $user = $userCrudService->find($tokenRecord['user_id']);
         if (empty($user)) {
             throw new Exception('没有找到用户记录');
         }
@@ -97,6 +97,6 @@ class JwtService
     function deleteToken($token)
     {
         $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenCrudService->fieldDelete('token', $token);
+        $tokenCrudService->deleteByField('token', $token);
     }
 }

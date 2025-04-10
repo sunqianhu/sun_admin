@@ -10,7 +10,7 @@
           {{ file.name }}
         </a>
       </div>
-      <span>无</span>
+      <span v-else>无</span>
     </div>
   </div>
 </template>

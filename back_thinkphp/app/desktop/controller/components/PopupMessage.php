@@ -5,7 +5,6 @@ namespace app\desktop\controller\components;
 use app\desktop\controller\Base;
 use app\service\MessageService;
 use app\validate\IdValidate;
-use app\validate\MessageValidate;
 use Exception;
 use think\exception\ValidateException;
 

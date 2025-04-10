@@ -6,7 +6,6 @@ use app\mobile\controller\Base;
 use app\validate\user\AvatarBase64ImageContentValidate;
 use Sunqianhu\Helper\File;
 use app\service\UserService;
-use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
 

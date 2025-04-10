@@ -6,7 +6,6 @@ use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\model\UserRoleModel;
 use app\service\CrudService;
-use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -57,7 +56,7 @@ class Edit extends Base
             $id = $post['id'];
 
             $userRoleCrudService = new CrudService(UserRoleModel::class);
-            $userRoleCrudService->fieldDelete('user_id', $id);
+            $userRoleCrudService->deleteByField('user_id', $id);
             foreach ($post['role_ids'] as $roleId){
                 $userRoleCrudService->add([
                     'user_id' => $id,

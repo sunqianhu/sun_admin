@@ -5,7 +5,6 @@ namespace app\desktop\controller\system\desktop\route;
 use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
 use app\service\CrudService;
-use app\service\desktop\RouteService;
 use Exception;
 
 class Index extends Base

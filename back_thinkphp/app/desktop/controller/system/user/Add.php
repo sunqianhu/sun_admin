@@ -3,14 +3,10 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\model\RoleModel;
 use app\model\UserModel;
 use app\model\UserRoleModel;
 use app\service\CrudService;
-use app\service\DepartmentService;
-use app\service\UserService;
 use app\validate\IdArrayValidate;
-use app\validate\IdValidate;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;

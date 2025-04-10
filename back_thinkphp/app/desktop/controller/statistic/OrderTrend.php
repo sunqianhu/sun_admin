@@ -6,11 +6,9 @@ use app\desktop\controller\Base;
 use app\service\order\ExcelService;
 use app\service\order\StatisticService;
 use app\validate\order\IndexSearchValidate;
-use app\validate\statistic\TrendValidate;
 use Exception;
 use Sunqianhu\Helper\File;
 use think\exception\ValidateException;
-use function app\desktop\controller\statistic\trend\rand;
 
 class OrderTrend extends Base
 {

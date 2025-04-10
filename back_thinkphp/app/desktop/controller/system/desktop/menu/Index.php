@@ -5,7 +5,6 @@ namespace app\desktop\controller\system\desktop\menu;
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
 use app\service\CrudService;
-use app\service\desktop\MenuService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 

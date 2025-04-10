@@ -8,7 +8,6 @@ use Exception;
 use Sunqianhu\Helper\File;
 use Sunqianhu\Helper\Image;
 use think\facade\Cache;
-use think\facade\Db;
 
 class UserService
 {

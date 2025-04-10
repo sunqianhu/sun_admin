@@ -3,8 +3,6 @@
 namespace app\service\mobile;
 
 use app\model\mobile\PermissionModel;
-use app\service\CrudService;
-use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 
 class PermissionService

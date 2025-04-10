@@ -17,7 +17,7 @@ class Index extends Base
     public function init()
     {
         $configCrudService = new CrudService(ConfigModel::class);
-        $config = $configCrudService->fetch(1);
+        $config = $configCrudService->find(1);
         return $this->success('获取成功', $config);
     }
 

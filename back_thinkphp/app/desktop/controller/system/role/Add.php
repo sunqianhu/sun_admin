@@ -3,16 +3,13 @@
 namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
-use app\model\RoleDesktopMenuModel;
-use app\model\RoleDesktopPermissionModel;
-use app\model\RoleDesktopRouteModel;
-use app\model\RoleMobilePermissionModel;
 use app\model\RoleModel;
 use app\service\CrudService;
 use app\service\desktop\MenuService as DesktopMenuService;
 use app\service\desktop\PermissionService as DesktopPermissionService;
 use app\service\desktop\RouteService as DesktopRouteService;
 use app\service\mobile\PermissionService as MobilePermissionService;
+use app\service\RoleService;
 use app\validate\IdArrayValidate;
 use app\validate\RoleValidate;
 use Exception;
@@ -70,49 +67,12 @@ class Add extends Base
             $roleCrudService = new CrudService(RoleModel::class);
             $id = $roleCrudService->add($post);
 
-            //桌面端权限
-            if (!empty($post['desktop_permission_ids'])) {
-                $roleDesktopPermissionCrudService = new CrudService(RoleDesktopPermissionModel::class);
-                foreach ($post['desktop_permission_ids'] as $desktopPermissionId) {
-                    $roleDesktopPermissionCrudService->add([
-                        'role_id' => $id,
-                        'permission_id' => $desktopPermissionId
-                    ]);
-                }
-            }
+            $roleService = new RoleService();
+            $roleService->updateDesktopPermissionRelation($id, $post['desktop_permission_ids']);
+            $roleService->updateDesktopMenuRelation($id, $post['desktop_menu_ids']);
+            $roleService->updateDesktopRouteRelation($id, $post['desktop_route_ids']);
+            $roleService->updateMobilePermissionRelation($id, $post['mobile_permission_ids']);
 
-            //桌面端菜单
-            if (!empty($post['desktop_menu_ids'])) {
-                $roleDesktopMenuCrudService = new CrudService(RoleDesktopMenuModel::class);
-                foreach ($post['desktop_menu_ids'] as $desktopMenuId) {
-                    $roleDesktopMenuCrudService->add([
-                        'role_id' => $id,
-                        'menu_id' => $desktopMenuId
-                    ]);
-                }
-            }
-
-            //桌面端路由
-            if (!empty($post['desktop_route_ids'])) {
-                $roleDesktopRouteCrudService = new CrudService(RoleDesktopRouteModel::class);
-                foreach ($post['desktop_route_ids'] as $desktopRouteId) {
-                    $roleDesktopRouteCrudService->add([
-                        'role_id' => $id,
-                        'route_id' => $desktopRouteId
-                    ]);
-                }
-            }
-
-            //移动端权限
-            if (!empty($post['mobile_permission_ids'])) {
-                $roleMobilePermissionCrudService = new CrudService(RoleMobilePermissionModel::class);
-                foreach ($post['mobile_permission_ids'] as $mobilePermissionId) {
-                    $roleMobilePermissionCrudService->add([
-                        'role_id' => $id,
-                        'permission_id' => $mobilePermissionId
-                    ]);
-                }
-            }
             Db::commit();
         }catch (Exception $exception){
             Db::rollback();

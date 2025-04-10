@@ -6,7 +6,6 @@ use app\desktop\controller\Base;
 use app\service\UserService;
 use app\validate\IdValidate;
 use app\validate\user\TwoPasswordValidate;
-use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
 

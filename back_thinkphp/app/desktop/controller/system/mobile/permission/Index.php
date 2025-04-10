@@ -5,7 +5,6 @@ namespace app\desktop\controller\system\mobile\permission;
 use app\desktop\controller\Base;
 use app\model\mobile\PermissionModel;
 use app\service\CrudService;
-use app\service\mobile\PermissionService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 

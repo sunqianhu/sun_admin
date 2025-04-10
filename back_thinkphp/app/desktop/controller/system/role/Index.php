@@ -54,16 +54,16 @@ class Index extends Base
             $roleCrudService->delete($id);
 
             $roleDesktopPermissionCrudService = new CrudService(RoleDesktopPermissionModel::class);
-            $roleDesktopPermissionCrudService->fieldDelete('role_id', $id);
+            $roleDesktopPermissionCrudService->deleteByField('role_id', $id);
 
             $roleDesktopMenuCrudService = new CrudService(RoleDesktopMenuModel::class);
-            $roleDesktopMenuCrudService->fieldDelete('role_id', $id);
+            $roleDesktopMenuCrudService->deleteByField('role_id', $id);
 
             $roleDesktopRouteCrudService = new CrudService(RoleDesktopRouteModel::class);
-            $roleDesktopRouteCrudService->fieldDelete('role_id', $id);
+            $roleDesktopRouteCrudService->deleteByField('role_id', $id);
 
             $roleMobilePermissionCrudService = new CrudService(RoleMobilePermissionModel::class);
-            $roleMobilePermissionCrudService->fieldDelete('role_id', $id);
+            $roleMobilePermissionCrudService->deleteByField('role_id', $id);
 
             Db::commit();
         }catch (Exception $exception){
