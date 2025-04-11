@@ -54,7 +54,7 @@ class Edit extends Base
 
         $dictionaryCrudService = new CrudService(DictionaryModel::class);
         try{
-            $dictionaryCrudService->edit($post['id'], $post);
+            $dictionaryCrudService->update($post['id'], $post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -21,7 +21,7 @@ class RoleService
         $roleDesktopPermissionCrudService->deleteByField('role_id', $id);
         if (!empty($permissionIds)) {
             foreach ($permissionIds as $permissionId) {
-                $roleDesktopPermissionCrudService->add([
+                $roleDesktopPermissionCrudService->insert([
                     'role_id' => $id,
                     'permission_id' => $permissionId
                 ]);
@@ -41,7 +41,7 @@ class RoleService
         $roleDesktopMenuCrudService->deleteByField('role_id', $id);
         if (!empty($menuIds)) {
             foreach ($menuIds as $menuId) {
-                $roleDesktopMenuCrudService->add([
+                $roleDesktopMenuCrudService->insert([
                     'role_id' => $id,
                     'menu_id' => $menuId
                 ]);
@@ -61,7 +61,7 @@ class RoleService
         $roleDesktopRouteCrudService->deleteByField('role_id', $id);
         if (!empty($routeIds)) {
             foreach ($routeIds as $routeId) {
-                $roleDesktopRouteCrudService->add([
+                $roleDesktopRouteCrudService->insert([
                     'role_id' => $id,
                     'route_id' => $routeId
                 ]);
@@ -81,7 +81,7 @@ class RoleService
         $roleMobilePermissionCrudService->deleteByField('role_id', $id);
         if (!empty($permissionIds)) {
             foreach ($permissionIds as $permissionId) {
-                $roleMobilePermissionCrudService->add([
+                $roleMobilePermissionCrudService->insert([
                     'role_id' => $id,
                     'permission_id' => $permissionId
                 ]);

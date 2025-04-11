@@ -27,7 +27,7 @@ class Add extends Base
 
         $menuCrudService = new CrudService(MenuModel::class);
         try {
-            $menuCrudService->add($post);
+            $menuCrudService->insert($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

@@ -65,7 +65,7 @@ class Add extends Base
         Db::startTrans();
         try{
             $roleCrudService = new CrudService(RoleModel::class);
-            $id = $roleCrudService->add($post);
+            $id = $roleCrudService->insert($post);
 
             $roleService = new RoleService();
             $roleService->updateDesktopPermissionRelation($id, $post['desktop_permission_ids']);

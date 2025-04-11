@@ -53,7 +53,7 @@ class Edit extends Base
 
         $permissionCrudService = new CrudService(PermissionModel::class);
         try{
-            $permissionCrudService->edit($post['id'], $post);
+            $permissionCrudService->update($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

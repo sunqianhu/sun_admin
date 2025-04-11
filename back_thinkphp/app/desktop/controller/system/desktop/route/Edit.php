@@ -50,7 +50,7 @@ class edit extends Base
 
         $routeCrudService = new CrudService(RouteModel::class);
         try{
-            $routeCrudService->edit($post['id'], $post);
+            $routeCrudService->update($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

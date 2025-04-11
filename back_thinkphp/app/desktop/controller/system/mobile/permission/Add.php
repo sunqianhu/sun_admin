@@ -27,7 +27,7 @@ class Add extends Base
 
         $permissionCrudService = new CrudService(PermissionModel::class);
         try {
-            $permissionCrudService->add($post);
+            $permissionCrudService->insert($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

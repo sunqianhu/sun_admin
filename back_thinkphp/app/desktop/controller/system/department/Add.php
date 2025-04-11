@@ -27,7 +27,7 @@ class Add extends Base
 
         $departmentCrudService = new CrudService(DepartmentModel::class);
         try{
-            $departmentCrudService->add($post);
+            $departmentCrudService->insert($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

@@ -7,10 +7,10 @@ use Exception;
 class CrudService
 {
     /**
-     * crud模型类
+     * 模型类
      * @var string
      */
-    protected string $crudModelClass;
+    protected string $modelClass;
 
     /**
      * 构造函数
@@ -22,106 +22,57 @@ class CrudService
         if (!class_exists($modelClass)) {
             throw new Exception("模型类不存在：{$modelClass}");
         }
-        $this->crudModelClass = $modelClass;
+        $this->modelClass = $modelClass;
     }
 
     /**
-     * 添加
+     * 插入
      * @param $data
      * @return int
      */
-    public function add($data)
+    public function insert($data)
     {
-        $model = new $this->crudModelClass();
+        $model = new $this->modelClass();
         $model->save($data);
         return $model->id;
     }
 
     /**
-     * 添加并设置添加时间
+     * 批量插入
+     * @param $data
+     * @return array
+     */
+    public function inserts($data)
+    {
+        $model = new $this->modelClass();
+        $models = $model->saveAll($data);
+        $ids = [];
+        foreach ($models as $model){
+            $ids[] = $model->id;
+        }
+        return $ids;
+    }
+
+    /**
+     * 插入并设置添加时间为当前时间
      * @param $data
      * @return int
      */
-    public function addWithAddTimeNow($data)
+    public function insertWithAddTimeNow($data)
     {
         $data['add_time'] = time();
-        return $this->add($data);
+        return $this->insert($data);
     }
 
     /**
-     * 修改
-     * @param $id
-     * @param $data
-     * @return boolean
-     * @throws Exception
-     */
-    public function edit($id, $data)
-    {
-        if(isset($data['id'])){
-            unset($data['id']);
-        }
-        if(empty($data)){
-            throw new Exception('修改的数据不能为空');
-        }
-        $model = $this->crudModelClass::find($id);
-        if (empty($model)) {
-            return true;
-        }
-        return $model->save($data);
-    }
-
-    /**
-     * 通过字段修改
-     * @param $field
-     * @param $value
-     * @param $data
-     * @return boolean
-     */
-    public function editByField($field, $value, $data)
-    {
-        return $this->editByWhere([$field=>$value], $data);
-    }
-
-    /**
-     * 通过条件修改
-     * @param $where
-     * @param $data
-     * @return true
-     */
-    public function editByWhere($where, $data)
-    {
-        $models = $this->crudModelClass::where($where)
-            ->select();
-        if($models->isEmpty()){
-            return true;
-        }
-        return $models->update($data);
-    }
-
-    /**
-     * 修改或添加
-     * @param $field
-     * @param $value
+     * 插入并设置修改时间为当前时间
      * @param $data
      * @return int
      */
-    public function upsert($field, $value, $data)
+    public function insertWithEditTimeNow($data)
     {
-        return $this->upsertByWhere([$field=>$value], $data);
-    }
-
-    /**
-     * 通过条件修改或添加
-     * @param $where
-     * @param $data
-     * @return mixed
-     */
-    public function upsertByWhere($where, $data)
-    {
-        $model = $this->crudModelClass::where($where)
-            ->findOrEmpty();
-        $model->save($data);
-        return $model->id;
+        $data['add_time'] = time();
+        return $this->insert($data);
     }
 
     /**
@@ -132,7 +83,7 @@ class CrudService
      */
     public function delete($id)
     {
-        $model = $this->crudModelClass::find($id);
+        $model = $this->modelClass::find($id);
         if (empty($model)) {
             return true;
         }
@@ -157,7 +108,7 @@ class CrudService
      */
     public function deleteByWhere($where)
     {
-        $models = $this->crudModelClass::where($where)
+        $models = $this->modelClass::where($where)
             ->select();
         if($models->isEmpty()){
             return true;
@@ -166,96 +117,184 @@ class CrudService
     }
 
     /**
-     * 得到一行记录
+     * 更新
+     * @param $id
+     * @param $data
+     * @return boolean
+     * @throws Exception
+     */
+    public function update($id, $data)
+    {
+        if(isset($data['id'])){
+            unset($data['id']);
+        }
+        if(empty($data)){
+            throw new Exception('更新的数据不能为空');
+        }
+        $model = $this->modelClass::find($id);
+        if (empty($model)) {
+            return true;
+        }
+        return $model->save($data);
+    }
+
+    /**
+     * 通过字段更新
+     * @param $field
+     * @param $value
+     * @param $data
+     * @return boolean
+     */
+    public function updateByField($field, $value, $data)
+    {
+        return $this->updateByWhere([$field=>$value], $data);
+    }
+
+    /**
+     * 通过条件更新
+     * @param $where
+     * @param $data
+     * @return true
+     */
+    public function updateByWhere($where, $data)
+    {
+        $models = $this->modelClass::where($where)
+            ->select();
+        if($models->isEmpty()){
+            return true;
+        }
+        return $models->update($data);
+    }
+
+    /**
+     * 更新或插入
+     * @param $id
+     * @param $data
+     * @return int
+     */
+    public function upsert($id, $data)
+    {
+        return $this->upsertByWhere(['id'=>$id], $data);
+    }
+
+    /**
+     * 通过字段更新或插入
+     * @param $field
+     * @param $value
+     * @param $data
+     * @return int
+     */
+    public function upsertByField($field, $value, $data)
+    {
+        return $this->upsertByWhere([$field=>$value], $data);
+    }
+
+    /**
+     * 通过条件更新或插入
+     * @param $where
+     * @param $data
+     * @return mixed
+     */
+    public function upsertByWhere($where, $data)
+    {
+        $model = $this->modelClass::where($where)
+            ->findOrEmpty();
+        $model->save($data);
+        return $model->id;
+    }
+
+    /**
+     * 查询一条记录
      * @param $id
      * @param $field
      * @return array
      */
-    public function find($id, $field = '*')
+    public function selectRow($id, $field = '*')
     {
-        $model = $this->crudModelClass::field($field)
+        $model = $this->modelClass::field($field)
             ->findOrEmpty($id);
         return $model->toArray();
     }
 
     /**
-     * 通过字段得到一行
+     * 通过字段查询一行
      * @param $whereField
      * @param $whereValue
      * @param $selectField
      * @return array
      */
-    public function findByField($whereField, $whereValue, $selectField = '*')
+    public function selectRowByField($whereField, $whereValue, $selectField = '*')
     {
-        return $this->findByWhere([$whereField=>$whereValue], $selectField);
+        return $this->selectByWhere([$whereField=>$whereValue], $selectField);
     }
 
     /**
-     * 通过条件得到一行
+     * 通过条件查询一行
      * @param $where
      * @param $selectField
      * @return mixed
      */
-    public function findByWhere($where, $selectField = '*')
+    public function selectByWhere($where, $selectField = '*')
     {
-        $model = $this->crudModelClass::field($selectField)
+        $model = $this->modelClass::field($selectField)
             ->where($where)
             ->findOrEmpty();
         return $model->toArray();
     }
 
     /**
-     * 通过主键得到一行记录的一个字段的值
+     * 查询一个字段的值
      * @param $id
      * @param $field
      * @return mixed
      */
-    public function getValue($id, $field)
+    public function selectValue($id, $field)
     {
-        return $this->getValueByWhere(['id'=>$id], $field);
+        return $this->selectValueByWhere(['id'=>$id], $field);
     }
 
     /**
-     * 通过字段得到一行记录的一个字段的值
+     * 通过字段查询一个字段的值
      * @param $whereField
      * @param $whereValue
      * @param $selectField
      * @return mixed
      */
-    public function getValueByField($whereField, $whereValue, $selectField)
+    public function selectValueByField($whereField, $whereValue, $selectField)
     {
-        return $this->getValueByWhere([$whereField=>$whereValue], $selectField);
+        return $this->selectValueByWhere([$whereField=>$whereValue], $selectField);
     }
 
     /**
-     * 通过条件得到一行记录的一个字段的值
+     * 通过条件查询一个字段的值
      * @param $where
      * @param $selectField
      * @return mixed
      */
-    public function getValueByWhere($where, $selectField)
+    public function selectValueByWhere($where, $selectField)
     {
-        return $this->crudModelClass::field($selectField)
+        return $this->modelClass::field($selectField)
             ->where($where)
+            ->limit(1)
             ->value($selectField);
     }
 
     /**
-     * 得到一列
+     * 查询一列
      * @param $field
      * @param $sortField
      * @param $sortDirection
      * @return array
      */
-    public function getColumn($field, $sortField = 'id', $sortDirection = 'asc')
+    public function selectColumn($field, $sortField = 'id', $sortDirection = 'asc')
     {
-        return $this->crudModelClass::field($field)
+        return $this->modelClass::field($field)
             ->order($sortField, $sortDirection)
             ->column($field);
     }
 
     /**
-     * 通过字段得到一列
+     * 通过字段查询一列
      * @param $whereField
      * @param $whereValue
      * @param $selectField
@@ -263,22 +302,22 @@ class CrudService
      * @param $sortDirection
      * @return array
      */
-    public function getColumnByField($whereField, $whereValue, $selectField, $sortField = 'id', $sortDirection = 'asc')
+    public function selectColumnByField($whereField, $whereValue, $selectField, $sortField = 'id', $sortDirection = 'asc')
     {
-        return $this->getColumnByWhere([$whereField=>$whereValue], $selectField, $sortField, $sortDirection);
+        return $this->selectColumnByWhere([$whereField=>$whereValue], $selectField, $sortField, $sortDirection);
     }
 
     /**
-     * 通过条件得到一列
+     * 通过条件查询一列
      * @param $where
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
      * @return mixed
      */
-    public function getColumnByWhere($where, $selectField, $sortField = 'id', $sortDirection = 'asc')
+    public function selectColumnByWhere($where, $selectField, $sortField = 'id', $sortDirection = 'asc')
     {
-        return $this->crudModelClass::field($selectField)
+        return $this->modelClass::field($selectField)
             ->where($where)
             ->order($sortField, $sortDirection)
             ->column($selectField);
@@ -293,9 +332,9 @@ class CrudService
      * @param $sortDirection
      * @return array
      */
-    public function getLimit($offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
+    public function selectLimit($offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->crudModelClass::field($selectField)
+        $models = $this->modelClass::field($selectField)
             ->order($sortField, $sortDirection)
             ->limit($offset, $length)
             ->select();
@@ -313,9 +352,9 @@ class CrudService
      * @param $sortDirection
      * @return array
      */
-    public function getLimitByField($whereField, $whereValue, $offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
+    public function selectLimitByField($whereField, $whereValue, $offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        return $this->getLimitByWhere([$whereField=>$whereValue], $offset, $length, $selectField, $sortField, $sortDirection);
+        return $this->selectLimitByWhere([$whereField=>$whereValue], $offset, $length, $selectField, $sortField, $sortDirection);
     }
 
     /**
@@ -328,9 +367,9 @@ class CrudService
      * @param $sortDirection
      * @return array
      */
-    public function getLimitByWhere($where, $offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
+    public function selectLimitByWhere($where, $offset, $length, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->crudModelClass::field($selectField)
+        $models = $this->modelClass::field($selectField)
             ->where($where)
             ->order($sortField, $sortDirection)
             ->limit($offset, $length)
@@ -339,22 +378,22 @@ class CrudService
     }
 
     /**
-     * 得到全部
+     * 查询全部
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
      * @return array
      */
-    public function getAll($selectField='*', $sortField = 'id', $sortDirection = 'asc')
+    public function selectAll($selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->crudModelClass::field($selectField)
+        $models = $this->modelClass::field($selectField)
             ->order($sortField, $sortDirection)
             ->select();
         return $models->toArray();
     }
 
     /**
-     * 通过字段得到全部
+     * 通过字段查询列表
      * @param $whereField
      * @param $whereValue
      * @param $selectField
@@ -362,25 +401,55 @@ class CrudService
      * @param $sortDirection
      * @return array
      */
-    public function getAllByField($whereField, $whereValue, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
+    public function selectListByField($whereField, $whereValue, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        return $this->getAllByWhere([$whereField=>$whereValue], $selectField, $sortField, $sortDirection);
+        return $this->selectListByWhere([$whereField=>$whereValue], $selectField, $sortField, $sortDirection);
     }
 
     /**
-     * 通过条件得到全部
+     * 通过条件得到列表
      * @param $where
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
      * @return array
      */
-    public function getAllByWhere($where, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
+    public function selectListByWhere($where, $selectField='*', $sortField = 'id', $sortDirection = 'asc')
     {
-        $models = $this->crudModelClass::field($selectField)
+        $models = $this->modelClass::field($selectField)
             ->where($where)
             ->order($sortField, $sortDirection)
             ->select();
         return $models->toArray();
+    }
+
+    /**
+     * 查询数量
+     * @return int
+     */
+    public function selectCount()
+    {
+        return $this->modelClass::count();
+    }
+
+    /**
+     * 查询数量通过字段
+     * @param $field
+     * @param $value
+     * @return mixed
+     */
+    public function selectCountByField($field, $value)
+    {
+        return $this->selectCountByWhere([$field=>$value]);
+    }
+
+    /**
+     * 查询数量通过条件
+     * @param $where
+     * @return mixed
+     */
+    public function selectCountByWhere($where)
+    {
+        return $this->modelClass::where($where)->count();
     }
 }

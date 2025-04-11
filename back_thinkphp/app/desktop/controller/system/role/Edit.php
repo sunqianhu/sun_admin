@@ -87,7 +87,7 @@ class Edit extends Base
         Db::startTrans();
         try{
             $roleCrudService = new CrudService(RoleModel::class);
-            $roleCrudService->edit($post['id'], $post);
+            $roleCrudService->update($post['id'], $post);
             $id = $post['id'];
 
             $roleService = new RoleService();

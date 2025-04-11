@@ -52,13 +52,13 @@ class Edit extends Base
         Db::startTrans();
         try{
             $userCrudService = new CrudService(UserModel::class);
-            $userCrudService->edit($post['id'], $post);
+            $userCrudService->update($post['id'], $post);
             $id = $post['id'];
 
             $userRoleCrudService = new CrudService(UserRoleModel::class);
             $userRoleCrudService->deleteByField('user_id', $id);
             foreach ($post['role_ids'] as $roleId){
-                $userRoleCrudService->add([
+                $userRoleCrudService->insert([
                     'user_id' => $id,
                     'role_id' => $roleId
                 ]);

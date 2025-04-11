@@ -53,7 +53,7 @@ class Edit extends Base
 
         $menuCrudService = new CrudService(MenuModel::class);
         try{
-            $menuCrudService->edit($post['id'], $post);
+            $menuCrudService->update($post['id'], $post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

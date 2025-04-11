@@ -32,12 +32,12 @@ class Add extends Base
         Db::startTrans();
         try{
             $userCrudService = new CrudService(UserModel::class);
-            $id = $userCrudService->add($post);
+            $id = $userCrudService->insert($post);
 
             if (!empty($post['role_ids'])) {
                 $userRoleCrudService = new CrudService(UserRoleModel::class);
                 foreach ($post['role_ids'] as $roleId){
-                    $userRoleCrudService->add([
+                    $userRoleCrudService->insert([
                         'user_id' => $id,
                         'role_id' => $roleId
                     ]);

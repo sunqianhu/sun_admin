@@ -17,7 +17,7 @@ class Index extends Base
     public function init()
     {
         $configCrudService = new CrudService(ConfigModel::class);
-        $config = $configCrudService->find(1);
+        $config = $configCrudService->selectRow(1);
         return $this->success('获取成功', $config);
     }
 
@@ -36,7 +36,7 @@ class Index extends Base
         }
 
         $configCrudService = new CrudService(ConfigModel::class);
-        $configCrudService->upsert('id', 1, $post);
+        $configCrudService->upsertByField('id', 1, $post);
 
         return $this->success('保存成功');
     }

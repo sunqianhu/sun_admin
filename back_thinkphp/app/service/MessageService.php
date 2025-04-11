@@ -35,7 +35,7 @@ class MessageService
                 'url' => $url,
                 'add_time' => $time
             ];
-            $id = $messageCrudService->add($data);
+            $id = $messageCrudService->insert($data);
 
             $data = [
                 'type' => 'message',

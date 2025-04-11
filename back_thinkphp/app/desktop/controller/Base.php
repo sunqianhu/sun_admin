@@ -77,7 +77,7 @@ class Base extends BaseController
                 'ip' => $this->request->ip(),
                 'time' => time()
             ];
-            $operationLogCrudService->add($data);
+            $operationLogCrudService->insert($data);
         }
     }
 

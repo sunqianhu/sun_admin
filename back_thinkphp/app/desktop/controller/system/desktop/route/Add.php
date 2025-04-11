@@ -27,7 +27,7 @@ class Add extends Base
 
         $routeCrudService = new CrudService(RouteModel::class);
         try{
-            $routeCrudService->add($post);
+            $routeCrudService->insert($post);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

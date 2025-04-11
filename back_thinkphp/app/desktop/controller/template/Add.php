@@ -27,7 +27,7 @@ class Add extends Base
 
         $dictionaryCrudService = new CrudService(DictionaryModel::class);
         try{
-            $dictionaryCrudService->add($post);
+            $dictionaryCrudService->insert($post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

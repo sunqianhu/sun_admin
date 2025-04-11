@@ -53,7 +53,7 @@ class Edit extends Base
 
         $departmentCrudService = new CrudService(DepartmentModel::class);
         try{
-            $departmentCrudService->edit($post['id'], $post);
+            $departmentCrudService->update($post['id'], $post);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

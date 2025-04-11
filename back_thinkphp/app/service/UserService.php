@@ -78,7 +78,7 @@ class UserService
     public function editPassword($id, $password)
     {
         $userCrudService = new CrudService(UserModel::class);
-        $userCrudService->edit($id, [
+        $userCrudService->update($id, [
             'password' => md5($password)
         ]);
     }
@@ -182,7 +182,7 @@ class UserService
     public function editAvatar($id, $path)
     {
         $userCrudService = new CrudService(UserModel::class);
-        $userCrudService->edit($id, [
+        $userCrudService->update($id, [
             'avatar' => $path
         ]);
     }
@@ -199,7 +199,7 @@ class UserService
     public function editStatus($id, $status)
     {
         $userCrudService = new CrudService(UserModel::class);
-        $userCrudService->edit($id, [
+        $userCrudService->update($id, [
             'status' => $status
         ]);
     }

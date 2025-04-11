@@ -34,7 +34,7 @@ class JwtService
             'expires_in' => time() + $this->expire
         ];
         $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenCrudService->add($data);
+        $tokenCrudService->insert($data);
         return $token;
     }
 
@@ -57,7 +57,7 @@ class JwtService
 
         //验证
         $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenRecord = $tokenCrudService->findByField('token', $token);
+        $tokenRecord = $tokenCrudService->selectRowByField('token', $token);
         if (empty($tokenRecord)) {
             throw new Exception('未登录');
         }
@@ -72,10 +72,10 @@ class JwtService
         $data = [
             'expires_in'=>time() + $this->expire
         ];
-        $tokenCrudService->edit($tokenRecord['id'], $data);
+        $tokenCrudService->update($tokenRecord['id'], $data);
 
         $userCrudService = new CrudService(UserModel::class);
-        $user = $userCrudService->find($tokenRecord['user_id']);
+        $user = $userCrudService->selectRow($tokenRecord['user_id']);
         if (empty($user)) {
             throw new Exception('没有找到用户记录');
         }

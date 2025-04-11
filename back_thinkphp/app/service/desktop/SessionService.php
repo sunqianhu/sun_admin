@@ -51,7 +51,7 @@ class SessionService
             'ip' => $ip,
             'time' => time()
         ];
-        $loginLogCrudService->add($data);
+        $loginLogCrudService->insert($data);
 
         //用户表
         $userModel->last_login_time = time();
@@ -86,7 +86,7 @@ class SessionService
     function ipAuth($ip)
     {
         $configCrudService = new CrudService(ConfigModel::class);
-        $deniedIpString = $configCrudService->getValue(1,'denied_ip_string');
+        $deniedIpString = $configCrudService->selectValue(1,'denied_ip_string');
         $deniedIps = explode("\r\n", $deniedIpString);
         $deniedIps = array_filter($deniedIps);
         if (empty($deniedIps)) {
