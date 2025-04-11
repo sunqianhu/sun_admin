@@ -71,7 +71,7 @@ class CrudService
      */
     public function insertWithEditTimeNow($data)
     {
-        $data['add_time'] = time();
+        $data['edit_time'] = time();
         return $this->insert($data);
     }
 
@@ -313,7 +313,7 @@ class CrudService
      * @param $selectField
      * @param $sortField
      * @param $sortDirection
-     * @return mixed
+     * @return array
      */
     public function selectColumnByWhere($where, $selectField, $sortField = 'id', $sortDirection = 'asc')
     {
@@ -436,7 +436,7 @@ class CrudService
      * 查询数量通过字段
      * @param $field
      * @param $value
-     * @return mixed
+     * @return int
      */
     public function selectCountByField($field, $value)
     {
@@ -446,7 +446,7 @@ class CrudService
     /**
      * 查询数量通过条件
      * @param $where
-     * @return mixed
+     * @return int
      */
     public function selectCountByWhere($where)
     {
