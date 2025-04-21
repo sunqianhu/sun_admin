@@ -12,33 +12,33 @@ import dotenv from "dotenv";
 const viteConfig = ({ mode }) => {
   dotenv.config({ path: ".env." + mode });
   return defineConfig({
-    base: process.env.VITE_BASE_URL,
+    base: process.env.VITE_BASE,
     plugins: [
       vue(),
       vueDevTools(),
       AutoImport({
-        resolvers: [ElementPlusResolver()]
+        resolvers: [ElementPlusResolver()],
       }),
       Components({
-        resolvers: [ElementPlusResolver()]
-      })
+        resolvers: [ElementPlusResolver()],
+      }),
     ],
     resolve: {
       alias: {
-        "@": fileURLToPath(new URL("./src", import.meta.url))
-      }
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
     },
     server: {
       proxy: {
         "/api": {
-          target: process.env.VITE_API_URL,
+          target: process.env.VITE_API_TARGET,
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, "")
-        }
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
       },
       host: "0.0.0.0",
-      port: 5174
-    }
+      port: 5174,
+    },
   });
 };
 export default viteConfig;

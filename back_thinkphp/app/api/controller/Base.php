@@ -3,8 +3,10 @@
 namespace app\api\controller;
 
 use app\BaseController;
+use app\model\OperationLogModel;
 use app\service\api\SessionService;
 use app\entity\Session;
+use app\service\CrudService;
 use Exception;
 use think\Response;
 
@@ -49,14 +51,14 @@ class Base extends BaseController
 
         //操作日志
         if($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
-            $operationLogService = new OperationLogService();
+            $operationLogCrudService = new CrudService(OperationLogModel::class);
             $data = [
                 'user_id' => $this->session->userId,
                 'api' => $this->request->baseUrl(),
                 'ip' => $this->request->ip(),
                 'time' => time()
             ];
-            $operationLogService->add($data);
+            $operationLogCrudService->insert($data);
         }
     }
 

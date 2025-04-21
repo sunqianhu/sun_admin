@@ -30,7 +30,7 @@ const viteConfig = ({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: process.env.VITE_API_URL,
+          target: process.env.VITE_API_TARGET,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
