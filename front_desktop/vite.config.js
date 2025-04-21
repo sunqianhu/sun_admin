@@ -13,6 +13,9 @@ const viteConfig = ({ mode }) => {
   dotenv.config({ path: ".env." + mode });
   return defineConfig({
     base: process.env.VITE_BASE,
+    build: {
+      outDir: process.env.VITE_BUILD_OUTDIR,
+    },
     plugins: [
       vue(),
       vueDevTools(),
