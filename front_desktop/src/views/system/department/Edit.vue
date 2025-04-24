@@ -37,7 +37,9 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -57,6 +59,7 @@ const rules = {
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
 };
 const initLoading = ref(false);
+const submitLoading = ref(false);
 
 /**
  * 初始化
@@ -90,10 +93,18 @@ const close = () => {
  */
 const submitForm = async () => {
   await departmentRef.value.validate();
-  const response = await axios.post(
-    "desktop/system.department.Edit/save",
-    department.value
-  );
+  submitLoading.value = true;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.department.Edit/save",
+      menu.value
+    );
+  } catch (error) {
+    submitLoading.value = false;
+    return;
+  }
+  submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,

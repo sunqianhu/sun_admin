@@ -3,7 +3,7 @@ import router from "../router";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_PREFIX,
-  timeout: 1000 * 60,
+  timeout: 1000 * 30,
 });
 
 //请求拦截器

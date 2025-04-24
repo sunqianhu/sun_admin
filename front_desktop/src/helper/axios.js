@@ -5,7 +5,7 @@ import { useRouteStore } from "@/stores/route";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_PREFIX,
-  timeout: 1000 * 60,
+  timeout: 1000 * 30,
 });
 
 //请求拦截器
@@ -13,10 +13,9 @@ instance.interceptors.request.use(
   function (config) {
     //token
     let token = localStorage.getItem("token");
-    if (token) {
+    if (token !== null) {
       config.headers.token = token;
     }
-
     return config;
   },
   function (error) {
@@ -40,7 +39,6 @@ instance.interceptors.response.use(
       logout();
       return Promise.reject(data);
     }
-
     return data;
   },
   function (error) {

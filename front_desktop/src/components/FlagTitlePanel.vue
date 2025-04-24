@@ -58,6 +58,7 @@ const props = defineProps({
     }
   }
   .flag-title-panel__body {
+    margin-top: var(--margin-sm);
   }
 }
 </style>
