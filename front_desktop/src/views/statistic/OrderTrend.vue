@@ -1,5 +1,5 @@
 <template>
-  <div class="order-trend" v-loading="pageLoading">
+  <div class="order-trend" v-loading="initLoading">
     <div class="page-header">
       <span class="page-header__name">订单趋势统计</span>
       <span class="page-header__description">查看一段时间内订单趋势</span>
@@ -58,7 +58,7 @@ const query = ref({
     dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix(),
   ],
 });
-const pageLoading = ref(true);
+const initLoading = ref(true);
 const expLoading = ref(false);
 const trend = ref([]);
 const option = ref({});
@@ -67,11 +67,11 @@ const option = ref({});
  * 初始化
  */
 const init = async () => {
-  pageLoading.value = true;
+  initLoading.value = true;
   const response = await axios.get("desktop/statistic.OrderTrend/init", {
     params: query.value,
   });
-  pageLoading.value = false;
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,

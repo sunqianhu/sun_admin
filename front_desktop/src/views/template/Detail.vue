@@ -1,5 +1,5 @@
 <template>
-  <div class="detail" v-loading="pageLoading">
+  <div class="detail" v-loading="initLoading">
     <card-panel title="用户信息" class="panel">
       <label-value>
         <label-value-item label="用户ID" :md="8">
@@ -37,7 +37,7 @@ import LabelValueItem from "@/components/LabelValueItem.vue";
 import dayjs from "dayjs";
 
 const route = useRoute();
-const pageLoading = ref(true);
+const initLoading = ref(true);
 const user = ref({});
 const loginLogs = ref([]);
 
@@ -45,17 +45,17 @@ const loginLogs = ref([]);
  * 初始化
  */
 const init = async () => {
-  pageLoading.value = true;
+  initLoading.value = true;
   let response;
   try {
     response = await axios.get("desktop/system.user.Detail/init", {
       params: { id: route.params.id },
     });
   } catch (error) {
-    pageLoading.value = false;
+    initLoading.value = false;
     return;
   }
-  pageLoading.value = false;
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,

@@ -1,5 +1,5 @@
 <template>
-  <div class="index" v-loading="pageLoading">
+  <div class="index" v-loading="initLoading">
     <div class="page-name">系统设置</div>
     <el-form :model="config" label-width="120px" ref="configRef" class="form">
       <el-form-item label="禁止访问IP" prop="denied_ip_string">
@@ -26,7 +26,7 @@ import axios from "@/helper/axios";
 
 const config = ref({});
 const configRef = ref({});
-const pageLoading = ref(true);
+const initLoading = ref(true);
 const submitLoading = ref(false);
 
 /**
@@ -34,7 +34,7 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   const response = await axios.get("desktop/system.config.Index/init");
-  pageLoading.value = false;
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,

@@ -213,7 +213,7 @@ onMounted(() => {
       font-size: var(--font-size-sm);
       flex: 1;
     }
-    .actions {
+    .page-header__actions {
     }
   }
   .searchbar {

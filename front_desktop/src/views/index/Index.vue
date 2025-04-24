@@ -1,5 +1,5 @@
 <template>
-  <div class="index" v-loading="pageLoading">
+  <div class="index" v-loading="initLoading">
     <div class="welcome">
       <img src="@/assets/index/welcome.svg" class="welcome__icon" />
       <div class="welcome__name">你好张三上午好，欢迎回来！</div>
@@ -93,7 +93,7 @@ import axios from "@/helper/axios";
 import { Odometer, ChatSquare } from "@element-plus/icons-vue";
 import CardPanel from "@/components/CardPanel.vue";
 
-const pageLoading = ref(false);
+const initLoading = ref(false);
 const tableData = [
   {
     date: "2016-05-03",
@@ -123,9 +123,9 @@ const module2Option = ref({});
  * 初始化
  */
 const init = async () => {
-  // pageLoading.value = true;
+  // initLoading.value = true;
   // const response = await axios.get("desktop/index/init");
-  // pageLoading.value = false;
+  // initLoading.value = false;
   // if (response.code != 1) {
   //   ElMessage({
   //     message: response.message,
