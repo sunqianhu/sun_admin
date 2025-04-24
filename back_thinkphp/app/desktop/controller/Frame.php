@@ -4,17 +4,21 @@ namespace app\desktop\controller;
 
 use app\service\desktop\DesktopUserService;
 use app\service\WatermarkService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 /**
  * 框架
  */
 class Frame extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 获取权限
-     * @return \think\Response
+     * @return Response
      */
     public function getPermissions()
     {
@@ -25,7 +29,7 @@ class Frame extends Base
 
     /**
      * 获取路由
-     * @return \think\Response
+     * @return Response
      */
     public function getRoutes()
     {
@@ -36,10 +40,10 @@ class Frame extends Base
 
     /**
      * 得到水印
-     * @return \think\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getWatermark()
     {

@@ -8,16 +8,20 @@ use app\service\CrudService;
 use app\validate\DictionaryValidate;
 use app\validate\IdValidate;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\exception\ValidateException;
+use think\Response;
 
 class Edit extends Base
 {
     /**
      * 初始化
-     * @return \think\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function init()
     {
@@ -40,7 +44,7 @@ class Edit extends Base
 
     /**
      * 保存
-     * @return \think\Response
+     * @return Response
      */
     public function save()
     {

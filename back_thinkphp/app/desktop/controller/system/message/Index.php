@@ -5,10 +5,11 @@ namespace app\desktop\controller\system\message;
 use app\desktop\controller\Base;
 use app\model\MessageModel;
 use app\service\MessageService;
+use think\Response;
 
 class Index extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 得到系统消息分页
@@ -33,7 +34,7 @@ class Index extends Base
 
     /**
      * 设置全部已读
-     * @return \think\Response
+     * @return Response
      */
     public function setAllRead()
     {

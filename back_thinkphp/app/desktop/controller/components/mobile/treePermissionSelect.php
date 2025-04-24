@@ -4,17 +4,21 @@ namespace app\desktop\controller\components\mobile;
 
 use app\desktop\controller\Base;
 use app\service\mobile\PermissionService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 class treePermissionSelect extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 得到树权限
-     * @return \think\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getTreePermission()
     {

@@ -4,14 +4,15 @@ namespace app\desktop\controller\components\department;
 
 use app\desktop\controller\Base;
 use app\service\DictionaryService;
+use think\Response;
 
 class TypeSelect extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 得到路由
-     * @return \think\Response
+     * @return Response
      */
     public function getTypes()
     {

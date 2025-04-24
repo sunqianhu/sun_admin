@@ -7,6 +7,7 @@ use app\validate\FileUploadValidate;
 use Exception;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
+use think\Response;
 
 class FileUpload extends Base
 {
@@ -14,7 +15,8 @@ class FileUpload extends Base
 
     /**
      * 上传
-     * @return \think\Response
+     * @return Response
+     * @throws Exception
      */
     public function upload()
     {

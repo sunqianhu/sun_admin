@@ -4,15 +4,15 @@ namespace app\service\desktop;
 
 use app\model\desktop\MenuModel;
 use Sunqianhu\Helper\ArrayHandler;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class MenuService
 {
     /**
      * 得到树形菜单
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getTreeMenu()
     {
@@ -28,9 +28,6 @@ class MenuService
     /**
      * 得到名称和url的树形菜单
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getNameUrlTreeMenu()
     {
@@ -48,9 +45,9 @@ class MenuService
      * 得到子菜单id
      * @param $id
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getChildMenuIds($id){
         $menuModels = MenuModel::where('menu_id', $id)
@@ -67,6 +64,9 @@ class MenuService
      * 是否有子菜单
      * @param $id
      * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function hasChildrenMenu($id){
         $menuModel = MenuModel::field('id')

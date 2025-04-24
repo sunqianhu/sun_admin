@@ -9,12 +9,13 @@ use app\validate\order\IndexSearchValidate;
 use Exception;
 use Sunqianhu\Helper\File;
 use think\exception\ValidateException;
+use think\Response;
 
 class OrderTrend extends Base
 {
     /**
      * 初始化
-     * @return \think\Response
+     * @return Response
      */
     public function init()
     {
@@ -44,7 +45,8 @@ class OrderTrend extends Base
 
     /**
      * 导出
-     * @return \think\Response
+     * @return Response
+     * @throws Exception
      */
     public function exp()
     {

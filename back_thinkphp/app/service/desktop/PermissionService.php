@@ -10,9 +10,6 @@ class PermissionService
     /**
      * 得到树形权限
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getTreePermission()
     {
@@ -28,9 +25,6 @@ class PermissionService
     /**
      * 得到名称和key的树形权限
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getNameKeyTreePermission()
     {

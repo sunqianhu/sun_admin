@@ -5,7 +5,7 @@
       <div class="page-header__description">字典管理描述</div>
       <div class="page-header__actions"></div>
     </div>
-    <div class="search">
+    <div class="searchbar">
       <el-form :model="query" :inline="true">
         <el-form-item label="字典名称">
           <el-input v-model="query.name" />
@@ -216,7 +216,7 @@ onMounted(() => {
     .actions {
     }
   }
-  .search {
+  .searchbar {
     margin-top: var(--margin);
   }
   .toolbar {

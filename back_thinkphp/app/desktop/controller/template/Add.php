@@ -8,12 +8,13 @@ use app\service\CrudService;
 use app\validate\DictionaryValidate;
 use Exception;
 use think\exception\ValidateException;
+use think\Response;
 
 class Add extends Base
 {
     /**
      * 保存
-     * @return \think\Response
+     * @return Response
      */
     public function save()
     {

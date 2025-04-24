@@ -6,17 +6,21 @@ use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\service\desktop\SessionService;
 use app\service\desktop\DesktopUserService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 /**
  * 主页
  */
 class Side extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 得到树形菜单
-     * @return \think\Response
+     * @return Response
      */
     public function getTreeMenu()
     {
@@ -28,10 +32,10 @@ class Side extends Base
 
     /**
      * 得到头像
-     * @return \think\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getAvatar()
     {
@@ -43,7 +47,7 @@ class Side extends Base
 
     /**
      * 退出
-     * @return \think\Response
+     * @return Response
      */
     public function logout()
     {

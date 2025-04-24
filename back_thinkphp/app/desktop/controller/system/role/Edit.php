@@ -14,14 +14,21 @@ use app\validate\IdArrayValidate;
 use app\validate\IdValidate;
 use app\validate\RoleValidate;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\exception\ValidateException;
 use think\facade\Db;
+use think\Response;
 
 class Edit extends Base
 {
     /**
      * 初始化
-     * @return \think\Response
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function init()
     {

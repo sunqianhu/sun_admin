@@ -5,17 +5,15 @@ namespace app\desktop\controller\layouts\side;
 use app\desktop\controller\Base;
 use app\service\MessageService;
 use Exception;
+use think\Response;
 
 class MessageNavigation extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 得到未读数
-     * @return \think\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
      */
     public function getNoReadCount()
     {

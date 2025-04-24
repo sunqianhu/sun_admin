@@ -8,18 +8,22 @@ use app\service\UserService;
 use app\validate\user\AvatarBase64ImageContentValidate;
 use Sunqianhu\Helper\File;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\exception\ValidateException;
+use think\Response;
 
 class EditAvatar extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 初始化
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function init()
     {
@@ -31,7 +35,7 @@ class EditAvatar extends Base
 
     /**
      * 保存
-     * @return \think\Response
+     * @return Response
      */
     public function save()
     {

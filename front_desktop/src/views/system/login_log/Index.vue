@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="page-name">登录日志</div>
-    <div class="search">
+    <div class="searchbar">
       <el-form :model="query" :inline="true">
         <el-form-item label="登录时间">
           <el-date-picker
@@ -145,7 +145,7 @@ onMounted(() => {
     font-size: var(--font-size-xl);
     font-weight: var(font-weight-bold);
   }
-  .search {
+  .searchbar {
     margin-top: var(--margin);
   }
   .list {

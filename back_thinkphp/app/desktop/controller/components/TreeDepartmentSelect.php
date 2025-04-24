@@ -4,17 +4,15 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\service\DepartmentService;
+use think\Response;
 
 class TreeDepartmentSelect extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 得到树型单位列表
-     * @return \think\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
      */
     public function getTreeDepartment()
     {

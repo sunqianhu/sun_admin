@@ -9,6 +9,9 @@ use app\model\mobile\TokenModel;
 use app\model\UserModel;
 use app\service\CrudService;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class SessionService
 {
@@ -23,9 +26,9 @@ class SessionService
      * @param $password
      * @param $ip
      * @return Session
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @throws Exception
      */
     public function login($account, $password, $ip = '')
@@ -103,6 +106,7 @@ class SessionService
      * @param $token
      * @param $action
      * @return Session
+     * @throws Exception
      */
     function tokenAuth($token, $action)
     {

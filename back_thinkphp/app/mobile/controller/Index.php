@@ -3,14 +3,21 @@
 namespace app\mobile\controller;
 
 use app\model\UserModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 class Index extends Base
 {
-    public $noApiAuthActions = ['init'];
+    public array $noApiAuthActions = ['init'];
 
     /**
      * 初始化
-     * @return \think\Response
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function init()
     {

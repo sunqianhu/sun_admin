@@ -2,7 +2,7 @@
   <div class="index">
     <div class="page-name">用户管理</div>
 
-    <div class="search">
+    <div class="searchbar">
       <el-form :model="query" :inline="true">
         <el-form-item label="部门">
           <tree-department-select

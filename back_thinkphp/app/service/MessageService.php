@@ -60,9 +60,10 @@ class MessageService
      * 发送多用户消息
      * @param $userIds
      * @param $title
-     * @param $content
-     * @param $url
+     * @param string $content
+     * @param string $url
      * @return array
+     * @throws Exception
      */
     public function sends($userIds, $title, $content = '', $url = '')
     {

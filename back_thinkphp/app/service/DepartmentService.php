@@ -62,9 +62,6 @@ class DepartmentService
      * 得到用户列表
      * @param $id
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getUsers($id){
         $userModels = UserModel::field('id,name,department_id')

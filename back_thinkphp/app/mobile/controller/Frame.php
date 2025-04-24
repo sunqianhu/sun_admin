@@ -3,17 +3,18 @@
 namespace app\mobile\controller;
 
 use app\service\mobile\MobileUserService;
+use think\Response;
 
 /**
  * 框架
  */
 class Frame extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 获取权限
-     * @return \think\Response
+     * @return Response
      */
     public function getPermissions()
     {

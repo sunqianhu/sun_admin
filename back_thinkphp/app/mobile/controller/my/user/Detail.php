@@ -5,14 +5,21 @@ namespace app\mobile\controller\my\user;
 use app\mobile\controller\Base;
 use app\model\UserModel;
 use app\service\mobile\SessionService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 class Detail extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 初始化
-     * @return \think\Response
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function init()
     {
@@ -32,7 +39,7 @@ class Detail extends Base
 
     /**
      * 退出
-     * @return \think\Response
+     * @return Response
      */
     public function logout()
     {

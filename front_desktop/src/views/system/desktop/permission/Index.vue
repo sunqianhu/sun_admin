@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="page-name">权限管理</div>
-    <div class="search">
+    <div class="searchbar">
       <el-form :model="query" :inline="true">
         <el-form-item label="权限名称">
           <el-input v-model="query.name" />
@@ -172,7 +172,7 @@ onMounted(() => {
     font-size: var(--font-size-xl);
     font-weight: var(font-weight-bold);
   }
-  .search {
+  .searchbar {
     margin-top: var(--margin);
   }
   .toolbar {

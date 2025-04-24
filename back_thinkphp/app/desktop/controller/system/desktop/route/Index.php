@@ -6,6 +6,7 @@ use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
 use app\service\CrudService;
 use Exception;
+use think\Response;
 
 class Index extends Base
 {
@@ -29,10 +30,7 @@ class Index extends Base
 
     /**
      * 删除
-     * @return \think\Response|void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
      */
     public function delete(){
         $id = $this->request->post('id', 0);

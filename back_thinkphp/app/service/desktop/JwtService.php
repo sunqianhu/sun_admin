@@ -12,9 +12,9 @@ use Firebase\JWT\Key;
 
 class JwtService
 {
-    private $key = 'axjeJXKlA836x7s@#';
-    private $leeway = 180;
-    public $expire = 60 * 30; //有效期
+    private string $key = 'axjeJXKlA836x7s@#';
+    private int $leeway = 180;
+    public int $expire = 60 * 30; //有效期
 
     /**
      * 得到token
@@ -41,9 +41,7 @@ class JwtService
     /**
      * 解析token
      * @param $token
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Session
      * @throws Exception
      */
     function resolverToken($token)

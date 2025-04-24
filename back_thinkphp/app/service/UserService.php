@@ -7,6 +7,9 @@ use app\model\UserRoleModel;
 use Exception;
 use Sunqianhu\Helper\File;
 use Sunqianhu\Helper\Image;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Cache;
 
 class UserService
@@ -40,8 +43,12 @@ class UserService
 
     /**
      * 修改
+     * @param $id
      * @param $data
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @throws Exception
      */
     public function edit($id, $data)
@@ -70,9 +77,9 @@ class UserService
      * @param $id
      * @param $password
      * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @throws Exception
      */
     public function editPassword($id, $password)
@@ -85,8 +92,8 @@ class UserService
 
     /**
      * id转账号
-     * @param $use
-     * @param $exclude
+     * @param $ids
+     * @param string $glue
      * @return mixed|string
      */
     public function idsToAccountString($ids, $glue = ',')
@@ -125,6 +132,7 @@ class UserService
      * 得到头像url
      * @param $path
      * @return string
+     * @throws Exception
      */
     public function getAvatarUrl($path)
     {
@@ -155,9 +163,9 @@ class UserService
      * @param $id
      * @param $base64ImageContent
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException|Exception
      */
     public function editAvatarByBase64ImageContent($id, $base64ImageContent)
     {
@@ -192,9 +200,9 @@ class UserService
      * @param $id
      * @param $status
      * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException|Exception
      */
     public function editStatus($id, $status)
     {

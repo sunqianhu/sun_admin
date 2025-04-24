@@ -7,14 +7,15 @@ use app\service\MessageService;
 use app\validate\IdValidate;
 use Exception;
 use think\exception\ValidateException;
+use think\Response;
 
 class PopupMessage extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 设置已读
-     * @return \think\Response
+     * @return Response
      */
     public function setRead()
     {

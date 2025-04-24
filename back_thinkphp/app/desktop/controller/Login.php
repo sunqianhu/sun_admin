@@ -7,14 +7,15 @@ use app\service\LoginFailCheckerService;
 use app\validate\LoginValidate;
 use think\exception\ValidateException;
 use Exception;
+use think\Response;
 
 class Login extends Base
 {
-    public $isTokenAuth = false;
+    public bool $isTokenAuth = false;
 
     /**
      * 登录
-     * @return \think\Response
+     * @return Response
      */
     public function login()
     {

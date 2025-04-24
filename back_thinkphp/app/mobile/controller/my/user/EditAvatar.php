@@ -8,14 +8,16 @@ use Sunqianhu\Helper\File;
 use app\service\UserService;
 use Exception;
 use think\exception\ValidateException;
+use think\Response;
 
 class EditAvatar extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 保存
-     * @return \think\Response
+     * @return Response
+     * @throws Exception
      */
     public function save()
     {

@@ -15,10 +15,10 @@ use think\Response;
  */
 class Base extends BaseController
 {
-    public $isTokenAuth = true;
-    public $noTokenAuthActions = [];
-    public $isApiAuth = true;
-    public $noApiAuthActions = [];
+    public bool $isTokenAuth = true;
+    public array $noTokenAuthActions = [];
+    public bool $isApiAuth = true;
+    public array $noApiAuthActions = [];
     public Session $session;
 
     /**

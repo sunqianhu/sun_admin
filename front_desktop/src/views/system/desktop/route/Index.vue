@@ -4,7 +4,7 @@
       <span class="page-header__name">路由管理</span>
       <span class="page-header__description">前端路由管理</span>
     </div>
-    <div class="search">
+    <div class="searchbar">
       <el-form :model="query" :inline="true">
         <el-form-item label="路由名称">
           <el-input v-model="query.name" />
@@ -176,7 +176,7 @@ onMounted(() => {
       font-size: var(--font-size-sm);
     }
   }
-  .search {
+  .searchbar {
     margin-top: var(--margin);
   }
   .toolbar {

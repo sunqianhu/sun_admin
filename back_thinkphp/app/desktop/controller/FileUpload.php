@@ -7,15 +7,17 @@ use Sunqianhu\Helper\File;
 use app\validate\FileUploadValidate;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
+use think\Response;
 
 class FileUpload extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
     private $allowModules = ['rich_editor'];
 
     /**
      * 上传
-     * @return \think\Response
+     * @return Response
+     * @throws Exception
      */
     public function upload()
     {

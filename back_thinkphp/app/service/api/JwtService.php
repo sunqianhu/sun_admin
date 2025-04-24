@@ -9,12 +9,15 @@ use app\service\CrudService;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class JwtService
 {
-    private $key = 'axjeJXKlA836x7s@#';
-    private $leeway = 180;
-    public $expire = 60 * 60 * 24 * 365; //有效期
+    private string $key = 'axjeJXKlA836x7s@#';
+    private int $leeway = 180;
+    public int $expire = 60 * 60 * 24 * 365; //有效期
 
     /**
      * 创建token
@@ -43,9 +46,9 @@ class JwtService
      * 解析token
      * @param $token
      * @return Session
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @throws Exception
      */
     function resolverToken($token)

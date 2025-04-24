@@ -4,6 +4,7 @@ namespace app\model\desktop;
 
 use app\model\BaseModel;
 use app\service\desktop\RouteService;
+use Exception;
 use Sunqianhu\Helper\SingletonFactory;
 
 class RouteModel extends BaseModel
@@ -15,6 +16,7 @@ class RouteModel extends BaseModel
      * @param $value
      * @param $data
      * @return null
+     * @throws Exception
      */
     public function getLayoutNameAttr($value, $data)
     {

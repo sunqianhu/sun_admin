@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="page-name">字典管理</div>
-    <div class="search">
+    <div class="searchbar">
       <el-form :model="query" :inline="true">
         <el-form-item label="字典类型">
           <el-input v-model="query.type" />
@@ -204,7 +204,7 @@ onMounted(() => {
     font-size: var(--font-size-xl);
     font-weight: var(font-weight-bold);
   }
-  .search {
+  .searchbar {
     margin-top: var(--margin);
   }
   .toolbar {

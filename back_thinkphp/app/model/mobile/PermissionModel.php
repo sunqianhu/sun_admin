@@ -11,7 +11,8 @@ class PermissionModel extends BaseModel
     /**
      * 获取接口地址
      * @param $value
-     * @return string
+     * @param $data
+     * @return array
      */
     public function getApisAttr($value, $data)
     {

@@ -15,10 +15,10 @@ use think\Response;
  */
 class Base extends BaseController
 {
-    public $isTokenAuth = true; //是否token认证
-    public $noTokenAuthActions = []; //不需要token认证的方法
-    public $isApiAuth = true; //是否接口认证
-    public $noApiAuthActions = []; //不需要接口认证的方法
+    public bool $isTokenAuth = true; //是否token认证
+    public array $noTokenAuthActions = []; //不需要token认证的方法
+    public bool $isApiAuth = true; //是否接口认证
+    public array $noApiAuthActions = []; //不需要接口认证的方法
     public Session $session;
 
     /**

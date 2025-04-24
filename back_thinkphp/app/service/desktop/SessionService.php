@@ -103,6 +103,7 @@ class SessionService
      * @param $token
      * @param $action
      * @return Session
+     * @throws Exception
      */
     function tokenAuth($token, $action)
     {

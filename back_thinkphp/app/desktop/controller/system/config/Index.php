@@ -7,12 +7,13 @@ use app\model\ConfigModel;
 use app\service\CrudService;
 use app\validate\ConfigValidate;
 use think\exception\ValidateException;
+use think\Response;
 
 class Index extends Base
 {
     /**
      * 初始化
-     * @return \think\Response
+     * @return Response
      */
     public function init()
     {

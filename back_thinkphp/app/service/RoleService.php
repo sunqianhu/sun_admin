@@ -12,7 +12,7 @@ class RoleService
     /**
      * 更新桌面端权限关联
      * @param $id
-     * @param $desktopPermissionIds
+     * @param $permissionIds
      * @return void
      */
     public function updateDesktopPermissionRelation($id, $permissionIds)

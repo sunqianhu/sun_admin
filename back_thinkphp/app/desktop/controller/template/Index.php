@@ -6,13 +6,15 @@ use app\desktop\controller\Base;
 use app\service\CrudService;
 use app\model\DictionaryModel;
 use Exception;
+use think\db\exception\DbException;
+use think\Response;
 
 class Index extends Base
 {
     /**
      * 得到字典分页
-     * @return \think\Response
-     * @throws \think\db\exception\DbException
+     * @return Response
+     * @throws DbException
      */
     public function getDictionaryPaginate()
     {
@@ -41,7 +43,7 @@ class Index extends Base
 
     /**
      * 删除
-     * @return \think\Response
+     * @return Response
      */
     public function delete(){
         $id = $this->request->post('id', 0);

@@ -5,6 +5,7 @@ use app\model\desktop\MenuModel as DesktopMenuModel;
 use app\model\desktop\PermissionModel as DesktopPermissionModel;
 use app\model\desktop\RouteModel as DesktopRouteModel;
 use app\model\mobile\PermissionModel as MobilePermissionModel;
+use think\model\relation\BelongsToMany;
 
 class RoleModel extends BaseModel
 {
@@ -12,7 +13,7 @@ class RoleModel extends BaseModel
 
     /**
      * 桌面端权限
-     * @return \think\model\relation\BelongsToMany
+     * @return BelongsToMany
      */
     public function desktopPermissions()
     {
@@ -21,7 +22,7 @@ class RoleModel extends BaseModel
 
     /**
      * 桌面端菜单
-     * @return \think\model\relation\BelongsToMany
+     * @return BelongsToMany
      */
     public function desktopMenus()
     {
@@ -30,7 +31,7 @@ class RoleModel extends BaseModel
 
     /**
      * 桌面端路由
-     * @return \think\model\relation\BelongsToMany
+     * @return BelongsToMany
      */
     public function desktopRoutes()
     {
@@ -39,7 +40,7 @@ class RoleModel extends BaseModel
 
     /**
      * 移动端权限
-     * @return \think\model\relation\BelongsToMany
+     * @return BelongsToMany
      */
     public function mobilePermissions()
     {

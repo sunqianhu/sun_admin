@@ -3,6 +3,8 @@ namespace app\model;
 
 use Sunqianhu\Helper\SingletonFactory;
 use app\service\UserService;
+use think\model\relation\BelongsTo;
+use think\model\relation\BelongsToMany;
 
 class UserModel extends BaseModel
 {
@@ -10,7 +12,7 @@ class UserModel extends BaseModel
 
     /**
      * 部门
-     * @return \think\model\relation\BelongsTo
+     * @return BelongsTo
      */
     public function department()
     {
@@ -20,7 +22,7 @@ class UserModel extends BaseModel
 
     /**
      * 角色
-     * @return \think\model\relation\BelongsToMany
+     * @return BelongsToMany
      */
     public function roles()
     {
@@ -45,8 +47,10 @@ class UserModel extends BaseModel
 
     /**
      * 得到头像url
-     * @param $path
+     * @param $value
+     * @param $data
      * @return string
+     * @throws \Exception
      */
     public function getAvatarUrlAttr($value, $data)
     {

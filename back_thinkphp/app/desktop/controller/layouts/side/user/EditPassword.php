@@ -10,7 +10,7 @@ use think\exception\ValidateException;
 
 class EditPassword extends Base
 {
-    public $isApiAuth = false;
+    public bool $isApiAuth = false;
 
     /**
      * 保存

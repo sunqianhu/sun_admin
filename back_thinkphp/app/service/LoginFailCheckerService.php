@@ -10,15 +10,15 @@ class LoginFailCheckerService
     /**
      * @var string
      */
-    public $cacheKey = '';
+    public string $cacheKey = '';
     /**
      * @var int 次数
      */
-    public $number = 5;
+    public int $number = 5;
     /**
      * @var int 时间
      */
-    public $time = 60 * 60;
+    public int $time = 60 * 60;
 
     /**
      * 构造
