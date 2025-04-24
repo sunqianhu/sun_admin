@@ -36,7 +36,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="chart" id="chart"></div>
+    <echart :option="option" class="chart"></echart>
     <el-table :data="trend" row-key="name" class="list">
       <el-table-column prop="full_name" label="日期" />
       <el-table-column prop="count" label="订单数量" />
@@ -49,8 +49,6 @@ import { ref, onMounted } from "vue";
 import { Download, Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
-import * as echarts from "echarts";
-import blueTheme from "@/extend/echarts_theme/blue.json";
 
 const query = ref({
   add_times: [
@@ -60,10 +58,10 @@ const query = ref({
     dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix(),
   ],
 });
-const trend = ref([]);
-let trendChart;
 const pageLoading = ref(true);
 const expLoading = ref(false);
+const trend = ref([]);
+const option = ref({});
 
 /**
  * 初始化
@@ -83,14 +81,14 @@ const init = async () => {
   }
 
   trend.value = response.data;
-  drawChart();
+  setOption();
 };
 
 /**
- * 画图
+ * 设置选项
  */
-const drawChart = () => {
-  let option = {
+const setOption = () => {
+  let currentOption = {
     tooltip: {},
     grid: {
       left: "0",
@@ -138,19 +136,11 @@ const drawChart = () => {
     ],
   };
   let trendValue = trend.value;
-
-  //数据
   trendValue.forEach((day) => {
-    option.xAxis.data.push(day.name);
-    option.series[0].data.push(day.count);
+    currentOption.xAxis.data.push(day.name);
+    currentOption.series[0].data.push(day.count);
   });
-
-  //画
-  if (!trendChart) {
-    let chartElement = document.getElementById("chart");
-    trendChart = echarts.init(chartElement, "blue_theme");
-  }
-  trendChart.setOption(option);
+  option.value = currentOption;
 };
 
 /**
@@ -186,7 +176,6 @@ const search = () => {
 };
 
 onMounted(() => {
-  echarts.registerTheme("blue_theme", blueTheme);
   init();
 });
 </script>

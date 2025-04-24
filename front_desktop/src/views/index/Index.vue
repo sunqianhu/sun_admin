@@ -50,12 +50,12 @@
       <el-row justify="space-between" :gutter="16">
         <el-col :md="12">
           <card-panel title="module1" class="module">
-            <div id="module1-chart" class="module__chart"></div>
+            <echart :option="module1Option" class="module__chart"></echart>
           </card-panel>
         </el-col>
         <el-col :sm="12">
           <card-panel title="module2" class="module">
-            <div id="module2-chart" class="module__chart"></div>
+            <echart :option="module2Option" class="module__chart"></echart>
           </card-panel>
         </el-col>
         <el-col :md="12">
@@ -90,8 +90,6 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import axios from "@/helper/axios";
-import * as echarts from "echarts";
-import blueTheme from "@/extend/echarts_theme/blue.json";
 import { Odometer, ChatSquare } from "@element-plus/icons-vue";
 import CardPanel from "@/components/CardPanel.vue";
 
@@ -118,13 +116,13 @@ const tableData = [
     address: "No. 189, Grove St, Los Angeles",
   },
 ];
+const module1Option = ref({});
+const module2Option = ref({});
 
 /**
  * 初始化
  */
 const init = async () => {
-  echarts.registerTheme("blue_theme", blueTheme);
-
   // pageLoading.value = true;
   // const response = await axios.get("desktop/index/init");
   // pageLoading.value = false;
@@ -136,17 +134,14 @@ const init = async () => {
   //   return;
   // }
 
-  drawLineChart();
-  drawBarChart();
+  setMoudle1Option();
+  setMoudle2Option();
 };
 
 /**
- * 折线图
+ * 设置模块1选项
  */
-let lineChart;
-const drawLineChart = () => {
-  let chartElement = document.getElementById("module1-chart");
-  let chart;
+const setMoudle1Option = () => {
   let option = {
     tooltip: {},
     grid: {
@@ -223,20 +218,13 @@ const drawLineChart = () => {
     option.series[0].data.push(item.number);
   });
 
-  //画
-  chart = echarts.init(chartElement, "blue_theme");
-  chart.setOption(option);
-  lineChart = chart;
+  module1Option.value = option;
 };
 
 /**
- * 柱状图
+ * 设置模块2选项
  */
-let barChart;
-const drawBarChart = () => {
-  let chartElement = document.getElementById("module2-chart");
-  let chart;
-
+const setMoudle2Option = () => {
   let option = {
     tooltip: {
       trigger: "axis",
@@ -307,11 +295,7 @@ const drawBarChart = () => {
     option.xAxis.data.push(item.name);
     option.series[0].data.push(item.number);
   }
-
-  //画
-  chart = echarts.init(chartElement, "blue_theme");
-  chart.setOption(option);
-  barChart = chart;
+  module2Option.value = option;
 };
 
 /**
@@ -323,11 +307,6 @@ const resizeChart = () => {
     barChart.resize();
   }, 500);
 };
-
-// div大小改变
-window.addEventListener("resize", function () {
-  resizeChart();
-});
 
 onMounted(() => {
   init();

@@ -1,58 +1,29 @@
 <template>
-  <div
-    ref="chartRef"
-    class="pie"
-    :style="{ width: width + 'px', height: height + 'px' }"
-  ></div>
+  <div ref="echartRef" class="echart"></div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, onUnmounted } from "vue";
 import * as echarts from "echarts";
 import blueTheme from "@/extend/echarts_theme/blue.json";
 
 const props = defineProps({
-  name: {
-    type: String,
-    default: "",
-  },
-  width: {
-    type: Number,
-    default: 500,
-  },
-  height: {
-    type: Number,
-    default: 500,
-  },
-  data: {
-    type: Array,
-    default: [],
+  option: {
+    type: Object,
+    default: {},
   },
 });
 
 let chart = null;
-const chartRef = ref(null);
+const echartRef = ref(null);
 
 /**
  * 画图
  */
 const drawChart = () => {
-  let option = {
-    tooltip: {
-      trigger: "item",
-    },
-    series: [
-      {
-        name: props.name,
-        type: "pie",
-        radius: ["30%", "80%"],
-        padAngle: 5,
-        data: props.data,
-      },
-    ],
-  };
+  let option = props.option;
   if (!chart) {
-    let chartElement = chartRef.value;
+    let chartElement = echartRef.value;
     chart = echarts.init(chartElement, "blue_theme");
   }
   chart.setOption(option);
@@ -64,7 +35,7 @@ const drawChart = () => {
 const resizeChart = () => {
   setTimeout(() => {
     chart.resize();
-  }, 500);
+  }, 10);
 };
 
 watch(
@@ -84,9 +55,16 @@ onMounted(() => {
   echarts.registerTheme("blue_theme", blueTheme);
   drawChart();
 });
+onUnmounted(() => {
+  if (!chart) {
+    return;
+  }
+  chart.dispose();
+  chart = null;
+});
 </script>
 
 <style scoped lang="scss">
-.pie {
+.echart {
 }
 </style>
