@@ -16,11 +16,9 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import axios from "@/helper/axios";
 import EditAvatar from "./EditAvatar.vue";
 
-const router = useRouter();
 const user = ref({});
 const logoutLoading = ref(false);
 

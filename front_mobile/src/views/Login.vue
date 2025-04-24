@@ -55,13 +55,14 @@ const submitLoading = ref(false);
  */
 const submitForm = async () => {
   submitLoading.value = true;
+  let response;
   try {
-    const response = await axios.post("mobile/login/login", session.value);
-  } catch (e) {
-    console.log(e);
-  } finally {
+    response = await axios.post("mobile/login/login", session.value);
+  } catch (error) {
     submitLoading.value = false;
+    return;
   }
+  submitLoading.value = false;
   if (response.code != 1) {
     showFailToast(response.message);
     return;
