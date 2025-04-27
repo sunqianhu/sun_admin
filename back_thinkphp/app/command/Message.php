@@ -3,7 +3,8 @@ declare (strict_types=1);
 
 namespace app\command;
 
-use app\service\desktop\JwtService;
+use app\service\desktop\SessionService;
+use app\service\JwtService;
 use Exception;
 use think\console\Command;
 use think\console\Input;
@@ -172,11 +173,13 @@ class Message extends Command
         }
 
         $jwt = new JwtService();
-        $session = $jwt->resolverToken($token);
-        $connection->userId = $session->userId;
+        $sessionId = $jwt->resolverToken($token);
+        $sessionService = new SessionService();
+        $connection->userId = $sessionService->getUserId($sessionId);
 
         unset($jwt);
-        unset($session);
+        unset($sessionId);
+        unset($sessionService);
     }
 
     /**
