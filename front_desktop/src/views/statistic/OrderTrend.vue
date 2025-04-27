@@ -183,7 +183,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .order-trend {
   background-color: var(--background-color-light);
-  padding: var(--padding);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   .page-header {

@@ -1,18 +1,15 @@
 <template>
-  <div class="side-layout">
-    <el-container
-      :class="{ 'side-layout__container--fold': sideStore.fold }"
-      class="side-layout__container"
-    >
-      <el-aside class="side-layout__aside">
-        <div class="system-name">
-          <img src="@/assets/logo.png" class="system-name__logo" />
-          <span class="system-name__name">SunAdmin</span>
+  <div class="index">
+    <el-container :class="{ 'layout--fold': sideStore.fold }" class="layout">
+      <el-aside class="layout__left">
+        <div class="system-name-row">
+          <img src="@/assets/logo.png" class="logo" />
+          <span class="name">sun admin</span>
         </div>
-        <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>
+        <el-scrollbar class="menu-row"><Menu></Menu></el-scrollbar>
         <div class="version">版本：{{ version }}</div>
       </el-aside>
-      <el-container class="side-layout__workspace">
+      <el-container class="layout__right">
         <el-header class="header">
           <div class="header__left">
             <hamburger class="header__hamburger"></hamburger>
@@ -26,18 +23,14 @@
             <avatar class="header__avatar"></avatar>
           </div>
         </el-header>
-        <el-main class="body">
+        <el-main class="layout__workspace">
           <router-view v-slot="{ Component, route }">
             <keep-alive v-if="route.meta?.keep_alive">
               <component :is="Component" />
             </keep-alive>
             <component :is="Component" v-else />
           </router-view>
-          <el-backtop
-            :right="15"
-            :bottom="15"
-            target=".side-layout__workspace .body"
-          >
+          <el-backtop :right="15" :bottom="15" target=".layout__workspace">
             UP
           </el-backtop>
         </el-main>
@@ -73,11 +66,11 @@ window.onresize = () => {
 </script>
 
 <style lang="scss" scoped>
-.side-layout {
+.index {
   height: 100dvh;
-  .side-layout__container {
+  > .layout {
     height: 100%;
-    .side-layout__aside {
+    .layout__left {
       width: 220px;
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
       background-color: #141414;
@@ -87,18 +80,18 @@ window.onresize = () => {
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      .system-name {
+      .system-name-row {
         width: 220px;
         height: 50px;
         line-height: 50px;
         overflow: hidden;
         transition: all 0.5s;
         padding-left: 19px;
-        .system-name__logo {
+        .logo {
           height: 25px;
           vertical-align: text-bottom;
         }
-        .system-name__name {
+        .name {
           font-size: var(--font-size-xl);
           font-weight: var(font-weight-bold);
           margin-left: 8px;
@@ -106,7 +99,7 @@ window.onresize = () => {
           transition: all 0.5s;
         }
       }
-      .menu-wrap {
+      .menu-row {
         flex: 1;
       }
       .version {
@@ -116,9 +109,9 @@ window.onresize = () => {
       }
     }
 
-    .side-layout__workspace {
+    .layout__right {
       background-color: var(--background-color);
-      .header {
+      > .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -139,16 +132,16 @@ window.onresize = () => {
           }
         }
       }
-      .body {
+      .layout__workspace {
         padding: var(--padding);
       }
     }
-    &.side-layout__container--fold {
-      .side-layout__aside {
+    &.layout--fold {
+      .layout__left {
         width: 64px;
-        .system-name {
+        .system-name-row {
           padding-left: 19px;
-          .system-name__name {
+          .name {
             margin-left: 30px;
           }
         }
@@ -160,9 +153,9 @@ window.onresize = () => {
   }
 
   @media (max-width: 768px) {
-    .side-layout__container {
-      &.side-layout__container--fold {
-        .aside {
+    .layout {
+      &.layout--fold {
+        .layout__left {
           width: 0px;
         }
       }
@@ -172,8 +165,8 @@ window.onresize = () => {
 
 //暗黑模式
 .dark {
-  .side-layout__container {
-    .side-layout__workspace {
+  .layout {
+    .layout__right {
       .header {
         background-color: #141414;
       }

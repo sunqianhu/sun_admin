@@ -18,7 +18,7 @@ const guide = () => {
     showProgress: true,
     steps: [
       {
-        element: ".aside",
+        element: ".side-layout__aside",
         popover: {
           title: "功能菜单",
           description: "点击功能菜单导航到具体的功能栏目",
@@ -29,15 +29,15 @@ const guide = () => {
         popover: { title: "折叠按钮", description: "打开或折叠左边功能菜单" },
       },
       {
+        element: ".full-screen",
+        popover: { title: "全屏", description: "切换全屏显示" },
+      },
+      {
         element: ".light-dark",
         popover: {
           title: "暗黑模式",
           description: "晚上浏览可切换到暗黑模式，保护眼睛",
         },
-      },
-      {
-        element: ".fullscreen",
-        popover: { title: "全屏", description: "切换全屏显示" },
       },
       {
         element: ".avatar",
