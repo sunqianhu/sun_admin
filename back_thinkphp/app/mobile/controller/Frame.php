@@ -19,7 +19,7 @@ class Frame extends Base
     public function getPermissions()
     {
         $mobileUserService = new MobileUserService();
-        $permissions = $mobileUserService->getPermissionKeys($this->session->userId);
+        $permissions = $mobileUserService->getPermissionKeys($this->userId);
         return $this->success('获取成功', $permissions);
     }
 }

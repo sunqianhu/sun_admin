@@ -2,13 +2,16 @@
 
 namespace app\service\desktop;
 
-use app\entity\Session;
 use app\model\ConfigModel;
-use app\model\desktop\TokenModel;
+use app\model\desktop\SessionModel;
 use app\model\LoginLogModel;
 use app\model\UserModel;
 use app\service\CrudService;
+use app\service\JwtService;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class SessionService
 {
@@ -16,16 +19,45 @@ class SessionService
     public array $noTokenAuthActions = []; //不需要token认证的方法
     public bool $isApiAuth = true; //是否接口认证
     public array $noApiAuthActions = []; //不需要接口认证的方法
+    public int $expire = 60 * 30; //有效期
+
+    /**
+     * 创建会话
+     * @param $userId
+     * @param $token
+     * @return int
+     */
+    public function createSession($userId, $token)
+    {
+        $data = [
+            'user_id' => $userId,
+            'token' => $token,
+            'expires_in' => time() + $this->expire
+        ];
+        $sessionCrudService = new CrudService(SessionModel::class);
+        return $sessionCrudService->insert($data);
+    }
+
+    /**
+     * 删除会话
+     * @param $id
+     * @throws Exception
+     */
+    public function deleteSession($id)
+    {
+        $sessionCrudService = new CrudService(SessionModel::class);
+        $sessionCrudService->delete($id);
+    }
 
     /**
      * 登录
      * @param $account
      * @param $password
      * @param $ip
-     * @return Session
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return int
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @throws Exception
      */
     public function login($account, $password, $ip = '')
@@ -42,7 +74,8 @@ class SessionService
         }
 
         $jwtService = new JwtService();
-        $token = $jwtService->createToken($userModel->id);
+        $token = $jwtService->generateToken($userModel->id);
+        $sessionId = $this->createSession($userModel->id, $token);
 
         //登录日志
         $loginLogCrudService = new CrudService(LoginLogModel::class);
@@ -58,23 +91,18 @@ class SessionService
         $userModel->last_login_ip = $ip;
         $userModel->save();
 
-        $session = new Session();
-        $session->userId = $userModel->id;
-        $session->departmentId = $userModel->department_id;
-        $session->token = $token;
-
-        return $session;
+        return $sessionId;
     }
 
     /**
      * 退出登录
-     * @param $token
+     * @param $id
      * @return void
+     * @throws Exception
      */
-    public function logout($token)
+    public function logout($id)
     {
-        $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenCrudService->deleteByField('token', $token);
+        $this->deleteSession($id);
     }
 
     /**
@@ -102,25 +130,38 @@ class SessionService
      * token认证
      * @param $token
      * @param $action
-     * @return Session
+     * @return int
      * @throws Exception
      */
     function tokenAuth($token, $action)
     {
-        $jwtService = new JwtService();
         $isAuth = $this->isTokenAuth;
         if (in_array($action, $this->noTokenAuthActions)) {
             $isAuth = false;
         }
         if (!$isAuth) {
-            try{
-                return $jwtService->resolverToken($token);
-            }catch (Exception $exception){
-                return new Session();
-            }
+            return 0;
         }
 
-        return $jwtService->resolverToken($token);
+        if($token === ''){
+            throw new Exception('未登录');
+        }
+        $jwtService = new JwtService();
+        $userId = $jwtService->resolverToken($token);
+
+        $sessionCrudService = new CrudService(SessionModel::class);
+        $session = $sessionCrudService->selectRowByField('token', $token);
+        if (empty($session)) {
+            throw new Exception('未登录');
+        }
+        if ($session['expires_in'] < time()) {
+            throw new Exception('登录已过期');
+        }
+        if ($session['user_id'] != $userId) {
+            throw new Exception('登录凭证错误');
+        }
+
+        return $session['id'];
     }
 
     /**
@@ -152,5 +193,54 @@ class SessionService
         if (!$desktopUserService->hasApiPermission($userId, $api)) {
             throw new Exception('无权限');
         }
+    }
+
+    /**
+     * 得到token
+     * @param $id
+     * @return string
+     * @throws Exception
+     */
+    public function getToken($id)
+    {
+        $sessionCrudService = new CrudService(SessionModel::class);
+        $session = $sessionCrudService->selectRow($id);
+        if(empty($session)){
+            throw new Exception('没有找到会话记录');
+        }
+        return $session['token'];
+    }
+
+    /**
+     * 得到用户id
+     * @param $id
+     * @return int
+     * @throws Exception
+     */
+    public function getUserId($id)
+    {
+        $sessionCrudService = new CrudService(SessionModel::class);
+        $session = $sessionCrudService->selectRow($id);
+        if(empty($session)){
+            throw new Exception('没有找到会话记录');
+        }
+        return $session['user_id'];
+    }
+
+    /**
+     * 得到部门id
+     * @param $id
+     * @return int
+     * @throws Exception
+     */
+    public function getDepartmentId($id)
+    {
+        $userId = $this->getUserId($id);
+        $userCrudService = new CrudService(UserModel::class);
+        $user = $userCrudService->selectRow($userId);
+        if(empty($user)){
+            throw new Exception('没有找到用户记录');
+        }
+        return $user['department_id'];
     }
 }

@@ -27,7 +27,7 @@ class EditAvatar extends Base
      */
     public function init()
     {
-        $userModel = UserModel::field('avatar')->find($this->session->userId);
+        $userModel = UserModel::field('avatar')->find($this->userId);
         $avatar = $userModel->avatar_url;
 
         return $this->success('获取成功', $avatar);
@@ -49,7 +49,7 @@ class EditAvatar extends Base
 
         $userService = new UserService();
         try {
-            $path = $userService->editAvatarByBase64ImageContent($this->session->userId, $post['avatar_base64_image_content']);
+            $path = $userService->editAvatarByBase64ImageContent($this->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->error($exception->getMessage());
         }

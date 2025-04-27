@@ -5,7 +5,6 @@ namespace app\api\controller;
 use app\BaseController;
 use app\model\OperationLogModel;
 use app\service\api\SessionService;
-use app\entity\Session;
 use app\service\CrudService;
 use Exception;
 use think\Response;
@@ -17,7 +16,9 @@ class Base extends BaseController
 {
     public bool $isTokenAuth = true; //是否token认证
     public array $noTokenAuthActions = []; //不需要token认证的方法
-    public Session $session;
+    public int $sessionId = 0;
+    public int $userId = 0;
+    public int $departmentId = 0;
 
     /**
      * 初始化
@@ -43,17 +44,21 @@ class Base extends BaseController
         //token
         try {
             $token = $this->request->header('token', '');
-            $this->session = $sessionService->tokenAuth($token, $action);
+            $this->sessionId = $sessionService->tokenAuth($token, $action);
+            if($this->sessionId){
+                $this->userId = $sessionService->getUserId($this->sessionId);
+                $this->departmentId = $sessionService->getDepartmentId($this->sessionId);
+            }
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 200, 2)->send();
             exit;
         }
 
         //操作日志
-        if($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
+        if($this->sessionId) {
             $operationLogCrudService = new CrudService(OperationLogModel::class);
             $data = [
-                'user_id' => $this->session->userId,
+                'user_id' => $this->userId,
                 'api' => $this->request->baseUrl(),
                 'ip' => $this->request->ip(),
                 'time' => time()

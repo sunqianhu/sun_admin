@@ -29,8 +29,8 @@ class PopupMessage extends Base
 
         $messageService = new MessageService();
         try{
-            $messageService->setRead($this->session->userId, $post['id']);
-            $messageService->queueSendRead($this->session->userId, $post['id']);
+            $messageService->setRead($this->userId, $post['id']);
+            $messageService->queueSendRead($this->userId, $post['id']);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

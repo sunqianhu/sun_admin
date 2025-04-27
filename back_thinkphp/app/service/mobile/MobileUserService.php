@@ -3,7 +3,7 @@
 namespace app\service\mobile;
 
 use app\model\mobile\PermissionModel;
-use app\model\mobile\TokenModel;
+use app\model\mobile\SessionModel;
 use app\service\CrudService;
 use app\service\UserService;
 
@@ -91,7 +91,7 @@ class MobileUserService
      * @return void
      */
     public function offLine($id){
-        $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenCrudService->deleteByField('user_id', $id);
+        $sessionCrudService = new CrudService(SessionModel::class);
+        $sessionCrudService->deleteByField('user_id', $id);
     }
 }

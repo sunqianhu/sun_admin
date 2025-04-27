@@ -3,7 +3,6 @@
 namespace app\desktop\controller;
 
 use app\BaseController;
-use app\entity\Session;
 use app\model\OperationLogModel;
 use app\service\CrudService;
 use app\service\desktop\SessionService;
@@ -19,7 +18,9 @@ class Base extends BaseController
     public array $noTokenAuthActions = [];
     public bool $isApiAuth = true;
     public array $noApiAuthActions = [];
-    public Session $session;
+    public int $sessionId = 0;
+    public int $userId = 0;
+    public int $departmentId = 0;
 
     /**
      * 初始化
@@ -47,7 +48,11 @@ class Base extends BaseController
         //token
         try {
             $token = $this->request->header('token', '');
-            $this->session = $sessionService->tokenAuth($token, $action);
+            $this->sessionId = $sessionService->tokenAuth($token, $action);
+            if($this->sessionId) {
+                $this->userId = $sessionService->getUserId($this->sessionId);
+                $this->departmentId = $sessionService->getDepartmentId($this->sessionId);
+            }
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 200, 2)->send();
             exit;
@@ -57,22 +62,17 @@ class Base extends BaseController
         try {
             $api = $this->request->baseUrl();
             $api = ltrim($api, '/');
-            $sessionService->apiAuth($this->session->userId, $api, $action);
+            $sessionService->apiAuth($this->userId, $api, $action);
         } catch (Exception $exception) {
             $this->error($exception->getMessage(), null, 0)->send();
             exit;
         }
 
         //操作日志
-        if(
-            $this->isTokenAuth &&
-            !in_array($action, $this->noTokenAuthActions) &&
-            $this->isApiAuth &&
-            !in_array($action, $this->noApiAuthActions)
-        ) {
+        if($this->sessionId) {
             $operationLogCrudService = new CrudService(OperationLogModel::class);
             $data = [
-                'user_id' => $this->session->userId,
+                'user_id' => $this->userId,
                 'api' => $this->request->baseUrl(),
                 'ip' => $this->request->ip(),
                 'time' => time()

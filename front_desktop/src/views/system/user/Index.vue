@@ -285,7 +285,7 @@ onMounted(() => {
     font-size: var(--font-size-xl);
     font-weight: var(font-weight-bold);
   }
-  .search {
+  .searchbar {
     margin-top: var(--margin);
     .el-select {
       min-width: 198px;

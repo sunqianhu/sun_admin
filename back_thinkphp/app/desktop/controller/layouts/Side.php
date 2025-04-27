@@ -25,7 +25,7 @@ class Side extends Base
     public function getTreeMenu()
     {
         $desktopUserService = new DesktopUserService();
-        $treeMenu = $desktopUserService->getTreeMenu($this->session->userId);
+        $treeMenu = $desktopUserService->getTreeMenu($this->userId);
 
         return $this->success('获取成功', $treeMenu);
     }
@@ -39,7 +39,7 @@ class Side extends Base
      */
     public function getAvatar()
     {
-        $userModel = UserModel::field('avatar')->find($this->session->userId);
+        $userModel = UserModel::field('avatar')->find($this->userId);
         $avatar = $userModel->avatar_url;
 
         return $this->success('获取成功', $avatar);

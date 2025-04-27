@@ -25,7 +25,7 @@ class Detail extends Base
     {
         $userModel = UserModel::field('id,avatar,name,department_id,phone')
             ->append(['avatar_url', 'department_name'])
-            ->find($this->session->userId);
+            ->find($this->userId);
         if(empty($userModel)){
             return $this->error('用户不存在');
         }

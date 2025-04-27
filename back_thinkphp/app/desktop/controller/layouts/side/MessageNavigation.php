@@ -19,7 +19,7 @@ class MessageNavigation extends Base
     {
         $messageService = new MessageService();
         try{
-            $count = $messageService->getNoReadCount($this->session->userId);
+            $count = $messageService->getNoReadCount($this->userId);
         }catch (Exception $exception){
             return $this->error($exception->getMessage());
         }

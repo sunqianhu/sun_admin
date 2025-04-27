@@ -5,7 +5,7 @@ namespace app\service\desktop;
 use app\model\desktop\MenuModel;
 use app\model\desktop\PermissionModel;
 use app\model\desktop\RouteModel;
-use app\model\desktop\TokenModel;
+use app\model\desktop\SessionModel;
 use app\service\CrudService;
 use app\service\UserService;
 use Sunqianhu\Helper\ArrayHandler;
@@ -164,7 +164,7 @@ class DesktopUserService
      * @return void
      */
     public function offLine($id){
-        $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenCrudService->deleteByField('user_id', $id);
+        $sessionCrudService = new CrudService(SessionModel::class);
+        $sessionCrudService->deleteByField('user_id', $id);
     }
 }

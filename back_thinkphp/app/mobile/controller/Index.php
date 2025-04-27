@@ -23,7 +23,7 @@ class Index extends Base
     {
         $userModel = UserModel::field('avatar,name,department_id')
             ->append(['avatar_url', 'department_name'])
-            ->find($this->session->userId);
+            ->find($this->userId);
         if(empty($user)){
             return $this->error('用户不存在');
         }

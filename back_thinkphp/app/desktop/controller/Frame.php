@@ -23,7 +23,7 @@ class Frame extends Base
     public function getPermissions()
     {
         $desktopUserService = new DesktopUserService();
-        $permissions = $desktopUserService->getPermissionKeys($this->session->userId);
+        $permissions = $desktopUserService->getPermissionKeys($this->userId);
         return $this->success('获取成功', $permissions);
     }
 
@@ -34,7 +34,7 @@ class Frame extends Base
     public function getRoutes()
     {
         $desktopUserService = new DesktopUserService();
-        $routes = $desktopUserService->getRoutes($this->session->userId);
+        $routes = $desktopUserService->getRoutes($this->userId);
         return $this->success('获取成功', $routes);
     }
 
@@ -47,12 +47,12 @@ class Frame extends Base
      */
     public function getWatermark()
     {
-        if(empty($this->session->userId)){
+        if(empty($this->userId)){
             return $this->error('还没有登录');
         }
 
         $watermarkService = new WatermarkService();
-        $watermark = $watermarkService->getWatermark($this->session->userId);
+        $watermark = $watermarkService->getWatermark($this->userId);
 
         return $this->success('获取成功', $watermark);
     }

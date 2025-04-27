@@ -2,7 +2,7 @@
 
 namespace app\service\api;
 
-use app\model\api\TokenModel;
+use app\model\api\SessionModel;
 use app\service\CrudService;
 use Exception;
 
@@ -16,7 +16,7 @@ class ApiUserService
      */
     public function offLine($id)
     {
-        $tokenCrudService = new CrudService(TokenModel::class);
-        $tokenCrudService->deleteByField('user_id', $id);
+        $sessionCrudService = new CrudService(SessionModel::class);
+        $sessionCrudService->deleteByField('user_id', $id);
     }
 }
