@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="side-layout-index">
     <el-container :class="{ 'layout--fold': sideStore.fold }" class="layout">
       <el-aside class="layout__left">
         <div class="system-name-row">
@@ -66,7 +66,7 @@ window.onresize = () => {
 </script>
 
 <style lang="scss" scoped>
-.index {
+.side-layout-index {
   height: 100dvh;
   > .layout {
     height: 100%;
