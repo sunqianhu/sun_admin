@@ -298,16 +298,6 @@ const setMoudle2Option = () => {
   module2Option.value = option;
 };
 
-/**
- * 重绘图形
- */
-const resizeChart = () => {
-  setTimeout(() => {
-    lineChart.resize();
-    barChart.resize();
-  }, 500);
-};
-
 onMounted(() => {
   init();
 });
