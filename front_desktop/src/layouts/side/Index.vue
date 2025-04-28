@@ -109,7 +109,7 @@ window.onresize = () => {
         align-items: center;
         justify-content: space-between;
         height: 50px;
-        background-color: #ffffff;
+        background-color: var(--background-color-light);
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
         padding: 0px;
         .header__right {
@@ -151,17 +151,6 @@ window.onresize = () => {
         .layout__left {
           width: 0px;
         }
-      }
-    }
-  }
-}
-
-//暗黑模式
-.dark {
-  .layout {
-    .layout__right {
-      .header {
-        background-color: #141414;
       }
     }
   }
