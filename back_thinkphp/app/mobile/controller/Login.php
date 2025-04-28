@@ -35,7 +35,7 @@ class Login extends Base
 
         try{
             $sessionService = new SessionService();
-            $session = $sessionService->login($post['account'], $post['password'], $this->request->ip());
+            $sessionId = $sessionService->login($post['account'], $post['password'], $this->request->ip());
         }catch (Exception $exception){
             $loginFailCheckerService->setFail();
             $availableNumber = $loginFailCheckerService->getAvailableNumber();
@@ -49,7 +49,7 @@ class Login extends Base
         }
         $loginFailCheckerService->resetFail();
 
-        $token = $session->token;
+        $token = $sessionService->getToken($sessionId);
         return $this->getSuccessResponse('登录成功', $token);
     }
 }
