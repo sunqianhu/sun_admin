@@ -226,21 +226,4 @@ class SessionService
         }
         return $session['user_id'];
     }
-
-    /**
-     * 得到部门id
-     * @param $id
-     * @return int
-     * @throws Exception
-     */
-    public function getDepartmentId($id)
-    {
-        $userId = $this->getUserId($id);
-        $userCrudService = new CrudService(UserModel::class);
-        $user = $userCrudService->selectRow($userId);
-        if(empty($user)){
-            throw new Exception('没有找到用户记录');
-        }
-        return $user['department_id'];
-    }
 }

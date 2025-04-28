@@ -19,7 +19,7 @@ class SessionService
     public array $noTokenAuthActions = []; //不需要token认证的方法
     public bool $isApiAuth = true; //是否接口认证
     public array $noApiAuthActions = []; //不需要接口认证的方法
-    public int $expire = 60 * 30; //有效期
+    public int $expire = 60 * 60; //有效期
 
     /**
      * 创建会话
@@ -225,22 +225,5 @@ class SessionService
             throw new Exception('没有找到会话记录');
         }
         return $session['user_id'];
-    }
-
-    /**
-     * 得到部门id
-     * @param $id
-     * @return int
-     * @throws Exception
-     */
-    public function getDepartmentId($id)
-    {
-        $userId = $this->getUserId($id);
-        $userCrudService = new CrudService(UserModel::class);
-        $user = $userCrudService->selectRow($userId);
-        if(empty($user)){
-            throw new Exception('没有找到用户记录');
-        }
-        return $user['department_id'];
     }
 }

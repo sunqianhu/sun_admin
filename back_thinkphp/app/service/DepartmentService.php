@@ -75,7 +75,7 @@ class DepartmentService
      * @param $type
      * @return array
      */
-    public function getTypeDepartments($type) {
+    public function getDepartmentsByType($type) {
         $departmentModels = DepartmentModel::field('id,name,type,department_id')
             ->where('type', $type)
             ->order('sort', 'asc')

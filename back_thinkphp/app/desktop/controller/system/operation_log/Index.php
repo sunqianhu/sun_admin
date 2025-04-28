@@ -13,13 +13,17 @@ class Index extends Base
      */
     public function getOperationLogPaginate()
     {
-        $get = $this->request->get(['time' => [], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
+        $get = $this->request->get(['department_ids'=>[], 'time' => [], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
 
         $query = OperationLogModel::alias('ol')
-            ->field('ol.*,u.name')
-            ->leftJoin("user u", "ol.user_id = u.id");
+            ->field('ol.*,u.name as user_name, d.name as department_name')
+            ->leftJoin("user u", "ol.user_id = u.id")
+            ->leftJoin("department d", "u.department_id = d.id");
         if (!empty($get['time']) && count($get['time']) == 2) {
             $query->whereBetweenTime('ol.time', intval($get['time'][0]), intval($get['time'][1]));
+        }
+        if (!empty($get['department_ids'])) {
+            $query->whereIn('u.department_id', $get['department_ids']);
         }
         if ($get['name'] !== '') {
             $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');

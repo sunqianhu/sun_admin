@@ -23,6 +23,7 @@ const viteConfig = ({ mode }) => {
         resolvers: [ElementPlusResolver()],
       }),
       Components({
+        directoryAsNamespace: true,
         resolvers: [ElementPlusResolver()],
       }),
     ],

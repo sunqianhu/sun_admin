@@ -8,20 +8,20 @@
     class="detail"
   >
     <div v-loading="dialogLoading">
-      <label-value>
-        <label-value-item label="账号">{{ user.account }}</label-value-item>
-        <label-value-item label="姓名">{{ user.name }}</label-value-item>
-        <label-value-item label="手机号码">{{ user.phone }}</label-value-item>
-        <label-value-item label="所属部门">
+      <attribute-list>
+        <attribute label="账号">{{ user.account }}</attribute>
+        <attribute label="姓名">{{ user.name }}</attribute>
+        <attribute label="手机号码">{{ user.phone }}</attribute>
+        <attribute label="所属部门">
           {{ user.department_name }}
-        </label-value-item>
-        <label-value-item label="最后登录时间">
+        </attribute>
+        <attribute label="最后登录时间">
           {{ dayjs.unix(user.last_login_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </label-value-item>
-        <label-value-item label="最后登录ip">
+        </attribute>
+        <attribute label="最后登录ip">
           {{ user.last_login_ip }}
-        </label-value-item>
-      </label-value>
+        </attribute>
+      </attribute-list>
     </div>
   </el-dialog>
 </template>
@@ -30,8 +30,8 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
-import LabelValue from "@/components/LabelValue.vue";
-import LabelValueItem from "@/components/LabelValueItem.vue";
+import LabelValue from "@/components/AttributeList.vue";
+import LabelValueItem from "@/components/Attribute.vue";
 
 const emits = defineEmits(["close"]);
 const dialogLoading = ref(false);

@@ -41,7 +41,6 @@
 <script setup>
 import { ref } from "vue";
 import axios from "@/helper/axios";
-import { Loading } from "element-plus/es/components/loading/src/service";
 
 const emits = defineEmits(["close", "submited"]);
 const dictionary = ref({
@@ -73,7 +72,7 @@ const submitForm = async () => {
   try {
     response = await axios.post(
       "desktop/system.dictionary.Add/save",
-      menu.value
+      dictionary.value
     );
   } catch (error) {
     submitLoading.value = false;

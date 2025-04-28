@@ -91,7 +91,7 @@ const submitForm = async () => {
   try {
     response = await axios.post(
       "desktop/system.dictionary.Edit/save",
-      menu.value
+      dictionary.value
     );
   } catch (error) {
     submitLoading.value = false;

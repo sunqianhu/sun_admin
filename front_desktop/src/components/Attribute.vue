@@ -5,10 +5,10 @@
     :sm="props.sm"
     :md="props.md"
     :lg="props.lg"
-    class="label-value-item"
+    class="attribute"
   >
-    <div class="label-value-item__label">{{ label }}：</div>
-    <div class="label-value-item__value"><slot></slot></div>
+    <div class="attribute__label">{{ label }}：</div>
+    <div class="attribute__value"><slot></slot></div>
   </el-col>
 </template>
 
@@ -22,13 +22,14 @@ const props = defineProps({
 </script>
 
 <style scoped lang="scss">
-.label-value-item {
+.attribute {
   display: flex;
-  .label-value-item__label {
+  padding: 4px;
+  .attribute__label {
     white-space: nowrap;
     color: var(--font-color-secondary);
   }
-  .label-value-item__value {
+  .attribute__value {
     flex: 1;
   }
 }

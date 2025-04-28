@@ -159,7 +159,7 @@ class UserService
     }
 
     /**
-     * 通过base64图片内容修改头像
+     * 通过base64内容修改头像
      * @param $id
      * @param $base64ImageContent
      * @return string
@@ -167,7 +167,7 @@ class UserService
      * @throws DbException
      * @throws ModelNotFoundException|Exception
      */
-    public function editAvatarByBase64ImageContent($id, $base64ImageContent)
+    public function editAvatarByBase64Content($id, $base64ImageContent)
     {
         $image = new Image();
         $path = $image->saveBase64ContentToFile('avatar', $base64ImageContent);
@@ -199,7 +199,7 @@ class UserService
      * 修改状态
      * @param $id
      * @param $status
-     * @return void
+     * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException|Exception
@@ -207,7 +207,7 @@ class UserService
     public function editStatus($id, $status)
     {
         $userCrudService = new CrudService(UserModel::class);
-        $userCrudService->update($id, [
+        return $userCrudService->update($id, [
             'status' => $status
         ]);
     }

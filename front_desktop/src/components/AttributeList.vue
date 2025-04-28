@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="16" class="label-value">
+  <el-row :gutter="16" class="attribute-list">
     <slot></slot>
   </el-row>
 </template>

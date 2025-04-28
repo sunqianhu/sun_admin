@@ -1,41 +1,41 @@
 <template>
   <div class="detail" v-loading="loading">
     <card-panel title="用户信息" class="panel">
-      <label-value>
-        <label-value-item label="用户ID" :md="8">
+      <attribute-list>
+        <attribute label="用户ID" :md="8">
           {{ user.id }}
-        </label-value-item>
-        <label-value-item label="账号" :md="8">
+        </attribute>
+        <attribute label="账号" :md="8">
           {{ user.account }}
-        </label-value-item>
-        <label-value-item label="姓名" :md="8">
+        </attribute>
+        <attribute label="姓名" :md="8">
           {{ user.name }}
-        </label-value-item>
-        <label-value-item label="手机号码" :md="8">
+        </attribute>
+        <attribute label="手机号码" :md="8">
           {{ user.phone }}
-        </label-value-item>
-        <label-value-item label="部门" :md="8">
+        </attribute>
+        <attribute label="部门" :md="8">
           {{ user.department?.name }}
-        </label-value-item>
-        <label-value-item label="角色" :md="8">
+        </attribute>
+        <attribute label="角色" :md="8">
           {{ user.role_name_string }}
-        </label-value-item>
-        <label-value-item label="状态" :md="8">
+        </attribute>
+        <attribute label="状态" :md="8">
           {{ user.status_name }}
-        </label-value-item>
-        <label-value-item label="添加时间" :md="8">
+        </attribute>
+        <attribute label="添加时间" :md="8">
           {{ dayjs.unix(user.add_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </label-value-item>
-        <label-value-item label="最后修改时间" :md="8">
+        </attribute>
+        <attribute label="最后修改时间" :md="8">
           {{ dayjs.unix(user.edit_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </label-value-item>
-        <label-value-item label="最后登录时间" :md="8">
+        </attribute>
+        <attribute label="最后登录时间" :md="8">
           {{ dayjs.unix(user.last_login_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </label-value-item>
-        <label-value-item label="最后登录ip" :md="8">
+        </attribute>
+        <attribute label="最后登录ip" :md="8">
           {{ user.last_login_ip }}
-        </label-value-item>
-      </label-value>
+        </attribute>
+      </attribute-list>
     </card-panel>
 
     <card-panel title="登录日志" class="panel">
@@ -45,10 +45,10 @@
         </el-link>
       </template>
       <el-table :data="loginLogs" row-key="id" style="width: 100%">
-        <el-table-column prop="ip" label="登录ip" />
         <el-table-column label="登录时间" v-slot="{ row }">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
+        <el-table-column prop="ip" label="登录ip" />
       </el-table>
     </card-panel>
 
@@ -74,8 +74,8 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/helper/axios";
 import CardPanel from "@/components/CardPanel.vue";
-import LabelValue from "@/components/LabelValue.vue";
-import LabelValueItem from "@/components/LabelValueItem.vue";
+import AttributeList from "@/components/AttributeList.vue";
+import Attribute from "@/components/Attribute.vue";
 import dayjs from "dayjs";
 
 const route = useRoute();

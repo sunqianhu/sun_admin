@@ -49,7 +49,7 @@ class EditAvatar extends Base
 
         $userService = new UserService();
         try {
-            $path = $userService->editAvatarByBase64ImageContent($this->userId, $post['avatar_base64_image_content']);
+            $path = $userService->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

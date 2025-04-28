@@ -48,19 +48,17 @@ watch(
   }
 );
 
-window.addEventListener("resize", function () {
-  resizeChart();
-});
 onMounted(() => {
   echarts.registerTheme("blue_theme", blueTheme);
   drawChart();
+  window.addEventListener("resize", resizeChart);
 });
 onUnmounted(() => {
-  if (!chart) {
-    return;
+  if (chart) {
+    chart.dispose();
+    chart = null;
   }
-  chart.dispose();
-  chart = null;
+  window.removeEventListener("resize", resizeChart);
 });
 </script>
 

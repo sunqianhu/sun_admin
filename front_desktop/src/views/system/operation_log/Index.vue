@@ -3,6 +3,12 @@
     <div class="page-name">操作日志</div>
     <div class="searchbar">
       <el-form :model="query" :inline="true">
+        <el-form-item label="部门">
+          <tree-department-select
+            v-model="query.department_ids"
+            multiple
+          ></tree-department-select>
+        </el-form-item>
         <el-form-item label="操作时间">
           <el-date-picker
             v-model="query.time"
@@ -38,7 +44,12 @@
         table-layout="auto"
         class="table"
       >
-        <el-table-column prop="name" label="用户姓名" />
+        <el-table-column v-slot="{ row }" prop="user_name" label="用户姓名">
+          <a :href="'/system/user/detail-' + row.user_id" target="_blank">
+            {{ row.user_name }}
+          </a>
+        </el-table-column>
+        <el-table-column prop="department_name" label="所属部门" />
         <el-table-column prop="api" label="请求接口" width="450" />
         <el-table-column prop="ip" label="操作ip" />
         <el-table-column label="操作时间" v-slot="{ row }">
@@ -148,6 +159,9 @@ onMounted(() => {
   }
   .searchbar {
     margin-top: var(--margin);
+    .el-select {
+      min-width: 198px;
+    }
   }
   .list {
     :deep(th.el-table__cell) {

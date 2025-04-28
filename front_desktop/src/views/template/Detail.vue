@@ -1,14 +1,14 @@
 <template>
   <div class="detail" v-loading="initLoading">
     <card-panel title="用户信息" class="panel">
-      <label-value>
-        <label-value-item label="用户ID" :md="8">
+      <attribute-list>
+        <attribute label="用户ID" :md="8">
           {{ user.id }}
-        </label-value-item>
-        <label-value-item label="添加时间" :md="8">
+        </attribute>
+        <attribute label="添加时间" :md="8">
           {{ dayjs.unix(user.add_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </label-value-item>
-      </label-value>
+        </attribute>
+      </attribute-list>
     </card-panel>
 
     <card-panel title="登录日志" class="panel">
@@ -32,8 +32,8 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/helper/axios";
 import CardPanel from "@/components/CardPanel.vue";
-import LabelValue from "@/components/LabelValue.vue";
-import LabelValueItem from "@/components/LabelValueItem.vue";
+import LabelValue from "@/components/AttributeList.vue";
+import LabelValueItem from "@/components/Attribute.vue";
 import dayjs from "dayjs";
 
 const route = useRoute();
