@@ -7,7 +7,6 @@
           <span class="name">sun admin</span>
         </div>
         <el-scrollbar class="menu-row"><Menu></Menu></el-scrollbar>
-        <div class="version">版本：{{ version }}</div>
       </el-aside>
       <el-container class="layout__right">
         <el-header class="header">
@@ -53,7 +52,6 @@ import Avatar from "./Avatar.vue";
 import Guide from "./Guide.vue";
 
 const sideStore = useSideStore();
-const version = import.meta.env.VITE_VERSION;
 
 /**
  * 窗口大小改变回调
@@ -101,11 +99,6 @@ window.onresize = () => {
       }
       .menu-row {
         flex: 1;
-      }
-      .version {
-        padding-left: var(--margin-sm);
-        font-size: var(--font-size-sm);
-        color: var(--font-color-secondary);
       }
     }
 
