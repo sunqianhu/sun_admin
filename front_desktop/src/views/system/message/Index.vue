@@ -5,7 +5,7 @@
       <el-form :model="query" :inline="true">
         <el-form-item label="消息时间">
           <el-date-picker
-            v-model="query.time"
+            v-model="query.times"
             type="datetimerange"
             format="YYYY-MM-DD HH:mm:ss"
             value-format="X"
@@ -65,7 +65,7 @@ import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 
 const query = ref({
-  time: [],
+  times: [],
   size: 30,
   page: 1,
 });
