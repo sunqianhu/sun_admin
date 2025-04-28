@@ -22,6 +22,10 @@ const props = defineProps({
     type: [Number, String, Array],
     default: "",
   },
+  menuId: {
+    type: Number,
+    default: 0,
+  },
   multiple: {
     type: Boolean,
     default: false,
@@ -40,7 +44,10 @@ const ids = ref(props.modelValue);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/components.desktop.treeMenuSelect/getTreeMenu"
+    "desktop/components.desktop.treeMenuSelect/getTreeMenu",
+    {
+      params: { menu_id: props.menuId },
+    }
   );
   if (response.code != 1) {
     ElMessage({

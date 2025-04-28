@@ -26,19 +26,4 @@ class PermissionModel extends BaseModel
         });
         return array_unique($apis);
     }
-
-    /**
-     * 名称键
-     * @param $value
-     * @param $data
-     * @return string
-     */
-    public function getNameKeyAttr($value, $data)
-    {
-        $nameKey = $data['name'];
-        if(isset($data['key']) && $data['key'] !== ''){
-            $nameKey = $data['name'].'（'.$data['key'].'）';
-        }
-        return $nameKey;
-    }
 }

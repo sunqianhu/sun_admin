@@ -22,6 +22,10 @@ const props = defineProps({
     type: [Number, String, Array],
     default: "",
   },
+  permissionId: {
+    type: Number,
+    default: 0,
+  },
   multiple: {
     type: Boolean,
     default: false,
@@ -40,7 +44,12 @@ const ids = ref(props.modelValue);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/components.desktop.treePermissionSelect/getTreePermission"
+    "desktop/components.desktop.treePermissionSelect/getTreePermission",
+    {
+      params: {
+        permission_id: props.permissionId,
+      },
+    }
   );
   if (response.code != 1) {
     ElMessage({

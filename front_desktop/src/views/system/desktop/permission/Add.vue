@@ -52,6 +52,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "@/helper/axios";
+import TreePermissionSelect from "@/components/desktop/TreePermissionSelect.vue";
 
 const emits = defineEmits(["close", "submited"]);
 const permission = ref({

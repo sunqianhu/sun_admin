@@ -22,8 +22,13 @@ class treePermissionSelect extends Base
      */
     public function getTreePermission()
     {
+        $get = $this->request->get(['permission_id'=>0]);
+        if(!is_numeric($get['permission_id'])){
+            return $this->getErrorResponse('menu_id参数错误');
+        }
+
         $permissionService = new PermissionService();
-        $treePermission = $permissionService->getTreePermission();
+        $treePermission = $permissionService->getTreePermission($get['permission_id']);
         return $this->getSuccessResonse('获取成功', $treePermission);
     }
 }

@@ -7,22 +7,30 @@ use app\model\UserModel;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use Sunqianhu\Helper\SingletonFactory;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Cache;
 
 class DepartmentService
 {
     /**
-     * 得到树形部门
-     * @return array
+     * 得到id
+     * @param $name
+     * @return mixed
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public function getTreeDepartment()
+    public function getId($name)
     {
-        $departmentModels = DepartmentModel::field('id, id, department_id, name')
-            ->order('sort', 'asc')
-            ->select();
-        $departments = $departmentModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $departmentModel = DepartmentModel::field('id')
+            ->where('name', $name)
+            ->find();
+        if(empty($departmentModel)){
+            throw new Exception('没有找到部门');
+        }
+        return $departmentModel->id;
     }
 
     /**
@@ -93,5 +101,59 @@ class DepartmentService
     {
         $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
         return $dictionaryService->getValue('department_type', $type);
+    }
+
+    /**
+     * 得到子部门id列表
+     * @param $id
+     * @return array
+     */
+    public function getChildrenIds($id){
+        $departmentModels = DepartmentModel::field('id')
+            ->where('department_id', $id)
+            ->select();
+        $ids = [];
+        foreach($departmentModels as $departmentModel){
+            $ids[] = $departmentModel->id;
+            $ids = array_merge($ids, $this->getChildrenIds($departmentModel->id));
+        }
+        return $ids;
+    }
+
+    /**
+     * 得到树形部门
+     * @return array
+     */
+    public function getTreeDepartment($id)
+    {
+        $ids = $this->getChildrenIds($id);
+        $ids[] = $id;
+
+        $departmentModels = DepartmentModel::field('id, id, department_id, name')
+            ->whereIn('id', $ids)
+            ->order('sort', 'asc')
+            ->select();
+        $departments = $departmentModels->toArray();
+        $arrayHandler = new ArrayHandler();
+        return $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+    }
+
+    /**
+     * 是否有子菜单
+     * @param $id
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function hasChildren($id){
+        $departmentModel = DepartmentModel::field('id')
+            ->where('menu_id', $id)
+            ->limit(0,1)
+            ->find();
+        if(!empty($departmentModel)){
+            return true;
+        }
+        return false;
     }
 }

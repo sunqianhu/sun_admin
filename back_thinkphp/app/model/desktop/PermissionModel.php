@@ -11,6 +11,7 @@ class PermissionModel extends BaseModel
     /**
      * 获取接口地址
      * @param $value
+     * @param $data
      * @return array
      */
     public function getApisAttr($value, $data)
@@ -25,20 +26,5 @@ class PermissionModel extends BaseModel
             return $value !== '';
         });
         return array_unique($apis);
-    }
-
-    /**
-     * 名称键
-     * @param $value
-     * @param $data
-     * @return string
-     */
-    public function getNameKeyAttr($value, $data)
-    {
-        $nameKey = $data['name'];
-        if(isset($data['key']) && $data['key'] !== ''){
-            $nameKey = $data['name'].'（'.$data['key'].'）';
-        }
-        return $nameKey;
     }
 }

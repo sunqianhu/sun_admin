@@ -22,6 +22,10 @@ const props = defineProps({
     type: [Number, String, Array],
     default: "",
   },
+  departmentId: {
+    type: Number,
+    default: 0,
+  },
   multiple: {
     type: Boolean,
     default: false,
@@ -40,7 +44,13 @@ const ids = ref(props.modelValue);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/components.TreeDepartmentSelect/getTreeDepartment"
+    "desktop/components.TreeDepartmentSelect/getTreeDepartment",
+    {
+      params: {
+        department_id: props.departmentId,
+        is_with_current: props.isWithCurrent,
+      },
+    }
   );
   if (response.code != 1) {
     ElMessage({

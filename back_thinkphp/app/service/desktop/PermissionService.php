@@ -4,33 +4,44 @@ namespace app\service\desktop;
 
 use app\model\desktop\PermissionModel;
 use Sunqianhu\Helper\ArrayHandler;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class PermissionService
 {
     /**
-     * 得到树形权限
+     * 得到子权限id
+     * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public function getTreePermission()
-    {
-        $permissionModels = PermissionModel::field('id, permission_id, name, key')
-            ->order('sort', 'asc')
+    public function getChildrenIds($id){
+        $permissionModels = PermissionModel::field('id')
+            ->where('permission_id', $id)
             ->select();
-        $permissions = $permissionModels->toArray();
-
-        $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        $ids = [];
+        foreach($permissionModels as $permissionModel){
+            $ids[] = $permissionModel->id;
+            $ids = array_merge($ids, $this->getChildrenIds($permissionModel->id));
+        }
+        return $ids;
     }
 
     /**
-     * 得到名称和key的树形权限
+     * 得到树形权限
      * @return array
      */
-    public function getNameKeyTreePermission()
+    public function getTreePermission($id)
     {
+        $ids = $this->getChildrenIds($id);
+        $ids[] = $id;
+
         $permissionModels = PermissionModel::field('id, permission_id, name, key')
+            ->whereIn('id', $ids)
             ->order('sort', 'asc')
-            ->append(['name_key'])
             ->select();
         $permissions = $permissionModels->toArray();
 
@@ -42,8 +53,11 @@ class PermissionService
      * 是否有子权限
      * @param $id
      * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public function hasChildrenPermission($id){
+    public function hasChildren($id){
         $permissionModel = PermissionModel::field('id')
             ->where('permission_id', $id)
             ->limit(0,1)

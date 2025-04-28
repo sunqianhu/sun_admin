@@ -52,22 +52,22 @@ class Edit extends Base
         $role = $roleModel->toArray();
 
         $desktopPermissionService = new DesktopPermissionService();
-        $desktopTreePermission = $desktopPermissionService->getNameKeyTreePermission();
+        $desktopTreePermission = $desktopPermissionService->getTreePermission(0);
 
         $desktopMenuService = new DesktopMenuService();
-        $desktopTreeMenu = $desktopMenuService->getNameUrlTreeMenu();
+        $desktopTreeMenu = $desktopMenuService->getTreeMenu(0);
 
         $desktopRouteService = new DesktopRouteService();
-        $desktopRouteServices = $desktopRouteService->getNamePathRoutes();
+        $desktopRoutes = $desktopRouteService->getRoutes();
 
         $mobilePermissionService = new MobilePermissionService();
-        $mobileTreePermission = $mobilePermissionService->getNameKeyTreePermission();
+        $mobileTreePermission = $mobilePermissionService->getTreePermission(0);
 
         $data = [
             'role' => $role,
             'desktop_tree_permission' => $desktopTreePermission,
             'desktop_tree_menu'=>$desktopTreeMenu,
-            'desktop_routes'=>$desktopRouteServices,
+            'desktop_routes'=>$desktopRoutes,
             'mobile_tree_permission'=>$mobileTreePermission
         ];
         return $this->getSuccessResonse('获取成功', $data);

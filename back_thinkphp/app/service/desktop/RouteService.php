@@ -21,19 +21,6 @@ class RouteService
     }
 
     /**
-     * 得到名称路径的路由列表
-     * @return array
-     */
-    public function getNamePathRoutes()
-    {
-        $routeModels = RouteModel::order('sort', 'asc')
-            ->append(['name_path'])
-            ->select();
-        return $routeModels->toArray();
-    }
-
-
-    /**
      * 得到布局名称
      * @param $layout
      * @return mixed
