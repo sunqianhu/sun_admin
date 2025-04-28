@@ -19,6 +19,6 @@ class RoleSelect extends Base
     {
         $roleCrudService = new CrudService(RoleModel::class);
         $roles = $roleCrudService->selectAll();
-        return $this->success('获取成功', $roles);
+        return $this->getSuccessResonse('获取成功', $roles);
     }
 }

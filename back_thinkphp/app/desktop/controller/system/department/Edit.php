@@ -21,17 +21,17 @@ class Edit extends Base
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         $id = $get['id'];
 
         $departmentModel = DepartmentModel::field('id,name,department_id,type,sort')->find($id);
         if (empty($departmentModel)) {
-            return $this->error('没有找到记录');
+            return $this->getErrorResponse('没有找到记录');
         }
         $department = $departmentModel->toArray();
 
-        return $this->success('获取成功', $department);
+        return $this->getSuccessResonse('获取成功', $department);
     }
 
     /**
@@ -45,19 +45,19 @@ class Edit extends Base
         try {
             validate(DepartmentValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         if($post['id'] == $post['department_id']){
-            return $this->error('上级部门不能和本部门相同');
+            return $this->getErrorResponse('上级部门不能和本部门相同');
         }
 
         $departmentCrudService = new CrudService(DepartmentModel::class);
         try{
             $departmentCrudService->update($post['id'], $post);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

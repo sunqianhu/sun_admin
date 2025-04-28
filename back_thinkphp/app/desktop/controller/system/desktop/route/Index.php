@@ -25,7 +25,7 @@ class Index extends Base
         $routeModels = $query->select();
         $routes = $routeModels->toArray();
 
-        return $this->success('获取成功', $routes);
+        return $this->getSuccessResonse('获取成功', $routes);
     }
 
     /**
@@ -35,16 +35,16 @@ class Index extends Base
     public function delete(){
         $id = $this->request->post('id', 0);
         if ($id <= 0 || !is_numeric($id)) {
-            return $this->error('id参数错误');
+            return $this->getErrorResponse('id参数错误');
         }
 
         $routeCrudService = new CrudService(RouteModel::class);
         try{
             $routeCrudService->delete($id);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('删除成功');
+        return $this->getSuccessResonse('删除成功');
     }
 }

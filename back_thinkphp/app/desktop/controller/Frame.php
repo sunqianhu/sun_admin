@@ -24,7 +24,7 @@ class Frame extends Base
     {
         $desktopUserService = new DesktopUserService();
         $permissions = $desktopUserService->getPermissionKeys($this->userId);
-        return $this->success('获取成功', $permissions);
+        return $this->getSuccessResonse('获取成功', $permissions);
     }
 
     /**
@@ -35,7 +35,7 @@ class Frame extends Base
     {
         $desktopUserService = new DesktopUserService();
         $routes = $desktopUserService->getRoutes($this->userId);
-        return $this->success('获取成功', $routes);
+        return $this->getSuccessResonse('获取成功', $routes);
     }
 
     /**
@@ -48,12 +48,12 @@ class Frame extends Base
     public function getWatermark()
     {
         if(empty($this->userId)){
-            return $this->error('还没有登录');
+            return $this->getErrorResponse('还没有登录');
         }
 
         $watermarkService = new WatermarkService();
         $watermark = $watermarkService->getWatermark($this->userId);
 
-        return $this->success('获取成功', $watermark);
+        return $this->getSuccessResonse('获取成功', $watermark);
     }
 }

@@ -52,12 +52,11 @@ class MobileUserService
             return false;
         }
 
+        $api = ltrim($api, '/');
         $api = strtolower($api);
         $apis = array_map('strtolower', $apis);
-        foreach($apis as $forApi){
-            if($forApi === $api){
-                return true;
-            }
+        if (in_array($api, $apis, true)) {
+            return true;
         }
 
         return false;

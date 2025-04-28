@@ -25,13 +25,13 @@ class Index extends Base
             ->append(['avatar_url', 'department_name'])
             ->find($this->userId);
         if(empty($user)){
-            return $this->error('用户不存在');
+            return $this->getErrorResponse('用户不存在');
         }
         $user = $userModel->toArray();
 
         $data = [
             'user'=>$user
         ];
-        return $this->success('获取成功', $data);
+        return $this->getSuccessResponse('获取成功', $data);
     }
 }

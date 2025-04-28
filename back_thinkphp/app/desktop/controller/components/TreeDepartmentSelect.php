@@ -18,6 +18,6 @@ class TreeDepartmentSelect extends Base
     {
         $departmentService = new DepartmentService();
         $treeDepartment = $departmentService->getTreeDepartment();
-        return $this->success('获取成功', $treeDepartment);
+        return $this->getSuccessResonse('获取成功', $treeDepartment);
     }
 }

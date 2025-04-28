@@ -34,6 +34,6 @@ class Index extends Base
         ]);
         $operationLogPaginateArray = $operationLogPaginate->toArray();
 
-        return $this->success('获取成功', $operationLogPaginateArray);
+        return $this->getSuccessResonse('获取成功', $operationLogPaginateArray);
     }
 }

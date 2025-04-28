@@ -29,7 +29,7 @@ class Index extends Base
         ]);
         $messagePaginateArray = $messagePaginate->toArray();
 
-        return $this->success('获取成功', $messagePaginateArray);
+        return $this->getSuccessResonse('获取成功', $messagePaginateArray);
     }
 
     /**
@@ -43,9 +43,9 @@ class Index extends Base
             $messageService->setAllRead($this->userId);
             $messageService->queueSendAllRead($this->userId);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('设置成功');
+        return $this->getSuccessResonse('设置成功');
     }
 }

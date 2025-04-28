@@ -26,18 +26,18 @@ class EditAvatar extends Base
         try {
             validate(AvatarBase64ImageContentValidate::class)->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         try {
             $userService = new UserService();
             $path = $userService->editAvatarByBase64ImageContent($this->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
         $file = new File();
         $url = $file->getUrl($path);
-        return $this->success('修改成功', $url);
+        return $this->getSuccessResponse('修改成功', $url);
     }
 }

@@ -21,17 +21,17 @@ class Edit extends Base
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         $id = $get['id'];
 
         $permissionModel = PermissionModel::field('id,permission_id,name,key,api_string,sort')->find($id);
         if (empty($permissionModel)) {
-            return $this->error('没有找到记录');
+            return $this->getErrorResponse('没有找到记录');
         }
         $permission = $permissionModel->toArray();
 
-        return $this->success('获取成功', $permission);
+        return $this->getSuccessResonse('获取成功', $permission);
     }
 
     /**
@@ -45,19 +45,19 @@ class Edit extends Base
         try {
             validate(PermissionValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         if($post['id'] == $post['permission_id']){
-            return $this->error('上级权限不能和此权限相同');
+            return $this->getErrorResponse('上级权限不能和此权限相同');
         }
 
         $permissionCrudService = new CrudService(PermissionModel::class);
         try{
             $permissionCrudService->update($post['id'], $post);
         } catch (Exception $exception) {
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

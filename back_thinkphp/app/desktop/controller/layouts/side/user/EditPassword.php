@@ -22,16 +22,16 @@ class EditPassword extends Base
         try {
             validate(TwoPasswordValidate::class)->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $userService = new UserService();
         try{
             $userService->editPassword($this->userId, $post['password1']);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

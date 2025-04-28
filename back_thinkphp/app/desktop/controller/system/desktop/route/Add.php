@@ -22,16 +22,16 @@ class Add extends Base
         try {
             validate(RouteValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $routeCrudService = new CrudService(RouteModel::class);
         try{
             $routeCrudService->insert($post);
         } catch (Exception $exception) {
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('添加成功');
+        return $this->getSuccessResonse('添加成功');
     }
 }

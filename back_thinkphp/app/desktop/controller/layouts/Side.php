@@ -27,7 +27,7 @@ class Side extends Base
         $desktopUserService = new DesktopUserService();
         $treeMenu = $desktopUserService->getTreeMenu($this->userId);
 
-        return $this->success('获取成功', $treeMenu);
+        return $this->getSuccessResonse('获取成功', $treeMenu);
     }
 
     /**
@@ -42,7 +42,7 @@ class Side extends Base
         $userModel = UserModel::field('avatar')->find($this->userId);
         $avatar = $userModel->avatar_url;
 
-        return $this->success('获取成功', $avatar);
+        return $this->getSuccessResonse('获取成功', $avatar);
     }
 
     /**
@@ -52,8 +52,8 @@ class Side extends Base
     public function logout()
     {
         $sessionService = new SessionService();
-        $sessionService->logout($this->session->token);
+        $sessionService->logout($this->sessionId);
 
-        return $this->success("退出成功");
+        return $this->getSuccessResonse("退出成功");
     }
 }

@@ -21,9 +21,9 @@ class MessageNavigation extends Base
         try{
             $count = $messageService->getNoReadCount($this->userId);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('获取成功', $count);
+        return $this->getSuccessResonse('获取成功', $count);
     }
 }

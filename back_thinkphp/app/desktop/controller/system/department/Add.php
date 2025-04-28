@@ -22,16 +22,16 @@ class Add extends Base
         try {
             validate(DepartmentValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $departmentCrudService = new CrudService(DepartmentModel::class);
         try{
             $departmentCrudService->insert($post);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('添加成功');
+        return $this->getSuccessResonse('添加成功');
     }
 }

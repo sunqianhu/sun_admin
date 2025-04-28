@@ -24,13 +24,13 @@ class Login extends Base
         try {
             validate(LoginValidate::class)->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         //登录次数
         $loginFailCheckerService = new LoginFailCheckerService($post['account']);
         if(!$loginFailCheckerService->check()){
-            return $this->error('连续登录失败'.$loginFailCheckerService->number.'次，请'.$loginFailCheckerService->getResetReadableTime().'后再试');
+            return $this->getErrorResponse('连续登录失败'.$loginFailCheckerService->number.'次，请'.$loginFailCheckerService->getResetReadableTime().'后再试');
         }
 
         try{
@@ -45,11 +45,11 @@ class Login extends Base
             }else{
                 $message .= '，连续登录失败'.$loginFailCheckerService->number.'次，请'.$loginFailCheckerService->getResetReadableTime().'后再试';
             }
-            return $this->error($message);
+            return $this->getErrorResponse($message);
         }
         $loginFailCheckerService->resetFail();
 
         $token = $session->token;
-        return $this->success('登录成功', $token);
+        return $this->getSuccessResponse('登录成功', $token);
     }
 }

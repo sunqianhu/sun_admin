@@ -41,7 +41,7 @@ class Add extends Base
             'desktop_routes'=>$desktopRouteServices,
             'mobile_tree_permission'=>$mobileTreePermission
         ];
-        return $this->success('获取成功', $data);
+        return $this->getSuccessResonse('获取成功', $data);
     }
 
     /**
@@ -59,7 +59,7 @@ class Add extends Base
             IdArrayValidate::check($post['desktop_route_ids'], '桌面端路由');
             IdArrayValidate::check($post['mobile_permission_ids'], '移动端权限');
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         Db::startTrans();
@@ -76,9 +76,9 @@ class Add extends Base
             Db::commit();
         }catch (Exception $exception){
             Db::rollback();
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('添加成功');
+        return $this->getSuccessResonse('添加成功');
     }
 }

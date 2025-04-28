@@ -36,7 +36,7 @@ class Edit extends Base
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         $id = $get['id'];
 
@@ -46,7 +46,7 @@ class Edit extends Base
             ->append(['desktop_permission_ids', 'desktop_menu_ids', 'desktop_route_ids', 'mobile_permission_ids'])
             ->find($id);
         if (empty($roleModel)) {
-            return $this->error('没有找到记录');
+            return $this->getErrorResponse('没有找到记录');
         }
         $roleModel->hidden(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions']);
         $role = $roleModel->toArray();
@@ -70,7 +70,7 @@ class Edit extends Base
             'desktop_routes'=>$desktopRouteServices,
             'mobile_tree_permission'=>$mobileTreePermission
         ];
-        return $this->success('获取成功', $data);
+        return $this->getSuccessResonse('获取成功', $data);
     }
 
     /**
@@ -88,7 +88,7 @@ class Edit extends Base
             IdArrayValidate::check($post['desktop_route_ids'], '桌面端路由');
             IdArrayValidate::check($post['mobile_permission_ids'], '移动端权限');
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         Db::startTrans();
@@ -106,9 +106,9 @@ class Edit extends Base
             Db::commit();
         }catch (Exception $exception){
             Db::rollback();
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

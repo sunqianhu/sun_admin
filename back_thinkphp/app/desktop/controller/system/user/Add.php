@@ -26,7 +26,7 @@ class Add extends Base
             validate(UserValidate::class)->scene('add')->check($post);
             IdArrayValidate::check($post['role_ids'], '角色');
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         Db::startTrans();
@@ -47,9 +47,9 @@ class Add extends Base
             Db::commit();
         }catch (Exception $exception){
             Db::rollback();
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('添加成功');
+        return $this->getSuccessResonse('添加成功');
     }
 }

@@ -186,7 +186,7 @@ class SessionService
             throw new Exception('接口认证，用户id不能为空');
         }
         if ($api === '') {
-            throw new Exception('接口认证，路由不能为空');
+            throw new Exception('接口认证，接口不能为空');
         }
 
         $desktopUserService = new DesktopUserService();

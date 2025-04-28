@@ -20,6 +20,6 @@ class Frame extends Base
     {
         $mobileUserService = new MobileUserService();
         $permissions = $mobileUserService->getPermissionKeys($this->userId);
-        return $this->success('获取成功', $permissions);
+        return $this->getSuccessResponse('获取成功', $permissions);
     }
 }

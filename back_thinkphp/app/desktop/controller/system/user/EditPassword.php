@@ -23,16 +23,16 @@ class EditPassword extends Base
             validate(IdValidate::class)->check($post);
             validate(TwoPasswordValidate::class)->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         try{
             $userService = new UserService();
             $userService->editPassword($post['id'], $post['password1']);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

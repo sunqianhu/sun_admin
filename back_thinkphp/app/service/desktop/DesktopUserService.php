@@ -55,6 +55,7 @@ class DesktopUserService
             return false;
         }
 
+        $api = ltrim($api, '/');
         $api = strtolower($api);
         $apis = array_map('strtolower', $apis);
         if (in_array($api, $apis, true)) {

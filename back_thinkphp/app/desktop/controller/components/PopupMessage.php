@@ -24,7 +24,7 @@ class PopupMessage extends Base
         try {
             validate(IdValidate::class)->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $messageService = new MessageService();
@@ -32,9 +32,9 @@ class PopupMessage extends Base
             $messageService->setRead($this->userId, $post['id']);
             $messageService->queueSendRead($this->userId, $post['id']);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('设置成功');
+        return $this->getSuccessResonse('设置成功');
     }
 }

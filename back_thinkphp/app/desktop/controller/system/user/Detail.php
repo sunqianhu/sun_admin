@@ -20,7 +20,7 @@ class Detail extends Base
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         $id = $get['id'];
 
@@ -29,7 +29,7 @@ class Detail extends Base
             ->find($id);
         $userModel->append(['status_name', 'role_names']);
         if (empty($userModel)) {
-            return $this->error('没有找到记录');
+            return $this->getErrorResponse('没有找到记录');
         }
 
         $user = $userModel->toArray();
@@ -60,6 +60,6 @@ class Detail extends Base
             'login_logs'=>$loginLogs,
             'operation_logs'=>$operationLogs
         ];
-        return $this->success('获取成功', $data);
+        return $this->getSuccessResonse('获取成功', $data);
     }
 }

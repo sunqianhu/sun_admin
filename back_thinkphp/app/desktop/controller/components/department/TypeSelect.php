@@ -19,6 +19,6 @@ class TypeSelect extends Base
         $dictionaryService = new DictionaryService();
         $types = $dictionaryService->getList('department_type');
 
-        return $this->success('获取成功', $types);
+        return $this->getSuccessResonse('获取成功', $types);
     }
 }

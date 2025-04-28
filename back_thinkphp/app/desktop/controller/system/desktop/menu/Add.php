@@ -22,16 +22,16 @@ class Add extends Base
         try {
             validate(MenuValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $menuCrudService = new CrudService(MenuModel::class);
         try {
             $menuCrudService->insert($post);
         } catch (Exception $exception) {
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('添加成功');
+        return $this->getSuccessResonse('添加成功');
     }
 }

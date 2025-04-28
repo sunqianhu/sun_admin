@@ -21,17 +21,17 @@ class edit extends Base
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         $id = $get['id'];
 
         $routeModel = RouteModel::field('*')->find($id);
         if (empty($routeModel)) {
-            return $this->error('没有找到记录');
+            return $this->getErrorResponse('没有找到记录');
         }
         $route = $routeModel->toArray();
 
-        return $this->success('获取成功', $route);
+        return $this->getSuccessResonse('获取成功', $route);
     }
 
     /**
@@ -45,16 +45,16 @@ class edit extends Base
         try {
             validate(RouteValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $routeCrudService = new CrudService(RouteModel::class);
         try{
             $routeCrudService->update($post['id'], $post);
         } catch (Exception $exception) {
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

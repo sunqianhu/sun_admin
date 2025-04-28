@@ -29,17 +29,17 @@ class Edit extends Base
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         $id = $get['id'];
 
         $dictionaryModel = DictionaryModel::field('id,type,key,value,sort')->find($id);
         if (empty($dictionaryModel)) {
-            return $this->error('没有找到记录');
+            return $this->getErrorResponse('没有找到记录');
         }
         $dictionary = $dictionaryModel->toArray();
 
-        return $this->success('获取成功', $dictionary);
+        return $this->getSuccessResonse('获取成功', $dictionary);
     }
 
     /**
@@ -53,16 +53,16 @@ class Edit extends Base
         try {
             validate(DictionaryValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $dictionaryCrudService = new CrudService(DictionaryModel::class);
         try{
             $dictionaryCrudService->update($post['id'], $post);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

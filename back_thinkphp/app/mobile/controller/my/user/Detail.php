@@ -27,14 +27,14 @@ class Detail extends Base
             ->append(['avatar_url', 'department_name'])
             ->find($this->userId);
         if(empty($userModel)){
-            return $this->error('用户不存在');
+            return $this->getErrorResponse('用户不存在');
         }
         $user = $userModel->toArray();
 
         $data = [
             'user'=>$user
         ];
-        return $this->success('获取成功', $data);
+        return $this->getSuccessResponse('获取成功', $data);
     }
 
     /**
@@ -44,8 +44,8 @@ class Detail extends Base
     public function logout()
     {
         $sessionService = new SessionService();
-        $sessionService->logout($this->session->token);
+        $sessionService->logout($this->sessionId);
 
-        return $this->success("退出登录成功");
+        return $this->getSuccessResponse("退出登录成功");
     }
 }

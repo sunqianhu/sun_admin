@@ -28,17 +28,17 @@ class FileUpload extends Base
         try {
             validate(FileUploadValidate::class)->check($requestFiles);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         if (!in_array($module, $this->allowModules)) {
-            return $this->error('模块文件夹不支持上传');
+            return $this->getErrorResponse('模块文件夹不支持上传');
         }
 
         $requestFile = $requestFiles['file'];
         try{
             $path = Filesystem::putFile($module, $requestFile);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
         $file = new File();
@@ -53,6 +53,6 @@ class FileUpload extends Base
             'path' => $path,
             'url' => $url
         ];
-        return $this->success("上传成功", $data);
+        return $this->getSuccessResonse("上传成功", $data);
     }
 }

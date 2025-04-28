@@ -30,7 +30,7 @@ class EditAvatar extends Base
         $userModel = UserModel::field('avatar')->find($this->userId);
         $avatar = $userModel->avatar_url;
 
-        return $this->success('获取成功', $avatar);
+        return $this->getSuccessResonse('获取成功', $avatar);
     }
 
     /**
@@ -44,19 +44,19 @@ class EditAvatar extends Base
         try {
             validate(AvatarBase64ImageContentValidate::class)->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $userService = new UserService();
         try {
             $path = $userService->editAvatarByBase64ImageContent($this->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
         $file = new File();
         $url = $file->getUrl($path);
 
-        return $this->success('修改成功', $url);
+        return $this->getSuccessResonse('修改成功', $url);
     }
 }

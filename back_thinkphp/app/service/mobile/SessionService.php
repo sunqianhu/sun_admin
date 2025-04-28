@@ -167,12 +167,12 @@ class SessionService
     /**
      * 接口认证
      * @param $userId
-     * @param $route
+     * @param $api
      * @param $action
      * @return void
      * @throws Exception
      */
-    function apiAuth($userId, $route, $action)
+    function apiAuth($userId, $api, $action)
     {
         $isAuth = $this->isTokenAuth && $this->isApiAuth;
         if (in_array($action, $this->noApiAuthActions)) {
@@ -185,12 +185,12 @@ class SessionService
         if (empty($userId)) {
             throw new Exception('接口认证，用户id不能为空');
         }
-        if ($route === '') {
-            throw new Exception('接口认证，路由不能为空');
+        if ($api === '') {
+            throw new Exception('接口认证，接口不能为空');
         }
 
         $mobileUserService = new MobileUserService();
-        if (!$mobileUserService->hasApiPermission($userId, $route)) {
+        if (!$mobileUserService->hasApiPermission($userId, $api)) {
             throw new Exception('无权限');
         }
     }

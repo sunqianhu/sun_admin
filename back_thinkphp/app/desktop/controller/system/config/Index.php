@@ -19,7 +19,7 @@ class Index extends Base
     {
         $configCrudService = new CrudService(ConfigModel::class);
         $config = $configCrudService->selectRow(1);
-        return $this->success('获取成功', $config);
+        return $this->getSuccessResonse('获取成功', $config);
     }
 
     /**
@@ -33,12 +33,12 @@ class Index extends Base
         try {
             validate(ConfigValidate::class)->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $configCrudService = new CrudService(ConfigModel::class);
         $configCrudService->upsertByField('id', 1, $post);
 
-        return $this->success('保存成功');
+        return $this->getSuccessResonse('保存成功');
     }
 }

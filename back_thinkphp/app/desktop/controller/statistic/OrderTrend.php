@@ -24,10 +24,10 @@ class OrderTrend extends Base
         try {
             validate(IndexSearchValidate::class)->check($get);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         if (count($get['add_times']) != 2) {
-            return $this->error('添加时间参数错误');
+            return $this->getErrorResponse('添加时间参数错误');
         }
 
         $startTime = $get['add_times'][0];
@@ -37,10 +37,10 @@ class OrderTrend extends Base
         try{
             $trend = $statisticService->getTimeRangeTrend($startTime, $endTime);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('获取成功', $trend);
+        return $this->getSuccessResonse('获取成功', $trend);
     }
 
     /**
@@ -56,10 +56,10 @@ class OrderTrend extends Base
         try {
             validate(IndexSearchValidate::class)->check($get);
         } catch (ValidateException $e) {
-            return $this->error($e->getError());
+            return $this->getErrorResponse($e->getError());
         }
         if (count($get['add_times']) != 2) {
-            return $this->error('添加时间参数错误');
+            return $this->getErrorResponse('添加时间参数错误');
         }
 
         $startTime = $get['add_times'][0];
@@ -69,12 +69,12 @@ class OrderTrend extends Base
         try{
             $path = $excelService->createTimeRangeTrendExcel($startTime, $endTime);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
         $file = new File();
         $url = $file->getUrl($path);
 
-        return $this->success('获取成功', $url);
+        return $this->getSuccessResonse('获取成功', $url);
     }
 }

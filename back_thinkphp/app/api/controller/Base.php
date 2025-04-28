@@ -18,7 +18,6 @@ class Base extends BaseController
     public array $noTokenAuthActions = []; //不需要token认证的方法
     public int $sessionId = 0;
     public int $userId = 0;
-    public int $departmentId = 0;
 
     /**
      * 初始化
@@ -35,7 +34,7 @@ class Base extends BaseController
         try {
             $sessionService->ipAuth($this->request->ip());
         } catch (Exception $exception) {
-            $this->error($exception->getMessage(), null)->send();
+            $this->getErrorResponse($exception->getMessage())->send();
             exit;
         }
 
@@ -47,10 +46,9 @@ class Base extends BaseController
             $this->sessionId = $sessionService->tokenAuth($token, $action);
             if($this->sessionId){
                 $this->userId = $sessionService->getUserId($this->sessionId);
-                $this->departmentId = $sessionService->getDepartmentId($this->sessionId);
             }
         } catch (Exception $exception) {
-            $this->error($exception->getMessage(), null, 200, 2)->send();
+            $this->getErrorResponse($exception->getMessage(), null, 2)->send();
             exit;
         }
 
@@ -68,38 +66,38 @@ class Base extends BaseController
     }
 
     /**
-     * 成功响应
+     * 得到成功响应
      * @param string $message
      * @param $data
-     * @param $code
-     * @param $actionCode
+     * @param $businessCode
+     * @param $httpCode
      * @return Response
      */
-    public function success(string $message, $data = null, $code = 200, $actionCode = 1)
+    public function getSuccessResponse(string $message, $data = null, $businessCode = 1, $httpCode = 200)
     {
         $result = [
-            'code' => $actionCode,
+            'code' => $businessCode,
             'message' => $message,
             'data' => $data
         ];
-        return Response::create($result, 'json', $code);
+        return Response::create($result, 'json', $httpCode);
     }
 
     /**
-     * 失败响应
+     * 得到错误响应
      * @param string $message
      * @param $data
-     * @param $code
-     * @param $actionCode
+     * @param $businessCode
+     * @param $httpCode
      * @return Response
      */
-    public function error(string $message, $data = null, $code = 200, $actionCode = 0)
+    public function getErrorResponse(string $message, $data = null, $businessCode = 0, $httpCode = 200)
     {
         $result = [
-            'code' => $actionCode,
+            'code' => $businessCode,
             'message' => $message,
             'data' => $data
         ];
-        return Response::create($result, 'json', $code);
+        return Response::create($result, 'json', $httpCode);
     }
 }

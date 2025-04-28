@@ -21,17 +21,17 @@ class Edit extends Base
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         $id = $get['id'];
 
         $menuModel = MenuModel::field('id,menu_id,name,url,icon,target,sort')->find($id);
         if (empty($menuModel)) {
-            return $this->error('没有找到记录');
+            return $this->getErrorResponse('没有找到记录');
         }
         $menu = $menuModel->toArray();
 
-        return $this->success('获取成功', $menu);
+        return $this->getSuccessResonse('获取成功', $menu);
     }
 
     /**
@@ -45,19 +45,19 @@ class Edit extends Base
         try {
             validate(MenuValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
         if($post['id'] == $post['menu_id']){
-            return $this->error('上级菜单不能和此菜单相同');
+            return $this->getErrorResponse('上级菜单不能和此菜单相同');
         }
 
         $menuCrudService = new CrudService(MenuModel::class);
         try{
             $menuCrudService->update($post['id'], $post);
         } catch (Exception $exception) {
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

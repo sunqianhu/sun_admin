@@ -47,7 +47,7 @@ class Index extends Base
         ]);
         $userPaginateArray = $userPaginate->toArray();
 
-        return $this->success('获取成功', $userPaginateArray);
+        return $this->getSuccessResonse('获取成功', $userPaginateArray);
     }
 
     /**
@@ -61,7 +61,7 @@ class Index extends Base
         try {
             validate(UserValidate::class)->scene('edit_status')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         $post['status'] = $post['status'] == 1 ? 1 : 0;
@@ -69,10 +69,10 @@ class Index extends Base
             $userService = new UserService();
             $userService->editStatus($post['id'], $post['status']);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 
     /**
@@ -86,7 +86,7 @@ class Index extends Base
         try {
             validate(UserValidate::class)->scene('offline')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         try{
@@ -96,9 +96,9 @@ class Index extends Base
             $mobileUserService = new MobileUserService();
             $mobileUserService->offLine($post['id']);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('操作成功');
+        return $this->getSuccessResonse('操作成功');
     }
 }

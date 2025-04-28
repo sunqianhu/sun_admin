@@ -31,7 +31,7 @@ class Index extends Base
         $arrayHandler = new ArrayHandler();
         $treePermission = $arrayHandler->convertTree($permissionArrays, 'id', 'permission_id', 'children');
 
-        return $this->success('获取成功', $treePermission);
+        return $this->getSuccessResonse('获取成功', $treePermission);
     }
 
     /**
@@ -41,16 +41,16 @@ class Index extends Base
     public function delete(){
         $id = $this->request->post('id', 0);
         if ($id <= 0 || !is_numeric($id)) {
-            return $this->error('id参数错误');
+            return $this->getErrorResponse('id参数错误');
         }
 
         $permissionCrudService = new CrudService(PermissionModel::class);
         try{
             $permissionCrudService->delete($id);
         }catch (Exception $exception){
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('删除成功');
+        return $this->getSuccessResonse('删除成功');
     }
 }

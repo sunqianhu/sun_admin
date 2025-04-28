@@ -20,7 +20,7 @@ class Edit extends Base
     {
         $id = $this->request->get('id', 0);
         if ($id <= 0 || !is_numeric($id)) {
-            return $this->error('id参数错误');
+            return $this->getErrorResponse('id参数错误');
         }
 
         $userModel = UserModel::field('id,name,phone,department_id')
@@ -28,11 +28,11 @@ class Edit extends Base
             ->append(['role_ids'])
             ->find($id);
         if (empty($userModel)) {
-            return $this->error('没有找到记录');
+            return $this->getErrorResponse('没有找到记录');
         }
         $user = $userModel->toArray();
 
-        return $this->success('获取成功', $user);
+        return $this->getSuccessResonse('获取成功', $user);
     }
 
     /**
@@ -46,7 +46,7 @@ class Edit extends Base
         try {
             validate(UserValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
-            return $this->error($exception->getError());
+            return $this->getErrorResponse($exception->getError());
         }
 
         Db::startTrans();
@@ -67,9 +67,9 @@ class Edit extends Base
             Db::commit();
         }catch (Exception $exception){
             Db::rollback();
-            return $this->error($exception->getMessage());
+            return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->success('修改成功');
+        return $this->getSuccessResonse('修改成功');
     }
 }

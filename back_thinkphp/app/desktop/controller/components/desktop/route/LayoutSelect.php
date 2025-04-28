@@ -19,6 +19,6 @@ class LayoutSelect extends Base
         $dictionaryService = new DictionaryService();
         $layouts = $dictionaryService->getList('desktop_route_layout');
 
-        return $this->success('获取成功', $layouts);
+        return $this->getSuccessResonse('获取成功', $layouts);
     }
 }
