@@ -71,6 +71,15 @@ watch(
   }
 );
 watch(
+  () => props.permissionId,
+  (newValue) => {
+    init();
+  },
+  {
+    deep: true,
+  }
+);
+watch(
   () => ids.value,
   (newValue) => {
     emits("update:modelValue", newValue);

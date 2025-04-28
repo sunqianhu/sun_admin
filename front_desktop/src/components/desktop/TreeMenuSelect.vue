@@ -69,6 +69,15 @@ watch(
   }
 );
 watch(
+  () => props.menuId,
+  (newValue) => {
+    init();
+  },
+  {
+    deep: true,
+  }
+);
+watch(
   () => ids.value,
   (newValue) => {
     emits("update:modelValue", newValue);

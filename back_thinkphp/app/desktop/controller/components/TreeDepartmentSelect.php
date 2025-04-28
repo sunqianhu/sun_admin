@@ -4,8 +4,6 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\service\DepartmentService;
-use app\validate\IdValidate;
-use think\exception\ValidateException;
 use think\Response;
 
 class TreeDepartmentSelect extends Base
