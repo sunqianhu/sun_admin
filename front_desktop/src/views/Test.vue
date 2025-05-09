@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 50px">
-    <tree-department-select></tree-department-select>
+    <dictionary-select type="department_type"></dictionary-select>
   </div>
 </template>
 
