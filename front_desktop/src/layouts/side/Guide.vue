@@ -18,7 +18,7 @@ const guide = () => {
     showProgress: true,
     steps: [
       {
-        element: ".side-layout__aside",
+        element: ".layout__left",
         popover: {
           title: "功能菜单",
           description: "点击功能菜单导航到具体的功能栏目",
@@ -44,7 +44,7 @@ const guide = () => {
         popover: { title: "头像", description: "查看修改个人信息" },
       },
       {
-        element: ".body",
+        element: ".layout__workspace",
         popover: { title: "工作区", description: "具体功能显示区" },
       },
     ],

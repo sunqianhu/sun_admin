@@ -80,9 +80,9 @@ class DesktopUserService
             ->join('role_desktop_permission rdp', 'p.id = rdp.permission_id')
             ->field('p.key')
             ->where('rdp.role_id', 'in', $roleIds)
-            ->order('p.sort', 'asc')
-            ->group('key')
-            ->column('key');
+            ->orderRaw('ANY_VALUE(p.sort) asc')
+            ->group('p.key')
+            ->column('p.key');
         return array_unique($keys);
     }
 
