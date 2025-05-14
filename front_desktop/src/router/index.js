@@ -9,17 +9,17 @@ const writeList = ["/login", "/404", "/test"];
 const staticRoutes = [
   {
     path: "/",
-    name: "side",
-    component: () => import("../layouts/side/Index.vue"),
+    name: "main",
+    component: () => import("../layouts/Main.vue"),
     meta: {
-      name: "侧边布局",
+      name: "主布局",
     },
     children: [],
   },
   {
     path: "/blank",
     name: "blank",
-    component: () => import("../layouts/blank/Index.vue"),
+    component: () => import("../layouts/Blank.vue"),
     meta: {
       name: "空白布局",
     },
@@ -92,7 +92,7 @@ const setRoutes = async () => {
   }
   routeStore.set(response.data);
 
-  let sideRoute = staticRoutes.find((route) => route.name == "side");
+  let mainRoute = staticRoutes.find((route) => route.name == "main");
   let blankRoute = staticRoutes.find((route) => route.name == "blank");
   let childRoutes = response.data;
   const componentFilePaths = import.meta.glob([
@@ -113,8 +113,8 @@ const setRoutes = async () => {
       return;
     }
 
-    if (childRoute.layout == "side") {
-      sideRoute.children.push(childRoute);
+    if (childRoute.layout == "main") {
+      mainRoute.children.push(childRoute);
     } else if (childRoute.layout == "blank") {
       blankRoute.children.push(childRoute);
     } else {
@@ -131,30 +131,30 @@ const setRoutes = async () => {
       name: "系统消息",
     },
   };
-  sideRoute.children.push(messageRoute);
+  mainRoute.children.push(messageRoute);
 
-  router.addRoute(sideRoute);
+  router.addRoute(mainRoute);
   router.addRoute(blankRoute);
 
   return "load";
 };
 
 /**
- * 得到侧边栏布局重定向路由
+ * 得到主布局布局重定向路由
  * @param {*} currentRoutePath
  * @returns
  */
-const getSideRedirectRoute = (currentRoutePath) => {
+const getMainRedirectRoute = (currentRoutePath) => {
   if (currentRoutePath !== "/") {
     throw new Error("当前路由路径不是首页");
   }
-  let sideRoute = staticRoutes.find((route) => route.name == "side");
-  if (!sideRoute.children?.length) {
-    throw new Error("侧边栏布局没有子路由");
+  let mainRoute = staticRoutes.find((route) => route.name == "main");
+  if (!mainRoute.children?.length) {
+    throw new Error("主布局布局没有子路由");
   }
-  let path = sideRoute.children[0]?.path;
+  let path = mainRoute.children[0]?.path;
   if (path === "") {
-    throw new Error("侧边栏布局第一个子路由path为空");
+    throw new Error("主布局布局第一个子路由path为空");
   }
   return { path: path, replace: true };
 };
@@ -193,7 +193,7 @@ const beforeHandle = async (to, from) => {
 
   //跳转
   try {
-    return getSideRedirectRoute(to.path);
+    return getMainRedirectRoute(to.path);
   } catch (error) {}
 
   return true;

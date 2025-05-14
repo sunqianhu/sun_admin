@@ -1,6 +1,6 @@
 <template>
-  <div class="side-layout-index">
-    <el-container :class="{ 'layout--fold': sideStore.fold }" class="layout">
+  <div class="main-layout">
+    <el-container :class="{ 'layout--fold': mainLayoutStore.fold }" class="layout">
       <el-aside class="layout__left">
         <div class="system-name-row">
           <img src="@/assets/logo.png" class="logo" />
@@ -42,29 +42,29 @@
 </template>
 
 <script setup>
-import { useSideStore } from "@/stores/layouts/side";
-import Menu from "./Menu.vue";
-import LightDark from "./LightDark.vue";
-import Hamburger from "./Hamburger.vue";
-import MessageNavigation from "./MessageNavigation.vue";
-import FullScreen from "./FullScreen.vue";
-import Avatar from "./Avatar.vue";
-import Guide from "./Guide.vue";
+import { useMainLayoutStore } from "@/stores/main_layout";
+import Menu from "./main/Menu.vue";
+import LightDark from "./main/LightDark.vue";
+import Hamburger from "./main/Hamburger.vue";
+import MessageNavigation from "./main/MessageNavigation.vue";
+import FullScreen from "./main/FullScreen.vue";
+import Avatar from "./main/Avatar.vue";
+import Guide from "./main/Guide.vue";
 
-const sideStore = useSideStore();
+const mainLayoutStore = useMainLayoutStore();
 
 /**
  * 窗口大小改变回调
  */
 window.onresize = () => {
   if (document.body.clientWidth < 768) {
-    sideStore.setFold(true);
+    mainLayoutStore.setFold(true);
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.side-layout-index {
+.main-layout {
   height: 100dvh;
   > .layout {
     height: 100%;
