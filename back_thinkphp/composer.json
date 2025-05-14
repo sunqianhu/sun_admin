@@ -22,10 +22,10 @@
     "require": {
         "php": ">=8.0.0",
         "topthink/framework": "^8.0",
-        "topthink/think-orm": "^3.0|^4.0",
+        "topthink/think-orm": "^3.0",
         "topthink/think-filesystem": "^2.0",
-        "sunqianhu/helper": "1.2.11",
         "phpoffice/phpspreadsheet": "^3.7",
+        "sunqianhu/helper": "1.2.11",
         "workerman/workerman": "^4.2",
         "textalk/websocket": "^1.6",
         "firebase/php-jwt": "^6.10",
