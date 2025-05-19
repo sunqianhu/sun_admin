@@ -12,9 +12,9 @@ class Index extends Base
     public bool $isApiAuth = false;
 
     /**
-     * 得到系统消息分页
+     * 得到分页
      */
-    public function getMessagePaginate()
+    public function getPaginate()
     {
         $get = $this->request->get(['times' =>[], 'size' => '30', 'page' => '1']);
 
@@ -23,13 +23,13 @@ class Index extends Base
             $query->whereBetweenTime('add_time', intval($get['times'][0]), intval($get['times'][1]));
         }
         $query->order('id', 'desc');
-        $messagePaginate = $query->paginate([
+        $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $messagePaginateArray = $messagePaginate->toArray();
+        $paginateArray = $paginate->toArray();
 
-        return $this->getSuccessResonse('获取成功', $messagePaginateArray);
+        return $this->getSuccessResonse('获取成功', $paginateArray);
     }
 
     /**

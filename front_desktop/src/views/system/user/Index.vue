@@ -103,7 +103,7 @@
     <add
       @close="addFlag = false"
       @submited="
-        getUserPaginate();
+        getPaginate();
         addFlag = false;
       "
       v-if="addFlag"
@@ -111,7 +111,7 @@
     <edit
       @close="editFlag = false"
       @submited="
-        getUserPaginate();
+        getPaginate();
         editFlag = false;
       "
       :id="rowId"
@@ -149,16 +149,13 @@ const editFlag = ref(false);
 const editPasswordFlag = ref(false);
 
 /**
- * 得到用户分页
+ * 得到分页
  */
-const getUserPaginate = async () => {
+const getPaginate = async () => {
   listLoading.value = true;
-  const response = await axios.get(
-    "desktop/system.user.Index/getUserPaginate",
-    {
-      params: query.value,
-    }
-  );
+  const response = await axios.get("desktop/system.user.Index/getPaginate", {
+    params: query.value,
+  });
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -176,7 +173,7 @@ const getUserPaginate = async () => {
  */
 const search = () => {
   query.page = 1;
-  getUserPaginate();
+  getPaginate();
 };
 
 /**
@@ -186,7 +183,7 @@ const search = () => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.page = 1;
-  getUserPaginate();
+  getPaginate();
 };
 
 /**
@@ -195,7 +192,7 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getUserPaginate();
+  getPaginate();
 };
 
 /**
@@ -271,7 +268,7 @@ const offLine = async (id) => {
 };
 
 onMounted(() => {
-  getUserPaginate();
+  getPaginate();
 });
 </script>
 

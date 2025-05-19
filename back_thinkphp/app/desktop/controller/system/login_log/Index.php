@@ -8,9 +8,9 @@ use app\model\LoginLogModel;
 class Index extends Base
 {
     /**
-     * 得到登录日志分页
+     * 得到分页
      */
-    public function getLoginLogPaginate()
+    public function getPaginate()
     {
         $get = $this->request->get(['department_ids'=>[], 'time' =>[], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
 
@@ -32,12 +32,12 @@ class Index extends Base
         }
         $query->order('ll.id', 'desc');
 
-        $loginLogPaginate = $query->paginate([
+        $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $loginLogPaginateArray = $loginLogPaginate->toArray();
+        $paginateArray = $paginate->toArray();
 
-        return $this->getSuccessResonse('获取成功', $loginLogPaginateArray);
+        return $this->getSuccessResonse('获取成功', $paginateArray);
     }
 }

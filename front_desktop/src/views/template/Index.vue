@@ -67,7 +67,7 @@
     <add
       @close="addFlag = false"
       @submited="
-        getDictionaryPaginate();
+        getPaginate();
         addFlag = false;
       "
       v-if="addFlag"
@@ -75,7 +75,7 @@
     <edit
       @close="editFlag = false"
       @submited="
-        getDictionaryPaginate();
+        getPaginate();
         editFlag = false;
       "
       :id="rowId"
@@ -103,12 +103,12 @@ const editFlag = ref(false);
 const total = ref(0);
 
 /**
- * 得到字典分页
+ * 得到分页
  */
-const getDictionaryPaginate = async () => {
+const getPaginate = async () => {
   loading.value = true;
   const response = await axios.get(
-    "desktop/system.dictionary.Index/getDictionaryPaginate",
+    "desktop/system.dictionary.Index/getPaginate",
     {
       params: query.value,
     }
@@ -130,7 +130,7 @@ const getDictionaryPaginate = async () => {
  * 搜索
  */
 const search = () => {
-  getDictionaryPaginate();
+  getPaginate();
 };
 
 /**
@@ -168,7 +168,7 @@ const del = async (id) => {
     message: response.message,
     type: "success",
   });
-  getDictionaryPaginate();
+  getPaginate();
 };
 
 /**
@@ -178,7 +178,7 @@ const del = async (id) => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getDictionaryPaginate();
+  getPaginate();
 };
 
 /**
@@ -187,11 +187,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getDictionaryPaginate();
+  getPaginate();
 };
 
 onMounted(() => {
-  getDictionaryPaginate();
+  getPaginate();
 });
 </script>
 

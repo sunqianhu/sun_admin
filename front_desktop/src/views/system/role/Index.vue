@@ -55,7 +55,7 @@
     <add
       @close="addFlag = false"
       @submited="
-        getRolePaginate();
+        getPaginate();
         addFlag = false;
       "
       v-if="addFlag"
@@ -63,7 +63,7 @@
     <edit
       @close="editFlag = false"
       @submited="
-        getRolePaginate();
+        getPaginate();
         editFlag = false;
       "
       :id="rowId"
@@ -91,16 +91,13 @@ const editFlag = ref(false);
 const total = ref(0);
 
 /**
- * 获取角色分页
+ * 得到分页
  */
-const getRolePaginate = async () => {
+const getPaginate = async () => {
   listLoading.value = true;
-  const response = await axios.get(
-    "desktop/system.role.Index/getRolePaginate",
-    {
-      params: query.value,
-    }
-  );
+  const response = await axios.get("desktop/system.role.Index/getPaginate", {
+    params: query.value,
+  });
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -118,7 +115,7 @@ const getRolePaginate = async () => {
  * 搜索
  */
 const search = () => {
-  getRolePaginate();
+  getPaginate();
 };
 
 /**
@@ -156,7 +153,7 @@ const del = async (id) => {
     message: response.message,
     type: "success",
   });
-  getRolePaginate();
+  getPaginate();
 };
 
 /**
@@ -166,7 +163,7 @@ const del = async (id) => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getRolePaginate();
+  getPaginate();
 };
 
 /**
@@ -175,11 +172,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getRolePaginate();
+  getPaginate();
 };
 
 onMounted(() => {
-  getRolePaginate();
+  getPaginate();
 });
 </script>
 

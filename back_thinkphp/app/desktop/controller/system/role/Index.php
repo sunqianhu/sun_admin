@@ -16,9 +16,9 @@ use think\Response;
 class Index extends Base
 {
     /**
-     * 得到角色分页
+     * 得到分页
      */
-    public function getRolePaginate()
+    public function getPaginate()
     {
         $get = $this->request->get(['name' => '', 'size' => '30', 'page' => '1']);
 
@@ -27,13 +27,13 @@ class Index extends Base
             $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
         $query->order('id', 'asc');
-        $rolePaginate = $query->paginate([
+        $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $rolePaginateArray = $rolePaginate->toArray();
+        $paginateArray = $paginate->toArray();
 
-        return $this->getSuccessResonse('获取成功', $rolePaginateArray);
+        return $this->getSuccessResonse('获取成功', $paginateArray);
     }
 
     /**

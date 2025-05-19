@@ -12,11 +12,11 @@ use think\Response;
 class Index extends Base
 {
     /**
-     * 得到字典分页
+     * 得到分页
      * @return Response
      * @throws DbException
      */
-    public function getDictionaryPaginate()
+    public function getPaginate()
     {
         $get = $this->request->get(['type' => '', 'key' => '', 'value' => '', 'size' => '30', 'page' => '1']);
         $query = DictionaryModel::field('id,type,key,value,sort');
@@ -33,12 +33,13 @@ class Index extends Base
             'type' => 'asc',
             'sort' => 'asc'
         ]);
-        $dictionaryPaginate = $query->paginate([
+        $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $dictionaryPaginateArray = $dictionaryPaginate->toArray();
-        return $this->getSuccessResonse('获取成功', $dictionaryPaginateArray);
+        $paginateArray = $paginate->toArray();
+        
+        return $this->getSuccessResonse('获取成功', $paginateArray);
     }
 
     /**

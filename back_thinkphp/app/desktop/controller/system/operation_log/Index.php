@@ -11,7 +11,7 @@ class Index extends Base
     /**
      * 得到操作日志
      */
-    public function getOperationLogPaginate()
+    public function getPaginate()
     {
         $get = $this->request->get(['department_ids'=>[], 'time' => [], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
 
@@ -32,12 +32,12 @@ class Index extends Base
             $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
         $query->order('ol.id', 'desc');
-        $operationLogPaginate = $query->paginate([
+        $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $operationLogPaginateArray = $operationLogPaginate->toArray();
+        $paginateArray = $paginate->toArray();
 
-        return $this->getSuccessResonse('获取成功', $operationLogPaginateArray);
+        return $this->getSuccessResonse('获取成功', $paginateArray);
     }
 }

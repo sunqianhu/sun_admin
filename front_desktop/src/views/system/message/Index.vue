@@ -74,16 +74,13 @@ const listLoading = ref(true);
 const total = ref(0);
 
 /**
- * 得到系统消息分页
+ * 得到分页
  */
-const getMessagePaginate = async () => {
+const getPaginate = async () => {
   listLoading.value = true;
-  const response = await axios.get(
-    "desktop/system.message.Index/getMessagePaginate",
-    {
-      params: query.value,
-    }
-  );
+  const response = await axios.get("desktop/system.message.Index/getPaginate", {
+    params: query.value,
+  });
   listLoading.value = false;
   if (response.code != 1) {
     ElMessage({
@@ -108,7 +105,7 @@ const setAllRead = async (id) => {
  * 搜索
  */
 const search = () => {
-  getMessagePaginate();
+  getPaginate();
 };
 
 /**
@@ -118,7 +115,7 @@ const search = () => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getMessagePaginate();
+  getPaginate();
 };
 
 /**
@@ -127,11 +124,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getMessagePaginate();
+  getPaginate();
 };
 
 onMounted(() => {
-  getMessagePaginate();
+  getPaginate();
   setAllRead();
 });
 </script>

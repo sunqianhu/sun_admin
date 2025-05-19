@@ -93,12 +93,12 @@ const listLoading = ref(true);
 const total = ref(0);
 
 /**
- * 获取操作日志
+ * 得到分页
  */
-const getOperationLogPaginate = async () => {
+const getPaginate = async () => {
   listLoading.value = true;
   const response = await axios.get(
-    "desktop/system.operation_log.Index/getOperationLogPaginate",
+    "desktop/system.operation_log.Index/getPaginate",
     {
       params: query.value,
     }
@@ -120,7 +120,7 @@ const getOperationLogPaginate = async () => {
  * 搜索
  */
 const search = () => {
-  getOperationLogPaginate();
+  getPaginate();
 };
 
 /**
@@ -130,7 +130,7 @@ const search = () => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getOperationLogPaginate();
+  getPaginate();
 };
 
 /**
@@ -139,11 +139,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getOperationLogPaginate();
+  getPaginate();
 };
 
 onMounted(() => {
-  getOperationLogPaginate();
+  getPaginate();
 });
 </script>
 

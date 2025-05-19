@@ -14,9 +14,9 @@ use think\exception\ValidateException;
 class Index extends Base
 {
     /**
-     * 获取用户分页
+     * 获取分页
      */
-    public function getUserPaginate()
+    public function getPaginate()
     {
         $get = $this->request->get(['department_ids'=>[], 'role_id', 'account', 'name', 'phone', 'size' => 30, 'page' => 1]);
 
@@ -41,13 +41,13 @@ class Index extends Base
         }
         $query->group('u.id')
             ->order('u.id', 'desc');
-        $userPaginate = $query->paginate([
+        $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page']
         ]);
-        $userPaginateArray = $userPaginate->toArray();
+        $paginateArray = $paginate->toArray();
 
-        return $this->getSuccessResonse('获取成功', $userPaginateArray);
+        return $this->getSuccessResonse('获取成功', $paginateArray);
     }
 
     /**

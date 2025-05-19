@@ -92,12 +92,12 @@ const listLoading = ref(true);
 const total = ref(0);
 
 /**
- * 获取登录日志分页
+ * 得到分页
  */
-const getLoginLogPaginate = async () => {
+const getPaginate = async () => {
   listLoading.value = true;
   const response = await axios.get(
-    "desktop/system.login_log.Index/getLoginLogPaginate",
+    "desktop/system.login_log.Index/getPaginate",
     {
       params: query.value,
     }
@@ -119,7 +119,7 @@ const getLoginLogPaginate = async () => {
  * 搜索
  */
 const search = () => {
-  getLoginLogPaginate();
+  getPaginate();
 };
 
 /**
@@ -129,7 +129,7 @@ const search = () => {
 const changePaginationSize = (size) => {
   query.value.size = size;
   query.value.number = 1;
-  getLoginLogPaginate();
+  getPaginate();
 };
 
 /**
@@ -138,11 +138,11 @@ const changePaginationSize = (size) => {
  */
 const changePaginationCurrent = (page) => {
   query.value.page = page;
-  getLoginLogPaginate();
+  getPaginate();
 };
 
 onMounted(() => {
-  getLoginLogPaginate();
+  getPaginate();
 });
 </script>
 
