@@ -11,21 +11,21 @@ use think\db\exception\ModelNotFoundException;
 class PermissionService
 {
     /**
-     * 得到子权限id
+     * 得到所有的子权限id
      * @param $id
      * @return array
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getChildrenIds($id){
+    public function getAllPermissionIds($id){
         $permissionModels = PermissionModel::field('id')
             ->where('permission_id', $id)
             ->select();
         $ids = [];
         foreach($permissionModels as $permissionModel){
             $ids[] = $permissionModel->id;
-            $ids = array_merge($ids, $this->getChildrenIds($permissionModel->id));
+            $ids = array_merge($ids, $this->getAllPermissionIds($permissionModel->id));
         }
         return $ids;
     }
@@ -40,7 +40,7 @@ class PermissionService
      */
     public function getTreePermission($id)
     {
-        $ids = $this->getChildrenIds($id);
+        $ids = $this->getAllPermissionIds($id);
         $ids[] = $id;
 
         $permissionModels = PermissionModel::field('id, permission_id, name, key')
@@ -54,14 +54,14 @@ class PermissionService
     }
 
     /**
-     * 是否有子权限
+     * 得到是否有子权限
      * @param $id
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function hasChildren($id){
+    public function getIsExistPermissions($id){
         $permissionModel = PermissionModel::field('id')
             ->where('permission_id', $id)
             ->limit(0,1)

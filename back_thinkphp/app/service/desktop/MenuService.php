@@ -18,14 +18,14 @@ class MenuService
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getChildrenIds($id){
+    public function getAllMenuIds($id){
         $menuModels = MenuModel::field('id')
             ->where('menu_id', $id)
             ->select();
         $ids = [];
         foreach($menuModels as $menuModel){
             $ids[] = $menuModel->id;
-            $ids = array_merge($ids, $this->getChildrenIds($menuModel->id));
+            $ids = array_merge($ids, $this->getAllMenuIds($menuModel->id));
         }
         return $ids;
     }
@@ -40,7 +40,7 @@ class MenuService
      */
     public function getTreeMenu($id)
     {
-        $ids = $this->getChildrenIds($id);
+        $ids = $this->getAllMenuIds($id);
         $ids[] = $id;
 
         $menuModels = MenuModel::field('id,menu_id,name,url')
@@ -54,14 +54,14 @@ class MenuService
     }
 
     /**
-     * 是否有子菜单
+     * 得到是否存在子菜单
      * @param $id
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function hasChildren($id){
+    public function getIsExistMenus($id){
         $menuModel = MenuModel::field('id')
             ->where('menu_id', $id)
             ->limit(0,1)
