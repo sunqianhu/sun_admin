@@ -153,14 +153,14 @@ class DepartmentService
     }
 
     /**
-     * 得到是否存在子部门和用户
+     * 得到是否存在部门或用户
      * @param $id
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getIsExistChildrenDepartmentsAndUsers($id)
+    public function getIsExistDepartmentsOrUsers($id)
     {
         if($this->getIsExistChildren($id) || $this->isExistUsers($id)){
             return true;
