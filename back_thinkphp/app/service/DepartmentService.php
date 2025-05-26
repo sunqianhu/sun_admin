@@ -79,43 +79,38 @@ class DepartmentService
     }
 
     /**
-     * 通过类型得到部门列表
-     * @param $type
-     * @return array
+     * 是否存在用户
+     * @param $id
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public function getDepartmentsByType($type) {
-        $departmentModels = DepartmentModel::field('id,name,type,department_id')
-            ->where('type', $type)
-            ->order('sort', 'asc')
-            ->select();
-        return $departmentModels->toArray();
-    }
-
-    /**
-     * 得到分类名称
-     * @param $type
-     * @return mixed
-     * @throws Exception
-     */
-    public function getTypeName($type)
+    public function isExistUsers($id)
     {
-        $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
-        return $dictionaryService->getValue('department_type', $type);
+        $UserModel = UserModel::field('id')
+            ->where('department_id', $id)
+            ->limit(0,1)
+            ->find();
+        if(empty($UserModel)){
+            return false;
+        }
+        return true;
     }
 
     /**
-     * 得到子部门id列表
+     * 得到所有子部门id列表
      * @param $id
      * @return array
      */
-    public function getChildrenIds($id){
+    public function getAllChildrenIds($id){
         $departmentModels = DepartmentModel::field('id')
             ->where('department_id', $id)
             ->select();
         $ids = [];
         foreach($departmentModels as $departmentModel){
             $ids[] = $departmentModel->id;
-            $ids = array_merge($ids, $this->getChildrenIds($departmentModel->id));
+            $ids = array_merge($ids, $this->getAllChildrenIds($departmentModel->id));
         }
         return $ids;
     }
@@ -126,7 +121,7 @@ class DepartmentService
      */
     public function getTreeDepartment($id)
     {
-        $ids = $this->getChildrenIds($id);
+        $ids = $this->getAllChildrenIds($id);
         $ids[] = $id;
 
         $departmentModels = DepartmentModel::field('id, id, department_id, name')
@@ -139,19 +134,35 @@ class DepartmentService
     }
 
     /**
-     * 是否有子菜单
+     * 得到是否存在子部门
      * @param $id
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function hasChildren($id){
+    public function getIsExistChildren($id){
         $departmentModel = DepartmentModel::field('id')
             ->where('menu_id', $id)
             ->limit(0,1)
             ->find();
         if(!empty($departmentModel)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 得到是否存在子部门和用户
+     * @param $id
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getIsExistChildrenDepartmentsAndUsers($id)
+    {
+        if($this->getIsExistChildren($id) || $this->isExistUsers($id)){
             return true;
         }
         return false;

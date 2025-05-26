@@ -48,7 +48,6 @@ const init = async () => {
     {
       params: {
         department_id: props.departmentId,
-        is_with_current: props.isWithCurrent,
       },
     }
   );
