@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50744
 File Encoding         : 65001
 
-Date: 2025-05-14 15:01:56
+Date: 2025-05-26 17:41:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -128,7 +128,7 @@ CREATE TABLE `desktop_permission` (
 -- Records of desktop_permission
 -- ----------------------------
 INSERT INTO `desktop_permission` VALUES ('1', '0', '系统管理', 'system', '', '99');
-INSERT INTO `desktop_permission` VALUES ('2', '1', '用户管理', 'system_user', 'desktop/system.user.Index/init\ndesktop/system.user.Index/getUserPaginate\ndesktop/system.user.Detail/init', '3');
+INSERT INTO `desktop_permission` VALUES ('2', '1', '用户管理', 'system_user', 'desktop/system.user.Index/init\ndesktop/system.user.Index/getPaginate\ndesktop/system.user.Detail/init', '3');
 INSERT INTO `desktop_permission` VALUES ('3', '2', '添加用户', 'system_user_add', 'desktop/system.user.Add/init\ndesktop/system.user.Add/save', '3');
 INSERT INTO `desktop_permission` VALUES ('4', '2', '修改用户', 'system_user_edit', 'desktop/system.user.Edit/init\ndesktop/system.user.Edit/save', '5');
 INSERT INTO `desktop_permission` VALUES ('5', '2', '修改密码', 'system_user_edit_password', 'desktop/system.user.EditPassword/save', '7');
@@ -136,16 +136,16 @@ INSERT INTO `desktop_permission` VALUES ('6', '2', '修改状态', 'system_user_
 INSERT INTO `desktop_permission` VALUES ('7', '2', '踢下线', 'system_user_offline', 'desktop/system.user.Index/offline', '11');
 INSERT INTO `desktop_permission` VALUES ('8', '1', '系统设置', 'system_config', 'desktop/system.config.Index/init\ndesktop/system.config.Index/save', '1');
 INSERT INTO `desktop_permission` VALUES ('9', '1', '部门管理', 'system_department', 'desktop/system.department.Index/getTreeDepartment', '5');
-INSERT INTO `desktop_permission` VALUES ('10', '1', '角色管理', 'system_role', 'desktop/system.role.Index/init\ndesktop/system.role.Index/getRolePaginate', '7');
+INSERT INTO `desktop_permission` VALUES ('10', '1', '角色管理', 'system_role', 'desktop/system.role.Index/init\ndesktop/system.role.Index/getPaginate', '7');
 INSERT INTO `desktop_permission` VALUES ('11', '1', '桌面端', 'system_desktop', '', '9');
 INSERT INTO `desktop_permission` VALUES ('12', '11', '路由管理', 'system_desktop_route', 'desktop/system.desktop.route.Index/init\ndesktop/system.desktop.route.Index/getRoutes', '5');
 INSERT INTO `desktop_permission` VALUES ('13', '11', '菜单管理', 'system_desktop_menu', 'desktop/system.desktop.menu.Index/init\ndesktop/system.desktop.menu.Index/getTreeMenu', '1');
 INSERT INTO `desktop_permission` VALUES ('14', '11', '权限管理', 'system_desktop_permission', 'desktop/system.desktop.permission.Index/init\ndesktop/system.desktop.permission.Index/getTreePermission', '3');
 INSERT INTO `desktop_permission` VALUES ('15', '1', '移动端', 'system_mobile', '', '11');
 INSERT INTO `desktop_permission` VALUES ('16', '15', '权限管理', 'system_mobile_permission', 'desktop/system.mobile.permission.Index/getTreePermission', '1');
-INSERT INTO `desktop_permission` VALUES ('17', '1', '字典管理', 'system_dictionary', 'desktop/system.dictionary.Index/init\ndesktop/system.dictionary.Index/getDictionaryPaginate', '13');
-INSERT INTO `desktop_permission` VALUES ('18', '1', '登录日志', 'system_login_log', 'desktop/system.login_log.Index/getLoginLogPaginate', '15');
-INSERT INTO `desktop_permission` VALUES ('19', '1', '操作日志', 'system_operation_log', 'desktop/system.operation_log.Index/getOperationLogPaginate', '17');
+INSERT INTO `desktop_permission` VALUES ('17', '1', '字典管理', 'system_dictionary', 'desktop/system.dictionary.Index/init\ndesktop/system.dictionary.Index/getPaginate', '13');
+INSERT INTO `desktop_permission` VALUES ('18', '1', '登录日志', 'system_login_log', 'desktop/system.login_log.Index/getPaginate', '15');
+INSERT INTO `desktop_permission` VALUES ('19', '1', '操作日志', 'system_operation_log', 'desktop/system.operation_log.Index/getPaginate', '17');
 INSERT INTO `desktop_permission` VALUES ('20', '9', '添加', 'system_department_add', 'desktop/system.department.Add/init\ndesktop/system.department.Add/save', '1');
 INSERT INTO `desktop_permission` VALUES ('21', '9', '修改', 'system_department_edit', 'desktop/system.department.Edit/init\ndesktop/system.department.Edit/save', '3');
 INSERT INTO `desktop_permission` VALUES ('22', '9', '删除', 'system_department_delete', 'desktop/system.department.Index/delete', '9');
@@ -217,7 +217,7 @@ CREATE TABLE `desktop_session` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COMMENT='会话';
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COMMENT='会话';
 
 -- ----------------------------
 -- Records of desktop_session
@@ -296,6 +296,7 @@ INSERT INTO `desktop_session` VALUES ('81', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUz
 INSERT INTO `desktop_session` VALUES ('82', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzQ3MjA0MTMwfQ.667WzdsBmcZ4LbCqwCusTHPgtinFDF4GXI5Tc1IjGXY', '1747207730');
 INSERT INTO `desktop_session` VALUES ('83', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzQ3MjA0MTM5fQ.xaNIBDlegSfjke4Ch7WjXjrXsU0kbx3XCSjtOMX4c4k', '1747207740');
 INSERT INTO `desktop_session` VALUES ('84', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzQ3MjA0NjkwfQ.xN5DBkqMLEwofTOIbmm3pITpD1xAZl9u6HuETI710GY', '1747208290');
+INSERT INTO `desktop_session` VALUES ('85', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzQ4MjUyMjUzfQ.1z0oDB2Koj8Z-N7sI62-sc6oOHIh0jKUFZXlV3MxCnM', '1748255853');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -371,7 +372,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -483,6 +484,7 @@ INSERT INTO `login_log` VALUES ('104', '1', '1745836935', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('105', '1', '1747204130', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('106', '1', '1747204140', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('107', '1', '1747204690', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('108', '1', '1748252254', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -598,7 +600,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '操作ip',
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2424 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=2493 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -3026,6 +3028,75 @@ INSERT INTO `operation_log` VALUES ('2420', '1', '/desktop/layouts.side.MessageN
 INSERT INTO `operation_log` VALUES ('2421', '1', '/desktop/layouts.Side/getAvatar', '127.0.0.1', '1747206093');
 INSERT INTO `operation_log` VALUES ('2422', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1747206094');
 INSERT INTO `operation_log` VALUES ('2423', '1', '/desktop/Frame/getWatermark', '127.0.0.1', '1747206094');
+INSERT INTO `operation_log` VALUES ('2424', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1747206141');
+INSERT INTO `operation_log` VALUES ('2425', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1747206141');
+INSERT INTO `operation_log` VALUES ('2426', '1', '/desktop/system.user.Index/getUserPaginate', '127.0.0.1', '1747206142');
+INSERT INTO `operation_log` VALUES ('2427', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1748252254');
+INSERT INTO `operation_log` VALUES ('2428', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1748252254');
+INSERT INTO `operation_log` VALUES ('2429', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1748252266');
+INSERT INTO `operation_log` VALUES ('2430', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1748252266');
+INSERT INTO `operation_log` VALUES ('2431', '1', '/desktop/layouts.Side/getTreeMenu', '127.0.0.1', '1748252267');
+INSERT INTO `operation_log` VALUES ('2432', '1', '/desktop/layouts.Side/getAvatar', '127.0.0.1', '1748252267');
+INSERT INTO `operation_log` VALUES ('2433', '1', '/desktop/layouts.side.MessageNavigation/getNoReadCount', '127.0.0.1', '1748252267');
+INSERT INTO `operation_log` VALUES ('2434', '1', '/desktop/Frame/getWatermark', '127.0.0.1', '1748252267');
+INSERT INTO `operation_log` VALUES ('2435', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1748252276');
+INSERT INTO `operation_log` VALUES ('2436', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1748252282');
+INSERT INTO `operation_log` VALUES ('2437', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1748252282');
+INSERT INTO `operation_log` VALUES ('2438', '1', '/desktop/layouts.Side/getTreeMenu', '127.0.0.1', '1748252283');
+INSERT INTO `operation_log` VALUES ('2439', '1', '/desktop/layouts.side.MessageNavigation/getNoReadCount', '127.0.0.1', '1748252283');
+INSERT INTO `operation_log` VALUES ('2440', '1', '/desktop/layouts.Side/getAvatar', '127.0.0.1', '1748252283');
+INSERT INTO `operation_log` VALUES ('2441', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1748252283');
+INSERT INTO `operation_log` VALUES ('2442', '1', '/desktop/Frame/getWatermark', '127.0.0.1', '1748252283');
+INSERT INTO `operation_log` VALUES ('2443', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1748252285');
+INSERT INTO `operation_log` VALUES ('2444', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1748252285');
+INSERT INTO `operation_log` VALUES ('2445', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1748252293');
+INSERT INTO `operation_log` VALUES ('2446', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1748252293');
+INSERT INTO `operation_log` VALUES ('2447', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1748252293');
+INSERT INTO `operation_log` VALUES ('2448', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1748252294');
+INSERT INTO `operation_log` VALUES ('2449', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1748252294');
+INSERT INTO `operation_log` VALUES ('2450', '1', '/desktop/layouts.Side/getTreeMenu', '127.0.0.1', '1748252295');
+INSERT INTO `operation_log` VALUES ('2451', '1', '/desktop/layouts.side.MessageNavigation/getNoReadCount', '127.0.0.1', '1748252295');
+INSERT INTO `operation_log` VALUES ('2452', '1', '/desktop/layouts.Side/getAvatar', '127.0.0.1', '1748252295');
+INSERT INTO `operation_log` VALUES ('2453', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1748252295');
+INSERT INTO `operation_log` VALUES ('2454', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1748252295');
+INSERT INTO `operation_log` VALUES ('2455', '1', '/desktop/Frame/getWatermark', '127.0.0.1', '1748252296');
+INSERT INTO `operation_log` VALUES ('2456', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1748252314');
+INSERT INTO `operation_log` VALUES ('2457', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1748252315');
+INSERT INTO `operation_log` VALUES ('2458', '1', '/desktop/system.desktop.permission.Edit/init', '127.0.0.1', '1748252320');
+INSERT INTO `operation_log` VALUES ('2459', '1', '/desktop/components.desktop.treePermissionSelect/getTreePermission', '127.0.0.1', '1748252321');
+INSERT INTO `operation_log` VALUES ('2460', '1', '/desktop/system.desktop.permission.Edit/save', '127.0.0.1', '1748252327');
+INSERT INTO `operation_log` VALUES ('2461', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1748252327');
+INSERT INTO `operation_log` VALUES ('2462', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1748252333');
+INSERT INTO `operation_log` VALUES ('2463', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1748252333');
+INSERT INTO `operation_log` VALUES ('2464', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1748252333');
+INSERT INTO `operation_log` VALUES ('2465', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1748252335');
+INSERT INTO `operation_log` VALUES ('2466', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1748252336');
+INSERT INTO `operation_log` VALUES ('2467', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1748252336');
+INSERT INTO `operation_log` VALUES ('2468', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1748252336');
+INSERT INTO `operation_log` VALUES ('2469', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1748252337');
+INSERT INTO `operation_log` VALUES ('2470', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1748252343');
+INSERT INTO `operation_log` VALUES ('2471', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1748252343');
+INSERT INTO `operation_log` VALUES ('2472', '1', '/desktop/layouts.Side/getTreeMenu', '127.0.0.1', '1748252345');
+INSERT INTO `operation_log` VALUES ('2473', '1', '/desktop/layouts.side.MessageNavigation/getNoReadCount', '127.0.0.1', '1748252345');
+INSERT INTO `operation_log` VALUES ('2474', '1', '/desktop/layouts.Side/getAvatar', '127.0.0.1', '1748252345');
+INSERT INTO `operation_log` VALUES ('2475', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1748252345');
+INSERT INTO `operation_log` VALUES ('2476', '1', '/desktop/Frame/getWatermark', '127.0.0.1', '1748252345');
+INSERT INTO `operation_log` VALUES ('2477', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1748252438');
+INSERT INTO `operation_log` VALUES ('2478', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1748252440');
+INSERT INTO `operation_log` VALUES ('2479', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1748252442');
+INSERT INTO `operation_log` VALUES ('2480', '1', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1748252444');
+INSERT INTO `operation_log` VALUES ('2481', '1', '/desktop/system.dictionary.Index/getPaginate', '127.0.0.1', '1748252445');
+INSERT INTO `operation_log` VALUES ('2482', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1748252451');
+INSERT INTO `operation_log` VALUES ('2483', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1748252451');
+INSERT INTO `operation_log` VALUES ('2484', '1', '/desktop/layouts.Side/getTreeMenu', '127.0.0.1', '1748252453');
+INSERT INTO `operation_log` VALUES ('2485', '1', '/desktop/layouts.side.MessageNavigation/getNoReadCount', '127.0.0.1', '1748252453');
+INSERT INTO `operation_log` VALUES ('2486', '1', '/desktop/layouts.Side/getAvatar', '127.0.0.1', '1748252454');
+INSERT INTO `operation_log` VALUES ('2487', '1', '/desktop/system.dictionary.Index/getPaginate', '127.0.0.1', '1748252454');
+INSERT INTO `operation_log` VALUES ('2488', '1', '/desktop/Frame/getWatermark', '127.0.0.1', '1748252454');
+INSERT INTO `operation_log` VALUES ('2489', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1748252457');
+INSERT INTO `operation_log` VALUES ('2490', '1', '/desktop/system.login_log.Index/getPaginate', '127.0.0.1', '1748252457');
+INSERT INTO `operation_log` VALUES ('2491', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1748252459');
+INSERT INTO `operation_log` VALUES ('2492', '1', '/desktop/system.operation_log.Index/getPaginate', '127.0.0.1', '1748252459');
 
 -- ----------------------------
 -- Table structure for role
@@ -3234,7 +3305,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '张三', '15122222222', 'avatar/2025/04/08/a6748e0fd20912cad64355baf91e8ce8.png', '1684989244', '1716183018', '1747204690', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '张三', '15122222222', 'avatar/2025/04/08/a6748e0fd20912cad64355baf91e8ce8.png', '1684989244', '1716183018', '1748252254', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '1', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
 INSERT INTO `user` VALUES ('3', '1', 'test1', 'ea7d67381ace4fcd68e90985645aa69d', '1', 'test1', '15108273575', '', '0', '0', '0', '');
 
