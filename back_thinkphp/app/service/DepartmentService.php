@@ -86,7 +86,7 @@ class DepartmentService
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function isExistUsers($id)
+    public function getIsExistUsers($id)
     {
         $UserModel = UserModel::field('id')
             ->where('department_id', $id)
@@ -103,14 +103,14 @@ class DepartmentService
      * @param $id
      * @return array
      */
-    public function getAllChildrenIds($id){
+    public function getAllDepartmentIds($id){
         $departmentModels = DepartmentModel::field('id')
             ->where('department_id', $id)
             ->select();
         $ids = [];
         foreach($departmentModels as $departmentModel){
             $ids[] = $departmentModel->id;
-            $ids = array_merge($ids, $this->getAllChildrenIds($departmentModel->id));
+            $ids = array_merge($ids, $this->getAllDepartmentIds($departmentModel->id));
         }
         return $ids;
     }
@@ -121,7 +121,7 @@ class DepartmentService
      */
     public function getTreeDepartment($id)
     {
-        $ids = $this->getAllChildrenIds($id);
+        $ids = $this->getAllDepartmentIds($id);
         $ids[] = $id;
 
         $departmentModels = DepartmentModel::field('id, id, department_id, name')
@@ -141,7 +141,7 @@ class DepartmentService
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getIsExistChildren($id){
+    public function getIsExistDepartment($id){
         $departmentModel = DepartmentModel::field('id')
             ->where('menu_id', $id)
             ->limit(0,1)
@@ -162,7 +162,7 @@ class DepartmentService
      */
     public function getIsExistDepartmentsOrUsers($id)
     {
-        if($this->getIsExistChildren($id) || $this->isExistUsers($id)){
+        if($this->getIsExistDepartment($id) || $this->getIsExistUsers($id)){
             return true;
         }
         return false;
