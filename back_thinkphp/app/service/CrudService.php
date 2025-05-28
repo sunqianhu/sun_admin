@@ -85,7 +85,7 @@ class CrudService
     {
         $model = $this->modelClass::find($id);
         if (empty($model)) {
-            return true;
+            throw new Exception('没有找到记录：'.$id);
         }
         return $model->delete();
     }
@@ -104,7 +104,7 @@ class CrudService
     /**
      * 通过条件删除
      * @param $where
-     * @return true
+     * @return boolean
      */
     public function deleteByWhere($where)
     {
@@ -133,7 +133,7 @@ class CrudService
         }
         $model = $this->modelClass::find($id);
         if (empty($model)) {
-            return true;
+            throw new Exception('没有找到记录：'.$id);
         }
         return $model->save($data);
     }
@@ -154,7 +154,7 @@ class CrudService
      * 通过条件更新
      * @param $where
      * @param $data
-     * @return true
+     * @return boolean
      */
     public function updateByWhere($where, $data)
     {
@@ -270,13 +270,19 @@ class CrudService
      * @param $where
      * @param $selectField
      * @return mixed
+     * @throws Exception
      */
     public function selectValueByWhere($where, $selectField)
     {
-        return $this->modelClass::field($selectField)
+        $model = $this->modelClass::field($selectField)
             ->where($where)
             ->limit(1)
-            ->value($selectField);
+            ->find();
+        if(empty($model)){
+            throw new Exception('没有找到记录');
+        }
+
+        return $model->$selectField;
     }
 
     /**
