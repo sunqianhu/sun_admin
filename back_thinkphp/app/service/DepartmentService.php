@@ -143,7 +143,7 @@ class DepartmentService
      */
     public function getIsExistDepartment($id){
         $departmentModel = DepartmentModel::field('id')
-            ->where('menu_id', $id)
+            ->where('department_id', $id)
             ->limit(0,1)
             ->find();
         if(!empty($departmentModel)){
@@ -166,5 +166,19 @@ class DepartmentService
             return true;
         }
         return false;
+    }
+
+    /**
+     * 得到子部门
+     * @param $id
+     * @return array
+     */
+    public function getDepartments($id)
+    {
+        $departmentModels = DepartmentModel::field('id,name,department_id,type')
+            ->where('department_id', $id)
+            ->order('sort', 'asc')
+            ->select();
+        return $departmentModels->toArray();
     }
 }

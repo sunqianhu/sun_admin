@@ -4,7 +4,7 @@
     filterable
     clearable
     :multiple="multiple"
-    :empty-values="[0, '', undefined]"
+    :empty-values="['', undefined]"
   >
     <el-option
       v-for="item in dictionary"
