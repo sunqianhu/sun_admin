@@ -57,9 +57,7 @@ import TreePermissionSelect from "@/components/desktop/TreePermissionSelect.vue"
 const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
-const permission = ref({
-  sort: 1,
-});
+const permission = ref({});
 const permissionRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入权限名称", trigger: "blur" }],

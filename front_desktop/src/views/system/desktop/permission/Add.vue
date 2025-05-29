@@ -56,7 +56,7 @@ import TreePermissionSelect from "@/components/desktop/TreePermissionSelect.vue"
 
 const emits = defineEmits(["close", "submited"]);
 const permission = ref({
-  sort: 1,
+  sort: 0,
 });
 const permissionRef = ref();
 const rules = {

@@ -50,7 +50,7 @@ import TypeSelect from "@/components/department/TypeSelect.vue";
 
 const emits = defineEmits(["close", "submited"]);
 const department = ref({
-  sort: 1,
+  sort: 0,
 });
 const departmentRef = ref({});
 const rules = {

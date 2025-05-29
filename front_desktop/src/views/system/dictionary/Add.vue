@@ -44,7 +44,7 @@ import axios from "@/helper/axios";
 
 const emits = defineEmits(["close", "submited"]);
 const dictionary = ref({
-  sort: 1,
+  sort: 0,
 });
 const dictionaryRef = ref({});
 const rules = {

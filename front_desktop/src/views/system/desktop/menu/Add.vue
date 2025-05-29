@@ -60,7 +60,7 @@ const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
 const menu = ref({
   target: 1,
-  sort: 1,
+  sort: 0,
 });
 const menuRef = ref();
 const rules = {

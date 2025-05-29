@@ -62,7 +62,7 @@ import LayoutSelect from "@/components/desktop/route/LayoutSelect.vue";
 const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
 const route = ref({
-  sort: 1,
+  sort: 0,
   keep_alive: 0,
 });
 const routeRef = ref();
