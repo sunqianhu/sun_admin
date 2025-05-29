@@ -54,9 +54,9 @@ const emits = defineEmits(["close", "submited"]);
 const department = ref({});
 const departmentRef = ref();
 const rules = {
-  type: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
-  name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
+  type: [{ required: true, message: "请输入部门类型", trigger: "blur" }],
+  name: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  sort: [{ required: true, message: "请输入排序", trigger: "blur" }],
 };
 const initLoading = ref(false);
 const submitLoading = ref(false);

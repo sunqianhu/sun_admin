@@ -1,7 +1,19 @@
 <template>
   <div class="index" v-loading="initLoading">
     <div class="page-name">系统设置</div>
-    <el-form :model="config" label-width="120px" ref="configRef" class="form">
+    <el-form
+      :model="config"
+      :rules="rules"
+      label-width="120px"
+      ref="configRef"
+      class="form"
+    >
+      <el-form-item label="框架版本" prop="frame_version">
+        <el-input v-model="config.frame_version" />
+      </el-form-item>
+      <el-form-item label="系统版本" prop="version">
+        <el-input v-model="config.version" />
+      </el-form-item>
       <el-form-item label="禁止访问IP" prop="denied_ip_string">
         <el-input v-model="config.denied_ip_string" type="textarea" :rows="5" />
         <div class="text-tip">一行一个</div>
@@ -26,6 +38,12 @@ import axios from "@/helper/axios";
 
 const config = ref({});
 const configRef = ref({});
+const rules = {
+  frame_version: [
+    { required: true, message: "请输入框架版本", trigger: "blur" },
+  ],
+  version: [{ required: true, message: "请输入系统版本", trigger: "blur" }],
+};
 const initLoading = ref(true);
 const submitLoading = ref(false);
 

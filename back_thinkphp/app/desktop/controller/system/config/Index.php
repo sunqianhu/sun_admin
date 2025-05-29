@@ -27,17 +27,18 @@ class Index extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['denied_ip_string'=>'']);
+        $post = $this->request->post(['denied_ip_string'=>'', 'frame_version'=>'', 'version'=>'']);
+        $post['id'] = 1;
 
         //验证
         try {
-            validate(ConfigValidate::class)->check($post);
+            validate(ConfigValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
 
         $configCrudService = new CrudService(ConfigModel::class);
-        $configCrudService->upsertByField('id', 1, $post);
+        $configCrudService->upsert($post['id'], $post);
 
         return $this->getSuccessResonse('保存成功');
     }

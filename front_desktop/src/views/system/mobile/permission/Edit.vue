@@ -58,9 +58,9 @@ const emits = defineEmits(["close", "submited"]);
 const permission = ref({});
 const permissionRef = ref();
 const rules = {
-  name: [{ required: true, message: "权限名称不能为空", trigger: "blur" }],
-  key: [{ required: true, message: "权限标识不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
+  name: [{ required: true, message: "请输入权限名称", trigger: "blur" }],
+  key: [{ required: true, message: "请输入权限标识", trigger: "blur" }],
+  sort: [{ required: true, message: "请输入排序", trigger: "blur" }],
 };
 const initLoading = ref(true);
 const submitLoading = ref(false);

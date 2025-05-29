@@ -38,7 +38,7 @@ const emits = defineEmits(["close", "submited"]);
 const dictionary = ref({});
 const dictionaryRef = ref({});
 const rules = {
-  type: [{ required: true, message: "字典类型不能为空", trigger: "blur" }],
+  type: [{ required: true, message: "请输入字典类型", trigger: "blur" }],
 };
 const submitLoading = ref(false);
 

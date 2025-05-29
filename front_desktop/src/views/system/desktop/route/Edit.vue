@@ -64,16 +64,14 @@ const route = ref({
 });
 const routeRef = ref();
 const rules = {
-  name: [{ required: true, message: "路由名称不能为空", trigger: "blur" }],
-  key: [{ required: true, message: "路由标识不能为空", trigger: "blur" }],
-  path: [{ required: true, message: "路由路径不能为空", trigger: "blur" }],
+  name: [{ required: true, message: "请输入路由名称", trigger: "blur" }],
+  key: [{ required: true, message: "请输入路由标识", trigger: "blur" }],
+  path: [{ required: true, message: "请输入路由路径", trigger: "blur" }],
   component_path: [
-    { required: true, message: "组件路径不能为空", trigger: "blur" },
+    { required: true, message: "请输入组件路径", trigger: "blur" },
   ],
-  keep_alive: [
-    { required: true, message: "路由保活不能为空", trigger: "blur" },
-  ],
-  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
+  keep_alive: [{ required: true, message: "请选择路由保活", trigger: "blur" }],
+  sort: [{ required: true, message: "请输入排序", trigger: "blur" }],
 };
 const layouts = ref([]);
 const submitLoading = ref(false);

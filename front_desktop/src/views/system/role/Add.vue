@@ -87,7 +87,7 @@ const role = ref({
 });
 const roleRef = ref({});
 const rules = {
-  name: [{ required: true, message: "角色名称不能为空", trigger: "blur" }],
+  name: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
 };
 const initLoading = ref(true);
 const submitLoading = ref(false);
