@@ -59,9 +59,7 @@ import LayoutSelect from "@/components/desktop/route/LayoutSelect.vue";
 const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const initLoading = ref(false);
-const route = ref({
-  sort: 1,
-});
+const route = ref({});
 const routeRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入路由名称", trigger: "blur" }],
