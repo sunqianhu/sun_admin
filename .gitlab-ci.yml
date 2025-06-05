@@ -1,30 +1,18 @@
-image: docker:latest
-
-services:
-  - name: docker:dind
-    alias: docker
-
 stages:
   - build
   - package
 
 variables:
-  DOCKER_TLS_CERTDIR: ""
-  DOCKER_HOST: tcp://docker:2375
   GIT_DEPTH: "0"
 
 before_script:
-  - sleep 10
-  - echo "checking docker daemon status..."
-  - docker info || (echo "docker daemon is not running!" && exit 1)
+  - echo "before script"
 
 build_back_thinkphp:
   stage: build
   script:
     - cd back_thinkphp
-    - docker build -t sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA .
-    - docker save -o sun_admin_back_thinkphp.tar sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA
-    #- docker tag sun_admin_back_thinkphp sunqianhu/sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA
+    - docker build -t sun_admin_back_thinkphp:latest .
   only:
     - product
   tags:
@@ -34,9 +22,7 @@ build_front_desktop:
   stage: build
   script:
     - cd front_desktop
-    - docker build -t sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA .
-    - docker save -o sun_admin_front_desktop.tar sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA
-    #- docker tag sun_admin_front_desktop sunqianhu/sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA
+    - docker build -t sun_admin_front_desktop:latest .
   only:
     - product
   tags:
@@ -44,10 +30,9 @@ build_front_desktop:
 
 package_images:
   stage: package
-  dependencies:
-    - build_back_thinkphp
-    - build_front_desktop
   script:
+    - docker save -o sun_admin_back_thinkphp.tar sun_admin_back_thinkphp:latest
+    - docker save -o sun_admin_front_desktop.tar sun_admin_front_desktop:latest
     - tar -czvf sun_admin.tar.gz sun_admin_back_thinkphp.tar sun_admin_front_desktop.tar
   artifacts:
     name: sun_admin
