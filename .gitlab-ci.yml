@@ -8,14 +8,11 @@ stages:
   - package
 
 variables:
-  GIT_DEPTH: "0"  #禁用浅克隆
+  GIT_DEPTH: "0"
 
 before_script:
-  - echo "Starting Docker daemon..."
-  - dockerd > /dev/null 2>&1 &
-  - sleep 5  # 等待 Docker 初始化
-  - echo "Checking Docker daemon status..."
-  - docker info || (echo "Docker daemon is not running!" && exit 1)
+  - echo "checking docker daemon status..."
+  - docker info || (echo "docker daemon is not running!" && exit 1)
 
 build_back_thinkphp:
   stage: build
