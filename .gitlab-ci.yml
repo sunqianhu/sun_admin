@@ -23,6 +23,7 @@ build_back_thinkphp:
   script:
     - cd back_thinkphp
     - docker build -t sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA .
+    - docker save -o sun_admin_back_thinkphp.tar sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA
     #- docker tag sun_admin_back_thinkphp sunqianhu/sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA
   only:
     - product
@@ -34,6 +35,7 @@ build_front_desktop:
   script:
     - cd front_desktop
     - docker build -t sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA .
+    - docker save -o sun_admin_front_desktop.tar sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA
     #- docker tag sun_admin_front_desktop sunqianhu/sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA
   only:
     - product
@@ -46,8 +48,6 @@ package_images:
     - build_back_thinkphp
     - build_front_desktop
   script:
-    - docker save -o sun_admin_back_thinkphp.tar sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA
-    - docker save -o sun_admin_front_desktop.tar sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA
     - tar -czvf sun_admin.tar.gz sun_admin_back_thinkphp.tar sun_admin_front_desktop.tar
   artifacts:
     name: sun_admin
