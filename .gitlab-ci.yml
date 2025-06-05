@@ -11,6 +11,7 @@ variables:
   GIT_DEPTH: "0"
 
 before_script:
+  - sleep 10
   - echo "checking docker daemon status..."
   - docker info || (echo "docker daemon is not running!" && exit 1)
 
