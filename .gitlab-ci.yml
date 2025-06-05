@@ -42,9 +42,12 @@ build_front_desktop:
 
 package_images:
   stage: package
+  dependencies:
+    - build_back_thinkphp
+    - build_front_desktop
   script:
-    - docker save -o sun_admin_back_thinkphp.tar sun_admin_back_thinkphp
-    - docker save -o sun_admin_front_desktop.tar sun_admin_front_desktop
+    - docker save -o sun_admin_back_thinkphp.tar sun_admin_back_thinkphp:$CI_COMMIT_SHORT_SHA
+    - docker save -o sun_admin_front_desktop.tar sun_admin_front_desktop:$CI_COMMIT_SHORT_SHA
     - tar -czvf sun_admin.tar.gz sun_admin_back_thinkphp.tar sun_admin_front_desktop.tar
   artifacts:
     name: sun_admin
