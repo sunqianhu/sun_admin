@@ -6,7 +6,8 @@ variables:
   GIT_DEPTH: "0"
 
 before_script:
-  - echo "before script"
+  - echo "checking docker daemon status..."
+  - docker info || (echo "docker daemon is not running!" && exit 1)
 
 build_back_thinkphp:
   stage: build
