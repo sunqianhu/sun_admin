@@ -108,7 +108,7 @@ const emits = defineEmits([
   "error",
   "beforeUpload",
 ]);
-const headers = { token: localStorage.getItem("token") };
+const headers = { token: localStorage.getItem("token") || "" };
 const files = ref(props.modelValue);
 const uploadRef = ref(null);
 let action = import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload";
@@ -144,7 +144,6 @@ const handleSuccess = async (response, uploadFile, uploadFiles) => {
     handleChange(uploadFile, uploadFiles);
     return;
   }
-
   emits("success", response, uploadFile, uploadFiles);
 };
 
@@ -163,7 +162,6 @@ const handleRemove = (uploadFile, uploadFiles) => {
  * @param {*} uploadFiles
  */
 const handleChange = (uploadFile, uploadFiles) => {
-  emits("update:modelValue", getFiles());
   emits("change", uploadFile, uploadFiles);
 };
 
@@ -227,6 +225,16 @@ watch(
   () => props.modelValue,
   (newModelValue) => {
     files.value = newModelValue;
+  },
+  {
+    deep: true,
+  }
+);
+
+watch(
+  () => files.value,
+  (newFiles) => {
+    emits("update:modelValue", newFiles);
   },
   {
     deep: true,
