@@ -18,6 +18,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  span: {
+    type: Number,
+    default: 8,
+  },
 });
 </script>
 

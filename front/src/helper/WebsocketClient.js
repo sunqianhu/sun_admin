@@ -30,12 +30,15 @@ class WebsocketClient {
     if (!this.url) {
       throw new Error("还未设置websocket服务端的url");
     }
-    if (!this.url.startsWith("ws")) {
-      var location = window.location;
-      this.url =
-        (location.protocol.indexOf("https") == 0 ? "wss://" : "ws://") +
-        location.host +
-        this.url;
+    let url = this.url;
+    if (!url.startsWith("ws")) {
+      const location = window.location;
+      const protocol =
+        location.protocol.indexOf("https") === 0 ? "wss://" : "ws://";
+      const host =
+        location.hostname + (location.port ? ":" + location.port : "");
+      url = protocol + host + url;
+      this.url = url;
     }
     if (window.WebSocket) {
       this.websocketClient = new WebSocket(this.url);

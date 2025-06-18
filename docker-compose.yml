@@ -2,18 +2,17 @@ version: '3.8'
 
 services:
   #后端
-  sun_admin_back_thinkphp:
+  sun_admin_back:
     #build:
-    #  context: ./back_thinkphp/
+    #  context: ./back/
     #  dockerfile: Dockerfile
-    image: sun_admin_back_thinkphp:latest
-    container_name: sun_admin_back_thinkphp
+    image: sun_admin_back:latest
+    container_name: sun_admin_back
     volumes:
-      - /home/www/sun_admin.sunqianhu.cc/back_thinkphp/public/storage:/var/www/html/public/storage
+      - /home/www/sun_admin.sunqianhu.cc/back/public/storage:/var/www/html/public/storage
     networks:
       - sun_admin
     restart: always
-
   #前端
   sun_admin_front_desktop:
     #build:
@@ -22,9 +21,26 @@ services:
     image: sun_admin_front_desktop:latest #镜像名版本号
     container_name: sun_admin_front_desktop #容器名
     depends_on:
-      - sun_admin_back_thinkphp #确保后端容器先启动
+      - sun_admin_back #确保后端容器先启动
     ports:
       - "80:80"
+    networks:
+      - sun_admin
+    restart: always
+  #数据库
+  sun_admin_mysql:
+    image: mysql:5.7.44
+    container_name: sun_admin_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Welcome123#
+      MYSQL_DATABASE: sun_admin
+      MYSQL_USER: sun_admin
+      MYSQL_PASSWORD: aW9%mY1(fV9[gI6!
+    volumes:
+      - /home/www/sun_admin.sunqianhu.com/mysql:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     networks:
       - sun_admin
     restart: always
