@@ -8,7 +8,7 @@ use app\model\RoleDesktopPermissionModel;
 use app\model\RoleDesktopRouteModel;
 use app\model\RoleMobilePermissionModel;
 use app\model\RoleModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use think\facade\Db;
 use think\Response;
@@ -48,20 +48,20 @@ class Index extends Base
 
         Db::startTrans();
         try{
-            $roleCrudService = new CrudService(RoleModel::class);
-            $roleCrudService->delete($id);
+            $roleCrud = new Crud(RoleModel::class);
+            $roleCrud->delete($id);
 
-            $roleDesktopPermissionCrudService = new CrudService(RoleDesktopPermissionModel::class);
-            $roleDesktopPermissionCrudService->deleteByField('role_id', $id);
+            $roleDesktopPermissionCrud = new Crud(RoleDesktopPermissionModel::class);
+            $roleDesktopPermissionCrud->deleteByField('role_id', $id);
 
-            $roleDesktopMenuCrudService = new CrudService(RoleDesktopMenuModel::class);
-            $roleDesktopMenuCrudService->deleteByField('role_id', $id);
+            $roleDesktopMenuCrud = new Crud(RoleDesktopMenuModel::class);
+            $roleDesktopMenuCrud->deleteByField('role_id', $id);
 
-            $roleDesktopRouteCrudService = new CrudService(RoleDesktopRouteModel::class);
-            $roleDesktopRouteCrudService->deleteByField('role_id', $id);
+            $roleDesktopRouteCrud = new Crud(RoleDesktopRouteModel::class);
+            $roleDesktopRouteCrud->deleteByField('role_id', $id);
 
-            $roleMobilePermissionCrudService = new CrudService(RoleMobilePermissionModel::class);
-            $roleMobilePermissionCrudService->deleteByField('role_id', $id);
+            $roleMobilePermissionCrud = new Crud(RoleMobilePermissionModel::class);
+            $roleMobilePermissionCrud->deleteByField('role_id', $id);
 
             Db::commit();
         }catch (Exception $exception){

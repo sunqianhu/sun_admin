@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\desktop\MenuValidate;
 use app\validate\IdValidate;
 use Exception;
@@ -51,9 +51,9 @@ class Edit extends Base
             return $this->getErrorResponse('上级菜单不能和此菜单相同');
         }
 
-        $menuCrudService = new CrudService(MenuModel::class);
+        $menuCrud = new Crud(MenuModel::class);
         try{
-            $menuCrudService->update($post['id'], $post);
+            $menuCrud->update($post['id'], $post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

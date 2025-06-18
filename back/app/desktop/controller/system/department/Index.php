@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\Response;
@@ -43,9 +43,9 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $departmentCrudService = new CrudService(DepartmentModel::class);
+        $departmentCrud = new Crud(DepartmentModel::class);
         try{
-            $departmentCrudService->delete($id);
+            $departmentCrud->delete($id);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

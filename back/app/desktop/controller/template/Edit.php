@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
 use app\model\DictionaryModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\DictionaryValidate;
 use app\validate\IdValidate;
 use Exception;
@@ -56,9 +56,9 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $dictionaryCrudService = new CrudService(DictionaryModel::class);
+        $dictionaryCrud = new Crud(DictionaryModel::class);
         try{
-            $dictionaryCrudService->update($post['id'], $post);
+            $dictionaryCrud->update($post['id'], $post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

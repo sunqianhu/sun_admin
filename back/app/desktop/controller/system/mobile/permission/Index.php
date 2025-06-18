@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\mobile\permission;
 
 use app\desktop\controller\Base;
 use app\model\mobile\PermissionModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\Response;
@@ -44,9 +44,9 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $permissionCrudService = new CrudService(PermissionModel::class);
+        $permissionCrud = new Crud(PermissionModel::class);
         try{
-            $permissionCrudService->delete($id);
+            $permissionCrud->delete($id);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

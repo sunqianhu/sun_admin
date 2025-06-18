@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\desktop\MenuValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -25,9 +25,9 @@ class Add extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $menuCrudService = new CrudService(MenuModel::class);
+        $menuCrud = new Crud(MenuModel::class);
         try {
-            $menuCrudService->insert($post);
+            $menuCrud->insert($post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

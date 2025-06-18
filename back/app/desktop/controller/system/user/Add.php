@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\user;
 use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\model\UserRoleModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\IdArrayValidate;
 use app\validate\UserValidate;
 use Exception;
@@ -31,13 +31,13 @@ class Add extends Base
 
         Db::startTrans();
         try{
-            $userCrudService = new CrudService(UserModel::class);
-            $id = $userCrudService->insert($post);
+            $userCrud = new Crud(UserModel::class);
+            $id = $userCrud->insert($post);
 
             if (!empty($post['role_ids'])) {
-                $userRoleCrudService = new CrudService(UserRoleModel::class);
+                $userRoleCrud = new Crud(UserRoleModel::class);
                 foreach ($post['role_ids'] as $roleId){
-                    $userRoleCrudService->insert([
+                    $userRoleCrud->insert([
                         'user_id' => $id,
                         'role_id' => $roleId
                     ]);

@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\user;
 use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\model\UserRoleModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -51,14 +51,14 @@ class Edit extends Base
 
         Db::startTrans();
         try{
-            $userCrudService = new CrudService(UserModel::class);
-            $userCrudService->update($post['id'], $post);
+            $userCrud = new Crud(UserModel::class);
+            $userCrud->update($post['id'], $post);
             $id = $post['id'];
 
-            $userRoleCrudService = new CrudService(UserRoleModel::class);
-            $userRoleCrudService->deleteByField('user_id', $id);
+            $userRoleCrud = new Crud(UserRoleModel::class);
+            $userRoleCrud->deleteByField('user_id', $id);
             foreach ($post['role_ids'] as $roleId){
-                $userRoleCrudService->insert([
+                $userRoleCrud->insert([
                     'user_id' => $id,
                     'role_id' => $roleId
                 ]);

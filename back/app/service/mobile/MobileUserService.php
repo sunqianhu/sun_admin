@@ -4,7 +4,7 @@ namespace app\service\mobile;
 
 use app\model\mobile\PermissionModel;
 use app\model\mobile\SessionModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\service\UserService;
 
 class MobileUserService
@@ -90,7 +90,7 @@ class MobileUserService
      * @return void
      */
     public function offLine($id){
-        $sessionCrudService = new CrudService(SessionModel::class);
-        $sessionCrudService->deleteByField('user_id', $id);
+        $sessionCrud = new Crud(SessionModel::class);
+        $sessionCrud->deleteByField('user_id', $id);
     }
 }

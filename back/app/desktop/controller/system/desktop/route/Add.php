@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\desktop\RouteValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -25,9 +25,9 @@ class Add extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $routeCrudService = new CrudService(RouteModel::class);
+        $routeCrud = new Crud(RouteModel::class);
         try{
-            $routeCrudService->insert($post);
+            $routeCrud->insert($post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

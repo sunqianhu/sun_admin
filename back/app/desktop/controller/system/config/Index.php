@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\config;
 
 use app\desktop\controller\Base;
 use app\model\ConfigModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\ConfigValidate;
 use think\exception\ValidateException;
 use think\Response;
@@ -17,8 +17,8 @@ class Index extends Base
      */
     public function init()
     {
-        $configCrudService = new CrudService(ConfigModel::class);
-        $config = $configCrudService->selectRow(1);
+        $configCrud = new Crud(ConfigModel::class);
+        $config = $configCrud->selectRow(1);
         return $this->getSuccessResonse('获取成功', $config);
     }
 
@@ -37,8 +37,8 @@ class Index extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $configCrudService = new CrudService(ConfigModel::class);
-        $configCrudService->upsert($post['id'], $post);
+        $configCrud = new Crud(ConfigModel::class);
+        $configCrud->upsert($post['id'], $post);
 
         return $this->getSuccessResonse('保存成功');
     }

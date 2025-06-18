@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use think\Response;
 
@@ -38,9 +38,9 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $routeCrudService = new CrudService(RouteModel::class);
+        $routeCrud = new Crud(RouteModel::class);
         try{
-            $routeCrudService->delete($id);
+            $routeCrud->delete($id);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

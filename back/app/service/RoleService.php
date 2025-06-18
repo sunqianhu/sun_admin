@@ -17,11 +17,11 @@ class RoleService
      */
     public function updateDesktopPermissionRelation($id, $permissionIds)
     {
-        $roleDesktopPermissionCrudService = new CrudService(RoleDesktopPermissionModel::class);
-        $roleDesktopPermissionCrudService->deleteByField('role_id', $id);
+        $roleDesktopPermissionCrud = new Crud(RoleDesktopPermissionModel::class);
+        $roleDesktopPermissionCrud->deleteByField('role_id', $id);
         if (!empty($permissionIds)) {
             foreach ($permissionIds as $permissionId) {
-                $roleDesktopPermissionCrudService->insert([
+                $roleDesktopPermissionCrud->insert([
                     'role_id' => $id,
                     'permission_id' => $permissionId
                 ]);
@@ -37,11 +37,11 @@ class RoleService
      */
     public function updateDesktopMenuRelation($id, $menuIds)
     {
-        $roleDesktopMenuCrudService = new CrudService(RoleDesktopMenuModel::class);
-        $roleDesktopMenuCrudService->deleteByField('role_id', $id);
+        $roleDesktopMenuCrud = new Crud(RoleDesktopMenuModel::class);
+        $roleDesktopMenuCrud->deleteByField('role_id', $id);
         if (!empty($menuIds)) {
             foreach ($menuIds as $menuId) {
-                $roleDesktopMenuCrudService->insert([
+                $roleDesktopMenuCrud->insert([
                     'role_id' => $id,
                     'menu_id' => $menuId
                 ]);
@@ -57,11 +57,11 @@ class RoleService
      */
     public function updateDesktopRouteRelation($id, $routeIds)
     {
-        $roleDesktopRouteCrudService = new CrudService(RoleDesktopRouteModel::class);
-        $roleDesktopRouteCrudService->deleteByField('role_id', $id);
+        $roleDesktopRouteCrud = new Crud(RoleDesktopRouteModel::class);
+        $roleDesktopRouteCrud->deleteByField('role_id', $id);
         if (!empty($routeIds)) {
             foreach ($routeIds as $routeId) {
-                $roleDesktopRouteCrudService->insert([
+                $roleDesktopRouteCrud->insert([
                     'role_id' => $id,
                     'route_id' => $routeId
                 ]);
@@ -77,11 +77,11 @@ class RoleService
      */
     public function updateMobilePermissionRelation($id, $permissionIds)
     {
-        $roleMobilePermissionCrudService = new CrudService(RoleMobilePermissionModel::class);
-        $roleMobilePermissionCrudService->deleteByField('role_id', $id);
+        $roleMobilePermissionCrud = new Crud(RoleMobilePermissionModel::class);
+        $roleMobilePermissionCrud->deleteByField('role_id', $id);
         if (!empty($permissionIds)) {
             foreach ($permissionIds as $permissionId) {
-                $roleMobilePermissionCrudService->insert([
+                $roleMobilePermissionCrud->insert([
                     'role_id' => $id,
                     'permission_id' => $permissionId
                 ]);

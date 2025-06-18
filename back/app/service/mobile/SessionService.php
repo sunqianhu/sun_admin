@@ -6,7 +6,7 @@ use app\model\ConfigModel;
 use app\model\LoginLogModel;
 use app\model\mobile\SessionModel;
 use app\model\UserModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\service\JwtService;
 use Exception;
 use think\db\exception\DataNotFoundException;
@@ -34,8 +34,8 @@ class SessionService
             'token' => $token,
             'expires_in' => time() + $this->expire
         ];
-        $sessionCrudService = new CrudService(SessionModel::class);
-        return $sessionCrudService->insert($data);
+        $sessionCrud = new Crud(SessionModel::class);
+        return $sessionCrud->insert($data);
     }
 
     /**
@@ -45,8 +45,8 @@ class SessionService
      */
     public function deleteSession($id)
     {
-        $sessionCrudService = new CrudService(SessionModel::class);
-        $sessionCrudService->delete($id);
+        $sessionCrud = new Crud(SessionModel::class);
+        $sessionCrud->delete($id);
     }
 
     /**
@@ -78,13 +78,13 @@ class SessionService
         $sessionId = $this->createSession($userModel->id, $token);
 
         //登录日志
-        $loginLogCrudService = new CrudService(LoginLogModel::class);
+        $loginLogCrud = new Crud(LoginLogModel::class);
         $data = [
             'user_id' => $userModel->id,
             'ip' => $ip,
             'time' => time()
         ];
-        $loginLogCrudService->insert($data);
+        $loginLogCrud->insert($data);
 
         //用户表
         $userModel->last_login_time = time();
@@ -113,8 +113,8 @@ class SessionService
      */
     function ipAuth($ip)
     {
-        $configCrudService = new CrudService(ConfigModel::class);
-        $deniedIpString = $configCrudService->selectValue(1, 'denied_ip_string');
+        $configCrud = new Crud(ConfigModel::class);
+        $deniedIpString = $configCrud->selectValue(1, 'denied_ip_string');
         $deniedIps = explode("\r\n", $deniedIpString);
         $deniedIps = array_filter($deniedIps);
         if (empty($deniedIps)) {
@@ -149,8 +149,8 @@ class SessionService
         $jwtService = new JwtService();
         $userId = $jwtService->resolverToken($token);
 
-        $sessionCrudService = new CrudService(SessionModel::class);
-        $session = $sessionCrudService->selectRowByField('token', $token);
+        $sessionCrud = new Crud(SessionModel::class);
+        $session = $sessionCrud->selectRowByField('token', $token);
         if (empty($session)) {
             throw new Exception('未登录');
         }
@@ -203,8 +203,8 @@ class SessionService
      */
     public function getToken($id)
     {
-        $sessionCrudService = new CrudService(SessionModel::class);
-        $session = $sessionCrudService->selectRow($id);
+        $sessionCrud = new Crud(SessionModel::class);
+        $session = $sessionCrud->selectRow($id);
         if(empty($session)){
             throw new Exception('没有找到会话记录');
         }
@@ -219,8 +219,8 @@ class SessionService
      */
     public function getUserId($id)
     {
-        $sessionCrudService = new CrudService(SessionModel::class);
-        $session = $sessionCrudService->selectRow($id);
+        $sessionCrud = new Crud(SessionModel::class);
+        $session = $sessionCrud->selectRow($id);
         if(empty($session)){
             throw new Exception('没有找到会话记录');
         }

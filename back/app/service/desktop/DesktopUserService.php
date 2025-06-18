@@ -6,7 +6,7 @@ use app\model\desktop\MenuModel;
 use app\model\desktop\PermissionModel;
 use app\model\desktop\RouteModel;
 use app\model\desktop\SessionModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\service\UserService;
 use Sunqianhu\Helper\ArrayHandler;
 
@@ -165,7 +165,7 @@ class DesktopUserService
      * @return void
      */
     public function offLine($id){
-        $sessionCrudService = new CrudService(SessionModel::class);
-        $sessionCrudService->deleteByField('user_id', $id);
+        $sessionCrud = new Crud(SessionModel::class);
+        $sessionCrud->deleteByField('user_id', $id);
     }
 }

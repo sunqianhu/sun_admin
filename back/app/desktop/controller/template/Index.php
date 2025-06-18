@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\model\DictionaryModel;
 use Exception;
 use think\db\exception\DbException;
@@ -52,9 +52,9 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $dictionaryCrudService = new CrudService(DictionaryModel::class);
+        $dictionaryCrud = new Crud(DictionaryModel::class);
         try{
-            $dictionaryCrudService->delete($id);
+            $dictionaryCrud->delete($id);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

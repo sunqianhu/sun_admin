@@ -24,7 +24,7 @@ class MessageService
             throw new Exception('消息接收用户和消息标题不能为空');
         }
 
-        $messageCrudService = new CrudService(MessageModel::class);
+        $messageCrud = new Crud(MessageModel::class);
         Db::startTrans();
         try {
             $time = time();
@@ -35,7 +35,7 @@ class MessageService
                 'url' => $url,
                 'add_time' => $time
             ];
-            $id = $messageCrudService->insert($data);
+            $id = $messageCrud->insert($data);
 
             $data = [
                 'type' => 'message',

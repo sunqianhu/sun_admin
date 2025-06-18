@@ -4,7 +4,7 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\model\RoleModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use think\Response;
 
 class RoleSelect extends Base
@@ -17,8 +17,8 @@ class RoleSelect extends Base
      */
     public function getRoles()
     {
-        $roleCrudService = new CrudService(RoleModel::class);
-        $roles = $roleCrudService->selectAll();
+        $roleCrud = new Crud(RoleModel::class);
+        $roles = $roleCrud->selectAll();
         return $this->getSuccessResonse('获取成功', $roles);
     }
 }

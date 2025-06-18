@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\Response;
@@ -41,9 +41,9 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $menuCrudService = new CrudService(MenuModel::class);
+        $menuCrud = new Crud(MenuModel::class);
         try{
-            $menuCrudService->delete($id);
+            $menuCrud->delete($id);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

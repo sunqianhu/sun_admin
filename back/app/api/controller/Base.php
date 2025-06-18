@@ -5,7 +5,7 @@ namespace app\api\controller;
 use app\BaseController;
 use app\model\OperationLogModel;
 use app\service\api\SessionService;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use think\Response;
 
@@ -54,14 +54,14 @@ class Base extends BaseController
 
         //操作日志
         if($this->sessionId) {
-            $operationLogCrudService = new CrudService(OperationLogModel::class);
+            $operationLogCrud = new Crud(OperationLogModel::class);
             $data = [
                 'user_id' => $this->userId,
                 'api' => $this->request->baseUrl(),
                 'ip' => $this->request->ip(),
                 'time' => time()
             ];
-            $operationLogCrudService->insert($data);
+            $operationLogCrud->insert($data);
         }
     }
 

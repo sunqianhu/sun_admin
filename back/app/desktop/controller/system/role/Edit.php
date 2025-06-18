@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
 use app\model\RoleModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\service\desktop\MenuService as DesktopMenuService;
 use app\service\desktop\PermissionService as DesktopPermissionService;
 use app\service\desktop\RouteService as DesktopRouteService;
@@ -93,8 +93,8 @@ class Edit extends Base
 
         Db::startTrans();
         try{
-            $roleCrudService = new CrudService(RoleModel::class);
-            $roleCrudService->update($post['id'], $post);
+            $roleCrud = new Crud(RoleModel::class);
+            $roleCrud->update($post['id'], $post);
             $id = $post['id'];
 
             $roleService = new RoleService();

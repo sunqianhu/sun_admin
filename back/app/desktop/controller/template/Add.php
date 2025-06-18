@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
 use app\model\DictionaryModel;
-use app\service\CrudService;
+use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\DictionaryValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -26,9 +26,9 @@ class Add extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $dictionaryCrudService = new CrudService(DictionaryModel::class);
+        $dictionaryCrud = new Crud(DictionaryModel::class);
         try{
-            $dictionaryCrudService->insert($post);
+            $dictionaryCrud->insert($post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
