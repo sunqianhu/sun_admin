@@ -9,16 +9,16 @@
   >
     <div v-loading="dialogLoading">
       <attribute-list>
-        <attribute label="账号">{{ user.account }}</attribute>
-        <attribute label="姓名">{{ user.name }}</attribute>
-        <attribute label="手机号码">{{ user.phone }}</attribute>
-        <attribute label="所属部门">
+        <attribute label="账号" :span="24">{{ user.account }}</attribute>
+        <attribute label="姓名" :span="24">{{ user.name }}</attribute>
+        <attribute label="手机号码" :span="24">{{ user.phone }}</attribute>
+        <attribute label="所属部门" :span="24">
           {{ user.department_name }}
         </attribute>
-        <attribute label="最后登录时间">
+        <attribute label="最后登录时间" :span="24">
           {{ dayjs.unix(user.last_login_time).format("YYYY-MM-DD HH:mm:ss") }}
         </attribute>
-        <attribute label="最后登录ip">
+        <attribute label="最后登录ip" :span="24">
           {{ user.last_login_ip }}
         </attribute>
       </attribute-list>

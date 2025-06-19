@@ -21,12 +21,19 @@ const guide = () => {
         element: ".layout__left",
         popover: {
           title: "功能菜单",
-          description: "点击功能菜单导航到具体的功能栏目",
+          description: "点击功能菜单导航到具体的功能页面",
         },
       },
       {
         element: ".hamburger",
         popover: { title: "折叠按钮", description: "打开或折叠左边功能菜单" },
+      },
+      {
+        element: ".message-navigation",
+        popover: {
+          title: "系统消息",
+          description: "查看历史系统消息",
+        },
       },
       {
         element: ".full-screen",
