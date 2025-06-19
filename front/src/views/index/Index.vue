@@ -60,7 +60,7 @@
         </el-col>
         <el-col :md="12">
           <card-panel title="module3" class="module">
-            <template #actions>
+            <template #action>
               <a href="javascript:;">更多</a>
             </template>
             <el-table :data="tableData" style="width: 100%">
@@ -72,7 +72,7 @@
         </el-col>
         <el-col :sm="12">
           <card-panel title="module4" class="module">
-            <template #actions>
+            <template #action>
               <a href="javascript:;">更多</a>
             </template>
             <el-table :data="tableData" style="width: 100%">

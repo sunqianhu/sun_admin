@@ -39,7 +39,7 @@
     </card-panel>
 
     <card-panel title="登录日志" class="panel">
-      <template #actions>
+      <template #action>
         <el-link href="/system/login-log" type="primary" target="_blank">
           更多
         </el-link>
@@ -53,7 +53,7 @@
     </card-panel>
 
     <card-panel title="操作日志" class="panel">
-      <template #actions>
+      <template #action>
         <el-link href="/system/operation-log" type="primary" target="_blank">
           更多
         </el-link>

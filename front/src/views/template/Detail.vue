@@ -12,7 +12,7 @@
     </card-panel>
 
     <card-panel title="登录日志" class="panel">
-      <template #actions>
+      <template #action>
         <el-link href="/system/login_log" type="primary" target="_blank">
           更多
         </el-link>
