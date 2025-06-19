@@ -4,6 +4,9 @@
     filterable
     clearable
     :multiple="multiple"
+    collapse-tags
+    collapse-tags-tooltip
+    :max-collapse-tags="maxCollapseTags"
     :empty-values="['', undefined]"
   >
     <el-option
@@ -34,6 +37,10 @@ const props = defineProps({
   keyType: {
     type: String,
     default: "int",
+  },
+  maxCollapseTags: {
+    type: Number,
+    default: 1,
   },
 });
 const emits = defineEmits(["update:modelValue"]);

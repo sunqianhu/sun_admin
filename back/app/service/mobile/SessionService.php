@@ -160,6 +160,7 @@ class SessionService
         if ($session['user_id'] != $userId) {
             throw new Exception('登录凭证错误');
         }
+        $sessionCrud->update($session['id'], ['expires_in' => time() + $this->expire]);
 
         return $session['id'];
     }

@@ -5,6 +5,9 @@
     clearable
     :empty-values="['', 0, undefined]"
     :multiple="multiple"
+    collapse-tags
+    collapse-tags-tooltip
+    :max-collapse-tags="maxCollapseTags"
     @change="change"
   >
     <el-option v-for="user in users" :label="user.name" :value="user.id" />
@@ -27,6 +30,10 @@ const props = defineProps({
   multiple: {
     type: Boolean,
     default: false,
+  },
+  maxCollapseTags: {
+    type: Number,
+    default: 1,
   },
 });
 const emits = defineEmits(["update:modelValue", "change"]);

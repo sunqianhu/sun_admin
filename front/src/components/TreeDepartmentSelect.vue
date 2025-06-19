@@ -9,7 +9,11 @@
     :multiple="multiple"
     :placeholder="placeholder"
     :empty-values="[0, '', undefined]"
+    collapse-tags
+    collapse-tags-tooltip
+    :max-collapse-tags="maxCollapseTags"
     clearable
+    filterable
   />
 </template>
 
@@ -33,6 +37,10 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: undefined,
+  },
+  maxCollapseTags: {
+    type: Number,
+    default: 1,
   },
 });
 const emits = defineEmits(["update:modelValue"]);
