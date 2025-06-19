@@ -4,6 +4,8 @@ import "nprogress/nprogress.css";
 import axios from "@/helper/axios";
 import { usePermissionStore } from "@/stores/permission";
 import { useRouteStore } from "@/stores/route";
+import routeCache from "@/helper/route_cache";
+import permissionCache from "@/helper/permission_cache";
 
 const writeList = ["/login", "/404", "/test"];
 const staticRoutes = [
@@ -68,12 +70,16 @@ const setPermissions = async () => {
   if (permissionStore.isSet) {
     return;
   }
-
-  const response = await axios.get("desktop/frame/getPermissions");
-  if (response.code != 1) {
-    throw new Error(response.message);
+  let permissions = permissionCache.get();
+  if (!permissions) {
+    const response = await axios.get("desktop/frame/getPermissions");
+    if (response.code != 1) {
+      throw new Error(response.message);
+    }
+    permissions = response.data;
+    permissionCache.set(permissions);
   }
-  permissionStore.set(response.data);
+  permissionStore.set(permissions);
 };
 
 /**
@@ -86,15 +92,19 @@ const setRoutes = async () => {
     return "exist";
   }
 
-  const response = await axios.get("desktop/frame/getRoutes");
-  if (response.code != 1) {
-    throw new Error(response.message);
+  let childRoutes = routeCache.get();
+  if (!childRoutes) {
+    const response = await axios.get("desktop/frame/getRoutes");
+    if (response.code != 1) {
+      throw new Error(response.message);
+    }
+    childRoutes = response.data;
+    routeCache.set(childRoutes);
   }
-  routeStore.set(response.data);
+  routeStore.set(childRoutes);
 
   let mainRoute = staticRoutes.find((route) => route.name == "main");
   let blankRoute = staticRoutes.find((route) => route.name == "blank");
-  let childRoutes = response.data;
   const componentFilePaths = import.meta.glob([
     "@/views/*.vue",
     "@/views/*/*.vue",
@@ -102,15 +112,15 @@ const setRoutes = async () => {
     "@/views/*/*/*/*.vue",
   ]);
 
-  childRoutes.forEach((childRoute) => {
+  for (const childRoute of childRoutes) {
     if (!childRoute.component_path) {
-      return;
+      continue;
     }
     childRoute.component =
       componentFilePaths["/src/views/" + childRoute.component_path];
     if (!childRoute.component) {
       console.error("没有找到组件路径：" + childRoute.component_path);
-      return;
+      continue;
     }
 
     if (childRoute.layout == "main") {
@@ -120,7 +130,7 @@ const setRoutes = async () => {
     } else {
       router.addRoute(childRoute);
     }
-  });
+  }
 
   //系统消息
   let messageRoute = {
@@ -140,21 +150,21 @@ const setRoutes = async () => {
 };
 
 /**
- * 得到主布局布局重定向路由
+ * 得到主布局跳转子路由
  * @param {*} currentRoutePath
  * @returns
  */
-const getMainRedirectRoute = (currentRoutePath) => {
+const getMainRouteRedirect = (currentRoutePath) => {
   if (currentRoutePath !== "/") {
-    throw new Error("当前路由路径不是首页");
+    return null;
   }
   let mainRoute = staticRoutes.find((route) => route.name == "main");
   if (!mainRoute.children?.length) {
-    throw new Error("主布局布局没有子路由");
+    return null;
   }
   let path = mainRoute.children[0]?.path;
   if (path === "") {
-    throw new Error("主布局布局第一个子路由path为空");
+    return null;
   }
   return { path: path, replace: true };
 };
@@ -192,9 +202,10 @@ const beforeHandle = async (to, from) => {
   }
 
   //跳转
-  try {
-    return getMainRedirectRoute(to.path);
-  } catch (error) {}
+  let redirect = getMainRouteRedirect(to.path);
+  if (redirect) {
+    return redirect;
+  }
 
   return true;
 };

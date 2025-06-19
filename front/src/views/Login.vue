@@ -7,7 +7,7 @@
       <div class="header">
         <div class="title">
           <img src="@/assets/logo.png" class="logo" alt="logo" />
-          <span class="name">SunAdmin</span>
+          <span class="name">sun admin</span>
         </div>
       </div>
       <el-form

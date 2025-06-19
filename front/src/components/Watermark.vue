@@ -10,6 +10,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
+import watermarkCache from "@/helper/watermark_cache";
 
 const data = ref({});
 const show = ref(false);
@@ -19,12 +20,17 @@ const show = ref(false);
  */
 const init = async () => {
   show.value = false;
-  const response = await axios.get("desktop/Frame/getWatermark");
-  if (response.code != 1) {
-    return;
+  let watermark = watermarkCache.get();
+  if (!watermark) {
+    const response = await axios.get("desktop/Frame/getWatermark");
+    if (response.code != 1) {
+      return;
+    }
+    watermark = response.data;
+    watermarkCache.set(watermark);
   }
   show.value = true;
-  data.value = response.data;
+  data.value = watermark;
 };
 
 onMounted(() => {

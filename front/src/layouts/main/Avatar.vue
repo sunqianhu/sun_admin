@@ -45,6 +45,9 @@ import { useRouter } from "vue-router";
 import { Edit, SwitchButton, User } from "@element-plus/icons-vue";
 import { usePermissionStore } from "@/stores/permission";
 import { useRouteStore } from "@/stores/route";
+import routeCache from "@/helper/route_cache";
+import permissionCache from "@/helper/permission_cache";
+import watermarkCache from "@/helper/watermark_cache";
 import axios from "@/helper/axios";
 import Detail from "./user/Detail.vue";
 import EditAvatar from "./user/EditAvatar.vue";
@@ -109,6 +112,10 @@ const logout = async () => {
   permissionStore.clear();
   routeStore.clear();
   localStorage.removeItem("token");
+
+  permissionCache.clear();
+  routeCache.clear();
+  watermarkCache.clear();
 
   router.replace("/login");
 };

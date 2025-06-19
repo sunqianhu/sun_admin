@@ -14,7 +14,7 @@ export const usePermissionStore = defineStore("permission", {
      */
     set(permissions) {
       this.isSet = true;
-      this.permissions = permissions;
+      this.permissions = [...permissions];
     },
 
     /**

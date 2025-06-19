@@ -14,7 +14,7 @@ export const useRouteStore = defineStore("route", {
      */
     set(routes) {
       this.isSet = true;
-      this.routes = routes;
+      this.routes = [...routes];
     },
 
     /**
