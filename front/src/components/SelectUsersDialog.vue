@@ -84,6 +84,11 @@
             >
               {{ user.name }}
             </el-tag>
+
+            <el-empty
+              description="还没有选择用户，请在左边选择用户"
+              v-if="selectedUsers.length === 0"
+            />
           </div>
         </flag-title-panel>
       </el-col>
