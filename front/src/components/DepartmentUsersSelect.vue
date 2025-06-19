@@ -22,7 +22,7 @@ const props = defineProps({
   },
   departmentId: {
     type: Number,
-    default: 0,
+    required: true,
   },
   multiple: {
     type: Boolean,

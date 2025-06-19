@@ -3,8 +3,8 @@
     <div class="card-panel__header">
       <div class="card-panel__title">{{ title }}</div>
       <div class="card-panel__sub-title">{{ subTitle }}</div>
-      <div class="card-panel__actions">
-        <slot name="actions"></slot>
+      <div class="card-panel__action">
+        <slot name="action"></slot>
       </div>
     </div>
     <div class="card-panel__body">
@@ -58,7 +58,7 @@ const props = defineProps({
       color: var(--font-color-secondary);
       font-size: var(--font-size-sm);
     }
-    .card-panel__actions {
+    .card-panel__action {
       margin-left: auto;
       margin-right: var(--margin);
     }

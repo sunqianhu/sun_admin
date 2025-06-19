@@ -1,7 +1,7 @@
 <template>
   <span class="gander" :title="name">
-    <el-icon v-if="id == 0" class="man"><UserFilled /></el-icon>
-    <el-icon v-if="id == 1" class="woman"><Avatar /></el-icon>
+    <el-icon v-if="id == 0" class="gander__man"><UserFilled /></el-icon>
+    <el-icon v-if="id == 1" class="gander__woman"><Avatar /></el-icon>
   </span>
 </template>
 
@@ -22,10 +22,10 @@ const props = defineProps({
 <style lang="scss" scoped>
 .gander {
   vertical-align: middle;
-  .man {
+  .gander__man {
     color: #409eff;
   }
-  .woman {
+  .gander__woman {
     color: #ff007d;
   }
 }

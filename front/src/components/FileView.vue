@@ -1,8 +1,12 @@
 <template>
   <div class="file-view">
-    <div class="label">附件：</div>
-    <div class="content">
-      <div v-for="file in files" class="file" v-if="files.length > 0">
+    <div class="file-view__label">附件：</div>
+    <div class="file-view__content">
+      <div
+        v-for="file in files"
+        class="file-view__file"
+        v-if="files.length > 0"
+      >
         <a
           :href="file.url + '?file_name=' + encodeURI(file.name)"
           target="_blank"
@@ -27,11 +31,11 @@ const props = defineProps({
 <style lang="scss" scoped>
 .file-view {
   display: flex;
-  .label {
+  .file-view__label {
   }
-  .content {
+  .file-view__content {
     flex: 1;
-    .file {
+    .file-view__file {
     }
   }
 }

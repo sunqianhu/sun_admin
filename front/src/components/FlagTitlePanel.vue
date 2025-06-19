@@ -5,8 +5,8 @@
       <div class="flag-title-panel__sub-title">
         {{ subTitle }}
       </div>
-      <div class="flag-title-panel__actions">
-        <slot name="actions"></slot>
+      <div class="flag-title-panel__action">
+        <slot name="action"></slot>
       </div>
     </div>
     <div class="flag-title-panel__body">
@@ -54,7 +54,7 @@ const props = defineProps({
       margin-left: var(--margin);
       color: var(--font-color-secondary);
     }
-    .flag-title-panel__actions {
+    .flag-title-panel__action {
     }
   }
   .flag-title-panel__body {
