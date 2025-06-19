@@ -16,7 +16,7 @@
               <el-form :model="query" :inline="true">
                 <el-form-item label="部门">
                   <tree-department-select
-                    v-model="query.department_userIds"
+                    v-model="query.department_ids"
                     :multiple="true"
                     filter
                   ></tree-department-select>
