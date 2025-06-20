@@ -167,13 +167,11 @@ onMounted(() => {
   box-shadow: var(--box-shadow);
   .page-header {
     .page-header__name {
-      font-size: var(--font-size-xl);
-      font-weight: var(font-weight-bold);
+      font-size: var(--font-size-lg);
     }
     .page-header__description {
       color: var(--font-color-secondary);
       margin-left: var(--margin);
-      font-size: var(--font-size-sm);
     }
   }
   .searchbar {

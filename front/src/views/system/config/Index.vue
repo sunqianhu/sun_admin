@@ -108,8 +108,7 @@ onMounted(() => {
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   .page-name {
-    font-size: var(--font-size-xl);
-    font-weight: var(font-weight-bold);
+    font-size: var(--font-size-lg);
   }
   .form {
     width: 500px;

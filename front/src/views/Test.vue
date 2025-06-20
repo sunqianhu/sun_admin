@@ -1,10 +1,6 @@
 <template>
-  <div style="margin: 50px">
-    <el-form :model="form" label-width="auto">
-      <el-form-item label="选择用户">
-        <select-users v-model="form.user_id"></select-users>
-      </el-form-item>
-    </el-form>
+  <div style="margin: 50px; font-size: var(--font-size)">
+    测试法大师傅士大夫ddfsdfsd
   </div>
 </template>
 

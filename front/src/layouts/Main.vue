@@ -1,6 +1,9 @@
 <template>
   <div class="main-layout">
-    <el-container :class="{ 'layout--fold': mainLayoutStore.fold }" class="layout">
+    <el-container
+      :class="{ 'layout--fold': mainLayoutStore.fold }"
+      class="layout"
+    >
       <el-aside class="layout__left">
         <div class="system-name-row">
           <img src="@/assets/logo.png" class="logo" />
@@ -91,7 +94,7 @@ window.onresize = () => {
         }
         .name {
           font-size: var(--font-size-xl);
-          font-weight: var(font-weight-bold);
+          font-weight: var(--font-weight-bold);
           margin-left: 8px;
           display: inline-block;
           transition: all 0.5s;

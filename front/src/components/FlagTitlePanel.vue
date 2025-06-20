@@ -37,7 +37,7 @@ const props = defineProps({
     .flag-title-panel__title {
       position: relative;
       font-size: var(--font-size-lg);
-      font-weight: var(font-weight-bold);
+      font-weight: var(--font-weight-bold);
       &::before {
         content: "";
         display: inline-block;

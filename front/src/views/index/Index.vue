@@ -317,7 +317,7 @@ onMounted(() => {
     }
     .welcome__name {
       font-size: var(--font-size-lg);
-      font-weight: var(font-weight-bold);
+      font-weight: var(--font-weight-bold);
       color: var(--color-primary);
       margin-left: 16px;
     }
@@ -339,7 +339,7 @@ onMounted(() => {
         }
         .count-item__number {
           font-size: 32px;
-          font-weight: var(font-weight-bold);
+          font-weight: var(--font-weight-bold);
           margin-left: 8px;
           margin-right: 4px;
         }

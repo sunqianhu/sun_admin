@@ -3,7 +3,7 @@
     <div class="page-header">
       <span class="page-header__name">订单趋势统计</span>
       <span class="page-header__description">查看一段时间内订单趋势</span>
-      <div class="page-header__actions">
+      <div class="page-header__action">
         <el-button
           type="primary"
           :icon="Download"
@@ -189,16 +189,14 @@ onMounted(() => {
   .page-header {
     display: flex;
     .page-header__name {
-      font-size: var(--font-size-xl);
-      font-weight: var(font-weight-bold);
+      font-size: var(--font-size-lg);
     }
     .page-header__description {
       color: var(--font-color-secondary);
       margin-left: var(--margin);
-      font-size: var(--font-size-sm);
       flex: 1;
     }
-    .page-header__actions {
+    .page-header__action {
     }
   }
   .searchbar {

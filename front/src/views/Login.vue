@@ -53,7 +53,9 @@
       <div class="browser">
         浏览器支持：Edge ≥ 85 Firefox≥79 Chrome≥85 Safari≥14.1
       </div>
-      <div class="copyright">Copyright &copy; 2024 asun</div>
+      <div class="copyright">
+        Copyright &copy; {{ new Date().getFullYear() }} asun
+      </div>
     </div>
 
     <vcode
@@ -156,7 +158,7 @@ const submitForm = async () => {
         .name {
           margin-left: 12px;
           font-size: 24px;
-          font-weight: var(font-weight-bold);
+          font-weight: var(--font-weight-bold);
         }
       }
     }

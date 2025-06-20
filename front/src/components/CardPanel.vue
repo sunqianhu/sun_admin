@@ -40,7 +40,7 @@ const props = defineProps({
       color: var(--color-primary);
       position: relative;
       font-size: var(--font-size-lg);
-      font-weight: var(font-weight-bold);
+      font-weight: var(--font-weight-bold);
       &::before {
         content: "";
         display: inline-block;

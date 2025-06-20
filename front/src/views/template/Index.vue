@@ -3,7 +3,7 @@
     <div class="page-header">
       <div class="page-header__name">字典管理</div>
       <div class="page-header__description">字典管理描述</div>
-      <div class="page-header__actions"></div>
+      <div class="page-header__action"></div>
     </div>
     <div class="searchbar">
       <el-form :model="query" :inline="true">
@@ -204,16 +204,14 @@ onMounted(() => {
   .page-header {
     display: flex;
     .page-header__name {
-      font-size: var(--font-size-xl);
-      font-weight: var(font-weight-bold);
+      font-size: var(--font-size-lg);
     }
     .page-header__description {
       color: var(--font-color-secondary);
       margin-left: var(--margin);
-      font-size: var(--font-size-sm);
       flex: 1;
     }
-    .page-header__actions {
+    .page-header__action {
     }
   }
   .searchbar {
