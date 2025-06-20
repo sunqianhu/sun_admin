@@ -261,7 +261,6 @@ const changePaginationCurrent = (page) => {
  */
 const confirmSelect = () => {
   userIds.value = selectedUsers.value.map((user) => user.id);
-  console.log(userIds.value);
   emits("update:modelValue", userIds.value);
   emits("confirmed", selectedUsers.value);
 };

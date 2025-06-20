@@ -12,7 +12,7 @@
       <el-form :model="query" :inline="true">
         <el-form-item label="部门">
           <tree-department-select
-            v-model="query.department_userId"
+            v-model="query.department_ids"
             :multiple="true"
             filter
           ></tree-department-select>
@@ -153,7 +153,6 @@ const changePaginationCurrent = (page) => {
  */
 const confirmSelect = () => {
   userId.value = selectedUser.value.id || 0;
-  console.log("userId.value", userId.value);
   emits("update:modelValue", userId.value);
   emits("confirmed", selectedUser.value);
 };
