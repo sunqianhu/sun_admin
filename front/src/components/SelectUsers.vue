@@ -64,7 +64,7 @@ watch(
 <style lang="scss" scoped>
 .select-users {
   .selected-user {
-    margin-right: var(--margin);
+    margin-right: var(--margin-sm);
     strong {
       color: var(--color-primary);
     }

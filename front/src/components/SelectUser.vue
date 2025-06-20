@@ -98,7 +98,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .select-user {
   .selected-user {
-    margin-right: var(--margin);
+    margin-right: var(--margin-sm);
     strong {
       color: var(--color-primary);
     }
