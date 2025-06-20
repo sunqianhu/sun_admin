@@ -61,7 +61,7 @@ watch(
 );
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .select-users {
   .selected-user {
     margin-right: var(--margin);

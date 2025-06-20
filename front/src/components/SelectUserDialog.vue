@@ -95,7 +95,7 @@ const close = () => {
 const getPaginate = async () => {
   paginateLoading.value = true;
   const response = await axios.get(
-    "desktop/components.SelectUsersDialog/getPaginate",
+    "desktop/components.SelectUserDialog/getPaginate",
     {
       params: query.value,
     }
@@ -173,7 +173,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .select-user-dialog {
   .searchbar {
     margin-top: var(--margin);

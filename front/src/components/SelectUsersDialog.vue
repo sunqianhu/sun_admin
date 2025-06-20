@@ -283,7 +283,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .select-users-dialog {
   .user-panel {
     .searchbar {

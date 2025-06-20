@@ -113,7 +113,7 @@ class UserService
     /**
      * 得到姓名
      * @param $id
-     * @return mixed
+     * @return string
      */
     public function getName($id)
     {
