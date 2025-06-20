@@ -8,7 +8,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="300px" class="scrollbar">
+    <el-scrollbar max-height="300px" v-loading="initLoading" class="scrollbar">
       <el-form
         :model="dictionary"
         :rules="rules"
@@ -41,15 +41,18 @@ const dictionaryRef = ref();
 const rules = {
   type: [{ required: true, message: "请输入字典类型", trigger: "blur" }],
 };
+const initLoading = ref(true);
 const submitLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
+  initLoading.value = true;
   const response = await axios.get("desktop/system.dictionary.Edit/init", {
     params: { id: props.id },
   });
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,

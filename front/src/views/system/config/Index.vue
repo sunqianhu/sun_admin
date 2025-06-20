@@ -44,13 +44,14 @@ const rules = {
   ],
   version: [{ required: true, message: "请输入系统版本", trigger: "blur" }],
 };
-const initLoading = ref(true);
+const initLoading = ref(false);
 const submitLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
+  initLoading.value = true;
   const response = await axios.get("desktop/system.config.Index/init");
   initLoading.value = false;
   if (response.code != 1) {

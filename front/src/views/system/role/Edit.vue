@@ -8,11 +8,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar
-      max-height="400px"
-      class="scrollbar"
-      v-loading="dialogLoading"
-    >
+    <el-scrollbar max-height="400px" class="scrollbar" v-loading="initLoading">
       <el-form
         :model="role"
         :rules="rules"
@@ -98,7 +94,7 @@ const roleRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
 };
-const dialogLoading = ref(true);
+const initLoading = ref(true);
 const submitLoading = ref(false);
 const desktopTreePermission = ref([]);
 const desktopTreePermissionRef = ref(null);
@@ -118,11 +114,11 @@ const mobileTreePermissionDefaultCheckKeys = ref([]);
  * 初始化
  */
 const init = async () => {
-  dialogLoading.value = true;
+  initLoading.value = true;
   const response = await axios.get("desktop/system.role.Edit/init", {
     params: { id: props.id },
   });
-  dialogLoading.value = false;
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
