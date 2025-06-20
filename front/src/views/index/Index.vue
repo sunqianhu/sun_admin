@@ -307,7 +307,7 @@ onMounted(() => {
 .index {
   .welcome {
     background: var(--background-color-light);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius);
     padding: var(--padding);
     display: flex;
     align-items: center;
@@ -327,7 +327,7 @@ onMounted(() => {
     .count-item {
       padding: var(--padding);
       background-color: var(--background-color-light);
-      border-radius: var(--border-radius-sm);
+      border-radius: var(--border-radius);
       margin-bottom: var(--margin);
       .count-item__name {
       }
