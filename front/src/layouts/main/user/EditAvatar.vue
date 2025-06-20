@@ -93,7 +93,7 @@ const saveLoading = ref(false);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/layouts.side.user.EditAvatar/init",
+    "desktop/layouts.main.user.EditAvatar/init",
     {
       params: user.value,
     }
@@ -186,7 +186,7 @@ const save = () => {
     let response;
     try {
       response = await axios.post(
-        "desktop/layouts.side.user.EditAvatar/save",
+        "desktop/layouts.main.user.EditAvatar/save",
         user.value
       );
     } catch (error) {

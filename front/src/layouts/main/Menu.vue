@@ -28,7 +28,7 @@ const treeMenu = ref([]);
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/layouts.Side/getTreeMenu");
+  const response = await axios.get("desktop/layouts.main.Menu/getTreeMenu");
   treeMenu.value = response.data;
 };
 

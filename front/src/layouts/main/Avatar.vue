@@ -2,7 +2,13 @@
   <div class="avatar">
     <el-dropdown>
       <span class="avatar__link">
-        <el-avatar shape="circle" :size="40" :src="avatar"></el-avatar>
+        <el-avatar
+          shape="circle"
+          :size="30"
+          :src="user.avatar_url"
+          class="avatar__avatar"
+        ></el-avatar>
+        <span class="avatar__name">{{ user.name }}</span>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -57,18 +63,18 @@ const router = useRouter();
 const detailFlag = ref(false);
 const editAvatarFlag = ref(false);
 const editPasswordFlag = ref(false);
-const avatar = ref("");
+const user = ref({});
 
 /**
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/layouts.Side/getAvatar");
+  const response = await axios.get("desktop/layouts.main.Avatar/getUser");
   if (response.code != 1) {
     return;
   }
 
-  avatar.value = response.data;
+  user.value = response.data;
 };
 
 /**
@@ -96,7 +102,7 @@ const openEditPassword = async () => {
  * 退出登录
  */
 const logout = async () => {
-  const response = await axios.get("desktop/layouts.Side/logout");
+  const response = await axios.get("desktop/layouts.main.Avatar/logout");
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -127,6 +133,14 @@ onMounted(() => {
 .avatar {
   .avatar__link {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    outline: none;
+    .avatar__avatar {
+    }
+    .avatar__name {
+      margin-left: 4px;
+    }
   }
 }
 </style>

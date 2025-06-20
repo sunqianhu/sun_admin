@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\layouts\side;
+namespace app\desktop\controller\layouts\main;
 
 use app\desktop\controller\Base;
 use app\service\MessageService;

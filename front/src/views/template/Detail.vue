@@ -32,8 +32,8 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/helper/axios";
 import CardPanel from "@/components/CardPanel.vue";
-import LabelValue from "@/components/AttributeList.vue";
-import LabelValueItem from "@/components/Attribute.vue";
+import AttributeList from "@/components/AttributeList.vue";
+import Attribute from "@/components/Attribute.vue";
 import dayjs from "dayjs";
 
 const route = useRoute();

@@ -30,8 +30,8 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
-import LabelValue from "@/components/AttributeList.vue";
-import LabelValueItem from "@/components/Attribute.vue";
+import AttributeList from "@/components/AttributeList.vue";
+import Attribute from "@/components/Attribute.vue";
 
 const emits = defineEmits(["close"]);
 const dialogLoading = ref(false);
@@ -42,7 +42,7 @@ const user = ref({});
  */
 const init = async () => {
   dialogLoading.value = true;
-  const response = await axios.get("desktop/layouts.side.user.Detail/getUser");
+  const response = await axios.get("desktop/layouts.main.user.Detail/getUser");
   dialogLoading.value = false;
   if (response.code != 1) {
     ElMessage({

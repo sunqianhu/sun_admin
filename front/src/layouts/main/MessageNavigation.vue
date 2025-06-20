@@ -25,7 +25,7 @@ const noReadCount = ref(0);
  */
 const getNoReadCount = async () => {
   const response = await axios.get(
-    "desktop/layouts.side.MessageNavigation/getNoReadCount"
+    "desktop/layouts.main.MessageNavigation/getNoReadCount"
   );
   if (response.code != 1) {
     ElMessage({

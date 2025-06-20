@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\layouts\side\user;
+namespace app\desktop\controller\layouts\main\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
