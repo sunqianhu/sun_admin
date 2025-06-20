@@ -96,10 +96,6 @@ const openEditPassword = async () => {
  * 退出登录
  */
 const logout = async () => {
-  const permissionStore = usePermissionStore();
-  const routeStore = useRouteStore();
-  let url;
-
   const response = await axios.get("desktop/layouts.Side/logout");
   if (response.code != 1) {
     ElMessage({
@@ -109,6 +105,8 @@ const logout = async () => {
     return;
   }
 
+  const permissionStore = usePermissionStore();
+  const routeStore = useRouteStore();
   permissionStore.clear();
   routeStore.clear();
   localStorage.removeItem("token");
