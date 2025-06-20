@@ -7,10 +7,8 @@
         class="file-view__file"
         v-if="files.length > 0"
       >
-        <a
-          :href="file.url + '?file_name=' + encodeURI(file.name)"
-          target="_blank"
-        >
+        <el-icon class="file-view__icon"><Paperclip /></el-icon>
+        <a :href="getUrl(file)" target="_blank">
           {{ file.name }}
         </a>
       </div>
@@ -20,12 +18,24 @@
 </template>
 
 <script setup>
+import { Paperclip } from "@element-plus/icons-vue";
+
 const props = defineProps({
   files: {
     type: Array,
     default: [],
   },
 });
+
+/**
+ * 得到下载网址
+ * @param file
+ */
+const getUrl = (file) => {
+  const url = new URL(file.url, window.location.origin);
+  url.searchParams.set("file_name", encodeURIComponent(file.name));
+  return url.toString();
+};
 </script>
 
 <style lang="scss" scoped>
@@ -36,6 +46,9 @@ const props = defineProps({
   .file-view__content {
     flex: 1;
     .file-view__file {
+      .file-view__icon {
+        margin-right: 4px;
+      }
     }
   }
 }
