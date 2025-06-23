@@ -1,21 +1,21 @@
 <template>
-  <div class="select-users">
+  <div class="users-selector">
     <span class="selected-user" v-if="userIds.length > 0">
       已选 <strong>{{ userIds.length }}</strong> 用户
     </span>
-    <el-button @click="openSelectUsersDialog">选择</el-button>
-    <select-users-dialog
+    <el-button @click="openUsersSelectorDialog">选择</el-button>
+    <users-selector-dialog
       v-model="userIds"
-      @close="closeSelectUsersDialog"
-      @confirmed="closeSelectUsersDialog"
-      v-if="selectUsersDialogFlag"
-    ></select-users-dialog>
+      @close="closeUsersSelectorDialog"
+      @confirmed="closeUsersSelectorDialog"
+      v-if="usersSelectorDialogFlag"
+    ></users-selector-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from "vue";
-import SelectUsersDialog from "./SelectUsersDialog.vue";
+import UsersSelectorDialog from "./UsersSelectorDialog.vue";
 
 const props = defineProps({
   modelValue: {
@@ -25,20 +25,20 @@ const props = defineProps({
 });
 const emits = defineEmits(["update:modelValue"]);
 const userIds = ref([...props.modelValue]);
-const selectUsersDialogFlag = ref(false);
+const usersSelectorDialogFlag = ref(false);
 
 /**
  * 打开选择用户对话框
  */
-const openSelectUsersDialog = () => {
-  selectUsersDialogFlag.value = true;
+const openUsersSelectorDialog = () => {
+  usersSelectorDialogFlag.value = true;
 };
 
 /**
  * 关闭选择用户对话框
  */
-const closeSelectUsersDialog = () => {
-  selectUsersDialogFlag.value = false;
+const closeUsersSelectorDialog = () => {
+  usersSelectorDialogFlag.value = false;
 };
 
 watch(
@@ -62,7 +62,7 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.select-users {
+.users-selector {
   .selected-user {
     margin-right: var(--margin-sm);
     strong {

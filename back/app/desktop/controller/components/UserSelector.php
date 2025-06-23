@@ -8,7 +8,7 @@ use app\validate\components\SelectUserValidate;
 use think\exception\ValidateException;
 use think\Response;
 
-class SelectUser extends Base
+class UserSelector extends Base
 {
     public bool $isApiAuth = false;
 

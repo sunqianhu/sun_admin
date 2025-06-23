@@ -6,7 +6,7 @@
     :draggable="true"
     :align-center="true"
     @close="close"
-    class="select-users-dialog"
+    class="users-selector-dialog"
   >
     <el-row :gutter="16">
       <el-col :span="16">
@@ -74,7 +74,7 @@
               >
             </div>
           </template>
-          <div class="selected-panel">
+          <div class="selected-user-panel">
             <el-tag
               v-for="user in selectedUsers"
               :key="user.id"
@@ -137,7 +137,7 @@ const close = () => {
 const getPaginate = async () => {
   paginateLoading.value = true;
   const response = await axios.get(
-    "desktop/components.SelectUsersDialog/getPaginate",
+    "desktop/components.UsersSelectorDialog/getPaginate",
     {
       params: query.value,
     }
@@ -159,9 +159,13 @@ const getPaginate = async () => {
  * 得到已选用户
  */
 const getSelectedUsers = async () => {
+  if (userIds.value.length === 0) {
+    selectedUsers.value = [];
+    return;
+  }
   const response = await axios.post(
-    "desktop/components.SelectUsersDialog/getSelectedUsers",
-    { userIds: userIds.value }
+    "desktop/components.UsersSelectorDialog/getSelectedUsers",
+    { user_ids: userIds.value }
   );
   if (response.code != 1) {
     ElMessage({
@@ -180,7 +184,7 @@ const init = async () => {
   await getSelectedUsers();
   await getPaginate();
   await nextTick();
-  setSelectionUsers();
+  setTableSelected();
 };
 
 /**
@@ -198,9 +202,9 @@ const selectUsers = (users) => {
 };
 
 /**
- * 设置选中用户
+ * 设置表格选中项
  */
-const setSelectionUsers = () => {
+const setTableSelected = () => {
   if (!usersRef.value) return;
   const selectedUserMap = new Map(
     selectedUsers.value.map((user) => [user.id, user])
@@ -218,7 +222,7 @@ const setSelectionUsers = () => {
  */
 const deleteSelectedUser = (id) => {
   selectedUsers.value = selectedUsers.value.filter((user) => user.id != id);
-  setSelectionUsers();
+  setTableSelected();
 };
 
 /**
@@ -226,7 +230,7 @@ const deleteSelectedUser = (id) => {
  */
 const clearAllSelectedUsers = () => {
   selectedUsers.value = [];
-  setSelectionUsers();
+  setTableSelected();
 };
 
 /**
@@ -270,7 +274,7 @@ watch(
   async (newValue) => {
     userIds.value = newValue;
     await getSelectedUsers();
-    setSelectionUsers();
+    setTableSelected();
   },
   {
     deep: true,
@@ -283,7 +287,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.select-users-dialog {
+.users-selector-dialog {
   .user-panel {
     .searchbar {
       margin-top: var(--margin);
@@ -304,7 +308,7 @@ onMounted(() => {
       margin-top: var(--margin);
     }
   }
-  .selected-panel {
+  .selected-user-panel {
     .user {
       margin-right: var(--margin);
     }

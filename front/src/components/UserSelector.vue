@@ -1,22 +1,22 @@
 <template>
-  <div class="select-user">
+  <div class="user-selector">
     <span class="selected-user" v-if="userName !== ''">
       {{ userName }}
     </span>
-    <el-button @click="openSelectUserDialog">选择</el-button>
-    <select-user-dialog
+    <el-button @click="openUserSelectorDialog">选择</el-button>
+    <user-selector-dialog
       v-model="userId"
-      @close="closeSelectUserDialog"
+      @close="closeUserSelectorDialog"
       @confirmed="handleConfirmed"
-      v-if="selectUsersDialogFlag"
-    ></select-user-dialog>
+      v-if="userSelectorDialogFlag"
+    ></user-selector-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import axios from "@/helper/axios";
-import SelectUserDialog from "./SelectUserDialog.vue";
+import UserSelectorDialog from "./UserSelectorDialog.vue";
 
 const props = defineProps({
   modelValue: {
@@ -27,14 +27,18 @@ const props = defineProps({
 const emits = defineEmits(["update:modelValue"]);
 const userId = ref(props.modelValue);
 const userName = ref("");
-const selectUsersDialogFlag = ref(false);
+const userSelectorDialogFlag = ref(false);
 
 /**
  * 得到用户姓名
  */
 const getUserName = async () => {
+  if (!userId.value) {
+    userName.value = "";
+    return;
+  }
   const response = await axios.post(
-    "desktop/components.SelectUser/getUserName",
+    "desktop/components.UserSelector/getUserName",
     { user_id: userId.value }
   );
   if (response.code != 1) {
@@ -50,15 +54,15 @@ const getUserName = async () => {
 /**
  * 打开选择用户对话框
  */
-const openSelectUserDialog = () => {
-  selectUsersDialogFlag.value = true;
+const openUserSelectorDialog = () => {
+  userSelectorDialogFlag.value = true;
 };
 
 /**
  * 关闭选择用户对话框
  */
-const closeSelectUserDialog = () => {
-  selectUsersDialogFlag.value = false;
+const closeUserSelectorDialog = () => {
+  userSelectorDialogFlag.value = false;
 };
 
 /**
@@ -67,7 +71,7 @@ const closeSelectUserDialog = () => {
  */
 const handleConfirmed = (selectedUser) => {
   userName.value = selectedUser.name;
-  closeSelectUserDialog();
+  closeUserSelectorDialog();
 };
 
 watch(
@@ -96,7 +100,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.select-user {
+.user-selector {
   .selected-user {
     margin-right: var(--margin-sm);
     strong {

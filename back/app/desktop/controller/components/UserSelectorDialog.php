@@ -7,7 +7,7 @@ use app\model\UserModel;
 use think\db\exception\DbException;
 use think\Response;
 
-class SelectUsersDialog extends Base
+class UserSelectorDialog extends Base
 {
     public bool $isApiAuth = false;
 
@@ -38,19 +38,5 @@ class SelectUsersDialog extends Base
         ]);
         $paginateArray = $paginate->toArray();
         return $this->getSuccessResonse('获取成功', $paginateArray);
-    }
-
-    /**
-     * 获取已选用户
-     * @return Response
-     */
-    public function getSelectedUsers()
-    {
-        $get = $this->request->post(['ids' => []]);
-        $userModels = UserModel::field('id,name')
-            ->whereIn('id', $get['ids'])
-            ->select();
-        $users = $userModels->toArray();
-        return $this->getSuccessResonse('获取成功', $users);
     }
 }

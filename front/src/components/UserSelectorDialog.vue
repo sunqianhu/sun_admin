@@ -6,7 +6,7 @@
     :draggable="true"
     :align-center="true"
     @close="close"
-    class="select-user-dialog"
+    class="user-selector-dialog"
   >
     <div class="searchbar">
       <el-form :model="query" :inline="true">
@@ -35,6 +35,7 @@
         v-loading="paginateLoading"
         ref="usersRef"
         class="table"
+        height="350"
         @current-change="selectUser"
       >
         <el-table-column prop="name" label="姓名" />
@@ -95,7 +96,7 @@ const close = () => {
 const getPaginate = async () => {
   paginateLoading.value = true;
   const response = await axios.get(
-    "desktop/components.SelectUserDialog/getPaginate",
+    "desktop/components.UserSelectorDialog/getPaginate",
     {
       params: query.value,
     }
@@ -173,7 +174,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.select-user-dialog {
+.user-selector-dialog {
   .searchbar {
     margin-top: var(--margin);
     .el-select {
@@ -184,9 +185,6 @@ onMounted(() => {
     margin-top: var(--margin);
     :deep(th.el-table__cell) {
       background-color: var(--background-color-dark);
-    }
-    .table {
-      height: 350px;
     }
   }
   .pagination {
