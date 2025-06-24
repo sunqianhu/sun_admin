@@ -1,32 +1,53 @@
 <template></template>
 
 <script setup>
-import WebsocketClient from "@/helper/WebsocketClient.js";
+import { onMounted } from "vue";
 import axios from "@/helper/axios";
 import audioPath from "@/assets/message.mp3";
+import createWebsocketClient from "sunqianhu_websocket_client";
 
 let messageInstances = []; //消息实例
+let websocketClient = null;
+let url = "";
 
-//websocket客户端
-const websocketClient = new WebsocketClient(
-  import.meta.env.VITE_WEBSOCKET_MESSAGE
-);
-websocketClient.onOpen = () => {
-  bind();
+/**
+ * 初始化
+ */
+const init = () => {
+  let url = getWsUrl();
+  websocketClient = createWebsocketClient(url);
+  websocketClient.onOpen = () => {
+    bind();
+  };
+  websocketClient.onMessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (!data) {
+      throw new Error("消息格式错误，消息：" + event.data);
+    }
+    if (data.type == "message") {
+      removeFirstMessageIfOverLimit();
+      showMessage(data);
+      playAudio();
+      setRead(data.id);
+    }
+  };
+  websocketClient.connect();
 };
-websocketClient.onMessage = (event) => {
-  const data = JSON.parse(event.data);
-  if (!data) {
-    throw new Error("消息格式错误，消息：" + event.data);
+
+/**
+ * 获取websocket连接地址
+ */
+const getWsUrl = () => {
+  let url = import.meta.env.VITE_WEBSOCKET_MESSAGE;
+  if (!url.startsWith("ws")) {
+    const hostname = window.location.hostname;
+    const protocol =
+      window.location.protocol.indexOf("https") === 0 ? "wss://" : "ws://";
+    const port = window.location.port;
+    url = protocol + hostname + (port ? ":" + port : "") + url;
   }
-  if (data.type == "message") {
-    removeFirstMessageIfOverLimit();
-    showMessage(data);
-    playAudio();
-    setRead(data.id);
-  }
+  return url;
 };
-websocketClient.connect();
 
 /**
  * 设为已读
@@ -92,6 +113,10 @@ function playAudio() {
   let audio = new Audio(audioPath);
   audio.play();
 }
+
+onMounted(() => {
+  init();
+});
 </script>
 
 <style lang="scss" scoped>
