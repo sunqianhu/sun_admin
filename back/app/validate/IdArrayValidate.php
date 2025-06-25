@@ -10,7 +10,7 @@ class IdArrayValidate
      * 验证
      * @param $ids
      * @param $fieldName
-     * @return void
+     * @return true
      */
     static public function check($ids, $fieldName)
     {
@@ -18,11 +18,8 @@ class IdArrayValidate
             throw new ValidateException($fieldName.'必须是个数组');
         }
         foreach ($ids as $id){
-            try {
-                validate(IdValidate::class)->check(['id'=>$id]);
-            }catch (ValidateException $exception){
-                throw new ValidateException($fieldName.'中有不合法的id');
-            }
+            validate(IdValidate::class)->check(['id'=>$id]);
         }
+        return true;
     }
 }
