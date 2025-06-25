@@ -6,10 +6,9 @@ use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\model\UserRoleModel;
 use Sunqianhu\Helper\thinkphp\Crud;
-use app\validate\IdArrayValidate;
+use Sunqianhu\Helper\IdsValidate;
 use app\validate\UserValidate;
 use Exception;
-use think\exception\ValidateException;
 use think\facade\Db;
 
 class Add extends Base
@@ -24,9 +23,9 @@ class Add extends Base
         //验证
         try {
             validate(UserValidate::class)->scene('add')->check($post);
-            IdArrayValidate::check($post['role_ids'], '角色');
-        } catch (ValidateException $exception) {
-            return $this->getErrorResponse($exception->getError());
+            IdsValidate::check($post['role_ids'], '角色');
+        } catch (Exception $exception) {
+            return $this->getErrorResponse($exception->getMessage());
         }
 
         Db::startTrans();

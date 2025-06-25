@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d721ff86d9beab910b90095a9f06baa9",
+    "content-hash": "83b4abd102e32f7079e3819b5b322dd2",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -1373,16 +1373,16 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.2.12",
+            "version": "1.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "4b75542dbf6e9adb9d8952bc9041116a9ff03bb6"
+                "reference": "9d50eb2f768e6c94562aa883caa4f36f6fdf2739"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/4b75542dbf6e9adb9d8952bc9041116a9ff03bb6",
-                "reference": "4b75542dbf6e9adb9d8952bc9041116a9ff03bb6",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/9d50eb2f768e6c94562aa883caa4f36f6fdf2739",
+                "reference": "9d50eb2f768e6c94562aa883caa4f36f6fdf2739",
                 "shasum": ""
             },
             "type": "library",
@@ -1404,9 +1404,9 @@
             "description": "php助手类包含项目开发过程中各种常用的工具类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.2.12"
+                "source": "https://github.com/sunqianhu/helper/tree/1.2.13"
             },
-            "time": "2025-06-18T09:43:30+00:00"
+            "time": "2025-06-25T06:50:35+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

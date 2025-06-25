@@ -10,10 +10,9 @@ use app\service\desktop\PermissionService as DesktopPermissionService;
 use app\service\desktop\RouteService as DesktopRouteService;
 use app\service\mobile\PermissionService as MobilePermissionService;
 use app\service\RoleService;
-use app\validate\IdArrayValidate;
+use Sunqianhu\Helper\IdsValidate;
 use app\validate\RoleValidate;
 use Exception;
-use think\exception\ValidateException;
 use think\facade\Db;
 
 class Add extends Base
@@ -54,12 +53,12 @@ class Add extends Base
         //验证
         try {
             validate(RoleValidate::class)->scene('add')->check($post);
-            IdArrayValidate::check($post['desktop_permission_ids'], '桌面端权限');
-            IdArrayValidate::check($post['desktop_menu_ids'], '桌面端菜单');
-            IdArrayValidate::check($post['desktop_route_ids'], '桌面端路由');
-            IdArrayValidate::check($post['mobile_permission_ids'], '移动端权限');
-        } catch (ValidateException $exception) {
-            return $this->getErrorResponse($exception->getError());
+            IdsValidate::check($post['desktop_permission_ids'], '桌面端权限');
+            IdsValidate::check($post['desktop_menu_ids'], '桌面端菜单');
+            IdsValidate::check($post['desktop_route_ids'], '桌面端路由');
+            IdsValidate::check($post['mobile_permission_ids'], '移动端权限');
+        } catch (Exception $exception) {
+            return $this->getErrorResponse($exception->getMessage());
         }
 
         Db::startTrans();
