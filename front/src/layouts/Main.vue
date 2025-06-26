@@ -68,7 +68,12 @@ window.onresize = () => {
 
 <style lang="scss" scoped>
 .main-layout {
-  height: 100dvh;
+  position: absolute;
+  left: 0;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  overflow: hidden;
   > .layout {
     height: 100%;
     .layout__left {

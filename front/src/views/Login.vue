@@ -1,39 +1,47 @@
 <template>
   <div class="login">
     <div class="background">
-      <video src="@/assets/login/background.mp4" autoplay loop muted></video>
+      <video
+        src="@/assets/login/background.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+      ></video>
     </div>
-    <div class="form-wrap">
-      <div class="header">
-        <div class="title">
-          <img src="@/assets/logo.png" class="logo" alt="logo" />
-          <span class="name">sun admin</span>
-        </div>
+
+    <div class="container">
+      <div class="system-name">
+        <img src="@/assets/logo.png" alt="logo" class="system-name__logo" />
+        <span class="system-name__name">sun admin</span>
       </div>
+      <div class="welcome">又见面啦！请输入账号和密码登录系统</div>
+
       <el-form
         :model="session"
         :rules="rules"
         scroll-to-error
         ref="sessionRef"
+        label-position="top"
         class="form"
         @keyup.enter="verify"
       >
-        <el-form-item prop="account">
+        <el-form-item label="账号" prop="account">
           <el-input
-            :prefix-icon="User"
-            placeholder="请输入账号"
-            size="large"
             v-model="session.account"
+            :prefix-icon="User"
+            size="large"
+            placeholder="请输入账号"
           />
         </el-form-item>
-        <el-form-item prop="password">
+        <el-form-item label="密码" prop="password">
           <el-input
+            v-model="session.password"
             type="password"
-            placeholder="请输入密码"
             show-password
             size="large"
             :prefix-icon="Lock"
-            v-model="session.password"
+            placeholder="请输入密码"
           />
         </el-form-item>
         <el-form-item class="submit">
@@ -49,12 +57,13 @@
         </el-form-item>
       </el-form>
     </div>
+
     <div class="footer">
       <div class="browser">
         浏览器支持：Edge ≥ 85 Firefox≥79 Chrome≥85 Safari≥14.1
       </div>
       <div class="copyright">
-        Copyright &copy; {{ new Date().getFullYear() }} asun
+        Copyright &copy; {{ new Date().getFullYear() }} jfwind
       </div>
     </div>
 
@@ -78,8 +87,8 @@ import Vcode from "vue3-puzzle-vcode";
 const session = ref({});
 const sessionRef = ref(null);
 const rules = {
-  account: [{ required: true, message: "账号不能为空", trigger: "blur" }],
-  password: [{ required: true, message: "密码不能为空", trigger: "blur" }],
+  account: [{ required: true, message: "请输入账号", trigger: "blur" }],
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
 };
 const submitLoading = ref(false);
 const vCodeFlag = ref(false);
@@ -120,9 +129,12 @@ const submitForm = async () => {
 
 <style lang="scss" scoped>
 .login {
-  height: 100dvh;
-  position: relative;
+  position: absolute;
   overflow: hidden;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
   .background {
     position: absolute;
     left: 0px;
@@ -130,14 +142,16 @@ const submitForm = async () => {
     top: 0px;
     bottom: 0px;
     z-index: 1;
-    background: #001437;
+    background-color: #141414;
+    background-image: url("@/assets/login/background.png");
+    background-size: 100% 100%;
     video {
       width: 100%;
       height: 100%;
       object-fit: fill;
     }
   }
-  .form-wrap {
+  .container {
     padding: 32px;
     position: absolute;
     left: 50%;
@@ -147,26 +161,33 @@ const submitForm = async () => {
     background: var(--background-color-opacity-light);
     border-radius: var(--border-radius-lg);
     box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.12);
-    .header {
-      text-align: center;
-      .title {
-        line-height: 44px;
-        .logo {
-          height: 30px;
-          vertical-align: -4px;
-        }
-        .name {
-          margin-left: 12px;
-          font-size: 24px;
-          font-weight: var(--font-weight-bold);
-        }
+    .system-name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .system-name__logo {
+        height: 30px;
+      }
+      .system-name__name {
+        margin-left: var(--margin);
+        font-size: 24px;
+        font-weight: var(--font-weight-bold);
       }
     }
+    .welcome {
+      margin-top: var(--margin-sm);
+      text-align: center;
+      font-size: var(--font-size-sm);
+      color: var(--font-color-placeholder);
+    }
     .form {
-      margin-top: 50px;
+      margin-top: 16px;
       width: 300px;
+      :deep(.el-input .el-input__inner:-webkit-autofill) {
+        box-shadow: 0 0 0px 1000px white inset;
+      }
       .submit {
-        margin-top: 50px;
+        margin-top: 32px;
         .button {
           width: 100%;
         }
