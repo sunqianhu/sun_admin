@@ -7,7 +7,7 @@
       <el-aside class="layout__left">
         <div class="system-name-row">
           <img src="@/assets/logo.png" class="logo" />
-          <span class="name">sun admin</span>
+          <span class="name">{{ systemName }}</span>
         </div>
         <el-scrollbar class="menu-row"><Menu></Menu></el-scrollbar>
       </el-aside>
@@ -45,7 +45,9 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import { useMainLayoutStore } from "@/stores/main_layout";
+import axios from "@/helper/axios";
 import Menu from "./main/Menu.vue";
 import LightDark from "./main/LightDark.vue";
 import Hamburger from "./main/Hamburger.vue";
@@ -55,6 +57,18 @@ import Avatar from "./main/Avatar.vue";
 import Guide from "./main/Guide.vue";
 
 const mainLayoutStore = useMainLayoutStore();
+const systemName = ref("");
+
+/**
+ * 初始化
+ */
+const init = async () => {
+  const response = await axios.get("desktop/layouts.Main/init");
+  if (response.code != 1) {
+    return;
+  }
+  systemName.value = response.data.system_name;
+};
 
 /**
  * 窗口大小改变回调
@@ -64,6 +78,10 @@ window.onresize = () => {
     mainLayoutStore.setFold(true);
   }
 };
+
+onMounted(() => {
+  init();
+});
 </script>
 
 <style lang="scss" scoped>

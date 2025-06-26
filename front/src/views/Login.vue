@@ -13,7 +13,7 @@
     <div class="container">
       <div class="system-name">
         <img src="@/assets/logo.png" alt="logo" class="system-name__logo" />
-        <span class="system-name__name">sun admin</span>
+        <span class="system-name__name">{{ systemName }}</span>
       </div>
       <div class="welcome">又见面啦！请输入账号和密码登录系统</div>
 
@@ -79,11 +79,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { User, Lock } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Vcode from "vue3-puzzle-vcode";
 
+const systemName = ref("");
 const session = ref({});
 const sessionRef = ref(null);
 const rules = {
@@ -92,6 +93,18 @@ const rules = {
 };
 const submitLoading = ref(false);
 const vCodeFlag = ref(false);
+
+/**
+ * 初始化
+ */
+const init = async () => {
+  const response = await axios.get("desktop/Login/init");
+  if (response.code != 1) {
+    return;
+  }
+  systemName.value = response.data.system_name;
+  document.title = systemName.value;
+};
 
 /**
  * 验证
@@ -125,6 +138,10 @@ const submitForm = async () => {
   localStorage.setItem("token", response.data);
   location.replace("./");
 };
+
+onMounted(() => {
+  init();
+});
 </script>
 
 <style lang="scss" scoped>

@@ -2,6 +2,7 @@
 
 namespace app\desktop\controller;
 
+use app\service\ConfigService;
 use app\service\desktop\SessionService;
 use app\service\LoginFailCheckerService;
 use app\validate\LoginValidate;
@@ -14,8 +15,24 @@ class Login extends Base
     public bool $isTokenAuth = false;
 
     /**
+     * 初始化
+     * @return Response
+     * @throws Exception
+     */
+    public function init()
+    {
+        $configService = new ConfigService();
+        $systemName = $configService->getValue('system_name');
+        $data = [
+            'system_name' => $systemName
+        ];
+        return $this->getSuccessResonse('获取成功', $data);
+    }
+
+    /**
      * 登录
      * @return Response
+     * @throws Exception
      */
     public function login()
     {

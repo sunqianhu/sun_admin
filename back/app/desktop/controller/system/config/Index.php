@@ -27,7 +27,7 @@ class Index extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['denied_ip_string'=>'', 'frame_version'=>'', 'version'=>'']);
+        $post = $this->request->post(['system_name'=>'', 'denied_ip_string'=>'', 'frame_version'=>'', 'version'=>'']);
         $post['id'] = 1;
 
         //验证
