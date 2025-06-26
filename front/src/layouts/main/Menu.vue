@@ -37,6 +37,16 @@ onMounted(() => {
 });
 </script>
 
+<style lang="scss">
+.el-menu--popup {
+  background-color: #141414;
+  .el-menu-item:hover,
+  .el-sub-menu__title:hover {
+    background-color: #409eff;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .menu {
   border-right: none;
