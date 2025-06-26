@@ -9,12 +9,13 @@
     </el-icon>
     <el-popover
       title="选择图标"
-      :visible="visible"
+      v-model:visible="visible"
       placement="right"
+      trigger="click"
       :width="500"
     >
       <template #reference>
-        <el-button @click="open" class="popover__reference"> 选择 </el-button>
+        <el-button class="popover__reference"> 选择 </el-button>
       </template>
       <div class="popover__content">
         <div class="search">
@@ -41,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onBeforeUnmount, onMounted } from "vue";
+import { ref, watch, computed } from "vue";
 import * as icons from "@element-plus/icons-vue";
 
 const props = defineProps({
@@ -66,36 +67,12 @@ const filteredIconNames = computed(() => {
 });
 
 /**
- * 打开
- */
-const open = () => {
-  visible.value = true;
-};
-
-/**
  * 选择
  * @param icon
  */
 const select = async (iconName) => {
   selectedIconName.value = iconName;
   visible.value = false;
-};
-
-/**
- * 页面点击关闭
- * @param e
- */
-const closeByDocumentClick = (e) => {
-  const referenceEl = document.querySelector(".popover__reference");
-  const contentEl = document.querySelector(".popover__content");
-
-  if (
-    visible.value &&
-    !referenceEl.contains(e.target) &&
-    !contentEl.contains(e.target)
-  ) {
-    visible.value = false;
-  }
 };
 
 watch(
@@ -116,19 +93,6 @@ watch(
     deep: true,
   }
 );
-
-/**
- * 关闭图标选择器
- */
-onMounted(() => {
-  document.addEventListener("click", closeByDocumentClick);
-});
-/**
- * 销毁监听
- */
-onBeforeUnmount(() => {
-  document.removeEventListener("click", closeByDocumentClick);
-});
 </script>
 <style>
 .el-popup-parent--hidden {
