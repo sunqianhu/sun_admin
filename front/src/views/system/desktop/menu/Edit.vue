@@ -29,7 +29,7 @@
           <el-input v-model="menu.url" />
         </el-form-item>
         <el-form-item label="菜单图标" prop="icon">
-          <el-input v-model="menu.icon" />
+          <icon-picker v-model="menu.icon" />
         </el-form-item>
         <el-form-item label="打开方式" prop="target">
           <el-radio-group v-model="menu.target">

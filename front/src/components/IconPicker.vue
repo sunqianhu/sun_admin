@@ -10,7 +10,7 @@
     <el-popover
       title="选择图标"
       :visible="visible"
-      placement="top"
+      placement="right"
       :width="500"
     >
       <template #reference>
@@ -20,7 +20,7 @@
         <div class="search">
           <el-input placeholder="搜索图标" v-model="searchKeyword" clearable />
         </div>
-        <el-scrollbar height="400px">
+        <el-scrollbar height="350px">
           <div class="icon-grid">
             <div
               v-for="(iconName, index) in filteredIconNames"
@@ -130,7 +130,11 @@ onBeforeUnmount(() => {
   document.removeEventListener("click", closeByDocumentClick);
 });
 </script>
-
+<style>
+.el-popup-parent--hidden {
+  overflow: auto;
+}
+</style>
 <style lang="scss" scoped>
 .icon-picker {
   display: flex;
