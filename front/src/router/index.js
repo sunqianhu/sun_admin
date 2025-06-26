@@ -32,7 +32,7 @@ const staticRoutes = [
     name: "login",
     component: () => import("../views/Login.vue"),
     meta: {
-      name: "sun admin",
+      name: "系统登录",
     },
   },
   {
