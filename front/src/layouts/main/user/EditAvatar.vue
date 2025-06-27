@@ -78,14 +78,17 @@ const cropperRef = ref();
 const option = ref({
   img: "", //裁剪框图片
   outputType: "png", //图片输出类型
-  outputSize: 1, //图片输出质量
   info: false, //是否显示裁减区域的宽度和高度
   autoCrop: true, //是否默认生成截图框
   fixed: true, //是否开启截图框宽高固定比例
   fixedNumber: [1, 1], //截图框的宽高比例
   limitMinSize: 100, //裁剪框限制最小区域
+  maxImgSize: 5000, //图片限制最大宽高
   centerBox: false, //截图框是否被限制在图片里面
-  fillColor: "white", //导出时背景颜色填充
+  fillColor: "#ffffff", //导出时背景颜色填充
+  // full: true, //是否输出原图比例的截图
+  // original: true, //上传图片按照原始比例渲染
+  // high: false, //是否按照设备的dpr 输出等比例图片
 });
 const preview = ref({});
 const saveLoading = ref(false);
