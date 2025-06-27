@@ -38,7 +38,7 @@ onMounted(() => {
 
 <style lang="scss">
 .main-menu-popper {
-  --el-menu-text-color: #ffffff;
+  --el-menu-text-color: #dfdfdf;
   --el-menu-bg-color: #141414;
   --el-menu-active-color: #ffffff;
   --el-menu-hover-bg-color: #409eff;
@@ -47,8 +47,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .menu {
-  --el-menu-text-color: #ffffff;
-  --el-menu-bg-color: #141414;
+  --el-menu-text-color: #dfdfdf;
+  --el-menu-bg-color: #050404;
   --el-menu-active-color: #ffffff;
   --el-menu-hover-bg-color: #409eff;
   border-right: none;
