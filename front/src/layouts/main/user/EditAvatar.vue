@@ -11,15 +11,22 @@
       <el-row>
         <el-col :span="16" class="edit-avatar__left">
           <div class="cropper">
+            <!--官网参考：https://github.com/xyxiao001/vue-cropper-->
             <vue-cropper
-              :img="option.img"
-              :outputType="option.outputType"
-              :info="option.info"
-              :autoCrop="option.autoCrop"
-              :fixed="option.fixed"
-              :fixedNumber="option.fixedNumber"
-              :limitMinSize="option.limitMinSize"
-              :centerBox="option.centerBox"
+              :img="imgUrl"
+              outputType="png"
+              :outputSize="1"
+              :info="false"
+              :autoCrop="true"
+              :autoCropWidth="350"
+              :autoCropHeight="350"
+              :fixed="true"
+              :fixedNumber="[1, 1]"
+              :limitMinSize="100"
+              :maxImgSize="4000"
+              :centerBox="false"
+              fillColor="#ffffff"
+              :full="true"
               @realTime="realTimePreview"
               ref="cropperRef"
             ></vue-cropper>
@@ -74,22 +81,7 @@ import { VueCropper } from "vue-cropper";
 const emits = defineEmits(["close", "submited"]);
 const user = ref({});
 const cropperRef = ref();
-//官网参考：https://github.com/xyxiao001/vue-cropper
-const option = ref({
-  img: "", //裁剪框图片
-  outputType: "png", //图片输出类型
-  info: false, //是否显示裁减区域的宽度和高度
-  autoCrop: true, //是否默认生成截图框
-  fixed: true, //是否开启截图框宽高固定比例
-  fixedNumber: [1, 1], //截图框的宽高比例
-  limitMinSize: 100, //裁剪框限制最小区域
-  maxImgSize: 5000, //图片限制最大宽高
-  centerBox: false, //截图框是否被限制在图片里面
-  fillColor: "#ffffff", //导出时背景颜色填充
-  // full: true, //是否输出原图比例的截图
-  // original: true, //上传图片按照原始比例渲染
-  // high: false, //是否按照设备的dpr 输出等比例图片
-});
+const imgUrl = ref("");
 const preview = ref({});
 const saveLoading = ref(false);
 
@@ -111,7 +103,7 @@ const init = async () => {
     return;
   }
 
-  option.value.img = response.data;
+  imgUrl.value = response.data;
 };
 
 /**
@@ -129,7 +121,7 @@ const uploadImageBefore = (file) => {
   // 使用 FileReader 读取文件并设置给 selectedImage
   const reader = new FileReader();
   reader.onload = () => {
-    option.value.img = reader.result;
+    imgUrl.value = reader.result;
   };
   reader.readAsDataURL(file);
   return false;
@@ -168,7 +160,6 @@ const rotateRight = () => {
  * @param {*} data
  */
 const realTimePreview = (data) => {
-  console.log(data);
   preview.value = data;
   let scale = 100 / data.w;
   preview.value.div = {
