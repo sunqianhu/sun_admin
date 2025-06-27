@@ -24,7 +24,7 @@
               ref="cropperRef"
             ></vue-cropper>
           </div>
-          <div class="actions">
+          <div class="action">
             <el-upload
               :before-upload="uploadImageBefore"
               :show-file-list="false"
@@ -75,15 +75,15 @@ const emits = defineEmits(["close", "submited"]);
 const user = ref({});
 const cropperRef = ref();
 const option = ref({
-  img: "",
-  outputType: "png",
-  info: false,
-  autoCrop: true,
-  fixed: true,
-  fixedNumber: [1, 1],
-  limitMinSize: 100,
-  centerBox: false,
-  fillColor: "white",
+  img: "", //裁剪框图片
+  outputType: "png", //图片输出类型
+  info: false, //是否显示裁减区域的宽度和高度
+  autoCrop: true, //是否默认生成截图框
+  fixed: true, //是否开启截图框宽高固定比例
+  fixedNumber: [1, 1], //截图框的宽高比例
+  limitMinSize: 100, //裁剪框限制最小区域
+  centerBox: false, //截图框是否被限制在图片里面
+  fillColor: "white", //导出时背景颜色填充
 });
 const preview = ref({});
 const saveLoading = ref(false);
@@ -165,7 +165,6 @@ const rotateRight = () => {
 const realTimePreview = (data) => {
   preview.value = data;
   let scale = 100 / data.w;
-  preview.value.div.transform = `scale(${scale})`;
   preview.value.div = {
     ...preview.value.div,
     transform: `scale(${scale})`,
@@ -226,7 +225,7 @@ onMounted(() => {
         max-height: 100%;
       }
     }
-    .actions {
+    .action {
       margin-top: var(--margin);
       .upload-image {
         display: inline-block;

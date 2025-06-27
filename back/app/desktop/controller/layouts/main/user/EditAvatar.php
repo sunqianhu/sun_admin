@@ -52,8 +52,7 @@ class EditAvatar extends Base
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
-        $url = $userAvatarService->getBigAvatarUrlByUserId($this->userId);
 
-        return $this->getSuccessResonse('修改成功', $url);
+        return $this->getSuccessResonse('修改成功');
     }
 }
