@@ -1,11 +1,10 @@
 <template>
   <el-menu
     mode="vertical"
-    text-color="rgba(255, 255, 255, 0.9)"
-    active-text-color="#ffffff"
     :default-active="defaultActive"
     :collapse="mainLayoutStore.fold"
     :unique-opened="true"
+    popper-class="main-menu-popper"
     class="menu"
   >
     <menu-item :tree-menu="treeMenu"></menu-item>
@@ -38,31 +37,20 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.el-menu--popup {
-  background-color: #141414;
-  .el-menu-item:hover,
-  .el-sub-menu__title:hover {
-    background-color: #409eff;
-  }
+.main-menu-popper {
+  --el-menu-text-color: #ffffff;
+  --el-menu-bg-color: #141414;
+  --el-menu-active-color: #ffffff;
+  --el-menu-hover-bg-color: #409eff;
 }
 </style>
 
 <style lang="scss" scoped>
 .menu {
+  --el-menu-text-color: #ffffff;
+  --el-menu-bg-color: #141414;
+  --el-menu-active-color: #ffffff;
+  --el-menu-hover-bg-color: #409eff;
   border-right: none;
-  background-color: #141414;
-  :deep(.el-menu) {
-    background-color: #141414;
-  }
-  :deep(.el-sub-menu__title) {
-    &:hover {
-      background-color: #409eff;
-    }
-  }
-  :deep(.el-menu-item) {
-    &:hover {
-      background-color: #409eff;
-    }
-  }
 }
 </style>
