@@ -3,9 +3,8 @@
 namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
+use app\service\UserAvatarService;
 use app\validate\user\AvatarBase64ImageContentValidate;
-use Sunqianhu\Helper\File;
-use app\service\UserService;
 use Exception;
 use think\exception\ValidateException;
 use think\Response;
@@ -30,14 +29,13 @@ class EditAvatar extends Base
         }
 
         try {
-            $userService = new UserService();
-            $path = $userService->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
+            $userAvatarService = new UserAvatarService();
+            $userAvatarService->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
+        $url = $userAvatarService->getAvatarUrlByUserId($this->userId);
 
-        $file = new File();
-        $url = $file->getUrl($path);
         return $this->getSuccessResponse('修改成功', $url);
     }
 }

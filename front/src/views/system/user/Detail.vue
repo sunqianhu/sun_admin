@@ -9,6 +9,9 @@
           {{ user.account }}
         </attribute>
         <attribute label="姓名" :md="8">
+          <a :href="user.big_avatar_url" target="_blank">
+            <el-avatar :size="20" :src="user.avatar_url" class="avatar" />
+          </a>
           {{ user.name }}
         </attribute>
         <attribute label="手机号码" :md="8">
@@ -117,6 +120,10 @@ onMounted(() => {
     margin-top: var(--margin);
     &:first-child {
       margin-top: 0px;
+    }
+    .avatar {
+      vertical-align: middle;
+      cursor: pointer;
     }
   }
 }

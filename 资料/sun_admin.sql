@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50744
 File Encoding         : 65001
 
-Date: 2025-06-26 17:34:53
+Date: 2025-06-27 14:28:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,7 +54,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('1', 'sun admin', '', '3.1.1', '1.0.0');
+INSERT INTO `config` VALUES ('1', 'sun admin', '', '3.2.3', '1.0.0');
 
 -- ----------------------------
 -- Table structure for department
@@ -220,7 +220,7 @@ CREATE TABLE `desktop_session` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COMMENT='会话';
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb4 COMMENT='会话';
 
 -- ----------------------------
 -- Records of desktop_session
@@ -316,7 +316,9 @@ INSERT INTO `desktop_session` VALUES ('99', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUz
 INSERT INTO `desktop_session` VALUES ('100', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzUwNzU3MzgyfQ.byUsEWjtK4z1e5Vw40Y0SqbHJuiJkI1GB-6hsqKX8cU', '1750762908');
 INSERT INTO `desktop_session` VALUES ('110', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzUwOTExNTYyfQ.Imd3xxwh2_S0J_Gp_hN4q8sduppkmFHfFpoTOlpXoMc', '1750915240');
 INSERT INTO `desktop_session` VALUES ('111', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzUwOTE3MTE2fQ.S1DsI85H6YQE4LdXDFz3pNpb1N-SADbXWjxdez8M150', '1750920725');
-INSERT INTO `desktop_session` VALUES ('118', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzUwOTMwNDU3fQ.J8-PFM83T7wVrcn1URNVU2YMWCjI9YjViJhkNXNMDos', '1750934071');
+INSERT INTO `desktop_session` VALUES ('118', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzUwOTMwNDU3fQ.J8-PFM83T7wVrcn1URNVU2YMWCjI9YjViJhkNXNMDos', '1750937354');
+INSERT INTO `desktop_session` VALUES ('119', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzUwOTkwMzg4fQ.8KzuZL0SUh1mZ0YCxsvtryj-dyGJkeDCwENH8OeCa_E', '1750999458');
+INSERT INTO `desktop_session` VALUES ('120', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzUxMDAzMzI3fQ.3vULqLSZNveraPABHP2VsIh0dVUg1ml11xJVozQzR4A', '1751009225');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -374,7 +376,7 @@ CREATE TABLE `jobs` (
   `create_time` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `queue` (`queue`(191)) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of jobs
@@ -386,6 +388,26 @@ INSERT INTO `jobs` VALUES ('4', 'message', '{\"job\":\"app\\\\job\\\\Message\",\
 INSERT INTO `jobs` VALUES ('5', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1749004000', '1749004000');
 INSERT INTO `jobs` VALUES ('6', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750387898', '1750387898');
 INSERT INTO `jobs` VALUES ('7', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750387990', '1750387990');
+INSERT INTO `jobs` VALUES ('8', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750930933', '1750930933');
+INSERT INTO `jobs` VALUES ('9', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750930944', '1750930944');
+INSERT INTO `jobs` VALUES ('10', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750931061', '1750931061');
+INSERT INTO `jobs` VALUES ('11', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750931481', '1750931481');
+INSERT INTO `jobs` VALUES ('12', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750931958', '1750931958');
+INSERT INTO `jobs` VALUES ('13', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750932043', '1750932043');
+INSERT INTO `jobs` VALUES ('14', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750932302', '1750932302');
+INSERT INTO `jobs` VALUES ('15', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750932331', '1750932331');
+INSERT INTO `jobs` VALUES ('16', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750932475', '1750932475');
+INSERT INTO `jobs` VALUES ('17', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750932499', '1750932499');
+INSERT INTO `jobs` VALUES ('18', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750932663', '1750932663');
+INSERT INTO `jobs` VALUES ('19', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933041', '1750933041');
+INSERT INTO `jobs` VALUES ('20', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933178', '1750933178');
+INSERT INTO `jobs` VALUES ('21', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933229', '1750933229');
+INSERT INTO `jobs` VALUES ('22', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933447', '1750933447');
+INSERT INTO `jobs` VALUES ('23', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933619', '1750933619');
+INSERT INTO `jobs` VALUES ('24', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933633', '1750933633');
+INSERT INTO `jobs` VALUES ('25', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933672', '1750933672');
+INSERT INTO `jobs` VALUES ('26', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933696', '1750933696');
+INSERT INTO `jobs` VALUES ('27', 'message', '{\"job\":\"app\\\\job\\\\Message\",\"maxTries\":null,\"timeout\":null,\"data\":{\"type\":\"read\",\"data\":{\"type\":\"all_read\",\"user_id\":1}}}', '0', null, '1750933746', '1750933746');
 
 -- ----------------------------
 -- Table structure for login_log
@@ -397,7 +419,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -543,6 +565,8 @@ INSERT INTO `login_log` VALUES ('138', '1', '1750929186', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('139', '1', '1750930278', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('140', '1', '1750930394', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('141', '1', '1750930457', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('142', '1', '1750990388', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('143', '1', '1751003327', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -565,30 +589,30 @@ CREATE TABLE `message` (
 -- ----------------------------
 -- Records of message
 -- ----------------------------
-INSERT INTO `message` VALUES ('1', '1', '标题', '内容', 'https:/www.baidu.com', '1737189131', '1', '1750387990');
-INSERT INTO `message` VALUES ('2', '1', '标题', '内容', 'https:/www.baidu.com', '1737189150', '1', '1750387990');
-INSERT INTO `message` VALUES ('3', '1', '标题', '内容', 'https:/www.baidu.com', '1737189193', '1', '1750387990');
-INSERT INTO `message` VALUES ('4', '1', '标题', '内容', 'https:/www.baidu.com', '1737189194', '1', '1750387990');
-INSERT INTO `message` VALUES ('5', '1', '标题', '内容', 'https:/www.baidu.com', '1737189230', '1', '1750387990');
-INSERT INTO `message` VALUES ('6', '1', '标题', '内容', 'https:/www.baidu.com', '1737189235', '1', '1750387990');
-INSERT INTO `message` VALUES ('7', '1', '标题', '内容', 'https:/www.baidu.com', '1737189285', '1', '1750387990');
-INSERT INTO `message` VALUES ('8', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1750387990');
-INSERT INTO `message` VALUES ('9', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1750387990');
-INSERT INTO `message` VALUES ('10', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1750387990');
-INSERT INTO `message` VALUES ('11', '1', '标题', '内容', 'https:/www.baidu.com', '1737189307', '1', '1750387990');
-INSERT INTO `message` VALUES ('12', '1', '标题', '内容', 'https:/www.baidu.com', '1737189371', '1', '1750387990');
-INSERT INTO `message` VALUES ('13', '1', '标题', '内容', 'https:/www.baidu.com', '1737189428', '1', '1750387990');
-INSERT INTO `message` VALUES ('14', '1', '标题', '内容', 'https:/www.baidu.com', '1737191011', '1', '1750387990');
-INSERT INTO `message` VALUES ('15', '1', '标题', '内容', 'https:/www.baidu.com', '1737191015', '1', '1750387990');
-INSERT INTO `message` VALUES ('16', '1', '标题', '内容', 'https:/www.baidu.com', '1737191063', '1', '1750387990');
-INSERT INTO `message` VALUES ('17', '1', '标题', '内容', 'https:/www.baidu.com', '1737195121', '1', '1750387990');
-INSERT INTO `message` VALUES ('18', '1', '标题', '内容', 'https:/www.baidu.com', '1737195154', '1', '1750387990');
-INSERT INTO `message` VALUES ('19', '1', '标题', '内容', 'https:/www.baidu.com', '1737195166', '1', '1750387990');
-INSERT INTO `message` VALUES ('20', '1', '标题', '内容', 'https:/www.baidu.com', '1737195528', '1', '1750387990');
-INSERT INTO `message` VALUES ('21', '1', '标题', '内容', 'https:/www.baidu.com', '1737195649', '1', '1750387990');
-INSERT INTO `message` VALUES ('22', '1', '标题', '内容', 'https:/www.baidu.com', '1737195670', '1', '1750387990');
-INSERT INTO `message` VALUES ('23', '1', '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com', '1737196101', '1', '1750387990');
-INSERT INTO `message` VALUES ('24', '1', '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com', '1737196183', '1', '1750387990');
+INSERT INTO `message` VALUES ('1', '1', '标题', '内容', 'https:/www.baidu.com', '1737189131', '1', '1750933746');
+INSERT INTO `message` VALUES ('2', '1', '标题', '内容', 'https:/www.baidu.com', '1737189150', '1', '1750933746');
+INSERT INTO `message` VALUES ('3', '1', '标题', '内容', 'https:/www.baidu.com', '1737189193', '1', '1750933746');
+INSERT INTO `message` VALUES ('4', '1', '标题', '内容', 'https:/www.baidu.com', '1737189194', '1', '1750933746');
+INSERT INTO `message` VALUES ('5', '1', '标题', '内容', 'https:/www.baidu.com', '1737189230', '1', '1750933746');
+INSERT INTO `message` VALUES ('6', '1', '标题', '内容', 'https:/www.baidu.com', '1737189235', '1', '1750933746');
+INSERT INTO `message` VALUES ('7', '1', '标题', '内容', 'https:/www.baidu.com', '1737189285', '1', '1750933746');
+INSERT INTO `message` VALUES ('8', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1750933746');
+INSERT INTO `message` VALUES ('9', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1750933746');
+INSERT INTO `message` VALUES ('10', '1', '标题', '内容', 'https:/www.baidu.com', '1737189301', '1', '1750933746');
+INSERT INTO `message` VALUES ('11', '1', '标题', '内容', 'https:/www.baidu.com', '1737189307', '1', '1750933746');
+INSERT INTO `message` VALUES ('12', '1', '标题', '内容', 'https:/www.baidu.com', '1737189371', '1', '1750933746');
+INSERT INTO `message` VALUES ('13', '1', '标题', '内容', 'https:/www.baidu.com', '1737189428', '1', '1750933746');
+INSERT INTO `message` VALUES ('14', '1', '标题', '内容', 'https:/www.baidu.com', '1737191011', '1', '1750933746');
+INSERT INTO `message` VALUES ('15', '1', '标题', '内容', 'https:/www.baidu.com', '1737191015', '1', '1750933746');
+INSERT INTO `message` VALUES ('16', '1', '标题', '内容', 'https:/www.baidu.com', '1737191063', '1', '1750933746');
+INSERT INTO `message` VALUES ('17', '1', '标题', '内容', 'https:/www.baidu.com', '1737195121', '1', '1750933746');
+INSERT INTO `message` VALUES ('18', '1', '标题', '内容', 'https:/www.baidu.com', '1737195154', '1', '1750933746');
+INSERT INTO `message` VALUES ('19', '1', '标题', '内容', 'https:/www.baidu.com', '1737195166', '1', '1750933746');
+INSERT INTO `message` VALUES ('20', '1', '标题', '内容', 'https:/www.baidu.com', '1737195528', '1', '1750933746');
+INSERT INTO `message` VALUES ('21', '1', '标题', '内容', 'https:/www.baidu.com', '1737195649', '1', '1750933746');
+INSERT INTO `message` VALUES ('22', '1', '标题', '内容', 'https:/www.baidu.com', '1737195670', '1', '1750933746');
+INSERT INTO `message` VALUES ('23', '1', '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com', '1737196101', '1', '1750933746');
+INSERT INTO `message` VALUES ('24', '1', '你的B站2024年度报告来啦', '珍贵的回忆已经为你打包完毕！今年你登录B站多少天？谁成为了你的最爱？戳链接回顾2024，查收UP主送来的惊喜彩蛋', 'https:/www.baidu.com', '1737196183', '1', '1750933746');
 
 -- ----------------------------
 -- Table structure for mobile_permission
@@ -658,7 +682,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '操作ip',
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4462 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=4867 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -5124,6 +5148,411 @@ INSERT INTO `operation_log` VALUES ('4458', '1', '/desktop/layouts.main.MessageN
 INSERT INTO `operation_log` VALUES ('4459', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930470');
 INSERT INTO `operation_log` VALUES ('4460', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930471');
 INSERT INTO `operation_log` VALUES ('4461', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930471');
+INSERT INTO `operation_log` VALUES ('4462', '1', '/desktop/system.config.Index/save', '127.0.0.1', '1750930554');
+INSERT INTO `operation_log` VALUES ('4463', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930586');
+INSERT INTO `operation_log` VALUES ('4464', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930586');
+INSERT INTO `operation_log` VALUES ('4465', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930586');
+INSERT INTO `operation_log` VALUES ('4466', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930586');
+INSERT INTO `operation_log` VALUES ('4467', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930586');
+INSERT INTO `operation_log` VALUES ('4468', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930587');
+INSERT INTO `operation_log` VALUES ('4469', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930588');
+INSERT INTO `operation_log` VALUES ('4470', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930588');
+INSERT INTO `operation_log` VALUES ('4471', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930588');
+INSERT INTO `operation_log` VALUES ('4472', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930588');
+INSERT INTO `operation_log` VALUES ('4473', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930589');
+INSERT INTO `operation_log` VALUES ('4474', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930590');
+INSERT INTO `operation_log` VALUES ('4475', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930590');
+INSERT INTO `operation_log` VALUES ('4476', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930590');
+INSERT INTO `operation_log` VALUES ('4477', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930590');
+INSERT INTO `operation_log` VALUES ('4478', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930591');
+INSERT INTO `operation_log` VALUES ('4479', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930591');
+INSERT INTO `operation_log` VALUES ('4480', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930591');
+INSERT INTO `operation_log` VALUES ('4481', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930592');
+INSERT INTO `operation_log` VALUES ('4482', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930592');
+INSERT INTO `operation_log` VALUES ('4483', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930593');
+INSERT INTO `operation_log` VALUES ('4484', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930593');
+INSERT INTO `operation_log` VALUES ('4485', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930593');
+INSERT INTO `operation_log` VALUES ('4486', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930593');
+INSERT INTO `operation_log` VALUES ('4487', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930593');
+INSERT INTO `operation_log` VALUES ('4488', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930594');
+INSERT INTO `operation_log` VALUES ('4489', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930594');
+INSERT INTO `operation_log` VALUES ('4490', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930595');
+INSERT INTO `operation_log` VALUES ('4491', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930595');
+INSERT INTO `operation_log` VALUES ('4492', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930595');
+INSERT INTO `operation_log` VALUES ('4493', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930602');
+INSERT INTO `operation_log` VALUES ('4494', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930602');
+INSERT INTO `operation_log` VALUES ('4495', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930602');
+INSERT INTO `operation_log` VALUES ('4496', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930603');
+INSERT INTO `operation_log` VALUES ('4497', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930603');
+INSERT INTO `operation_log` VALUES ('4498', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930603');
+INSERT INTO `operation_log` VALUES ('4499', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930603');
+INSERT INTO `operation_log` VALUES ('4500', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930603');
+INSERT INTO `operation_log` VALUES ('4501', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930603');
+INSERT INTO `operation_log` VALUES ('4502', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930604');
+INSERT INTO `operation_log` VALUES ('4503', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930612');
+INSERT INTO `operation_log` VALUES ('4504', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930612');
+INSERT INTO `operation_log` VALUES ('4505', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930612');
+INSERT INTO `operation_log` VALUES ('4506', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750930613');
+INSERT INTO `operation_log` VALUES ('4507', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930613');
+INSERT INTO `operation_log` VALUES ('4508', '1', '/desktop/system.config.Index/save', '127.0.0.1', '1750930651');
+INSERT INTO `operation_log` VALUES ('4509', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1750930673');
+INSERT INTO `operation_log` VALUES ('4510', '1', '/desktop/system.desktop.menu.Edit/init', '127.0.0.1', '1750930681');
+INSERT INTO `operation_log` VALUES ('4511', '1', '/desktop/components.desktop.treeMenuSelect/getTreeMenu', '127.0.0.1', '1750930681');
+INSERT INTO `operation_log` VALUES ('4512', '1', '/desktop/system.desktop.menu.Edit/init', '127.0.0.1', '1750930685');
+INSERT INTO `operation_log` VALUES ('4513', '1', '/desktop/components.desktop.treeMenuSelect/getTreeMenu', '127.0.0.1', '1750930685');
+INSERT INTO `operation_log` VALUES ('4514', '1', '/desktop/system.desktop.menu.Edit/init', '127.0.0.1', '1750930701');
+INSERT INTO `operation_log` VALUES ('4515', '1', '/desktop/components.desktop.treeMenuSelect/getTreeMenu', '127.0.0.1', '1750930701');
+INSERT INTO `operation_log` VALUES ('4516', '1', '/desktop/system.desktop.menu.Edit/init', '127.0.0.1', '1750930712');
+INSERT INTO `operation_log` VALUES ('4517', '1', '/desktop/components.desktop.treeMenuSelect/getTreeMenu', '127.0.0.1', '1750930712');
+INSERT INTO `operation_log` VALUES ('4518', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1750930718');
+INSERT INTO `operation_log` VALUES ('4519', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1750930720');
+INSERT INTO `operation_log` VALUES ('4520', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930922');
+INSERT INTO `operation_log` VALUES ('4521', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930922');
+INSERT INTO `operation_log` VALUES ('4522', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930922');
+INSERT INTO `operation_log` VALUES ('4523', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930922');
+INSERT INTO `operation_log` VALUES ('4524', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930929');
+INSERT INTO `operation_log` VALUES ('4525', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930930');
+INSERT INTO `operation_log` VALUES ('4526', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930930');
+INSERT INTO `operation_log` VALUES ('4527', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930930');
+INSERT INTO `operation_log` VALUES ('4528', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750930933');
+INSERT INTO `operation_log` VALUES ('4529', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750930933');
+INSERT INTO `operation_log` VALUES ('4530', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750930943');
+INSERT INTO `operation_log` VALUES ('4531', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750930943');
+INSERT INTO `operation_log` VALUES ('4532', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750930943');
+INSERT INTO `operation_log` VALUES ('4533', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750930944');
+INSERT INTO `operation_log` VALUES ('4534', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750930944');
+INSERT INTO `operation_log` VALUES ('4535', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750930944');
+INSERT INTO `operation_log` VALUES ('4536', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750931061');
+INSERT INTO `operation_log` VALUES ('4537', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750931061');
+INSERT INTO `operation_log` VALUES ('4538', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750931061');
+INSERT INTO `operation_log` VALUES ('4539', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750931061');
+INSERT INTO `operation_log` VALUES ('4540', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750931061');
+INSERT INTO `operation_log` VALUES ('4541', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750931061');
+INSERT INTO `operation_log` VALUES ('4542', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750931448');
+INSERT INTO `operation_log` VALUES ('4543', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750931448');
+INSERT INTO `operation_log` VALUES ('4544', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750931448');
+INSERT INTO `operation_log` VALUES ('4545', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750931449');
+INSERT INTO `operation_log` VALUES ('4546', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750931465');
+INSERT INTO `operation_log` VALUES ('4547', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1750931466');
+INSERT INTO `operation_log` VALUES ('4548', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1750931466');
+INSERT INTO `operation_log` VALUES ('4549', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1750931467');
+INSERT INTO `operation_log` VALUES ('4550', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750931468');
+INSERT INTO `operation_log` VALUES ('4551', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750931481');
+INSERT INTO `operation_log` VALUES ('4552', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750931481');
+INSERT INTO `operation_log` VALUES ('4553', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750931496');
+INSERT INTO `operation_log` VALUES ('4554', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750931507');
+INSERT INTO `operation_log` VALUES ('4555', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750931958');
+INSERT INTO `operation_log` VALUES ('4556', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750931958');
+INSERT INTO `operation_log` VALUES ('4557', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750931958');
+INSERT INTO `operation_log` VALUES ('4558', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750931958');
+INSERT INTO `operation_log` VALUES ('4559', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750931958');
+INSERT INTO `operation_log` VALUES ('4560', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750931958');
+INSERT INTO `operation_log` VALUES ('4561', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750932043');
+INSERT INTO `operation_log` VALUES ('4562', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750932043');
+INSERT INTO `operation_log` VALUES ('4563', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750932043');
+INSERT INTO `operation_log` VALUES ('4564', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750932043');
+INSERT INTO `operation_log` VALUES ('4565', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750932043');
+INSERT INTO `operation_log` VALUES ('4566', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750932044');
+INSERT INTO `operation_log` VALUES ('4567', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1750932300');
+INSERT INTO `operation_log` VALUES ('4568', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1750932300');
+INSERT INTO `operation_log` VALUES ('4569', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750932302');
+INSERT INTO `operation_log` VALUES ('4570', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750932302');
+INSERT INTO `operation_log` VALUES ('4571', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750932302');
+INSERT INTO `operation_log` VALUES ('4572', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750932302');
+INSERT INTO `operation_log` VALUES ('4573', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750932302');
+INSERT INTO `operation_log` VALUES ('4574', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750932302');
+INSERT INTO `operation_log` VALUES ('4575', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750932329');
+INSERT INTO `operation_log` VALUES ('4576', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750932330');
+INSERT INTO `operation_log` VALUES ('4577', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750932330');
+INSERT INTO `operation_log` VALUES ('4578', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750932330');
+INSERT INTO `operation_log` VALUES ('4579', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750932330');
+INSERT INTO `operation_log` VALUES ('4580', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750932331');
+INSERT INTO `operation_log` VALUES ('4581', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750932475');
+INSERT INTO `operation_log` VALUES ('4582', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750932475');
+INSERT INTO `operation_log` VALUES ('4583', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750932475');
+INSERT INTO `operation_log` VALUES ('4584', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750932475');
+INSERT INTO `operation_log` VALUES ('4585', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750932475');
+INSERT INTO `operation_log` VALUES ('4586', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750932476');
+INSERT INTO `operation_log` VALUES ('4587', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750932499');
+INSERT INTO `operation_log` VALUES ('4588', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750932499');
+INSERT INTO `operation_log` VALUES ('4589', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750932499');
+INSERT INTO `operation_log` VALUES ('4590', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750932499');
+INSERT INTO `operation_log` VALUES ('4591', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750932499');
+INSERT INTO `operation_log` VALUES ('4592', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750932499');
+INSERT INTO `operation_log` VALUES ('4593', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750932663');
+INSERT INTO `operation_log` VALUES ('4594', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750932663');
+INSERT INTO `operation_log` VALUES ('4595', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750932663');
+INSERT INTO `operation_log` VALUES ('4596', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750932663');
+INSERT INTO `operation_log` VALUES ('4597', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750932663');
+INSERT INTO `operation_log` VALUES ('4598', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750932663');
+INSERT INTO `operation_log` VALUES ('4599', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750932890');
+INSERT INTO `operation_log` VALUES ('4600', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933040');
+INSERT INTO `operation_log` VALUES ('4601', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933040');
+INSERT INTO `operation_log` VALUES ('4602', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933040');
+INSERT INTO `operation_log` VALUES ('4603', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933040');
+INSERT INTO `operation_log` VALUES ('4604', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933041');
+INSERT INTO `operation_log` VALUES ('4605', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933041');
+INSERT INTO `operation_log` VALUES ('4606', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933178');
+INSERT INTO `operation_log` VALUES ('4607', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933178');
+INSERT INTO `operation_log` VALUES ('4608', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933178');
+INSERT INTO `operation_log` VALUES ('4609', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933178');
+INSERT INTO `operation_log` VALUES ('4610', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933178');
+INSERT INTO `operation_log` VALUES ('4611', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933178');
+INSERT INTO `operation_log` VALUES ('4612', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933229');
+INSERT INTO `operation_log` VALUES ('4613', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933229');
+INSERT INTO `operation_log` VALUES ('4614', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933229');
+INSERT INTO `operation_log` VALUES ('4615', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933229');
+INSERT INTO `operation_log` VALUES ('4616', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933229');
+INSERT INTO `operation_log` VALUES ('4617', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933230');
+INSERT INTO `operation_log` VALUES ('4618', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933446');
+INSERT INTO `operation_log` VALUES ('4619', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933446');
+INSERT INTO `operation_log` VALUES ('4620', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933446');
+INSERT INTO `operation_log` VALUES ('4621', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933446');
+INSERT INTO `operation_log` VALUES ('4622', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933447');
+INSERT INTO `operation_log` VALUES ('4623', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933447');
+INSERT INTO `operation_log` VALUES ('4624', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933489');
+INSERT INTO `operation_log` VALUES ('4625', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933614');
+INSERT INTO `operation_log` VALUES ('4626', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933619');
+INSERT INTO `operation_log` VALUES ('4627', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933619');
+INSERT INTO `operation_log` VALUES ('4628', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933619');
+INSERT INTO `operation_log` VALUES ('4629', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933619');
+INSERT INTO `operation_log` VALUES ('4630', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933619');
+INSERT INTO `operation_log` VALUES ('4631', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933619');
+INSERT INTO `operation_log` VALUES ('4632', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933632');
+INSERT INTO `operation_log` VALUES ('4633', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933632');
+INSERT INTO `operation_log` VALUES ('4634', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933632');
+INSERT INTO `operation_log` VALUES ('4635', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933632');
+INSERT INTO `operation_log` VALUES ('4636', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933633');
+INSERT INTO `operation_log` VALUES ('4637', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933633');
+INSERT INTO `operation_log` VALUES ('4638', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933672');
+INSERT INTO `operation_log` VALUES ('4639', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933672');
+INSERT INTO `operation_log` VALUES ('4640', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933672');
+INSERT INTO `operation_log` VALUES ('4641', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933672');
+INSERT INTO `operation_log` VALUES ('4642', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933672');
+INSERT INTO `operation_log` VALUES ('4643', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933672');
+INSERT INTO `operation_log` VALUES ('4644', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933688');
+INSERT INTO `operation_log` VALUES ('4645', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933693');
+INSERT INTO `operation_log` VALUES ('4646', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933695');
+INSERT INTO `operation_log` VALUES ('4647', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933695');
+INSERT INTO `operation_log` VALUES ('4648', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933695');
+INSERT INTO `operation_log` VALUES ('4649', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933695');
+INSERT INTO `operation_log` VALUES ('4650', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933695');
+INSERT INTO `operation_log` VALUES ('4651', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933696');
+INSERT INTO `operation_log` VALUES ('4652', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933706');
+INSERT INTO `operation_log` VALUES ('4653', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750933745');
+INSERT INTO `operation_log` VALUES ('4654', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750933745');
+INSERT INTO `operation_log` VALUES ('4655', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750933746');
+INSERT INTO `operation_log` VALUES ('4656', '1', '/desktop/system.message.Index/getPaginate', '127.0.0.1', '1750933746');
+INSERT INTO `operation_log` VALUES ('4657', '1', '/desktop/system.message.Index/setAllRead', '127.0.0.1', '1750933746');
+INSERT INTO `operation_log` VALUES ('4658', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750933746');
+INSERT INTO `operation_log` VALUES ('4659', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1750933748');
+INSERT INTO `operation_log` VALUES ('4660', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1750933754');
+INSERT INTO `operation_log` VALUES ('4661', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1750933754');
+INSERT INTO `operation_log` VALUES ('4662', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1750933754');
+INSERT INTO `operation_log` VALUES ('4663', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1750990389');
+INSERT INTO `operation_log` VALUES ('4664', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1750990389');
+INSERT INTO `operation_log` VALUES ('4665', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750990391');
+INSERT INTO `operation_log` VALUES ('4666', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750990391');
+INSERT INTO `operation_log` VALUES ('4667', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750990391');
+INSERT INTO `operation_log` VALUES ('4668', '1', '/desktop/Frame/getWatermark', '127.0.0.1', '1750990391');
+INSERT INTO `operation_log` VALUES ('4669', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750990391');
+INSERT INTO `operation_log` VALUES ('4670', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750990395');
+INSERT INTO `operation_log` VALUES ('4671', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750990395');
+INSERT INTO `operation_log` VALUES ('4672', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750990396');
+INSERT INTO `operation_log` VALUES ('4673', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750990396');
+INSERT INTO `operation_log` VALUES ('4674', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750990446');
+INSERT INTO `operation_log` VALUES ('4675', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750990446');
+INSERT INTO `operation_log` VALUES ('4676', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750990446');
+INSERT INTO `operation_log` VALUES ('4677', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750990446');
+INSERT INTO `operation_log` VALUES ('4678', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1750990680');
+INSERT INTO `operation_log` VALUES ('4679', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750991158');
+INSERT INTO `operation_log` VALUES ('4680', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750991158');
+INSERT INTO `operation_log` VALUES ('4681', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750991159');
+INSERT INTO `operation_log` VALUES ('4682', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1750991159');
+INSERT INTO `operation_log` VALUES ('4683', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750991159');
+INSERT INTO `operation_log` VALUES ('4684', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750991262');
+INSERT INTO `operation_log` VALUES ('4685', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750991262');
+INSERT INTO `operation_log` VALUES ('4686', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750991262');
+INSERT INTO `operation_log` VALUES ('4687', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1750991262');
+INSERT INTO `operation_log` VALUES ('4688', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750991263');
+INSERT INTO `operation_log` VALUES ('4689', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750992523');
+INSERT INTO `operation_log` VALUES ('4690', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1750992569');
+INSERT INTO `operation_log` VALUES ('4691', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1750992569');
+INSERT INTO `operation_log` VALUES ('4692', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750992572');
+INSERT INTO `operation_log` VALUES ('4693', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750992572');
+INSERT INTO `operation_log` VALUES ('4694', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750992573');
+INSERT INTO `operation_log` VALUES ('4695', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750992573');
+INSERT INTO `operation_log` VALUES ('4696', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750992573');
+INSERT INTO `operation_log` VALUES ('4697', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750992598');
+INSERT INTO `operation_log` VALUES ('4698', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750992599');
+INSERT INTO `operation_log` VALUES ('4699', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750992599');
+INSERT INTO `operation_log` VALUES ('4700', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750992599');
+INSERT INTO `operation_log` VALUES ('4701', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750992599');
+INSERT INTO `operation_log` VALUES ('4702', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750992649');
+INSERT INTO `operation_log` VALUES ('4703', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750992649');
+INSERT INTO `operation_log` VALUES ('4704', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750992649');
+INSERT INTO `operation_log` VALUES ('4705', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750992649');
+INSERT INTO `operation_log` VALUES ('4706', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750992650');
+INSERT INTO `operation_log` VALUES ('4707', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750992743');
+INSERT INTO `operation_log` VALUES ('4708', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750992743');
+INSERT INTO `operation_log` VALUES ('4709', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750992743');
+INSERT INTO `operation_log` VALUES ('4710', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750992744');
+INSERT INTO `operation_log` VALUES ('4711', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750992744');
+INSERT INTO `operation_log` VALUES ('4712', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750992858');
+INSERT INTO `operation_log` VALUES ('4713', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750992864');
+INSERT INTO `operation_log` VALUES ('4714', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750992864');
+INSERT INTO `operation_log` VALUES ('4715', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750992864');
+INSERT INTO `operation_log` VALUES ('4716', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750992864');
+INSERT INTO `operation_log` VALUES ('4717', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750992864');
+INSERT INTO `operation_log` VALUES ('4718', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750993182');
+INSERT INTO `operation_log` VALUES ('4719', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750993182');
+INSERT INTO `operation_log` VALUES ('4720', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750993182');
+INSERT INTO `operation_log` VALUES ('4721', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750993182');
+INSERT INTO `operation_log` VALUES ('4722', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750993183');
+INSERT INTO `operation_log` VALUES ('4723', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750993225');
+INSERT INTO `operation_log` VALUES ('4724', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750993225');
+INSERT INTO `operation_log` VALUES ('4725', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750993225');
+INSERT INTO `operation_log` VALUES ('4726', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750993225');
+INSERT INTO `operation_log` VALUES ('4727', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750993225');
+INSERT INTO `operation_log` VALUES ('4728', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750993267');
+INSERT INTO `operation_log` VALUES ('4729', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750993267');
+INSERT INTO `operation_log` VALUES ('4730', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750993267');
+INSERT INTO `operation_log` VALUES ('4731', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750993267');
+INSERT INTO `operation_log` VALUES ('4732', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750993268');
+INSERT INTO `operation_log` VALUES ('4733', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750993295');
+INSERT INTO `operation_log` VALUES ('4734', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750993304');
+INSERT INTO `operation_log` VALUES ('4735', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750993304');
+INSERT INTO `operation_log` VALUES ('4736', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750993304');
+INSERT INTO `operation_log` VALUES ('4737', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750993305');
+INSERT INTO `operation_log` VALUES ('4738', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750993305');
+INSERT INTO `operation_log` VALUES ('4739', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750993345');
+INSERT INTO `operation_log` VALUES ('4740', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750993345');
+INSERT INTO `operation_log` VALUES ('4741', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750993345');
+INSERT INTO `operation_log` VALUES ('4742', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750993345');
+INSERT INTO `operation_log` VALUES ('4743', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750993346');
+INSERT INTO `operation_log` VALUES ('4744', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1750993878');
+INSERT INTO `operation_log` VALUES ('4745', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750993946');
+INSERT INTO `operation_log` VALUES ('4746', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750993947');
+INSERT INTO `operation_log` VALUES ('4747', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750993947');
+INSERT INTO `operation_log` VALUES ('4748', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1750993947');
+INSERT INTO `operation_log` VALUES ('4749', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750993947');
+INSERT INTO `operation_log` VALUES ('4750', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1750993950');
+INSERT INTO `operation_log` VALUES ('4751', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1750993950');
+INSERT INTO `operation_log` VALUES ('4752', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1750993951');
+INSERT INTO `operation_log` VALUES ('4753', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750994015');
+INSERT INTO `operation_log` VALUES ('4754', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750994015');
+INSERT INTO `operation_log` VALUES ('4755', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750994015');
+INSERT INTO `operation_log` VALUES ('4756', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1750994015');
+INSERT INTO `operation_log` VALUES ('4757', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1750994015');
+INSERT INTO `operation_log` VALUES ('4758', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1750994015');
+INSERT INTO `operation_log` VALUES ('4759', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750994015');
+INSERT INTO `operation_log` VALUES ('4760', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750994053');
+INSERT INTO `operation_log` VALUES ('4761', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750994053');
+INSERT INTO `operation_log` VALUES ('4762', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750994053');
+INSERT INTO `operation_log` VALUES ('4763', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750994053');
+INSERT INTO `operation_log` VALUES ('4764', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750994229');
+INSERT INTO `operation_log` VALUES ('4765', '1', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1750994232');
+INSERT INTO `operation_log` VALUES ('4766', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750994236');
+INSERT INTO `operation_log` VALUES ('4767', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1750994237');
+INSERT INTO `operation_log` VALUES ('4768', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1750994237');
+INSERT INTO `operation_log` VALUES ('4769', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1750994237');
+INSERT INTO `operation_log` VALUES ('4770', '1', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1750994239');
+INSERT INTO `operation_log` VALUES ('4771', '1', '/desktop/system.role.Index/getPaginate', '127.0.0.1', '1750994240');
+INSERT INTO `operation_log` VALUES ('4772', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1750994242');
+INSERT INTO `operation_log` VALUES ('4773', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1750994244');
+INSERT INTO `operation_log` VALUES ('4774', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1750994245');
+INSERT INTO `operation_log` VALUES ('4775', '1', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1750994247');
+INSERT INTO `operation_log` VALUES ('4776', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1750994292');
+INSERT INTO `operation_log` VALUES ('4777', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1750994292');
+INSERT INTO `operation_log` VALUES ('4778', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1750994292');
+INSERT INTO `operation_log` VALUES ('4779', '1', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1750994395');
+INSERT INTO `operation_log` VALUES ('4780', '1', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1750994400');
+INSERT INTO `operation_log` VALUES ('4781', '1', '/desktop/system.desktop.route.Index/getRoutes', '127.0.0.1', '1750994407');
+INSERT INTO `operation_log` VALUES ('4782', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750994421');
+INSERT INTO `operation_log` VALUES ('4783', '1', '/desktop/system.config.Index/save', '127.0.0.1', '1750994425');
+INSERT INTO `operation_log` VALUES ('4784', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1750994436');
+INSERT INTO `operation_log` VALUES ('4785', '1', '/desktop/layouts.main.user.EditAvatar/save', '127.0.0.1', '1750994504');
+INSERT INTO `operation_log` VALUES ('4786', '1', '/desktop/layouts.main.user.EditAvatar/save', '127.0.0.1', '1750994517');
+INSERT INTO `operation_log` VALUES ('4787', '1', '/desktop/layouts.main.user.EditAvatar/save', '127.0.0.1', '1750994606');
+INSERT INTO `operation_log` VALUES ('4788', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750994606');
+INSERT INTO `operation_log` VALUES ('4789', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1750994614');
+INSERT INTO `operation_log` VALUES ('4790', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1750994645');
+INSERT INTO `operation_log` VALUES ('4791', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1750994661');
+INSERT INTO `operation_log` VALUES ('4792', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1750994661');
+INSERT INTO `operation_log` VALUES ('4793', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750994663');
+INSERT INTO `operation_log` VALUES ('4794', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750994663');
+INSERT INTO `operation_log` VALUES ('4795', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750994663');
+INSERT INTO `operation_log` VALUES ('4796', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750994663');
+INSERT INTO `operation_log` VALUES ('4797', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750994663');
+INSERT INTO `operation_log` VALUES ('4798', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1750994757');
+INSERT INTO `operation_log` VALUES ('4799', '1', '/desktop/layouts.main.user.EditAvatar/save', '127.0.0.1', '1750994771');
+INSERT INTO `operation_log` VALUES ('4800', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750994771');
+INSERT INTO `operation_log` VALUES ('4801', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1750994776');
+INSERT INTO `operation_log` VALUES ('4802', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1750994776');
+INSERT INTO `operation_log` VALUES ('4803', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750994776');
+INSERT INTO `operation_log` VALUES ('4804', '1', '/desktop/system.config.Index/init', '127.0.0.1', '1750994776');
+INSERT INTO `operation_log` VALUES ('4805', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1750994776');
+INSERT INTO `operation_log` VALUES ('4806', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1750994779');
+INSERT INTO `operation_log` VALUES ('4807', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1750995848');
+INSERT INTO `operation_log` VALUES ('4808', '1', '/desktop/layouts.main.user.EditAvatar/save', '127.0.0.1', '1750995857');
+INSERT INTO `operation_log` VALUES ('4809', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1750995858');
+INSERT INTO `operation_log` VALUES ('4810', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1751003328');
+INSERT INTO `operation_log` VALUES ('4811', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1751003328');
+INSERT INTO `operation_log` VALUES ('4812', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1751003329');
+INSERT INTO `operation_log` VALUES ('4813', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1751003329');
+INSERT INTO `operation_log` VALUES ('4814', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1751003329');
+INSERT INTO `operation_log` VALUES ('4815', '1', '/desktop/Frame/getWatermark', '127.0.0.1', '1751003330');
+INSERT INTO `operation_log` VALUES ('4816', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1751003330');
+INSERT INTO `operation_log` VALUES ('4817', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1751003333');
+INSERT INTO `operation_log` VALUES ('4818', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1751003370');
+INSERT INTO `operation_log` VALUES ('4819', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1751003447');
+INSERT INTO `operation_log` VALUES ('4820', '1', '/desktop/layouts.main.user.EditAvatar/save', '127.0.0.1', '1751003461');
+INSERT INTO `operation_log` VALUES ('4821', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1751003462');
+INSERT INTO `operation_log` VALUES ('4822', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1751003465');
+INSERT INTO `operation_log` VALUES ('4823', '1', '/desktop/layouts.main.user.EditAvatar/save', '127.0.0.1', '1751003485');
+INSERT INTO `operation_log` VALUES ('4824', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1751003486');
+INSERT INTO `operation_log` VALUES ('4825', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1751003918');
+INSERT INTO `operation_log` VALUES ('4826', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1751003918');
+INSERT INTO `operation_log` VALUES ('4827', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1751003918');
+INSERT INTO `operation_log` VALUES ('4828', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1751003929');
+INSERT INTO `operation_log` VALUES ('4829', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1751003929');
+INSERT INTO `operation_log` VALUES ('4830', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1751003943');
+INSERT INTO `operation_log` VALUES ('4831', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1751003943');
+INSERT INTO `operation_log` VALUES ('4832', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1751003975');
+INSERT INTO `operation_log` VALUES ('4833', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1751003975');
+INSERT INTO `operation_log` VALUES ('4834', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1751003975');
+INSERT INTO `operation_log` VALUES ('4835', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1751004007');
+INSERT INTO `operation_log` VALUES ('4836', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1751004007');
+INSERT INTO `operation_log` VALUES ('4837', '1', '/desktop/system.user.Detail/init', '127.0.0.1', '1751004051');
+INSERT INTO `operation_log` VALUES ('4838', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751004061');
+INSERT INTO `operation_log` VALUES ('4839', '1', '/desktop/system.user.Detail/init', '127.0.0.1', '1751004079');
+INSERT INTO `operation_log` VALUES ('4840', '1', '/desktop/system.user.Detail/init', '127.0.0.1', '1751004274');
+INSERT INTO `operation_log` VALUES ('4841', '1', '/desktop/system.user.Detail/init', '127.0.0.1', '1751004276');
+INSERT INTO `operation_log` VALUES ('4842', '1', '/desktop/system.user.Detail/init', '127.0.0.1', '1751004907');
+INSERT INTO `operation_log` VALUES ('4843', '1', '/desktop/system.user.Detail/init', '127.0.0.1', '1751004985');
+INSERT INTO `operation_log` VALUES ('4844', '1', '/desktop/layouts.main.Menu/getTreeMenu', '127.0.0.1', '1751005000');
+INSERT INTO `operation_log` VALUES ('4845', '1', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1751005000');
+INSERT INTO `operation_log` VALUES ('4846', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1751005000');
+INSERT INTO `operation_log` VALUES ('4847', '1', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1751005000');
+INSERT INTO `operation_log` VALUES ('4848', '1', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1751005000');
+INSERT INTO `operation_log` VALUES ('4849', '1', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1751005000');
+INSERT INTO `operation_log` VALUES ('4850', '1', '/desktop/layouts.Main/init', '127.0.0.1', '1751005000');
+INSERT INTO `operation_log` VALUES ('4851', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005003');
+INSERT INTO `operation_log` VALUES ('4852', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005006');
+INSERT INTO `operation_log` VALUES ('4853', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005122');
+INSERT INTO `operation_log` VALUES ('4854', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005179');
+INSERT INTO `operation_log` VALUES ('4855', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005449');
+INSERT INTO `operation_log` VALUES ('4856', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005456');
+INSERT INTO `operation_log` VALUES ('4857', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005465');
+INSERT INTO `operation_log` VALUES ('4858', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005469');
+INSERT INTO `operation_log` VALUES ('4859', '1', '/desktop/frame/getPermissions', '127.0.0.1', '1751005478');
+INSERT INTO `operation_log` VALUES ('4860', '1', '/desktop/frame/getRoutes', '127.0.0.1', '1751005478');
+INSERT INTO `operation_log` VALUES ('4861', '1', '/desktop/system.user.Detail/init', '127.0.0.1', '1751005479');
+INSERT INTO `operation_log` VALUES ('4862', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1751005549');
+INSERT INTO `operation_log` VALUES ('4863', '1', '/desktop/layouts.main.user.EditAvatar/save', '127.0.0.1', '1751005564');
+INSERT INTO `operation_log` VALUES ('4864', '1', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1751005565');
+INSERT INTO `operation_log` VALUES ('4865', '1', '/desktop/layouts.main.user.Detail/getUser', '127.0.0.1', '1751005568');
+INSERT INTO `operation_log` VALUES ('4866', '1', '/desktop/layouts.main.user.EditAvatar/init', '127.0.0.1', '1751005625');
 
 -- ----------------------------
 -- Table structure for role
@@ -5321,6 +5750,7 @@ CREATE TABLE `user` (
   `name` varchar(63) NOT NULL DEFAULT '' COMMENT '姓名',
   `phone` varchar(63) NOT NULL DEFAULT '' COMMENT '手机号码',
   `avatar` varchar(127) NOT NULL DEFAULT '' COMMENT '头像',
+  `big_avatar` varchar(127) NOT NULL DEFAULT '' COMMENT '大头像',
   `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `edit_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
   `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
@@ -5332,9 +5762,9 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '张三', '15122222222', 'avatar/2025/04/08/a6748e0fd20912cad64355baf91e8ce8.png', '1684989244', '1716183018', '1750930457', '127.0.0.1');
-INSERT INTO `user` VALUES ('2', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '1', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
-INSERT INTO `user` VALUES ('3', '1', 'test1', 'ea7d67381ace4fcd68e90985645aa69d', '1', 'test1', '15108273575', '', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '张三', '15122222222', '', '', '1684989244', '1716183018', '1751003327', '127.0.0.1');
+INSERT INTO `user` VALUES ('2', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '1', '李四', '15111111111', '', '', '1684992552', '1703148627', '0', '');
+INSERT INTO `user` VALUES ('3', '1', 'test1', 'ea7d67381ace4fcd68e90985645aa69d', '1', 'test1', '15108273575', '', '', '0', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for user_role

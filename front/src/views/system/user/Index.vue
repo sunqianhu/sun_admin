@@ -43,8 +43,13 @@
         class="table"
       >
         <el-table-column v-slot="{ row }" prop="account" label="账号">
-          <a :href="'/system/user/detail-' + row.id" target="_blank">
-            {{ row.account }}
+          <a
+            :href="'/system/user/detail-' + row.id"
+            target="_blank"
+            class="account"
+          >
+            <el-avatar :size="30" :src="row.avatar_url" />
+            <span class="account__account">{{ row.account }} </span>
           </a>
         </el-table-column>
         <el-table-column prop="name" label="姓名" />
@@ -296,6 +301,13 @@ onMounted(() => {
     }
     .table {
       width: 100%;
+      .account {
+        display: flex;
+        align-items: center;
+        .account__account {
+          margin-left: var(--margin-sm);
+        }
+      }
     }
   }
   .pagination {

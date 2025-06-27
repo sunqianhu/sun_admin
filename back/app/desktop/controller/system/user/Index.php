@@ -22,7 +22,7 @@ class Index extends Base
 
         $query = UserModel::alias('u')
             ->leftJoin('user_role ur', 'u.id = ur.user_id')
-            ->field('u.id,u.account,u.name,u.phone,u.status,u.add_time,u.department_id')
+            ->field('u.id,u.account,u.name,u.phone,u.status,u.add_time,u.department_id,u.avatar')
             ->with('department');
         if (!empty($get['department_ids'])) {
             $query->whereIn('u.department_id', $get['department_ids']);
@@ -40,7 +40,8 @@ class Index extends Base
             $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
         $query->group('u.id')
-            ->order('u.id', 'desc');
+            ->order('u.id', 'desc')
+            ->append(['avatar_url']);
         $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page']

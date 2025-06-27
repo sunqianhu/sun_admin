@@ -5,8 +5,7 @@ namespace app\service;
 use app\model\UserModel;
 use app\model\UserRoleModel;
 use Exception;
-use Sunqianhu\Helper\File;
-use Sunqianhu\Helper\Image;
+use Sunqianhu\Helper\thinkphp\Crud;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -129,24 +128,6 @@ class UserService
     }
 
     /**
-     * 得到头像url
-     * @param $path
-     * @return string
-     * @throws Exception
-     */
-    public function getAvatarUrl($path)
-    {
-        if ($path === '') {
-            $path = 'image/avatar.png';
-            $siteService = new SiteService();
-            return $siteService->getUrl($path);
-        }
-
-        $file = new File();
-        return $file->getUrl($path);
-    }
-
-    /**
      * 得到角色id列表
      * @param $userId
      * @return array
@@ -156,43 +137,6 @@ class UserService
         return UserRoleModel::where('user_id', $userId)
             ->group('role_id')
             ->column('role_id');
-    }
-
-    /**
-     * 通过base64内容修改头像
-     * @param $id
-     * @param $base64ImageContent
-     * @return string
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException|Exception
-     */
-    public function editAvatarByBase64Content($id, $base64ImageContent)
-    {
-        $image = new Image();
-        $path = $image->saveBase64ContentToFile('avatar', $base64ImageContent);
-
-        $file = new File();
-        $fullPath = $file->getFullPath($path);
-        $image->generateThumbnail($fullPath, $fullPath, 200);
-
-        $this->editAvatar($id, $path);
-        return $path;
-    }
-
-    /**
-     * 修改头像
-     * @param $id
-     * @param $path
-     * @return void
-     * @throws Exception
-     */
-    public function editAvatar($id, $path)
-    {
-        $userCrud = new Crud(UserModel::class);
-        $userCrud->update($id, [
-            'avatar' => $path
-        ]);
     }
 
     /**

@@ -4,9 +4,8 @@ namespace app\desktop\controller\layouts\main\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\UserService;
+use app\service\UserAvatarService;
 use app\validate\user\AvatarBase64ImageContentValidate;
-use Sunqianhu\Helper\File;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -27,10 +26,10 @@ class EditAvatar extends Base
      */
     public function init()
     {
-        $userModel = UserModel::field('avatar')->find($this->userId);
-        $avatar = $userModel->avatar_url;
+        $userModel = UserModel::field('big_avatar')->find($this->userId);
+        $url = $userModel->big_avatar_url;
 
-        return $this->getSuccessResonse('获取成功', $avatar);
+        return $this->getSuccessResonse('获取成功', $url);
     }
 
     /**
@@ -47,15 +46,13 @@ class EditAvatar extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $userService = new UserService();
+        $userAvatarService = new UserAvatarService();
         try {
-            $path = $userService->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
+            $userAvatarService->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
-
-        $file = new File();
-        $url = $file->getUrl($path);
+        $url = $userAvatarService->getBigAvatarUrlByUserId($this->userId);
 
         return $this->getSuccessResonse('修改成功', $url);
     }

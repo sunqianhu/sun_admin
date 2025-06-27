@@ -24,9 +24,9 @@ class Detail extends Base
         }
         $id = $get['id'];
 
-        $userModel = UserModel::field('id,account,name,phone,department_id,add_time,status,edit_time,last_login_time,last_login_ip')
+        $userModel = UserModel::field('id,account,name,phone,department_id,add_time,status,edit_time,last_login_time,last_login_ip,avatar,big_avatar')
             ->with(['roles', 'department'])
-            ->append(['status_name', 'role_names'])
+            ->append(['status_name', 'role_names', 'avatar_url', 'big_avatar_url'])
             ->find($id);
         if (empty($userModel)) {
             return $this->getErrorResponse('没有找到记录');

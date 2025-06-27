@@ -1373,16 +1373,16 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.2.13",
+            "version": "1.2.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "9d50eb2f768e6c94562aa883caa4f36f6fdf2739"
+                "reference": "5cf3df5a737a506b13cff897dd3a52450cdea129"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/9d50eb2f768e6c94562aa883caa4f36f6fdf2739",
-                "reference": "9d50eb2f768e6c94562aa883caa4f36f6fdf2739",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/5cf3df5a737a506b13cff897dd3a52450cdea129",
+                "reference": "5cf3df5a737a506b13cff897dd3a52450cdea129",
                 "shasum": ""
             },
             "type": "library",
@@ -1404,9 +1404,9 @@
             "description": "php助手类包含项目开发过程中各种常用的工具类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.2.13"
+                "source": "https://github.com/sunqianhu/helper/tree/1.2.14"
             },
-            "time": "2025-06-25T06:50:35+00:00"
+            "time": "2025-06-27T05:21:51+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

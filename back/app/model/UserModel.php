@@ -2,7 +2,7 @@
 namespace app\model;
 
 use Sunqianhu\Helper\SingletonFactory;
-use app\service\UserService;
+use app\service\UserAvatarService;
 use think\model\relation\BelongsTo;
 use think\model\relation\BelongsToMany;
 
@@ -54,8 +54,21 @@ class UserModel extends BaseModel
      */
     public function getAvatarUrlAttr($value, $data)
     {
-        $userService = SingletonFactory::getInstance(UserService::class);
-        return $userService->getAvatarUrl($data['avatar']);
+        $userAvatarService = SingletonFactory::getInstance(UserAvatarService::class);
+        return $userAvatarService->getAvatarUrl($data['avatar']);
+    }
+
+    /**
+     * 得到大头像url
+     * @param $value
+     * @param $data
+     * @return string
+     * @throws \Exception
+     */
+    public function getBigAvatarUrlAttr($value, $data)
+    {
+        $userAvatarService = SingletonFactory::getInstance(UserAvatarService::class);
+        return $userAvatarService->getBigAvatarUrl($data['big_avatar']);
     }
 
     /**
