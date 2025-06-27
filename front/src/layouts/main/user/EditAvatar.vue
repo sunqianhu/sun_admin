@@ -74,9 +74,11 @@ import { VueCropper } from "vue-cropper";
 const emits = defineEmits(["close", "submited"]);
 const user = ref({});
 const cropperRef = ref();
+//官网参考：https://github.com/xyxiao001/vue-cropper
 const option = ref({
   img: "", //裁剪框图片
   outputType: "png", //图片输出类型
+  outputSize: 1, //图片输出质量
   info: false, //是否显示裁减区域的宽度和高度
   autoCrop: true, //是否默认生成截图框
   fixed: true, //是否开启截图框宽高固定比例
@@ -163,6 +165,7 @@ const rotateRight = () => {
  * @param {*} data
  */
 const realTimePreview = (data) => {
+  console.log(data);
   preview.value = data;
   let scale = 100 / data.w;
   preview.value.div = {
