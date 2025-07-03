@@ -14,12 +14,12 @@ services:
       - sun_admin
     restart: always
   #前端
-  sun_admin_front_desktop:
+  sun_admin_front:
     #build:
-    #  context: ./front_desktop/
+    #  context: ./front/
     #  dockerfile: Dockerfile
-    image: sun_admin_front_desktop:latest #镜像名版本号
-    container_name: sun_admin_front_desktop #容器名
+    image: sun_admin_front:latest #镜像名版本号
+    container_name: sun_admin_front #容器名
     depends_on:
       - sun_admin_back #确保后端容器先启动
     ports:
@@ -32,7 +32,7 @@ services:
     image: mysql:5.7.44
     container_name: sun_admin_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: Welcome123#
+      MYSQL_ROOT_PASSWORD: Hello*@SunAdmin#
       MYSQL_DATABASE: sun_admin
       MYSQL_USER: sun_admin
       MYSQL_PASSWORD: aW9%mY1(fV9[gI6!
