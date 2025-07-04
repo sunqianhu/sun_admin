@@ -1,5 +1,4 @@
-#构建应用
-FROM node:lts-alpine as build
+FROM node:24.3.0-alpine as build
 WORKDIR /app
 
 COPY . .
@@ -7,7 +6,7 @@ RUN npm ci
 RUN npm run build
 
 #nginx服务
-FROM nginx:alpine
+FROM nginx:1.26.3-alpine
 
 WORKDIR /usr/share/nginx/html
 COPY --from=build /app/dist .
