@@ -54,10 +54,10 @@ class RoleModel extends BaseModel
      * @return array
      */
     public function getDesktopPermissionIdsAttr($value, $data){
-        if(empty($this->desktopPermissions)){
+        if(empty($this->desktop_permissions)){
             return [];
         }
-        $desktopPermissions = $this->desktopPermissions->toArray();
+        $desktopPermissions = $this->desktop_permissions->toArray();
         $ids = array_column($desktopPermissions, 'id');
         return array_unique($ids);
     }
@@ -69,10 +69,10 @@ class RoleModel extends BaseModel
      * @return array
      */
     public function getDesktopMenuIdsAttr($value, $data){
-        if(empty($this->desktopMenus)){
+        if(empty($this->desktop_menus)){
             return [];
         }
-        $desktopMenus = $this->desktopMenus->toArray();
+        $desktopMenus = $this->desktop_menus->toArray();
         $ids = array_column($desktopMenus, 'id');
         return array_unique($ids);
     }
@@ -84,10 +84,10 @@ class RoleModel extends BaseModel
      * @return array
      */
     public function getDesktopRouteIdsAttr($value, $data){
-        if(empty($this->desktopRoutes)){
+        if(empty($this->desktop_routes)){
             return [];
         }
-        $desktopRoutes = $this->desktopRoutes->toArray();
+        $desktopRoutes = $this->desktop_routes->toArray();
         $ids = array_column($desktopRoutes, 'id');
         return array_unique($ids);
     }
@@ -99,10 +99,10 @@ class RoleModel extends BaseModel
      * @return array
      */
     public function getMobilePermissionIdsAttr($value, $data){
-        if(empty($this->mobilePermissions)){
+        if(empty($this->mobile_permissions)){
             return [];
         }
-        $mobilePermissions = $this->mobilePermissions->toArray();
+        $mobilePermissions = $this->mobile_permissions->toArray();
         $ids = array_column($mobilePermissions, 'id');
         return array_unique($ids);
     }

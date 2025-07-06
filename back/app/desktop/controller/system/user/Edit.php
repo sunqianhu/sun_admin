@@ -8,6 +8,7 @@ use app\model\UserRoleModel;
 use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\UserValidate;
 use Exception;
+use think\db\Query;
 use think\exception\ValidateException;
 use think\facade\Db;
 
@@ -24,7 +25,10 @@ class Edit extends Base
         }
 
         $userModel = UserModel::field('id,name,phone,department_id')
-            ->with(['roles'])
+            ->with(['roles'=>function (Query $query) {
+                $query->field('id,name')
+                    ->hidden(['pivot']);
+            }])
             ->append(['role_ids'])
             ->find($id);
         if (empty($userModel)) {

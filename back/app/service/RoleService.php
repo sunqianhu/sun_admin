@@ -6,6 +6,7 @@ use app\model\RoleDesktopMenuModel;
 use app\model\RoleDesktopPermissionModel;
 use app\model\RoleDesktopRouteModel;
 use app\model\RoleMobilePermissionModel;
+use Sunqianhu\Helper\thinkphp\Crud;
 
 class RoleService
 {

@@ -1,6 +1,7 @@
 <?php
 namespace app\model;
 
+use Exception;
 use Sunqianhu\Helper\SingletonFactory;
 use app\service\UserAvatarService;
 use think\model\relation\BelongsTo;
@@ -50,7 +51,7 @@ class UserModel extends BaseModel
      * @param $value
      * @param $data
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAvatarUrlAttr($value, $data)
     {
@@ -63,7 +64,7 @@ class UserModel extends BaseModel
      * @param $value
      * @param $data
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function getBigAvatarUrlAttr($value, $data)
     {

@@ -32,7 +32,7 @@ class Edit extends Base
      */
     public function init()
     {
-        $get = $this->request->get(['id'=>0]);
+        $get = $this->request->get(['id' => 0]);
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
@@ -41,14 +41,22 @@ class Edit extends Base
         $id = $get['id'];
 
         //角色
-        $roleModel = RoleModel::with(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions'])
+        $roleModel = RoleModel::with(['desktop_permissions' => function ($query) {
+            $query->field('id,name')->hidden(['pivot']);
+        }, 'desktop_routes' => function ($query) {
+            $query->field('id,name')->hidden(['pivot']);
+        }, 'desktop_menus' => function ($query) {
+            $query->field('id,name')->hidden(['pivot']);
+        }, 'mobile_permissions' => function ($query) {
+            $query->field('id,name')->hidden(['pivot']);
+        }])
             ->field('id,name')
             ->append(['desktop_permission_ids', 'desktop_menu_ids', 'desktop_route_ids', 'mobile_permission_ids'])
             ->find($id);
         if (empty($roleModel)) {
             return $this->getErrorResponse('没有找到记录');
         }
-        $roleModel->hidden(['desktopPermissions', 'desktopRoutes', 'desktopMenus', 'mobilePermissions']);
+        $roleModel->hidden(['desktop_permissions', 'desktop_routes', 'desktop_menus', 'mobile_permissions']);
         $role = $roleModel->toArray();
 
         $desktopPermissionService = new DesktopPermissionService();
@@ -66,9 +74,9 @@ class Edit extends Base
         $data = [
             'role' => $role,
             'desktop_tree_permission' => $desktopTreePermission,
-            'desktop_tree_menu'=>$desktopTreeMenu,
-            'desktop_routes'=>$desktopRoutes,
-            'mobile_tree_permission'=>$mobileTreePermission
+            'desktop_tree_menu' => $desktopTreeMenu,
+            'desktop_routes' => $desktopRoutes,
+            'mobile_tree_permission' => $mobileTreePermission
         ];
         return $this->getSuccessResonse('获取成功', $data);
     }
@@ -92,7 +100,7 @@ class Edit extends Base
         }
 
         Db::startTrans();
-        try{
+        try {
             $roleCrud = new Crud(RoleModel::class);
             $roleCrud->update($post['id'], $post);
             $id = $post['id'];
@@ -104,7 +112,7 @@ class Edit extends Base
             $roleService->updateMobilePermissionRelation($id, $post['mobile_permission_ids']);
 
             Db::commit();
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             Db::rollback();
             return $this->getErrorResponse($exception->getMessage());
         }
