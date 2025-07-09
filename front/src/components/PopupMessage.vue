@@ -38,7 +38,7 @@ const init = () => {
  * 获取websocket连接地址
  */
 const getWsUrl = () => {
-  let url = import.meta.env.VITE_WEBSOCKET_MESSAGE;
+  let url = import.meta.env.VITE_WEBSOCKET_MESSAGE_URL;
   if (!url.startsWith("ws")) {
     const hostname = window.location.hostname;
     const protocol =
