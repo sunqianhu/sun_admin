@@ -1333,17 +1333,20 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.2.14",
+            "version": "1.2.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "5cf3df5a737a506b13cff897dd3a52450cdea129"
+                "reference": "a5a98c19b398a74b261edad6a225c187d86d3170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/5cf3df5a737a506b13cff897dd3a52450cdea129",
-                "reference": "5cf3df5a737a506b13cff897dd3a52450cdea129",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/a5a98c19b398a74b261edad6a225c187d86d3170",
+                "reference": "a5a98c19b398a74b261edad6a225c187d86d3170",
                 "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*"
             },
             "type": "library",
             "autoload": {
@@ -1364,9 +1367,9 @@
             "description": "php助手类包含项目开发过程中各种常用的工具类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.2.14"
+                "source": "https://github.com/sunqianhu/helper/tree/1.2.15"
             },
-            "time": "2025-06-27T05:21:51+00:00"
+            "time": "2025-07-10T10:10:14+00:00"
         },
         {
             "name": "symfony/clock",
@@ -2575,12 +2578,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.0.0"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
