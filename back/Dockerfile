@@ -1,18 +1,18 @@
-#composer包
 FROM composer:2.5.8 as composer
 WORKDIR /app
 COPY ./composer.json ./composer.lock .
 RUN composer install --no-interaction --ignore-platform-reqs --no-scripts
 
 #环境
-FROM sunqianhu/php_nginx:1.0.4
+FROM sunqianhu/php_nginx:php82nginx1263
 WORKDIR /var/www/html
 
 #代码
 COPY . .
 COPY --from=composer /app/vendor ./vendor
 RUN composer dump-autoload --no-dev \
-	&& chown -R www-data:www-data /var/www/html
+	&& chown -R www-data:www-data /var/www/html \
+	&& rm -rf docker/
 
 #配置
 COPY ./docker/.env .
