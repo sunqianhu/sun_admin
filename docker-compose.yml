@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   #后端
-  sun_admin_back:
-    #build:
-    #  context: ./back/
-    #  dockerfile: Dockerfile
+  back:
+    build:
+      context: ./back/
+      dockerfile: Dockerfile
     image: sun_admin_back:latest
     container_name: sun_admin_back
     volumes:
@@ -14,10 +14,10 @@ services:
       - sun_admin
     restart: always
   #前端
-  sun_admin_front:
-    #build:
-    #  context: ./front/
-    #  dockerfile: Dockerfile
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
     image: sun_admin_front:latest #镜像名版本号
     container_name: sun_admin_front #容器名
     depends_on:
@@ -28,7 +28,7 @@ services:
       - sun_admin
     restart: always
   #数据库
-  sun_admin_mysql:
+  mysql:
     image: mysql:5.7.44
     container_name: sun_admin_mysql
     environment:
