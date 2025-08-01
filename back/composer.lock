@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8db1eaf71df55670f70242fc024d479",
+    "content-hash": "0ce3cc896c271fe870832bcc1438106d",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -1333,20 +1333,23 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.2.15",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "a5a98c19b398a74b261edad6a225c187d86d3170"
+                "reference": "08d0619b14d0dd2335905c32e8ff395c9cdece1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/a5a98c19b398a74b261edad6a225c187d86d3170",
-                "reference": "a5a98c19b398a74b261edad6a225c187d86d3170",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/08d0619b14d0dd2335905c32e8ff395c9cdece1e",
+                "reference": "08d0619b14d0dd2335905c32e8ff395c9cdece1e",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*"
+                "ext-curl": "*",
+                "ext-gd": "*",
+                "ext-pdo": "*",
+                "ext-zip": "*"
             },
             "type": "library",
             "autoload": {
@@ -1367,9 +1370,9 @@
             "description": "php助手类包含项目开发过程中各种常用的工具类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.2.15"
+                "source": "https://github.com/sunqianhu/helper/tree/1.4.1"
             },
-            "time": "2025-07-10T10:10:14+00:00"
+            "time": "2025-08-01T07:42:12+00:00"
         },
         {
             "name": "symfony/clock",
