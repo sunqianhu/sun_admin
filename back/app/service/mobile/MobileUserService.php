@@ -4,8 +4,10 @@ namespace app\service\mobile;
 
 use app\model\mobile\PermissionModel;
 use app\model\mobile\SessionModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\service\UserService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class MobileUserService
 {
@@ -13,6 +15,9 @@ class MobileUserService
      * 得到接口列表
      * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getApis($id){
         $userService = new UserService();
@@ -45,6 +50,9 @@ class MobileUserService
      * @param $id
      * @param $api
      * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function hasApiPermission($id, $api){
         $apis = $this->getApis($id);
@@ -88,9 +96,15 @@ class MobileUserService
      * 下线
      * @param $id
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function offLine($id){
-        $sessionCrud = new Crud(SessionModel::class);
-        $sessionCrud->deleteByField('user_id', $id);
+        $sessionModels = SessionModel::where('user_id', $id)->select();
+        if ($sessionModels->isEmpty()) {
+            throw new Exception('没有找到会话记录');
+        }
+        $sessionModels->delete();
     }
 }

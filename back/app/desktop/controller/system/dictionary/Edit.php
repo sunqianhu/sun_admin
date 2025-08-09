@@ -4,7 +4,6 @@ namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
 use app\model\DictionaryModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\DictionaryValidate;
 use app\validate\IdValidate;
 use Exception;
@@ -49,16 +48,19 @@ class Edit extends Base
     {
         $post = $this->request->post(['id', 'type', 'key', 'value', 'sort']);
 
-        //验证
         try {
             validate(DictionaryValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
 
-        $dictionaryCrud = new Crud(DictionaryModel::class);
+        $dictionaryModel = DictionaryModel::find($post['id']);
+        if (empty($dictionaryModel)) {
+            return $this->getErrorResponse('没有找到记录');
+        }
+
         try{
-            $dictionaryCrud->update($post['id'], $post);
+            $dictionaryModel->update($post['id'], $post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

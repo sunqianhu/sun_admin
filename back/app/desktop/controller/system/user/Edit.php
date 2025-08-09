@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\user;
 use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\model\UserRoleModel;
-use Sunqianhu\Helper\thinkphp\Crud;
+use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
 use think\db\Query;
@@ -46,7 +46,6 @@ class Edit extends Base
     {
         $post = $this->request->post(['id', 'name', 'phone', 'department_id', 'role_ids']);
 
-        //验证
         try {
             validate(UserValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
@@ -55,14 +54,15 @@ class Edit extends Base
 
         Db::startTrans();
         try{
-            $userCrud = new Crud(UserModel::class);
-            $userCrud->update($post['id'], $post);
+            $userService = new UserService();
+            $userService->edit($post['id'], $post);
             $id = $post['id'];
 
-            $userRoleCrud = new Crud(UserRoleModel::class);
-            $userRoleCrud->deleteByField('user_id', $id);
+            $userRoleModels = UserRoleModel::where('user_id', $id)->select();
+            $userRoleModels->delete();
             foreach ($post['role_ids'] as $roleId){
-                $userRoleCrud->insert([
+                $userRoleModel = new UserRoleModel();
+                $userRoleModel->save([
                     'user_id' => $id,
                     'role_id' => $roleId
                 ]);

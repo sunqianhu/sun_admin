@@ -3,7 +3,6 @@
 namespace app\service\api;
 
 use app\model\api\SessionModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 
 class ApiUserService
@@ -16,7 +15,10 @@ class ApiUserService
      */
     public function offLine($id)
     {
-        $sessionCrud = new Crud(SessionModel::class);
-        $sessionCrud->deleteByField('user_id', $id);
+        $sessionModels = SessionModel::where('user_id', $id)->select();
+        if ($sessionModels->isEmpty()) {
+            throw new Exception('没有找到会话记录');
+        }
+        $sessionModels->delete();
     }
 }

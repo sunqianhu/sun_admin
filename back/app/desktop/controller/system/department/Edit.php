@@ -4,7 +4,6 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\DepartmentValidate;
 use app\validate\IdValidate;
 use Exception;
@@ -41,7 +40,6 @@ class Edit extends Base
     {
         $post = $this->request->post(['id', 'department_id' => 0, 'type', 'name', 'sort']);
 
-        //验证
         try {
             validate(DepartmentValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
@@ -51,9 +49,13 @@ class Edit extends Base
             return $this->getErrorResponse('上级部门不能和本部门相同');
         }
 
-        $departmentCrud = new Crud(DepartmentModel::class);
+        $departmentModel = DepartmentModel::find($post['id']);
+        if(empty($departmentModel)){
+            return $this->getErrorResponse('没有找到记录');
+        }
+
         try{
-            $departmentCrud->update($post['id'], $post);
+            $departmentModel->save($post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

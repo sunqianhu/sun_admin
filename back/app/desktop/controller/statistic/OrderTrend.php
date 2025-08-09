@@ -4,7 +4,7 @@ namespace app\desktop\controller\statistic;
 
 use app\desktop\controller\Base;
 use app\service\order\ExcelService;
-use app\service\order\StatisticService;
+use app\service\order\TrendStatisticService;
 use app\validate\order\IndexSearchValidate;
 use Exception;
 use Sunqianhu\Helper\File;
@@ -33,9 +33,9 @@ class OrderTrend extends Base
         $startTime = $get['add_times'][0];
         $endTime = $get['add_times'][1];
 
-        $statisticService = new StatisticService();
+        $trendStatisticService = new TrendStatisticService();
         try{
-            $trend = $statisticService->getTimeRangeTrend($startTime, $endTime);
+            $trend = $trendStatisticService->getTimeRangeTrend($startTime, $endTime);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

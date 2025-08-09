@@ -30,7 +30,6 @@ class Message
                     break;
                 default:
                     throw new Exception('未知的消息类型');
-                    return;
             }
         } catch (Exception $exception) {
             echo $exception->getMessage() . "\r\n";

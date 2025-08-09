@@ -7,7 +7,6 @@ use Exception;
 use Sunqianhu\Helper\File;
 use Sunqianhu\Helper\Image;
 use Sunqianhu\Helper\SingletonFactory;
-use Sunqianhu\Helper\thinkphp\Crud;
 
 class UserAvatarService
 {
@@ -37,8 +36,11 @@ class UserAvatarService
      */
     public function getAvatarUrlByUserId($userId)
     {
-        $userCrud = new Crud(UserModel::class);
-        $path = $userCrud->selectValue($userId, 'avatar');
+        $UserModel = UserModel::field('avatar')->find($userId);
+        if (empty($UserModel)) {
+            throw new Exception('没有找到用户记录');
+        }
+        $path = $UserModel->avatar;
         return $this->getAvatarUrl($path);
     }
 
@@ -68,8 +70,11 @@ class UserAvatarService
      */
     public function getBigAvatarUrlByUserId($userId)
     {
-        $userCrud = new Crud(UserModel::class);
-        $path = $userCrud->selectValue($userId, 'big_avatar');
+        $UserModel = UserModel::field('big_avatar')->find($userId);
+        if (empty($UserModel)) {
+            throw new Exception('没有找到用户记录');
+        }
+        $path = $UserModel->big_avatar;
         return $this->getBigAvatarUrl($path);
     }
 
@@ -109,8 +114,11 @@ class UserAvatarService
      */
     public function editAvatar($userId, $smallPath, $bigPath)
     {
-        $userCrud = new Crud(UserModel::class);
-        $userCrud->update($userId, [
+        $userModel = UserModel::find($userId);
+        if (empty($userModel)) {
+            throw new Exception('没有找到用户记录');
+        }
+        $userModel->save([
             'avatar' => $smallPath,
             'big_avatar' => $bigPath
         ]);

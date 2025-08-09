@@ -4,9 +4,6 @@ namespace app\desktop\controller\components\desktop;
 
 use app\desktop\controller\Base;
 use app\service\desktop\PermissionService;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class treePermissionSelect extends Base
@@ -16,9 +13,6 @@ class treePermissionSelect extends Base
     /**
      * 得到树权限
      * @return Response
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function getTreePermission()
     {

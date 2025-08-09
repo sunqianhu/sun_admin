@@ -5,6 +5,7 @@ namespace app\desktop\controller\system\message;
 use app\desktop\controller\Base;
 use app\model\MessageModel;
 use app\service\MessageService;
+use Exception;
 use think\Response;
 
 class Index extends Base

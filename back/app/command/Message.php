@@ -107,7 +107,7 @@ class Message extends Command
     /**
      * 收到数据
      * @param TcpConnection $connection
-     * @param $data 传输中的数据
+     * @param  $data
      * @return void
      */
     public function onMessage(TcpConnection $connection, $data)

@@ -16,6 +16,7 @@ class Login extends Base
     /**
      * 登录
      * @return Response
+     * @throws Exception
      */
     public function login()
     {

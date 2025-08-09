@@ -2,7 +2,7 @@
 
 namespace app\service\order;
 
-class StatisticService
+class TrendStatisticService
 {
     /**
      * 得到时间范围内的趋势

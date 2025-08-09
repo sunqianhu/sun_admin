@@ -3,6 +3,9 @@
 namespace app\service;
 
 use app\model\DictionaryModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Cache;
 
 class DictionaryService
@@ -16,6 +19,9 @@ class DictionaryService
      * 获取字典列表
      * @param $type
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getList($type)
     {

@@ -3,6 +3,9 @@
 namespace app\service;
 
 use app\model\MessageModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 use think\facade\Queue;
 use Exception;
@@ -24,7 +27,7 @@ class MessageService
             throw new Exception('消息接收用户和消息标题不能为空');
         }
 
-        $messageCrud = new Crud(MessageModel::class);
+        $messageModel = new MessageModel();
         Db::startTrans();
         try {
             $time = time();
@@ -35,7 +38,8 @@ class MessageService
                 'url' => $url,
                 'add_time' => $time
             ];
-            $id = $messageCrud->insert($data);
+            $messageModel->save($data);
+            $id = $messageModel->id;
 
             $data = [
                 'type' => 'message',
@@ -179,6 +183,9 @@ class MessageService
      * 设置全部已读
      * @param $userId
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function setAllRead($userId)
     {

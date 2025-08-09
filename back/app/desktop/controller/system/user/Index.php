@@ -58,7 +58,6 @@ class Index extends Base
     {
         $post = $this->request->post(['id', 'status' => 0]);
 
-        //验证
         try {
             validate(UserValidate::class)->scene('edit_status')->check($post);
         } catch (ValidateException $exception) {
@@ -83,7 +82,6 @@ class Index extends Base
     {
         $post = $this->request->post(['id']);
 
-        //验证
         try {
             validate(UserValidate::class)->scene('offline')->check($post);
         } catch (ValidateException $exception) {

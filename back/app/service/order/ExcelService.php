@@ -17,8 +17,8 @@ class ExcelService
      */
     public function createTimeRangeTrendExcel($startTime, $endTime)
     {
-        $statisticService = new StatisticService();
-        $trend = $statisticService->getTimeRangeTrend($startTime, $endTime);
+        $trendStatisticService = new TrendStatisticService();
+        $trend = $trendStatisticService->getTimeRangeTrend($startTime, $endTime);
 
         //excel
         $spreadsheet = new Spreadsheet();

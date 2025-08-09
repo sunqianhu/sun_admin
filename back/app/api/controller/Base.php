@@ -5,13 +5,9 @@ namespace app\api\controller;
 use app\BaseController;
 use app\model\OperationLogModel;
 use app\service\api\SessionService;
-use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use think\Response;
 
-/**
- * 基控制器
- */
 class Base extends BaseController
 {
     public bool $isTokenAuth = true; //是否token认证
@@ -54,14 +50,14 @@ class Base extends BaseController
 
         //操作日志
         if($this->sessionId) {
-            $operationLogCrud = new Crud(OperationLogModel::class);
+            $operationLogModel = new OperationLogModel();
             $data = [
                 'user_id' => $this->userId,
                 'api' => $this->request->baseUrl(),
                 'ip' => $this->request->ip(),
                 'time' => time()
             ];
-            $operationLogCrud->insert($data);
+            $operationLogModel->save($data);
         }
     }
 
@@ -69,11 +65,11 @@ class Base extends BaseController
      * 得到成功响应
      * @param string $message
      * @param $data
-     * @param $businessCode
-     * @param $httpCode
+     * @param int $businessCode
+     * @param int $httpCode
      * @return Response
      */
-    public function getSuccessResponse(string $message, $data = null, $businessCode = 1, $httpCode = 200)
+    public function getSuccessResponse(string $message, $data = null, int $businessCode = 1, int $httpCode = 200)
     {
         $result = [
             'code' => $businessCode,
@@ -87,11 +83,11 @@ class Base extends BaseController
      * 得到错误响应
      * @param string $message
      * @param $data
-     * @param $businessCode
-     * @param $httpCode
+     * @param int $businessCode
+     * @param int $httpCode
      * @return Response
      */
-    public function getErrorResponse(string $message, $data = null, $businessCode = 0, $httpCode = 200)
+    public function getErrorResponse(string $message, $data = null, int $businessCode = 0, int $httpCode = 200)
     {
         $result = [
             'code' => $businessCode,

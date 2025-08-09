@@ -4,7 +4,6 @@ namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
 use app\model\DictionaryModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\DictionaryValidate;
 use app\validate\IdValidate;
 use Exception;
@@ -26,6 +25,7 @@ class Edit extends Base
     public function init()
     {
         $get = $this->request->get(['id'=>0]);
+
         try {
             validate(IdValidate::class)->check($get);
         } catch (ValidateException $exception) {
@@ -45,6 +45,9 @@ class Edit extends Base
     /**
      * 保存
      * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function save()
     {
@@ -56,9 +59,13 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $dictionaryCrud = new Crud(DictionaryModel::class);
+        $dictionaryModel = DictionaryModel::find($post['id']);
+        if(empty($dictionaryModel)){
+            return $this->getErrorResponse('没有找到记录');
+        }
+
         try{
-            $dictionaryCrud->update($post['id'], $post);
+            $dictionaryModel->save($post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

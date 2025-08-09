@@ -5,9 +5,6 @@ namespace app\mobile\controller;
 use app\service\mobile\MobileUserService;
 use think\Response;
 
-/**
- * 框架
- */
 class Frame extends Base
 {
     public bool $isApiAuth = false;

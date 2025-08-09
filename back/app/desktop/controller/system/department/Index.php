@@ -4,9 +4,11 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class Index extends Base
@@ -36,6 +38,9 @@ class Index extends Base
     /**
      * 删除
      * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function delete(){
         $id = $this->request->post('id', 0);
@@ -43,9 +48,13 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $departmentCrud = new Crud(DepartmentModel::class);
+        $departmentModel = DepartmentModel::find($id);
+        if(empty($departmentModel)){
+            return $this->getErrorResponse('没有找到记录');
+        }
+
         try{
-            $departmentCrud->delete($id);
+            $departmentModel->delete();
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

@@ -40,6 +40,7 @@ class Detail extends Base
     /**
      * 退出
      * @return Response
+     * @throws \Exception
      */
     public function logout()
     {

@@ -6,9 +6,12 @@ use app\model\desktop\MenuModel;
 use app\model\desktop\PermissionModel;
 use app\model\desktop\RouteModel;
 use app\model\desktop\SessionModel;
-use Sunqianhu\Helper\thinkphp\Crud;
+use Exception;
 use app\service\UserService;
 use Sunqianhu\Helper\ArrayHandler;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class DesktopUserService
 {
@@ -16,6 +19,9 @@ class DesktopUserService
      * 得到接口列表
      * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getApis($id){
         $userService = new UserService();
@@ -48,6 +54,9 @@ class DesktopUserService
      * @param $id
      * @param $api
      * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function hasApiPermission($id, $api){
         $apis = $this->getApis($id);
@@ -104,6 +113,9 @@ class DesktopUserService
      * 得到路由
      * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getRoutes($id){
         $userService = new UserService();
@@ -139,6 +151,9 @@ class DesktopUserService
      * 得到树形菜单
      * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getTreeMenu($id){
         $userService = new UserService();
@@ -163,9 +178,15 @@ class DesktopUserService
      * 下线
      * @param $id
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function offLine($id){
-        $sessionCrud = new Crud(SessionModel::class);
-        $sessionCrud->deleteByField('user_id', $id);
+        $sessionModels = SessionModel::where('user_id', $id)->select();
+        if ($sessionModels->isEmpty()) {
+            throw new Exception('没有找到会话记录');
+        }
+        $sessionModels->delete();
     }
 }

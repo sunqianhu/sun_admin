@@ -4,7 +4,6 @@ namespace app\desktop\controller\system\mobile\permission;
 
 use app\desktop\controller\Base;
 use app\model\mobile\PermissionModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\mobile\PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -18,16 +17,15 @@ class Add extends Base
     {
         $post = $this->request->post(['permission_id' => 0, 'name' => '', 'key' => '', 'api_string' => '', 'sort']);
 
-        //验证
         try {
             validate(PermissionValidate::class)->scene('add')->check($post);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
 
-        $permissionCrud = new Crud(PermissionModel::class);
         try {
-            $permissionCrud->insert($post);
+            $permissionModel = new PermissionModel();
+            $permissionModel->save($post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

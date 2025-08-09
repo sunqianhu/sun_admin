@@ -29,6 +29,7 @@ class RouteModel extends BaseModel
      * @param $value
      * @param $data
      * @return null
+     * @throws Exception
      */
     public function getKeepAliveNameAttr($value, $data)
     {

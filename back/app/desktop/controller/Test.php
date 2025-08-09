@@ -2,7 +2,7 @@
 
 namespace app\desktop\controller;
 
-class Test
+class Test extends Base
 {
     public function index()
     {

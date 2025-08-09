@@ -6,7 +6,6 @@ use app\model\ConfigModel;
 use app\model\desktop\SessionModel;
 use app\model\LoginLogModel;
 use app\model\UserModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\service\JwtService;
 use Exception;
 use think\db\exception\DataNotFoundException;
@@ -34,8 +33,8 @@ class SessionService
             'token' => $token,
             'expires_in' => time() + $this->expire
         ];
-        $sessionCrud = new Crud(SessionModel::class);
-        return $sessionCrud->insert($data);
+        $sessionModel = new SessionModel();
+        return $sessionModel->save($data);
     }
 
     /**
@@ -45,8 +44,11 @@ class SessionService
      */
     public function deleteSession($id)
     {
-        $sessionCrud = new Crud(SessionModel::class);
-        $sessionCrud->delete($id);
+        $sessionModel = SessionModel::find($id);
+        if (empty($sessionModel)) {
+            throw new Exception('没有找到会话记录');
+        }
+        $sessionModel->delete();
     }
 
     /**
@@ -78,13 +80,13 @@ class SessionService
         $sessionId = $this->createSession($userModel->id, $token);
 
         //登录日志
-        $loginLogCrud = new Crud(LoginLogModel::class);
+        $loginLogModel = new LoginLogModel();
         $data = [
             'user_id' => $userModel->id,
             'ip' => $ip,
             'time' => time()
         ];
-        $loginLogCrud->insert($data);
+        $loginLogModel->save($data);
 
         //用户表
         $userModel->last_login_time = time();
@@ -113,8 +115,11 @@ class SessionService
      */
     function ipAuth($ip)
     {
-        $configCrud = new Crud(ConfigModel::class);
-        $deniedIpString = $configCrud->selectValue(1,'denied_ip_string');
+        $configModel = ConfigModel::field('denied_ip_string')->find(1);
+        if (empty($configModel)) {
+            throw new Exception('没有找到系统配置记录');
+        }
+        $deniedIpString = $configModel->denied_ip_string;
         $deniedIps = explode("\r\n", $deniedIpString);
         $deniedIps = array_filter($deniedIps);
         if (empty($deniedIps)) {
@@ -149,20 +154,19 @@ class SessionService
         $jwtService = new JwtService();
         $userId = $jwtService->resolverToken($token);
 
-        $sessionCrud = new Crud(SessionModel::class);
-        $session = $sessionCrud->selectRowByField('token', $token);
-        if (empty($session)) {
+        $sessionModel = SessionModel::where('token', $token);
+        if (empty($sessionModel)) {
             throw new Exception('未登录');
         }
-        if ($session['expires_in'] < time()) {
+        if ($sessionModel->expires_in < time()) {
             throw new Exception('登录已过期');
         }
-        if ($session['user_id'] != $userId) {
+        if ($sessionModel->user_id != $userId) {
             throw new Exception('登录凭证错误');
         }
-        $sessionCrud->update($session['id'], ['expires_in' => time() + $this->expire]);
+        $sessionModel->save(['expires_in' => time() + $this->expire]);
 
-        return $session['id'];
+        return $sessionModel->id;
     }
 
     /**
@@ -204,12 +208,11 @@ class SessionService
      */
     public function getToken($id)
     {
-        $sessionCrud = new Crud(SessionModel::class);
-        $session = $sessionCrud->selectRow($id);
-        if(empty($session)){
+        $sessionModel = SessionModel::field('token')->find($id);
+        if(empty($sessionModel)){
             throw new Exception('没有找到会话记录');
         }
-        return $session['token'];
+        return $sessionModel->token;
     }
 
     /**
@@ -220,11 +223,10 @@ class SessionService
      */
     public function getUserId($id)
     {
-        $sessionCrud = new Crud(SessionModel::class);
-        $session = $sessionCrud->selectRow($id);
-        if(empty($session)){
+        $sessionModel = SessionModel::field('user_id')->find($id);
+        if(empty($sessionModel)){
             throw new Exception('没有找到会话记录');
         }
-        return $session['user_id'];
+        return $sessionModel->user_id;
     }
 }

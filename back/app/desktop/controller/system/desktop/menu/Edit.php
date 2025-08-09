@@ -4,7 +4,6 @@ namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\desktop\MenuValidate;
 use app\validate\IdValidate;
 use Exception;
@@ -41,7 +40,6 @@ class Edit extends Base
     {
         $post = $this->request->post(['id', 'menu_id' => 0, 'name'=>'', 'url'=>'', 'icon'=>'', 'target', 'sort']);
 
-        //验证
         try {
             validate(MenuValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
@@ -51,9 +49,13 @@ class Edit extends Base
             return $this->getErrorResponse('上级菜单不能和此菜单相同');
         }
 
-        $menuCrud = new Crud(MenuModel::class);
+        $menuModel = MenuModel::find($post['id']);
+        if(empty($menuModel)){
+            return $this->getErrorResponse('没有找到记录');
+        }
+
         try{
-            $menuCrud->update($post['id'], $post);
+            $menuModel->save($post['id'], $post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

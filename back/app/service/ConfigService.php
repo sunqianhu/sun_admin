@@ -3,7 +3,6 @@ namespace app\service;
 
 use app\model\ConfigModel;
 use Exception;
-use Sunqianhu\Helper\thinkphp\Crud;
 
 class ConfigService
 {
@@ -17,19 +16,26 @@ class ConfigService
      */
     public function getValue($field)
     {
-        $configCrud = new Crud(ConfigModel::class);
-        return $configCrud->selectValue($this->id, $field) ?? '';
+        $configModel = ConfigModel::find($this->id);
+        if(empty($configModel)){
+            throw new Exception('没有找到配置记录');
+        }
+        return $configModel->$field;
     }
 
     /**
      * 设置值
      * @param $field
      * @param $value
-     * @return void
+     * @return bool
      * @throws Exception
      */
     public function setValue($field, $value){
-        $configCrud = new Crud(ConfigModel::class);
-        $configCrud->update($this->id, [$field=>$value]);
+        $configModel = ConfigModel::find($this->id);
+        if(empty($configModel)){
+            throw new Exception('没有找到配置记录');
+        }
+        $configModel->$field = $value;
+        return $configModel->save();
     }
 }

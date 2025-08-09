@@ -4,8 +4,10 @@ namespace app\desktop\controller\system\desktop\route;
 
 use app\desktop\controller\Base;
 use app\model\desktop\RouteModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class Index extends Base
@@ -31,6 +33,9 @@ class Index extends Base
     /**
      * 删除
      * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function delete(){
         $id = $this->request->post('id', 0);
@@ -38,9 +43,13 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $routeCrud = new Crud(RouteModel::class);
+        $routeModel = RouteModel::find($id);
+        if(empty($routeModel)){
+            return $this->getErrorResponse('没有找到记录');
+        }
+
         try{
-            $routeCrud->delete($id);
+            $routeModel->delete();
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

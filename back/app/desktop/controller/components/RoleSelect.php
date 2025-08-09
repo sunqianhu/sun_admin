@@ -4,7 +4,9 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\model\RoleModel;
-use Sunqianhu\Helper\thinkphp\Crud;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class RoleSelect extends Base
@@ -14,11 +16,15 @@ class RoleSelect extends Base
     /**
      * 得到角色列表
      * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getRoles()
     {
-        $roleCrud = new Crud(RoleModel::class);
-        $roles = $roleCrud->selectAll();
+        $roleModels = RoleModel::field('id,name')
+            ->select();
+        $roles = $roleModels->toArray();
         return $this->getSuccessResonse('获取成功', $roles);
     }
 }

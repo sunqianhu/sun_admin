@@ -5,18 +5,48 @@ namespace app\service;
 use app\model\UserModel;
 use app\model\UserRoleModel;
 use Exception;
-use Sunqianhu\Helper\thinkphp\Crud;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
-use think\facade\Cache;
 
 class UserService
 {
     /**
+     * 得到id
+     * @param $name
+     * @return string
+     * @throws Exception
+     */
+    public function getId($name)
+    {
+        $userModel = UserModel::field('id')
+            ->where('name', $name)
+            ->find();
+        if(empty($userModel)){
+            throw new Exception('没有找到用户记录');
+        }
+        return $userModel->id;
+    }
+
+    /**
+     * 得到姓名
+     * @param $id
+     * @return string
+     * @throws Exception
+     */
+    public function getName($id)
+    {
+        $userModel = UserModel::field('name')->find($id);
+        if(empty($userModel)){
+            throw new Exception('没有找到用户记录');
+        }
+        return $userModel->name;
+    }
+
+    /**
      * 添加
      * @param $data
-     * @return void
+     * @return int
      * @throws Exception
      */
     public function add($data)
@@ -28,9 +58,11 @@ class UserService
         }
 
         //手机号码
-        $userModel = UserModel::where('phone', $data['phone'])->find();
-        if (!empty($userModel)) {
-            throw new Exception('手机号码已经存在');
+        if(isset($data['phone'])){
+            $userModel = UserModel::where('phone', $data['phone'])->find();
+            if (!empty($userModel)) {
+                throw new Exception('手机号码已经存在');
+            }
         }
 
         $data['password'] = md5($data['password']);
@@ -83,10 +115,32 @@ class UserService
      */
     public function editPassword($id, $password)
     {
-        $userCrud = new Crud(UserModel::class);
-        $userCrud->update($id, [
+        $userModel = UserModel::find($id);
+        if (empty($userModel)) {
+            throw new Exception('没有找到用户记录');
+        }
+        $userModel->save([
             'password' => md5($password)
         ]);
+    }
+
+    /**
+     * 修改状态
+     * @param $id
+     * @param $status
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException|Exception
+     */
+    public function editStatus($id, $status)
+    {
+        $userModel = UserModel::find($id);
+        if (empty($userModel)) {
+            throw new Exception('没有找到用户记录');
+        }
+        $userModel->status = $status;
+        return $userModel->save();
     }
 
     /**
@@ -95,7 +149,7 @@ class UserService
      * @param string $glue
      * @return mixed|string
      */
-    public function idsToAccountString($ids, $glue = ',')
+    public function idsToAccountsString($ids, $glue = ',')
     {
         if (empty($ids)) {
             return '';
@@ -110,24 +164,6 @@ class UserService
     }
 
     /**
-     * 得到姓名
-     * @param $id
-     * @return string
-     */
-    public function getName($id)
-    {
-        $key = 'user_name_' . $id;
-        $name = Cache::get($key);
-        if ($name !== null) {
-            return $name;
-        }
-
-        $name = UserModel::where('id', $id)->value('name') ?? '';
-        Cache::set($key, $name, 600);
-        return $name;
-    }
-
-    /**
      * 得到角色id列表
      * @param $userId
      * @return array
@@ -137,22 +173,5 @@ class UserService
         return UserRoleModel::where('user_id', $userId)
             ->group('role_id')
             ->column('role_id');
-    }
-
-    /**
-     * 修改状态
-     * @param $id
-     * @param $status
-     * @return bool
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException|Exception
-     */
-    public function editStatus($id, $status)
-    {
-        $userCrud = new Crud(UserModel::class);
-        return $userCrud->update($id, [
-            'status' => $status
-        ]);
     }
 }

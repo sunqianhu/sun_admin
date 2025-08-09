@@ -6,7 +6,11 @@ use app\model\RoleDesktopMenuModel;
 use app\model\RoleDesktopPermissionModel;
 use app\model\RoleDesktopRouteModel;
 use app\model\RoleMobilePermissionModel;
-use Sunqianhu\Helper\thinkphp\Crud;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\facade\Db;
 
 class RoleService
 {
@@ -15,18 +19,30 @@ class RoleService
      * @param $id
      * @param $permissionIds
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function updateDesktopPermissionRelation($id, $permissionIds)
     {
-        $roleDesktopPermissionCrud = new Crud(RoleDesktopPermissionModel::class);
-        $roleDesktopPermissionCrud->deleteByField('role_id', $id);
-        if (!empty($permissionIds)) {
-            foreach ($permissionIds as $permissionId) {
-                $roleDesktopPermissionCrud->insert([
-                    'role_id' => $id,
-                    'permission_id' => $permissionId
-                ]);
+        Db::startTrans();
+        try {
+            $roleDesktopPermissionModels = RoleDesktopPermissionModel::where('role_id', $id)->select();
+            $roleDesktopPermissionModels->delete();
+
+            if (!empty($permissionIds)) {
+                foreach ($permissionIds as $permissionId) {
+                    $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
+                    $roleDesktopPermissionModel->save([
+                        'role_id' => $id,
+                        'permission_id' => $permissionId
+                    ]);
+                }
             }
+            Db::commit();
+        } catch (Exception $exception) {
+            Db::rollback();
+            throw $exception;
         }
     }
 
@@ -35,18 +51,30 @@ class RoleService
      * @param $id
      * @param $menuIds
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function updateDesktopMenuRelation($id, $menuIds)
     {
-        $roleDesktopMenuCrud = new Crud(RoleDesktopMenuModel::class);
-        $roleDesktopMenuCrud->deleteByField('role_id', $id);
-        if (!empty($menuIds)) {
-            foreach ($menuIds as $menuId) {
-                $roleDesktopMenuCrud->insert([
-                    'role_id' => $id,
-                    'menu_id' => $menuId
-                ]);
+        Db::startTrans();
+        try{
+            $roleDesktopMenuModels = RoleDesktopMenuModel::where('role_id', $id)->select();
+            $roleDesktopMenuModels->delete();
+
+            if (!empty($menuIds)) {
+                foreach ($menuIds as $menuId) {
+                    $roleDesktopMenuModel = new RoleDesktopMenuModel();
+                    $roleDesktopMenuModel->save([
+                        'role_id' => $id,
+                        'menu_id' => $menuId
+                    ]);
+                }
             }
+            Db::commit();
+        }catch (Exception $exception){
+            Db::rollback();
+            throw $exception;
         }
     }
 
@@ -55,18 +83,30 @@ class RoleService
      * @param $id
      * @param $routeIds
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function updateDesktopRouteRelation($id, $routeIds)
     {
-        $roleDesktopRouteCrud = new Crud(RoleDesktopRouteModel::class);
-        $roleDesktopRouteCrud->deleteByField('role_id', $id);
-        if (!empty($routeIds)) {
-            foreach ($routeIds as $routeId) {
-                $roleDesktopRouteCrud->insert([
-                    'role_id' => $id,
-                    'route_id' => $routeId
-                ]);
+        Db::startTrans();
+        try{
+            $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $id)->select();
+            $roleDesktopRouteModels->delete();
+
+            if (!empty($routeIds)) {
+                foreach ($routeIds as $routeId) {
+                    $roleDesktopRouteModel = new RoleDesktopRouteModel();
+                    $roleDesktopRouteModel->save([
+                        'role_id' => $id,
+                        'route_id' => $routeId
+                    ]);
+                }
             }
+            Db::commit();
+        }catch (Exception $exception){
+            Db::rollback();
+            throw $exception;
         }
     }
 
@@ -75,18 +115,30 @@ class RoleService
      * @param $id
      * @param $permissionIds
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function updateMobilePermissionRelation($id, $permissionIds)
     {
-        $roleMobilePermissionCrud = new Crud(RoleMobilePermissionModel::class);
-        $roleMobilePermissionCrud->deleteByField('role_id', $id);
-        if (!empty($permissionIds)) {
-            foreach ($permissionIds as $permissionId) {
-                $roleMobilePermissionCrud->insert([
-                    'role_id' => $id,
-                    'permission_id' => $permissionId
-                ]);
+        Db::startTrans();
+        try{
+            $roleMobilePermissionModels = RoleMobilePermissionModel::where('role_id', $id)->select();
+            $roleMobilePermissionModels->delete();
+
+            if (!empty($permissionIds)) {
+                foreach ($permissionIds as $permissionId) {
+                    $roleMobilePermissionModel = new RoleMobilePermissionModel();
+                    $roleMobilePermissionModel->save([
+                        'role_id' => $id,
+                        'permission_id' => $permissionId
+                    ]);
+                }
             }
+            Db::commit();
+        }catch (Exception $exception){
+            Db::rollback();
+            throw $exception;
         }
     }
 }

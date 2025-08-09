@@ -9,9 +9,6 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Response;
 
-/**
- * 框架
- */
 class Frame extends Base
 {
     public bool $isApiAuth = false;

@@ -32,7 +32,11 @@ class PermissionService
 
     /**
      * 得到树形权限
+     * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getTreePermission($id)
     {

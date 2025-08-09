@@ -57,7 +57,7 @@ class DepartmentService
      * @param $glue
      * @return string
      */
-    public function getNameString($ids, $glue = '，')
+    public function getNamesString($ids, $glue = '，')
     {
         if (empty($ids)) {
             return '';

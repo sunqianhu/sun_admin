@@ -8,7 +8,6 @@ use app\model\RoleDesktopPermissionModel;
 use app\model\RoleDesktopRouteModel;
 use app\model\RoleMobilePermissionModel;
 use app\model\RoleModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use Exception;
 use think\facade\Db;
 use think\Response;
@@ -48,20 +47,23 @@ class Index extends Base
 
         Db::startTrans();
         try{
-            $roleCrud = new Crud(RoleModel::class);
-            $roleCrud->delete($id);
+            $roleModel = RoleModel::find($id);
+            if(empty($roleModel)){
+                throw new Exception('没有找到角色记录');
+            }
+            $roleModel->delete($id);
 
-            $roleDesktopPermissionCrud = new Crud(RoleDesktopPermissionModel::class);
-            $roleDesktopPermissionCrud->deleteByField('role_id', $id);
+            $roleDesktopPermissionModels = RoleDesktopPermissionModel::where('role_id', $id)->select();
+            $roleDesktopPermissionModels->delete();
 
-            $roleDesktopMenuCrud = new Crud(RoleDesktopMenuModel::class);
-            $roleDesktopMenuCrud->deleteByField('role_id', $id);
+            $roleDesktopMenuModels = RoleDesktopMenuModel::where('role_id', $id)->select();
+            $roleDesktopMenuModels->delete();
 
-            $roleDesktopRouteCrud = new Crud(RoleDesktopRouteModel::class);
-            $roleDesktopRouteCrud->deleteByField('role_id', $id);
+            $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $id)->select();
+            $roleDesktopRouteModels->delete();
 
-            $roleMobilePermissionCrud = new Crud(RoleMobilePermissionModel::class);
-            $roleMobilePermissionCrud->deleteByField('role_id', $id);
+            $roleMobilePermissionModels = RoleMobilePermissionModel::where('role_id', $id)->select();
+            $roleMobilePermissionModels->delete();
 
             Db::commit();
         }catch (Exception $exception){

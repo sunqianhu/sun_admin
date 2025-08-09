@@ -4,7 +4,6 @@ namespace app\desktop\controller\system\mobile\permission;
 
 use app\desktop\controller\Base;
 use app\model\mobile\PermissionModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\validate\IdValidate;
 use app\validate\mobile\PermissionValidate;
 use Exception;
@@ -41,7 +40,6 @@ class Edit extends Base
     {
         $post = $this->request->post(['id', 'permission_id' => 0, 'name'=>'', 'key'=>'', 'api_string'=>'', 'sort']);
 
-        //验证
         try {
             validate(PermissionValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
@@ -51,9 +49,13 @@ class Edit extends Base
             return $this->getErrorResponse('上级权限不能和此权限相同');
         }
 
-        $permissionCrud = new Crud(PermissionModel::class);
+        $permissionModel = PermissionModel::find($post['id']);
+        if(empty($permissionModel)){
+            return $this->getErrorResponse('没有找到权限记录');
+        }
+
         try{
-            $permissionCrud->update($post['id'], $post);
+            $permissionModel->save($post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

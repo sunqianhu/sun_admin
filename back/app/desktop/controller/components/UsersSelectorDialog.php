@@ -4,7 +4,9 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
+use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class UsersSelectorDialog extends Base
@@ -43,6 +45,9 @@ class UsersSelectorDialog extends Base
     /**
      * 获取已选用户
      * @return Response
+     * @throws DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
      */
     public function getSelectedUsers()
     {

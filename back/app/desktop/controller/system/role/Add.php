@@ -4,7 +4,6 @@ namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
 use app\model\RoleModel;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\service\desktop\MenuService as DesktopMenuService;
 use app\service\desktop\PermissionService as DesktopPermissionService;
 use app\service\desktop\RouteService as DesktopRouteService;
@@ -13,6 +12,7 @@ use app\service\RoleService;
 use Sunqianhu\Helper\IdsValidate;
 use app\validate\RoleValidate;
 use Exception;
+use think\exception\ValidateException;
 use think\facade\Db;
 
 class Add extends Base
@@ -50,9 +50,13 @@ class Add extends Base
     {
         $post = $this->request->post(['name', 'desktop_permission_ids' => [], 'desktop_menu_ids' => [], 'desktop_route_ids' => [], 'mobile_permission_ids' => []]);
 
-        //验证
-        try {
+        try{
             validate(RoleValidate::class)->scene('add')->check($post);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
+
+        try {
             IdsValidate::check($post['desktop_permission_ids'], '桌面端权限');
             IdsValidate::check($post['desktop_menu_ids'], '桌面端菜单');
             IdsValidate::check($post['desktop_route_ids'], '桌面端路由');
@@ -63,8 +67,9 @@ class Add extends Base
 
         Db::startTrans();
         try{
-            $roleCrud = new Crud(RoleModel::class);
-            $id = $roleCrud->insert($post);
+            $roleModel = new RoleModel();
+            $roleModel->save($post);
+            $id = $roleModel->id;
 
             $roleService = new RoleService();
             $roleService->updateDesktopPermissionRelation($id, $post['desktop_permission_ids']);

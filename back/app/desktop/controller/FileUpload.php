@@ -24,7 +24,6 @@ class FileUpload extends Base
         $requestFiles = $this->request->file();
         $module = $this->request->post('module', ''); //权限
 
-        //验证
         try {
             validate(FileUploadValidate::class)->check($requestFiles);
         } catch (ValidateException $exception) {

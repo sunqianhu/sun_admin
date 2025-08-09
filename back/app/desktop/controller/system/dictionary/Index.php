@@ -3,9 +3,11 @@
 namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
-use Sunqianhu\Helper\thinkphp\Crud;
 use app\model\DictionaryModel;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class Index extends Base
@@ -41,6 +43,9 @@ class Index extends Base
     /**
      * 删除
      * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function delete(){
         $id = $this->request->post('id', 0);
@@ -48,9 +53,13 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $dictionaryCrud = new Crud(DictionaryModel::class);
+        $dictionaryModel = DictionaryModel::find($id);
+        if(empty($dictionaryModel)){
+            return $this->getErrorResponse('没有找到记录');
+        }
+
         try{
-            $dictionaryCrud->delete($id);
+            $dictionaryModel->delete();
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

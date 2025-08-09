@@ -1333,16 +1333,16 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.4.1",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "08d0619b14d0dd2335905c32e8ff395c9cdece1e"
+                "reference": "4211509930a0ba49fb173b060e7dcfb2385709e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/08d0619b14d0dd2335905c32e8ff395c9cdece1e",
-                "reference": "08d0619b14d0dd2335905c32e8ff395c9cdece1e",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/4211509930a0ba49fb173b060e7dcfb2385709e9",
+                "reference": "4211509930a0ba49fb173b060e7dcfb2385709e9",
                 "shasum": ""
             },
             "require": {
@@ -1370,9 +1370,9 @@
             "description": "php助手类包含项目开发过程中各种常用的工具类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.4.1"
+                "source": "https://github.com/sunqianhu/helper/tree/1.4.4"
             },
-            "time": "2025-08-01T07:42:12+00:00"
+            "time": "2025-08-07T02:19:31+00:00"
         },
         {
             "name": "symfony/clock",
@@ -2581,12 +2581,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.0.0"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
