@@ -195,7 +195,7 @@ class SessionService
         }
 
         $desktopUserService = new DesktopUserService();
-        if (!$desktopUserService->hasApiPermission($userId, $api)) {
+        if (!$desktopUserService->hasPermissionByApi($userId, $api)) {
             throw new Exception('无权限');
         }
     }

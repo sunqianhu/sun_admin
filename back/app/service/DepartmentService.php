@@ -70,6 +70,9 @@ class DepartmentService
      * 得到用户列表
      * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getUsers($id){
         $userModels = UserModel::field('id,name,department_id')
@@ -86,7 +89,7 @@ class DepartmentService
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getIsExistUsers($id)
+    public function isExistUsers($id)
     {
         $UserModel = UserModel::field('id')
             ->where('department_id', $id)
@@ -102,6 +105,9 @@ class DepartmentService
      * 得到所有子部门id列表
      * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getAllDepartmentIds($id){
         $departmentModels = DepartmentModel::field('id')
@@ -117,7 +123,11 @@ class DepartmentService
 
     /**
      * 得到树形部门
+     * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getTreeDepartment($id)
     {
@@ -134,14 +144,14 @@ class DepartmentService
     }
 
     /**
-     * 得到是否存在子部门
+     * 是否存在子部门
      * @param $id
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getIsExistDepartment($id){
+    public function isExistDepartment($id){
         $departmentModel = DepartmentModel::field('id')
             ->where('department_id', $id)
             ->limit(0,1)
@@ -153,16 +163,16 @@ class DepartmentService
     }
 
     /**
-     * 得到是否存在部门或用户
+     * 是否存在部门或用户
      * @param $id
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getIsExistDepartmentsOrUsers($id)
+    public function isExistDepartmentsOrUsers($id)
     {
-        if($this->getIsExistDepartment($id) || $this->getIsExistUsers($id)){
+        if($this->isExistDepartment($id) || $this->isExistUsers($id)){
             return true;
         }
         return false;
@@ -172,6 +182,9 @@ class DepartmentService
      * 得到子部门
      * @param $id
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getDepartments($id)
     {

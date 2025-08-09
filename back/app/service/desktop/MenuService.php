@@ -54,14 +54,14 @@ class MenuService
     }
 
     /**
-     * 得到是否存在子菜单
+     * 是否存在子菜单
      * @param $id
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getIsExistMenus($id){
+    public function isExistMenus($id){
         $menuModel = MenuModel::field('id')
             ->where('menu_id', $id)
             ->limit(0,1)

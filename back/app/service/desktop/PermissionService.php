@@ -54,7 +54,7 @@ class PermissionService
     }
 
     /**
-     * 得到是否存在子权限
+     * 是否存在子权限
      * @param $id
      * @return bool
      * @throws DataNotFoundException

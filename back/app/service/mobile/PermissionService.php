@@ -61,7 +61,7 @@ class PermissionService
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getIsExistPermissions($id){
+    public function isExistPermissions($id){
         $permissionModel = PermissionModel::field('id')
             ->where('permission_id', $id)
             ->limit(0,1)

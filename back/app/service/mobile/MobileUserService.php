@@ -54,7 +54,7 @@ class MobileUserService
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function hasApiPermission($id, $api){
+    public function hasPermissionByApi($id, $api){
         $apis = $this->getApis($id);
         if(empty($apis)){
             return false;

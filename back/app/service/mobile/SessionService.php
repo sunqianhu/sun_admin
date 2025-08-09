@@ -195,7 +195,7 @@ class SessionService
         }
 
         $mobileUserService = new MobileUserService();
-        if (!$mobileUserService->hasApiPermission($userId, $api)) {
+        if (!$mobileUserService->hasPermissionByApi($userId, $api)) {
             throw new Exception('无权限');
         }
     }
