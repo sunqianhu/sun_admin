@@ -58,7 +58,7 @@ class DictionaryService
         }
 
         $dictionaryModel = DictionaryModel::field('value')
-            ->where($type, 'type')
+            ->where('type', $type)
             ->where('key', $key)
             ->order('sort', 'asc')
             ->find();
