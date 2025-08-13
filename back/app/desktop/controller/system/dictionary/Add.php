@@ -25,7 +25,7 @@ class Add extends Base
 
         try{
             $dictionaryModel = new DictionaryModel();
-            $dictionaryModel->insert($post);
+            $dictionaryModel->save($post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

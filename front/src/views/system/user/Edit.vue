@@ -33,7 +33,7 @@
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :Loading="submitLoading" @click="submitForm">
+      <el-button type="primary" :loading="submitLoading" @click="submitForm">
         提交
       </el-button>
     </template>

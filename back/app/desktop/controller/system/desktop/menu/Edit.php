@@ -55,7 +55,7 @@ class Edit extends Base
         }
 
         try{
-            $menuModel->save($post['id'], $post);
+            $menuModel->save($post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

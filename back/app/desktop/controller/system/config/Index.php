@@ -38,13 +38,14 @@ class Index extends Base
     {
         $post = $this->request->post(['system_name'=>'', 'denied_ip_string'=>'', 'frame_version'=>'', 'version'=>'']);
 
+        $post['id'] = 1;
         try {
             validate(ConfigValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
 
-        $configModel = ConfigModel::find(1);
+        $configModel = ConfigModel::find($post['id']);
         if(empty($configModel)){
             return $this->getErrorResponse('没有找到配置记录');
         }

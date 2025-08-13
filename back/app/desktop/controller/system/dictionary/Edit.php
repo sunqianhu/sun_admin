@@ -60,7 +60,7 @@ class Edit extends Base
         }
 
         try{
-            $dictionaryModel->update($post['id'], $post);
+            $dictionaryModel->save($post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
