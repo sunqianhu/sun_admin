@@ -32,7 +32,8 @@ class SessionService
             'expires_in' => time() + $this->expire
         ];
         $sessionModel = new SessionModel();
-        return $sessionModel->save($data);
+        $sessionModel->save($data);
+        return $sessionModel->id;
     }
 
     /**

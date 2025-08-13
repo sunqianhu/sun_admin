@@ -34,7 +34,8 @@ class SessionService
             'expires_in' => time() + $this->expire
         ];
         $sessionModel = new SessionModel();
-        return $sessionModel->save($data);
+        $sessionModel->save($data);
+        return $sessionModel->id;
     }
 
     /**
@@ -77,7 +78,7 @@ class SessionService
 
         $jwtService = new JwtService();
         $token = $jwtService->generateToken($userModel->id);
-        $sessionId = $this->createSession($userModel->id, $token);
+        echo $sessionId = $this->createSession($userModel->id, $token);
 
         //登录日志
         $loginLogModel = new LoginLogModel();
@@ -152,7 +153,8 @@ class SessionService
             throw new Exception('未登录');
         }
         $jwtService = new JwtService();
-        $userId = $jwtService->resolverToken($token);
+        echo $token;exit;
+        echo $userId = $jwtService->resolverToken($token);exit;
 
         $sessionModel = SessionModel::where('token', $token);
         if (empty($sessionModel)) {
