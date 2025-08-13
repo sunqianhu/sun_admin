@@ -27,6 +27,9 @@ class Frame extends Base
     /**
      * 获取路由
      * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getRoutes()
     {

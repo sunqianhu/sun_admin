@@ -78,7 +78,7 @@ class SessionService
 
         $jwtService = new JwtService();
         $token = $jwtService->generateToken($userModel->id);
-        echo $sessionId = $this->createSession($userModel->id, $token);
+        $sessionId = $this->createSession($userModel->id, $token);
 
         //登录日志
         $loginLogModel = new LoginLogModel();
@@ -153,10 +153,9 @@ class SessionService
             throw new Exception('未登录');
         }
         $jwtService = new JwtService();
-        echo $token;exit;
-        echo $userId = $jwtService->resolverToken($token);exit;
+        $userId = $jwtService->resolverToken($token);
 
-        $sessionModel = SessionModel::where('token', $token);
+        $sessionModel = SessionModel::where('token', $token)->find();
         if (empty($sessionModel)) {
             throw new Exception('未登录');
         }
