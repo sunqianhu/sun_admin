@@ -11,13 +11,13 @@ class Message
     public function fire(Job $job, $data)
     {
         $job->delete();
-        if (empty($data) || empty($data['type'])) {
+        if (empty($data) || !isset($data['type']) || !isset($data['data'])) {
             return;
         }
 
-        $data = $data['data'];
-        $messageService = new MessageService();
         try {
+            $data = $data['data'];
+            $messageService = new MessageService();
             switch ($data['type']) {
                 case 'message':
                     $messageService->sends($data['user_ids'], $data['title'], $data['content'], $data['url']);

@@ -24,7 +24,7 @@ class MessageService
     public function send($userId, $title, $content = '', $url = '')
     {
         if (empty($userId) || $title === '') {
-            throw new Exception('消息接收用户和消息标题不能为空');
+            throw new Exception('接收用户和消息标题不能为空');
         }
 
         $messageModel = new MessageModel();
@@ -55,7 +55,7 @@ class MessageService
             Db::commit();
         } catch (Exception $exception) {
             Db::rollback();
-            throw new Exception($exception->getMessage());
+            throw $exception;
         }
         return $id;
     }
@@ -92,7 +92,7 @@ class MessageService
      * @return void
      * @throws Exception
      */
-    public function queueSends($userIds, $title, $content = '', $url = '')
+    public function sendsByQueue($userIds, $title, $content = '', $url = '')
     {
         if (empty($userIds) || $title === '') {
             throw new Exception('消息接收用户和消息标题不能为空');
@@ -128,9 +128,9 @@ class MessageService
      * @param $userId
      * @param $id
      * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @throws Exception
      */
     public function setRead($userId, $id)
@@ -149,6 +149,7 @@ class MessageService
      * @param $userId
      * @param $id
      * @return void
+     * @throws Exception
      */
     public function sendRead($userId, $id)
     {
@@ -166,7 +167,7 @@ class MessageService
      * @param $id
      * @return void
      */
-    public function queueSendRead($userId, $id)
+    public function sendReadByQueue($userId, $id)
     {
         $data = [
             'type' => 'read',
@@ -201,6 +202,7 @@ class MessageService
      * 发送全部已读
      * @param $userId
      * @return void
+     * @throws Exception
      */
     public function sendAllRead($userId)
     {
@@ -216,7 +218,7 @@ class MessageService
      * @param $userId
      * @return void
      */
-    public function queueSendAllRead($userId)
+    public function sendAllReadByQueue($userId)
     {
         $data = [
             'type' => 'read',

@@ -3,6 +3,7 @@
 namespace app\mobile\controller;
 
 use app\service\mobile\MobileUserService;
+use app\service\UserMobilePermissionService;
 use think\Response;
 
 class Frame extends Base
@@ -15,8 +16,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $mobileUserService = new MobileUserService();
-        $permissions = $mobileUserService->getPermissionKeys($this->userId);
+        $userMobilePermissionService = new UserMobilePermissionService();
+        $permissions = $userMobilePermissionService->getPermissionKeys($this->userId);
         return $this->getSuccessResponse('获取成功', $permissions);
     }
 }

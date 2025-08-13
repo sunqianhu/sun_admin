@@ -19,12 +19,14 @@ use Workerman\Worker;
 class Message extends Command
 {
     /**
-     * @var Worker 容器
+     * 容器
+     * @var Worker
      */
     public Worker $worker;
 
     /**
-     * @var array|string[] 命令参数
+     * 命令参数
+     * @var array
      */
     private array $actions = ['start', 'stop', 'reload', 'restart', 'status'];
 
@@ -41,7 +43,7 @@ class Message extends Command
      * 执行
      * @param Input $input
      * @param Output $output
-     * @return int|void|null
+     * @return void
      * @throws Exception
      */
     protected function execute(Input $input, Output $output)
@@ -84,33 +86,33 @@ class Message extends Command
         $this->worker->count = 1;
 
         //事件
-        $this->worker->onWorkerStart = [$this, 'onWorkerStart'];
-        $this->worker->onMessage = [$this, 'onMessage'];
+        $this->worker->onWorkerStart = [$this, 'handleWorkerStart'];
+        $this->worker->onMessage = [$this, 'handleMessage'];
 
         Worker::runAll();
     }
 
     /**
-     * 子进程启动
+     * 处理Worker启动
      * @param $worker
      * @return void
      */
-    public function onWorkerStart($worker)
+    public function handleWorkerStart($worker)
     {
         try {
-            $this->clear($worker);
+            $this->clearConnection($worker);
         } catch (Exception $exception) {
             echo $exception->getMessage() . PHP_EOL;
         }
     }
 
     /**
-     * 收到数据
+     * 处理消息
      * @param TcpConnection $connection
      * @param  $data
      * @return void
      */
-    public function onMessage(TcpConnection $connection, $data)
+    public function handleMessage(TcpConnection $connection, $data)
     {
         try {
             //活跃时间
@@ -143,7 +145,7 @@ class Message extends Command
      * @param $worker
      * @return void
      */
-    public function clear($worker)
+    public function clearConnection($worker)
     {
         Timer::add(3600, function () use ($worker) {
             $time = time();
@@ -172,12 +174,12 @@ class Message extends Command
             throw new Exception('token不能为空');
         }
 
-        $jwt = new JwtService();
-        $sessionId = $jwt->resolverToken($token);
+        $jwtService = new JwtService();
+        $sessionId = $jwtService->resolverToken($token);
         $sessionService = new SessionService();
         $connection->userId = $sessionService->getUserId($sessionId);
 
-        unset($jwt);
+        unset($jwtService);
         unset($sessionId);
         unset($sessionService);
     }

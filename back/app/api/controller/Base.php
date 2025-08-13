@@ -10,8 +10,16 @@ use think\Response;
 
 class Base extends BaseController
 {
-    public bool $isTokenAuth = true; //是否token认证
-    public array $noTokenAuthActions = []; //不需要token认证的方法
+    /**
+     * 是否token认证
+     * @var bool
+     */
+    public bool $isTokenAuth = true;
+    /**
+     * 不需要token认证的方法
+     * @var array
+     */
+    public array $noTokenAuthActions = [];
     public int $sessionId = 0;
     public int $userId = 0;
 
@@ -49,7 +57,7 @@ class Base extends BaseController
         }
 
         //操作日志
-        if($this->sessionId) {
+        if($this->userId) {
             $operationLogModel = new OperationLogModel();
             $data = [
                 'user_id' => $this->userId,

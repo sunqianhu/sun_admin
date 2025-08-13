@@ -14,9 +14,21 @@ use think\db\exception\ModelNotFoundException;
 
 class SessionService
 {
-    public bool $isTokenAuth = true; //是否token认证
-    public array $noTokenAuthActions = []; //不需要token认证的方法
-    public int $expire = 60 * 60 * 24 * 365; //有效期
+    /**
+     * 是否token认证
+     * @var bool
+     */
+    public bool $isTokenAuth = true;
+    /**
+     * 不需要token认证的方法
+     * @var array
+     */
+    public array $noTokenAuthActions = [];
+    /**
+     * 有效期
+     * @var int
+     */
+    public int $expire = 60 * 60 * 24 * 365;
 
     /**
      * 创建会话
@@ -48,6 +60,21 @@ class SessionService
             throw new Exception('没有找到会话记录');
         }
         $sessionModel->delete($id);
+    }
+
+    /**
+     * 通过用户ID删除会话
+     * @param $userId
+     * @return void
+     * @throws Exception
+     */
+    public function deleteSessionByUserId($userId)
+    {
+        $sessionModels = SessionModel::where('user_id', $userId)->select();
+        if ($sessionModels->isEmpty()) {
+            throw new Exception('没有找到会话记录');
+        }
+        return $sessionModels->delete();
     }
 
     /**
@@ -93,16 +120,6 @@ class SessionService
         $userModel->save();
 
         return $sessionId;
-    }
-
-    /**
-     * 退出登录
-     * @param $id
-     * @throws Exception
-     */
-    public function logout($id)
-    {
-        $this->deleteSession($id);
     }
 
     /**

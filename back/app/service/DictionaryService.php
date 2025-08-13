@@ -72,7 +72,7 @@ class DictionaryService
      * @param $glue
      * @return string
      */
-    public function getValueString($type, $keys, $glue = '，')
+    public function getValuesString($type, $keys, $glue = '，')
     {
         $keyString = implode(',', $keys);
         $cacheKey = 'dictionary_' . $type . '_' . $keyString;

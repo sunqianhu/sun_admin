@@ -2,6 +2,7 @@
 
 namespace app\service;
 
+use Exception;
 use think\facade\Config;
 use WebSocket\Client;
 
@@ -12,9 +13,13 @@ class WebsocketMessageService
      * @param $userIds
      * @param $data
      * @return void
+     * @throws Exception
      */
     public function send($userIds, $data)
     {
+        if(empty($config['request_ip']) || empty($config['port'])){
+            throw new Exception('还没有配置websocket服务ip和端口');
+        }
         $config = Config::get('message');
         $url = 'ws://' . $config['request_ip'] . ':' . $config['port'];
 

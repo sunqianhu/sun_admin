@@ -53,6 +53,23 @@ class SessionService
     }
 
     /**
+     * 通过用户ID删除会话
+     * @param $userId
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     * @throws Exception
+     */
+    public function deleteSessionByUserId($userId){
+        $sessionModels = SessionModel::where('user_id', $userId)->select();
+        if ($sessionModels->isEmpty()) {
+            throw new Exception('没有找到会话记录');
+        }
+        $sessionModels->delete();
+    }
+
+    /**
      * 登录
      * @param $account
      * @param $password
@@ -95,17 +112,6 @@ class SessionService
         $userModel->save();
 
         return $sessionId;
-    }
-
-    /**
-     * 退出登录
-     * @param $id
-     * @return void
-     * @throws Exception
-     */
-    public function logout($id)
-    {
-        $this->deleteSession($id);
     }
 
     /**
@@ -195,8 +201,8 @@ class SessionService
             throw new Exception('接口认证，接口不能为空');
         }
 
-        $desktopUserService = new DesktopUserService();
-        if (!$desktopUserService->hasPermissionByApi($userId, $api)) {
+        $userDesktopPermissionService = new UserDesktopPermissionService();
+        if (!$userDesktopPermissionService->hasPermissionByApi($userId, $api)) {
             throw new Exception('无权限');
         }
     }

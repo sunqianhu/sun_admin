@@ -4,8 +4,8 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\desktop\DesktopUserService;
-use app\service\mobile\MobileUserService;
+use app\service\desktop\SessionService as DesktopSessionService;
+use app\service\mobile\SessionService as MobileSessionService;
 use app\service\UserService;
 use app\validate\UserValidate;
 use Exception;
@@ -89,11 +89,11 @@ class Index extends Base
         }
 
         try{
-            $DesktopUserService = new DesktopUserService();
-            $DesktopUserService->offLine($post['id']);
+            $desktopSessionService = new DesktopSessionService();
+            $desktopSessionService->deleteSessionByUserId($post['id']);
 
-            $mobileUserService = new MobileUserService();
-            $mobileUserService->offLine($post['id']);
+            $mobileSessionService = new MobileSessionService();
+            $mobileSessionService->deleteSessionByUserId($post['id']);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

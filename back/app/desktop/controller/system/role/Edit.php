@@ -8,7 +8,10 @@ use app\service\desktop\MenuService as DesktopMenuService;
 use app\service\desktop\PermissionService as DesktopPermissionService;
 use app\service\desktop\RouteService as DesktopRouteService;
 use app\service\mobile\PermissionService as MobilePermissionService;
-use app\service\RoleService;
+use app\service\RoleDesktopMenuService;
+use app\service\RoleDesktopPermissionService;
+use app\service\RoleDesktopRouteService;
+use app\service\RoleMobilePermissionService;
 use Sunqianhu\Helper\IdsValidate;
 use app\validate\IdValidate;
 use app\validate\RoleValidate;
@@ -108,11 +111,17 @@ class Edit extends Base
             $roleModel->save($post);
             $id = $roleModel->id;
 
-            $roleService = new RoleService();
-            $roleService->updateDesktopPermissionRelation($id, $post['desktop_permission_ids']);
-            $roleService->updateDesktopMenuRelation($id, $post['desktop_menu_ids']);
-            $roleService->updateDesktopRouteRelation($id, $post['desktop_route_ids']);
-            $roleService->updateMobilePermissionRelation($id, $post['mobile_permission_ids']);
+            $RoleDesktopPermissionService = new RoleDesktopPermissionService();
+            $RoleDesktopPermissionService->setRelation($id, $post['desktop_permission_ids']);
+
+            $roleDesktopMenuService = new RoleDesktopMenuService();
+            $roleDesktopMenuService->setRelation($id, $post['desktop_menu_ids']);
+
+            $roleDesktopRouteService = new RoleDesktopRouteService();
+            $roleDesktopRouteService->setRelation($id, $post['desktop_route_ids']);
+
+            $roleMobilePermissionService = new RoleMobilePermissionService();
+            $roleMobilePermissionService->setRelation($id, $post['mobile_permission_ids']);
 
             Db::commit();
         } catch (Exception $exception) {

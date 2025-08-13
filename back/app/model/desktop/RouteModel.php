@@ -4,6 +4,7 @@ namespace app\model\desktop;
 
 use app\model\BaseModel;
 use app\service\desktop\RouteService;
+use app\service\DictionaryService;
 use Exception;
 use Sunqianhu\Helper\SingletonFactory;
 
@@ -20,8 +21,8 @@ class RouteModel extends BaseModel
      */
     public function getLayoutNameAttr($value, $data)
     {
-        $route = SingletonFactory::getInstance(RouteService::class);
-        return $route->getLayoutName($data['layout']);
+        $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
+        return $dictionaryService->getValue('desktop_route_layout', $data['layout']);
     }
 
     /**
@@ -33,7 +34,7 @@ class RouteModel extends BaseModel
      */
     public function getKeepAliveNameAttr($value, $data)
     {
-        $routeService = SingletonFactory::getInstance(RouteService::class);
-        return $routeService->getKeepAliveName($data['keep_alive']);
+        $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
+        return $dictionaryService->getValue('desktop_route_keep_alive', $data['keep_alive']);
     }
 }

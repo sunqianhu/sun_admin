@@ -3,7 +3,10 @@
 namespace app\desktop\controller\layouts\main;
 
 use app\desktop\controller\Base;
-use app\service\desktop\DesktopUserService;
+use app\service\UserDesktopMenuService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class Menu extends Base
@@ -13,11 +16,14 @@ class Menu extends Base
     /**
      * 得到树形菜单
      * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getTreeMenu()
     {
-        $desktopUserService = new DesktopUserService();
-        $treeMenu = $desktopUserService->getTreeMenu($this->userId);
+        $userDesktopMenuService = new UserDesktopMenuService();
+        $treeMenu = $userDesktopMenuService->getTreeMenu($this->userId);
 
         return $this->getSuccessResonse('获取成功', $treeMenu);
     }

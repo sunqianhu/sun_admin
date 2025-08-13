@@ -3,6 +3,8 @@
 namespace app\desktop\controller;
 
 use app\service\desktop\DesktopUserService;
+use app\service\UserDesktopPermissionService;
+use app\service\UserDesktopRouteService;
 use app\service\WatermarkService;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -19,8 +21,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $desktopUserService = new DesktopUserService();
-        $permissions = $desktopUserService->getPermissionKeys($this->userId);
+        $userDesktopPermissionService = new UserDesktopPermissionService();
+        $permissions = $userDesktopPermissionService->getPermissionKeys($this->userId);
         return $this->getSuccessResonse('获取成功', $permissions);
     }
 
@@ -33,8 +35,8 @@ class Frame extends Base
      */
     public function getRoutes()
     {
-        $desktopUserService = new DesktopUserService();
-        $routes = $desktopUserService->getRoutes($this->userId);
+        $userDesktopRouteService = new UserDesktopRouteService();
+        $routes = $userDesktopRouteService->getRoutes($this->userId);
         return $this->getSuccessResonse('获取成功', $routes);
     }
 

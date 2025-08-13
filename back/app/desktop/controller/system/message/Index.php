@@ -42,7 +42,7 @@ class Index extends Base
         $messageService = new MessageService();
         try{
             $messageService->setAllRead($this->userId);
-            $messageService->queueSendAllRead($this->userId);
+            $messageService->sendAllReadByQueue($this->userId);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
