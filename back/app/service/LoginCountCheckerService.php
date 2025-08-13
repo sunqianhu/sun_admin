@@ -5,7 +5,7 @@ namespace app\service;
 use Sunqianhu\Helper\Time;
 use think\facade\Cache;
 
-class LoginFailCheckerService
+class LoginCountCheckerService
 {
     /**
      * @var string

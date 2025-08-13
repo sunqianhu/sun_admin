@@ -4,7 +4,7 @@ namespace app\desktop\controller;
 
 use app\service\ConfigService;
 use app\service\desktop\SessionService;
-use app\service\LoginFailCheckerService;
+use app\service\LoginCountCheckerService;
 use app\validate\LoginValidate;
 use think\exception\ValidateException;
 use Exception;
@@ -45,26 +45,26 @@ class Login extends Base
         }
 
         //登录次数
-        $loginFailCheckerService = new LoginFailCheckerService($post['account']);
-        if(!$loginFailCheckerService->check()){
-            return $this->getErrorResponse('连续登录失败'.$loginFailCheckerService->number.'次，请'.$loginFailCheckerService->getResetReadableTime().'后再试');
+        $loginCountCheckerService = new LoginCountCheckerService($post['account']);
+        if(!$loginCountCheckerService->check()){
+            return $this->getErrorResponse('连续登录失败'.$loginCountCheckerService->number.'次，请'.$loginCountCheckerService->getResetReadableTime().'后再试');
         }
 
         try{
             $sessionService = new SessionService();
             $sessionId = $sessionService->login($post['account'], $post['password'], $this->request->ip());
         }catch (Exception $exception){
-            $loginFailCheckerService->setFail();
-            $availableNumber = $loginFailCheckerService->getAvailableNumber();
+            $loginCountCheckerService->setFail();
+            $availableNumber = $loginCountCheckerService->getAvailableNumber();
             $message = $exception->getMessage();
             if($availableNumber > 0){
                 $message .= '，还能再试'.$availableNumber.'次';
             }else{
-                $message .= '，连续登录失败'.$loginFailCheckerService->number.'次，请'.$loginFailCheckerService->getResetReadableTime().'后再试';
+                $message .= '，连续登录失败'.$loginCountCheckerService->number.'次，请'.$loginCountCheckerService->getResetReadableTime().'后再试';
             }
             return $this->getErrorResponse($message);
         }
-        $loginFailCheckerService->resetFail();
+        $loginCountCheckerService->resetFail();
 
         $token = $sessionService->getToken($sessionId);
 
