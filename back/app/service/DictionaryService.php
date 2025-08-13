@@ -3,6 +3,7 @@
 namespace app\service;
 
 use app\model\DictionaryModel;
+use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -13,7 +14,7 @@ class DictionaryService
     /**
      * @var int 有效期
      */
-    private $expire = 600;
+    private int $expire = 600;
 
     /**
      * 获取字典列表
@@ -31,7 +32,7 @@ class DictionaryService
             return $list;
         }
 
-        $dictionaryModels = DictionaryModel::where('type', '=', $type)
+        $dictionaryModels = DictionaryModel::where('type', $type)
             ->field('key,value')
             ->order('sort', 'asc')
             ->select();
@@ -46,6 +47,7 @@ class DictionaryService
      * @param $type
      * @param $key
      * @return void
+     * @throws Exception
      */
     public function getValue($type, $key)
     {
@@ -55,11 +57,15 @@ class DictionaryService
             return $value;
         }
 
-        $value = DictionaryModel::field('value')
-            ->where('type', '=', $type)
-            ->where('key', '=', $key)
+        $dictionaryModel = DictionaryModel::field('value')
+            ->where($type, 'type')
+            ->where('key', $key)
             ->order('sort', 'asc')
-            ->value('value') ?? '';
+            ->find();
+        if(empty($dictionaryModel)){
+            throw new Exception('没有找到字典记录');
+        }
+        $value = $dictionaryModel->value;
         Cache::set($cacheKey, $value, $this->expire);
 
         return $value;
@@ -69,26 +75,26 @@ class DictionaryService
      * 获取值串
      * @param $type
      * @param $keys
-     * @param $glue
+     * @param string $glue
      * @return string
      */
-    public function getValuesString($type, $keys, $glue = '，')
+    public function getValuesString($type, $keys, string $glue = '，')
     {
         $keyString = implode(',', $keys);
-        $cacheKey = 'dictionary_' . $type . '_' . $keyString;
+        $cacheKey = 'dictionary_' . $type . '_' . str_replace(',', '_', $keyString);
         $valueString = Cache::get($cacheKey);
         if ($valueString !== null) {
             return $valueString;
         }
 
-        $values = DictionaryModel::where('type', '=', $type)
+        $values = DictionaryModel::where('type', $type)
             ->where('key', 'in', $keyString)
             ->field('value')
             ->order('sort', 'asc')
             ->column('value');
-        $valueString = implode($glue, $values);
-        Cache::set($cacheKey, $valueString, $this->expire);
+        $valuesString = implode($glue, $values);
+        Cache::set($cacheKey, $valuesString, $this->expire);
 
-        return $valueString;
+        return $valuesString;
     }
 }
