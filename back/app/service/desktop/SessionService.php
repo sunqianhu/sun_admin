@@ -7,6 +7,7 @@ use app\model\desktop\SessionModel;
 use app\model\LoginLogModel;
 use app\model\UserModel;
 use app\service\JwtService;
+use app\service\UserDesktopPermissionService;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -14,11 +15,31 @@ use think\db\exception\ModelNotFoundException;
 
 class SessionService
 {
-    public bool $isTokenAuth = true; //是否token认证
-    public array $noTokenAuthActions = []; //不需要token认证的方法
-    public bool $isApiAuth = true; //是否接口认证
-    public array $noApiAuthActions = []; //不需要接口认证的方法
-    public int $expire = 60 * 60; //有效期
+    /**
+     * 是否token认证
+     * @var bool
+     */
+    public bool $isTokenAuth = true;
+    /**
+     * 不需要token认证的方法
+     * @var array
+     */
+    public array $noTokenAuthActions = [];
+    /**
+     * 是否接口认证
+     * @var bool
+     */
+    public bool $isApiAuth = true;
+    /**
+     * 不需要接口认证的方法
+     * @var array
+     */
+    public array $noApiAuthActions = [];
+    /**
+     * 有效期
+     * @var int
+     */
+    public int $expire = 60 * 60;
 
     /**
      * 创建会话

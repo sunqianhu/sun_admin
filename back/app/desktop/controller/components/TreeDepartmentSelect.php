@@ -4,6 +4,9 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\service\DepartmentService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class TreeDepartmentSelect extends Base
@@ -13,6 +16,9 @@ class TreeDepartmentSelect extends Base
     /**
      * 得到树型单位列表
      * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getTreeDepartment()
     {

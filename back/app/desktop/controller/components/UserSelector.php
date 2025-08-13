@@ -5,6 +5,7 @@ namespace app\desktop\controller\components;
 use app\desktop\controller\Base;
 use app\service\UserService;
 use app\validate\components\SelectUserValidate;
+use Exception;
 use think\exception\ValidateException;
 use think\Response;
 
@@ -15,6 +16,7 @@ class UserSelector extends Base
     /**
      * 得到用户姓名
      * @return Response
+     * @throws Exception
      */
     public function getUserName()
     {

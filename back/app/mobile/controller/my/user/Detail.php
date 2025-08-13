@@ -45,7 +45,7 @@ class Detail extends Base
     public function logout()
     {
         $sessionService = new SessionService();
-        $sessionService->logout($this->sessionId);
+        $sessionService->deleteSession($this->sessionId);
 
         return $this->getSuccessResponse("退出登录成功");
     }

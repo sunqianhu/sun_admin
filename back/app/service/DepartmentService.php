@@ -3,10 +3,8 @@
 namespace app\service;
 
 use app\model\DepartmentModel;
-use app\model\UserModel;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
-use Sunqianhu\Helper\SingletonFactory;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -67,41 +65,6 @@ class DepartmentService
     }
 
     /**
-     * 得到用户列表
-     * @param $id
-     * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function getUsers($id){
-        $userModels = UserModel::field('id,name,department_id')
-            ->where('department_id', $id)
-            ->select();
-        return $userModels->toArray();
-    }
-
-    /**
-     * 是否存在用户
-     * @param $id
-     * @return bool
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function isExistUsers($id)
-    {
-        $UserModel = UserModel::field('id')
-            ->where('department_id', $id)
-            ->limit(0,1)
-            ->find();
-        if(empty($UserModel)){
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 得到所有子部门id列表
      * @param $id
      * @return array
@@ -157,22 +120,6 @@ class DepartmentService
             ->limit(0,1)
             ->find();
         if(!empty($departmentModel)){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 是否存在部门或用户
-     * @param $id
-     * @return bool
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function isExistDepartmentsOrUsers($id)
-    {
-        if($this->isExistDepartment($id) || $this->isExistUsers($id)){
             return true;
         }
         return false;

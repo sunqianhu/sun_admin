@@ -2,7 +2,6 @@
 
 namespace app\service;
 
-use app\model\RoleDesktopPermissionModel;
 use app\model\RoleMobilePermissionModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
