@@ -11,7 +11,7 @@
         </el-form-item>
         <el-form-item label="操作时间">
           <el-date-picker
-            v-model="query.time"
+            v-model="query.times"
             type="datetimerange"
             format="YYYY-MM-DD HH:mm:ss"
             value-format="X"
@@ -79,11 +79,11 @@ import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 
 const query = ref({
-  time: [
+  times: [
     dayjs(
-      dayjs().subtract(3, "month").format("YYYY-MM-DD") + " 00:00:00"
+      dayjs().subtract(6, "month").format("YYYY-MM-DD") + " 00:00:00"
     ).unix(),
-    dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix(),
+    dayjs(dayjs().format("YYYY-MM-DD") + " 23:59:59").unix(),
   ],
   size: 30,
   page: 1,

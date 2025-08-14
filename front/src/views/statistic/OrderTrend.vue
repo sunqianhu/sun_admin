@@ -55,7 +55,7 @@ const query = ref({
     dayjs(
       dayjs().subtract(1, "month").format("YYYY-MM-DD") + " 00:00:00"
     ).unix(),
-    dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix(),
+    dayjs(dayjs().format("YYYY-MM-DD") + " 23:59:59").unix(),
   ],
 });
 const initLoading = ref(true);
