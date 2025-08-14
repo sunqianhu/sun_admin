@@ -36,7 +36,7 @@ const toggleFold = () => {
     height: 24px;
   }
   &:hover {
-    background: rgba(0, 0, 0, 0.025);
+    background: rgba(0, 0, 0, 0.05);
     .hamburger__icon {
       opacity: var(--active-opacity);
     }

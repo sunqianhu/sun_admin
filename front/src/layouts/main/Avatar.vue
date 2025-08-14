@@ -9,6 +9,7 @@
           class="avatar__avatar"
         ></el-avatar>
         <span class="avatar__name">{{ user.name }}</span>
+        <el-icon class="avatar__arrow-down"><ArrowDown /></el-icon>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -48,7 +49,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { Edit, SwitchButton, User } from "@element-plus/icons-vue";
+import { Edit, SwitchButton, User, ArrowDown } from "@element-plus/icons-vue";
 import { usePermissionStore } from "@/stores/permission";
 import { useRouteStore } from "@/stores/route";
 import routeCache from "@/helper/route_cache";
@@ -139,6 +140,9 @@ onMounted(() => {
     .avatar__avatar {
     }
     .avatar__name {
+      margin-left: 4px;
+    }
+    .avatar__arrow-down {
       margin-left: 4px;
     }
   }

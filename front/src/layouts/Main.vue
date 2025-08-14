@@ -147,7 +147,7 @@ onMounted(() => {
           .header__fullscreen,
           .header__light-dark,
           .header__avatar {
-            margin-left: var(--margin);
+            margin-left: 24px;
           }
         }
       }

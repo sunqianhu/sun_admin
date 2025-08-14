@@ -28,7 +28,7 @@ const switchChecked = ref(isDark);
     color: #203549;
   }
   :deep(.el-switch.is-checked .el-switch__core) {
-    background-color: #203549;
+    background-color: #696969;
     border-color: #203549;
   }
   :deep(.el-switch.is-checked .el-icon) {

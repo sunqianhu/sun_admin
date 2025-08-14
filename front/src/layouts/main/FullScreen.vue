@@ -18,7 +18,7 @@ const toggleFullScreen = () => {
     screenfull.toggle();
   } else {
     ElMessage({
-      message: "你的浏览器不支持全屏，请更换浏览器",
+      message: "你的浏览器不支持全屏",
       type: "error",
     });
   }

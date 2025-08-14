@@ -1,3 +1,4 @@
+import "animate.css";
 import "./assets/app.scss";
 
 import { createApp } from "vue";
