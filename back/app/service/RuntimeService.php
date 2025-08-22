@@ -2,6 +2,7 @@
 namespace app\service;
 
 use app\model\RuntimeModel;
+use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -15,6 +16,7 @@ class RuntimeService
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
+     * @throws Exception
      */
     public function getValue($key)
     {
