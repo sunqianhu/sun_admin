@@ -41,7 +41,7 @@ const user = ref({});
 const init = async () => {
   const response = await axios.get("mobile/Index/init");
   if (response.code != 1) {
-    showFailToast(response.message);
+    //showFailToast(response.message);
     return;
   }
 
