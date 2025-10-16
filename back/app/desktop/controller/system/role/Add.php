@@ -12,7 +12,7 @@ use app\service\RoleDesktopMenuService;
 use app\service\RoleDesktopPermissionService;
 use app\service\RoleDesktopRouteService;
 use app\service\RoleMobilePermissionService;
-use Sunqianhu\Helper\IdsValidate;
+use Sunqianhu\Helper\IdsValidator;
 use app\validate\RoleValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -60,10 +60,10 @@ class Add extends Base
         }
 
         try {
-            IdsValidate::check($post['desktop_permission_ids'], '桌面端权限');
-            IdsValidate::check($post['desktop_menu_ids'], '桌面端菜单');
-            IdsValidate::check($post['desktop_route_ids'], '桌面端路由');
-            IdsValidate::check($post['mobile_permission_ids'], '移动端权限');
+            IdsValidator::check('桌面端权限', $post['desktop_permission_ids']);
+            IdsValidator::check('桌面端菜单', $post['desktop_menu_ids']);
+            IdsValidator::check('桌面端路由', $post['desktop_route_ids']);
+            IdsValidator::check('移动端权限', $post['mobile_permission_ids']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

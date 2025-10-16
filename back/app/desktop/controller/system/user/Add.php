@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\user;
 use app\desktop\controller\Base;
 use app\model\UserRoleModel;
 use app\service\UserService;
-use Sunqianhu\Helper\IdsValidate;
+use Sunqianhu\Helper\IdsValidator;
 use app\validate\UserValidate;
 use Exception;
 use think\facade\Db;
@@ -21,7 +21,7 @@ class Add extends Base
 
         try {
             validate(UserValidate::class)->scene('add')->check($post);
-            IdsValidate::check($post['role_ids'], '角色');
+            IdsValidator::check('角色', $post['role_ids']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
