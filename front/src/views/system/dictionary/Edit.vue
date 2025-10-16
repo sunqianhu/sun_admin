@@ -87,16 +87,10 @@ const close = () => {
 const submitForm = async () => {
   await dictionaryRef.value.validate();
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post(
-      "desktop/system.dictionary.Edit/save",
-      dictionary.value
-    );
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post(
+    "desktop/system.dictionary.Edit/save",
+    dictionary.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

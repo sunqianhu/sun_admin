@@ -73,16 +73,10 @@ const close = () => {
 const submitForm = async () => {
   await departmentRef.value.validate();
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post(
-      "desktop/system.department.Add/save",
-      menu.value
-    );
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post(
+    "desktop/system.department.Add/save",
+    department.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

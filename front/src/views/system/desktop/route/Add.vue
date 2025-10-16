@@ -92,16 +92,10 @@ const submitForm = async () => {
   await routeRef.value.validate();
 
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post(
-      "desktop/system.desktop.route.Add/save",
-      route.value
-    );
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post(
+    "desktop/system.desktop.route.Add/save",
+    route.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

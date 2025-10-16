@@ -103,16 +103,10 @@ const submitForm = async () => {
   await permissionRef.value.validate();
 
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post(
-      "desktop/system.desktop.permission.Edit/save",
-      permission.value
-    );
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post(
+    "desktop/system.desktop.permission.Edit/save",
+    permission.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

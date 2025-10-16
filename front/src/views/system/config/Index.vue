@@ -76,16 +76,10 @@ const submitForm = async () => {
   await configRef.value.validate();
 
   submitLoading.value = true;
-  let response;
-  try {
-    response = await axios.post(
-      "desktop/system.config.Index/save",
-      config.value
-    );
-  } catch (error) {
-    submitLoading.value = false;
-    return;
-  }
+  const response = await axios.post(
+    "desktop/system.config.Index/save",
+    config.value
+  );
   submitLoading.value = false;
   if (response.code != 1) {
     ElMessage({

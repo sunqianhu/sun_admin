@@ -10,8 +10,6 @@ use think\Response;
 
 class Index extends Base
 {
-    public array $noApiAuthActions = ['init'];
-
     /**
      * 初始化
      * @return Response
