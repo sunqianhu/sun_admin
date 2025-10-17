@@ -1,9 +1,9 @@
 <?php
 namespace app\model;
 
+use app\service\user\UserAvatarService;
 use Exception;
 use Sunqianhu\Helper\SingletonFactory;
-use app\service\UserAvatarService;
 use think\model\relation\BelongsTo;
 use think\model\relation\BelongsToMany;
 

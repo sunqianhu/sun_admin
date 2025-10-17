@@ -1,6 +1,6 @@
 <?php
 
-namespace app\service;
+namespace app\service\department;
 
 use app\model\UserModel;
 use think\db\exception\DataNotFoundException;
@@ -42,22 +42,5 @@ class DepartmentUserService
             return false;
         }
         return true;
-    }
-
-    /**
-     * 是否存在部门或用户
-     * @param $departmentId
-     * @return bool
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function isExistDepartmentsOrUsers($departmentId)
-    {
-        $departmentService = new DepartmentService();
-        if($departmentService->isExistDepartment($departmentId) || $this->isExistUsers($departmentId)){
-            return true;
-        }
-        return false;
     }
 }

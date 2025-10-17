@@ -3,7 +3,7 @@
 namespace app\mobile\controller;
 
 use app\service\mobile\MobileUserService;
-use app\service\UserMobilePermissionService;
+use app\service\user\UserMobilePermissionService;
 use think\Response;
 
 class Frame extends Base

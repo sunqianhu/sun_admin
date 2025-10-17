@@ -1,8 +1,9 @@
 <?php
 
-namespace app\service;
+namespace app\service\user;
 
 use app\model\UserModel;
+use app\service\SiteService;
 use Exception;
 use Sunqianhu\Helper\File;
 use Sunqianhu\Helper\Image;

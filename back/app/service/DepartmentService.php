@@ -3,6 +3,7 @@
 namespace app\service;
 
 use app\model\DepartmentModel;
+use app\service\department\DepartmentUserService;
 use Exception;
 use Sunqianhu\Helper\ArrayHandler;
 use think\db\exception\DataNotFoundException;
@@ -72,16 +73,30 @@ class DepartmentService
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getAllDepartmentIds($id){
+    public function getAllChildrenDepartmentIds($id){
         $departmentModels = DepartmentModel::field('id')
             ->where('department_id', $id)
             ->select();
         $ids = [];
         foreach($departmentModels as $departmentModel){
             $ids[] = $departmentModel->id;
-            $ids = array_merge($ids, $this->getAllDepartmentIds($departmentModel->id));
+            $ids = array_merge($ids, $this->getAllChildrenDepartmentIds($departmentModel->id));
         }
         return $ids;
+    }
+
+    /**
+     * 获取所有子部门id列表包括当前部门id
+     * @param $id
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getAllChildrenDepartmentIdsWithCurrentId($id)
+    {
+        $ids[] = $id;
+        return array_merge($ids, $this->getAllChildrenDepartmentIds($id));
     }
 
     /**
@@ -94,7 +109,7 @@ class DepartmentService
      */
     public function getTreeDepartment($id)
     {
-        $ids = $this->getAllDepartmentIds($id);
+        $ids = $this->getAllChildrenDepartmentIds($id);
         $ids[] = $id;
 
         $departmentModels = DepartmentModel::field('id, id, department_id, name')
@@ -114,7 +129,7 @@ class DepartmentService
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function isExistDepartment($id){
+    public function isExistDepartments($id){
         $departmentModel = DepartmentModel::field('id')
             ->where('department_id', $id)
             ->limit(0,1)
@@ -140,5 +155,41 @@ class DepartmentService
             ->order('sort', 'asc')
             ->select();
         return $departmentModels->toArray();
+    }
+
+    /**
+     * 是否存在部门或用户
+     * @param $departmentId
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function isExistDepartmentsOrUsers($departmentId)
+    {
+        $departmentUserService = new DepartmentUserService();
+        if($this->isExistDepartments($departmentId) || $departmentUserService->isExistUsers($departmentId)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 得到基本的部门信息
+     * @param $id
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     * @throws Exception
+     */
+    public function getBaseDepartment($id)
+    {
+        $departmentModel = DepartmentModel::field('id,name,department_id,type')
+            ->find($id);
+        if(empty($departmentModel)){
+            throw new Exception('没有找到部门');
+        }
+        return $departmentModel->toArray();
     }
 }

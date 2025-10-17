@@ -3,7 +3,6 @@
 namespace app\service\api;
 
 use app\model\api\SessionModel;
-use app\model\ConfigModel;
 use app\model\LoginLogModel;
 use app\model\UserModel;
 use app\service\JwtService;
@@ -15,20 +14,10 @@ use think\db\exception\ModelNotFoundException;
 class SessionService
 {
     /**
-     * 是否token认证
-     * @var bool
-     */
-    public bool $isTokenAuth = true;
-    /**
-     * 不需要token认证的方法
-     * @var array
-     */
-    public array $noTokenAuthActions = [];
-    /**
      * 有效期
      * @var int
      */
-    public int $expire = 60 * 60 * 24 * 365;
+    public int $expire = 60 * 60 * 24 * 365 * 5;
 
     /**
      * 创建会话
@@ -123,49 +112,16 @@ class SessionService
     }
 
     /**
-     * ip认证
-     * @param $ip
-     * @return true
-     * @throws Exception
-     */
-    function ipAuth($ip)
-    {
-        $configModel = ConfigModel::field('denied_ip_string')->find(1);
-        if(empty($configModel)){
-            throw new Exception('没有找到系统配置记录');
-        }
-        $deniedIpString = $configModel->denied_ip_string;
-        $deniedIps = explode("\r\n", $deniedIpString);
-        $deniedIps = array_filter($deniedIps);
-        if (empty($deniedIps)) {
-            return true;
-        }
-        if (in_array($ip, $deniedIps)) {
-            throw new Exception('您的ip已被拒绝访问');
-        }
-        return true;
-    }
-
-    /**
      * token认证
      * @param $token
-     * @param $action
      * @return int
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      * @throws Exception
      */
-    function tokenAuth($token, $action)
+    function tokenAuth($token)
     {
-        $isAuth = $this->isTokenAuth;
-        if (in_array($action, $this->noTokenAuthActions)) {
-            $isAuth = false;
-        }
-        if (!$isAuth) {
-            return 0;
-        }
-
         if($token === ''){
             throw new Exception('未登录');
         }
@@ -182,9 +138,27 @@ class SessionService
         if ($sessionModel->user_id != $userId) {
             throw new Exception('登录凭证错误');
         }
-        $sessionModel->save(['expires_in' => time() + $this->expire]);
 
         return $sessionModel->id;
+    }
+
+    /**
+     * 续期
+     * @param $id
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     * @throws Exception
+     */
+    public function renewExpiresIn($id)
+    {
+        $sessionModel = SessionModel::find($id);
+        if(empty($sessionModel)){
+            throw new Exception('没有找到会话记录');
+        }
+        $sessionModel->expires_in = time() + $this->expire;
+        $sessionModel->save();
     }
 
     /**

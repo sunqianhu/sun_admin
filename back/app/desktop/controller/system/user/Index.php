@@ -6,7 +6,7 @@ use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\service\desktop\SessionService as DesktopSessionService;
 use app\service\mobile\SessionService as MobileSessionService;
-use app\service\UserService;
+use app\service\user\UserStatusService;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -64,10 +64,10 @@ class Index extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $post['status'] = $post['status'] == 1 ? 1 : 0;
+        $status = $post['status'] == 1 ? 1 : 0;
+        $userStatusService = new UserStatusService();
         try{
-            $userService = new UserService();
-            $userService->editStatus($post['id'], $post['status']);
+            $userStatusService->editStatus($post['id'], $status);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

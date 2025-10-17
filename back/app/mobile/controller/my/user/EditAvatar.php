@@ -3,7 +3,7 @@
 namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
-use app\service\UserAvatarService;
+use app\service\user\UserAvatarService;
 use app\validate\user\AvatarBase64ImageContentValidate;
 use Exception;
 use think\exception\ValidateException;

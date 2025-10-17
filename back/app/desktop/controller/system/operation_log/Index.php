@@ -13,7 +13,7 @@ class Index extends Base
      */
     public function getPaginate()
     {
-        $get = $this->request->get(['department_ids'=>[], 'times' => [], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
+        $get = $this->request->get(['department_ids'=>[], 'terminal'=>'', 'times' => [], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
 
         $query = OperationLogModel::alias('ol')
             ->field('ol.*,u.name as user_name, d.name as department_name')
@@ -23,7 +23,10 @@ class Index extends Base
             $query->whereBetweenTime('ol.time', intval($get['times'][0]), intval($get['times'][1]));
         }
         if (!empty($get['department_ids'])) {
-            $query->whereIn('u.department_id', $get['department_ids']);
+            $query->whereIn('ol.department_id', $get['department_ids']);
+        }
+        if ($get['terminal'] !== '') {
+            $query->where('ol.terminal', $get['terminal']);
         }
         if ($get['name'] !== '') {
             $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');
@@ -32,6 +35,7 @@ class Index extends Base
             $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
         $query->order('ol.id', 'desc');
+        $query->append(['terminal_name']);
         $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],

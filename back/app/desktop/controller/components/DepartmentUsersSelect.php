@@ -4,7 +4,7 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\DepartmentUserService;
+use app\service\department\DepartmentUserService;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

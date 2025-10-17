@@ -3,7 +3,6 @@
 namespace app\service;
 
 use app\model\UserModel;
-use app\model\UserRoleModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -11,38 +10,6 @@ use think\db\exception\ModelNotFoundException;
 
 class UserService
 {
-    /**
-     * 得到id
-     * @param $name
-     * @return string
-     * @throws Exception
-     */
-    public function getId($name)
-    {
-        $userModel = UserModel::field('id')
-            ->where('name', $name)
-            ->find();
-        if(empty($userModel)){
-            throw new Exception('没有找到用户记录');
-        }
-        return $userModel->id;
-    }
-
-    /**
-     * 得到姓名
-     * @param $id
-     * @return string
-     * @throws Exception
-     */
-    public function getName($id)
-    {
-        $userModel = UserModel::field('name')->find($id);
-        if(empty($userModel)){
-            throw new Exception('没有找到用户记录');
-        }
-        return $userModel->name;
-    }
-
     /**
      * 添加
      * @param $data
@@ -104,62 +71,51 @@ class UserService
     }
 
     /**
-     * 修改密码
+     * 得到id
+     * @param $name
+     * @return string
+     * @throws Exception
+     */
+    public function getId($name)
+    {
+        $userModel = UserModel::field('id')
+            ->where('name', $name)
+            ->find();
+        if(empty($userModel)){
+            throw new Exception('没有找到用户记录');
+        }
+        return $userModel->id;
+    }
+
+    /**
+     * 得到姓名
      * @param $id
-     * @param $password
-     * @return void
+     * @return string
+     * @throws Exception
+     */
+    public function getName($id)
+    {
+        $userModel = UserModel::field('name')->find($id);
+        if(empty($userModel)){
+            throw new Exception('没有找到用户记录');
+        }
+        return $userModel->name;
+    }
+
+    /**
+     * 获取基础用户信息
+     * @param $id
+     * @return array
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @throws Exception
      */
-    public function editPassword($id, $password)
+    public function getBaseUser($id)
     {
-        $userModel = UserModel::find($id);
-        if (empty($userModel)) {
+        $userModel = UserModel::field('id,name,account,phone,department_id')->find($id);
+        if(empty($userModel)){
             throw new Exception('没有找到用户记录');
         }
-        $userModel->save([
-            'password' => md5($password)
-        ]);
-    }
-
-    /**
-     * 修改状态
-     * @param $id
-     * @param $status
-     * @return bool
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException|Exception
-     */
-    public function editStatus($id, $status)
-    {
-        $userModel = UserModel::find($id);
-        if (empty($userModel)) {
-            throw new Exception('没有找到用户记录');
-        }
-        $userModel->status = $status;
-        return $userModel->save();
-    }
-
-    /**
-     * id转账号
-     * @param $ids
-     * @param string $glue
-     * @return mixed|string
-     */
-    public function idsToAccountsString($ids, $glue = ',')
-    {
-        if (empty($ids)) {
-            return '';
-        }
-
-        $accounts = UserModel::whereIn('id', $ids)->column('account');
-        if (empty($accounts)) {
-            return '';
-        }
-
-        return implode($glue, $accounts);
+        return $userModel->toArray();
     }
 }

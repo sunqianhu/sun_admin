@@ -1,6 +1,6 @@
 <?php
 
-namespace app\service;
+namespace app\service\user;
 
 use app\model\mobile\PermissionModel;
 use think\db\exception\DataNotFoundException;

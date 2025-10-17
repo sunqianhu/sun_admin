@@ -5,7 +5,12 @@ namespace app\api\controller;
 use app\BaseController;
 use app\model\OperationLogModel;
 use app\service\api\SessionService;
+use app\service\IpAuthService;
+use app\service\user\UserDepartmentService;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
 class Base extends BaseController
@@ -22,21 +27,24 @@ class Base extends BaseController
     public array $noTokenAuthActions = [];
     public int $sessionId = 0;
     public int $userId = 0;
+    public int $departmentId = 0;
 
     /**
      * 初始化
      * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     function initialize()
     {
         parent::initialize();
         $sessionService = new SessionService();
-        $sessionService->isTokenAuth = $this->isTokenAuth;
-        $sessionService->noTokenAuthActions = $this->noTokenAuthActions;
 
         //ip
+        $ipAuthService = new IpAuthService();
         try {
-            $sessionService->ipAuth($this->request->ip());
+            $ipAuthService->ipAuth($this->request->ip());
         } catch (Exception $exception) {
             $this->getErrorResponse($exception->getMessage())->send();
             exit;
@@ -45,22 +53,35 @@ class Base extends BaseController
         $action = $this->request->action();
 
         //token
-        try {
+        if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             $token = $this->request->header('token', '');
-            $this->sessionId = $sessionService->tokenAuth($token, $action);
-            if($this->sessionId){
-                $this->userId = $sessionService->getUserId($this->sessionId);
+            try {
+                $this->sessionId = $sessionService->tokenAuth($token);
+            } catch (Exception $exception) {
+                $this->getErrorResponse($exception->getMessage(), null, 2)->send();
+                exit;
             }
-        } catch (Exception $exception) {
-            $this->getErrorResponse($exception->getMessage(), null, 2)->send();
-            exit;
+        }
+
+        if ($this->sessionId) {
+            try {
+                $this->userId = $sessionService->getUserId($this->sessionId);
+                $userDepartmentService = new UserDepartmentService();
+                $this->departmentId = $userDepartmentService->getDepartmentId($this->userId);
+                $sessionService->renewExpiresIn($this->sessionId);
+            } catch (Exception $exception) {
+                $this->getErrorResponse($exception->getMessage())->send();
+                exit;
+            }
         }
 
         //操作日志
-        if($this->userId) {
+        if ($this->userId) {
             $operationLogModel = new OperationLogModel();
             $data = [
+                'department_id' => $this->departmentId,
                 'user_id' => $this->userId,
+                'terminal' => 2,
                 'api' => $this->request->baseUrl(),
                 'ip' => $this->request->ip(),
                 'time' => time()

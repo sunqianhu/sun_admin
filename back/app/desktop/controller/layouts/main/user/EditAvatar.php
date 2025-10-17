@@ -4,7 +4,7 @@ namespace app\desktop\controller\layouts\main\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\UserAvatarService;
+use app\service\user\UserAvatarService;
 use app\validate\user\AvatarBase64ImageContentValidate;
 use Exception;
 use think\db\exception\DataNotFoundException;

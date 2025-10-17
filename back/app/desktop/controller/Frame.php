@@ -3,8 +3,8 @@
 namespace app\desktop\controller;
 
 use app\service\desktop\DesktopUserService;
-use app\service\UserDesktopPermissionService;
-use app\service\UserDesktopRouteService;
+use app\service\user\UserDesktopPermissionService;
+use app\service\user\UserDesktopRouteService;
 use app\service\WatermarkService;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;

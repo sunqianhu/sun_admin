@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
-use app\service\UserService;
+use app\service\user\UserPasswordService;
 use app\validate\IdValidate;
 use app\validate\user\TwoPasswordValidate;
 use Exception;
@@ -26,9 +26,9 @@ class EditPassword extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
+        $userPasswordService = new UserPasswordService();
         try{
-            $userService = new UserService();
-            $userService->editPassword($post['id'], $post['password1']);
+            $userPasswordService->editPassword($post['id'], $post['password1']);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

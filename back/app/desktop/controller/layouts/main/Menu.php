@@ -3,7 +3,7 @@
 namespace app\desktop\controller\layouts\main;
 
 use app\desktop\controller\Base;
-use app\service\UserDesktopMenuService;
+use app\service\user\UserDesktopMenuService;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
