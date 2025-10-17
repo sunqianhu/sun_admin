@@ -1,11 +1,11 @@
 <template>
   <div class="theme-setting">
-    <el-tooltip effect="dark" content="界面主题设置" placement="bottom">
+    <el-tooltip effect="dark" content="设置系统主题" placement="bottom">
       <el-icon class="icon" @click="openSetting"><Setting /></el-icon>
     </el-tooltip>
     <el-drawer
       v-model="settingFlag"
-      title="主题设置"
+      title="系统主题设置"
       direction="rtl"
       size="300px"
       @close="closeSetting"

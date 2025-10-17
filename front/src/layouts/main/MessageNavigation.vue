@@ -1,7 +1,7 @@
 <template>
   <div class="message-navigation" @click="router.push('/system/message')">
     <el-badge :value="noReadCount" :max="99" :hidden="noReadCount <= 0">
-      <el-tooltip effect="dark" content="系统消息" placement="bottom">
+      <el-tooltip effect="dark" content="查看系统消息" placement="bottom">
         <el-icon class="icon"><ChatDotRound /></el-icon>
       </el-tooltip>
     </el-badge>
