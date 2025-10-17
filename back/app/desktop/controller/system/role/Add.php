@@ -8,13 +8,13 @@ use app\service\desktop\MenuService as DesktopMenuService;
 use app\service\desktop\PermissionService as DesktopPermissionService;
 use app\service\desktop\RouteService as DesktopRouteService;
 use app\service\mobile\PermissionService as MobilePermissionService;
-use app\service\RoleDesktopMenuService;
-use app\service\RoleDesktopPermissionService;
-use app\service\RoleDesktopRouteService;
-use app\service\RoleMobilePermissionService;
-use Sunqianhu\Helper\IdsValidator;
+use app\service\role\RoleDesktopMenuService;
+use app\service\role\RoleDesktopPermissionService;
+use app\service\role\RoleDesktopRouteService;
+use app\service\role\RoleMobilePermissionService;
 use app\validate\RoleValidate;
 use Exception;
+use Sunqianhu\Helper\IdsValidator;
 use think\exception\ValidateException;
 use think\facade\Db;
 

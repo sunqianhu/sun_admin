@@ -1,38 +1,38 @@
 <?php
 
-namespace app\service;
+namespace app\service\role;
 
-use app\model\RoleMobilePermissionModel;
+use app\model\RoleDesktopRouteModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 
-class RoleMobilePermissionService
+class RoleDesktopRouteService
 {
     /**
      * 设置关系
      * @param $roleId
-     * @param $permissionIds
+     * @param $routeIds
      * @return void
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function setRelation($roleId, $permissionIds)
+    public function setRelation($roleId, $routeIds)
     {
         Db::startTrans();
         try{
-            $roleMobilePermissionModels = RoleMobilePermissionModel::where('role_id', $roleId)->select();
-            $roleMobilePermissionModels->delete();
+            $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $roleId)->select();
+            $roleDesktopRouteModels->delete();
 
-            if (!empty($permissionIds)) {
-                foreach ($permissionIds as $permissionId) {
-                    $roleMobilePermissionModel = new RoleMobilePermissionModel();
-                    $roleMobilePermissionModel->save([
+            if (!empty($routeIds)) {
+                foreach ($routeIds as $routeId) {
+                    $roleDesktopRouteModel = new RoleDesktopRouteModel();
+                    $roleDesktopRouteModel->save([
                         'role_id' => $roleId,
-                        'permission_id' => $permissionId
+                        'route_id' => $routeId
                     ]);
                 }
             }

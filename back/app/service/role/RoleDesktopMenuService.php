@@ -1,38 +1,38 @@
 <?php
 
-namespace app\service;
+namespace app\service\role;
 
-use app\model\RoleDesktopRouteModel;
+use app\model\RoleDesktopMenuModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 
-class RoleDesktopRouteService
+class RoleDesktopMenuService
 {
     /**
      * 设置关系
      * @param $roleId
-     * @param $routeIds
+     * @param $menuIds
      * @return void
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function setRelation($roleId, $routeIds)
+    public function setRelation($roleId, $menuIds)
     {
         Db::startTrans();
         try{
-            $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $roleId)->select();
-            $roleDesktopRouteModels->delete();
+            $roleDesktopMenuModels = RoleDesktopMenuModel::where('role_id', $roleId)->select();
+            $roleDesktopMenuModels->delete();
 
-            if (!empty($routeIds)) {
-                foreach ($routeIds as $routeId) {
-                    $roleDesktopRouteModel = new RoleDesktopRouteModel();
-                    $roleDesktopRouteModel->save([
+            if (!empty($menuIds)) {
+                foreach ($menuIds as $menuId) {
+                    $roleDesktopMenuModel = new RoleDesktopMenuModel();
+                    $roleDesktopMenuModel->save([
                         'role_id' => $roleId,
-                        'route_id' => $routeId
+                        'menu_id' => $menuId
                     ]);
                 }
             }

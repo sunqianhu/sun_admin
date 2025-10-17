@@ -1,6 +1,6 @@
 <?php
 
-namespace app\service;
+namespace app\service\role;
 
 use app\model\RoleDesktopPermissionModel;
 use Exception;
