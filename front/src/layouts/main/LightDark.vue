@@ -2,10 +2,10 @@
   <div class="light-dark">
     <el-tooltip effect="dark" content="切换主题" placement="bottom">
       <el-switch
-        v-model="switchChecked"
+        v-model="isDark"
         :active-action-icon="Moon"
         :inactive-action-icon="Sunny"
-        @change="toggleDark"
+        @change="useToggle"
       />
     </el-tooltip>
   </div>
@@ -17,8 +17,6 @@ import { useDark, useToggle } from "@vueuse/core";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 
 const isDark = useDark();
-const toggleDark = useToggle(isDark);
-const switchChecked = ref(isDark);
 </script>
 
 <style lang="scss" scoped>

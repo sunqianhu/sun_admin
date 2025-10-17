@@ -21,6 +21,7 @@
               class="header__message-navigation"
             ></message-navigation>
             <full-screen class="header__fullscreen"></full-screen>
+            <theme-setting class="header__theme-setting"></theme-setting>
             <light-dark class="header__light-dark"></light-dark>
             <avatar class="header__avatar"></avatar>
           </div>
@@ -45,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useMainLayoutStore } from "@/stores/main_layout";
 import axios from "@/helper/axios";
 import Menu from "./main/Menu.vue";
@@ -55,9 +56,21 @@ import MessageNavigation from "./main/MessageNavigation.vue";
 import FullScreen from "./main/FullScreen.vue";
 import Avatar from "./main/Avatar.vue";
 import Guide from "./main/Guide.vue";
+import ThemeSetting from "./main/ThemeSetting.vue";
+import { useThemeStore } from "@/stores/theme";
+import { useDark } from "@vueuse/core";
 
 const mainLayoutStore = useMainLayoutStore();
 const systemName = ref("");
+const theme = useThemeStore();
+const isDark = useDark();
+const leftBgColor = computed(() =>
+  isDark.value ? theme.darkLeftBgColor : theme.lightLeftBgColor
+);
+const leftTextColor = computed(() =>
+  isDark.value ? theme.darkLeftTextColor : theme.lightLeftTextColor
+);
+const leftWidth = computed(() => theme.leftWidth);
 
 /**
  * 初始化
@@ -95,17 +108,17 @@ onMounted(() => {
   > .layout {
     height: 100%;
     .layout__left {
-      width: 220px;
+      width: v-bind('leftWidth + "px"');
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
-      background-color: #141414;
-      color: #ffffff;
+      background-color: v-bind(leftBgColor);
+      color: v-bind(leftTextColor);
       z-index: 2;
       transition: width 0.5s;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       .system-name-row {
-        width: 220px;
+        width: v-bind('leftWidth + "px"');
         height: 50px;
         line-height: 50px;
         overflow: hidden;
@@ -145,6 +158,7 @@ onMounted(() => {
           padding-right: var(--padding);
           .header__message-navigation,
           .header__fullscreen,
+          .header__theme-setting,
           .header__light-dark,
           .header__avatar {
             margin-left: 24px;

@@ -1,7 +1,7 @@
 <template>
   <div class="full-screen" @click="toggleFullScreen">
-    <el-tooltip effect="dark" content="切换全屏" placement="bottom">
-      <FullScreen class="full-screen__icon" />
+    <el-tooltip effect="dark" content="切换全屏显示" placement="bottom">
+      <el-icon class="icon"><FullScreen /></el-icon>
     </el-tooltip>
   </div>
 </template>
@@ -28,13 +28,26 @@ const toggleFullScreen = () => {
 <style lang="scss" scoped>
 .full-screen {
   line-height: 0px;
-  .full-screen__icon {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    &:hover {
-      opacity: var(--active-opacity);
+  cursor: pointer;
+  .icon {
+    font-size: 20px;
+  }
+  &:hover {
+    .icon {
+      animation: twinkle 0.3s ease-in-out;
     }
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>

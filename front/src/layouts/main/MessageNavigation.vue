@@ -1,11 +1,8 @@
 <template>
-  <div class="message-navigation">
+  <div class="message-navigation" @click="router.push('/system/message')">
     <el-badge :value="noReadCount" :max="99" :hidden="noReadCount <= 0">
       <el-tooltip effect="dark" content="系统消息" placement="bottom">
-        <ChatDotRound
-          class="message-navigation__icon"
-          @click="router.push('/system/message')"
-        />
+        <el-icon class="icon"><ChatDotRound /></el-icon>
       </el-tooltip>
     </el-badge>
   </div>
@@ -45,13 +42,26 @@ onMounted(() => {
 <style lang="scss" scoped>
 .message-navigation {
   line-height: 0px;
-  .message-navigation__icon {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    &:hover {
-      opacity: var(--active-opacity);
+  cursor: pointer;
+  .icon {
+    font-size: 20px;
+  }
+  &:hover {
+    .icon {
+      animation: twinkle 0.3s ease-in-out;
     }
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>

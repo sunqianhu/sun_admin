@@ -24,8 +24,11 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 import * as icons from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
+import { useThemeStore } from "@/stores/theme";
+import { useDark } from "@vueuse/core";
 
 const router = useRouter();
 const props = defineProps({
@@ -34,6 +37,13 @@ const props = defineProps({
     default: [],
   },
 });
+const theme = useThemeStore();
+const isDark = useDark();
+const menuActiveBgColor = computed(() =>
+  isDark.value
+    ? theme.darkSystemMenuActiveBgColor
+    : theme.lightSystemMenuActiveBgColor
+);
 
 /**
  * 导航
@@ -51,6 +61,6 @@ const navigateTo = (url, target) => {
 
 <style lang="scss" scoped>
 .el-menu-item.is-active {
-  background-color: #409eff;
+  background-color: v-bind(menuActiveBgColor);
 }
 </style>
