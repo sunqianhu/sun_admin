@@ -37,12 +37,12 @@ const props = defineProps({
     default: [],
   },
 });
-const theme = useThemeStore();
+const themeStore = useThemeStore();
 const isDark = useDark();
 const menuActiveBgColor = computed(() =>
   isDark.value
-    ? theme.darkSystemMenuActiveBgColor
-    : theme.lightSystemMenuActiveBgColor
+    ? themeStore.darkSystemMenuActiveBgColor
+    : themeStore.lightSystemMenuActiveBgColor
 );
 
 /**

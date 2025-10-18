@@ -10,22 +10,27 @@
       size="300px"
       @close="closeSetting"
     >
-      <el-form :model="themeForm" scroll-to-error>
-        <el-form-item label="暗黑模式" prop="type">
+      <el-form :model="theme" scroll-to-error>
+        <el-form-item label="暗黑模式" prop="isDark">
           <el-switch v-model="isDark" @change="useToggle" />
+        </el-form-item>
+
+        <el-divider content-position="center">全局</el-divider>
+        <el-form-item label="快捷导航栏" prop="quickNavigation">
+          <el-switch v-model="theme.quickNavigation" @change="updateAll" />
         </el-form-item>
 
         <el-divider content-position="center">侧边栏</el-divider>
         <template v-if="!isDark">
           <el-form-item label="侧边栏背景颜色" prop="darkLeftBgColor">
             <el-color-picker
-              v-model="themeForm.lightLeftBgColor"
+              v-model="theme.lightLeftBgColor"
               @change="updateAll"
             />
           </el-form-item>
           <el-form-item label="侧边栏文字颜色" prop="darkLeftTextColor">
             <el-color-picker
-              v-model="themeForm.lightLeftTextColor"
+              v-model="theme.lightLeftTextColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -33,20 +38,20 @@
         <template v-else>
           <el-form-item label="侧边栏背景颜色" prop="darkLeftBgColor">
             <el-color-picker
-              v-model="themeForm.darkLeftBgColor"
+              v-model="theme.darkLeftBgColor"
               @change="updateAll"
             />
           </el-form-item>
           <el-form-item label="侧边栏文字颜色" prop="darkLeftTextColor">
             <el-color-picker
-              v-model="themeForm.darkLeftTextColor"
+              v-model="theme.darkLeftTextColor"
               @change="updateAll"
             />
           </el-form-item>
         </template>
-        <el-form-item label="系统菜单栏宽度" prop="type">
+        <el-form-item label="侧边栏宽度" prop="leftWidth">
           <el-input-number
-            v-model="themeForm.leftWidth"
+            v-model="theme.leftWidth"
             :min="150"
             :max="400"
             @change="updateAll"
@@ -60,7 +65,7 @@
             prop="lightSystemMenuBgColor"
           >
             <el-color-picker
-              v-model="themeForm.lightSystemMenuBgColor"
+              v-model="theme.lightSystemMenuBgColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -69,7 +74,7 @@
             prop="lightSystemMenuTextColor"
           >
             <el-color-picker
-              v-model="themeForm.lightSystemMenuTextColor"
+              v-model="theme.lightSystemMenuTextColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -78,7 +83,7 @@
             prop="lightSystemMenuActiveBgColor"
           >
             <el-color-picker
-              v-model="themeForm.lightSystemMenuActiveBgColor"
+              v-model="theme.lightSystemMenuActiveBgColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -87,7 +92,7 @@
             prop="lightSystemMenuActiveTextColor"
           >
             <el-color-picker
-              v-model="themeForm.lightSystemMenuActiveTextColor"
+              v-model="theme.lightSystemMenuActiveTextColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -96,7 +101,7 @@
             prop="lightSystemMenuActiveTextColor"
           >
             <el-color-picker
-              v-model="themeForm.lightSystemMenuHoverBgColor"
+              v-model="theme.lightSystemMenuHoverBgColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -105,7 +110,7 @@
             prop="lightSystemMenuActiveTextColor"
           >
             <el-color-picker
-              v-model="themeForm.lightSystemMenuHoverTextColor"
+              v-model="theme.lightSystemMenuHoverTextColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -113,7 +118,7 @@
         <template v-else>
           <el-form-item label="系统菜单栏背景颜色" prop="darkSystemMenuBgColor">
             <el-color-picker
-              v-model="themeForm.darkSystemMenuBgColor"
+              v-model="theme.darkSystemMenuBgColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -122,7 +127,7 @@
             prop="darkSystemMenuTextColor"
           >
             <el-color-picker
-              v-model="themeForm.darkSystemMenuTextColor"
+              v-model="theme.darkSystemMenuTextColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -131,7 +136,7 @@
             prop="darkSystemMenuActiveBgColor"
           >
             <el-color-picker
-              v-model="themeForm.darkSystemMenuActiveBgColor"
+              v-model="theme.darkSystemMenuActiveBgColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -140,7 +145,7 @@
             prop="darkSystemMenuActiveTextColor"
           >
             <el-color-picker
-              v-model="themeForm.darkSystemMenuActiveTextColor"
+              v-model="theme.darkSystemMenuActiveTextColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -149,7 +154,7 @@
             prop="darkSystemMenuActiveTextColor"
           >
             <el-color-picker
-              v-model="themeForm.darkSystemMenuHoverBgColor"
+              v-model="theme.darkSystemMenuHoverBgColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -158,7 +163,7 @@
             prop="darkSystemMenuActiveTextColor"
           >
             <el-color-picker
-              v-model="themeForm.darkSystemMenuHoverTextColor"
+              v-model="theme.darkSystemMenuHoverTextColor"
               @change="updateAll"
             />
           </el-form-item>
@@ -166,9 +171,9 @@
         <!--暗黑模式-->
 
         <el-form-item>
-          <el-button style="width: 100%" @click="resetToDefault"
-            >恢复默认</el-button
-          >
+          <el-button style="width: 100%" @click="resetToDefault">
+            恢复默认
+          </el-button>
         </el-form-item>
       </el-form>
     </el-drawer>
@@ -183,10 +188,10 @@ import { useThemeStore } from "@/stores/theme";
 
 const isDark = useDark();
 const settingFlag = ref(false);
-const theme = useThemeStore();
+const themeStore = useThemeStore();
 
-const themeForm = ref({ ...theme });
-themeForm.value.isDark = isDark.value;
+const theme = ref({ ...themeStore });
+theme.value.isDark = isDark.value;
 
 /**
  * 打开设置
@@ -206,14 +211,14 @@ const closeSetting = () => {
  * 更新主题
  */
 const updateAll = () => {
-  theme.updateAll(themeForm.value);
+  themeStore.updateAll(theme.value);
 };
 
 /**
  * 恢复默认
  */
 const resetToDefault = () => {
-  theme.resetToDefault();
+  themeStore.resetToDefault();
   ElMessage({
     message: "恢复成功",
     type: "success",

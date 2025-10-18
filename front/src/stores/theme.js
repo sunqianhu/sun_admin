@@ -1,20 +1,22 @@
+import QuickNavigation from "@/layouts/main/QuickNavigation.vue";
 import { defineStore } from "pinia";
 
 //默认主题
 const defaultTheme = {
   //全局
   leftWidth: 220,
+  quickNavigation: true, //快捷导航栏
 
   //亮模式
   //侧边栏
-  lightLeftBgColor: "#0a4d68",
-  lightLeftTextColor: "#f0f4f8",
+  lightLeftBgColor: "#001e5f",
+  lightLeftTextColor: "#ECF0F1",
   //菜单
-  lightSystemMenuBgColor: "#0a4d68",
-  lightSystemMenuTextColor: "#e2f0fd",
-  lightSystemMenuActiveBgColor: "#1e90ff",
+  lightSystemMenuBgColor: "#001e5f",
+  lightSystemMenuTextColor: "#ECF0F1",
+  lightSystemMenuActiveBgColor: "#005ebf",
   lightSystemMenuActiveTextColor: "#ffffff",
-  lightSystemMenuHoverBgColor: "#1c7ed6",
+  lightSystemMenuHoverBgColor: "#003e9f",
   lightSystemMenuHoverTextColor: "#ffffff",
 
   //---------------------

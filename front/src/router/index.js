@@ -6,6 +6,7 @@ import { usePermissionStore } from "@/stores/permission";
 import { useRouteStore } from "@/stores/route";
 import routeCache from "@/helper/route_cache";
 import permissionCache from "@/helper/permission_cache";
+import { useQuickNavigationStore } from "@/stores/quick_navigation";
 
 const writeList = ["/login", "/404", "/test"];
 const staticRoutes = [
@@ -119,13 +120,13 @@ const setRoutes = async () => {
     childRoute.component =
       componentFilePaths["/src/views/" + childRoute.component_path];
     if (!childRoute.component) {
-      console.error("没有找到组件路径：" + childRoute.component_path);
+      console.error("没有找到组件：" + childRoute.component_path);
       continue;
     }
 
-    if (childRoute.layout == "main") {
+    if (childRoute.meta.layout == "main") {
       mainRoute.children.push(childRoute);
-    } else if (childRoute.layout == "blank") {
+    } else if (childRoute.meta.layout == "blank") {
       blankRoute.children.push(childRoute);
     } else {
       router.addRoute(childRoute);
@@ -139,6 +140,7 @@ const setRoutes = async () => {
     component: () => import("../views/system/message/Index.vue"),
     meta: {
       name: "系统消息",
+      layout: "main",
     },
   };
   mainRoute.children.push(messageRoute);
@@ -218,6 +220,10 @@ const beforeHandle = async (to, from) => {
 const afterHandle = (to, from) => {
   NProgress.done();
   document.title = to.meta.name || "sun admin";
+
+  //快速导航
+  const quickNavigationStore = useQuickNavigationStore();
+  quickNavigationStore.upsert(to);
 };
 
 //路由对象

@@ -26,6 +26,7 @@
             <avatar class="header__avatar"></avatar>
           </div>
         </el-header>
+        <quick-navigation></quick-navigation>
         <el-main class="layout__workspace">
           <router-view v-slot="{ Component, route }">
             <keep-alive v-if="route.meta?.keep_alive">
@@ -57,20 +58,21 @@ import FullScreen from "./main/FullScreen.vue";
 import Avatar from "./main/Avatar.vue";
 import Guide from "./main/Guide.vue";
 import ThemeSetting from "./main/ThemeSetting.vue";
+import QuickNavigation from "./main/QuickNavigation.vue";
 import { useThemeStore } from "@/stores/theme";
 import { useDark } from "@vueuse/core";
 
 const mainLayoutStore = useMainLayoutStore();
 const systemName = ref("");
-const theme = useThemeStore();
+const themeStore = useThemeStore();
 const isDark = useDark();
 const leftBgColor = computed(() =>
-  isDark.value ? theme.darkLeftBgColor : theme.lightLeftBgColor
+  isDark.value ? themeStore.darkLeftBgColor : themeStore.lightLeftBgColor
 );
 const leftTextColor = computed(() =>
-  isDark.value ? theme.darkLeftTextColor : theme.lightLeftTextColor
+  isDark.value ? themeStore.darkLeftTextColor : themeStore.lightLeftTextColor
 );
-const leftWidth = computed(() => theme.leftWidth);
+const leftWidth = computed(() => themeStore.leftWidth);
 
 /**
  * 初始化
@@ -107,7 +109,10 @@ onMounted(() => {
   overflow: hidden;
   > .layout {
     height: 100%;
+    position: relative;
     .layout__left {
+      position: relative;
+      z-index: 2;
       width: v-bind('leftWidth + "px"');
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
       background-color: v-bind(leftBgColor);
@@ -142,6 +147,8 @@ onMounted(() => {
     }
 
     .layout__right {
+      position: relative;
+      z-index: 1;
       background-color: var(--background-color);
       > .header {
         display: flex;
@@ -149,7 +156,6 @@ onMounted(() => {
         justify-content: space-between;
         height: 50px;
         background-color: var(--background-color-light);
-        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
         padding: 0px;
         .header__right {
           display: flex;

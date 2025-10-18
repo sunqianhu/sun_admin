@@ -36,10 +36,10 @@ class UserDesktopRouteService
                 'path'=>$routeModel->path,
                 'name'=>$routeModel->key,
                 'component_path'=>$routeModel->component_path,
-                'layout'=>$routeModel->layout,
                 'meta'=>[
                     'name'=>$routeModel->name,
-                    'keep_alive'=>$routeModel->keep_alive
+                    'keep_alive'=>$routeModel->keep_alive,
+                    'layout'=>$routeModel->layout,
                 ]
             ];
             $routes[] = $route;

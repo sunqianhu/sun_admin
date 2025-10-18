@@ -24,29 +24,33 @@ const mainLayoutStore = useMainLayoutStore();
 const route = useRoute();
 const defaultActive = route.fullPath; //默认活跃项
 const treeMenu = ref([]);
-const theme = useThemeStore();
+const themeStore = useThemeStore();
 const isDark = useDark();
 
 const menuBgColor = computed(() =>
-  isDark.value ? theme.darkSystemMenuBgColor : theme.lightSystemMenuBgColor
+  isDark.value
+    ? themeStore.darkSystemMenuBgColor
+    : themeStore.lightSystemMenuBgColor
 );
 const menuTextColor = computed(() =>
-  isDark.value ? theme.darkSystemMenuTextColor : theme.lightSystemMenuTextColor
+  isDark.value
+    ? themeStore.darkSystemMenuTextColor
+    : themeStore.lightSystemMenuTextColor
 );
 const menuActiveTextColor = computed(() =>
   isDark.value
-    ? theme.darkSystemMenuActiveTextColor
-    : theme.lightSystemMenuActiveTextColor
+    ? themeStore.darkSystemMenuActiveTextColor
+    : themeStore.lightSystemMenuActiveTextColor
 );
 const menuHoverBgColor = computed(() =>
   isDark.value
-    ? theme.darkSystemMenuHoverBgColor
-    : theme.lightSystemMenuHoverBgColor
+    ? themeStore.darkSystemMenuHoverBgColor
+    : themeStore.lightSystemMenuHoverBgColor
 );
 const menuHoverTextColor = computed(() =>
   isDark.value
-    ? theme.darkSystemMenuHoverTextColor
-    : theme.lightSystemMenuHoverTextColor
+    ? themeStore.darkSystemMenuHoverTextColor
+    : themeStore.lightSystemMenuHoverTextColor
 );
 
 /**
