@@ -8,7 +8,6 @@
     class="quick-navigation"
     @update:model-value="navigation"
     @tab-remove="remove"
-    v-if="themeStore.quickNavigation"
   >
     <el-tab-pane
       v-for="quickNavigation in quickNavigationStore.quickNavigations"
@@ -21,11 +20,9 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useQuickNavigationStore } from "../../stores/quick_navigation";
-import { useThemeStore } from "@/stores/theme";
 
 const router = useRouter();
 const quickNavigationStore = useQuickNavigationStore();
-const themeStore = useThemeStore();
 
 /**
  * 导航

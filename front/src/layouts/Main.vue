@@ -26,7 +26,7 @@
             <avatar class="header__avatar"></avatar>
           </div>
         </el-header>
-        <quick-navigation></quick-navigation>
+        <quick-navigation v-if="themeStore.quickNavigation"></quick-navigation>
         <el-main class="layout__workspace">
           <router-view v-slot="{ Component, route }">
             <keep-alive v-if="route.meta?.keep_alive">
