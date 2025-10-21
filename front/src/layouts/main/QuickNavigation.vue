@@ -18,9 +18,10 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useQuickNavigationStore } from "../../stores/quick_navigation";
 
+const route = useRoute();
 const router = useRouter();
 const quickNavigationStore = useQuickNavigationStore();
 
@@ -43,7 +44,16 @@ const navigation = (key) => {
  */
 const remove = (key) => {
   try {
+    const isCurrentRoute = router.currentRoute.value.name === key;
     quickNavigationStore.remove(key);
+    if (isCurrentRoute) {
+      const lastQuickNavigation = quickNavigationStore.quickNavigations.find(
+        (item) => item.key === quickNavigationStore.active
+      );
+      if (lastQuickNavigation) {
+        router.push({ path: lastQuickNavigation.path });
+      }
+    }
   } catch (error) {
     ElMessage({
       message: error.message,

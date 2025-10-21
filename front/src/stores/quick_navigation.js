@@ -50,12 +50,14 @@ export const useQuickNavigationStore = defineStore("quick_navigation", {
 
       //删除
       quickNavigations = quickNavigations.filter((item) => item.key !== key);
-      let length = quickNavigations.length;
-      if (length > 0 && quickNavigation.key === this.active) {
-        this.active = quickNavigations[length - 1].key;
-      }
-
       this.quickNavigations = quickNavigations;
+
+      //更新当前页
+      if (quickNavigation.key === this.active) {
+        let length = quickNavigations.length;
+        let lastQuickNavigation = quickNavigations[length - 1];
+        this.active = lastQuickNavigation.key;
+      }
     },
   },
 });
