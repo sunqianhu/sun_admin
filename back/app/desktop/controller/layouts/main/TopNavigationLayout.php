@@ -1,13 +1,13 @@
 <?php
 
-namespace app\desktop\controller\layouts;
+namespace app\desktop\controller\layouts\main;
 
 use app\desktop\controller\Base;
 use app\service\ConfigService;
 use Exception;
 use think\Response;
 
-class Main extends Base
+class TopNavigationLayout extends Base
 {
     public bool $isApiAuth = false;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\layouts\main;
+namespace app\desktop\controller\layouts\main\top_navigation_layout;
 
 use app\desktop\controller\Base;
 use app\service\user\UserDesktopMenuService;

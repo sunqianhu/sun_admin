@@ -1,36 +1,45 @@
-import QuickNavigation from "@/layouts/main/QuickNavigation.vue";
 import { defineStore } from "pinia";
 
 //默认主题
 const defaultTheme = {
-  //全局
-  leftWidth: 220,
-  quickNavigation: true, //快捷导航栏
+  //主布局
+  mainLayout_layoutType: "sidebar_layout",
+  mainLayout_quickNavigation: true,
 
-  //亮模式
-  //侧边栏
-  lightLeftBgColor: "#001e5f",
-  lightLeftTextColor: "#ECF0F1",
-  //菜单
-  lightSystemMenuBgColor: "#001e5f",
-  lightSystemMenuTextColor: "#ECF0F1",
-  lightSystemMenuActiveBgColor: "#005ebf",
-  lightSystemMenuActiveTextColor: "#ffffff",
-  lightSystemMenuHoverBgColor: "#003e9f",
-  lightSystemMenuHoverTextColor: "#ffffff",
+  //侧边栏布局
+  sidebarLayout_leftWidth: 220,
+  sidebarLayout_light_leftBgColor: "#001e5f",
+  sidebarLayout_light_leftTextColor: "#ECF0F1",
+  sidebarLayout_light_menuBgColor: "#001e5f",
+  sidebarLayout_light_menuTextColor: "#ECF0F1",
+  sidebarLayout_light_menuActiveBgColor: "#005ebf",
+  sidebarLayout_light_menuActiveTextColor: "#ffffff",
+  sidebarLayout_light_menuHoverBgColor: "#003e9f",
+  sidebarLayout_light_menuHoverTextColor: "#ffffff",
 
-  //---------------------
-  //暗黑模式
-  //侧边栏
-  darkLeftBgColor: "#050404",
-  darkLeftTextColor: "#dfdfdf",
-  //菜单
-  darkSystemMenuBgColor: "#050404",
-  darkSystemMenuTextColor: "#dfdfdf",
-  darkSystemMenuActiveBgColor: "#409eff",
-  darkSystemMenuActiveTextColor: "#ffffff",
-  darkSystemMenuHoverBgColor: "#409eff",
-  darkSystemMenuHoverTextColor: "#ffffff",
+  sidebarLayout_dark_leftBgColor: "#050404",
+  sidebarLayout_dark_leftTextColor: "#dfdfdf",
+  sidebarLayout_dark_menuBgColor: "#050404",
+  sidebarLayout_dark_menuTextColor: "#dfdfdf",
+  sidebarLayout_dark_menuActiveBgColor: "#409eff",
+  sidebarLayout_dark_menuActiveTextColor: "#ffffff",
+  sidebarLayout_dark_menuHoverBgColor: "#409eff",
+  sidebarLayout_dark_menuHoverTextColor: "#ffffff",
+
+  //顶部导航栏布局
+  topNavigationLayout_light_menuBgColor: "#001e5f",
+  topNavigationLayout_light_menuTextColor: "#ECF0F1",
+  topNavigationLayout_light_menuActiveBgColor: "#005ebf",
+  topNavigationLayout_light_menuActiveTextColor: "#ffffff",
+  topNavigationLayout_light_menuHoverBgColor: "#003e9f",
+  topNavigationLayout_light_menuHoverTextColor: "#ffffff",
+
+  topNavigationLayout_dark_menuBgColor: "#050404",
+  topNavigationLayout_dark_menuTextColor: "#dfdfdf",
+  topNavigationLayout_dark_menuActiveBgColor: "#409eff",
+  topNavigationLayout_dark_menuActiveTextColor: "#ffffff",
+  topNavigationLayout_dark_menuHoverBgColor: "#409eff",
+  topNavigationLayout_dark_menuHoverTextColor: "#ffffff",
 };
 
 /**
@@ -68,11 +77,12 @@ export const useThemeStore = defineStore("theme", {
   },
   actions: {
     /**
-     * 更新全部
-     * @param {*} localTheme
+     * 更新属性
+     * @param {*} attribute
+     * @param {*} value
      */
-    updateAll(localTheme) {
-      Object.assign(this, localTheme);
+    setAttribute(attribute, value) {
+      this[attribute] = value;
       saveToStorage(this.$state);
     },
 

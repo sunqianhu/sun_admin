@@ -2,7 +2,7 @@
   <div class="hamburger" @click="toggleFold">
     <el-tooltip effect="dark" content="折叠或展开侧边栏" placement="bottom">
       <component
-        :is="mainLayoutStore.fold ? Expand : Fold"
+        :is="sidebarLayoutStore.fold ? Expand : Fold"
         class="hamburger__icon"
       ></component>
     </el-tooltip>
@@ -10,16 +10,16 @@
 </template>
 
 <script setup>
-import { useMainLayoutStore } from "@/stores/main_layout.js";
+import { useSidebarLayoutStore } from "@/stores/sidebar_layout.js";
 import { Fold, Expand } from "@element-plus/icons-vue";
 
-const mainLayoutStore = useMainLayoutStore();
+const sidebarLayoutStore = useSidebarLayoutStore();
 
 /**
  * 切换折叠
  */
 const toggleFold = () => {
-  mainLayoutStore.toggleFold();
+  sidebarLayoutStore.toggleFold();
 };
 </script>
 

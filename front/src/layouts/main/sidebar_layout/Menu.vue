@@ -2,7 +2,7 @@
   <el-menu
     mode="vertical"
     :default-active="defaultActive"
-    :collapse="mainLayoutStore.fold"
+    :collapse="sidebarLayoutStore.fold"
     :unique-opened="true"
     popper-class="main-menu-popper"
     class="menu"
@@ -14,50 +14,57 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
-import { useMainLayoutStore } from "@/stores/main_layout";
+import { useSidebarLayoutStore } from "@/stores/sidebar_layout";
 import axios from "@/helper/axios";
 import MenuItem from "./MenuItem.vue";
 import { useThemeStore } from "@/stores/theme";
 import { useDark } from "@vueuse/core";
 
-const mainLayoutStore = useMainLayoutStore();
+const sidebarLayoutStore = useSidebarLayoutStore();
 const route = useRoute();
-const defaultActive = route.fullPath; //默认活跃项
+const defaultActive = route.path; //默认活跃项
 const treeMenu = ref([]);
 const themeStore = useThemeStore();
 const isDark = useDark();
 
 const menuBgColor = computed(() =>
   isDark.value
-    ? themeStore.darkSystemMenuBgColor
-    : themeStore.lightSystemMenuBgColor
+    ? themeStore.sidebarLayout_dark_menuBgColor
+    : themeStore.sidebarLayout_light_menuBgColor
 );
 const menuTextColor = computed(() =>
   isDark.value
-    ? themeStore.darkSystemMenuTextColor
-    : themeStore.lightSystemMenuTextColor
+    ? themeStore.sidebarLayout_dark_menuTextColor
+    : themeStore.sidebarLayout_light_menuTextColor
+);
+const menuActiveBgColor = computed(() =>
+  isDark.value
+    ? themeStore.sidebarLayout_dark_menuActiveBgColor
+    : themeStore.sidebarLayout_light_menuActiveBgColor
 );
 const menuActiveTextColor = computed(() =>
   isDark.value
-    ? themeStore.darkSystemMenuActiveTextColor
-    : themeStore.lightSystemMenuActiveTextColor
+    ? themeStore.sidebarLayout_dark_menuActiveTextColor
+    : themeStore.sidebarLayout_light_menuActiveTextColor
 );
 const menuHoverBgColor = computed(() =>
   isDark.value
-    ? themeStore.darkSystemMenuHoverBgColor
-    : themeStore.lightSystemMenuHoverBgColor
+    ? themeStore.sidebarLayout_dark_menuHoverBgColor
+    : themeStore.sidebarLayout_light_menuHoverBgColor
 );
 const menuHoverTextColor = computed(() =>
   isDark.value
-    ? themeStore.darkSystemMenuHoverTextColor
-    : themeStore.lightSystemMenuHoverTextColor
+    ? themeStore.sidebarLayout_dark_menuHoverTextColor
+    : themeStore.sidebarLayout_light_menuHoverTextColor
 );
 
 /**
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/layouts.main.Menu/getTreeMenu");
+  const response = await axios.get(
+    "desktop/layouts.main.sidebar_layout.Menu/getTreeMenu"
+  );
   treeMenu.value = response.data;
 };
 
@@ -73,15 +80,10 @@ onMounted(() => {
   --el-menu-active-color: v-bind(menuActiveTextColor);
   --el-menu-hover-bg-color: v-bind(menuHoverBgColor);
   --el-menu-hover-text-color: v-bind(menuHoverTextColor);
-
-  :deep(.el-sub-menu__title:hover),
-  :deep(.el-menu-item:hover) {
-    color: v-bind(menuHoverTextColor) !important;
-  }
-  :deep(.el-menu-item.is-active) {
-    color: v-bind(menuActiveTextColor) !important;
-  }
-
   border-right: none;
+
+  :deep(.el-menu-item.is-active) {
+    background-color: v-bind(menuActiveBgColor);
+  }
 }
 </style>

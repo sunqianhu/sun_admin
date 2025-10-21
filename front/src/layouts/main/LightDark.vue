@@ -22,17 +22,20 @@ const isDark = useDark();
 <style lang="scss" scoped>
 .light-dark {
   cursor: pointer;
-  :deep(.el-switch .el-icon) {
-    color: #203549;
+  :deep(.el-switch) {
+    height: inherit;
+    .el-icon {
+      color: #203549;
+    }
   }
-  :deep(.el-switch.is-checked .el-switch__core) {
-    background-color: #696969;
-    border-color: #203549;
-  }
-  :deep(.el-switch.is-checked .el-icon) {
-    color: #506579;
-  }
-  &:hover {
+  :deep(.el-switch.is-checked) {
+    .el-switch__core {
+      background-color: #696969;
+      border-color: #203549;
+    }
+    .el-icon {
+      color: #506579;
+    }
   }
 }
 </style>
