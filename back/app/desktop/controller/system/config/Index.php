@@ -28,7 +28,7 @@ class Index extends Base
         }
 
         $config = $configModel->toArray();
-        return $this->getSuccessResonse('获取成功', $config);
+        return $this->getSuccessResponse('获取成功', $config);
     }
 
     /**
@@ -51,6 +51,6 @@ class Index extends Base
         }
         $configModel->save($post);
 
-        return $this->getSuccessResonse('保存成功');
+        return $this->getSuccessResponse('保存成功');
     }
 }

@@ -23,6 +23,6 @@ class SidebarLayout extends Base
         $data = [
             'system_name' => $systemName
         ];
-        return $this->getSuccessResonse('获取成功', $data);
+        return $this->getSuccessResponse('获取成功', $data);
     }
 }

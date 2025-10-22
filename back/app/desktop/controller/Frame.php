@@ -23,7 +23,7 @@ class Frame extends Base
     {
         $userDesktopPermissionService = new UserDesktopPermissionService();
         $permissions = $userDesktopPermissionService->getPermissionKeys($this->userId);
-        return $this->getSuccessResonse('获取成功', $permissions);
+        return $this->getSuccessResponse('获取成功', $permissions);
     }
 
     /**
@@ -37,7 +37,7 @@ class Frame extends Base
     {
         $userDesktopRouteService = new UserDesktopRouteService();
         $routes = $userDesktopRouteService->getRoutes($this->userId);
-        return $this->getSuccessResonse('获取成功', $routes);
+        return $this->getSuccessResponse('获取成功', $routes);
     }
 
     /**
@@ -56,6 +56,6 @@ class Frame extends Base
         $watermarkService = new WatermarkService();
         $watermark = $watermarkService->getWatermark($this->userId);
 
-        return $this->getSuccessResonse('获取成功', $watermark);
+        return $this->getSuccessResponse('获取成功', $watermark);
     }
 }

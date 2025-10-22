@@ -39,7 +39,7 @@ class UsersSelectorDialog extends Base
             'page' => $get['page'],
         ]);
         $paginateArray = $paginate->toArray();
-        return $this->getSuccessResonse('获取成功', $paginateArray);
+        return $this->getSuccessResponse('获取成功', $paginateArray);
     }
 
     /**
@@ -56,6 +56,6 @@ class UsersSelectorDialog extends Base
             ->whereIn('id', $get['user_ids'])
             ->select();
         $users = $userModels->toArray();
-        return $this->getSuccessResonse('获取成功', $users);
+        return $this->getSuccessResponse('获取成功', $users);
     }
 }

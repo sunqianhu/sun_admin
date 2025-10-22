@@ -30,7 +30,7 @@ class DepartmentUsersSelect extends Base
 
         $departmentUserService = new DepartmentUserService();
         $users = $departmentUserService->getUsers($get['department_id']);
-        return $this->getSuccessResonse('获取成功', $users);
+        return $this->getSuccessResponse('获取成功', $users);
     }
 
     /**

@@ -25,6 +25,6 @@ class Menu extends Base
         $userDesktopMenuService = new UserDesktopMenuService();
         $treeMenu = $userDesktopMenuService->getTreeMenu($this->userId);
 
-        return $this->getSuccessResonse('获取成功', $treeMenu);
+        return $this->getSuccessResponse('获取成功', $treeMenu);
     }
 }

@@ -32,6 +32,6 @@ class EditPassword extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 }

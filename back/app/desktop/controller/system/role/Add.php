@@ -43,7 +43,7 @@ class Add extends Base
             'desktop_routes'=>$desktopRoutes,
             'mobile_tree_permission'=>$mobileTreePermission
         ];
-        return $this->getSuccessResonse('获取成功', $data);
+        return $this->getSuccessResponse('获取成功', $data);
     }
 
     /**
@@ -92,6 +92,6 @@ class Add extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('添加成功');
+        return $this->getSuccessResponse('添加成功');
     }
 }

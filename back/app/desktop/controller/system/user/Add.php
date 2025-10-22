@@ -47,6 +47,6 @@ class Add extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('添加成功');
+        return $this->getSuccessResponse('添加成功');
     }
 }

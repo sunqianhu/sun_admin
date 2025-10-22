@@ -24,6 +24,6 @@ class MessageNavigation extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('获取成功', $count);
+        return $this->getSuccessResponse('获取成功', $count);
     }
 }

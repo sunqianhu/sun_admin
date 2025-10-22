@@ -52,6 +52,6 @@ class FileUpload extends Base
             'path' => $path,
             'url' => $url
         ];
-        return $this->getSuccessResonse("上传成功", $data);
+        return $this->getSuccessResponse("上传成功", $data);
     }
 }

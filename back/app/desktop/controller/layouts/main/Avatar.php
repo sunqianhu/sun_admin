@@ -28,7 +28,7 @@ class Avatar extends Base
             ->find($this->userId);
         $user = $userModel->toArray();
 
-        return $this->getSuccessResonse('获取成功', $user);
+        return $this->getSuccessResponse('获取成功', $user);
     }
 
     /**
@@ -41,6 +41,6 @@ class Avatar extends Base
         $sessionService = new SessionService();
         $sessionService->deleteSession($this->sessionId);
 
-        return $this->getSuccessResonse("退出成功");
+        return $this->getSuccessResponse("退出成功");
     }
 }

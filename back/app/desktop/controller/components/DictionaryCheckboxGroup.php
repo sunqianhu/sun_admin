@@ -30,6 +30,6 @@ class DictionaryCheckboxGroup extends Base
         $dictionaryService = new DictionaryService();
         $dictionary = $dictionaryService->getList($type);
 
-        return $this->getSuccessResonse('获取成功', $dictionary);
+        return $this->getSuccessResponse('获取成功', $dictionary);
     }
 }

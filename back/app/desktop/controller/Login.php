@@ -26,7 +26,7 @@ class Login extends Base
         $data = [
             'system_name' => $systemName
         ];
-        return $this->getSuccessResonse('获取成功', $data);
+        return $this->getSuccessResponse('获取成功', $data);
     }
 
     /**
@@ -68,6 +68,6 @@ class Login extends Base
 
         $token = $sessionService->getToken($sessionId);
 
-        return $this->getSuccessResonse('登录成功', $token);
+        return $this->getSuccessResponse('登录成功', $token);
     }
 }

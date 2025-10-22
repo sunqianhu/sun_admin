@@ -29,7 +29,7 @@ class EditAvatar extends Base
         $userModel = UserModel::field('big_avatar')->find($this->userId);
         $url = $userModel->big_avatar_url;
 
-        return $this->getSuccessResonse('获取成功', $url);
+        return $this->getSuccessResponse('获取成功', $url);
     }
 
     /**
@@ -53,6 +53,6 @@ class EditAvatar extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 }

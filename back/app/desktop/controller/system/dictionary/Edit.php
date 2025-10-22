@@ -38,7 +38,7 @@ class Edit extends Base
         }
         $dictionary = $dictionaryModel->toArray();
 
-        return $this->getSuccessResonse('获取成功', $dictionary);
+        return $this->getSuccessResponse('获取成功', $dictionary);
     }
 
     /**
@@ -65,6 +65,6 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 }

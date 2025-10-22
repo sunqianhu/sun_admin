@@ -31,6 +31,6 @@ class UserSelector extends Base
         $userService = new UserService();
         $userName = $userService->getName($get['user_id']);
 
-        return $this->getSuccessResonse('获取成功', $userName);
+        return $this->getSuccessResponse('获取成功', $userName);
     }
 }

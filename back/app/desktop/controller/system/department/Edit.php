@@ -30,7 +30,7 @@ class Edit extends Base
         }
         $department = $departmentModel->toArray();
 
-        return $this->getSuccessResonse('获取成功', $department);
+        return $this->getSuccessResponse('获取成功', $department);
     }
 
     /**
@@ -60,6 +60,6 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 }

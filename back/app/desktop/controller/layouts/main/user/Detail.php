@@ -26,6 +26,6 @@ class Detail extends Base
             ->append(['department_name', 'avatar_url', 'big_avatar_url'])
             ->find($this->userId);
         $user = $userModel->toArray();
-        return $this->getSuccessResonse('获取成功', $user);
+        return $this->getSuccessResponse('获取成功', $user);
     }
 }

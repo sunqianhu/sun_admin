@@ -25,6 +25,6 @@ class RoleSelect extends Base
         $roleModels = RoleModel::field('id,name')
             ->select();
         $roles = $roleModels->toArray();
-        return $this->getSuccessResonse('获取成功', $roles);
+        return $this->getSuccessResponse('获取成功', $roles);
     }
 }

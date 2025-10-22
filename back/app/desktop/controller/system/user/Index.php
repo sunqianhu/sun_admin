@@ -48,7 +48,7 @@ class Index extends Base
         ]);
         $paginateArray = $paginate->toArray();
 
-        return $this->getSuccessResonse('获取成功', $paginateArray);
+        return $this->getSuccessResponse('获取成功', $paginateArray);
     }
 
     /**
@@ -72,7 +72,7 @@ class Index extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 
     /**
@@ -98,6 +98,6 @@ class Index extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('操作成功');
+        return $this->getSuccessResponse('操作成功');
     }
 }

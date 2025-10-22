@@ -30,7 +30,7 @@ class Edit extends Base
         }
         $menu = $menuModel->toArray();
 
-        return $this->getSuccessResonse('获取成功', $menu);
+        return $this->getSuccessResponse('获取成功', $menu);
     }
 
     /**
@@ -60,6 +60,6 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 }

@@ -29,6 +29,6 @@ class treePermissionSelect extends Base
 
         $permissionService = new PermissionService();
         $treePermission = $permissionService->getTreePermission($get['permission_id']);
-        return $this->getSuccessResonse('获取成功', $treePermission);
+        return $this->getSuccessResponse('获取成功', $treePermission);
     }
 }

@@ -40,7 +40,7 @@ class OrderTrend extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('获取成功', $trend);
+        return $this->getSuccessResponse('获取成功', $trend);
     }
 
     /**
@@ -75,6 +75,6 @@ class OrderTrend extends Base
         $file = new File();
         $url = $file->getUrl($path);
 
-        return $this->getSuccessResonse('获取成功', $url);
+        return $this->getSuccessResponse('获取成功', $url);
     }
 }

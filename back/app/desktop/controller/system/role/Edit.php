@@ -80,7 +80,7 @@ class Edit extends Base
             'desktop_routes' => $desktopRoutes,
             'mobile_tree_permission' => $mobileTreePermission
         ];
-        return $this->getSuccessResonse('获取成功', $data);
+        return $this->getSuccessResponse('获取成功', $data);
     }
 
     /**
@@ -129,6 +129,6 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 }

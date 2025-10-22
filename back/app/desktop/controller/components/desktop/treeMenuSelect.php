@@ -29,6 +29,6 @@ class treeMenuSelect extends Base
 
         $menuService = new MenuService();
         $treeMenu = $menuService->getTreeMenu($get['menu_id']);
-        return $this->getSuccessResonse('获取成功', $treeMenu);
+        return $this->getSuccessResponse('获取成功', $treeMenu);
     }
 }

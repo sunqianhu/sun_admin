@@ -60,6 +60,6 @@ class Detail extends Base
             'login_logs'=>$loginLogs,
             'operation_logs'=>$operationLogs
         ];
-        return $this->getSuccessResonse('获取成功', $data);
+        return $this->getSuccessResponse('获取成功', $data);
     }
 }

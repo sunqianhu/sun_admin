@@ -32,7 +32,7 @@ class Index extends Base
         $arrayHandler = new ArrayHandler();
         $treeDepartment = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
-        return $this->getSuccessResonse('获取成功', $treeDepartment);
+        return $this->getSuccessResponse('获取成功', $treeDepartment);
     }
 
     /**
@@ -59,6 +59,6 @@ class Index extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('删除成功');
+        return $this->getSuccessResponse('删除成功');
     }
 }

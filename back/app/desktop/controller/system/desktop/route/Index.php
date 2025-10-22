@@ -27,7 +27,7 @@ class Index extends Base
         $routeModels = $query->select();
         $routes = $routeModels->toArray();
 
-        return $this->getSuccessResonse('获取成功', $routes);
+        return $this->getSuccessResponse('获取成功', $routes);
     }
 
     /**
@@ -54,6 +54,6 @@ class Index extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('删除成功');
+        return $this->getSuccessResponse('删除成功');
     }
 }

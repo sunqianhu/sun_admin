@@ -35,6 +35,6 @@ class PopupMessage extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('设置成功');
+        return $this->getSuccessResponse('设置成功');
     }
 }

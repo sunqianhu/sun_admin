@@ -42,6 +42,6 @@ class Index extends Base
         ]);
         $paginateArray = $paginate->toArray();
 
-        return $this->getSuccessResonse('获取成功', $paginateArray);
+        return $this->getSuccessResponse('获取成功', $paginateArray);
     }
 }

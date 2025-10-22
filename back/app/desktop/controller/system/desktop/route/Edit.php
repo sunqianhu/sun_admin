@@ -30,7 +30,7 @@ class Edit extends Base
         }
         $route = $routeModel->toArray();
 
-        return $this->getSuccessResonse('获取成功', $route);
+        return $this->getSuccessResponse('获取成功', $route);
     }
 
     /**
@@ -57,6 +57,6 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 }

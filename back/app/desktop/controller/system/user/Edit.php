@@ -36,7 +36,7 @@ class Edit extends Base
         }
         $user = $userModel->toArray();
 
-        return $this->getSuccessResonse('获取成功', $user);
+        return $this->getSuccessResponse('获取成功', $user);
     }
 
     /**
@@ -74,6 +74,6 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResonse('修改成功');
+        return $this->getSuccessResponse('修改成功');
     }
 }
