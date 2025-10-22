@@ -90,7 +90,6 @@ onMounted(() => {
         display: flex;
         align-items: center;
         .logo {
-          width: 32px;
           height: 32px;
           margin-right: 8px;
         }
