@@ -2,7 +2,7 @@
   <el-dialog
     :model-value="true"
     title="账号信息"
-    width="600"
+    width="500"
     :draggable="true"
     @close="close"
     class="detail"
@@ -15,10 +15,10 @@
       </div>
       <div class="detail__right">
         <attribute-list class="attribute-list">
-          <attribute label="账号" :span="12">{{ user.account }}</attribute>
-          <attribute label="姓名" :span="12">{{ user.name }}</attribute>
-          <attribute label="手机号码" :span="12">{{ user.phone }}</attribute>
-          <attribute label="所属部门" :span="12">
+          <attribute label="账号" :span="24">{{ user.account }}</attribute>
+          <attribute label="姓名" :span="24">{{ user.name }}</attribute>
+          <attribute label="手机号码" :span="24">{{ user.phone }}</attribute>
+          <attribute label="所属部门" :span="24">
             {{ user.department_name }}
           </attribute>
           <attribute label="最后登录时间" :span="24">
@@ -79,6 +79,7 @@ onMounted(() => {
   padding: var(--margin) 0px;
   .detail__left {
     text-align: center;
+    width: 150px;
   }
   .detail__right {
     flex: 1;

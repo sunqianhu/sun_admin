@@ -6,6 +6,8 @@
     v-if="themeStore.mainLayout_layoutType === 'top_navigation_layout'"
   ></top-navigation-layout>
   <theme-setting-form></theme-setting-form>
+  <watermark />
+  <popup-message />
 </template>
 
 <script setup>

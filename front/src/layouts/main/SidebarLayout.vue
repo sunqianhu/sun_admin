@@ -27,6 +27,7 @@
           </div>
         </el-header>
         <quick-navigation
+          class="sidebar-layout__quick-navigation"
           v-if="themeStore.mainLayout_quickNavigation"
         ></quick-navigation>
         <el-main class="sidebar-layout__workspace">
@@ -46,8 +47,6 @@
         </el-main>
       </el-container>
     </el-container>
-    <watermark />
-    <popup-message />
     <guide />
   </div>
 </template>
