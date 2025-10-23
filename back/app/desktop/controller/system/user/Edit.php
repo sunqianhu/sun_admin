@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\user;
 use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\model\UserRoleModel;
-use app\service\UserService;
+use app\helper\UserHelper;
 use app\validate\UserValidate;
 use Exception;
 use think\db\Query;
@@ -54,8 +54,8 @@ class Edit extends Base
 
         Db::startTrans();
         try{
-            $userService = new UserService();
-            $userService->edit($post['id'], $post);
+            $userHelper = new UserHelper();
+            $userHelper->edit($post['id'], $post);
             $id = $post['id'];
 
             $userRoleModels = UserRoleModel::where('user_id', $id)->select();

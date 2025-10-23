@@ -4,7 +4,7 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\department\DepartmentUserService;
+use app\helper\department\DepartmentUserHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -28,8 +28,8 @@ class DepartmentUsersSelect extends Base
             return $this->getErrorResponse('department_id参数错误');
         }
 
-        $departmentUserService = new DepartmentUserService();
-        $users = $departmentUserService->getUsers($get['department_id']);
+        $departmentUserHelper = new DepartmentUserHelper();
+        $users = $departmentUserHelper->getUsers($get['department_id']);
         return $this->getSuccessResponse('获取成功', $users);
     }
 

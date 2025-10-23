@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\UserRoleModel;
-use app\service\UserService;
+use app\helper\UserHelper;
 use Sunqianhu\Helper\IdsValidator;
 use app\validate\UserValidate;
 use Exception;
@@ -28,8 +28,8 @@ class Add extends Base
 
         Db::startTrans();
         try{
-            $userService = new UserService();
-            $id = $userService->add($post);
+            $userHelper = new UserHelper();
+            $id = $userHelper->add($post);
 
             if (!empty($post['role_ids'])) {
                 foreach ($post['role_ids'] as $roleId){

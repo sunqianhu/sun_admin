@@ -4,9 +4,9 @@ namespace app\api\controller;
 
 use app\BaseController;
 use app\model\OperationLogModel;
-use app\service\api\SessionService;
-use app\service\IpAuthService;
-use app\service\user\UserDepartmentService;
+use app\helper\api\SessionHelper;
+use app\helper\IpAuthHelper;
+use app\helper\user\UserDepartmentHelper;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -39,12 +39,12 @@ class Base extends BaseController
     function initialize()
     {
         parent::initialize();
-        $sessionService = new SessionService();
+        $sessionHelper = new SessionHelper();
 
         //ip
-        $ipAuthService = new IpAuthService();
+        $ipAuthHelper = new IpAuthHelper();
         try {
-            $ipAuthService->ipAuth($this->request->ip());
+            $ipAuthHelper->ipAuth($this->request->ip());
         } catch (Exception $exception) {
             $this->getErrorResponse($exception->getMessage())->send();
             exit;
@@ -56,7 +56,7 @@ class Base extends BaseController
         if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             $token = $this->request->header('token', '');
             try {
-                $this->sessionId = $sessionService->tokenAuth($token);
+                $this->sessionId = $sessionHelper->tokenAuth($token);
             } catch (Exception $exception) {
                 $this->getErrorResponse($exception->getMessage(), null, 2)->send();
                 exit;
@@ -65,10 +65,10 @@ class Base extends BaseController
 
         if ($this->sessionId) {
             try {
-                $this->userId = $sessionService->getUserId($this->sessionId);
-                $userDepartmentService = new UserDepartmentService();
-                $this->departmentId = $userDepartmentService->getDepartmentId($this->userId);
-                $sessionService->renewExpiresIn($this->sessionId);
+                $this->userId = $sessionHelper->getUserId($this->sessionId);
+                $userDepartmentHelper = new UserDepartmentHelper();
+                $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
+                $sessionHelper->renewExpiresIn($this->sessionId);
             } catch (Exception $exception) {
                 $this->getErrorResponse($exception->getMessage())->send();
                 exit;

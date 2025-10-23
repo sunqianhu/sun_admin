@@ -2,10 +2,9 @@
 
 namespace app\desktop\controller;
 
-use app\service\desktop\DesktopUserService;
-use app\service\user\UserDesktopPermissionService;
-use app\service\user\UserDesktopRouteService;
-use app\service\WatermarkService;
+use app\helper\user\UserDesktopPermissionHelper;
+use app\helper\user\UserDesktopRouteHelper;
+use app\helper\WatermarkHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -21,8 +20,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $userDesktopPermissionService = new UserDesktopPermissionService();
-        $permissions = $userDesktopPermissionService->getPermissionKeys($this->userId);
+        $userDesktopPermissionHelper = new UserDesktopPermissionHelper();
+        $permissions = $userDesktopPermissionHelper->getPermissionKeys($this->userId);
         return $this->getSuccessResponse('获取成功', $permissions);
     }
 
@@ -35,8 +34,8 @@ class Frame extends Base
      */
     public function getRoutes()
     {
-        $userDesktopRouteService = new UserDesktopRouteService();
-        $routes = $userDesktopRouteService->getRoutes($this->userId);
+        $userDesktopRouteHelper = new UserDesktopRouteHelper();
+        $routes = $userDesktopRouteHelper->getRoutes($this->userId);
         return $this->getSuccessResponse('获取成功', $routes);
     }
 
@@ -53,8 +52,8 @@ class Frame extends Base
             return $this->getErrorResponse('还没有登录');
         }
 
-        $watermarkService = new WatermarkService();
-        $watermark = $watermarkService->getWatermark($this->userId);
+        $watermarkHelper = new WatermarkHelper();
+        $watermark = $watermarkHelper->getWatermark($this->userId);
 
         return $this->getSuccessResponse('获取成功', $watermark);
     }

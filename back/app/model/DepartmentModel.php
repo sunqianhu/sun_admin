@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-use app\service\DictionaryService;
+use app\helper\DictionaryHelper;
 use Exception;
 use Sunqianhu\Helper\SingletonFactory;
 
@@ -19,7 +19,7 @@ class DepartmentModel extends BaseModel
      */
     public function getTypeNameAttr($value, $data)
     {
-        $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
-        return $dictionaryService->getValue('department_type', $data['type']);
+        $dictionaryHelper = SingletonFactory::getInstance(DictionaryHelper::class);
+        return $dictionaryHelper->getValue('department_type', $data['type']);
     }
 }

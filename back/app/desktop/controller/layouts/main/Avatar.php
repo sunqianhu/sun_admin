@@ -4,7 +4,7 @@ namespace app\desktop\controller\layouts\main;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\desktop\SessionService;
+use app\helper\desktop\SessionHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -38,8 +38,8 @@ class Avatar extends Base
      */
     public function logout()
     {
-        $sessionService = new SessionService();
-        $sessionService->deleteSession($this->sessionId);
+        $sessionHelper = new SessionHelper();
+        $sessionHelper->deleteSession($this->sessionId);
 
         return $this->getSuccessResponse("退出成功");
     }

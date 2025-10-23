@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components\department;
 
 use app\desktop\controller\Base;
-use app\service\DictionaryService;
+use app\helper\DictionaryHelper;
 use think\Response;
 
 class TypeSelect extends Base
@@ -16,8 +16,8 @@ class TypeSelect extends Base
      */
     public function getTypes()
     {
-        $dictionaryService = new DictionaryService();
-        $types = $dictionaryService->getList('department_type');
+        $dictionaryHelper = new DictionaryHelper();
+        $types = $dictionaryHelper->getList('department_type');
 
         return $this->getSuccessResponse('获取成功', $types);
     }

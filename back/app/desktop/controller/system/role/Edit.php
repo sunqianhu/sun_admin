@@ -4,14 +4,14 @@ namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
 use app\model\RoleModel;
-use app\service\desktop\MenuService as DesktopMenuService;
-use app\service\desktop\PermissionService as DesktopPermissionService;
-use app\service\desktop\RouteService as DesktopRouteService;
-use app\service\mobile\PermissionService as MobilePermissionService;
-use app\service\role\RoleDesktopMenuService;
-use app\service\role\RoleDesktopPermissionService;
-use app\service\role\RoleDesktopRouteService;
-use app\service\role\RoleMobilePermissionService;
+use app\helper\desktop\MenuHelper as DesktopMenuHelper;
+use app\helper\desktop\PermissionHelper as DesktopPermissionHelper;
+use app\helper\desktop\RouteHelper as DesktopRouteHelper;
+use app\helper\mobile\PermissionHelper as MobilePermissionHelper;
+use app\helper\role\RoleDesktopMenuHelper;
+use app\helper\role\RoleDesktopPermissionHelper;
+use app\helper\role\RoleDesktopRouteHelper;
+use app\helper\role\RoleMobilePermissionHelper;
 use app\validate\IdValidate;
 use app\validate\RoleValidate;
 use Exception;
@@ -61,17 +61,17 @@ class Edit extends Base
         $roleModel->hidden(['desktop_permissions', 'desktop_routes', 'desktop_menus', 'mobile_permissions']);
         $role = $roleModel->toArray();
 
-        $desktopPermissionService = new DesktopPermissionService();
-        $desktopTreePermission = $desktopPermissionService->getTreePermission(0);
+        $desktopPermissionHelper = new DesktopPermissionHelper();
+        $desktopTreePermission = $desktopPermissionHelper->getTreePermission(0);
 
-        $desktopMenuService = new DesktopMenuService();
-        $desktopTreeMenu = $desktopMenuService->getTreeMenu(0);
+        $desktopMenuHelper = new DesktopMenuHelper();
+        $desktopTreeMenu = $desktopMenuHelper->getTreeMenu(0);
 
-        $desktopRouteService = new DesktopRouteService();
-        $desktopRoutes = $desktopRouteService->getRoutes();
+        $desktopRouteHelper = new DesktopRouteHelper();
+        $desktopRoutes = $desktopRouteHelper->getRoutes();
 
-        $mobilePermissionService = new MobilePermissionService();
-        $mobileTreePermission = $mobilePermissionService->getTreePermission(0);
+        $mobilePermissionHelper = new MobilePermissionHelper();
+        $mobileTreePermission = $mobilePermissionHelper->getTreePermission(0);
 
         $data = [
             'role' => $role,
@@ -111,17 +111,17 @@ class Edit extends Base
             $roleModel->save($post);
             $id = $roleModel->id;
 
-            $RoleDesktopPermissionService = new RoleDesktopPermissionService();
-            $RoleDesktopPermissionService->setRelation($id, $post['desktop_permission_ids']);
+            $RoleDesktopPermissionHelper = new RoleDesktopPermissionHelper();
+            $RoleDesktopPermissionHelper->setRelation($id, $post['desktop_permission_ids']);
 
-            $roleDesktopMenuService = new RoleDesktopMenuService();
-            $roleDesktopMenuService->setRelation($id, $post['desktop_menu_ids']);
+            $roleDesktopMenuHelper = new RoleDesktopMenuHelper();
+            $roleDesktopMenuHelper->setRelation($id, $post['desktop_menu_ids']);
 
-            $roleDesktopRouteService = new RoleDesktopRouteService();
-            $roleDesktopRouteService->setRelation($id, $post['desktop_route_ids']);
+            $roleDesktopRouteHelper = new RoleDesktopRouteHelper();
+            $roleDesktopRouteHelper->setRelation($id, $post['desktop_route_ids']);
 
-            $roleMobilePermissionService = new RoleMobilePermissionService();
-            $roleMobilePermissionService->setRelation($id, $post['mobile_permission_ids']);
+            $roleMobilePermissionHelper = new RoleMobilePermissionHelper();
+            $roleMobilePermissionHelper->setRelation($id, $post['mobile_permission_ids']);
 
             Db::commit();
         } catch (Exception $exception) {

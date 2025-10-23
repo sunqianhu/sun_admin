@@ -1,7 +1,7 @@
 <?php
 namespace app\model;
 
-use app\service\user\UserAvatarService;
+use app\helper\user\UserAvatarHelper;
 use Exception;
 use Sunqianhu\Helper\SingletonFactory;
 use think\model\relation\BelongsTo;
@@ -55,8 +55,8 @@ class UserModel extends BaseModel
      */
     public function getAvatarUrlAttr($value, $data)
     {
-        $userAvatarService = SingletonFactory::getInstance(UserAvatarService::class);
-        return $userAvatarService->getAvatarUrl($data['avatar']);
+        $userAvatarHelper = SingletonFactory::getInstance(UserAvatarHelper::class);
+        return $userAvatarHelper->getAvatarUrl($data['avatar']);
     }
 
     /**
@@ -68,8 +68,8 @@ class UserModel extends BaseModel
      */
     public function getBigAvatarUrlAttr($value, $data)
     {
-        $userAvatarService = SingletonFactory::getInstance(UserAvatarService::class);
-        return $userAvatarService->getBigAvatarUrl($data['big_avatar']);
+        $userAvatarHelper = SingletonFactory::getInstance(UserAvatarHelper::class);
+        return $userAvatarHelper->getBigAvatarUrl($data['big_avatar']);
     }
 
     /**

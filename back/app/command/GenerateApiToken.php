@@ -3,7 +3,7 @@ declare (strict_types = 1);
 
 namespace app\command;
 
-use app\service\JwtService;
+use app\helper\JwtHelper;
 use Exception;
 use think\console\Command;
 use think\console\Input;
@@ -27,7 +27,7 @@ class GenerateApiToken extends Command
             throw new Exception('用户id不能为空');
         }
 
-        $jwtService = new JwtService();
-        echo $token = $jwtService->generateToken($userId);
+        $jwtHelper = new JwtHelper();
+        echo $token = $jwtHelper->generateToken($userId);
     }
 }

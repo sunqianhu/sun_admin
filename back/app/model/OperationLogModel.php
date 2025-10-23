@@ -1,7 +1,7 @@
 <?php
 namespace app\model;
 
-use app\service\DictionaryService;
+use app\helper\DictionaryHelper;
 use Exception;
 use Sunqianhu\Helper\SingletonFactory;
 
@@ -18,8 +18,8 @@ class OperationLogModel extends BaseModel
      */
     public function getTerminalNameAttr($value, $data)
     {
-        $dictionaryService = SingletonFactory::getInstance(DictionaryService::class);
-        return $dictionaryService->getValue('operation_terminal', $data['terminal']);
+        $dictionaryHelper = SingletonFactory::getInstance(DictionaryHelper::class);
+        return $dictionaryHelper->getValue('operation_terminal', $data['terminal']);
     }
 
 }

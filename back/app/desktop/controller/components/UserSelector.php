@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\service\UserService;
+use app\helper\UserHelper;
 use app\validate\components\SelectUserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -28,8 +28,8 @@ class UserSelector extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $userService = new UserService();
-        $userName = $userService->getName($get['user_id']);
+        $userHelper = new UserHelper();
+        $userName = $userHelper->getName($get['user_id']);
 
         return $this->getSuccessResponse('获取成功', $userName);
     }

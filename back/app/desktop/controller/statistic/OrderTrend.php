@@ -3,8 +3,8 @@
 namespace app\desktop\controller\statistic;
 
 use app\desktop\controller\Base;
-use app\service\order\ExcelService;
-use app\service\order\TrendStatisticService;
+use app\helper\order\ExcelHelper;
+use app\helper\order\TrendStatisticHelper;
 use app\validate\order\IndexSearchValidate;
 use Exception;
 use Sunqianhu\Helper\File;
@@ -33,9 +33,9 @@ class OrderTrend extends Base
         $startTime = $get['add_times'][0];
         $endTime = $get['add_times'][1];
 
-        $trendStatisticService = new TrendStatisticService();
+        $trendStatisticHelper = new TrendStatisticHelper();
         try{
-            $trend = $trendStatisticService->getTimeRangeTrend($startTime, $endTime);
+            $trend = $trendStatisticHelper->getTimeRangeTrend($startTime, $endTime);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
@@ -65,9 +65,9 @@ class OrderTrend extends Base
         $startTime = $get['add_times'][0];
         $endTime = $get['add_times'][1];
 
-        $excelService = new ExcelService();
+        $excelHelper = new ExcelHelper();
         try{
-            $path = $excelService->createTimeRangeTrendExcel($startTime, $endTime);
+            $path = $excelHelper->createTimeRangeTrendExcel($startTime, $endTime);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

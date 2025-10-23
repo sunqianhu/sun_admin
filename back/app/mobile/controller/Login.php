@@ -2,8 +2,8 @@
 
 namespace app\mobile\controller;
 
-use app\service\mobile\SessionService;
-use app\service\LoginCountCheckerService;
+use app\helper\mobile\SessionHelper;
+use app\helper\LoginCountCheckerHelper;
 use app\validate\LoginValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -29,28 +29,28 @@ class Login extends Base
         }
 
         //登录次数
-        $loginCountCheckerService = new LoginCountCheckerService($post['account']);
-        if(!$loginCountCheckerService->check()){
-            return $this->getErrorResponse('连续登录失败'.$loginCountCheckerService->number.'次，请'.$loginCountCheckerService->getResetReadableTime().'后再试');
+        $loginCountCheckerHelper = new LoginCountCheckerHelper($post['account']);
+        if(!$loginCountCheckerHelper->check()){
+            return $this->getErrorResponse('连续登录失败'.$loginCountCheckerHelper->number.'次，请'.$loginCountCheckerHelper->getResetReadableTime().'后再试');
         }
 
         try{
-            $sessionService = new SessionService();
-            $sessionId = $sessionService->login($post['account'], $post['password'], $this->request->ip());
+            $sessionHelper = new SessionHelper();
+            $sessionId = $sessionHelper->login($post['account'], $post['password'], $this->request->ip());
         }catch (Exception $exception){
-            $loginCountCheckerService->setFail();
-            $availableNumber = $loginCountCheckerService->getAvailableNumber();
+            $loginCountCheckerHelper->setFail();
+            $availableNumber = $loginCountCheckerHelper->getAvailableNumber();
             $message = $exception->getMessage();
             if($availableNumber > 0){
                 $message .= '，还能再试'.$availableNumber.'次';
             }else{
-                $message .= '，连续登录失败'.$loginCountCheckerService->number.'次，请'.$loginCountCheckerService->getResetReadableTime().'后再试';
+                $message .= '，连续登录失败'.$loginCountCheckerHelper->number.'次，请'.$loginCountCheckerHelper->getResetReadableTime().'后再试';
             }
             return $this->getErrorResponse($message);
         }
-        $loginCountCheckerService->resetFail();
+        $loginCountCheckerHelper->resetFail();
 
-        $token = $sessionService->getToken($sessionId);
+        $token = $sessionHelper->getToken($sessionId);
         return $this->getSuccessResponse('登录成功', $token);
     }
 }

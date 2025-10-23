@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components\mobile;
 
 use app\desktop\controller\Base;
-use app\service\mobile\PermissionService;
+use app\helper\mobile\PermissionHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -27,8 +27,8 @@ class treePermissionSelect extends Base
             return $this->getErrorResponse('menu_id参数错误');
         }
 
-        $permissionService = new PermissionService();
-        $treePermission = $permissionService->getTreePermission($get['permission_id']);
+        $permissionHelper = new PermissionHelper();
+        $treePermission = $permissionHelper->getTreePermission($get['permission_id']);
         return $this->getSuccessResponse('获取成功', $treePermission);
     }
 }

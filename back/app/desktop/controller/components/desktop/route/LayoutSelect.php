@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components\desktop\route;
 
 use app\desktop\controller\Base;
-use app\service\DictionaryService;
+use app\helper\DictionaryHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -22,8 +22,8 @@ class LayoutSelect extends Base
      */
     public function getLayouts()
     {
-        $dictionaryService = new DictionaryService();
-        $layouts = $dictionaryService->getList('desktop_route_layout');
+        $dictionaryHelper = new DictionaryHelper();
+        $layouts = $dictionaryHelper->getList('desktop_route_layout');
 
         return $this->getSuccessResponse('获取成功', $layouts);
     }

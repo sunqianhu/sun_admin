@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\message;
 
 use app\desktop\controller\Base;
 use app\model\MessageModel;
-use app\service\MessageService;
+use app\helper\MessageHelper;
 use Exception;
 use think\Response;
 
@@ -39,10 +39,10 @@ class Index extends Base
      */
     public function setAllRead()
     {
-        $messageService = new MessageService();
+        $messageHelper = new MessageHelper();
         try{
-            $messageService->setAllRead($this->userId);
-            $messageService->sendAllReadByQueue($this->userId);
+            $messageHelper->setAllRead($this->userId);
+            $messageHelper->sendAllReadByQueue($this->userId);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

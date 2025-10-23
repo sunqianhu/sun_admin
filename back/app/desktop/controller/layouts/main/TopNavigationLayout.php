@@ -3,7 +3,7 @@
 namespace app\desktop\controller\layouts\main;
 
 use app\desktop\controller\Base;
-use app\service\ConfigService;
+use app\helper\ConfigHelper;
 use Exception;
 use think\Response;
 
@@ -18,8 +18,8 @@ class TopNavigationLayout extends Base
      */
     public function init()
     {
-        $configService = new ConfigService();
-        $systemName = $configService->getValue('system_name');
+        $configHelper = new ConfigHelper();
+        $systemName = $configHelper->getValue('system_name');
         $data = [
             'system_name' => $systemName
         ];

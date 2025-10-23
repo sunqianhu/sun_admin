@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components\desktop;
 
 use app\desktop\controller\Base;
-use app\service\desktop\MenuService;
+use app\helper\desktop\MenuHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -27,8 +27,8 @@ class treeMenuSelect extends Base
             return $this->getErrorResponse('menu_id参数错误');
         }
 
-        $menuService = new MenuService();
-        $treeMenu = $menuService->getTreeMenu($get['menu_id']);
+        $menuHelper = new MenuHelper();
+        $treeMenu = $menuHelper->getTreeMenu($get['menu_id']);
         return $this->getSuccessResponse('获取成功', $treeMenu);
     }
 }

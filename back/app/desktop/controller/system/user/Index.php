@@ -4,9 +4,9 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\service\desktop\SessionService as DesktopSessionService;
-use app\service\mobile\SessionService as MobileSessionService;
-use app\service\user\UserStatusService;
+use app\helper\desktop\SessionHelper as DesktopSessionHelper;
+use app\helper\mobile\SessionHelper as MobileSessionHelper;
+use app\helper\user\UserStatusHelper;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -65,9 +65,9 @@ class Index extends Base
         }
 
         $status = $post['status'] == 1 ? 1 : 0;
-        $userStatusService = new UserStatusService();
+        $userStatusHelper = new UserStatusHelper();
         try{
-            $userStatusService->editStatus($post['id'], $status);
+            $userStatusHelper->editStatus($post['id'], $status);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
@@ -89,11 +89,11 @@ class Index extends Base
         }
 
         try{
-            $desktopSessionService = new DesktopSessionService();
-            $desktopSessionService->deleteSessionByUserId($post['id']);
+            $desktopSessionHelper = new DesktopSessionHelper();
+            $desktopSessionHelper->deleteSessionByUserId($post['id']);
 
-            $mobileSessionService = new MobileSessionService();
-            $mobileSessionService->deleteSessionByUserId($post['id']);
+            $mobileSessionHelper = new MobileSessionHelper();
+            $mobileSessionHelper->deleteSessionByUserId($post['id']);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

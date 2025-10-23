@@ -3,7 +3,7 @@
 namespace app\desktop\controller\layouts\main;
 
 use app\desktop\controller\Base;
-use app\service\MessageService;
+use app\helper\MessageHelper;
 use Exception;
 use think\Response;
 
@@ -17,9 +17,9 @@ class MessageNavigation extends Base
      */
     public function getNoReadCount()
     {
-        $messageService = new MessageService();
+        $messageHelper = new MessageHelper();
         try{
-            $count = $messageService->getNoReadCount($this->userId);
+            $count = $messageHelper->getNoReadCount($this->userId);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

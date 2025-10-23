@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\service\MessageService;
+use app\helper\MessageHelper;
 use app\validate\IdValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -27,10 +27,10 @@ class PopupMessage extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $messageService = new MessageService();
+        $messageHelper = new MessageHelper();
         try{
-            $messageService->setRead($this->userId, $post['id']);
-            $messageService->sendReadByQueue($this->userId, $post['id']);
+            $messageHelper->setRead($this->userId, $post['id']);
+            $messageHelper->sendReadByQueue($this->userId, $post['id']);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

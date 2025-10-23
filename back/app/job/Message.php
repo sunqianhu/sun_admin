@@ -2,7 +2,7 @@
 
 namespace app\job;
 
-use app\service\MessageService;
+use app\helper\MessageHelper;
 use Exception;
 use think\queue\Job;
 
@@ -17,16 +17,16 @@ class Message
 
         try {
             $data = $data['data'];
-            $messageService = new MessageService();
+            $messageHelper = new MessageHelper();
             switch ($data['type']) {
                 case 'message':
-                    $messageService->sends($data['user_ids'], $data['title'], $data['content'], $data['url']);
+                    $messageHelper->sends($data['user_ids'], $data['title'], $data['content'], $data['url']);
                     break;
                 case 'read':
-                    $messageService->sendRead($data['user_id'], $data['id']);
+                    $messageHelper->sendRead($data['user_id'], $data['id']);
                     break;
                 case 'all_read':
-                    $messageService->sendAllRead($data['user_id']);
+                    $messageHelper->sendAllRead($data['user_id']);
                     break;
                 default:
                     throw new Exception('未知的消息类型');

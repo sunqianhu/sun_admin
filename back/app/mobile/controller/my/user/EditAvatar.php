@@ -3,7 +3,7 @@
 namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
-use app\service\user\UserAvatarService;
+use app\helper\user\UserAvatarHelper;
 use app\validate\user\AvatarBase64ImageContentValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -29,12 +29,12 @@ class EditAvatar extends Base
         }
 
         try {
-            $userAvatarService = new UserAvatarService();
-            $userAvatarService->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
+            $userAvatarHelper = new UserAvatarHelper();
+            $userAvatarHelper->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
-        $url = $userAvatarService->getAvatarUrlByUserId($this->userId);
+        $url = $userAvatarHelper->getAvatarUrlByUserId($this->userId);
 
         return $this->getSuccessResponse('修改成功', $url);
     }

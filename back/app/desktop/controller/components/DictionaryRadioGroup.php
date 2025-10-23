@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\service\DictionaryService;
+use app\helper\DictionaryHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -27,8 +27,8 @@ class DictionaryRadioGroup extends Base
             return $this->getErrorResponse('字典类型不能为空');
         }
 
-        $dictionaryService = new DictionaryService();
-        $dictionary = $dictionaryService->getList($type);
+        $dictionaryHelper = new DictionaryHelper();
+        $dictionary = $dictionaryHelper->getList($type);
 
         return $this->getSuccessResponse('获取成功', $dictionary);
     }
