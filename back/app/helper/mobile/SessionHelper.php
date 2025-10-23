@@ -96,7 +96,9 @@ class SessionHelper
         //登录日志
         $loginLogModel = new LoginLogModel();
         $data = [
+            'department_id' => $userModel->department_id,
             'user_id' => $userModel->id,
+            'terminal' => 1,
             'ip' => $ip,
             'time' => time()
         ];

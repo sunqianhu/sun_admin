@@ -10,7 +10,7 @@ class OperationLogModel extends BaseModel
     protected $name = 'operation_log';
 
     /**
-     * 得到类型名称
+     * 得到终端名称
      * @param $value
      * @param $data
      * @return string
@@ -21,5 +21,4 @@ class OperationLogModel extends BaseModel
         $dictionaryHelper = SingletonFactory::getInstance(DictionaryHelper::class);
         return $dictionaryHelper->getValue('operation_terminal', $data['terminal']);
     }
-
 }

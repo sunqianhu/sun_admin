@@ -112,12 +112,11 @@ const logout = async () => {
     return;
   }
 
-  const permissionStore = usePermissionStore();
-  const routeStore = useRouteStore();
-  permissionStore.clear();
-  routeStore.clear();
   localStorage.removeItem("token");
-
+  const permissionStore = usePermissionStore();
+  permissionStore.clear();
+  const routeStore = useRouteStore();
+  routeStore.clear();
   permissionCache.clear();
   routeCache.clear();
   watermarkCache.clear();

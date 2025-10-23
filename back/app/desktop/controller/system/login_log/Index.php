@@ -22,7 +22,7 @@ class Index extends Base
             $query->whereBetweenTime('ll.time', intval($get['times'][0]), intval($get['times'][1]));
         }
         if (!empty($get['department_ids'])) {
-            $query->whereIn('u.department_id', $get['department_ids']);
+            $query->whereIn('ll.department_id', $get['department_ids']);
         }
         if ($get['name'] !== '') {
             $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');
@@ -31,6 +31,7 @@ class Index extends Base
             $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
         $query->order('ll.id', 'desc');
+        $query->append(['terminal_name']);
 
         $paginate = $query->paginate([
             'list_rows' => $get['size'],

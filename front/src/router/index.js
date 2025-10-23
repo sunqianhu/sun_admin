@@ -72,7 +72,7 @@ const setPermissions = async () => {
     return;
   }
   let permissions = permissionCache.get();
-  if (!permissions) {
+  if (permissions === null) {
     const response = await axios.get("desktop/frame/getPermissions");
     if (response.code != 1) {
       throw new Error(response.message);
@@ -90,7 +90,7 @@ const setPermissions = async () => {
 const setRoutes = async () => {
   const routeStore = useRouteStore();
   if (routeStore.isSet) {
-    return "exist";
+    return 0;
   }
 
   let childRoutes = routeCache.get();
@@ -112,7 +112,6 @@ const setRoutes = async () => {
     "@/views/*/*/*.vue",
     "@/views/*/*/*/*.vue",
   ]);
-
   for (const childRoute of childRoutes) {
     if (!childRoute.component_path) {
       continue;
@@ -148,7 +147,7 @@ const setRoutes = async () => {
   router.addRoute(mainRoute);
   router.addRoute(blankRoute);
 
-  return "load";
+  return 1; //加载了路由
 };
 
 /**
@@ -195,7 +194,7 @@ const beforeHandle = async (to, from) => {
   try {
     await setPermissions();
     let result = await setRoutes();
-    if (result === "load") {
+    if (result === 1) {
       return to.fullPath;
     }
   } catch (error) {

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50744
 File Encoding         : 65001
 
-Date: 2025-10-22 13:41:41
+Date: 2025-10-23 09:36:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,7 +54,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('1', 'sun admin', '', '3.3.11', '1.0.0');
+INSERT INTO `config` VALUES ('1', 'sun admin', '', '3.4.0', '1.0.0');
 
 -- ----------------------------
 -- Table structure for department
@@ -220,7 +220,7 @@ CREATE TABLE `desktop_session` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='会话';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COMMENT='会话';
 
 -- ----------------------------
 -- Records of desktop_session
@@ -245,6 +245,7 @@ INSERT INTO `desktop_session` VALUES ('25', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUz
 INSERT INTO `desktop_session` VALUES ('26', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzYxMDM2OTM4fQ.1E2b_aBdfRCLzOGXJNB1SeKuk72cTxuKPzGvlrttn00', '1761038753');
 INSERT INTO `desktop_session` VALUES ('27', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzYxMDk2NjcwfQ.rdDsojsXef8w-llYj9Y-ZsffVXLmdjcQwkkDPuSYWaU', '1761102184');
 INSERT INTO `desktop_session` VALUES ('28', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzYxMTA0NjUyfQ.33WIrwMIX43GbVF1MxThJ9aINo3g8ncUz5PgAuVqzs8', '1761106467');
+INSERT INTO `desktop_session` VALUES ('29', '1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzYxMTgyOTc3fQ.lqrKR15oZcl-KDMld__gW8GWEOQ0bWGSv96fD7_SSEk', '1761185123');
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -353,209 +354,212 @@ INSERT INTO `jobs` VALUES ('36', 'message', '{\"job\":\"app\\\\job\\\\Message\",
 DROP TABLE IF EXISTS `login_log`;
 CREATE TABLE `login_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `department_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '部门ID',
   `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `terminal` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '终端',
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=195 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
 -- ----------------------------
-INSERT INTO `login_log` VALUES ('1', '1', '1721279896', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('2', '1', '1721281841', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('3', '1', '1721283308', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('4', '1', '1721295019', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('5', '1', '1721295056', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('6', '1', '1721295062', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('7', '1', '1721295119', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('8', '1', '1721295148', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('9', '1', '1721295260', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('10', '1', '1721295474', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('11', '1', '1721295550', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('12', '1', '1721295974', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('13', '1', '1721295982', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('14', '1', '1721296030', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('15', '1', '1721298728', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('16', '1', '1721352576', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('17', '1', '1721352698', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('18', '1', '1721354799', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('19', '1', '1721355327', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('20', '1', '1721356880', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('21', '1', '1721360261', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('22', '1', '1721360358', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('23', '1', '1721360399', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('24', '1', '1721360433', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('25', '1', '1721360563', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('26', '1', '1721360709', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('27', '1', '1721366120', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('28', '1', '1721370713', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('29', '1', '1721374404', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('30', '1', '1721375701', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('31', '1', '1721376659', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('32', '1', '1722840439', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('33', '1', '1722852169', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('34', '1', '1722999409', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('35', '1', '1722999524', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('36', '1', '1723002721', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('37', '1', '1723003404', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('38', '1', '1723003436', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('39', '1', '1723008394', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('40', '1', '1723008607', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('41', '1', '1723016937', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('42', '1', '1723019338', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('43', '1', '1723078746', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('44', '1', '1723082071', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('45', '1', '1723083591', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('46', '1', '1723084076', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('47', '1', '1723084544', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('48', '1', '1723085253', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('49', '1', '1723096643', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('50', '1', '1723096722', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('51', '1', '1723096780', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('52', '1', '1723096841', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('53', '1', '1724830161', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('54', '1', '1724832288', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('55', '1', '1725519533', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('56', '1', '1725522390', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('57', '1', '1728630587', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('58', '1', '1728633146', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('59', '1', '1736054080', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('60', '1', '1736054092', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('61', '1', '1736055953', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('62', '1', '1736056531', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('63', '1', '1736057055', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('64', '1', '1736057119', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('65', '1', '1736057183', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('66', '1', '1736065551', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('67', '1', '1736568604', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('68', '1', '1736592964', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('69', '1', '1736596222', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('70', '1', '1736731103', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('71', '1', '1736743561', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('72', '1', '1736749182', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('73', '1', '1736753852', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('74', '1', '1737182458', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('75', '1', '1737188530', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('76', '1', '1737195067', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('77', '1', '1737343934', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('78', '1', '1737356550', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('79', '1', '1737356555', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('80', '1', '1737356700', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('81', '1', '1737356719', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('82', '1', '1737359169', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('83', '1', '1737359282', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('84', '1', '1739848469', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('85', '1', '1740034716', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('86', '1', '1740037129', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('87', '1', '1740472180', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('88', '1', '1740563101', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('89', '1', '1740566318', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('90', '1', '1740566322', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('91', '1', '1740629780', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('92', '1', '1740629786', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('93', '1', '1740727401', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('94', '1', '1744107778', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('95', '1', '1744183529', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('96', '1', '1744192165', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('97', '1', '1745464632', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('98', '1', '1745742158', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('99', '1', '1745748937', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('100', '1', '1745748997', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('101', '1', '1745749096', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('102', '1', '1745805772', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('103', '1', '1745808080', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('104', '1', '1745836935', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('105', '1', '1747204130', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('106', '1', '1747204140', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('107', '1', '1747204690', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('108', '1', '1748252254', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('109', '1', '1748508105', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('110', '1', '1749003760', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('111', '1', '1749008069', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('112', '1', '1750297660', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('113', '1', '1750301577', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('114', '1', '1750305236', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('115', '1', '1750310577', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('116', '1', '1750314720', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('117', '1', '1750327131', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('118', '1', '1750327689', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('119', '1', '1750382763', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('120', '1', '1750382813', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('121', '1', '1750406861', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('122', '1', '1750656729', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('123', '1', '1750757382', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('124', '1', '1750900293', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('125', '1', '1750904058', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('126', '1', '1750904091', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('127', '1', '1750904716', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('128', '1', '1750905676', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('129', '1', '1750906451', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('130', '1', '1750906729', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('131', '1', '1750910320', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('132', '1', '1750911393', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('133', '1', '1750911562', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('134', '1', '1750917116', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('135', '1', '1750926791', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('136', '1', '1750928757', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('137', '1', '1750929154', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('138', '1', '1750929186', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('139', '1', '1750930278', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('140', '1', '1750930394', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('141', '1', '1750930457', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('142', '1', '1750990388', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('143', '1', '1751003327', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('144', '1', '1751015741', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('145', '1', '1751017550', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('146', '1', '1751250987', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('147', '1', '1751251143', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('148', '1', '1751252026', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('149', '1', '1751358327', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('150', '1', '1751358693', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('151', '1', '1751358881', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('152', '1', '1751359023', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('153', '1', '1751361475', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('154', '1', '1752027012', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('155', '1', '1755055666', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('156', '1', '1755055677', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('157', '1', '1755055783', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('158', '1', '1755055797', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('159', '1', '1755055813', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('160', '1', '1755055829', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('161', '1', '1755055892', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('162', '1', '1755055976', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('163', '1', '1755056005', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('164', '1', '1755056076', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('165', '1', '1755056327', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('166', '1', '1755059489', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('167', '1', '1755062153', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('168', '1', '1755063239', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('169', '1', '1755063324', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('170', '1', '1755063357', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('171', '1', '1755063520', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('172', '1', '1755063656', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('173', '1', '1755063845', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('174', '1', '1755064082', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('175', '1', '1755072976', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('176', '1', '1755078251', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('177', '1', '1755136080', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('178', '1', '1755153518', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('179', '1', '1755163825', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('180', '1', '1755228265', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('181', '1', '1760663459', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('182', '1', '1760672903', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('183', '1', '1760681250', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('184', '1', '1760768075', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('185', '1', '1760777414', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('186', '1', '1760781727', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('187', '1', '1760951326', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('188', '1', '1760953296', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('189', '1', '1761008487', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('190', '1', '1761012452', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('191', '1', '1761024022', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('192', '1', '1761036938', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('193', '1', '1761096670', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('194', '1', '1761104652', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('1', '0', '1', '0', '1721279896', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('2', '0', '1', '0', '1721281841', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('3', '0', '1', '0', '1721283308', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('4', '0', '1', '0', '1721295019', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('5', '0', '1', '0', '1721295056', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('6', '0', '1', '0', '1721295062', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('7', '0', '1', '0', '1721295119', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('8', '0', '1', '0', '1721295148', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('9', '0', '1', '0', '1721295260', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('10', '0', '1', '0', '1721295474', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('11', '0', '1', '0', '1721295550', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('12', '0', '1', '0', '1721295974', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('13', '0', '1', '0', '1721295982', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('14', '0', '1', '0', '1721296030', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('15', '0', '1', '0', '1721298728', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('16', '0', '1', '0', '1721352576', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('17', '0', '1', '0', '1721352698', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('18', '0', '1', '0', '1721354799', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('19', '0', '1', '0', '1721355327', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('20', '0', '1', '0', '1721356880', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('21', '0', '1', '0', '1721360261', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('22', '0', '1', '0', '1721360358', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('23', '0', '1', '0', '1721360399', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('24', '0', '1', '0', '1721360433', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('25', '0', '1', '0', '1721360563', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('26', '0', '1', '0', '1721360709', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('27', '0', '1', '0', '1721366120', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('28', '0', '1', '0', '1721370713', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('29', '0', '1', '0', '1721374404', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('30', '0', '1', '0', '1721375701', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('31', '0', '1', '0', '1721376659', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('32', '0', '1', '0', '1722840439', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('33', '0', '1', '0', '1722852169', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('34', '0', '1', '0', '1722999409', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('35', '0', '1', '0', '1722999524', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('36', '0', '1', '0', '1723002721', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('37', '0', '1', '0', '1723003404', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('38', '0', '1', '0', '1723003436', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('39', '0', '1', '0', '1723008394', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('40', '0', '1', '0', '1723008607', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('41', '0', '1', '0', '1723016937', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('42', '0', '1', '0', '1723019338', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('43', '0', '1', '0', '1723078746', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('44', '0', '1', '0', '1723082071', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('45', '0', '1', '0', '1723083591', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('46', '0', '1', '0', '1723084076', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('47', '0', '1', '0', '1723084544', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('48', '0', '1', '0', '1723085253', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('49', '0', '1', '0', '1723096643', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('50', '0', '1', '0', '1723096722', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('51', '0', '1', '0', '1723096780', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('52', '0', '1', '0', '1723096841', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('53', '0', '1', '0', '1724830161', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('54', '0', '1', '0', '1724832288', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('55', '0', '1', '0', '1725519533', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('56', '0', '1', '0', '1725522390', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('57', '0', '1', '0', '1728630587', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('58', '0', '1', '0', '1728633146', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('59', '0', '1', '0', '1736054080', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('60', '0', '1', '0', '1736054092', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('61', '0', '1', '0', '1736055953', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('62', '0', '1', '0', '1736056531', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('63', '0', '1', '0', '1736057055', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('64', '0', '1', '0', '1736057119', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('65', '0', '1', '0', '1736057183', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('66', '0', '1', '0', '1736065551', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('67', '0', '1', '0', '1736568604', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('68', '0', '1', '0', '1736592964', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('69', '0', '1', '0', '1736596222', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('70', '0', '1', '0', '1736731103', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('71', '0', '1', '0', '1736743561', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('72', '0', '1', '0', '1736749182', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('73', '0', '1', '0', '1736753852', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('74', '0', '1', '0', '1737182458', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('75', '0', '1', '0', '1737188530', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('76', '0', '1', '0', '1737195067', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('77', '0', '1', '0', '1737343934', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('78', '0', '1', '0', '1737356550', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('79', '0', '1', '0', '1737356555', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('80', '0', '1', '0', '1737356700', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('81', '0', '1', '0', '1737356719', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('82', '0', '1', '0', '1737359169', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('83', '0', '1', '0', '1737359282', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('84', '0', '1', '0', '1739848469', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('85', '0', '1', '0', '1740034716', '172.18.0.2');
+INSERT INTO `login_log` VALUES ('86', '0', '1', '0', '1740037129', '172.18.0.2');
+INSERT INTO `login_log` VALUES ('87', '0', '1', '0', '1740472180', '172.18.0.2');
+INSERT INTO `login_log` VALUES ('88', '0', '1', '0', '1740563101', '172.18.0.2');
+INSERT INTO `login_log` VALUES ('89', '0', '1', '0', '1740566318', '172.18.0.2');
+INSERT INTO `login_log` VALUES ('90', '0', '1', '0', '1740566322', '172.18.0.2');
+INSERT INTO `login_log` VALUES ('91', '0', '1', '0', '1740629780', '172.18.0.2');
+INSERT INTO `login_log` VALUES ('92', '0', '1', '0', '1740629786', '172.18.0.2');
+INSERT INTO `login_log` VALUES ('93', '0', '1', '0', '1740727401', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('94', '0', '1', '0', '1744107778', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('95', '0', '1', '0', '1744183529', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('96', '0', '1', '0', '1744192165', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('97', '0', '1', '0', '1745464632', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('98', '0', '1', '0', '1745742158', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('99', '0', '1', '0', '1745748937', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('100', '0', '1', '0', '1745748997', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('101', '0', '1', '0', '1745749096', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('102', '0', '1', '0', '1745805772', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('103', '0', '1', '0', '1745808080', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('104', '0', '1', '0', '1745836935', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('105', '0', '1', '0', '1747204130', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('106', '0', '1', '0', '1747204140', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('107', '0', '1', '0', '1747204690', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('108', '0', '1', '0', '1748252254', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('109', '0', '1', '0', '1748508105', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('110', '0', '1', '0', '1749003760', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('111', '0', '1', '0', '1749008069', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('112', '0', '1', '0', '1750297660', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('113', '0', '1', '0', '1750301577', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('114', '0', '1', '0', '1750305236', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('115', '0', '1', '0', '1750310577', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('116', '0', '1', '0', '1750314720', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('117', '0', '1', '0', '1750327131', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('118', '0', '1', '0', '1750327689', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('119', '0', '1', '0', '1750382763', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('120', '0', '1', '0', '1750382813', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('121', '0', '1', '0', '1750406861', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('122', '0', '1', '0', '1750656729', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('123', '0', '1', '0', '1750757382', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('124', '0', '1', '0', '1750900293', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('125', '0', '1', '0', '1750904058', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('126', '0', '1', '0', '1750904091', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('127', '0', '1', '0', '1750904716', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('128', '0', '1', '0', '1750905676', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('129', '0', '1', '0', '1750906451', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('130', '0', '1', '0', '1750906729', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('131', '0', '1', '0', '1750910320', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('132', '0', '1', '0', '1750911393', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('133', '0', '1', '0', '1750911562', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('134', '0', '1', '0', '1750917116', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('135', '0', '1', '0', '1750926791', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('136', '0', '1', '0', '1750928757', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('137', '0', '1', '0', '1750929154', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('138', '0', '1', '0', '1750929186', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('139', '0', '1', '0', '1750930278', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('140', '0', '1', '0', '1750930394', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('141', '0', '1', '0', '1750930457', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('142', '0', '1', '0', '1750990388', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('143', '0', '1', '0', '1751003327', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('144', '0', '1', '0', '1751015741', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('145', '0', '1', '0', '1751017550', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('146', '0', '1', '0', '1751250987', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('147', '0', '1', '0', '1751251143', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('148', '0', '1', '0', '1751252026', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('149', '0', '1', '0', '1751358327', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('150', '0', '1', '0', '1751358693', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('151', '0', '1', '0', '1751358881', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('152', '0', '1', '0', '1751359023', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('153', '0', '1', '0', '1751361475', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('154', '0', '1', '0', '1752027012', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('155', '0', '1', '0', '1755055666', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('156', '0', '1', '0', '1755055677', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('157', '0', '1', '0', '1755055783', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('158', '0', '1', '0', '1755055797', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('159', '0', '1', '0', '1755055813', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('160', '0', '1', '0', '1755055829', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('161', '0', '1', '0', '1755055892', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('162', '0', '1', '0', '1755055976', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('163', '0', '1', '0', '1755056005', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('164', '0', '1', '0', '1755056076', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('165', '0', '1', '0', '1755056327', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('166', '0', '1', '0', '1755059489', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('167', '0', '1', '0', '1755062153', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('168', '0', '1', '0', '1755063239', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('169', '0', '1', '0', '1755063324', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('170', '0', '1', '0', '1755063357', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('171', '0', '1', '0', '1755063520', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('172', '0', '1', '0', '1755063656', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('173', '0', '1', '0', '1755063845', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('174', '0', '1', '0', '1755064082', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('175', '0', '1', '0', '1755072976', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('176', '0', '1', '0', '1755078251', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('177', '0', '1', '0', '1755136080', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('178', '0', '1', '0', '1755153518', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('179', '0', '1', '0', '1755163825', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('180', '0', '1', '0', '1755228265', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('181', '0', '1', '0', '1760663459', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('182', '0', '1', '0', '1760672903', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('183', '0', '1', '0', '1760681250', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('184', '0', '1', '0', '1760768075', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('185', '0', '1', '0', '1760777414', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('186', '0', '1', '0', '1760781727', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('187', '0', '1', '0', '1760951326', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('188', '0', '1', '0', '1760953296', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('189', '0', '1', '0', '1761008487', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('190', '0', '1', '0', '1761012452', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('191', '0', '1', '0', '1761024022', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('192', '0', '1', '0', '1761036938', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('193', '0', '1', '0', '1761096670', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('194', '0', '1', '0', '1761104652', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('195', '0', '1', '0', '1761182977', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -654,7 +658,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '操作ip',
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12006 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=12057 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -12664,6 +12668,57 @@ INSERT INTO `operation_log` VALUES ('12002', '1', '1', '0', '/desktop/layouts.ma
 INSERT INTO `operation_log` VALUES ('12003', '1', '1', '0', '/desktop/layouts.main.TopNavigationLayout/init', '127.0.0.1', '1761104654');
 INSERT INTO `operation_log` VALUES ('12004', '1', '1', '0', '/desktop/Frame/getWatermark', '127.0.0.1', '1761104655');
 INSERT INTO `operation_log` VALUES ('12005', '1', '1', '0', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1761104667');
+INSERT INTO `operation_log` VALUES ('12006', '1', '1', '0', '/desktop/frame/getPermissions', '127.0.0.1', '1761182977');
+INSERT INTO `operation_log` VALUES ('12007', '1', '1', '0', '/desktop/frame/getRoutes', '127.0.0.1', '1761182978');
+INSERT INTO `operation_log` VALUES ('12008', '1', '1', '0', '/desktop/layouts.main.MessageNavigation/getNoReadCount', '127.0.0.1', '1761182980');
+INSERT INTO `operation_log` VALUES ('12009', '1', '1', '0', '/desktop/layouts.main.Avatar/getUser', '127.0.0.1', '1761182980');
+INSERT INTO `operation_log` VALUES ('12010', '1', '1', '0', '/desktop/layouts.main.top_navigation_layout.Menu/getTreeMenu', '127.0.0.1', '1761182980');
+INSERT INTO `operation_log` VALUES ('12011', '1', '1', '0', '/desktop/layouts.main.TopNavigationLayout/init', '127.0.0.1', '1761182980');
+INSERT INTO `operation_log` VALUES ('12012', '1', '1', '0', '/desktop/Frame/getWatermark', '127.0.0.1', '1761182980');
+INSERT INTO `operation_log` VALUES ('12013', '1', '1', '0', '/desktop/statistic.OrderTrend/init', '127.0.0.1', '1761182983');
+INSERT INTO `operation_log` VALUES ('12014', '1', '1', '0', '/desktop/system.config.Index/init', '127.0.0.1', '1761182986');
+INSERT INTO `operation_log` VALUES ('12015', '1', '1', '0', '/desktop/system.config.Index/save', '127.0.0.1', '1761182988');
+INSERT INTO `operation_log` VALUES ('12016', '1', '1', '0', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1761182991');
+INSERT INTO `operation_log` VALUES ('12017', '1', '1', '0', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1761182991');
+INSERT INTO `operation_log` VALUES ('12018', '1', '1', '0', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1761182991');
+INSERT INTO `operation_log` VALUES ('12019', '1', '1', '0', '/desktop/system.config.Index/init', '127.0.0.1', '1761182992');
+INSERT INTO `operation_log` VALUES ('12020', '1', '1', '0', '/desktop/system.config.Index/save', '127.0.0.1', '1761182998');
+INSERT INTO `operation_log` VALUES ('12021', '1', '1', '0', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1761183000');
+INSERT INTO `operation_log` VALUES ('12022', '1', '1', '0', '/desktop/components.roleSelect/getRoles', '127.0.0.1', '1761183001');
+INSERT INTO `operation_log` VALUES ('12023', '1', '1', '0', '/desktop/system.user.Index/getPaginate', '127.0.0.1', '1761183001');
+INSERT INTO `operation_log` VALUES ('12024', '1', '1', '0', '/desktop/system.department.Index/getTreeDepartment', '127.0.0.1', '1761183004');
+INSERT INTO `operation_log` VALUES ('12025', '1', '1', '0', '/desktop/system.role.Index/getPaginate', '127.0.0.1', '1761183006');
+INSERT INTO `operation_log` VALUES ('12026', '1', '1', '0', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1761183009');
+INSERT INTO `operation_log` VALUES ('12027', '1', '1', '0', '/desktop/system.desktop.menu.Edit/init', '127.0.0.1', '1761183012');
+INSERT INTO `operation_log` VALUES ('12028', '1', '1', '0', '/desktop/components.desktop.treeMenuSelect/getTreeMenu', '127.0.0.1', '1761183012');
+INSERT INTO `operation_log` VALUES ('12029', '1', '1', '0', '/desktop/system.desktop.menu.Edit/save', '127.0.0.1', '1761183013');
+INSERT INTO `operation_log` VALUES ('12030', '1', '1', '0', '/desktop/system.desktop.menu.Index/getTreeMenu', '127.0.0.1', '1761183014');
+INSERT INTO `operation_log` VALUES ('12031', '1', '1', '0', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1761183017');
+INSERT INTO `operation_log` VALUES ('12032', '1', '1', '0', '/desktop/system.desktop.permission.Edit/init', '127.0.0.1', '1761183021');
+INSERT INTO `operation_log` VALUES ('12033', '1', '1', '0', '/desktop/components.desktop.treePermissionSelect/getTreePermission', '127.0.0.1', '1761183022');
+INSERT INTO `operation_log` VALUES ('12034', '1', '1', '0', '/desktop/system.desktop.permission.Edit/save', '127.0.0.1', '1761183023');
+INSERT INTO `operation_log` VALUES ('12035', '1', '1', '0', '/desktop/system.desktop.permission.Index/getTreePermission', '127.0.0.1', '1761183023');
+INSERT INTO `operation_log` VALUES ('12036', '1', '1', '0', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1761183026');
+INSERT INTO `operation_log` VALUES ('12037', '1', '1', '0', '/desktop/system.mobile.permission.Edit/init', '127.0.0.1', '1761183028');
+INSERT INTO `operation_log` VALUES ('12038', '1', '1', '0', '/desktop/components.mobile.treePermissionSelect/getTreePermission', '127.0.0.1', '1761183028');
+INSERT INTO `operation_log` VALUES ('12039', '1', '1', '0', '/desktop/system.mobile.permission.Edit/save', '127.0.0.1', '1761183029');
+INSERT INTO `operation_log` VALUES ('12040', '1', '1', '0', '/desktop/system.mobile.permission.Index/getTreePermission', '127.0.0.1', '1761183029');
+INSERT INTO `operation_log` VALUES ('12041', '1', '1', '0', '/desktop/system.dictionary.Index/getPaginate', '127.0.0.1', '1761183031');
+INSERT INTO `operation_log` VALUES ('12042', '1', '1', '0', '/desktop/system.dictionary.Edit/init', '127.0.0.1', '1761183032');
+INSERT INTO `operation_log` VALUES ('12043', '1', '1', '0', '/desktop/system.dictionary.Edit/save', '127.0.0.1', '1761183034');
+INSERT INTO `operation_log` VALUES ('12044', '1', '1', '0', '/desktop/system.dictionary.Index/getPaginate', '127.0.0.1', '1761183034');
+INSERT INTO `operation_log` VALUES ('12045', '1', '1', '0', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1761183036');
+INSERT INTO `operation_log` VALUES ('12046', '1', '1', '0', '/desktop/system.login_log.Index/getPaginate', '127.0.0.1', '1761183036');
+INSERT INTO `operation_log` VALUES ('12047', '1', '1', '0', '/desktop/components.DictionarySelect/getDictionary', '127.0.0.1', '1761183043');
+INSERT INTO `operation_log` VALUES ('12048', '1', '1', '0', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1761183043');
+INSERT INTO `operation_log` VALUES ('12049', '1', '1', '0', '/desktop/system.operation_log.Index/getPaginate', '127.0.0.1', '1761183043');
+INSERT INTO `operation_log` VALUES ('12050', '1', '1', '0', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1761183299');
+INSERT INTO `operation_log` VALUES ('12051', '1', '1', '0', '/desktop/system.login_log.Index/getPaginate', '127.0.0.1', '1761183299');
+INSERT INTO `operation_log` VALUES ('12052', '1', '1', '0', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1761183308');
+INSERT INTO `operation_log` VALUES ('12053', '1', '1', '0', '/desktop/components.DictionarySelect/getDictionary', '127.0.0.1', '1761183308');
+INSERT INTO `operation_log` VALUES ('12054', '1', '1', '0', '/desktop/system.operation_log.Index/getPaginate', '127.0.0.1', '1761183308');
+INSERT INTO `operation_log` VALUES ('12055', '1', '1', '0', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', '127.0.0.1', '1761183323');
+INSERT INTO `operation_log` VALUES ('12056', '1', '1', '0', '/desktop/system.login_log.Index/getPaginate', '127.0.0.1', '1761183323');
 
 -- ----------------------------
 -- Table structure for role
@@ -12873,7 +12928,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '张三', '15122222222', 'avatar/2025/07/01/c86246c718258d9e7545e94ee210aef8.png', 'big_avatar/2025/07/01/864cd52dd821a9d52d281b68d23243ae.png', '1684989244', '1716183018', '1761104652', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '张三', '15122222222', 'avatar/2025/07/01/c86246c718258d9e7545e94ee210aef8.png', 'big_avatar/2025/07/01/864cd52dd821a9d52d281b68d23243ae.png', '1684989244', '1716183018', '1761182977', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '1', '李四', '15111111111', '', '', '1684992552', '1703148627', '0', '');
 INSERT INTO `user` VALUES ('3', '1', 'test1', 'ea7d67381ace4fcd68e90985645aa69d', '1', 'test1', '15108273575', '', '', '0', '0', '0', '');
 
