@@ -12,7 +12,7 @@
         <el-form-item label="终端">
           <dictionary-select
             v-model="query.terminal"
-            type="operation_terminal"
+            type="terminal"
           ></dictionary-select>
         </el-form-item>
         <el-form-item label="操作时间">

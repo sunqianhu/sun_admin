@@ -9,6 +9,12 @@
             multiple
           ></tree-department-select>
         </el-form-item>
+        <el-form-item label="终端">
+          <dictionary-select
+            v-model="query.terminal"
+            type="terminal"
+          ></dictionary-select>
+        </el-form-item>
         <el-form-item label="登录时间">
           <el-date-picker
             v-model="query.times"
@@ -44,12 +50,13 @@
         table-layout="auto"
         class="table"
       >
+        <el-table-column prop="terminal_name" label="终端" />
+        <el-table-column prop="department_name" label="所属部门" />
         <el-table-column v-slot="{ row }" prop="user_name" label="用户姓名">
           <a :href="'/system/user/detail-' + row.user_id" target="_blank">
             {{ row.user_name }}
           </a>
         </el-table-column>
-        <el-table-column prop="department_name" label="所属部门" />
         <el-table-column prop="ip" label="登录ip" />
         <el-table-column label="登录时间" v-slot="{ row }">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
