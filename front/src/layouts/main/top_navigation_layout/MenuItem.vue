@@ -5,17 +5,11 @@
         :index="menu.url"
         @click="navigateTo(menu.url, menu.target)"
       >
-        <el-icon v-if="menu.icon">
-          <component :is="icons[menu.icon]"></component>
-        </el-icon>
         <span>{{ menu.name }}</span>
       </el-menu-item>
     </template>
     <el-sub-menu :index="'group_' + menu.id" v-else>
       <template #title>
-        <el-icon v-if="menu.icon">
-          <component :is="icons[menu.icon]"></component>
-        </el-icon>
         <span>{{ menu.name }}</span>
       </template>
       <menu-item :tree-menu="menu.children"></menu-item>
