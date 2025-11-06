@@ -4,6 +4,7 @@ stages:
 
 variables:
   GIT_DEPTH: "0"
+  VERSION: 1.4.3
 
 before_script:
   - echo "checking docker daemon status..."
@@ -13,7 +14,7 @@ build_back:
   stage: build
   script:
     - cd back
-    - docker build -t sun_admin_back:latest .
+    - docker build -t sun_admin_back:$VERSION .
   only:
     - product
   tags:
@@ -23,7 +24,7 @@ build_front:
   stage: build
   script:
     - cd front
-    - docker build -t sun_admin_front:latest .
+    - docker build -t sun_admin_front:$VERSION .
   only:
     - product
   tags:
@@ -32,13 +33,13 @@ build_front:
 package_images:
   stage: package
   script:
-    - docker save -o sun_admin_back.tar.gz sun_admin_back:latest
-    - docker save -o sun_admin_front.tar.gz sun_admin_front:latest
-    - tar -czvf sun_admin.tar.gz sun_admin_back.tar.gz sun_admin_front.tar.gz
+    - docker save -o sun_admin_back_$VERSION.tar.gz sun_admin_back:$VERSION
+    - docker save -o sun_admin_front_$VERSION.tar.gz sun_admin_front:$VERSION
   artifacts:
     name: sun_admin
     paths:
-      - sun_admin.tar.gz
+      - sun_admin_back_$VERSION.tar.gz 
+      - sun_admin_front_$VERSION.tar.gz
     expire_in: 1 week
   only:
     - product

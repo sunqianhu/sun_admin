@@ -4,10 +4,12 @@ namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
 use app\model\DictionaryModel;
+use app\validate\IdValidate;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\exception\ValidateException;
 use think\Response;
 
 class Index extends Base
@@ -51,11 +53,14 @@ class Index extends Base
      * @throws ModelNotFoundException
      */
     public function delete(){
-        $id = $this->request->post('id', 0);
-
-        if ($id <= 0 || !is_numeric($id)) {
-            return $this->getErrorResponse('id参数错误');
+        $post = $this->request->post(['id']);
+        try {
+            validate(IdValidate::class)->check($post);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
         }
+
+        $id = $post['id'];
 
         $dictionaryModel = DictionaryModel::find($id);
         if (empty($dictionaryModel)) {
