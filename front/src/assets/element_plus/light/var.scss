@@ -1,0 +1,42 @@
+@use "./var.scss" as *;
+// @use "../../../../node_modules/element-plus/theme-chalk/src/mixins/_var.scss" as *;
+// @use "../../../../node_modules/element-plus/theme-chalk/src/mixins/mixins.scss" as *;
+@use "element-plus/theme-chalk/src/mixins/_var.scss" as *;
+@use "element-plus/theme-chalk/src/mixins/mixins.scss" as *;
+
+$types: primary, success, warning, danger, error, info;
+
+:root:root {
+  color-scheme: light;
+  //通用
+  @include set-css-var-value("color-white", $color-white);
+  @include set-css-var-value("color-black", $color-black);
+
+  //--el-color-primary-rgb: 64, 158, 255;
+  //--el-color-success-rgb: 103, 194, 58;
+  //--el-color-warning-rgb: 230, 162, 60;
+  //--el-color-danger-rgb: 245, 108, 108;
+  //--el-color-error-rgb: 245, 108, 108;
+  //--el-color-info-rgb: 144, 147, 153;
+  @each $type in $types {
+    @include set-css-color-rgb($type);
+  }
+
+  //--el-color-#{$type}
+  //--el-color-#{$type}-light-{$i}
+  //--el-color-#{$type}-dark-2
+  @each $type in $types {
+    @include set-css-color-type($colors, $type);
+  }
+
+  //组件
+  //background --el-bg-color-#{$type}
+  //@include set-component-css-var("bg-color", $bg-color);
+  //text-color --el-text-color-#{$type}
+  //@include set-component-css-var("text-color", $text-color);
+
+  //其他
+  .el-dialog {
+    background-color: var(--background-color-light);
+  }
+}

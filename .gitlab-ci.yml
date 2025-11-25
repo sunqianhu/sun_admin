@@ -36,7 +36,7 @@ package_images:
     - docker save -o sun_admin_back_$VERSION.tar.gz sun_admin_back:$VERSION
     - docker save -o sun_admin_front_$VERSION.tar.gz sun_admin_front:$VERSION
   artifacts:
-    name: sun_admin
+    name: sun_admin_$VERSION
     paths:
       - sun_admin_back_$VERSION.tar.gz 
       - sun_admin_front_$VERSION.tar.gz

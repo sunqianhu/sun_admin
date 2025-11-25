@@ -6,7 +6,7 @@ services:
     build:
       context: ./back/
       dockerfile: Dockerfile
-    image: sun_admin_back:latest
+    image: sun_admin_back:1.4.3
     container_name: sun_admin_back
     volumes:
       - /home/www/sun_admin.sunqianhu.cc/back/public/storage:/var/www/html/public/storage
@@ -18,10 +18,10 @@ services:
     build:
       context: ./front/
       dockerfile: Dockerfile
-    image: sun_admin_front:latest #镜像名版本号
-    container_name: sun_admin_front #容器名
+    image: sun_admin_front:1.4.3
+    container_name: sun_admin_front
     depends_on:
-      - sun_admin_back #确保后端容器先启动
+      - sun_admin_back
     ports:
       - "80:80"
     networks:

@@ -32,6 +32,8 @@ const props = defineProps({
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   padding: var(--padding);
+  position: relative;
+
   .card-panel__header {
     display: flex;
     justify-content: space-between;
