@@ -1,42 +1,94 @@
-@use "./var.scss" as *;
-// @use "../../../../node_modules/element-plus/theme-chalk/src/mixins/_var.scss" as *;
-// @use "../../../../node_modules/element-plus/theme-chalk/src/mixins/mixins.scss" as *;
-@use "element-plus/theme-chalk/src/mixins/_var.scss" as *;
-@use "element-plus/theme-chalk/src/mixins/mixins.scss" as *;
+@use "sass:map";
+@use "sass:math";
+@use "sass:color";
 
+//https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/common/var.scss
+// @use "../../../../node_modules/element-plus/theme-chalk/src/mixins/function.scss" as *;
+// @use "../../../../node_modules/element-plus/theme-chalk/src/color/index.scss" as *;
+@use "element-plus/theme-chalk/src/mixins/function.scss" as *;
+@use "element-plus/theme-chalk/src/color/index.scss" as *;
+
+//颜色混合
+@mixin set-color-mix-level(
+  $type,
+  $number,
+  $mode: "light",
+  $mix-color: $color-white
+) {
+  $colors: map.deep-merge(
+    (
+      $type: (
+        "#{$mode}-#{$number}":
+          color.mix(
+            $mix-color,
+            map.get($colors, $type, "base"),
+            math.percentage(math.div($number, 10))
+          ),
+      ),
+    ),
+    $colors
+  ) !global;
+}
+
+//类型
 $types: primary, success, warning, danger, error, info;
 
-:root:root {
-  color-scheme: light;
-  //通用
-  @include set-css-var-value("color-white", $color-white);
-  @include set-css-var-value("color-black", $color-black);
+//主题色
+$colors: () !default;
+$colors: map.deep-merge(
+  (
+    "white": #ffffff,
+    "black": #000000,
+    "primary": (
+      "base": #31713A,
+    ),
+    "success": (
+      "base": #67C23A,
+    ),
+    "warning": (
+      "base": #E9B005,
+    ),
+    "danger": (
+      "base": #E82840,
+    ),
+    "error": (
+      "base": #ff003e,
+    ),
+    "info": (
+      "base": #d0d0d0,
+    ),
+  ),
+  $colors
+);
 
-  //--el-color-primary-rgb: 64, 158, 255;
-  //--el-color-success-rgb: 103, 194, 58;
-  //--el-color-warning-rgb: 230, 162, 60;
-  //--el-color-danger-rgb: 245, 108, 108;
-  //--el-color-error-rgb: 245, 108, 108;
-  //--el-color-info-rgb: 144, 147, 153;
-  @each $type in $types {
-    @include set-css-color-rgb($type);
-  }
+$color-white: map.get($colors, "white") !default;
+$color-black: map.get($colors, "black") !default;
+$color-primary: map.get($colors, "primary", "base") !default;
+$color-success: map.get($colors, "success", "base") !default;
+$color-warning: map.get($colors, "warning", "base") !default;
+$color-danger: map.get($colors, "danger", "base") !default;
+$color-error: map.get($colors, "error", "base") !default;
+$color-info: map.get($colors, "info", "base") !default;
 
-  //--el-color-#{$type}
-  //--el-color-#{$type}-light-{$i}
-  //--el-color-#{$type}-dark-2
-  @each $type in $types {
-    @include set-css-color-type($colors, $type);
-  }
-
-  //组件
-  //background --el-bg-color-#{$type}
-  //@include set-component-css-var("bg-color", $bg-color);
-  //text-color --el-text-color-#{$type}
-  //@include set-component-css-var("text-color", $text-color);
-
-  //其他
-  .el-dialog {
-    background-color: var(--background-color-light);
+// $colors.primary.light-i
+// --el-color-primary-light-i
+// 10% 53a8ff
+// 20% 66b1ff
+// 30% 79bbff
+// 40% 8cc5ff
+// 50% a0cfff
+// 60% b3d8ff
+// 70% c6e2ff
+// 80% d9ecff
+// 90% ecf5ff
+@each $type in $types {
+  @for $i from 1 through 9 {
+    @include set-color-mix-level($type, $i, 'light', $color-white);
   }
 }
+
+// --el-color-primary-dark-2
+@each $type in $types {
+  @include set-color-mix-level($type, 2, 'dark', $color-black);
+}
+//@debug "colors: #{$colors}";
