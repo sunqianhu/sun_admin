@@ -52,6 +52,5 @@ const navigateTo = (url, target) => {
 
 <style lang="scss" scoped>
 .el-menu-item.is-active {
-  background-color: v-bind(menuActiveBgColor);
 }
 </style>
