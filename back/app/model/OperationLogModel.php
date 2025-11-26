@@ -19,6 +19,6 @@ class OperationLogModel extends BaseModel
     public function getTerminalNameAttr($value, $data)
     {
         $dictionaryHelper = SingletonFactory::getInstance(DictionaryHelper::class);
-        return $dictionaryHelper->getValue('operation_terminal', $data['terminal']);
+        return $dictionaryHelper->getValue('terminal', $data['terminal']);
     }
 }
