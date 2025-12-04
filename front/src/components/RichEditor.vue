@@ -2,9 +2,9 @@
   <div class="rich-editor">
     <Toolbar
       :editor="editorRef"
-      :defaultConfig="toolbarConfig"
+      :defaultConfig="tool - barConfig"
       :mode="mode"
-      class="rich-editor__toolbar"
+      class="rich-editor__tool-bar"
     />
     <Editor
       v-model="html"
@@ -35,7 +35,7 @@ const props = defineProps({
     type: Number,
     default: 350,
   },
-  toolbarConfig: {
+  tool-barConfig: {
     type: Object,
     default: {},
   },
@@ -49,10 +49,10 @@ const editorRef = shallowRef(); // 编辑器实例，必须用 shallowRef
 const mode = props.mode;
 const html = ref(props.modelValue); // 内容 HTML
 const token = localStorage.getItem("token") || "";
-const toolbarConfig = Object.assign(
+const tool-barConfig = Object.assign(
   {},
   {
-    //toolbarKeys: ["bold"]
+    //tool-barKeys: ["bold"]
     //excludeKeys: []
   },
   props.editorConfig
@@ -167,7 +167,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .rich-editor {
   border: 1px solid var(--border-color);
-  .rich-editor__toolbar {
+  .rich-editor__tool-bar {
     border-bottom: 1px solid var(--border-color);
   }
 }

@@ -1,20 +1,20 @@
 <template>
   <div class="index">
     <div class="page-name">菜单管理</div>
-    <div class="searchbar">
+    <div class="query-bar">
       <el-form :model="query" :inline="true">
         <el-form-item label="菜单名称">
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search"
+          <el-button type="primary" :icon="Search" @click="submitQuery"
             >查询</el-button
           >
         </el-form-item>
       </el-form>
     </div>
 
-    <div class="toolbar">
+    <div class="tool-bar">
       <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
 
@@ -104,9 +104,9 @@ const getTreeMenu = async () => {
 };
 
 /**
- * 搜索
+ * 提交查询
  */
-const search = () => {
+const submitQuery = () => {
   getTreeMenu();
 };
 
@@ -164,10 +164,10 @@ onMounted(() => {
   .page-name {
     font-size: var(--font-size-lg);
   }
-  .searchbar {
+  .query-bar {
     margin-top: var(--margin);
   }
-  .toolbar {
+  .tool-bar {
   }
   .list {
     margin-top: var(--margin);

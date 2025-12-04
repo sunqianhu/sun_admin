@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="page-name">系统消息</div>
-    <div class="searchbar">
+    <div class="query-bar">
       <el-form :model="query" :inline="true">
         <el-form-item label="消息时间">
           <el-date-picker
@@ -17,8 +17,8 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">
-            搜索
+          <el-button type="primary" :icon="Search" @click="submitQuery">
+            查询
           </el-button>
         </el-form-item>
       </el-form>
@@ -102,9 +102,9 @@ const setAllRead = async (id) => {
 };
 
 /**
- * 搜索
+ * 提交查询
  */
-const search = () => {
+const submitQuery = () => {
   getPaginate();
 };
 
@@ -142,7 +142,7 @@ onMounted(() => {
   .page-name {
     font-size: var(--font-size-lg);
   }
-  .searchbar {
+  .query-bar {
     margin-top: var(--margin);
   }
   .list {

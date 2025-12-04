@@ -12,7 +12,7 @@
       <el-col :span="16">
         <flag-title-panel title="待选用户">
           <div class="user-panel">
-            <div class="searchbar">
+            <div class="query-bar">
               <el-form :model="query" :inline="true">
                 <el-form-item label="部门">
                   <tree-department-select
@@ -25,7 +25,7 @@
                   <el-input v-model="query.keyword" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" :icon="Search" @click="search">
+                  <el-button type="primary" :icon="Search" @click="submitQuery">
                     搜索
                   </el-button>
                 </el-form-item>
@@ -188,9 +188,9 @@ const init = async () => {
 };
 
 /**
- * 搜索
+ * 提交查询
  */
-const search = () => {
+const submitQuery = () => {
   getPaginate();
 };
 
@@ -289,7 +289,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .users-selector-dialog {
   .user-panel {
-    .searchbar {
+    .query-bar {
       margin-top: var(--margin);
       .el-select {
         width: 198px;

@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="page-name">登录日志</div>
-    <div class="searchbar">
+    <div class="query-bar">
       <el-form :model="query" :inline="true">
         <el-form-item label="部门">
           <tree-department-select
@@ -35,7 +35,7 @@
           <el-input v-model="query.phone" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search"
+          <el-button type="primary" :icon="Search" @click="submitQuery"
             >搜索</el-button
           >
         </el-form-item>
@@ -123,9 +123,9 @@ const getPaginate = async () => {
 };
 
 /**
- * 搜索
+ * 提交查询
  */
-const search = () => {
+const submitQuery = () => {
   getPaginate();
 };
 
@@ -162,7 +162,7 @@ onMounted(() => {
   .page-name {
     font-size: var(--font-size-lg);
   }
-  .searchbar {
+  .query-bar {
     margin-top: var(--margin);
     .el-select {
       min-width: 198px;

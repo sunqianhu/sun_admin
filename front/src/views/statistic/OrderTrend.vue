@@ -14,7 +14,7 @@
         </el-button>
       </div>
     </div>
-    <div class="searchbar">
+    <div class="query-bar">
       <el-form :model="query" :inline="true">
         <el-form-item label="订单时间">
           <el-date-picker
@@ -30,8 +30,8 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">
-            搜索
+          <el-button type="primary" :icon="Search" @click="submitQuery">
+            查询
           </el-button>
         </el-form-item>
       </el-form>
@@ -169,9 +169,9 @@ const exp = async () => {
 };
 
 /**
- * 搜索
+ * 提交查询
  */
-const search = () => {
+const submitQuery = () => {
   init();
 };
 
@@ -199,7 +199,7 @@ onMounted(() => {
     .page-header__action {
     }
   }
-  .searchbar {
+  .query-bar {
     margin-top: var(--margin);
   }
   .chart {
