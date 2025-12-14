@@ -30,16 +30,28 @@ build_front:
   tags:
     - runner171
 
+build_front_mobile:
+  stage: build
+  script:
+    - cd front_mobile
+    - docker build -t sun_admin_front_mobile:$VERSION .
+  only:
+    - product
+  tags:
+    - runner171
+
 package_images:
   stage: package
   script:
     - docker save -o sun_admin_back_$VERSION.tar.gz sun_admin_back:$VERSION
     - docker save -o sun_admin_front_$VERSION.tar.gz sun_admin_front:$VERSION
+    - docker save -o sun_admin_front_mobile_$VERSION.tar.gz sun_admin_front_mobile:$VERSION
   artifacts:
     name: sun_admin_$VERSION
     paths:
       - sun_admin_back_$VERSION.tar.gz 
       - sun_admin_front_$VERSION.tar.gz
+      - sun_admin_front_mobile_$VERSION.tar.gz
     expire_in: 1 week
   only:
     - product

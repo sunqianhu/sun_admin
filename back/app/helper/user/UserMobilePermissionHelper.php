@@ -84,7 +84,7 @@ class UserMobilePermissionHelper
             ->join('role_mobile_permission rmp', 'p.id = rmp.permission_id')
             ->field('p.key')
             ->where('rmp.role_id', 'in', $roleIds)
-            ->order('p.sort', 'asc')
+            ->orderRaw('ANY_VALUE(p.sort) asc')
             ->group('key')
             ->column('key');
         return $keys;

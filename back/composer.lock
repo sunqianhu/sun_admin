@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5557a064cd04350c183569997504030",
+    "content-hash": "d229426fd72f2e700dcf293ba14c0f8c",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -1333,16 +1333,16 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.5.2",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "1722eed622f7321e32ea1f262e0fc32e41ab70e5"
+                "reference": "42aaa209484130fa0a3b957b2ef6ebf45e501ff7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/1722eed622f7321e32ea1f262e0fc32e41ab70e5",
-                "reference": "1722eed622f7321e32ea1f262e0fc32e41ab70e5",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/42aaa209484130fa0a3b957b2ef6ebf45e501ff7",
+                "reference": "42aaa209484130fa0a3b957b2ef6ebf45e501ff7",
                 "shasum": ""
             },
             "require": {
@@ -1370,9 +1370,9 @@
             "description": "php助手类包含项目开发过程中各种常用的工具类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.5.2"
+                "source": "https://github.com/sunqianhu/helper/tree/1.6.1"
             },
-            "time": "2025-11-04T07:38:06+00:00"
+            "time": "2025-12-10T01:52:00+00:00"
         },
         {
             "name": "symfony/clock",

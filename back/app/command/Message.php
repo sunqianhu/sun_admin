@@ -4,7 +4,6 @@ declare (strict_types=1);
 namespace app\command;
 
 use app\helper\desktop\SessionHelper;
-use app\helper\JwtHelper;
 use Exception;
 use think\console\Command;
 use think\console\Input;
@@ -174,12 +173,10 @@ class Message extends Command
             throw new Exception('token不能为空');
         }
 
-        $jwtHelper = new JwtHelper();
-        $sessionId = $jwtHelper->resolverToken($token);
         $sessionHelper = new SessionHelper();
+        $sessionId = $sessionHelper->tokenAuth($token);
         $connection->userId = $sessionHelper->getUserId($sessionId);
 
-        unset($jwtHelper);
         unset($sessionId);
         unset($sessionHelper);
     }
