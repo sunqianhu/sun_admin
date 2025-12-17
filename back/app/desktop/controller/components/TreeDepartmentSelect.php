@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\helper\DepartmentHelper;
+use app\helper\department\TreeDepartmentHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -27,8 +27,8 @@ class TreeDepartmentSelect extends Base
             return $this->getErrorResponse('department_id参数错误');
         }
 
-        $departmentHelper = new DepartmentHelper();
-        $treeDepartment = $departmentHelper->getTreeDepartment($get['department_id']);
+        $treeDepartmentHelper = new TreeDepartmentHelper();
+        $treeDepartment = $treeDepartmentHelper->getTreeDepartment($get['department_id']);
         return $this->getSuccessResponse('获取成功', $treeDepartment);
     }
 }
