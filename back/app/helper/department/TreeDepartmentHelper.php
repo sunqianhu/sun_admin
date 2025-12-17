@@ -65,4 +65,37 @@ class TreeDepartmentHelper
         $arrayHandler = new ArrayHandler();
         return $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
     }
+
+
+    /**
+     * 得到所有的父部门ID列表
+     * @param $departmentId
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getAllParentDepartmentIds($departmentId){
+        $departmentIds = [];
+        $departmentModel = DepartmentModel::field('id,department_id')->find($departmentId);
+        if(!empty($departmentModel) && $departmentModel->department_id){
+            $departmentIds[] = $departmentModel->department_id;
+            $departmentIds = array_merge($departmentIds, $this->getAllParentDepartmentIds($departmentModel->department_id));
+        }
+        return $departmentIds;
+    }
+
+    /**
+     * 获取所有父部门id列表包括当前部门ID列表
+     * @param $departmentId
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getAllParentDepartmentIdsWithCurrentId($departmentId)
+    {
+        $departmentIds[] = $departmentId;
+        return array_merge($departmentIds, $this->getAllParentDepartmentIds($departmentId));
+    }
 }
