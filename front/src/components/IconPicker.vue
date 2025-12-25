@@ -3,7 +3,7 @@
     <el-icon
       size="18"
       class="icon-picker__selected-icon"
-      v-if="selectedIconName !== ''"
+      v-if="selectedIconName"
     >
       <component :is="icons[selectedIconName]" />
     </el-icon>
@@ -47,6 +47,7 @@ import * as icons from "@element-plus/icons-vue";
 
 const selectedIconName = defineModel({
   type: String,
+  default: "",
 });
 const iconNames = Object.keys(icons);
 const visible = ref(false);

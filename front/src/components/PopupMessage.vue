@@ -8,7 +8,6 @@ import createWebsocketClient from "sunqianhu_websocket_client";
 
 let messageInstances = []; //消息实例
 let websocketClient = null;
-let url = "";
 
 /**
  * 初始化

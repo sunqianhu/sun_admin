@@ -199,22 +199,6 @@ const handleError = (error, uploadFile, uploadFiles) => {
   });
   emits("error", error, uploadFile, uploadFiles);
 };
-
-/**
- * 得到文件集合
- */
-const getFiles = () => {
-  if (!files.value || files.value.length === 0) {
-    return [];
-  }
-  return files.value.map((file) => {
-    const responseData = file.response?.data ?? {};
-    return {
-      ...file,
-      ...responseData,
-    };
-  });
-};
 </script>
 
 <style scoped></style>

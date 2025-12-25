@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 
@@ -72,6 +72,7 @@ const query = ref({
 });
 const userId = defineModel({
   type: Number,
+  default: 0,
 });
 const selectedUser = ref({});
 const users = ref([]);

@@ -20,6 +20,7 @@ import UserSelectorDialog from "./UserSelectorDialog.vue";
 
 const userId = defineModel({
   type: Number,
+  default: 0,
 });
 const userName = ref("");
 const userSelectorDialogFlag = ref(false);
