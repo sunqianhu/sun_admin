@@ -23,7 +23,8 @@ const props = defineProps({
   },
 });
 const keys = defineModel({
-  type: [Number, String, Array],
+  type: Array,
+  default: [],
 });
 const dictionary = ref([]);
 
