@@ -106,6 +106,12 @@ import { ref, watch, onMounted, nextTick } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 
+const props = defineProps({
+  modelValue: {
+    type: Array,
+    default: [],
+  },
+});
 const emits = defineEmits(["close", "confirmed"]);
 const userIds = defineModel({
   type: Array,
