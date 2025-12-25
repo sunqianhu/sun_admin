@@ -18,14 +18,9 @@ import { ref, watch, onMounted } from "vue";
 import axios from "@/helper/axios";
 import UserSelectorDialog from "./UserSelectorDialog.vue";
 
-const props = defineProps({
-  modelValue: {
-    type: Number,
-    default: 0,
-  },
+const userId = defineModel({
+  type: Number,
 });
-const emits = defineEmits(["update:modelValue"]);
-const userId = ref(props.modelValue);
 const userName = ref("");
 const userSelectorDialogFlag = ref(false);
 
@@ -79,15 +74,6 @@ watch(
   async (newValue) => {
     userId.value = newValue;
     getUserName();
-  },
-  {
-    deep: true,
-  }
-);
-watch(
-  () => userId.value,
-  (newValue) => {
-    emits("update:modelValue", newValue);
   },
   {
     deep: true,

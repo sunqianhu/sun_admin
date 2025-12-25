@@ -14,17 +14,13 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import UsersSelectorDialog from "./UsersSelectorDialog.vue";
 
-const props = defineProps({
-  modelValue: {
-    type: Array,
-    default: [],
-  },
+const userIds = defineModel({
+  type: Array,
+  default: [],
 });
-const emits = defineEmits(["update:modelValue"]);
-const userIds = ref([...props.modelValue]);
 const usersSelectorDialogFlag = ref(false);
 
 /**
@@ -40,25 +36,6 @@ const openUsersSelectorDialog = () => {
 const closeUsersSelectorDialog = () => {
   usersSelectorDialogFlag.value = false;
 };
-
-watch(
-  () => props.modelValue,
-  async (newValue) => {
-    userIds.value = newValue;
-  },
-  {
-    deep: true,
-  }
-);
-watch(
-  () => userIds.value,
-  (newValue) => {
-    emits("update:modelValue", newValue);
-  },
-  {
-    deep: true,
-  }
-);
 </script>
 
 <style lang="scss" scoped>

@@ -42,18 +42,13 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from "vue";
+import { ref, computed } from "vue";
 import * as icons from "@element-plus/icons-vue";
 
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: "",
-  },
+const selectedIconName = defineModel({
+  type: String,
 });
-const emits = defineEmits(["update:modelValue"]);
 const iconNames = Object.keys(icons);
-const selectedIconName = ref(props.modelValue);
 const visible = ref(false);
 const searchKeyword = ref("");
 const filteredIconNames = computed(() => {
@@ -74,25 +69,6 @@ const select = async (iconName) => {
   selectedIconName.value = iconName;
   visible.value = false;
 };
-
-watch(
-  () => props.modelValue,
-  async (newValue) => {
-    selectedIconName.value = newValue;
-  },
-  {
-    deep: true,
-  }
-);
-watch(
-  () => selectedIconName.value,
-  (newValue) => {
-    emits("update:modelValue", newValue);
-  },
-  {
-    deep: true,
-  }
-);
 </script>
 <style>
 .el-popup-parent--hidden {

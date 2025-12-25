@@ -18,14 +18,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
 const props = defineProps({
-  modelValue: {
-    type: [Number, String],
-    default: "",
-  },
   type: {
     type: String,
     required: true,
@@ -43,9 +39,10 @@ const props = defineProps({
     default: 1,
   },
 });
-const emits = defineEmits(["update:modelValue"]);
+const keys = defineModel({
+  type: [Number, String, Array],
+});
 const dictionary = ref([]);
-const keys = ref(props.modelValue);
 
 /**
  * 初始化
@@ -68,25 +65,6 @@ const init = async () => {
   }
   dictionary.value = response.data;
 };
-
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    keys.value = newValue;
-  },
-  {
-    deep: true,
-  }
-);
-watch(
-  () => keys.value,
-  (newValue) => {
-    emits("update:modelValue", newValue);
-  },
-  {
-    deep: true,
-  }
-);
 
 onMounted(() => {
   init();

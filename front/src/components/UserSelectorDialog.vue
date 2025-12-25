@@ -65,21 +65,16 @@ import { ref, watch, onMounted, nextTick } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 
-const props = defineProps({
-  modelValue: {
-    type: Number,
-    default: 0,
-  },
-});
-const emits = defineEmits(["close", "confirmed", "update:modelValue"]);
+const emits = defineEmits(["close", "confirmed"]);
 const query = ref({
   size: 30,
   page: 1,
 });
-const userId = ref(props.modelValue);
+const userId = defineModel({
+  type: Number,
+});
 const selectedUser = ref({});
 const users = ref([]);
-const usersRef = ref(null);
 const paginateLoading = ref(false);
 const total = ref(0);
 
@@ -154,19 +149,8 @@ const changePaginationCurrent = (page) => {
  */
 const confirmSelect = () => {
   userId.value = selectedUser.value.id || 0;
-  emits("update:modelValue", userId.value);
   emits("confirmed", selectedUser.value);
 };
-
-watch(
-  () => props.modelValue,
-  async (newValue) => {
-    userId.value = newValue;
-  },
-  {
-    deep: true,
-  }
-);
 
 onMounted(() => {
   getPaginate();

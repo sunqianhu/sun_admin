@@ -18,10 +18,6 @@ import { ref, onMounted, watch } from "vue";
 import axios from "@/helper/axios";
 
 const props = defineProps({
-  modelValue: {
-    type: [Number, String, Array],
-    default: "",
-  },
   permissionId: {
     type: Number,
     default: 0,
@@ -35,9 +31,10 @@ const props = defineProps({
     default: "",
   },
 });
-const emits = defineEmits(["update:modelValue"]);
+const ids = defineModel({
+  type: [Number, Array],
+});
 const treePermission = ref([]);
-const ids = ref(props.modelValue);
 
 /**
  * 初始化
@@ -62,27 +59,9 @@ const init = async () => {
 };
 
 watch(
-  () => props.modelValue,
-  (newValue) => {
-    ids.value = newValue;
-  },
-  {
-    deep: true,
-  }
-);
-watch(
   () => props.permissionId,
   (newValue) => {
     init();
-  },
-  {
-    deep: true,
-  }
-);
-watch(
-  () => ids.value,
-  (newValue) => {
-    emits("update:modelValue", newValue);
   },
   {
     deep: true,

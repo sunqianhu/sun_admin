@@ -45,10 +45,6 @@
 import { ref, watch } from "vue";
 
 const props = defineProps({
-  modelValue: {
-    type: Array,
-    default: [],
-  },
   action: {
     type: String,
     default: undefined,
@@ -99,7 +95,6 @@ const props = defineProps({
   },
 });
 const emits = defineEmits([
-  "update:modelValue",
   "success",
   "remove",
   "change",
@@ -108,8 +103,11 @@ const emits = defineEmits([
   "error",
   "beforeUpload",
 ]);
+const files = defineModel({
+  type: Array,
+  default: [],
+});
 const headers = { token: localStorage.getItem("token") || "" };
-const files = ref(props.modelValue);
 const uploadRef = ref(null);
 let action = import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload";
 if (props.action) {
@@ -217,29 +215,6 @@ const getFiles = () => {
     };
   });
 };
-
-/**
- * 侦听props
- */
-watch(
-  () => props.modelValue,
-  (newModelValue) => {
-    files.value = newModelValue;
-  },
-  {
-    deep: true,
-  }
-);
-
-watch(
-  () => files.value,
-  (newFiles) => {
-    emits("update:modelValue", newFiles);
-  },
-  {
-    deep: true,
-  }
-);
 </script>
 
 <style scoped></style>

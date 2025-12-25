@@ -2,7 +2,7 @@
   <div class="rich-editor">
     <Toolbar
       :editor="editorRef"
-      :defaultConfig="tool - barConfig"
+      :defaultConfig="toolBarConfig"
       :mode="mode"
       class="rich-editor__tool-bar"
     />
@@ -23,10 +23,6 @@ import { onBeforeUnmount, ref, shallowRef, watch } from "vue";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 
 const props = defineProps({
-  modelValue: {
-    type: String,
-    default: "",
-  },
   mode: {
     type: String,
     default: "default",
@@ -35,7 +31,7 @@ const props = defineProps({
     type: Number,
     default: 350,
   },
-  tool-barConfig: {
+  toolBarConfig: {
     type: Object,
     default: {},
   },
@@ -44,15 +40,17 @@ const props = defineProps({
     default: {},
   },
 });
-const emits = defineEmits(["update:modelValue"]);
+const html = defineModel({
+  type: String,
+  default: undefined,
+});
 const editorRef = shallowRef(); // 编辑器实例，必须用 shallowRef
 const mode = props.mode;
-const html = ref(props.modelValue); // 内容 HTML
 const token = localStorage.getItem("token") || "";
-const tool-barConfig = Object.assign(
+const toolBarConfig = Object.assign(
   {},
   {
-    //tool-barKeys: ["bold"]
+    //toolBarKeys: ["bold"]
     //excludeKeys: []
   },
   props.editorConfig
@@ -116,46 +114,12 @@ const editorConfig = Object.assign(
 );
 
 /**
- * 设置html
- * @param {*} newHtml
- */
-const setHtml = (newHtml) => {
-  html.value = newHtml;
-};
-
-/**
  * 设置编辑器模板引用
  * @param {*} editor
  */
 const setEditRef = (editor) => {
   editorRef.value = editor; // 记录 editor 实例，重要！
 };
-
-/**
- * 侦听props
- */
-watch(
-  () => props.modelValue,
-  (newModelValue) => {
-    setHtml(newModelValue);
-  },
-  {
-    deep: true,
-  }
-);
-
-/**
- * 侦听数据
- */
-watch(
-  () => html.value,
-  (newHtml) => {
-    emits("update:modelValue", newHtml);
-  },
-  {
-    deep: true,
-  }
-);
 
 onBeforeUnmount(() => {
   const editor = editorRef.value;

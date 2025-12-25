@@ -106,14 +106,11 @@ import { ref, watch, onMounted, nextTick } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 
-const props = defineProps({
-  modelValue: {
-    type: Array,
-    default: [],
-  },
+const emits = defineEmits(["close", "confirmed"]);
+const userIds = defineModel({
+  type: Array,
+  default: [],
 });
-const emits = defineEmits(["close", "confirmed", "update:modelValue"]);
-const userIds = ref([...props.modelValue]);
 const query = ref({
   size: 30,
   page: 1,
@@ -265,7 +262,6 @@ const changePaginationCurrent = (page) => {
  */
 const confirmSelect = () => {
   userIds.value = selectedUsers.value.map((user) => user.id);
-  emits("update:modelValue", userIds.value);
   emits("confirmed", selectedUsers.value);
 };
 

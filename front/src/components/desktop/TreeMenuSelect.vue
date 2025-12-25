@@ -18,10 +18,6 @@ import { ref, onMounted, watch } from "vue";
 import axios from "@/helper/axios";
 
 const props = defineProps({
-  modelValue: {
-    type: [Number, String, Array],
-    default: "",
-  },
   menuId: {
     type: Number,
     default: 0,
@@ -35,9 +31,10 @@ const props = defineProps({
     default: "",
   },
 });
-const emits = defineEmits(["update:modelValue"]);
+const ids = defineModel({
+  type: [Number, Array],
+});
 const treeMenu = ref([]);
-const ids = ref(props.modelValue);
 
 /**
  * 初始化
@@ -60,27 +57,9 @@ const init = async () => {
 };
 
 watch(
-  () => props.modelValue,
-  (newValue) => {
-    ids.value = newValue;
-  },
-  {
-    deep: true,
-  }
-);
-watch(
   () => props.menuId,
   (newValue) => {
     init();
-  },
-  {
-    deep: true,
-  }
-);
-watch(
-  () => ids.value,
-  (newValue) => {
-    emits("update:modelValue", newValue);
   },
   {
     deep: true,
