@@ -97,7 +97,7 @@ const getWsUrl = () => {
 };
 
 onMounted(() => {
-  getNoReadCount();
+  init();
 });
 </script>
 
