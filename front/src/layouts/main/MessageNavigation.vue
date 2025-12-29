@@ -13,9 +13,40 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "@/helper/axios";
 import { ChatDotRound } from "@element-plus/icons-vue";
+import createWebsocketClient from "sunqianhu_websocket_client";
 
 const router = useRouter();
 const noReadCount = ref(0);
+let websocketClient = null;
+
+/**
+ * 初始化
+ */
+const init = () => {
+  initWebsocketClient();
+  getNoReadCount();
+};
+
+/**
+ * 初始化websocket client
+ */
+const initWebsocketClient = () => {
+  let url = getWsUrl();
+  websocketClient = createWebsocketClient(url);
+  websocketClient.onOpen = () => {
+    bind();
+  };
+  websocketClient.onMessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (!data) {
+      throw new Error("消息格式错误，消息：" + event.data);
+    }
+    if (data.type == "all_read") {
+      getNoReadCount();
+    }
+  };
+  websocketClient.connect();
+};
 
 /**
  * 得到未读数
@@ -32,6 +63,37 @@ const getNoReadCount = async () => {
     return;
   }
   noReadCount.value = response.data;
+};
+
+/**
+ * 绑定用户
+ */
+const bind = () => {
+  let token = localStorage.getItem("token");
+  if (!token) {
+    throw new Error("建立连接时token不能为空");
+  }
+  const data = {
+    type: "bind",
+    token: token,
+  };
+  const dataString = JSON.stringify(data);
+  websocketClient.send(dataString);
+};
+
+/**
+ * 获取websocket连接地址
+ */
+const getWsUrl = () => {
+  let url = import.meta.env.VITE_WEBSOCKET_MESSAGE_URL;
+  if (!url.startsWith("ws")) {
+    const hostname = window.location.hostname;
+    const protocol =
+      window.location.protocol.indexOf("https") === 0 ? "wss://" : "ws://";
+    const port = window.location.port;
+    url = protocol + hostname + (port ? ":" + port : "") + url;
+  }
+  return url;
 };
 
 onMounted(() => {

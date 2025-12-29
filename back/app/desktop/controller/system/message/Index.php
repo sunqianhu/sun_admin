@@ -23,7 +23,8 @@ class Index extends Base
         if (!empty($get['times']) && count($get['times']) == 2) {
             $query->whereBetweenTime('add_time', intval($get['times'][0]), intval($get['times'][1]));
         }
-        $query->order('id', 'desc');
+        $query->where('user_id', $this->userId)
+            ->order('id', 'desc');
         $paginate = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
