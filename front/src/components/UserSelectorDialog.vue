@@ -5,6 +5,7 @@
     width="800"
     :draggable="true"
     :align-center="true"
+    append-to-body
     @close="close"
     class="user-selector-dialog"
   >

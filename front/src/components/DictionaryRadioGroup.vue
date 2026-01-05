@@ -1,5 +1,5 @@
 <template>
-  <el-radio-group v-model="key">
+  <el-radio-group v-model="key" @change="change">
     <el-radio
       v-for="item in dictionary"
       :label="item.value"
@@ -22,10 +22,11 @@ const props = defineProps({
     default: "int",
   },
 });
+const emits = defineEmits(["change"]);
+const dictionary = ref([]);
 const key = defineModel({
   type: [Number, String],
 });
-const dictionary = ref([]);
 
 /**
  * 初始化
@@ -47,6 +48,14 @@ const init = async () => {
     return;
   }
   dictionary.value = response.data;
+};
+
+/**
+ * 改变
+ * @param value
+ */
+const change = (value) => {
+  emits("change", value);
 };
 
 onMounted(() => {

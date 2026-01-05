@@ -4,11 +4,17 @@ stages:
 
 variables:
   GIT_DEPTH: "0"
-  VERSION: 1.4.3
 
 before_script:
   - echo "checking docker daemon status..."
   - docker info || (echo "docker daemon is not running!" && exit 1)
+  - export VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+  - |
+    if [ -z "$VERSION" ]; then
+      echo "没有获取到标签版本号，请先打在git上打标签"
+      exit 1
+    fi
+  - echo "版本号：$VERSION"
 
 build_back:
   stage: build
