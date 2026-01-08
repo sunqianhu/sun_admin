@@ -25,4 +25,4 @@ EXPOSE 80
 EXPOSE 443
 
 #启动
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

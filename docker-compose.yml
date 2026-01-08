@@ -9,7 +9,7 @@ services:
     image: sun_admin_back:1.4.3
     container_name: sun_admin_back
     volumes:
-      - /home/www/sun_admin.sunqianhu.cc/back/public/storage:/var/www/html/public/storage
+      - /home/www/sun_admin.sunqianhu.com/back/public/storage:/var/www/html/public/storage
     networks:
       - sun_admin
     restart: always
