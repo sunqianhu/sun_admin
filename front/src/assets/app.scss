@@ -1,7 +1,7 @@
-@use "element_plus/light/css-vars.scss" as *;
-@use "light.scss" as *;
-@use "element_plus/dark/css-vars.scss" as *;
-@use "dark.scss" as *;
+@import "element_plus/light/css-vars.scss";
+@import "light.scss";
+@import "element_plus/dark/css-vars.scss";
+@import "dark.scss";
 
 :root:root {
   //颜色
@@ -11,7 +11,8 @@
   --color-danger: #f56c6c;
 
   //文字
-  --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+  --font-family:
+    "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 
   --font-color: #303133;

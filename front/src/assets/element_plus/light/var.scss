@@ -1,94 +1,15 @@
-@use "sass:map";
-@use "sass:math";
-@use "sass:color";
-
-//https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/common/var.scss
-// @use "../../../../node_modules/element-plus/theme-chalk/src/mixins/function.scss" as *;
-// @use "../../../../node_modules/element-plus/theme-chalk/src/color/index.scss" as *;
-@use "element-plus/theme-chalk/src/mixins/function.scss" as *;
-@use "element-plus/theme-chalk/src/color/index.scss" as *;
-
-//颜色混合
-@mixin set-color-mix-level(
-  $type,
-  $number,
-  $mode: "light",
-  $mix-color: $color-white
-) {
-  $colors: map.deep-merge(
-    (
-      $type: (
-        "#{$mode}-#{$number}":
-          color.mix(
-            $mix-color,
-            map.get($colors, $type, "base"),
-            math.percentage(math.div($number, 10))
-          ),
-      ),
-    ),
-    $colors
-  ) !global;
-}
-
-//类型
-$types: primary, success, warning, danger, error, info;
-
-//主题色
-$colors: () !default;
-$colors: map.deep-merge(
-  (
-    "white": #ffffff,
-    "black": #000000,
-    "primary": (
-      "base": #31713A,
-    ),
-    "success": (
-      "base": #67C23A,
-    ),
-    "warning": (
-      "base": #E9B005,
-    ),
-    "danger": (
-      "base": #E82840,
-    ),
-    "error": (
-      "base": #ff003e,
-    ),
-    "info": (
-      "base": #d0d0d0,
-    ),
-  ),
-  $colors
+@forward "element-plus/theme-chalk/src/common/var.scss" with (
+  // $font-size: (
+  //   "extra-large": 22px,
+  //   "large": 20px,
+  //   "medium": 18px,
+  //   "base": 16px,
+  //   "small": 14px,
+  //   "extra-small": 12px,
+  // ),
+  // $checkbox: (
+  //   "font-size": 16px,
+  //   "input-height": 16px,
+  //   "input-width": 16px,
+   // ),
 );
-
-$color-white: map.get($colors, "white") !default;
-$color-black: map.get($colors, "black") !default;
-$color-primary: map.get($colors, "primary", "base") !default;
-$color-success: map.get($colors, "success", "base") !default;
-$color-warning: map.get($colors, "warning", "base") !default;
-$color-danger: map.get($colors, "danger", "base") !default;
-$color-error: map.get($colors, "error", "base") !default;
-$color-info: map.get($colors, "info", "base") !default;
-
-// $colors.primary.light-i
-// --el-color-primary-light-i
-// 10% 53a8ff
-// 20% 66b1ff
-// 30% 79bbff
-// 40% 8cc5ff
-// 50% a0cfff
-// 60% b3d8ff
-// 70% c6e2ff
-// 80% d9ecff
-// 90% ecf5ff
-@each $type in $types {
-  @for $i from 1 through 9 {
-    @include set-color-mix-level($type, $i, 'light', $color-white);
-  }
-}
-
-// --el-color-primary-dark-2
-@each $type in $types {
-  @include set-color-mix-level($type, 2, 'dark', $color-black);
-}
-//@debug "colors: #{$colors}";
