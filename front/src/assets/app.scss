@@ -1,7 +1,7 @@
-@import "element_plus/light/css-vars.scss";
-@import "light.scss";
-@import "element-plus/theme-chalk/dark/css-vars.css";
-@import "dark.scss";
+@use "element_plus/light/css-vars.scss" as lightCssVars;
+@use "element_plus/dark/css-vars.scss" as darkCssVars;
+@use "light.scss";
+@use "dark.scss";
 
 :root:root {
   //颜色

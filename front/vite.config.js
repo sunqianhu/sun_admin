@@ -20,31 +20,16 @@ const viteConfig = ({ mode }) => {
       vue(),
       vueDevTools(),
       AutoImport({
-        resolvers: [
-          ElementPlusResolver({
-            importStyle: "sass",
-          }),
-        ],
+        resolvers: [ElementPlusResolver({ importStyle: false })],
       }),
       Components({
         directoryAsNamespace: true,
-        resolvers: [
-          ElementPlusResolver({
-            importStyle: "sass",
-          }),
-        ],
+        resolvers: [ElementPlusResolver({ importStyle: false })],
       }),
     ],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
-      },
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "@/assets/element_plus/light/var.scss" as *;`,
-        },
       },
     },
     server: {
