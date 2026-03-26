@@ -7,7 +7,7 @@
     :align-center="true"
     append-to-body
     @close="close"
-    class="user-selector-dialog"
+    class="user-select-dialog"
   >
     <div class="query-bar">
       <el-form :model="query" :inline="true">
@@ -93,10 +93,10 @@ const close = () => {
 const getPaginate = async () => {
   paginateLoading.value = true;
   const response = await axios.get(
-    "desktop/components.UserSelectorDialog/getPaginate",
+    "desktop/components.UserSelectDialog/getPaginate",
     {
       params: query.value,
-    }
+    },
   );
   paginateLoading.value = false;
   if (response.code != 1) {
@@ -160,7 +160,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.user-selector-dialog {
+.user-select-dialog {
   .query-bar {
     margin-top: var(--margin);
     .el-select {

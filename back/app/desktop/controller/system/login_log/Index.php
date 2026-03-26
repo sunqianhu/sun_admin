@@ -33,12 +33,12 @@ class Index extends Base
         $query->order('ll.id', 'desc');
         $query->append(['terminal_name']);
 
-        $paginate = $query->paginate([
+        $paginateObject = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $paginateArray = $paginate->toArray();
+        $paginate = $paginateObject->toArray();
 
-        return $this->getSuccessResponse('获取成功', $paginateArray);
+        return $this->getSuccessResponse('获取成功', $paginate);
     }
 }

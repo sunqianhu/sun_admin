@@ -1,29 +1,29 @@
 <template>
-  <div class="user-selector">
+  <div class="user-select">
     <span class="selected-user" v-if="userName !== ''">
       {{ userName }}
     </span>
-    <el-button @click="openUserSelectorDialog">选择</el-button>
-    <user-selector-dialog
+    <el-button @click="openUserSelectDialog">选择</el-button>
+    <user-select-dialog
       v-model="userId"
-      @close="closeUserSelectorDialog"
+      @close="closeUserSelectDialog"
       @confirmed="handleConfirmed"
-      v-if="userSelectorDialogFlag"
-    ></user-selector-dialog>
+      v-if="userSelectDialogFlag"
+    ></user-select-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import axios from "@/helper/axios";
-import UserSelectorDialog from "./UserSelectorDialog.vue";
+import UserSelectDialog from "./UserSelectDialog.vue";
 
 const userId = defineModel({
   type: Number,
   default: 0,
 });
 const userName = ref("");
-const userSelectorDialogFlag = ref(false);
+const userSelectDialogFlag = ref(false);
 
 /**
  * 得到用户姓名
@@ -34,8 +34,8 @@ const getUserName = async () => {
     return;
   }
   const response = await axios.post(
-    "desktop/components.UserSelector/getUserName",
-    { user_id: userId.value }
+    "desktop/components.UserSelect/getUserName",
+    { user_id: userId.value },
   );
   if (response.code != 1) {
     ElMessage({
@@ -50,15 +50,15 @@ const getUserName = async () => {
 /**
  * 打开选择用户对话框
  */
-const openUserSelectorDialog = () => {
-  userSelectorDialogFlag.value = true;
+const openUserSelectDialog = () => {
+  userSelectDialogFlag.value = true;
 };
 
 /**
  * 关闭选择用户对话框
  */
-const closeUserSelectorDialog = () => {
-  userSelectorDialogFlag.value = false;
+const closeUserSelectDialog = () => {
+  userSelectDialogFlag.value = false;
 };
 
 /**
@@ -67,7 +67,7 @@ const closeUserSelectorDialog = () => {
  */
 const handleConfirmed = (selectedUser) => {
   userName.value = selectedUser.name;
-  closeUserSelectorDialog();
+  closeUserSelectDialog();
 };
 
 watch(
@@ -78,7 +78,7 @@ watch(
   },
   {
     deep: true,
-  }
+  },
 );
 
 onMounted(() => {
@@ -87,7 +87,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.user-selector {
+.user-select {
   .selected-user {
     margin-right: var(--margin-sm);
     strong {

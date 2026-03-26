@@ -28,7 +28,7 @@
           v-slot="{ row }"
           label="操作"
           fixed="right"
-          width="140"
+          width="220"
         >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
@@ -36,6 +36,19 @@
               <el-button size="small">删除</el-button>
             </template>
           </el-popconfirm>
+          <el-dropdown style="margin-left: 16px">
+            <el-button size="small">
+              更多
+              <el-icon><arrow-down /></el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="openEditDataScope(row.id)">
+                  修改数据权限
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </el-table-column>
       </el-table>
     </div>
@@ -69,15 +82,25 @@
       :id="rowId"
       v-if="editFlag"
     ></edit>
+    <edit-data-scope
+      @close="editDataScopeFlag = false"
+      @submited="
+        getPaginate();
+        editDataScopeFlag = false;
+      "
+      :role-id="rowId"
+      v-if="editDataScopeFlag"
+    ></edit-data-scope>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Search, Plus } from "@element-plus/icons-vue";
+import { Search, Plus, ArrowDown } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
+import EditDataScope from "./EditDataScope.vue";
 
 const rowId = ref(0);
 const query = ref({
@@ -89,6 +112,7 @@ const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
+const editDataScopeFlag = ref(false);
 
 /**
  * 得到分页
@@ -130,6 +154,15 @@ const openAdd = () => {
  */
 const openEdit = (id) => {
   editFlag.value = true;
+  rowId.value = id;
+};
+
+/**
+ * 打开修改数据权限
+ * @param id
+ */
+const openEditDataScope = (id) => {
+  editDataScopeFlag.value = true;
   rowId.value = id;
 };
 

@@ -4,10 +4,12 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
+use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Response;
 
-class UserSelectorDialog extends Base
+class UsersSelectDialog extends Base
 {
     public bool $isApiAuth = false;
 
@@ -32,11 +34,28 @@ class UserSelectorDialog extends Base
                     ->whereOr('phone', 'LIKE', '%' . $get['keyword'] . '%');
             });
         }
-        $paginate = $query->paginate([
+        $paginateObject = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $paginateArray = $paginate->toArray();
-        return $this->getSuccessResponse('获取成功', $paginateArray);
+        $paginate = $paginateObject->toArray();
+        return $this->getSuccessResponse('获取成功', $paginate);
+    }
+
+    /**
+     * 获取已选用户
+     * @return Response
+     * @throws DbException
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     */
+    public function getSelectedUsers()
+    {
+        $get = $this->request->post(['user_ids' => []]);
+        $userModels = UserModel::field('id,name')
+            ->whereIn('id', $get['user_ids'])
+            ->select();
+        $users = $userModels->toArray();
+        return $this->getSuccessResponse('获取成功', $users);
     }
 }

@@ -7,7 +7,7 @@
     :align-center="true"
     append-to-body
     @close="close"
-    class="users-selector-dialog"
+    class="users-select-dialog"
   >
     <el-row :gutter="16">
       <el-col :span="16">
@@ -141,10 +141,10 @@ const close = () => {
 const getPaginate = async () => {
   paginateLoading.value = true;
   const response = await axios.get(
-    "desktop/components.UsersSelectorDialog/getPaginate",
+    "desktop/components.UsersSelectDialog/getPaginate",
     {
       params: query.value,
-    }
+    },
   );
   paginateLoading.value = false;
   if (response.code != 1) {
@@ -168,8 +168,8 @@ const getSelectedUsers = async () => {
     return;
   }
   const response = await axios.post(
-    "desktop/components.UsersSelectorDialog/getSelectedUsers",
-    { user_ids: userIds.value }
+    "desktop/components.UsersSelectDialog/getSelectedUsers",
+    { user_ids: userIds.value },
   );
   if (response.code != 1) {
     ElMessage({
@@ -211,7 +211,7 @@ const selectUsers = (users) => {
 const setTableSelected = () => {
   if (!usersRef.value) return;
   const selectedUserMap = new Map(
-    selectedUsers.value.map((user) => [user.id, user])
+    selectedUsers.value.map((user) => [user.id, user]),
   );
 
   users.value.forEach((user) => {
@@ -281,7 +281,7 @@ watch(
   },
   {
     deep: true,
-  }
+  },
 );
 
 onMounted(() => {
@@ -290,7 +290,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.users-selector-dialog {
+.users-select-dialog {
   .user-panel {
     .query-bar {
       margin-top: var(--margin);

@@ -9,7 +9,7 @@ use Exception;
 use think\exception\ValidateException;
 use think\Response;
 
-class UserSelector extends Base
+class UserSelect extends Base
 {
     public bool $isApiAuth = false;
 

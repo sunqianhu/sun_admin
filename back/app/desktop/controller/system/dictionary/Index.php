@@ -32,12 +32,12 @@ class Index extends Base
             'type' => 'asc',
             'sort' => 'asc'
         ]);
-        $paginate = $query->paginate([
+        $paginateObject = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        $paginateArray = $paginate->toArray();
-        return $this->getSuccessResponse('获取成功', $paginateArray);
+        $paginate = $paginateObject->toArray();
+        return $this->getSuccessResponse('获取成功', $paginate);
     }
 
     /**
