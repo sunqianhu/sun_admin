@@ -28,6 +28,8 @@
       >
         <el-table-column prop="name" label="部门名称" />
         <el-table-column prop="type_name" label="部门类型" />
+        <el-table-column prop="id" label="部门ID" />
+        <el-table-column prop="path" label="部门路径" />
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column
           v-slot="{ row }"
