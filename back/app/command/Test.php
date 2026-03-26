@@ -3,6 +3,9 @@ declare (strict_types = 1);
 
 namespace app\command;
 
+use app\helper\user\UserDataScopeHelper;
+use app\model\DepartmentModel;
+use app\model\UserModel;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -20,5 +23,10 @@ class Test extends Command
 
     protected function execute(Input $input, Output $output)
     {
+        $query = UserModel::field('id,name')
+            ->where('id', '>', 0);
+        $userDataScopeHelper = new UserDataScopeHelper();
+        $query = $userDataScopeHelper->setQuery(1, 'default', $query, 'department_id', 'id');
+        echo $query->buildSql(true);
     }
 }

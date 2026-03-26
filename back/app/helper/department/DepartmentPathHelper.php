@@ -21,13 +21,13 @@ class DepartmentPathHelper
      */
     public function updatePath($departmentId)
     {
-        $treeDepartmentByRecursiveHelper = new TreeDepartmentByRecursiveHelper();
-        $descendantDepartmentIds = $treeDepartmentByRecursiveHelper->getDescendantDepartmentIdsWithCurrentId($departmentId);
+        $recursiveTreeDepartmentHelper = new RecursiveTreeDepartmentHelper();
+        $descendantDepartmentIds = $recursiveTreeDepartmentHelper->getDescendantDepartmentIdsWithCurrentId($departmentId);
 
         Db::startTrans();
         try{
             foreach($descendantDepartmentIds as $descendantDepartmentId){
-                $path = $treeDepartmentByRecursiveHelper->getPath($descendantDepartmentId);
+                $path = $recursiveTreeDepartmentHelper->getPath($descendantDepartmentId);
                 $departmentModel = DepartmentModel::field('id')
                     ->find($descendantDepartmentId);
                 $departmentModel->path = $path;

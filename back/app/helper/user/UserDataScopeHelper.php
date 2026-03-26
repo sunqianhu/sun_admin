@@ -5,10 +5,12 @@ namespace app\helper\user;
 use app\helper\department\DepartmentPathHelper;
 use app\model\data_scope\PolicyDepartmentModel;
 use app\model\data_scope\PolicyModel;
+use app\model\DepartmentModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\db\Query;
 
 class UserDataScopeHelper
 {
@@ -26,7 +28,7 @@ class UserDataScopeHelper
     {
         $access = [
             'granted'=>false,
-            'has_all_department'=>false,
+            'all'=>false,
             'rules'=>[]
         ];
         $userRoleHelper = new UserRoleHelper();
@@ -46,7 +48,7 @@ class UserDataScopeHelper
             ->select()
             ->toArray();
 
-        //单位
+        //部门
         $userDepartmentHelper = new UserDepartmentHelper();
         $departmentId = $userDepartmentHelper->getDepartmentId($userId);
         if(empty($departmentId)){
@@ -56,8 +58,18 @@ class UserDataScopeHelper
         //规则
         $rules = [];
         foreach ($policies as $policy){
-            //本单位
+            //本用户
             if($policy['type'] == 0){
+                $rule = [
+                    'type'=>'self_user',
+                    'value'=>$userId
+                ];
+                $rules[] = $rule;
+                continue;
+            }
+
+            //本单位
+            if($policy['type'] == 1){
                 $rule = [
                     'type'=>'self_department',
                     'value'=>$departmentId
@@ -66,19 +78,12 @@ class UserDataScopeHelper
                 continue;
             }
 
-            //全部单位
-            if($policy['type'] == 1){
-                $rules = [];
-                $access['has_all_department'] = true;
-                break;
-            }
-
             //本单位及下级单位
-            if($policy['type'] == 2){
+            else if($policy['type'] == 2){
                 $departmentPathHelper = new DepartmentPathHelper();
                 $path = $departmentPathHelper->getPath($departmentId);
                 $rule = [
-                    'type'=>'self_children_department',
+                    'type'=>'self_and_children_department',
                     'value'=>$path
                 ];
                 $rules[] = $rule;
@@ -86,7 +91,7 @@ class UserDataScopeHelper
             }
 
             //指定单位
-            if($policy['type'] == 99){
+            else if($policy['type'] == 98){
                 $departmentIds = PolicyDepartmentModel::where('policy_id', $policy['id'])->column('department_id');
                 $rule = [
                     'type'=>'specified_department',
@@ -95,10 +100,72 @@ class UserDataScopeHelper
                 $rules[] = $rule;
                 continue;
             }
+
+            //全部权限
+            else if($policy['type'] == 99){
+                $rule = [
+                    'type'=>'all',
+                    'value'=>''
+                ];
+                $rules[] = $rule;
+                $access['all'] = true;
+                break;
+            }
         }
 
-        $access['granted'] = !empty($policies);
+        $access['granted'] = !empty($rules);
         $access['rules'] = $rules;
         return $access;
+    }
+
+    /**
+     * 设置查询构造器
+     * @param $userId
+     * @param $dataScopeKey
+     * @param $query
+     * @param $departmentField
+     * @param $userField
+     * @return Query
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function setQuery($userId, $dataScopeKey, $query, $departmentField, $userField)
+    {
+        $access = $this->getAccess($userId, $dataScopeKey);
+
+        //无权限
+        if (!$access['granted']) {
+            return $query->whereRaw('1 = 0');
+        }
+
+        //全部权限
+        if ($access['all']) {
+            return $query;
+        }
+
+        //加载权限
+        $query->where(function ($linkQuery) use ($access,$departmentField, $userField) {
+            foreach($access['rules'] as $rule){
+                $linkQuery->whereOr(function ($ruleQuery) use ($rule, $departmentField, $userField) {
+                    if ($rule['type'] == 'self_user') {
+                        $ruleQuery->where($userField, $rule['value']);
+                    }
+                    else if ($rule['type'] == 'self_department') {
+                        $ruleQuery->where($departmentField, $rule['value']);
+                    } else if ($rule['type'] == 'self_and_children_department') {
+                        $ruleQuery->whereIn($departmentField, function ($selfAndChildrenDepartmentQuery) use ($rule) {
+                            $selfAndChildrenDepartmentQuery->table('department')
+                                ->field('id')
+                                ->where('path', 'like', $rule['value'] . '%');
+                        });
+                    } else if ($rule['type'] == 'specified_department') {
+                        $ruleQuery->whereIn($departmentField, $rule['value']);
+                    }
+                });
+            }
+        });
+
+        return $query;
     }
 }

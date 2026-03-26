@@ -28,7 +28,7 @@
           label="指定单位"
           prop="department_ids"
           :required="true"
-          v-if="policy.type == 99"
+          v-if="policy.type == 98"
         >
           <tree-department-select v-model="policy.department_ids">
           </tree-department-select>
@@ -92,7 +92,7 @@ const init = async () => {
     "desktop/system.data_scope.policy.Edit/init",
     {
       params: { id: props.id },
-    }
+    },
   );
   initLoading.value = false;
   if (response.code != 1) {
@@ -120,7 +120,7 @@ const submitForm = async () => {
   submitLoading.value = true;
   const response = await axios.post(
     "desktop/system.data_scope.policy.Edit/save",
-    policy.value
+    policy.value,
   );
   submitLoading.value = false;
   if (response.code != 1) {

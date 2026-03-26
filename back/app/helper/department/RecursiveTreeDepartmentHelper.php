@@ -7,7 +7,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-class TreeDepartmentByRecursiveHelper
+class RecursiveTreeDepartmentHelper
 {
     /**
      * 得到子孙部门ID列表

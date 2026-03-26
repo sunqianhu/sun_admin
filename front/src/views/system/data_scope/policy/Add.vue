@@ -28,7 +28,7 @@
           label="指定单位"
           prop="department_ids"
           :required="true"
-          v-if="policy.type == 99"
+          v-if="policy.type == 98"
         >
           <tree-department-select v-model="policy.department_ids">
           </tree-department-select>
