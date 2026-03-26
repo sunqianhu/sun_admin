@@ -15,7 +15,7 @@ use think\exception\ValidateException;
 use think\facade\Db;
 use think\Response;
 
-class EditDataScope extends Base
+class DataScopeEdit extends Base
 {
     /**
      * 初始化

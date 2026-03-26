@@ -9,20 +9,20 @@
   >
     <el-scrollbar max-height="300px" v-loading="initLoading" class="scrollbar">
       <el-form
-        :model="editDataScope"
+        :model="roleDataScope"
         :rules="rules"
         scroll-to-error
         :validate-on-rule-change="false"
-        ref="editDataScopeRef"
+        ref="roleDataScopeRef"
         label-position="top"
       >
         <el-form-item
-          v-for="(dataScope, index) in editDataScope.data_scopes"
+          v-for="(dataScope, index) in roleDataScope.data_scopes"
           :label="dataScope.name"
           :prop="`data_scopes.${index}.policy_id`"
         >
           <el-radio-group
-            v-model="editDataScope.data_scopes[index].policy_id"
+            v-model="roleDataScope.data_scopes[index].policy_id"
             class="radio-group"
           >
             <div v-for="policiy in dataScope.policies" class="radio-item">
@@ -49,11 +49,11 @@ import axios from "@/helper/axios";
 
 const props = defineProps(["roleId"]);
 const emits = defineEmits(["close", "submited"]);
-const editDataScope = ref({
+const roleDataScope = ref({
   role_id: props.roleId,
   data_scopes: [],
 });
-const editDataScopeRef = ref();
+const roleDataScopeRef = ref();
 const rules = ref({});
 const initLoading = ref(false);
 const submitLoading = ref(false);
@@ -63,7 +63,7 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   initLoading.value = true;
-  const response = await axios.get("desktop/system.role.EditDataScope/init", {
+  const response = await axios.get("desktop/system.role.DataScopeEdit/init", {
     params: {
       role_id: props.roleId,
     },
@@ -76,7 +76,7 @@ const init = async () => {
     });
     return;
   }
-  editDataScope.value.data_scopes = response.data.data_scopes;
+  roleDataScope.value.data_scopes = response.data.data_scopes;
   await nextTick();
   setRule();
 };
@@ -86,7 +86,7 @@ const init = async () => {
  */
 const setRule = () => {
   const newRules = {};
-  editDataScope.value.data_scopes.forEach((dataScope, index) => {
+  roleDataScope.value.data_scopes.forEach((dataScope, index) => {
     newRules[`data_scopes.${index}.policy_id`] = [
       {
         validator: (rule, value, callback) => {
@@ -114,11 +114,11 @@ const close = () => {
  * 提交表单
  */
 const submitForm = async () => {
-  await editDataScopeRef.value.validate();
+  await roleDataScopeRef.value.validate();
   submitLoading.value = true;
   const response = await axios.post(
-    "desktop/system.role.EditDataScope/save",
-    editDataScope.value
+    "desktop/system.role.DataScopeEdit/save",
+    roleDataScope.value,
   );
   submitLoading.value = false;
   if (response.code != 1) {

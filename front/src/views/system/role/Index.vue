@@ -43,7 +43,7 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="openEditDataScope(row.id)">
+                <el-dropdown-item @click="openDataScopeEdit(row.id)">
                   修改数据权限
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -82,15 +82,15 @@
       :id="rowId"
       v-if="editFlag"
     ></edit>
-    <edit-data-scope
-      @close="editDataScopeFlag = false"
+    <data-scope-edit
+      @close="dataScopeEditFlag = false"
       @submited="
         getPaginate();
-        editDataScopeFlag = false;
+        dataScopeEditFlag = false;
       "
       :role-id="rowId"
-      v-if="editDataScopeFlag"
-    ></edit-data-scope>
+      v-if="dataScopeEditFlag"
+    ></data-scope-edit>
   </div>
 </template>
 
@@ -100,7 +100,7 @@ import { Search, Plus, ArrowDown } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
-import EditDataScope from "./EditDataScope.vue";
+import DataScopeEdit from "./DataScopeEdit.vue";
 
 const rowId = ref(0);
 const query = ref({
@@ -112,7 +112,7 @@ const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
-const editDataScopeFlag = ref(false);
+const dataScopeEditFlag = ref(false);
 
 /**
  * 得到分页
@@ -158,11 +158,11 @@ const openEdit = (id) => {
 };
 
 /**
- * 打开修改数据权限
+ * 打开数据权限修改
  * @param id
  */
-const openEditDataScope = (id) => {
-  editDataScopeFlag.value = true;
+const openDataScopeEdit = (id) => {
+  dataScopeEditFlag.value = true;
   rowId.value = id;
 };
 
