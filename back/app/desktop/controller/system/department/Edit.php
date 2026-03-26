@@ -3,11 +3,13 @@
 namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
+use app\helper\department\DepartmentPathHelper;
 use app\model\DepartmentModel;
 use app\validate\DepartmentValidate;
 use app\validate\IdValidate;
 use Exception;
 use think\exception\ValidateException;
+use think\facade\Db;
 
 class Edit extends Base
 {
@@ -24,7 +26,8 @@ class Edit extends Base
         }
         $id = $get['id'];
 
-        $departmentModel = DepartmentModel::field('id,name,department_id,type,sort')->find($id);
+        $departmentModel = DepartmentModel::field('id,name,department_id,type,sort')
+            ->find($id);
         if (empty($departmentModel)) {
             return $this->getErrorResponse('没有找到记录');
         }
@@ -54,9 +57,15 @@ class Edit extends Base
             return $this->getErrorResponse('没有找到记录');
         }
 
+        Db::startTrans();
         try{
             $departmentModel->save($post);
+
+            $departmentPathHelper = new DepartmentPathHelper();
+            $departmentPathHelper->updatePath($departmentModel->id);
+            Db::commit();
         }catch (Exception $exception){
+            Db::rollback();
             return $this->getErrorResponse($exception->getMessage());
         }
 

@@ -20,7 +20,7 @@ class Index extends Base
     {
         $get = $this->request->get(['name'=>'']);
 
-        $query = DepartmentModel::field('id,department_id,type,name,sort');
+        $query = DepartmentModel::field('id,department_id,type,name,sort,path');
         if ($get['name'] !== '') {
             $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
