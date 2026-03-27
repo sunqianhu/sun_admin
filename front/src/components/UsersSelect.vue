@@ -17,6 +17,12 @@
 import { ref } from "vue";
 import UsersSelectDialog from "./UsersSelectDialog.vue";
 
+const props = defineProps({
+  topDepartmentId: {
+    type: Number,
+    default: 0,
+  },
+});
 const userIds = defineModel({
   type: Array,
   default: [],

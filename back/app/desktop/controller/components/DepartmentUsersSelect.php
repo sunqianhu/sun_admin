@@ -3,6 +3,8 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
+use app\helper\user\UserDataScopeHelper;
+use app\model\DepartmentModel;
 use app\model\UserModel;
 use app\helper\department\DepartmentUserHelper;
 use think\db\exception\DataNotFoundException;
@@ -28,28 +30,13 @@ class DepartmentUsersSelect extends Base
             return $this->getErrorResponse('department_id参数错误');
         }
 
+        $userDataScopeHelper = new UserDataScopeHelper();
+        if(!$userDataScopeHelper->canAccessDepartment($this->userId, 'global_department_access', $get['department_id'])){
+            return $this->getErrorResponse('无权限访问该部门');
+        }
+
         $departmentUserHelper = new DepartmentUserHelper();
         $users = $departmentUserHelper->getUsers($get['department_id']);
         return $this->getSuccessResponse('获取成功', $users);
-    }
-
-    /**
-     * 是否存在用户
-     * @param $departmentId
-     * @return bool
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function isExistUsers($departmentId)
-    {
-        $UserModel = UserModel::field('id')
-            ->where('department_id', $departmentId)
-            ->limit(0,1)
-            ->find();
-        if(empty($UserModel)){
-            return false;
-        }
-        return true;
     }
 }

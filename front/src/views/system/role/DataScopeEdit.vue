@@ -13,24 +13,25 @@
         :rules="rules"
         scroll-to-error
         :validate-on-rule-change="false"
+        label-width="100"
         ref="roleDataScopeRef"
-        label-position="top"
       >
         <el-form-item
           v-for="(dataScope, index) in roleDataScope.data_scopes"
           :label="dataScope.name"
           :prop="`data_scopes.${index}.policy_id`"
         >
-          <el-radio-group
+          <el-select
             v-model="roleDataScope.data_scopes[index].policy_id"
-            class="radio-group"
+            placeholder="请选择"
           >
-            <div v-for="policiy in dataScope.policies" class="radio-item">
-              <el-radio :value="policiy.id">
-                {{ policiy.name }}
-              </el-radio>
-            </div>
-          </el-radio-group>
+            <el-option
+              v-for="policiy in dataScope.policies"
+              :key="policiy.id"
+              :label="policiy.name"
+              :value="policiy.id"
+            />
+          </el-select>
         </el-form-item>
       </el-form>
     </el-scrollbar>

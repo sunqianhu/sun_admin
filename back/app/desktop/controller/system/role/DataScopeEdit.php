@@ -45,7 +45,7 @@ class DataScopeEdit extends Base
         $dataScopes = $dataScopeModels->toArray();
 
         foreach($dataScopes as $key=>$dataScope){
-            $dataScopes[$key]['policy_id'] = 0;
+            $dataScopes[$key]['policy_id'] = '';
             foreach($roleDataScopePolicies as $roleDataScopePolicy){
                 if($dataScope['id'] == $roleDataScopePolicy['data_scope_id']){
                     $dataScopes[$key]['policy_id'] = $roleDataScopePolicy['policy_id'];

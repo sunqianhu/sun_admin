@@ -28,27 +28,17 @@
           v-slot="{ row }"
           label="操作"
           fixed="right"
-          width="220"
+          width="250"
         >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
+          <el-button size="small" @click="openDataScopeEdit(row.id)">
+            修改数据权限
+          </el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
               <el-button size="small">删除</el-button>
             </template>
           </el-popconfirm>
-          <el-dropdown style="margin-left: 16px">
-            <el-button size="small">
-              更多
-              <el-icon><arrow-down /></el-icon>
-            </el-button>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="openDataScopeEdit(row.id)">
-                  修改数据权限
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
         </el-table-column>
       </el-table>
     </div>

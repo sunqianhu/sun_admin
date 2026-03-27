@@ -3,6 +3,7 @@
 namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
+use app\model\RoleDataScopePolicyModel;
 use app\model\RoleDesktopMenuModel;
 use app\model\RoleDesktopPermissionModel;
 use app\model\RoleDesktopRouteModel;
@@ -64,6 +65,9 @@ class Index extends Base
 
             $roleMobilePermissionModels = RoleMobilePermissionModel::where('role_id', $id)->select();
             $roleMobilePermissionModels->delete();
+
+            $roleDataScopePolicyModels = RoleDataScopePolicyModel::where('role_id', $id)->select();
+            $roleDataScopePolicyModels->delete();
 
             Db::commit();
         }catch (Exception $exception){

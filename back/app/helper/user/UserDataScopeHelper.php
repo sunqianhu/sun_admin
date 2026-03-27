@@ -6,11 +6,13 @@ use app\helper\department\DepartmentPathHelper;
 use app\model\data_scope\PolicyDepartmentModel;
 use app\model\data_scope\PolicyModel;
 use app\model\DepartmentModel;
+use app\model\UserModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\db\Query;
+use think\facade\Cache;
 
 class UserDataScopeHelper
 {
@@ -26,6 +28,13 @@ class UserDataScopeHelper
      */
     public function getAccess($userId, $dataScopeKey)
     {
+        $cacheKey = 'user_data_scope_access_' . $userId . '_' . $dataScopeKey;
+        $cacheTtl = 600;
+        $cacheAccess = Cache::get($cacheKey);
+        if($cacheAccess){
+            return $cacheAccess;
+        }
+
         $access = [
             'granted'=>false,
             'all'=>false,
@@ -34,6 +43,7 @@ class UserDataScopeHelper
         $userRoleHelper = new UserRoleHelper();
         $roleIds = $userRoleHelper->getRoleIds($userId);
         if(empty($roleIds)){
+            Cache::set($cacheKey, $access, $cacheTtl);
             return $access;
         }
 
@@ -51,9 +61,6 @@ class UserDataScopeHelper
         //部门
         $userDepartmentHelper = new UserDepartmentHelper();
         $departmentId = $userDepartmentHelper->getDepartmentId($userId);
-        if(empty($departmentId)){
-            throw new Exception('用户还没有设置部门');
-        }
 
         //规则
         $rules = [];
@@ -79,19 +86,25 @@ class UserDataScopeHelper
             }
 
             //本单位及下级单位
-            else if($policy['type'] == 2){
+            if($policy['type'] == 2){
                 $departmentPathHelper = new DepartmentPathHelper();
                 $path = $departmentPathHelper->getPath($departmentId);
+
+                $departmentIds = DepartmentModel::field('id')
+                    ->where('path', $path)
+                    ->where('path', 'like', $path . '/%')
+                    ->column('id');
+
                 $rule = [
                     'type'=>'self_and_children_department',
-                    'value'=>$path
+                    'value'=>$departmentIds
                 ];
                 $rules[] = $rule;
                 continue;
             }
 
             //指定单位
-            else if($policy['type'] == 98){
+            if($policy['type'] == 98){
                 $departmentIds = PolicyDepartmentModel::where('policy_id', $policy['id'])->column('department_id');
                 $rule = [
                     'type'=>'specified_department',
@@ -102,7 +115,7 @@ class UserDataScopeHelper
             }
 
             //全部权限
-            else if($policy['type'] == 99){
+            if($policy['type'] == 99){
                 $rule = [
                     'type'=>'all',
                     'value'=>''
@@ -115,11 +128,12 @@ class UserDataScopeHelper
 
         $access['granted'] = !empty($rules);
         $access['rules'] = $rules;
+        Cache::set($cacheKey, $access, $cacheTtl);
         return $access;
     }
 
     /**
-     * 设置查询构造器
+     * 构建查询限制
      * @param $userId
      * @param $dataScopeKey
      * @param $query
@@ -130,7 +144,7 @@ class UserDataScopeHelper
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function setQuery($userId, $dataScopeKey, $query, $departmentField, $userField)
+    public function buildQueryConstraint($userId, $dataScopeKey, $query, $departmentField, $userField = 'id')
     {
         $access = $this->getAccess($userId, $dataScopeKey);
 
@@ -154,11 +168,12 @@ class UserDataScopeHelper
                     else if ($rule['type'] == 'self_department') {
                         $ruleQuery->where($departmentField, $rule['value']);
                     } else if ($rule['type'] == 'self_and_children_department') {
-                        $ruleQuery->whereIn($departmentField, function ($selfAndChildrenDepartmentQuery) use ($rule) {
-                            $selfAndChildrenDepartmentQuery->table('department')
-                                ->field('id')
-                                ->where('path', 'like', $rule['value'] . '%');
-                        });
+                        $departmentIds = $rule['value'];
+                        if(empty($departmentIds)) {
+                            $ruleQuery->whereRaw('1 = 0');
+                        }else{
+                            $ruleQuery->whereIn($departmentField, $departmentIds);
+                        }
                     } else if ($rule['type'] == 'specified_department') {
                         $ruleQuery->whereIn($departmentField, $rule['value']);
                     }
@@ -167,5 +182,49 @@ class UserDataScopeHelper
         });
 
         return $query;
+    }
+
+    /**
+     * 是否能够访问部门
+     * @param $userId
+     * @param $dataScopeKey
+     * @param $departmentId
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function canAccessDepartment($userId, $dataScopeKey, $departmentId)
+    {
+        $query = DepartmentModel::field('id')
+            ->where('id', $departmentId);
+        $query = $this->buildQueryConstraint($userId, $dataScopeKey, $query, 'id', '');
+        $departmentModel = $query->find();
+        if(!empty($departmentModel)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 是否能够访问用户
+     * @param $userId
+     * @param $dataScopeKey
+     * @param $targetUserId
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function canAccessUser($userId, $dataScopeKey, $targetUserId)
+    {
+        $query = UserModel::field('id')
+            ->where('id', $targetUserId);
+        $query = $this->buildQueryConstraint($userId, $dataScopeKey, $query, 'department_id', 'id');
+        $userModel = $query->find();
+        if(!empty($userModel)){
+            return true;
+        }
+        return false;
     }
 }

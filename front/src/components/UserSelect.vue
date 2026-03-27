@@ -18,6 +18,12 @@ import { ref, watch, onMounted } from "vue";
 import axios from "@/helper/axios";
 import UserSelectDialog from "./UserSelectDialog.vue";
 
+const props = defineProps({
+  topDepartmentId: {
+    type: Number,
+    default: 0,
+  },
+});
 const userId = defineModel({
   type: Number,
   default: 0,
@@ -71,9 +77,8 @@ const handleConfirmed = (selectedUser) => {
 };
 
 watch(
-  () => props.modelValue,
+  () => userId.value,
   async (newValue) => {
-    userId.value = newValue;
     getUserName();
   },
   {

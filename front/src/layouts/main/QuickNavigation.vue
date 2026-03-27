@@ -4,7 +4,7 @@
     type="card"
     tab-position="top"
     :stretch="false"
-    closable
+    :closable="quickNavigationStore.quickNavigations?.length > 1"
     class="quick-navigation"
     @update:model-value="navigation"
     @tab-remove="remove"
@@ -31,7 +31,7 @@ const quickNavigationStore = useQuickNavigationStore();
  */
 const navigation = (key) => {
   const quickNavigation = quickNavigationStore.quickNavigations.find(
-    (item) => item.key === key
+    (item) => item.key === key,
   );
   if (quickNavigation && router.currentRoute.value.name !== key) {
     router.push({ path: quickNavigation.path });
@@ -48,7 +48,7 @@ const remove = (key) => {
     quickNavigationStore.remove(key);
     if (isCurrentRoute) {
       const lastQuickNavigation = quickNavigationStore.quickNavigations.find(
-        (item) => item.key === quickNavigationStore.active
+        (item) => item.key === quickNavigationStore.active,
       );
       if (lastQuickNavigation) {
         router.push({ path: lastQuickNavigation.path });

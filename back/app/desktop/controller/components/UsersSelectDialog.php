@@ -3,6 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
+use app\helper\user\UserDataScopeHelper;
 use app\model\UserModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -25,6 +26,8 @@ class UsersSelectDialog extends Base
             ->with(['department' => function ($query) {
                 $query->withField('id,name');
             }]);
+        $userDataScopeHelper = new UserDataScopeHelper();
+        $query = $userDataScopeHelper->buildQueryConstraint($this->userId, 'global_user_access', $query, 'department_id', 'id');
         if (!empty($get['department_ids'])) {
             $query->whereIn('department_id', $get['department_ids']);
         }

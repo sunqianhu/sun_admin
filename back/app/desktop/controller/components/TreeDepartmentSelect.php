@@ -4,6 +4,7 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\helper\department\TreeDepartmentHelper;
+use app\helper\user\UserDataScopeHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -25,6 +26,11 @@ class TreeDepartmentSelect extends Base
         $get = $this->request->get(['department_id'=>0]);
         if(!is_numeric($get['department_id'])){
             return $this->getErrorResponse('department_id参数错误');
+        }
+
+        $userDataScopeHelper = new UserDataScopeHelper();
+        if(!$userDataScopeHelper->canAccessDepartment($this->userId, 'global_department_access', $get['department_id'])){
+            return $this->getErrorResponse('无权限访问该部门');
         }
 
         $treeDepartmentHelper = new TreeDepartmentHelper();
