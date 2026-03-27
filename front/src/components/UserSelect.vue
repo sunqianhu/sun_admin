@@ -18,18 +18,13 @@ import { ref, watch, onMounted } from "vue";
 import axios from "@/helper/axios";
 import UserSelectDialog from "./UserSelectDialog.vue";
 
-const props = defineProps({
-  topDepartmentId: {
-    type: Number,
-    default: 0,
-  },
-});
 const userId = defineModel({
   type: Number,
   default: 0,
 });
 const userName = ref("");
 const userSelectDialogFlag = ref(false);
+const error = ref("");
 
 /**
  * 得到用户姓名
