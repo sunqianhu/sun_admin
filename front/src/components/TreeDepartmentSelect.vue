@@ -54,7 +54,7 @@ const init = async () => {
       params: {
         department_id: props.departmentId,
       },
-    }
+    },
   );
   if (response.code != 1) {
     ElMessage({
@@ -73,7 +73,7 @@ watch(
   },
   {
     deep: true,
-  }
+  },
 );
 
 onMounted(() => {

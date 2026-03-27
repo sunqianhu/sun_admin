@@ -92,7 +92,7 @@ class UserDataScopeHelper
 
                 $departmentIds = DepartmentModel::field('id')
                     ->where('path', $path)
-                    ->where('path', 'like', $path . '/%')
+                    ->whereOr('path', 'like', $path . '/%')
                     ->column('id');
 
                 $rule = [
