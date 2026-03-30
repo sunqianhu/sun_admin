@@ -59,9 +59,6 @@ class SessionHelper
      */
     public function deleteSessionByUserId($userId){
         $sessionModels = SessionModel::where('user_id', $userId)->select();
-        if ($sessionModels->isEmpty()) {
-            throw new Exception('没有找到会话记录');
-        }
         $sessionModels->delete();
     }
 
