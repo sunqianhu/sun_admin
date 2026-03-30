@@ -38,7 +38,7 @@ const getUserName = async () => {
     "desktop/components.UserSelect/getUserName",
     { user_id: userId.value },
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

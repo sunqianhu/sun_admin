@@ -29,9 +29,9 @@ const ids = defineModel({
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/system.data_scope.policy.TreeDepartmentSelect/getTreeDepartment"
+    "desktop/system.data_scope.policy.TreeDepartmentSelect/getTreeDepartment",
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

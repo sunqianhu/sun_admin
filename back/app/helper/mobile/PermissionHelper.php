@@ -3,7 +3,7 @@
 namespace app\helper\mobile;
 
 use app\model\mobile\PermissionModel;
-use Sunqianhu\Helper\ArrayHandler;
+use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -49,8 +49,8 @@ class PermissionHelper
             ->select();
         $permissions = $permissionModels->toArray();
 
-        $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        $arr = new Arr();
+        return $arr->toTree($permissions, 'id', 'permission_id', 'children');
     }
 
     /**

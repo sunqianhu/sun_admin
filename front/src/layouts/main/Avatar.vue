@@ -71,7 +71,7 @@ const user = ref({});
  */
 const init = async () => {
   const response = await axios.get("desktop/layouts.main.Avatar/getUser");
-  if (response.code != 1) {
+  if (response.code != 0) {
     return;
   }
 
@@ -104,7 +104,7 @@ const openEditPassword = async () => {
  */
 const logout = async () => {
   const response = await axios.get("desktop/layouts.main.Avatar/logout");
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

@@ -95,7 +95,7 @@ const submitForm = async () => {
   submitLoading.value = true;
   const response = await axios.post("desktop/system.user.Add/save", user.value);
   submitLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

@@ -53,7 +53,7 @@ import dayjs from "dayjs";
 const query = ref({
   add_times: [
     dayjs(
-      dayjs().subtract(1, "month").format("YYYY-MM-DD") + " 00:00:00"
+      dayjs().subtract(1, "month").format("YYYY-MM-DD") + " 00:00:00",
     ).unix(),
     dayjs(dayjs().format("YYYY-MM-DD") + " 23:59:59").unix(),
   ],
@@ -72,7 +72,7 @@ const init = async () => {
     params: query.value,
   });
   initLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -158,7 +158,7 @@ const exp = async () => {
     return;
   }
   expLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

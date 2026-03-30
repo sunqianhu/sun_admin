@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\department;
 use app\desktop\controller\Base;
 use app\model\DepartmentModel;
 use Exception;
-use Sunqianhu\Helper\ArrayHandler;
+use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -29,8 +29,8 @@ class Index extends Base
         $departments = $query->select();
         $departments = $departments->toArray();
 
-        $arrayHandler = new ArrayHandler();
-        $treeDepartment = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        $treeDepartment = $arr->toTree($departments, 'id', 'department_id', 'children');
 
         return $this->getSuccessResponse('获取成功', $treeDepartment);
     }

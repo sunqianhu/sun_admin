@@ -34,9 +34,9 @@ const layouts = ref([]);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/components.desktop.route.LayoutSelect/getLayouts"
+    "desktop/components.desktop.route.LayoutSelect/getLayouts",
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

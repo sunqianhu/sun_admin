@@ -58,7 +58,8 @@ class Edit extends Base
         try {
             validate(PolicyValidate::class)->scene('edit')->check($post);
             if($post['type'] == 99){
-                IdsValidator::check('指定部门', $post['department_ids']);
+                $idsValidator = new IdsValidator();
+                $idsValidator->check('指定部门', $post['department_ids']);
             }
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());

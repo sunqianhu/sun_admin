@@ -3,7 +3,7 @@
 namespace app\helper\desktop;
 
 use app\model\desktop\MenuModel;
-use Sunqianhu\Helper\ArrayHandler;
+use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -49,8 +49,8 @@ class MenuHelper
             ->select();
         $menus = $menuModels->toArray();
 
-        $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        $arr = new Arr();
+        return $arr->toTree($menus, 'id', 'menu_id', 'children');
     }
 
     /**

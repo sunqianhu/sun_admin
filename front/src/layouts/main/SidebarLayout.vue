@@ -88,7 +88,7 @@ const leftWidth = computed(() => themeStore.sidebarLayout_leftWidth);
  */
 const init = async () => {
   const response = await axios.get("desktop/layouts.main.SidebarLayout/init");
-  if (response.code != 1) {
+  if (response.code != 0) {
     return;
   }
   systemName.value = response.data.system_name;

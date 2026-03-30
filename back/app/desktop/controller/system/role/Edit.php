@@ -97,10 +97,11 @@ class Edit extends Base
         }
 
         try {
-            IdsValidator::check('桌面端权限', $post['desktop_permission_ids']);
-            IdsValidator::check('桌面端菜单', $post['desktop_menu_ids']);
-            IdsValidator::check('桌面端路由', $post['desktop_route_ids']);
-            IdsValidator::check('移动端权限', $post['mobile_permission_ids']);
+            $idsValidator = new IdsValidator();
+            $idsValidator->check('桌面端权限', $post['desktop_permission_ids']);
+            $idsValidator->check('桌面端菜单', $post['desktop_menu_ids']);
+            $idsValidator->check('桌面端路由', $post['desktop_route_ids']);
+            $idsValidator->check('移动端权限', $post['mobile_permission_ids']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

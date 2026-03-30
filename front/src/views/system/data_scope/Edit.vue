@@ -60,7 +60,7 @@ const init = async () => {
     params: { id: props.id },
   });
   initLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -85,10 +85,10 @@ const submitForm = async () => {
   submitLoading.value = true;
   const response = await axios.post(
     "desktop/system.data_scope.Edit/save",
-    dataScope.value
+    dataScope.value,
   );
   submitLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

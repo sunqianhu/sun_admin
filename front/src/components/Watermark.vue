@@ -23,7 +23,7 @@ const init = async () => {
   let watermark = watermarkCache.get();
   if (!watermark) {
     const response = await axios.get("desktop/Frame/getWatermark");
-    if (response.code != 1) {
+    if (response.code != 0) {
       return;
     }
     watermark = response.data;

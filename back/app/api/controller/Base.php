@@ -98,7 +98,7 @@ class Base extends BaseController
      * @param int $httpCode
      * @return Response
      */
-    public function getSuccessResponse(string $message, $data = null, int $businessCode = 1, int $httpCode = 200)
+    public function getSuccessResponse(string $message, $data = null, int $businessCode = 0, int $httpCode = 200)
     {
         $result = [
             'code' => $businessCode,
@@ -116,7 +116,7 @@ class Base extends BaseController
      * @param int $httpCode
      * @return Response
      */
-    public function getErrorResponse(string $message, $data = null, int $businessCode = 0, int $httpCode = 200)
+    public function getErrorResponse(string $message, $data = null, int $businessCode = 1, int $httpCode = 200)
     {
         $result = [
             'code' => $businessCode,

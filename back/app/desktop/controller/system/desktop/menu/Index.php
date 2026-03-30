@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\desktop\menu;
 use app\desktop\controller\Base;
 use app\model\desktop\MenuModel;
 use Exception;
-use Sunqianhu\Helper\ArrayHandler;
+use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -27,8 +27,8 @@ class Index extends Base
         $menuModels = $query->select();
         $menus = $menuModels->toArray();
 
-        $arrayHandler = new ArrayHandler();
-        $treeMenu = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
+        $arr = new Arr();
+        $treeMenu = $arr->toTree($menus, 'id', 'menu_id', 'children');
 
         return $this->getSuccessResponse('获取成功', $treeMenu);
     }

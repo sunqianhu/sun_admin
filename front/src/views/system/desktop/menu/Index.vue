@@ -90,10 +90,10 @@ const getTreeMenu = async () => {
     "desktop/system.desktop.menu.Index/getTreeMenu",
     {
       params: query.value,
-    }
+    },
   );
   listLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -134,9 +134,9 @@ const del = async (id) => {
     "desktop/system.desktop.menu.Index/delete",
     {
       id: id,
-    }
+    },
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

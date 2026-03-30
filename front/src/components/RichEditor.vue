@@ -53,7 +53,7 @@ const toolBarConfig = Object.assign(
     //toolBarKeys: ["bold"]
     //excludeKeys: []
   },
-  props.editorConfig
+  props.editorConfig,
 );
 const editorConfig = Object.assign(
   {},
@@ -72,7 +72,7 @@ const editorConfig = Object.assign(
         },
         timeout: 1000 * 15,
         customInsert(response, insertFn) {
-          if (response.code != 1) {
+          if (response.code != 0) {
             ElMessage({
               message: response.message,
               type: "error",
@@ -96,7 +96,7 @@ const editorConfig = Object.assign(
         },
         timeout: 1000 * 60,
         customInsert(response, insertFn) {
-          if (response.code != 1) {
+          if (response.code != 0) {
             ElMessage({
               message: response.message,
               type: "error",
@@ -110,7 +110,7 @@ const editorConfig = Object.assign(
       },
     },
   },
-  props.editorConfig
+  props.editorConfig,
 );
 
 /**

@@ -58,9 +58,9 @@ const submitForm = async () => {
   await userRef.value.validate();
   const response = await axios.post(
     "desktop/system.user.EditPassword/save",
-    user.value
+    user.value,
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

@@ -3,7 +3,7 @@
 namespace app\helper\department;
 
 use app\model\DepartmentModel;
-use Sunqianhu\Helper\ArrayHandler;
+use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -57,8 +57,8 @@ class TreeDepartmentHelper
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        return $arr->toTree($departments, 'id', 'department_id', 'children');
     }
 
     /**

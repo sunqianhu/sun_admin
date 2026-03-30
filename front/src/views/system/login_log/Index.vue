@@ -87,7 +87,7 @@ import axios from "@/helper/axios";
 const query = ref({
   times: [
     dayjs(
-      dayjs().subtract(6, "month").format("YYYY-MM-DD") + " 00:00:00"
+      dayjs().subtract(6, "month").format("YYYY-MM-DD") + " 00:00:00",
     ).unix(),
     dayjs(dayjs().format("YYYY-MM-DD") + " 23:59:59").unix(),
   ],
@@ -107,10 +107,10 @@ const getPaginate = async () => {
     "desktop/system.login_log.Index/getPaginate",
     {
       params: query.value,
-    }
+    },
   );
   listLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

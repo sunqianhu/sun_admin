@@ -107,7 +107,7 @@ const init = async () => {
   initLoading.value = true;
   const response = await axios.get("desktop/system.role.Add/init");
   initLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -176,7 +176,7 @@ const submitForm = async () => {
   submitLoading.value = true;
   const response = await axios.post("desktop/system.role.Add/save", role.value);
   submitLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

@@ -126,7 +126,7 @@ const init = async () => {
   // initLoading.value = true;
   // const response = await axios.get("desktop/index/init");
   // initLoading.value = false;
-  // if (response.code != 1) {
+  // if (response.code != 0) {
   //   ElMessage({
   //     message: response.message,
   //     type: "error"

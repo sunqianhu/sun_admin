@@ -34,9 +34,9 @@ const types = ref([]);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/components.department.TypeSelect/getTypes"
+    "desktop/components.department.TypeSelect/getTypes",
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

@@ -85,7 +85,7 @@ const upload = async (file) => {
   file.status = "uploading";
   const response = await axios.post("mobile/FileUpload/upload", formData);
   file.status = "done";
-  if (response.code != 1) {
+  if (response.code != 0) {
     showFailToast(response.message);
     deleteFile(file);
     return;
@@ -150,7 +150,7 @@ watch(
   },
   {
     deep: true,
-  }
+  },
 );
 
 onMounted(() => {

@@ -99,7 +99,7 @@ const vCodeFlag = ref(false);
  */
 const init = async () => {
   const response = await axios.get("desktop/Login/init");
-  if (response.code != 1) {
+  if (response.code != 0) {
     return;
   }
   systemName.value = response.data.system_name;
@@ -127,7 +127,7 @@ const submitForm = async () => {
     return;
   }
   submitLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

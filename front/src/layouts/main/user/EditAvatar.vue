@@ -93,9 +93,9 @@ const init = async () => {
     "desktop/layouts.main.user.EditAvatar/init",
     {
       params: user.value,
-    }
+    },
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -181,10 +181,10 @@ const save = () => {
     saveLoading.value = true;
     const response = await axios.post(
       "desktop/layouts.main.user.EditAvatar/save",
-      user.value
+      user.value,
     );
     saveLoading.value = false;
-    if (response.code != 1) {
+    if (response.code != 0) {
       ElMessage({
         message: response.message,
         type: "error",

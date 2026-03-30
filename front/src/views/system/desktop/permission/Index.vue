@@ -97,10 +97,10 @@ const getTreePermission = async () => {
     "desktop/system.desktop.permission.Index/getTreePermission",
     {
       params: query.value,
-    }
+    },
   );
   listLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -141,9 +141,9 @@ const del = async (id) => {
     "desktop/system.desktop.permission.Index/delete",
     {
       id: id,
-    }
+    },
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

@@ -95,7 +95,7 @@ const init = async () => {
     },
   );
   initLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -123,7 +123,7 @@ const submitForm = async () => {
     policy.value,
   );
   submitLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

@@ -96,10 +96,10 @@ const getPolicies = async () => {
     "desktop/system.data_scope.policy.Index/getPolicies",
     {
       params: query.value,
-    }
+    },
   );
   listLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -133,9 +133,9 @@ const del = async (id) => {
     "desktop/system.data_scope.policy.Index/delete",
     {
       id: id,
-    }
+    },
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

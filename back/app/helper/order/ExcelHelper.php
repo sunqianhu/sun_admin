@@ -36,9 +36,7 @@ class ExcelHelper
         $activeSheet->getColumnDimension('B')->setAutoSize(true);
 
         $file = new File();
-        $dir = $file->makeModuleDir('order');
-        $fileName = md5(time().'_sun_'.rand(1000, 9999)).'.xlsx';
-        $path = $dir.$fileName;
+        $path = $file->makeModuleFilePath('order', 'xlsx');
         $fullPath = $file->getFullPath($path);
 
         $writer = new Xlsx($spreadsheet);

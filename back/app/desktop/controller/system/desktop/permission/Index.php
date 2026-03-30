@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\desktop\permission;
 use app\desktop\controller\Base;
 use app\model\desktop\PermissionModel;
 use Exception;
-use Sunqianhu\Helper\ArrayHandler;
+use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -30,8 +30,8 @@ class Index extends Base
         $permissionModels = $query->select();
         $permissions = $permissionModels->toArray();
 
-        $arrayHandler = new ArrayHandler();
-        $treePermission = $arrayHandler->convertTree($permissions, 'id', 'permission_id', 'children');
+        $arr = new Arr();
+        $treePermission = $arr->toTree($permissions, 'id', 'permission_id', 'children');
 
         return $this->getSuccessResponse('获取成功', $treePermission);
     }

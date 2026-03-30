@@ -95,10 +95,8 @@ class UserAvatarHelper
         $image->generateThumbnail($fullBigPath, $fullBigPath, 1000);
 
         //小头像
-        $relativeDir = $file->makeModuleDir('avatar');
         $ext = pathinfo($bigPath, PATHINFO_EXTENSION);
-        $fileName = md5(time() .'_sun_'. rand(1000, 9999)) . '.' . $ext;
-        $smallPath = $relativeDir . $fileName;
+        $smallPath = $file->makeModuleFilePath('avatar', $ext);
         $fullSmallPath = $file->getFullPath($smallPath);
         $image->generateThumbnail($fullBigPath, $fullSmallPath, 100);
 

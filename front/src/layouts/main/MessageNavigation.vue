@@ -53,9 +53,9 @@ const initWebsocketClient = () => {
  */
 const getNoReadCount = async () => {
   const response = await axios.get(
-    "desktop/layouts.main.MessageNavigation/getNoReadCount"
+    "desktop/layouts.main.MessageNavigation/getNoReadCount",
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

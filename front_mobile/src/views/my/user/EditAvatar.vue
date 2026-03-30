@@ -115,7 +115,7 @@ const save = async (base64ImageContent) => {
   });
   closeToast();
 
-  if (response.code != 1) {
+  if (response.code != 0) {
     showFailToast(response.message);
     return;
   }

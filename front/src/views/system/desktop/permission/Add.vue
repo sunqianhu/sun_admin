@@ -82,10 +82,10 @@ const submitForm = async () => {
   submitLoading.value = true;
   const response = await axios.post(
     "desktop/system.desktop.permission.Add/save",
-    permission.value
+    permission.value,
   );
   submitLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

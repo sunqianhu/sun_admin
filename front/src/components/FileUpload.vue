@@ -133,7 +133,7 @@ const handleBeforeUpload = (rawFile) => {
  * @param {*} uploadFiles
  */
 const handleSuccess = async (response, uploadFile, uploadFiles) => {
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

@@ -36,7 +36,7 @@ const submitForm = async () => {
     "desktop/system.api_token_generate.Index/generate",
   );
   submitLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

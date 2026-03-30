@@ -44,9 +44,9 @@ const init = async () => {
     "desktop/components.desktop.treeMenuSelect/getTreeMenu",
     {
       params: { menu_id: props.menuId },
-    }
+    },
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -63,7 +63,7 @@ watch(
   },
   {
     deep: true,
-  }
+  },
 );
 
 onMounted(() => {

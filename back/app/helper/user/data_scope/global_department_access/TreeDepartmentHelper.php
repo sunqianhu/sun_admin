@@ -5,7 +5,7 @@ namespace app\helper\user\data_scope\global_department_access;
 use app\helper\department\DepartmentPathHelper;
 use app\helper\user\UserDataScopeHelper;
 use app\model\DepartmentModel;
-use Sunqianhu\Helper\ArrayHandler;
+use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -35,7 +35,7 @@ class TreeDepartmentHelper
         $query->order('sort', 'asc');
         $departmentModels = $query->select();
         $departments = $departmentModels->toArray();
-        $arrayHandler = new ArrayHandler();
-        return $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        return $arr->toTree($departments, 'id', 'department_id', 'children');
     }
 }

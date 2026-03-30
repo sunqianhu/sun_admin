@@ -162,7 +162,7 @@ const getPaginate = async () => {
     params: query.value,
   });
   listLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -225,7 +225,7 @@ const editStatus = async (row) => {
     id: row.id,
     status: row.status,
   });
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -259,7 +259,7 @@ const offLine = async (id) => {
   response = await axios.post("desktop/system.user.Index/offLine", {
     id: id,
   });
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

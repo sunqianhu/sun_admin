@@ -119,7 +119,7 @@ const init = async () => {
     params: { id: props.id },
   });
   initLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -136,17 +136,17 @@ const init = async () => {
   role.value = response.data.role;
   desktopTreePermissionDefaultCheckKeys.value =
     getDesktopTreePermissionDefaultCheckKeys(
-      response.data.role.desktop_permission_ids
+      response.data.role.desktop_permission_ids,
     );
   desktopTreeMenuDefaultCheckKeys.value = getDesktopTreeMenuDefaultCheckKeys(
-    response.data.role.desktop_menu_ids
+    response.data.role.desktop_menu_ids,
   );
   desktopRouteDefaultCheckKeys.value = getDesktopRouteDefaultCheckKeys(
-    response.data.role.desktop_route_ids
+    response.data.role.desktop_route_ids,
   );
   mobileTreePermissionDefaultCheckKeys.value =
     getMobileTreePermissionDefaultCheckKeys(
-      response.data.role.mobile_permission_ids
+      response.data.role.mobile_permission_ids,
     );
 };
 
@@ -281,10 +281,10 @@ const submitForm = async () => {
   submitLoading.value = true;
   const response = await axios.post(
     "desktop/system.role.Edit/save",
-    role.value
+    role.value,
   );
   submitLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

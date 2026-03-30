@@ -69,7 +69,7 @@ const setPermissions = async () => {
   }
 
   const response = await axios.get("mobile/Frame/getPermissions");
-  if (response.code != 1) {
+  if (response.code != 0) {
     throw new Error(response.message);
   }
   permissionStore.set(response.data);

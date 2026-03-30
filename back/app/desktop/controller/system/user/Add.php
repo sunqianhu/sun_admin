@@ -21,7 +21,8 @@ class Add extends Base
 
         try {
             validate(UserValidate::class)->scene('add')->check($post);
-            IdsValidator::check('角色', $post['role_ids']);
+            $idsValidator = new IdsValidator();
+            $idsValidator->check('角色', $post['role_ids']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

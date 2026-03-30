@@ -57,9 +57,9 @@ const systemName = ref("");
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/layouts.main.TopNavigationLayout/init"
+    "desktop/layouts.main.TopNavigationLayout/init",
   );
-  if (response.code != 1) {
+  if (response.code != 0) {
     return;
   }
   systemName.value = response.data.system_name;

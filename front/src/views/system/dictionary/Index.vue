@@ -110,10 +110,10 @@ const getPaginate = async () => {
     "desktop/system.dictionary.Index/getPaginate",
     {
       params: query.value,
-    }
+    },
   );
   listLoading.value = false;
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",
@@ -155,7 +155,7 @@ const del = async (id) => {
   const response = await axios.post("desktop/system.dictionary.Index/delete", {
     id: id,
   });
-  if (response.code != 1) {
+  if (response.code != 0) {
     ElMessage({
       message: response.message,
       type: "error",

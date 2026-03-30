@@ -74,7 +74,7 @@ const setPermissions = async () => {
   let permissions = permissionCache.get();
   if (permissions === null) {
     const response = await axios.get("desktop/frame/getPermissions");
-    if (response.code != 1) {
+    if (response.code != 0) {
       throw new Error(response.message);
     }
     permissions = response.data;
@@ -96,7 +96,7 @@ const setRoutes = async () => {
   let childRoutes = routeCache.get();
   if (!childRoutes) {
     const response = await axios.get("desktop/frame/getRoutes");
-    if (response.code != 1) {
+    if (response.code != 0) {
       throw new Error(response.message);
     }
     childRoutes = response.data;
