@@ -57,11 +57,16 @@
             {{ row.user_name }}
           </a>
         </el-table-column>
-        <el-table-column prop="api" label="请求接口" width="450" />
         <el-table-column prop="ip" label="操作ip" />
         <el-table-column label="操作时间" v-slot="{ row }">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
+        <el-table-column
+          prop="api"
+          label="请求接口"
+          width="400"
+          show-overflow-tooltip
+        />
       </el-table>
     </div>
 
@@ -88,7 +93,7 @@ import axios from "@/helper/axios";
 const query = ref({
   times: [
     dayjs(
-      dayjs().subtract(6, "month").format("YYYY-MM-DD") + " 00:00:00"
+      dayjs().subtract(6, "month").format("YYYY-MM-DD") + " 00:00:00",
     ).unix(),
     dayjs(dayjs().format("YYYY-MM-DD") + " 23:59:59").unix(),
   ],
@@ -108,7 +113,7 @@ const getPaginate = async () => {
     "desktop/system.operation_log.Index/getPaginate",
     {
       params: query.value,
-    }
+    },
   );
   listLoading.value = false;
   if (response.code != 1) {

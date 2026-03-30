@@ -65,7 +65,7 @@ const remove = (key) => {
 
 <style lang="scss" scoped>
 .quick-navigation {
-  --el-tabs-header-height: 32px;
+  --el-tabs-header-height: 40px;
   background-color: var(--background-color-light);
   border-top: 1px solid var(--border-color);
   //box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);

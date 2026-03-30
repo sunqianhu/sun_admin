@@ -1,26 +1,33 @@
 .dark:root:root {
-  //颜色
+  //全局颜色
   --color-primary: #409eff;
   --color-success: #67c23a;
   --color-warning: #e6a23c;
   --color-danger: #f56c6c;
 
-  //文字
+  //文字颜色
   --font-color: #e5eaf3;
   --font-color-secondary: #a3a6ad;
   --font-color-placeholder: #8d9095;
   --font-color-disabled: #6c6e72;
 
-  //边框
+  //边框颜色
   --border-color: #4c4d4f;
   --border-color-light: #414243;
   --border-color-dark: #58585b;
 
-  //背景
+  //背景颜色
   --background-color: #303030;
   --background-color-light: #0a0a0a;
   --background-color-dark: #39393a;
+
+  //透明背景颜色
   --background-color-opacity: rgba(10, 10, 10, 0.8);
   --background-color-opacity-light: rgba(10, 10, 10, 0.9);
   --background-color-opacity-dark: rgba(10, 10, 10, 0.7);
+
+  //阴影
+  --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
+  --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
+  --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
 }

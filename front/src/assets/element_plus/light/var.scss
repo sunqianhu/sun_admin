@@ -3,5 +3,50 @@
     "primary": (
       "base": #409eff,
     ),
+  ),
+  $font-size: (
+    "extra-large": 22px,
+    "large": 20px,
+    "medium": 16px,
+    "base": 16px,
+    "small": 14px,
+    "extra-small": 12px,
+  ),
+  $input-font-size: (
+    "large": 20px,
+    "default": 16px,
+    "small": 14px,
+  ),
+  $checkbox: (
+    "font-size": 16px,
+  ),
+  $select: (
+    "input-font-size": 16px,
+  ),
+  $alert: (
+    "title-font-size": 16px,
+    "description-font-size": 16px,
+  ),
+  $messagebox: (
+    "error-font-size": 14px,
+  ),
+  $dialog: (
+    "content-font-size": 16px,
+  ),
+  $pagination: (
+    "font-size": 16px,
+  ),
+  $tag: (
+    "font-size": 14px,
+  ),
+  $badge: (
+    "font-size": 14px,
+  ),
+  $timeline: (
+    "node-size-normal": 14px,
+    "node-size-large": 16px,
+  ),
+  $avatar: (
+    "text-size": 16px,
   )
 );

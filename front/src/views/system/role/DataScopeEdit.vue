@@ -13,7 +13,6 @@
         :rules="rules"
         scroll-to-error
         :validate-on-rule-change="false"
-        label-width="100"
         ref="roleDataScopeRef"
       >
         <el-form-item

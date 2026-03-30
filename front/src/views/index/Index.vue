@@ -9,7 +9,7 @@
       <el-row justify="space-between" :gutter="16">
         <el-col :sm="12" :md="6">
           <div class="count-item">
-            <div class="count-item__name">name1</div>
+            <div class="count-item__name">模块1</div>
             <div class="count-item__count">
               <el-icon class="count-item__icon"><Odometer /></el-icon>
               <span class="count-item__number">21</span>条
@@ -18,7 +18,7 @@
         </el-col>
         <el-col :sm="12" :md="6">
           <div class="count-item">
-            <div class="count-item__name">name2</div>
+            <div class="count-item__name">模块2</div>
             <div class="count-item__count">
               <el-icon class="count-item__icon"><Odometer /></el-icon>
               <span class="count-item__number">17</span>条
@@ -27,7 +27,7 @@
         </el-col>
         <el-col :sm="12" :md="6">
           <div class="count-item">
-            <div class="count-item__name">name3</div>
+            <div class="count-item__name">模块3</div>
             <div class="count-item__count">
               <el-icon class="count-item__icon"><Odometer /></el-icon>
               <span class="count-item__number">25</span>条
@@ -36,7 +36,7 @@
         </el-col>
         <el-col :sm="12" :md="6">
           <div class="count-item">
-            <div class="count-item__name">name4</div>
+            <div class="count-item__name">模块4</div>
             <div class="count-item__count">
               <el-icon class="count-item__icon"><Odometer /></el-icon>
               <span class="count-item__number">14</span>条
@@ -49,35 +49,35 @@
     <div class="modules">
       <el-row justify="space-between" :gutter="16">
         <el-col :md="12">
-          <card-panel title="module1" class="module">
+          <card-panel title="模块1" class="module">
             <echart :option="module1Option" class="module__chart"></echart>
           </card-panel>
         </el-col>
         <el-col :sm="12">
-          <card-panel title="module2" class="module">
+          <card-panel title="模块2" class="module">
             <echart :option="module2Option" class="module__chart"></echart>
           </card-panel>
         </el-col>
         <el-col :md="12">
-          <card-panel title="module3" class="module">
+          <card-panel title="模块3" class="module">
             <template #action>
               <a href="javascript:;">更多</a>
             </template>
             <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="date" label="Date" width="100" />
-              <el-table-column prop="name" label="Name" width="100" />
+              <el-table-column prop="date" label="Date" width="120" />
+              <el-table-column prop="name" label="Name" width="80" />
               <el-table-column prop="address" label="Address" />
             </el-table>
           </card-panel>
         </el-col>
         <el-col :sm="12">
-          <card-panel title="module4" class="module">
+          <card-panel title="模块4" class="module">
             <template #action>
               <a href="javascript:;">更多</a>
             </template>
             <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="date" label="Date" width="100" />
-              <el-table-column prop="name" label="Name" width="100" />
+              <el-table-column prop="date" label="Date" width="120" />
+              <el-table-column prop="name" label="Name" width="80" />
               <el-table-column prop="address" label="Address" />
             </el-table>
           </card-panel>
@@ -311,13 +311,13 @@ onMounted(() => {
     padding: var(--padding);
     display: flex;
     align-items: center;
+    box-shadow: var(--box-shadow);
     .welcome__icon {
       width: 50px;
       display: inline-block;
     }
     .welcome__name {
       font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
       color: var(--color-primary);
       margin-left: 16px;
     }
@@ -329,6 +329,7 @@ onMounted(() => {
       background-color: var(--background-color-light);
       border-radius: var(--border-radius);
       margin-bottom: var(--margin);
+      box-shadow: var(--box-shadow);
       .count-item__name {
       }
       .count-item__count {

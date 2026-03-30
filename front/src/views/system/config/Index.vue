@@ -78,7 +78,7 @@ const submitForm = async () => {
   submitLoading.value = true;
   const response = await axios.post(
     "desktop/system.config.Index/save",
-    config.value
+    config.value,
   );
   submitLoading.value = false;
   if (response.code != 1) {

@@ -111,7 +111,7 @@ const getPaginate = async () => {
     "desktop/system.dictionary.Index/getPaginate",
     {
       params: query.value,
-    }
+    },
   );
   loading.value = false;
   if (response.code != 1) {

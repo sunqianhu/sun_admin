@@ -74,12 +74,12 @@ const isDark = useDark();
 const leftBgColor = computed(() =>
   isDark.value
     ? themeStore.sidebarLayout_dark_leftBgColor
-    : themeStore.sidebarLayout_light_leftBgColor
+    : themeStore.sidebarLayout_light_leftBgColor,
 );
 const leftTextColor = computed(() =>
   isDark.value
     ? themeStore.sidebarLayout_dark_leftTextColor
-    : themeStore.sidebarLayout_light_leftTextColor
+    : themeStore.sidebarLayout_light_leftTextColor,
 );
 const leftWidth = computed(() => themeStore.sidebarLayout_leftWidth);
 
