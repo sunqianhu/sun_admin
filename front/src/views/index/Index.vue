@@ -2,7 +2,7 @@
   <div class="index" v-loading="initLoading">
     <div class="welcome">
       <img src="@/assets/index/welcome.svg" class="welcome__icon" />
-      <div class="welcome__name">你好张三上午好，欢迎回来！</div>
+      <div class="welcome__name"><strong>张三</strong>上午好，欢迎回来！</div>
     </div>
 
     <div class="count-statistic">
