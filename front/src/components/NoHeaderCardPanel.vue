@@ -1,5 +1,5 @@
 <template>
-  <div class="no-header-panel">
+  <div class="no-header-card-panel">
     <slot name="default"></slot>
   </div>
 </template>
@@ -9,7 +9,7 @@ const props = defineProps({});
 </script>
 
 <style lang="scss" scoped>
-.no-header-panel {
+.no-header-card-panel {
   background: var(--background-color-light);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
