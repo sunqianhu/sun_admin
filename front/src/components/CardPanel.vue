@@ -1,12 +1,15 @@
 <template>
   <div class="card-panel">
     <div class="card-panel__header">
-      <div class="card-panel__title">{{ title }}</div>
-      <div class="card-panel__sub-title">{{ subTitle }}</div>
-      <div class="card-panel__action">
+      <div class="card-panel__title-col">
+        <div class="card-panel__title">{{ title }}</div>
+        <div class="card-panel__sub-title">{{ subTitle }}</div>
+      </div>
+      <div class="card-panel__action-col">
         <slot name="action"></slot>
       </div>
     </div>
+
     <div class="card-panel__body">
       <slot name="default"></slot>
     </div>
@@ -38,29 +41,33 @@ const props = defineProps({
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .card-panel__title {
-      color: var(--color-primary);
-      position: relative;
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-      &::before {
-        content: "";
-        display: inline-block;
-        vertical-align: -3px;
-        width: 4px;
-        height: 18px;
-        background-color: var(--color-primary);
-        margin-right: var(--margin-sm);
-        border-radius: 2px;
+    .card-panel__title-col {
+      display: flex;
+      align-items: center;
+      .card-panel__title {
+        color: var(--color-primary);
+        position: relative;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+        &::before {
+          content: "";
+          display: inline-block;
+          vertical-align: -3px;
+          width: 4px;
+          height: 18px;
+          background-color: var(--color-primary);
+          margin-right: var(--margin-sm);
+          border-radius: 2px;
+        }
+      }
+      .card-panel__sub-title {
+        flex: 1;
+        margin-left: var(--margin);
+        color: var(--font-color-secondary);
+        font-size: var(--font-size-sm);
       }
     }
-    .card-panel__sub-title {
-      flex: 1;
-      margin-left: var(--margin);
-      color: var(--font-color-secondary);
-      font-size: var(--font-size-sm);
-    }
-    .card-panel__action {
+    .card-panel__action-col {
       margin-left: auto;
       margin-right: var(--margin);
     }
