@@ -170,7 +170,7 @@ onMounted(() => {
   }
   .list {
     :deep(th.el-table__cell) {
-      background-color: var(--background-color);
+      background-color: var(--background-color-lighter);
     }
     .table {
       width: 100%;
