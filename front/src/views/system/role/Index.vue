@@ -220,7 +220,7 @@ onMounted(() => {
   .list {
     margin-top: var(--margin);
     :deep(th.el-table__cell) {
-      background-color: var(--background-color-dark);
+      background-color: var(--background-color);
     }
     .table {
       width: 100%;
