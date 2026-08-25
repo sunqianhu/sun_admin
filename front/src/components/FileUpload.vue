@@ -28,6 +28,7 @@
     :on-exceed="handleExceed"
     :on-progress="handleProgress"
     :on-error="handleError"
+    class="file-upload"
   >
     <template #default>
       <slot></slot>
@@ -201,4 +202,9 @@ const handleError = (error, uploadFile, uploadFiles) => {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.file-upload {
+  display: inline-flex;
+  vertical-align: middle;
+}
+</style>
