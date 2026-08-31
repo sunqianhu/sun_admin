@@ -31,19 +31,66 @@
     class="file-upload"
   >
     <template #default>
-      <slot></slot>
+      <el-popover
+        :visible="showPopoverProgress && uploading"
+        placement="bottom-end"
+        :width="350"
+      >
+        <template #reference>
+          <slot :uploading="uploading"></slot>
+        </template>
+        <slot name="progress" :files="uploadingFiles" :abort="abort">
+          <div class="upload-progress">
+            <div
+              v-for="file in uploadingFiles"
+              :key="file.uid"
+              class="upload-progress__item"
+            >
+              <div class="upload-progress__header">
+                <span class="upload-progress__name" :title="file.name">
+                  {{ file.name }}
+                </span>
+                <span class="upload-progress__percentage">
+                  {{ file.percentage || 0 }}%
+                </span>
+              </div>
+              <el-progress
+                :percentage="file.percentage || 0"
+                :show-text="false"
+                :stroke-width="4"
+                class="upload-progress__bar"
+              />
+              <div class="upload-progress__footer">
+                <span>
+                  {{ formatFileSize(getUploadedFileSize(file)) }} /
+                  {{ formatFileSize(file.size) }}
+                </span>
+                <el-tooltip content="取消上传">
+                  <el-button
+                    link
+                    :icon="Close"
+                    class="upload-progress__cancel"
+                    @click.stop="abort(file)"
+                  />
+                </el-tooltip>
+              </div>
+            </div>
+          </div>
+        </slot>
+      </el-popover>
     </template>
-    <template #tip>
+    <template v-if="$slots.tip" #tip>
       <slot name="tip"></slot>
     </template>
-    <template #file>
-      <slot name="file"></slot>
+    <template v-if="$slots.file" #file="{ file, index }">
+      <slot name="file" :file="file" :index="index"></slot>
     </template>
   </el-upload>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { computed, ref } from "vue";
+import { Close } from "@element-plus/icons-vue";
 
 const props = defineProps({
   action: {
@@ -74,6 +121,10 @@ const props = defineProps({
     type: Boolean,
     default: undefined,
   },
+  showPopoverProgress: {
+    type: Boolean,
+    default: true,
+  },
   data: {
     type: Object,
     default: undefined,
@@ -102,14 +153,20 @@ const emits = defineEmits([
   "exceed",
   "progress",
   "error",
+  "abort",
   "beforeUpload",
 ]);
 const files = defineModel({
   type: Array,
-  default: [],
+  default: () => [],
 });
 const headers = { token: localStorage.getItem("token") || "" };
 const uploadRef = ref(null);
+const uploadingFiles = computed(() =>
+  files.value.filter((file) => ["ready", "uploading"].includes(file.status)),
+); //上传中的文件列表
+const uploading = computed(() => uploadingFiles.value.length > 0); //上传中
+const showPopoverProgress = ref(props.showPopoverProgress);
 let action = import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload";
 if (props.action) {
   action = import.meta.env.VITE_API_PREFIX + props.action;
@@ -200,11 +257,91 @@ const handleError = (error, uploadFile, uploadFiles) => {
   });
   emits("error", error, uploadFile, uploadFiles);
 };
+
+/**
+ * 取消上传
+ * @param uploadFile
+ */
+const abort = async (uploadFile) => {
+  if (!uploadFile) {
+    return;
+  }
+  await uploadRef.value?.handleRemove(uploadFile);
+  emits("abort", uploadFile);
+};
+
+/**
+ * 格式化文件大小
+ * @param {number} size
+ */
+const formatFileSize = (size) => {
+  if (!size) {
+    return "0 B";
+  }
+  if (size < 1024) {
+    return `${size} B`;
+  }
+  if (size < 1024 * 1024) {
+    return `${(size / 1024).toFixed(1)} KB`;
+  }
+  if (size < 1024 * 1024 * 1024) {
+    return `${(size / 1024 / 1024).toFixed(1)} MB`;
+  }
+  return `${(size / 1024 / 1024 / 1024).toFixed(1)} GB`;
+};
+
+/**
+ * 得到文件已上传大小
+ * @param file
+ */
+const getUploadedFileSize = (file) => {
+  return Math.round(((file.size || 0) * (file.percentage || 0)) / 100);
+};
 </script>
 
 <style lang="scss" scoped>
 .file-upload {
   display: inline-flex;
   vertical-align: middle;
+}
+.upload-progress {
+  .upload-progress__item {
+    & + .upload-progress__item {
+      padding-top: var(--padding);
+      margin-top: var(--margin);
+      border-top: 1px solid var(--border-color);
+    }
+    .upload-progress__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--margin-sm);
+      .upload-progress__name {
+        width: 230px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .upload-progress__percentage {
+        color: var(--color-primary);
+        font-weight: var(--font-weight-bold);
+      }
+    }
+    .upload-progress__bar {
+      margin-top: var(--margin-sm);
+    }
+    .upload-progress__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--margin-sm);
+      color: var(--font-color-secondary);
+      font-size: var(--font-size-sm);
+      .upload-progress__cancel {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
 }
 </style>
