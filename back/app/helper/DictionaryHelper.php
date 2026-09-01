@@ -51,7 +51,7 @@ class DictionaryHelper
      */
     public function getValue($type, $key)
     {
-        $cacheKey = 'dictionary_' . $type . '_' . $key;
+        $cacheKey = 'dictionary_value_' . $type . '_' . $key;
         $value = Cache::get($cacheKey);
         if ($value !== null) {
             return $value;
@@ -96,5 +96,32 @@ class DictionaryHelper
         Cache::set($cacheKey, $valuesString, $this->expire);
 
         return $valuesString;
+    }
+
+    /**
+     * @throws ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     */
+    public function getKey($type, $value)
+    {
+        $cacheKey = 'dictionary_key_' . $type . '_' . md5($value);
+        $key = Cache::get($cacheKey);
+        if ($key !== null) {
+            return $key;
+        }
+
+        $dictionaryModel = DictionaryModel::field('key')
+            ->where('type', $type)
+            ->where('value', $value)
+            ->order('sort', 'asc')
+            ->find();
+        if(empty($dictionaryModel)){
+            throw new Exception('没有找到字典记录');
+        }
+        $key = $dictionaryModel->key;
+        Cache::set($cacheKey, $key, $this->expire);
+
+        return $key;
     }
 }
