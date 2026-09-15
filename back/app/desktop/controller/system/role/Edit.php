@@ -112,8 +112,8 @@ class Edit extends Base
             $roleModel->save($post);
             $id = $roleModel->id;
 
-            $RoleDesktopPermissionHelper = new RoleDesktopPermissionHelper();
-            $RoleDesktopPermissionHelper->setRelation($id, $post['desktop_permission_ids']);
+            $roleDesktopPermissionHelper = new RoleDesktopPermissionHelper();
+            $roleDesktopPermissionHelper->setRelation($id, $post['desktop_permission_ids']);
 
             $roleDesktopMenuHelper = new RoleDesktopMenuHelper();
             $roleDesktopMenuHelper->setRelation($id, $post['desktop_menu_ids']);
