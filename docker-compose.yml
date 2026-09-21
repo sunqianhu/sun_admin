@@ -21,7 +21,7 @@ services:
     image: sun_admin_front:1.4.3
     container_name: sun_admin_front
     depends_on:
-      - sun_admin_back
+      - back
     ports:
       - "80:80"
     networks:
