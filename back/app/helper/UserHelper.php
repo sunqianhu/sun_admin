@@ -32,7 +32,7 @@ class UserHelper
             }
         }
 
-        $data['password'] = md5($data['password']);
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         $userModel = new UserModel();
         $userModel->save($data);
 
@@ -60,7 +60,7 @@ class UserHelper
         //手机号码
         if (isset($data['phone'])) {
             $phoneUserModel = UserModel::where('id', '<>', $id)
-                ->where('phone', '=', $data['phone'])
+                ->where('phone', $data['phone'])
                 ->find();
             if (!empty($phoneUserModel)) {
                 throw new Exception('此手机号码已经存在');

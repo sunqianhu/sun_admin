@@ -79,11 +79,10 @@ class SessionHelper
      */
     public function login($account, $password, $ip = '')
     {
-        $userModel = UserModel::field('id,department_id,status,name')
+        $userModel = UserModel::field('id,department_id,status,name,password')
             ->where('account', $account)
-            ->where('password', md5($password))
             ->find();
-        if (empty($userModel)) {
+        if (empty($userModel) || !password_verify($password, $userModel->password)) {
             throw new Exception('账号或密码错误');
         }
         if ($userModel->status == 0) {

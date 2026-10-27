@@ -26,7 +26,7 @@ class UserPasswordHelper
         if (empty($userModel)) {
             throw new Exception('没有找到用户记录');
         }
-        $userModel->password = md5($password);
+        $userModel->password = password_hash($password, PASSWORD_DEFAULT);
         $userModel->save();
     }
 }
