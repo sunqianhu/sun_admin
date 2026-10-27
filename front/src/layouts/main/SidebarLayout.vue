@@ -16,6 +16,10 @@
           <div class="header__left">
             <hamburger class="header__hamburger"></hamburger>
           </div>
+          <quick-navigation
+            class="header__center"
+            v-if="themeStore.mainLayout_quickNavigation"
+          ></quick-navigation>
           <div class="header__right">
             <message-navigation
               class="header__message-navigation"
@@ -26,10 +30,6 @@
             <avatar class="header__avatar"></avatar>
           </div>
         </el-header>
-        <quick-navigation
-          class="sidebar-layout__quick-navigation"
-          v-if="themeStore.mainLayout_quickNavigation"
-        ></quick-navigation>
         <el-main class="sidebar-layout__workspace">
           <router-view v-slot="{ Component, route }">
             <keep-alive v-if="route.meta?.keep_alive">
@@ -157,6 +157,7 @@ onMounted(() => {
 
     .sidebar-layout__right {
       position: relative;
+      min-width: 0;
       z-index: 1;
       background-color: var(--background-color);
       > .header {
@@ -166,6 +167,24 @@ onMounted(() => {
         height: 50px;
         background-color: var(--background-color-light);
         padding: 0px;
+        .header__center {
+          flex: 1;
+          min-width: 0;
+          overflow: hidden;
+          border-top: none;
+          --el-tabs-header-height: 50px;
+          margin-left: var(--margin);
+          :deep(.el-tabs__header) {
+            border-bottom: none;
+            .el-tabs__nav-prev,
+            .el-tabs__nav-next {
+              height: 50px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+        }
         .header__right {
           display: flex;
           align-items: center;

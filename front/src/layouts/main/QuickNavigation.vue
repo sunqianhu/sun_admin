@@ -67,17 +67,11 @@ const remove = (key) => {
 .quick-navigation {
   --el-tabs-header-height: 40px;
   background-color: var(--background-color-light);
-  border-top: 1px solid var(--border-color);
-  //box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   :deep(.el-tabs__content) {
     display: none;
   }
   :deep(.el-tabs__header) {
     margin-bottom: 0px;
-    .el-tabs__nav-prev,
-    .el-tabs__nav-next {
-      line-height: 34px;
-    }
     .el-tabs__nav {
       border: none;
       .el-tabs__item {
