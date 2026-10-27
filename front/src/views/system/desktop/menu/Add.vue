@@ -83,11 +83,15 @@ const submitForm = async () => {
   await menuRef.value.validate();
 
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.desktop.menu.Add/save",
-    menu.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.desktop.menu.Add/save",
+      menu.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

@@ -93,13 +93,17 @@ const editFlag = ref(false);
  */
 const getTreePermission = async () => {
   listLoading.value = true;
-  const response = await axios.get(
-    "desktop/system.desktop.permission.Index/getTreePermission",
-    {
-      params: query.value,
-    },
-  );
-  listLoading.value = false;
+  let response;
+  try {
+    response = await axios.get(
+      "desktop/system.desktop.permission.Index/getTreePermission",
+      {
+        params: query.value,
+      },
+    );
+  } finally {
+    listLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

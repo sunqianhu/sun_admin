@@ -40,8 +40,12 @@ const init = async () => {
  */
 const logout = async () => {
   logoutLoading.value = true;
-  const response = await axios.get("mobile/my.user.Detail/logout");
-  logoutLoading.value = false;
+  let response;
+  try {
+    response = await axios.get("mobile/my.user.Detail/logout");
+  } finally {
+    logoutLoading.value = false;
+  }
   if (response.code != 0) {
     showFailToast(response.message);
     return;

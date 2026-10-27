@@ -32,10 +32,14 @@ const token = ref("");
  */
 const submitForm = async () => {
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.api_token_generate.Index/generate",
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.api_token_generate.Index/generate",
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

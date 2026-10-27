@@ -92,13 +92,17 @@ const close = () => {
  */
 const getPolicies = async () => {
   listLoading.value = true;
-  const response = await axios.get(
-    "desktop/system.data_scope.policy.Index/getPolicies",
-    {
-      params: query.value,
-    },
-  );
-  listLoading.value = false;
+  let response;
+  try {
+    response = await axios.get(
+      "desktop/system.data_scope.policy.Index/getPolicies",
+      {
+        params: query.value,
+      },
+    );
+  } finally {
+    listLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

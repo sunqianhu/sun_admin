@@ -63,12 +63,16 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   initLoading.value = true;
-  const response = await axios.get("desktop/system.role.DataScopeEdit/init", {
-    params: {
-      role_id: props.roleId,
-    },
-  });
-  initLoading.value = false;
+  let response;
+  try {
+    response = await axios.get("desktop/system.role.DataScopeEdit/init", {
+      params: {
+        role_id: props.roleId,
+      },
+    });
+  } finally {
+    initLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,
@@ -116,11 +120,15 @@ const close = () => {
 const submitForm = async () => {
   await roleDataScopeRef.value.validate();
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.role.DataScopeEdit/save",
-    roleDataScope.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.role.DataScopeEdit/save",
+      roleDataScope.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

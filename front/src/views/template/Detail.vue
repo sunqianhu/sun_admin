@@ -46,10 +46,14 @@ const loginLogs = ref([]);
  */
 const init = async () => {
   initLoading.value = true;
-  let response = await axios.get("desktop/system.user.Detail/init", {
-    params: { id: route.params.id },
-  });
-  initLoading.value = false;
+  let response;
+  try {
+    response = await axios.get("desktop/system.user.Detail/init", {
+      params: { id: route.params.id },
+    });
+  } finally {
+    initLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

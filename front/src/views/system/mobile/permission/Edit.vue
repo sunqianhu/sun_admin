@@ -70,13 +70,17 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   initLoading.value = true;
-  const response = await axios.get(
-    "desktop/system.mobile.permission.Edit/init",
-    {
-      params: { id: props.id },
-    },
-  );
-  initLoading.value = false;
+  let response;
+  try {
+    response = await axios.get(
+      "desktop/system.mobile.permission.Edit/init",
+      {
+        params: { id: props.id },
+      },
+    );
+  } finally {
+    initLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,
@@ -101,11 +105,15 @@ const submitForm = async () => {
   await permissionRef.value.validate();
 
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.mobile.permission.Edit/save",
-    permission.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.mobile.permission.Edit/save",
+      permission.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

@@ -60,10 +60,14 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   initLoading.value = true;
-  const response = await axios.get("desktop/system.dictionary.Edit/init", {
-    params: { id: props.id },
-  });
-  initLoading.value = false;
+  let response;
+  try {
+    response = await axios.get("desktop/system.dictionary.Edit/init", {
+      params: { id: props.id },
+    });
+  } finally {
+    initLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,
@@ -87,11 +91,15 @@ const close = () => {
 const submitForm = async () => {
   await dictionaryRef.value.validate();
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.dictionary.Edit/save",
-    dictionary.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.dictionary.Edit/save",
+      dictionary.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

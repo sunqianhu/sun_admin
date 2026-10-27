@@ -68,10 +68,14 @@ const option = ref({});
  */
 const init = async () => {
   initLoading.value = true;
-  const response = await axios.get("desktop/statistic.OrderTrend/init", {
-    params: query.value,
-  });
-  initLoading.value = false;
+  let response;
+  try {
+    response = await axios.get("desktop/statistic.OrderTrend/init", {
+      params: query.value,
+    });
+  } finally {
+    initLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,
@@ -154,10 +158,10 @@ const exp = async () => {
       params: query.value,
     });
   } catch (error) {
-    expLoading.value = false;
     return;
+  } finally {
+    expLoading.value = false;
   }
-  expLoading.value = false;
   if (response.code != 0) {
     ElMessage({
       message: response.message,

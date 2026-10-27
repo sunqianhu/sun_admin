@@ -92,10 +92,14 @@ const loading = ref(true);
  */
 const init = async () => {
   loading.value = true;
-  const response = await axios.get("desktop/system.user.Detail/init", {
-    params: { id: route.params.id },
-  });
-  loading.value = false;
+  let response;
+  try {
+    response = await axios.get("desktop/system.user.Detail/init", {
+      params: { id: route.params.id },
+    });
+  } finally {
+    loading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

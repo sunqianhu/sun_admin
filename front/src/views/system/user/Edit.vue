@@ -65,10 +65,14 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   initLoading.value = true;
-  let response = await axios.get("desktop/system.user.Edit/init", {
-    params: { id: props.id },
-  });
-  initLoading.value = false;
+  let response;
+  try {
+    response = await axios.get("desktop/system.user.Edit/init", {
+      params: { id: props.id },
+    });
+  } finally {
+    initLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,
@@ -93,11 +97,15 @@ const submitForm = async () => {
   await userRef.value.validate();
 
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.user.Edit/save",
-    user.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.user.Edit/save",
+      user.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

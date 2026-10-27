@@ -106,13 +106,17 @@ const total = ref(0);
  */
 const getPaginate = async () => {
   listLoading.value = true;
-  const response = await axios.get(
-    "desktop/system.dictionary.Index/getPaginate",
-    {
-      params: query.value,
-    },
-  );
-  listLoading.value = false;
+  let response;
+  try {
+    response = await axios.get(
+      "desktop/system.dictionary.Index/getPaginate",
+      {
+        params: query.value,
+      },
+    );
+  } finally {
+    listLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

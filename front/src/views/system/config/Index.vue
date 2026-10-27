@@ -56,8 +56,12 @@ const submitLoading = ref(false);
  */
 const init = async () => {
   initLoading.value = true;
-  const response = await axios.get("desktop/system.config.Index/init");
-  initLoading.value = false;
+  let response;
+  try {
+    response = await axios.get("desktop/system.config.Index/init");
+  } finally {
+    initLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,
@@ -76,11 +80,15 @@ const submitForm = async () => {
   await configRef.value.validate();
 
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.config.Index/save",
-    config.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.config.Index/save",
+      config.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

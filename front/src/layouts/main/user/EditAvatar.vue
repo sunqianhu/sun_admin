@@ -179,11 +179,15 @@ const save = () => {
   cropperRef.value.getCropData(async (data) => {
     user.value.avatar_base64_image_content = data;
     saveLoading.value = true;
-    const response = await axios.post(
-      "desktop/layouts.main.user.EditAvatar/save",
-      user.value,
-    );
-    saveLoading.value = false;
+    let response;
+    try {
+      response = await axios.post(
+        "desktop/layouts.main.user.EditAvatar/save",
+        user.value,
+      );
+    } finally {
+      saveLoading.value = false;
+    }
     if (response.code != 0) {
       ElMessage({
         message: response.message,

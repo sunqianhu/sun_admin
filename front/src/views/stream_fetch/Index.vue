@@ -72,16 +72,24 @@ const handleMessage = (message) => {
  */
 const submitFetch = async () => {
   loading.value = true;
-  const request = streamFetch.post(
-    "desktop/stream_fetch.Index/fetch",
-    {},
-    {
-      onMessage: handleMessage,
-      onComplete: () => {
-        loading.value = false;
-      },
-    },
-  );
+  error.value = "";
+  try {
+    await new Promise((resolve, reject) => {
+      streamFetch.post(
+        "desktop/stream_fetch.Index/fetch",
+        {},
+        {
+          onMessage: handleMessage,
+          onComplete: resolve,
+          onError: reject,
+        },
+      );
+    });
+  } catch (requestError) {
+    error.value = requestError.message;
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 

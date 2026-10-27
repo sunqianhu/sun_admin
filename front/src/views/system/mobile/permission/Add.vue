@@ -78,11 +78,15 @@ const close = () => {
 const submitForm = async () => {
   await permissionRef.value.validate();
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.mobile.permission.Add/save",
-    permission.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.mobile.permission.Add/save",
+      permission.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

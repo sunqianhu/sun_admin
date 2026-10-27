@@ -92,13 +92,17 @@ const close = () => {
  */
 const getPaginate = async () => {
   paginateLoading.value = true;
-  const response = await axios.get(
-    "desktop/components.UserSelectDialog/getPaginate",
-    {
-      params: query.value,
-    },
-  );
-  paginateLoading.value = false;
+  let response;
+  try {
+    response = await axios.get(
+      "desktop/components.UserSelectDialog/getPaginate",
+      {
+        params: query.value,
+      },
+    );
+  } finally {
+    paginateLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

@@ -55,11 +55,15 @@ const close = () => {
 const submitForm = async () => {
   await dictionaryRef.value.validate();
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.dictionary.Add/save",
-    dictionary.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.dictionary.Add/save",
+      dictionary.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

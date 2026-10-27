@@ -123,10 +123,10 @@ const submitForm = async () => {
   try {
     response = await axios.post("desktop/login/login", session.value);
   } catch (error) {
-    submitLoading.value = false;
     return;
+  } finally {
+    submitLoading.value = false;
   }
-  submitLoading.value = false;
   if (response.code != 0) {
     ElMessage({
       message: response.message,

@@ -97,11 +97,15 @@ const close = () => {
 const submitForm = async () => {
   await policyRef.value.validate();
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.data_scope.policy.Add/save",
-    policy.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.data_scope.policy.Add/save",
+      policy.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

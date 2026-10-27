@@ -83,8 +83,12 @@ const upload = async (file) => {
   formData.append("module", props.module);
 
   file.status = "uploading";
-  const response = await axios.post("mobile/FileUpload/upload", formData);
-  file.status = "done";
+  let response;
+  try {
+    response = await axios.post("mobile/FileUpload/upload", formData);
+  } finally {
+    file.status = response?.code == 0 ? "done" : "failed";
+  }
   if (response.code != 0) {
     showFailToast(response.message);
     deleteFile(file);

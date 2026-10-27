@@ -64,11 +64,15 @@ const close = () => {
 const submitForm = async () => {
   await dataScopeRef.value.validate();
   submitLoading.value = true;
-  const response = await axios.post(
-    "desktop/system.data_scope.Add/save",
-    dataScope.value,
-  );
-  submitLoading.value = false;
+  let response;
+  try {
+    response = await axios.post(
+      "desktop/system.data_scope.Add/save",
+      dataScope.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

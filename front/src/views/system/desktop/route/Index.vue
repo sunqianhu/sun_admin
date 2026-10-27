@@ -90,13 +90,17 @@ const editFlag = ref(false);
  */
 const getRoutes = async () => {
   listLoading.value = true;
-  const response = await axios.get(
-    "desktop/system.desktop.route.Index/getRoutes",
-    {
-      params: query.value,
-    },
-  );
-  listLoading.value = false;
+  let response;
+  try {
+    response = await axios.get(
+      "desktop/system.desktop.route.Index/getRoutes",
+      {
+        params: query.value,
+      },
+    );
+  } finally {
+    listLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

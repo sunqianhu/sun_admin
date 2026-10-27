@@ -26,6 +26,13 @@
     >
       <img :src="selectedBase64ImageContent" class="cropper__image" />
     </van-dialog>
+    <van-toast
+      v-model:show="saveLoading"
+      type="loading"
+      :duration="0"
+      forbid-click
+      teleport="body"
+    />
   </div>
 </template>
 
@@ -42,6 +49,7 @@ const props = defineProps({
   },
 });
 const emits = defineEmits(["successed"]);
+const saveLoading = ref(false);
 const selectedBase64ImageContent = ref(""); //选择的头像base64内容
 const showCropperFlag = ref(false); //显示裁剪标识
 let cropper = null; //裁剪器对象
@@ -106,14 +114,15 @@ function cancelCrop() {
  * @param base64ImageContent
  */
 const save = async (base64ImageContent) => {
-  showLoadingToast({
-    duration: 0,
-    forbidClick: true,
-  });
-  const response = await axios.post("mobile/my.user.EditAvatar/save", {
-    avatar_base64_image_content: base64ImageContent,
-  });
-  closeToast();
+  saveLoading.value = true;
+  let response;
+  try {
+    response = await axios.post("mobile/my.user.EditAvatar/save", {
+      avatar_base64_image_content: base64ImageContent,
+    });
+  } finally {
+    saveLoading.value = false;
+  }
 
   if (response.code != 0) {
     showFailToast(response.message);
