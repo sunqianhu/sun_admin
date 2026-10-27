@@ -113,6 +113,15 @@ class Message extends Command
      */
     public function handleMessage(TcpConnection $connection, $data)
     {
+        if (isset($connection->token)) {
+            try {
+                (new SessionHelper())->tokenAuth($connection->token);
+            } catch (Exception $exception) {
+                $connection->close();
+                return;
+            }
+        }
+
         try {
             //活跃时间
             $connection->activeTime = time();
@@ -176,6 +185,7 @@ class Message extends Command
         $sessionHelper = new SessionHelper();
         $sessionId = $sessionHelper->tokenAuth($token);
         $connection->userId = $sessionHelper->getUserId($sessionId);
+        $connection->token = $token;
 
         unset($sessionId);
         unset($sessionHelper);
@@ -196,6 +206,7 @@ class Message extends Command
 
         //消息
         $encodeData = json_encode($data);
+        $sessionHelper = new SessionHelper();
 
         //指定
         foreach ($this->worker->connections as $connection) {
@@ -203,6 +214,12 @@ class Message extends Command
                 continue;
             }
             if (!in_array($connection->userId, $userIds)) {
+                continue;
+            }
+            try {
+                $sessionHelper->tokenAuth($connection->token ?? '');
+            } catch (Exception $exception) {
+                $connection->close();
                 continue;
             }
             $connection->send($encodeData);

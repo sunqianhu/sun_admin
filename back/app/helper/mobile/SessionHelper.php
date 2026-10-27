@@ -133,6 +133,14 @@ class SessionHelper
             throw new Exception('登录凭证错误');
         }
 
+        $userModel = UserModel::field('id,status')->find($userId);
+        if (empty($userModel)) {
+            throw new Exception('账号不存在');
+        }
+        if ((int) $userModel->status !== 1) {
+            throw new Exception('账号已停用');
+        }
+
         return $sessionModel->id;
     }
 
