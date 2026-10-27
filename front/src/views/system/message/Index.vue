@@ -68,7 +68,6 @@ import { ref, onMounted } from "vue";
 import dayjs from "dayjs";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
-import { getSafeHttpUrl } from "@/helper/url";
 
 const query = ref({
   times: [],
@@ -101,10 +100,7 @@ const getPaginate = async () => {
   }
 
   total.value = response.data.total;
-  messages.value = response.data.data.map((message) => ({
-    ...message,
-    url: getSafeHttpUrl(message.url),
-  }));
+  messages.value = response.data.data;
 };
 
 /**
