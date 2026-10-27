@@ -177,7 +177,7 @@ const getPaginate = async () => {
  * 提交查询
  */
 const submitQuery = () => {
-  query.page = 1;
+  query.value.page = 1;
   getPaginate();
 };
 
