@@ -1,7 +1,7 @@
 <template></template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, onBeforeUnmount } from "vue";
 import axios from "@/helper/axios";
 import audioPath from "@/assets/message.mp3";
 import createWebsocketClient from "sunqianhu_websocket_client";
@@ -115,6 +115,11 @@ function playAudio() {
 
 onMounted(() => {
   init();
+});
+
+onBeforeUnmount(() => {
+  websocketClient.close();
+  messageInstances = [];
 });
 </script>
 

@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import axios from "@/helper/axios";
 import { ChatDotRound } from "@element-plus/icons-vue";
@@ -98,6 +98,10 @@ const getWsUrl = () => {
 
 onMounted(() => {
   init();
+});
+
+onBeforeUnmount(() => {
+  websocketClient.close();
 });
 </script>
 
