@@ -109,12 +109,9 @@ const getPaginate = async () => {
   loading.value = true;
   let response;
   try {
-    response = await axios.get(
-      "desktop/system.dictionary.Index/getPaginate",
-      {
-        params: query.value,
-      },
-    );
+    response = await axios.get("desktop/system.dictionary.Index/getPaginate", {
+      params: query.value,
+    });
   } finally {
     loading.value = false;
   }
@@ -209,6 +206,7 @@ onMounted(() => {
     display: flex;
     .page-header__name {
       font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
     }
     .page-header__description {
       color: var(--font-color-secondary);

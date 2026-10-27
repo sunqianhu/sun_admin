@@ -36,7 +36,12 @@
         <div class="message__content">
           {{ message.content }}
           <span>
-            <a :href="message.url" target="_blank" v-if="message.url !== ''">
+            <a
+              :href="message.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              v-if="message.url"
+            >
               【详情】
             </a>
           </span>
@@ -63,6 +68,7 @@ import { ref, onMounted } from "vue";
 import dayjs from "dayjs";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
+import { getSafeHttpUrl } from "@/helper/url";
 
 const query = ref({
   times: [],
@@ -95,7 +101,10 @@ const getPaginate = async () => {
   }
 
   total.value = response.data.total;
-  messages.value = response.data.data;
+  messages.value = response.data.data.map((message) => ({
+    ...message,
+    url: getSafeHttpUrl(message.url),
+  }));
 };
 
 /**
@@ -145,6 +154,7 @@ onMounted(() => {
   box-shadow: var(--box-shadow);
   .page-name {
     font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
   }
   .query-bar {
     margin-top: var(--margin);

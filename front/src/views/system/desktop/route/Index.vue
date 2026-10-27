@@ -92,12 +92,9 @@ const getRoutes = async () => {
   listLoading.value = true;
   let response;
   try {
-    response = await axios.get(
-      "desktop/system.desktop.route.Index/getRoutes",
-      {
-        params: query.value,
-      },
-    );
+    response = await axios.get("desktop/system.desktop.route.Index/getRoutes", {
+      params: query.value,
+    });
   } finally {
     listLoading.value = false;
   }
@@ -172,6 +169,7 @@ onMounted(() => {
   .page-header {
     .page-header__name {
       font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
     }
     .page-header__description {
       color: var(--font-color-secondary);

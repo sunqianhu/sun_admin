@@ -167,6 +167,7 @@ onMounted(() => {
   box-shadow: var(--box-shadow);
   .page-name {
     font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
   }
   .query-bar {
     margin-top: var(--margin);

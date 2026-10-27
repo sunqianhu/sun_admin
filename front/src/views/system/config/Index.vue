@@ -116,6 +116,7 @@ onMounted(() => {
   box-shadow: var(--box-shadow);
   .page-name {
     font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
   }
   .form {
     width: 500px;

@@ -61,6 +61,7 @@ const submitForm = async () => {
     display: flex;
     .page-header__name {
       font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
     }
     .page-header__description {
       color: var(--font-color-secondary);

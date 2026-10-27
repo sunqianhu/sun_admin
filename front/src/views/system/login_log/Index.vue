@@ -105,12 +105,9 @@ const getPaginate = async () => {
   listLoading.value = true;
   let response;
   try {
-    response = await axios.get(
-      "desktop/system.login_log.Index/getPaginate",
-      {
-        params: query.value,
-      },
-    );
+    response = await axios.get("desktop/system.login_log.Index/getPaginate", {
+      params: query.value,
+    });
   } finally {
     listLoading.value = false;
   }
@@ -165,6 +162,7 @@ onMounted(() => {
   box-shadow: var(--box-shadow);
   .page-name {
     font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
   }
   .query-bar {
     margin-top: var(--margin);
