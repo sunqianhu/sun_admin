@@ -1,69 +1,66 @@
 <template>
   <div class="login">
-    <div class="background">
-      <video
-        src="@/assets/login/background.mp4"
-        autoplay
-        loop
-        muted
-        playsinline
-      ></video>
-    </div>
-
-    <div class="container">
-      <div class="system-name">
-        <img src="@/assets/logo.png" alt="logo" class="system-name__logo" />
-        <span class="system-name__name">{{ systemName }}</span>
+    <div class="main">
+      <div class="main__left">
+        <div class="system-logo">
+          <img src="@/assets/logo.png" alt="" />
+        </div>
+        <div class="welcome">欢迎使用</div>
+        <h1 class="system-name">{{ systemName }}</h1>
       </div>
-      <div class="welcome">又见面啦！请输入账号和密码登录系统</div>
 
-      <el-form
-        :model="session"
-        :rules="rules"
-        scroll-to-error
-        ref="sessionRef"
-        label-position="top"
-        class="form"
-        @keyup.enter="verify"
-      >
-        <el-form-item label="账号" prop="account">
-          <el-input
-            v-model="session.account"
-            :prefix-icon="User"
-            size="large"
-            placeholder="请输入账号"
-          />
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input
-            v-model="session.password"
-            type="password"
-            show-password
-            size="large"
-            :prefix-icon="Lock"
-            placeholder="请输入密码"
-          />
-        </el-form-item>
-        <el-form-item class="submit">
-          <el-button
-            type="primary"
-            size="large"
-            @click="verify"
-            class="button"
-            :loading="submitLoading"
+      <div class="main__right">
+        <div class="panel">
+          <div class="page-header">
+            <div class="page-header__name">账号登录</div>
+            <div class="page-header__description">请输入您的账号和密码</div>
+          </div>
+          <el-form
+            :model="session"
+            :rules="rules"
+            scroll-to-error
+            ref="sessionRef"
+            label-position="top"
+            class="form"
+            @submit.prevent="verify"
           >
-            登录
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-
-    <div class="footer">
-      <div class="browser">
-        浏览器支持：Edge ≥ 85 Firefox≥79 Chrome≥85 Safari≥14.1
-      </div>
-      <div class="copyright">
-        Copyright &copy; {{ new Date().getFullYear() }} jfwind
+            <el-form-item label="账号" prop="account">
+              <el-input
+                v-model="session.account"
+                :prefix-icon="User"
+                placeholder="请输入账号"
+                autocomplete="username"
+                autocapitalize="none"
+                :spellcheck="false"
+              />
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input
+                v-model="session.password"
+                type="password"
+                show-password
+                :prefix-icon="Lock"
+                placeholder="请输入密码"
+                autocomplete="current-password"
+              />
+            </el-form-item>
+            <el-form-item class="submit-row">
+              <el-button
+                type="primary"
+                native-type="submit"
+                :loading="submitLoading"
+                class="button"
+              >
+                {{ submitLoading ? "正在登录" : "登录" }}
+              </el-button>
+            </el-form-item>
+          </el-form>
+          <div class="help">忘记密码？请联系管理员</div>
+        </div>
+        <div class="footer">
+          支持浏览器：Edge ≥ 85 Firefox≥79 Chrome≥85 Safari≥14.1<br />
+          &copy; {{ new Date().getFullYear() }} {{ systemName }}
+        </div>
       </div>
     </div>
 
@@ -86,7 +83,7 @@ import Vcode from "vue3-puzzle-vcode";
 
 const systemName = ref("");
 const session = ref({});
-const sessionRef = ref(null);
+const sessionRef = ref();
 const rules = {
   account: [{ required: true, message: "请输入账号", trigger: "blur" }],
   password: [{ required: true, message: "请输入密码", trigger: "blur" }],
@@ -100,8 +97,13 @@ const vCodeFlag = ref(false);
 const init = async () => {
   const response = await axios.get("desktop/Login/init");
   if (response.code != 0) {
+    ElMessage({
+      message: response.message,
+      type: "error",
+    });
     return;
   }
+
   systemName.value = response.data.system_name;
   document.title = systemName.value;
 };
@@ -122,8 +124,6 @@ const submitForm = async () => {
   let response;
   try {
     response = await axios.post("desktop/login/login", session.value);
-  } catch (error) {
-    return;
   } finally {
     submitLoading.value = false;
   }
@@ -146,80 +146,161 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .login {
-  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
-  left: 0px;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  .background {
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    z-index: 1;
-    background-color: #141414;
-    background-image: url("@/assets/login/background.png");
-    background-size: 100% 100%;
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: fill;
-    }
-  }
-  .container {
-    padding: 32px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-    background: var(--background-color-opacity-light);
+  background-color: var(--background-color);
+  .main {
+    display: flex;
+    width: 840px;
+    height: 480px;
+    max-height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--border-color-light);
     border-radius: var(--border-radius-lg);
-    box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.12);
-    .system-name {
+    background-color: var(--background-color-light);
+    box-shadow: var(--box-shadow-light);
+  }
+  .main__left {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    flex: 0 0 36%;
+    padding: var(--padding-lg);
+    overflow: hidden;
+    color: #ffffff;
+    background: linear-gradient(155deg, #1e3054, #233c67);
+    &::after {
+      position: absolute;
+      right: -100px;
+      bottom: -160px;
+      width: 300px;
+      height: 300px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+    .system-logo {
       display: flex;
       align-items: center;
       justify-content: center;
-      .system-name__logo {
-        height: 30px;
-      }
-      .system-name__name {
-        margin-left: var(--margin);
-        font-size: 24px;
-        font-weight: var(--font-weight-bold);
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius);
+      background-color: #ffffff;
+      img {
+        display: block;
+        width: 32px;
       }
     }
     .welcome {
-      margin-top: var(--margin-sm);
-      text-align: center;
-      font-size: var(--font-size-sm);
-      color: var(--font-color-placeholder);
+      margin-top: var(--margin);
+      color: #b9c7df;
+      font-size: var(--font-size);
     }
-    .form {
-      margin-top: 16px;
-      width: 300px;
-      :deep(.el-input .el-input__inner:-webkit-autofill) {
-        box-shadow: 0 0 0px 1000px white inset;
-      }
-      .submit {
-        margin-top: 32px;
-        .button {
-          width: 100%;
-        }
-      }
+    .system-name {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+      margin: 0px;
     }
   }
-  .footer {
-    position: absolute;
-    left: var(--margin);
-    right: var(--margin);
-    bottom: var(--margin);
-    z-index: 2;
-    text-align: center;
-    font-size: var(--font-size-sm);
-    color: var(--font-color-secondary);
+  .main__right {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 24px 40px;
+    .panel {
+      width: 320px;
+      margin: auto;
+      .page-header {
+        .page-header__name {
+          font-size: var(--font-size-xl);
+          font-weight: var(--font-weight-bold);
+          line-height: 32px;
+        }
+        .page-header__description {
+          margin-top: var(--margin-sm);
+          color: var(--font-color-secondary);
+          line-height: 20px;
+        }
+      }
+      .form {
+        margin-top: 24px;
+        :deep(.el-form-item) {
+          margin-bottom: var(--margin);
+        }
+        :deep(.el-form-item__label::before) {
+          display: none;
+        }
+        :deep(.el-input__wrapper) {
+          box-sizing: border-box;
+          height: 40px;
+          padding: 0px 12px;
+          border-radius: var(--border-radius);
+        }
+        :deep(.el-input__inner) {
+          &:-webkit-autofill {
+            -webkit-text-fill-color: var(--el-text-color-primary);
+            box-shadow: 0px 0px 0px 1000px var(--el-fill-color-blank) inset;
+          }
+        }
+        .submit-row {
+          margin-top: 24px;
+          .button {
+            width: 100%;
+            height: 40px;
+            border-radius: var(--border-radius);
+          }
+        }
+      }
+      .help {
+        margin-top: var(--margin);
+        color: var(--font-color-secondary);
+        font-size: var(--font-size-xs);
+        text-align: center;
+      }
+    }
+    .footer {
+      margin-top: var(--margin);
+      color: var(--font-color-placeholder);
+      font-size: var(--font-size-xs);
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .login {
+    padding: var(--padding);
+    .main {
+      flex-direction: column;
+      width: 400px;
+    }
+    .main__left {
+      flex: 0 0 auto;
+      padding: 20px 24px;
+      .system-logo {
+        display: none;
+      }
+      .welcome {
+        margin-top: 0px;
+      }
+      .system-name {
+        font-size: var(--font-size-lg);
+      }
+    }
+    .main__right {
+      flex: 0 1 auto;
+    }
   }
 }
 </style>
