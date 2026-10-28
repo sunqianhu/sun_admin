@@ -11,12 +11,7 @@
   </div>
 </template>
 
-<script setup>
-import { useDark, useToggle } from "@vueuse/core";
-
-const isDark = useDark();
-useToggle(isDark);
-</script>
+<script setup></script>
 
 <style lang="scss">
 body {

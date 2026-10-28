@@ -159,7 +159,6 @@ onMounted(() => {
     height: 480px;
     max-height: 100%;
     overflow: hidden;
-    border: 1px solid var(--border-color-light);
     border-radius: var(--border-radius-lg);
     background-color: var(--background-color-light);
     box-shadow: var(--box-shadow-light);
@@ -246,12 +245,6 @@ onMounted(() => {
           height: 40px;
           padding: 0px 12px;
           border-radius: var(--border-radius);
-        }
-        :deep(.el-input__inner) {
-          &:-webkit-autofill {
-            -webkit-text-fill-color: var(--el-text-color-primary);
-            box-shadow: 0px 0px 0px 1000px var(--el-fill-color-blank) inset;
-          }
         }
         .submit-row {
           margin-top: 24px;

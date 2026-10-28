@@ -5,7 +5,10 @@
 </template>
 
 <script setup>
+import { useDark } from "@vueuse/core";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+
+useDark();
 </script>
 
 <style scoped></style>

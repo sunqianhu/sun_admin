@@ -5,15 +5,13 @@
         v-model="isDark"
         :active-action-icon="Moon"
         :inactive-action-icon="Sunny"
-        @change="useToggle"
       />
     </el-tooltip>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useDark, useToggle } from "@vueuse/core";
+import { useDark } from "@vueuse/core";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 
 const isDark = useDark();

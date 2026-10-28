@@ -9,7 +9,7 @@
   >
     <el-form :model="theme" scroll-to-error class="form">
       <el-form-item label="暗黑模式" prop="isDark">
-        <el-switch v-model="isDark" @change="useToggle" />
+        <el-switch v-model="isDark" />
       </el-form-item>
 
       <el-divider content-position="center">主布局</el-divider>
@@ -465,7 +465,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useDark, useToggle } from "@vueuse/core";
+import { useDark } from "@vueuse/core";
 import { useThemeStore } from "@/stores/theme";
 import { useThemeSettingFormStore } from "@/stores/theme_setting_form";
 

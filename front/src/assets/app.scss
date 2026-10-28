@@ -74,6 +74,15 @@ pre {
   padding: 0px;
   line-height: 150%;
 }
+.el-input__inner {
+  &:-webkit-autofill {
+    -webkit-text-fill-color: var(--el-input-text-color);
+    box-shadow: 0 0 0 1000px var(--el-input-bg-color) inset;
+  }
+  &:autofill {
+    box-shadow: 0 0 0 1000px var(--el-input-bg-color) inset;
+  }
+}
 .text-tip {
   color: var(--font-color-secondary);
   font-size: var(--font-size-sm);

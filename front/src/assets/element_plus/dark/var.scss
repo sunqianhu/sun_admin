@@ -1,6 +1,7 @@
 @use "sass:map";
 @use "sass:math";
 @use "sass:color";
+@use "element-plus/theme-chalk/src/mixins/function.scss";
 
 //rgba覆盖转换hex
 @function mix-overlay-color($upper, $lower) {
@@ -13,7 +14,7 @@
   $blue: color.channel($upper, "blue") * $opacity +
     color.channel($lower, "blue") * (1 - $opacity);
 
-  @return rgb2hex(rgb($red, $green, $blue));
+  @return rgb($red, $green, $blue);
 }
 
 //颜色混合
