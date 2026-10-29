@@ -80,11 +80,26 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="openEditPassword(row.id)"
+                <el-dropdown-item @click="openPasswordEdit(row.id)"
                   >修改密码</el-dropdown-item
                 >
-                <el-dropdown-item @click="offLine(row.id)">
-                  踢下线
+                <el-dropdown-item
+                  v-permission="['system_user_desktop_offline']"
+                  @click="desktopOffline(row.id)"
+                >
+                  踢桌面端下线
+                </el-dropdown-item>
+                <el-dropdown-item
+                  v-permission="['system_user_mobile_offline']"
+                  @click="mobileOffline(row.id)"
+                >
+                  踢移动端下线
+                </el-dropdown-item>
+                <el-dropdown-item
+                  v-permission="['system_user_api_offline']"
+                  @click="apiOffline(row.id)"
+                >
+                  踢API端下线
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -243,26 +258,79 @@ const editStatus = async (row) => {
 };
 
 /**
- * 打开修改密码
+ * 打开密码修改
  * @param {number} id 记录id
  */
-const openEditPassword = async (id) => {
+const openPasswordEdit = async (id) => {
   rowId.value = id;
   passwordEditFlag.value = true;
 };
 
 /**
- * 踢下线
+ * 踢桌面端下线
  * @param {number} id 记录id
  */
-const offLine = async (id) => {
-  let response = await ElMessageBox.confirm("确定将用户踢下线吗？", "提示", {
+const desktopOffline = async (id) => {
+  await ElMessageBox.confirm("确定将用户的桌面端踢下线吗？", "提示", {
     draggable: true,
   });
 
-  response = await axios.post("desktop/system.user.Index/offLine", {
-    id: id,
+  const response = await axios.post(
+    "desktop/system.user.Index/desktopOffline",
+    { id: id },
+  );
+  if (response.code != 0) {
+    ElMessage({
+      message: response.message,
+      type: "error",
+    });
+    return;
+  }
+  ElMessage({
+    message: response.message,
+    type: "success",
   });
+};
+
+/**
+ * 踢移动端下线
+ * @param {number} id 记录id
+ */
+const mobileOffline = async (id) => {
+  await ElMessageBox.confirm("确定将用户的移动端踢下线吗？", "提示", {
+    draggable: true,
+  });
+
+  const response = await axios.post(
+    "desktop/system.user.Index/mobileOffline",
+    { id: id },
+  );
+  if (response.code != 0) {
+    ElMessage({
+      message: response.message,
+      type: "error",
+    });
+    return;
+  }
+  ElMessage({
+    message: response.message,
+    type: "success",
+  });
+};
+
+/**
+ * 踢API端下线
+ * @param {number} id 记录id
+ */
+const apiOffline = async (id) => {
+  await ElMessageBox.confirm("确定将用户的API端踢下线吗？", "提示", {
+    draggable: true,
+  });
+
+  const response = await axios.post(
+    "desktop/system.user.Index/apiOffline",
+    { id: id },
+  );
   if (response.code != 0) {
     ElMessage({
       message: response.message,

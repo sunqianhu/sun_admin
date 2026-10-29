@@ -16,10 +16,10 @@
           <el-dropdown-item :icon="User" @click="openDetail">
             账号信息
           </el-dropdown-item>
-          <el-dropdown-item :icon="User" @click="openEditAvatar">
+          <el-dropdown-item :icon="User" @click="openAvatarEdit">
             修改头像
           </el-dropdown-item>
-          <el-dropdown-item :icon="Edit" @click="openEditPassword">
+          <el-dropdown-item :icon="Edit" @click="openPasswordEdit">
             修改密码
           </el-dropdown-item>
           <el-dropdown-item :icon="SwitchButton" @click="logout">
@@ -86,16 +86,16 @@ const openDetail = async () => {
 };
 
 /**
- * 打开修改头像
+ * 打开头像修改
  */
-const openEditAvatar = async () => {
+const openAvatarEdit = async () => {
   avatarEditFlag.value = true;
 };
 
 /**
- * 打开修改密码
+ * 打开密码修改
  */
-const openEditPassword = async () => {
+const openPasswordEdit = async () => {
   passwordEditFlag.value = true;
 };
 

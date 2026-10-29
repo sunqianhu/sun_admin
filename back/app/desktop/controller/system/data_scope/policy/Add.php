@@ -3,6 +3,8 @@
 namespace app\desktop\controller\system\data_scope\policy;
 
 use app\desktop\controller\Base;
+use app\model\DataScopeModel;
+use app\model\DepartmentModel;
 use app\model\data_scope\PolicyDepartmentModel;
 use app\model\data_scope\PolicyModel;
 use app\validate\data_scope\PolicyValidate;
@@ -22,7 +24,7 @@ class Add extends Base
 
         try {
             validate(PolicyValidate::class)->scene('add')->check($post);
-            if($post['type'] == 99){
+            if($post['type'] == 98){
                 $idsValidator = new IdsValidator();
                 $idsValidator->check('指定部门', $post['department_ids']);
             }
@@ -37,7 +39,7 @@ class Add extends Base
             $data = $post;
             unset($data['department_ids']);
             $policyModel = new PolicyModel();
-            $policyModel->save($post);
+            $policyModel->save($data);
             $id = $policyModel->id;
 
             foreach($post['department_ids'] as $departmentId){

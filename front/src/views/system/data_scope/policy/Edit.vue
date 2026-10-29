@@ -55,19 +55,17 @@ import TreeDepartmentSelect from "./TreeDepartmentSelect.vue";
 const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const policy = ref({
-  data_scope: 0,
+  type: 0,
   department_ids: [],
 });
 const policyRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入名称", trigger: "blur" }],
-  data_scope: [
-    { required: true, message: "请选择数据范围", trigger: "change" },
-  ],
+  type: [{ required: true, message: "请选择类型", trigger: "change" }],
   department_ids: [
     {
       validator: (rule, value, callback) => {
-        if (policy.value.data_scope === 99) {
+        if (Number(policy.value.type) === 98) {
           if (!value || value.length === 0) {
             callback(new Error("请选择指定单位"));
             return;

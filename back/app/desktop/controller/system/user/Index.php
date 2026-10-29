@@ -75,9 +75,9 @@ class Index extends Base
     }
 
     /**
-     * 踢下线
+     * 踢桌面端下线
      */
-    function offLine()
+    public function desktopOffline()
     {
         $post = $this->request->post(['id']);
 
@@ -89,11 +89,58 @@ class Index extends Base
 
         try{
             $sessionHelper = new SessionHelper();
-            $sessionHelper->deleteByUserId($post['id']);
+            $sessionHelper->deleteByUserId($post['id'], 0);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
 
         return $this->getSuccessResponse('操作成功');
     }
+
+    /**
+     * 踢移动端下线
+     */
+    public function mobileOffline()
+    {
+        $post = $this->request->post(['id']);
+
+        try {
+            validate(UserValidate::class)->scene('offline')->check($post);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
+
+        try{
+            $sessionHelper = new SessionHelper();
+            $sessionHelper->deleteByUserId($post['id'], 1);
+        }catch (Exception $exception){
+            return $this->getErrorResponse($exception->getMessage());
+        }
+
+        return $this->getSuccessResponse('操作成功');
+    }
+
+    /**
+     * 踢API端下线
+     */
+    public function apiOffline()
+    {
+        $post = $this->request->post(['id']);
+
+        try {
+            validate(UserValidate::class)->scene('offline')->check($post);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
+
+        try{
+            $sessionHelper = new SessionHelper();
+            $sessionHelper->deleteByUserId($post['id'], 2);
+        }catch (Exception $exception){
+            return $this->getErrorResponse($exception->getMessage());
+        }
+
+        return $this->getSuccessResponse('操作成功');
+    }
+
 }
