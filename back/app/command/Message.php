@@ -113,15 +113,6 @@ class Message extends Command
      */
     public function handleMessage(TcpConnection $connection, $data)
     {
-        if (isset($connection->token)) {
-            try {
-                (new SessionHelper())->tokenAuth(0, $connection->token);
-            } catch (Exception $exception) {
-                $connection->close();
-                return;
-            }
-        }
-
         try {
             //活跃时间
             $connection->activeTime = time();
@@ -130,6 +121,19 @@ class Message extends Command
             $decodeData = json_decode($data, true);
             if (empty($decodeData) || empty($decodeData['type'])) {
                 throw new Exception('data数据格式错误，数据：'.$data);
+            }
+
+            //除了绑定都要认证
+            if($decodeData['type'] !== 'bind'){
+                try {
+                    $sessionHelper = new SessionHelper();
+                    $sessionHelper->tokenAuth(0, $connection->token);
+                    unset($sessionHelper);
+                } catch (Exception $exception) {
+                    $connection->close();
+                    throw new Exception($exception->getMessage());
+                    return;
+                }
             }
 
             //处理
@@ -182,11 +186,18 @@ class Message extends Command
             throw new Exception('token不能为空');
         }
 
-        $sessionHelper = new SessionHelper();
-        $sessionId = $sessionHelper->tokenAuth(0, $token);
-        $connection->userId = $sessionHelper->getUserId($sessionId);
-        $connection->token = $token;
+        try{
+            $sessionHelper = new SessionHelper();
+            $sessionId = $sessionHelper->tokenAuth(0, $token);
+            $userId = $sessionHelper->getUserId($sessionId);
 
+            $connection->userId = $userId;
+            $connection->token = $token;
+        }catch (Exception $exception){
+            throw new Exception($exception->getMessage());
+        }
+
+        unset($userId);
         unset($sessionId);
         unset($sessionHelper);
     }
@@ -206,20 +217,11 @@ class Message extends Command
 
         //消息
         $encodeData = json_encode($data);
-        $sessionHelper = new SessionHelper();
-
-        //指定
         foreach ($this->worker->connections as $connection) {
             if (empty($connection->userId)) {
                 continue;
             }
             if (!in_array($connection->userId, $userIds)) {
-                continue;
-            }
-            try {
-                $sessionHelper->tokenAuth(0, $connection->token ?? '');
-            } catch (Exception $exception) {
-                $connection->close();
                 continue;
             }
             $connection->send($encodeData);

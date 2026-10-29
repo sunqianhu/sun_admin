@@ -25,13 +25,10 @@ class RolePermissionHelper
     {
         Db::startTrans();
         try {
-            $permissionIds = array_values(array_unique($permissionIds));
-            if (!empty($permissionIds) && (int) PermissionModel::whereIn('id', $permissionIds)->count() !== count($permissionIds)) {
-                throw new Exception('包含不存在的权限');
-            }
             $rolePermissionModels = RolePermissionModel::where('role_id', $roleId)->select();
             $rolePermissionModels->delete();
 
+            $permissionIds = array_values(array_unique($permissionIds));
             if (!empty($permissionIds)) {
                 foreach ($permissionIds as $permissionId) {
                     $rolePermissionModel = new RolePermissionModel();

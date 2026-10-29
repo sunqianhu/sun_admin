@@ -4,8 +4,6 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\helper\user\UserDataScopeHelper;
-use app\model\DepartmentModel;
-use app\model\UserModel;
 use app\helper\department\DepartmentUserHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;

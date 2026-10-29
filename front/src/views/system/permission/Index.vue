@@ -19,7 +19,7 @@
 
     <div class="tool-bar">
       <el-button
-        v-permission="['desktop_system_permission_add']"
+        v-permission="['system_permission_add']"
         type="primary"
         :icon="Plus"
         @click="openAdd"
@@ -51,7 +51,7 @@
           width="140"
         >
           <el-button
-            v-permission="['desktop_system_permission_edit']"
+            v-permission="['system_permission_edit']"
             size="small"
             @click="openEdit(row.id)"
             >修改</el-button
@@ -59,7 +59,7 @@
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
               <el-button
-                v-permission="['desktop_system_permission_delete']"
+                v-permission="['system_permission_delete']"
                 size="small"
                 >删除</el-button
               >

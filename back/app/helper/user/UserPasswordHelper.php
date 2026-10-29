@@ -41,7 +41,7 @@ class UserPasswordHelper
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @throws Exception
+     * @throws Exception|Throwable
      */
     public function editPassword($userId, $password)
     {
@@ -49,18 +49,7 @@ class UserPasswordHelper
         if (empty($userModel)) {
             throw new Exception('没有找到用户记录');
         }
-        Db::startTrans();
-        try {
-            $userModel->password = password_hash($password, PASSWORD_DEFAULT);
-            $userModel->save();
-
-            $sessionHelper = new SessionHelper();
-            $sessionHelper->deleteByUserId($userId);
-
-            Db::commit();
-        } catch (Throwable $exception) {
-            Db::rollback();
-            throw $exception;
-        }
+        $userModel->password = password_hash($password, PASSWORD_DEFAULT);
+        $userModel->save();
     }
 }

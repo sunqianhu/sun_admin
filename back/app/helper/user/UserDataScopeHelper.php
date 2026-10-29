@@ -159,7 +159,7 @@ class UserDataScopeHelper
         }
 
         //加载权限
-        $query->where(function ($linkQuery) use ($access,$departmentField, $userField) {
+        $query->where(function ($linkQuery) use ($access, $departmentField, $userField) {
             foreach($access['rules'] as $rule){
                 $linkQuery->whereOr(function ($ruleQuery) use ($rule, $departmentField, $userField) {
                     if ($rule['type'] == 'self_user') {

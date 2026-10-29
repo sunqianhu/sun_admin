@@ -28,7 +28,7 @@
         <el-form-item label="权限标识" prop="key">
           <el-input v-model="permission.key" />
           <div class="text-tip">
-            全局唯一，以下划线分隔，桌面端以desktop_开头，移动端以mobile_开头，API端以api_开头
+            全局唯一，以下划线分隔，例如：system_user_add
           </div>
         </el-form-item>
         <el-form-item label="接口地址" prop="apis_string">
