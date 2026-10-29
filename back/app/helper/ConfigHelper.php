@@ -52,6 +52,24 @@ class ConfigHelper
     }
 
     /**
+     * 获取被拒绝的ip列表
+     * @return mixed
+     * @throws Exception
+     */
+    public function getDeniedIps()
+    {
+        $deniedIps = Cache::get('config_denied_ips');
+        if ($deniedIps !== null) {
+            return $deniedIps;
+        }
+        $deniedIpsString = $this->getValue('denied_ips_string');
+        $deniedIps = explode("\r\n", $deniedIpsString);
+        $deniedIps = array_filter($deniedIps);
+        Cache::tag('config')->set('config_denied_ips', $deniedIps, 60 * 60 * 24 * 7);
+        return $deniedIps;
+    }
+
+    /**
      * 清除缓存
      * @return bool
      */

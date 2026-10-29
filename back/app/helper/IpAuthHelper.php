@@ -4,10 +4,13 @@ namespace app\helper;
 
 use app\model\ConfigModel;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\facade\Cache;
 
 class IpAuthHelper
 {
-
     /**
      * ip认证
      * @param $ip
@@ -16,13 +19,8 @@ class IpAuthHelper
      */
     function ipAuth($ip)
     {
-        $configModel = ConfigModel::field('denied_ip_string')->find(1);
-        if (empty($configModel)) {
-            throw new Exception('没有找到系统配置记录');
-        }
-        $deniedIpString = $configModel->denied_ip_string;
-        $deniedIps = explode("\r\n", $deniedIpString);
-        $deniedIps = array_filter($deniedIps);
+        $configHelper = new ConfigHelper();
+        $deniedIps = $configHelper->getDeniedIps();
         if (empty($deniedIps)) {
             return true;
         }
