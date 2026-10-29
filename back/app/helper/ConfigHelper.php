@@ -19,14 +19,17 @@ class ConfigHelper
     {
         $cacheKey = 'config_' . $field;
         $value = Cache::get($cacheKey);
-        if ($value === null) {
-            $configModel = ConfigModel::find($this->id);
-            if (empty($configModel)) {
-                throw new Exception('没有找到配置记录');
-            }
-            $value = $configModel->$field;
-            Cache::set($cacheKey, $value, 60 * 60 * 24 * 7);
+        if ($value !== null) {
+            return $value;
         }
+
+        $configModel = ConfigModel::find($this->id);
+        if (empty($configModel)) {
+            throw new Exception('没有找到配置记录');
+        }
+        $value = $configModel->$field;
+        Cache::set($cacheKey, $value, 60 * 60 * 24 * 7);
+
         return $value;
     }
 

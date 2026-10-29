@@ -17,8 +17,8 @@
       <el-form-item label="系统版本" prop="version">
         <el-input v-model="config.version" />
       </el-form-item>
-      <el-form-item label="禁止访问IP" prop="denied_ip_string">
-        <el-input v-model="config.denied_ip_string" type="textarea" :rows="5" />
+      <el-form-item label="禁止访问IP" prop="denied_ips_string">
+        <el-input v-model="config.denied_ips_string" type="textarea" :rows="5" />
         <div class="text-tip">一行一个</div>
       </el-form-item>
       <el-form-item>
