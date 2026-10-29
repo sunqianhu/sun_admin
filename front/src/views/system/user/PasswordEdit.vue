@@ -6,26 +6,26 @@
     :draggable="true"
     @close="close"
   >
-    <div class="edit-password">
+    <div class="password-edit">
       <el-form
-        :model="user"
+        :model="UserPassword"
         :rules="rules"
         scroll-to-error
-        ref="userRef"
+        ref="UserPasswordRef"
         label-width="120px"
       >
         <el-form-item label="新密码" prop="new_password1">
           <el-input
             type="password"
             show-password
-            v-model="user.new_password1"
+            v-model="UserPassword.new_password1"
           />
         </el-form-item>
         <el-form-item label="确认新密码" prop="new_password2">
           <el-input
             type="password"
             show-password
-            v-model="user.new_password2"
+            v-model="UserPassword.new_password2"
           />
         </el-form-item>
       </el-form>
@@ -43,12 +43,12 @@
 import { ref } from "vue";
 import axios from "@/helper/axios";
 
-const props = defineProps(["id"]);
+const props = defineProps(["user_id"]);
 const emits = defineEmits(["close", "submited"]);
-const user = ref({
-  id: props.id,
+const UserPassword = ref({
+  user_id: props.user_id,
 });
-const userRef = ref();
+const UserPasswordRef = ref();
 const rules = {
   new_password1: [{ required: true, message: "请输入新密码", trigger: "blur" }],
   new_password2: [
@@ -68,13 +68,13 @@ const close = () => {
  * 提交表单
  */
 const submitForm = async () => {
-  await userRef.value.validate();
+  await UserPasswordRef.value.validate();
   let response;
   try {
     submitLoading.value = true;
     response = await axios.post(
-      "desktop/system.user.EditPassword/save",
-      user.value,
+      "desktop/system.user.PasswordEdit/save",
+      UserPassword.value,
     );
   } finally {
     submitLoading.value = false;
@@ -95,7 +95,7 @@ const submitForm = async () => {
 };
 </script>
 <style lang="scss" scoped>
-.edit-password {
+.password-edit {
   padding-right: 50px;
 }
 </style>

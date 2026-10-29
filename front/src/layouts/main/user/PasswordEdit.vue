@@ -6,30 +6,32 @@
     :draggable="true"
     @close="close"
   >
-    <div class="edit-password">
-      <el-form :model="user" :rules="rules" ref="userRef" label-width="120px">
+    <div class="password-edit">
+      <el-form
+        :model="UserPassword"
+        :rules="rules"
+        ref="UserPasswordRef"
+        label-width="120px"
+      >
         <el-form-item label="原密码" prop="old_password">
           <el-input
             type="password"
             show-password
-            v-model="user.old_password"
-            autocomplete="current-password"
+            v-model="UserPassword.old_password"
           />
         </el-form-item>
         <el-form-item label="新密码" prop="new_password1">
           <el-input
             type="password"
             show-password
-            v-model="user.new_password1"
-            autocomplete="new-password"
+            v-model="UserPassword.new_password1"
           />
         </el-form-item>
         <el-form-item label="确认新密码" prop="new_password2">
           <el-input
             type="password"
             show-password
-            v-model="user.new_password2"
-            autocomplete="new-password"
+            v-model="UserPassword.new_password2"
           />
         </el-form-item>
       </el-form>
@@ -48,8 +50,8 @@ import { ref } from "vue";
 import axios from "@/helper/axios";
 
 const emits = defineEmits(["close", "submited"]);
-const user = ref({});
-const userRef = ref();
+const UserPassword = ref({});
+const UserPasswordRef = ref();
 const submitLoading = ref(false);
 const rules = {
   old_password: [
@@ -74,14 +76,14 @@ const close = () => {
  * 提交表单
  */
 const submitForm = async () => {
-  await userRef.value.validate();
+  await UserPasswordRef.value.validate();
 
   submitLoading.value = true;
   let response;
   try {
     response = await axios.post(
-      "desktop/layouts.main.user.EditPassword/save",
-      user.value,
+      "desktop/layouts.main.user.PasswordEdit/save",
+      UserPassword.value,
     );
   } finally {
     submitLoading.value = false;
@@ -102,7 +104,7 @@ const submitForm = async () => {
 };
 </script>
 <style lang="scss" scoped>
-.edit-password {
+.password-edit {
   padding-right: 50px;
 }
 </style>

@@ -7,9 +7,9 @@
     align-center
     @close="close"
   >
-    <div class="edit-avatar">
+    <div class="avatar-edit">
       <el-row>
-        <el-col :span="16" class="edit-avatar__left">
+        <el-col :span="16" class="avatar-edit__left">
           <div class="cropper">
             <!--官网参考：https://github.com/xyxiao001/vue-cropper-->
             <vue-cropper
@@ -45,7 +45,7 @@
             <el-button :icon="RefreshRight" @click="rotateRight" />
           </div>
         </el-col>
-        <el-col :span="8" class="edit-avatar__right">
+        <el-col :span="8" class="avatar-edit__right">
           <div class="title">预览头像</div>
           <div class="preview">
             <div class="preview__show">
@@ -79,7 +79,7 @@ import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 
 const emits = defineEmits(["close", "submited"]);
-const user = ref({});
+const UserAvatar = ref({});
 const cropperRef = ref();
 const imgUrl = ref("");
 const preview = ref({});
@@ -90,9 +90,9 @@ const saveLoading = ref(false);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/layouts.main.user.EditAvatar/init",
+    "desktop/layouts.main.user.AvatarEdit/init",
     {
-      params: user.value,
+      params: UserAvatar.value,
     },
   );
   if (response.code != 0) {
@@ -177,13 +177,13 @@ const realTimePreview = (data) => {
  */
 const save = () => {
   cropperRef.value.getCropData(async (data) => {
-    user.value.avatar_base64_image_content = data;
+    UserAvatar.value.avatar_base64_image_content = data;
     saveLoading.value = true;
     let response;
     try {
       response = await axios.post(
-        "desktop/layouts.main.user.EditAvatar/save",
-        user.value,
+        "desktop/layouts.main.user.AvatarEdit/save",
+        UserAvatar.value,
       );
     } finally {
       saveLoading.value = false;
@@ -210,8 +210,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.edit-avatar {
-  .edit-avatar__left {
+.avatar-edit {
+  .avatar-edit__left {
     .cropper {
       height: 350px;
       background-color: #888888;
@@ -229,7 +229,7 @@ onMounted(() => {
       }
     }
   }
-  .edit-avatar__right {
+  .avatar-edit__right {
     padding-left: 16px;
     .preview {
       height: 329px;

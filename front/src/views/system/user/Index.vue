@@ -122,13 +122,13 @@
       :id="rowId"
       v-if="editFlag"
     ></edit>
-    <EditPassword
-      :open="editPasswordFlag"
-      :id="rowId"
-      @close="editPasswordFlag = false"
-      @submited="editPasswordFlag = false"
-      v-if="editPasswordFlag"
-    ></EditPassword>
+    <PasswordEdit
+      :open="passwordEditFlag"
+      :user_id="rowId"
+      @close="passwordEditFlag = false"
+      @submited="passwordEditFlag = false"
+      v-if="passwordEditFlag"
+    ></PasswordEdit>
   </div>
 </template>
 
@@ -139,7 +139,7 @@ import dayjs from "dayjs";
 import { Search, ArrowDown, Plus } from "@element-plus/icons-vue";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
-import EditPassword from "./EditPassword.vue";
+import PasswordEdit from "./PasswordEdit.vue";
 
 const query = ref({
   size: 30,
@@ -151,7 +151,7 @@ const total = ref(0);
 const rowId = ref(0);
 const addFlag = ref(false);
 const editFlag = ref(false);
-const editPasswordFlag = ref(false);
+const passwordEditFlag = ref(false);
 
 /**
  * 得到分页
@@ -248,7 +248,7 @@ const editStatus = async (row) => {
  */
 const openEditPassword = async (id) => {
   rowId.value = id;
-  editPasswordFlag.value = true;
+  passwordEditFlag.value = true;
 };
 
 /**

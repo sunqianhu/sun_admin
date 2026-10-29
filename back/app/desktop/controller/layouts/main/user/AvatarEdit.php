@@ -13,7 +13,7 @@ use think\db\exception\ModelNotFoundException;
 use think\exception\ValidateException;
 use think\Response;
 
-class EditAvatar extends Base
+class AvatarEdit extends Base
 {
     public bool $isApiAuth = false;
 

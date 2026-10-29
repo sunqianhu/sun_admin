@@ -9,7 +9,7 @@ use app\validate\user\UserPasswordEditValidate;
 use Exception;
 use think\exception\ValidateException;
 
-class EditPassword extends Base
+class PasswordEdit extends Base
 {
     /**
      * 修改
@@ -17,19 +17,17 @@ class EditPassword extends Base
     public function save()
     {
 
-        $post = $this->request->post(['id', 'new_password1', 'new_password2']);
+        $post = $this->request->post(['user_id', 'new_password1', 'new_password2']);
 
         try {
-            validate(IdValidate::class)->check($post);
-            $post['old_password'] = '1';
-            validate(UserPasswordEditValidate::class)->check($post);
+            validate(UserPasswordEditValidate::class)->scene('default')->check($post);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
 
         $userPasswordHelper = new UserPasswordHelper();
         try{
-            $userPasswordHelper->editPassword($post['id'], $post['new_password1']);
+            $userPasswordHelper->editPassword($post['user_id'], $post['new_password1']);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

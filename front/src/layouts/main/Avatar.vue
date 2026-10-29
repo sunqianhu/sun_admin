@@ -30,19 +30,19 @@
     </el-dropdown>
 
     <detail @close="detailFlag = false" v-if="detailFlag"></detail>
-    <edit-avatar
-      @close="editAvatarFlag = false"
+    <avatar-edit
+      @close="avatarEditFlag = false"
       @submited="
-        editAvatarFlag = false;
+        avatarEditFlag = false;
         init();
       "
-      v-if="editAvatarFlag"
-    ></edit-avatar>
-    <edit-password
-      @close="editPasswordFlag = false"
-      @submited="editPasswordFlag = false"
-      v-if="editPasswordFlag"
-    ></edit-password>
+      v-if="avatarEditFlag"
+    ></avatar-edit>
+    <password-edit
+      @close="passwordEditFlag = false"
+      @submited="passwordEditFlag = false"
+      v-if="passwordEditFlag"
+    ></password-edit>
   </div>
 </template>
 
@@ -57,13 +57,13 @@ import permissionCache from "@/helper/permission_cache";
 import watermarkCache from "@/helper/watermark_cache";
 import axios from "@/helper/axios";
 import Detail from "./user/Detail.vue";
-import EditAvatar from "./user/EditAvatar.vue";
-import EditPassword from "./user/EditPassword.vue";
+import AvatarEdit from "./user/AvatarEdit.vue";
+import PasswordEdit from "./user/PasswordEdit.vue";
 
 const router = useRouter();
 const detailFlag = ref(false);
-const editAvatarFlag = ref(false);
-const editPasswordFlag = ref(false);
+const avatarEditFlag = ref(false);
+const passwordEditFlag = ref(false);
 const user = ref({});
 
 /**
@@ -89,14 +89,14 @@ const openDetail = async () => {
  * 打开修改头像
  */
 const openEditAvatar = async () => {
-  editAvatarFlag.value = true;
+  avatarEditFlag.value = true;
 };
 
 /**
  * 打开修改密码
  */
 const openEditPassword = async () => {
-  editPasswordFlag.value = true;
+  passwordEditFlag.value = true;
 };
 
 /**
