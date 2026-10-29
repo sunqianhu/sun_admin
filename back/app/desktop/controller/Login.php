@@ -3,8 +3,7 @@
 namespace app\desktop\controller;
 
 use app\helper\ConfigHelper;
-use app\helper\desktop\SessionHelper;
-use app\helper\LoginCountCheckerHelper;
+use app\helper\SessionHelper;
 use app\validate\LoginValidate;
 use think\exception\ValidateException;
 use Exception;
@@ -44,27 +43,12 @@ class Login extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        //登录次数
-        $loginCountCheckerHelper = new LoginCountCheckerHelper($post['account']);
-        if(!$loginCountCheckerHelper->check()){
-            return $this->getErrorResponse('连续登录失败'.$loginCountCheckerHelper->number.'次，请'.$loginCountCheckerHelper->getResetReadableTime().'后再试');
-        }
-
-        try{
+        try {
             $sessionHelper = new SessionHelper();
             $sessionId = $sessionHelper->login($post['account'], $post['password'], $this->request->ip());
-        }catch (Exception $exception){
-            $loginCountCheckerHelper->setFail();
-            $availableNumber = $loginCountCheckerHelper->getAvailableNumber();
-            $message = $exception->getMessage();
-            if($availableNumber > 0){
-                $message .= '，还能再试'.$availableNumber.'次';
-            }else{
-                $message .= '，连续登录失败'.$loginCountCheckerHelper->number.'次，请'.$loginCountCheckerHelper->getResetReadableTime().'后再试';
-            }
-            return $this->getErrorResponse($message);
+        } catch (Exception $exception) {
+            return $this->getErrorResponse($exception->getMessage());
         }
-        $loginCountCheckerHelper->resetFail();
 
         $token = $sessionHelper->getToken($sessionId);
 

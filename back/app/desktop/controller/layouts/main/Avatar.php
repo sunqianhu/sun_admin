@@ -4,7 +4,7 @@ namespace app\desktop\controller\layouts\main;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\helper\desktop\SessionHelper;
+use app\helper\SessionHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
