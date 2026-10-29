@@ -14,17 +14,27 @@
         ref="userRef"
         label-width="120px"
       >
-        <el-form-item label="新密码" prop="password1">
-          <el-input type="password" show-password v-model="user.password1" />
+        <el-form-item label="新密码" prop="new_password1">
+          <el-input
+            type="password"
+            show-password
+            v-model="user.new_password1"
+          />
         </el-form-item>
-        <el-form-item label="确认新密码" prop="password2">
-          <el-input type="password" show-password v-model="user.password2" />
+        <el-form-item label="确认新密码" prop="new_password2">
+          <el-input
+            type="password"
+            show-password
+            v-model="user.new_password2"
+          />
         </el-form-item>
       </el-form>
     </div>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submitForm">
+        提交
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -40,9 +50,12 @@ const user = ref({
 });
 const userRef = ref();
 const rules = {
-  password1: [{ required: true, message: "请输入新密码", trigger: "blur" }],
-  password2: [{ required: true, message: "请输入确认新密码", trigger: "blur" }],
+  new_password1: [{ required: true, message: "请输入新密码", trigger: "blur" }],
+  new_password2: [
+    { required: true, message: "请输入确认新密码", trigger: "blur" },
+  ],
 };
+const submitLoading = ref(false);
 
 /**
  * 关闭
@@ -56,10 +69,16 @@ const close = () => {
  */
 const submitForm = async () => {
   await userRef.value.validate();
-  const response = await axios.post(
-    "desktop/system.user.EditPassword/save",
-    user.value,
-  );
+  let response;
+  try {
+    submitLoading.value = true;
+    response = await axios.post(
+      "desktop/system.user.EditPassword/save",
+      user.value,
+    );
+  } finally {
+    submitLoading.value = false;
+  }
   if (response.code != 0) {
     ElMessage({
       message: response.message,

@@ -4,7 +4,8 @@ namespace app\desktop\controller\layouts\main\user;
 
 use app\desktop\controller\Base;
 use app\helper\user\UserPasswordHelper;
-use app\validate\user\TwoPasswordValidate;
+use app\model\UserModel;
+use app\validate\user\UserPasswordEditValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -17,18 +18,26 @@ class EditPassword extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['password1', 'password2']);
+        $post = $this->request->post(['old_password', 'password1', 'password2']);
 
         try {
-            validate(TwoPasswordValidate::class)->check($post);
+            validate(UserPasswordEditValidate::class)->check($post);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
 
         $userPasswordHelper = new UserPasswordHelper();
-        try{
+        try {
+            $userModel = UserModel::field('id,password')->find($this->userId);
+            if (empty($userModel)) {
+                return $this->getErrorResponse('没有找到用户记录');
+            }
+            if (!password_verify($post['old_password'], $userModel->password)) {
+                return $this->getErrorResponse('原密码错误');
+            }
+
             $userPasswordHelper->editPassword($this->userId, $post['password1']);
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
 
