@@ -45,7 +45,13 @@ class Login extends Base
 
         try {
             $sessionHelper = new SessionHelper();
-            $sessionId = $sessionHelper->login($post['account'], $post['password'], $this->request->ip());
+            $sessionId = $sessionHelper->login(
+                0,
+                $post['account'],
+                $post['password'],
+                $this->request->ip(),
+                time() + 30 * 60
+            );
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

@@ -4,10 +4,11 @@ namespace app\desktop\controller;
 
 use app\BaseController;
 use app\model\OperationLogModel;
-use app\helper\desktop\SessionHelper;
+use app\helper\SessionHelper;
 use app\helper\IpAuthHelper;
 use app\helper\user\UserDepartmentHelper;
 use Exception;
+use think\exception\HttpResponseException;
 use think\Response;
 
 class Base extends BaseController
@@ -28,45 +29,53 @@ class Base extends BaseController
     {
         parent::initialize();
         $sessionHelper = new SessionHelper();
+        $ip = $this->request->ip();
+        $action = $this->request->action();
+        $api = $this->request->baseUrl();
+        $token = $this->request->header('token', '');
 
         //ip
         $ipAuthHelper = new IpAuthHelper();
         try {
-            $ipAuthHelper->ipAuth($this->request->ip());
+            $ipAuthHelper->ipAuth($ip);
         } catch (Exception $exception) {
             $this->getErrorResponse($exception->getMessage())->send();
             exit;
         }
 
-        $action = $this->request->action();
-
-        //token
-        $token = $this->request->header('token', '');
+        //token认证
         if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             try {
-                $this->sessionId = $sessionHelper->tokenAuth($token);
+                $this->sessionId = $sessionHelper->tokenAuth(0, $token);
             } catch (Exception $exception) {
-                $this->getErrorResponse($exception->getMessage(), null, 2)->send();
-                exit;
+                throw new HttpResponseException(
+                    $this->getErrorResponse('登录认证失败，'.$exception->getMessage(), null, 2)
+                );
             }
         }
 
-        if ($this->sessionId) {
-            try {
-                //token续期
+        if(!empty($this->sessionId)){
+            try{
                 $this->userId = $sessionHelper->getUserId($this->sessionId);
                 $userDepartmentHelper = new UserDepartmentHelper();
                 $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
-                $sessionHelper->renewExpiresIn($this->sessionId);
+                $sessionHelper->renewExpireTime($this->sessionId, time() + 30 * 60);
+            }catch (Exception $exception){
+                throw new HttpResponseException(
+                    $this->getErrorResponse($exception->getMessage(), null, 2)
+                );
+            }
+        }
 
-                //接口
-                if ($this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
-                    $api = $this->request->baseUrl();
-                    $sessionHelper->apiAuth($this->userId, $api);
+        //接口认证
+        if ($this->sessionId) {
+            if ($this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
+                try {
+                    $sessionHelper->apiAuth(0, $this->userId, $api);
+                } catch (Exception $exception) {
+                    $this->getErrorResponse('接口认证失败，'.$exception->getMessage())->send();
+                    exit;
                 }
-            } catch (Exception $exception) {
-                $this->getErrorResponse($exception->getMessage())->send();
-                exit;
             }
         }
 
@@ -77,8 +86,8 @@ class Base extends BaseController
                 'department_id' => $this->departmentId,
                 'user_id' => $this->userId,
                 'terminal' => 0,
-                'api' => $this->request->baseUrl(),
-                'ip' => $this->request->ip(),
+                'api' => $api,
+                'ip' => $ip,
                 'time' => time()
             ];
             $operationLogModel->save($data);

@@ -28,8 +28,14 @@ class Login extends Base
         }
 
         try {
-            $sessionHelper = new SessionHelper(SessionHelper::TERMINAL_MOBILE);
-            $sessionId = $sessionHelper->login($post['account'], $post['password'], $this->request->ip());
+            $sessionHelper = new SessionHelper();
+            $sessionId = $sessionHelper->login(
+                1,
+                $post['account'],
+                $post['password'],
+                $this->request->ip(),
+                time() + 60 * 60 * 24 * 7
+            );
             $token = $sessionHelper->getToken($sessionId);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
