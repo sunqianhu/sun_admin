@@ -28,7 +28,7 @@ class ConfigHelper
             throw new Exception('没有找到配置记录');
         }
         $value = $configModel->$field;
-        Cache::set($cacheKey, $value, 60 * 60 * 24 * 7);
+        Cache::tag('config')->set($cacheKey, $value, 60 * 60 * 24 * 7);
 
         return $value;
     }
@@ -46,9 +46,17 @@ class ConfigHelper
         $configModel->$field = $value;
         $result = $configModel->save();
         if ($result) {
-            $cacheKey = 'config_' . $field;
-            Cache::delete($cacheKey);
+            $this->clearCache();
         }
         return $result;
+    }
+
+    /**
+     * 清除缓存
+     * @return bool
+     */
+    public function clearCache()
+    {
+        return Cache::tag('config')->clear();
     }
 }
