@@ -3,6 +3,7 @@
 namespace app\desktop\controller\system\dictionary;
 
 use app\desktop\controller\Base;
+use app\helper\DictionaryHelper;
 use app\model\DictionaryModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
@@ -43,9 +44,6 @@ class Index extends Base
     /**
      * 删除
      * @return Response
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function delete(){
         $id = $this->request->post('id', 0);
@@ -53,14 +51,10 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $dictionaryModel = DictionaryModel::find($id);
-        if(empty($dictionaryModel)){
-            return $this->getErrorResponse('没有找到记录');
-        }
-
-        try{
-            $dictionaryModel->delete();
-        }catch (Exception $exception){
+        try {
+            $dictionaryHelper = new DictionaryHelper();
+            $dictionaryHelper->delete($id);
+        } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
 

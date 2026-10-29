@@ -14,7 +14,63 @@ class DictionaryHelper
     /**
      * @var int 有效期
      */
-    private int $expire = 600;
+    private int $expire = 60 * 60 * 7;
+
+    /**
+     * 添加
+     * @param array $data
+     * @return int
+     * @throws Exception
+     */
+    public function add($data)
+    {
+        $dictionaryModel = new DictionaryModel();
+        $dictionaryModel->save($data);
+        $this->clearCache();
+
+        return $dictionaryModel->id;
+    }
+
+    /**
+     * 修改
+     * @param $id
+     * @param array $data
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     * @throws Exception
+     */
+    public function edit($id, $data)
+    {
+        $dictionaryModel = DictionaryModel::where('id', $id)->find();
+        if (empty($dictionaryModel)) {
+            throw new Exception('没有找到字典记录');
+        }
+
+        $dictionaryModel->save($data);
+        $this->clearCache();
+    }
+
+    /**
+     * 删除
+     * @param $id
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     * @throws Exception
+     */
+    public function delete($id)
+    {
+        $dictionaryModel = DictionaryModel::where('id', $id)->find();
+        if (empty($dictionaryModel)) {
+            throw new Exception('没有找到字典记录');
+        }
+
+        $dictionaryModel->delete();
+        $this->clearCache();
+    }
 
     /**
      * 获取字典列表
@@ -26,7 +82,7 @@ class DictionaryHelper
      */
     public function getList($type)
     {
-        $cacheKey = 'dictionary_' . $type;
+        $cacheKey = 'dictionary:list:' . $type;
         $list = Cache::get($cacheKey);
         if ($list !== null) {
             return $list;
@@ -37,7 +93,7 @@ class DictionaryHelper
             ->order('sort', 'asc')
             ->select();
         $list = $dictionaryModels->toArray();
-        Cache::set($cacheKey, $list, $this->expire);
+        Cache::tag('dictionary')->set($cacheKey, $list, $this->expire);
 
         return $list;
     }
@@ -46,12 +102,12 @@ class DictionaryHelper
      * 获取值
      * @param $type
      * @param $key
-     * @return void
+     * @return mixed
      * @throws Exception
      */
     public function getValue($type, $key)
     {
-        $cacheKey = 'dictionary_value_' . $type . '_' . $key;
+        $cacheKey = 'dictionary:value:' . $type . ':' . $key;
         $value = Cache::get($cacheKey);
         if ($value !== null) {
             return $value;
@@ -66,7 +122,7 @@ class DictionaryHelper
             throw new Exception('没有找到字典记录');
         }
         $value = $dictionaryModel->value;
-        Cache::set($cacheKey, $value, $this->expire);
+        Cache::tag('dictionary')->set($cacheKey, $value, $this->expire);
 
         return $value;
     }
@@ -80,20 +136,20 @@ class DictionaryHelper
      */
     public function getValuesString($type, $keys, string $glue = '，')
     {
-        $keyString = implode(',', $keys);
-        $cacheKey = 'dictionary_' . $type . '_' . str_replace(',', '_', $keyString);
+        $keysString = implode(',', $keys);
+        $cacheKey = 'dictionary:values:' . $type . ':' . md5(serialize([$keys, $glue]));
         $valueString = Cache::get($cacheKey);
         if ($valueString !== null) {
             return $valueString;
         }
 
         $values = DictionaryModel::where('type', $type)
-            ->where('key', 'in', $keyString)
+            ->where('key', 'in', $keysString)
             ->field('value')
             ->order('sort', 'asc')
             ->column('value');
         $valuesString = implode($glue, $values);
-        Cache::set($cacheKey, $valuesString, $this->expire);
+        Cache::tag('dictionary')->set($cacheKey, $valuesString, $this->expire);
 
         return $valuesString;
     }
@@ -105,7 +161,7 @@ class DictionaryHelper
      */
     public function getKey($type, $value)
     {
-        $cacheKey = 'dictionary_key_' . $type . '_' . md5($value);
+        $cacheKey = 'dictionary:key:' . $type . ':' . md5($value);
         $key = Cache::get($cacheKey);
         if ($key !== null) {
             return $key;
@@ -120,8 +176,17 @@ class DictionaryHelper
             throw new Exception('没有找到字典记录');
         }
         $key = $dictionaryModel->key;
-        Cache::set($cacheKey, $key, $this->expire);
+        Cache::tag('dictionary')->set($cacheKey, $key, $this->expire);
 
         return $key;
+    }
+
+    /**
+     * 清除缓存
+     * @return bool
+     */
+    public function clearCache(): bool
+    {
+        return Cache::tag('dictionary')->clear();
     }
 }
