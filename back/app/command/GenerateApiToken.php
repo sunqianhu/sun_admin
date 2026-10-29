@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\command;
 
 use app\helper\JwtHelper;
+use app\helper\SessionHelper;
 use Exception;
 use think\console\Command;
 use think\console\Input;
@@ -28,6 +29,16 @@ class GenerateApiToken extends Command
         }
 
         $jwtHelper = new JwtHelper();
-        echo $token = $jwtHelper->generateToken($userId);
+        $token = $jwtHelper->generateToken($userId);
+        $sessionHelper = new SessionHelper();
+        $data = [
+            'user_id' => $userId,
+            'terminal' => 2,
+            'token' => $token,
+            'expire_time' => time() + 60 * 60 * 24 * 365 * 5
+        ];
+        $sessionHelper->add($data);
+
+        $output->writeln($token);
     }
 }

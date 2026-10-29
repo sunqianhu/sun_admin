@@ -3,7 +3,7 @@ declare (strict_types=1);
 
 namespace app\command;
 
-use app\helper\desktop\SessionHelper;
+use app\helper\SessionHelper;
 use Exception;
 use think\console\Command;
 use think\console\Input;
@@ -115,7 +115,7 @@ class Message extends Command
     {
         if (isset($connection->token)) {
             try {
-                (new SessionHelper())->tokenAuth($connection->token);
+                (new SessionHelper())->tokenAuth(0, $connection->token);
             } catch (Exception $exception) {
                 $connection->close();
                 return;
@@ -183,7 +183,7 @@ class Message extends Command
         }
 
         $sessionHelper = new SessionHelper();
-        $sessionId = $sessionHelper->tokenAuth($token);
+        $sessionId = $sessionHelper->tokenAuth(0, $token);
         $connection->userId = $sessionHelper->getUserId($sessionId);
         $connection->token = $token;
 
@@ -217,7 +217,7 @@ class Message extends Command
                 continue;
             }
             try {
-                $sessionHelper->tokenAuth($connection->token ?? '');
+                $sessionHelper->tokenAuth(0, $connection->token ?? '');
             } catch (Exception $exception) {
                 $connection->close();
                 continue;

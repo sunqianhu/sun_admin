@@ -32,18 +32,19 @@ class Base extends BaseController
         $ip = $this->request->ip();
         $action = $this->request->action();
         $api = $this->request->baseUrl();
-        $token = $this->request->header('token', '');
 
         //ip
         $ipAuthHelper = new IpAuthHelper();
         try {
             $ipAuthHelper->ipAuth($ip);
         } catch (Exception $exception) {
-            $this->getErrorResponse($exception->getMessage())->send();
-            exit;
+            throw new HttpResponseException(
+                $this->getErrorResponse($exception->getMessage())
+            );
         }
 
         //token认证
+        $token = $this->request->header('token', '');
         if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             try {
                 $this->sessionId = $sessionHelper->tokenAuth(0, $token);
@@ -62,7 +63,7 @@ class Base extends BaseController
                 $sessionHelper->renewExpireTime($this->sessionId, time() + 30 * 60);
             }catch (Exception $exception){
                 throw new HttpResponseException(
-                    $this->getErrorResponse($exception->getMessage(), null, 2)
+                    $this->getErrorResponse($exception->getMessage())
                 );
             }
         }
@@ -73,8 +74,9 @@ class Base extends BaseController
                 try {
                     $sessionHelper->apiAuth(0, $this->userId, $api);
                 } catch (Exception $exception) {
-                    $this->getErrorResponse('接口认证失败，'.$exception->getMessage())->send();
-                    exit;
+                    throw new HttpResponseException(
+                        $this->getErrorResponse('接口认证失败，'.$exception->getMessage())
+                    );
                 }
             }
         }

@@ -4,13 +4,14 @@ namespace app\api\controller;
 
 use app\BaseController;
 use app\model\OperationLogModel;
-use app\helper\api\SessionHelper;
+use app\helper\SessionHelper;
 use app\helper\IpAuthHelper;
 use app\helper\user\UserDepartmentHelper;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\exception\HttpResponseException;
 use think\Response;
 
 class Base extends BaseController
@@ -32,22 +33,21 @@ class Base extends BaseController
     /**
      * 初始化
      * @return void
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     function initialize()
     {
         parent::initialize();
         $sessionHelper = new SessionHelper();
+        $ip = $this->request->ip();
 
         //ip
         $ipAuthHelper = new IpAuthHelper();
         try {
-            $ipAuthHelper->ipAuth($this->request->ip());
+            $ipAuthHelper->ipAuth($ip);
         } catch (Exception $exception) {
-            $this->getErrorResponse($exception->getMessage())->send();
-            exit;
+            throw new HttpResponseException(
+                $this->getErrorResponse($exception->getMessage())
+            );
         }
 
         $action = $this->request->action();
@@ -56,10 +56,11 @@ class Base extends BaseController
         if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             $token = $this->request->header('token', '');
             try {
-                $this->sessionId = $sessionHelper->tokenAuth($token);
+                $this->sessionId = $sessionHelper->tokenAuth(2, $token);
             } catch (Exception $exception) {
-                $this->getErrorResponse($exception->getMessage(), null, 2)->send();
-                exit;
+                throw new HttpResponseException(
+                    $this->getErrorResponse($exception->getMessage())
+                );
             }
         }
 
@@ -68,10 +69,10 @@ class Base extends BaseController
                 $this->userId = $sessionHelper->getUserId($this->sessionId);
                 $userDepartmentHelper = new UserDepartmentHelper();
                 $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
-                $sessionHelper->renewExpiresIn($this->sessionId);
             } catch (Exception $exception) {
-                $this->getErrorResponse($exception->getMessage())->send();
-                exit;
+                throw new HttpResponseException(
+                    $this->getErrorResponse($exception->getMessage())
+                );
             }
         }
 
@@ -83,7 +84,7 @@ class Base extends BaseController
                 'user_id' => $this->userId,
                 'terminal' => 2,
                 'api' => $this->request->baseUrl(),
-                'ip' => $this->request->ip(),
+                'ip' => $ip,
                 'time' => time()
             ];
             $operationLogModel->save($data);

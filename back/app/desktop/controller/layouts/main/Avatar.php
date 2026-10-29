@@ -39,7 +39,7 @@ class Avatar extends Base
     public function logout()
     {
         $sessionHelper = new SessionHelper();
-        $sessionHelper->deleteSession($this->sessionId);
+        $sessionHelper->delete($this->sessionId);
 
         return $this->getSuccessResponse("退出成功");
     }

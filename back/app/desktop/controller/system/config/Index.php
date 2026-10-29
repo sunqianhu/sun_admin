@@ -3,6 +3,7 @@
 namespace app\desktop\controller\system\config;
 
 use app\desktop\controller\Base;
+use app\helper\ConfigHelper;
 use app\model\ConfigModel;
 use app\validate\ConfigValidate;
 use think\db\exception\DataNotFoundException;
@@ -36,7 +37,7 @@ class Index extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['system_name'=>'', 'denied_ip_string'=>'', 'frame_version'=>'', 'version'=>'']);
+        $post = $this->request->post(['system_name'=>'', 'denied_ips_string'=>'', 'frame_version'=>'', 'version'=>'']);
 
         $post['id'] = 1;
         try {
@@ -50,6 +51,9 @@ class Index extends Base
             return $this->getErrorResponse('没有找到配置记录');
         }
         $configModel->save($post);
+
+        $configHelper = new ConfigHelper();
+        $configHelper->clearCache();
 
         return $this->getSuccessResponse('保存成功');
     }

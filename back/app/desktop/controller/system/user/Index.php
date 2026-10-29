@@ -4,8 +4,7 @@ namespace app\desktop\controller\system\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\helper\desktop\SessionHelper as DesktopSessionHelper;
-use app\helper\mobile\SessionHelper as MobileSessionHelper;
+use app\helper\SessionHelper;
 use app\helper\user\UserStatusHelper;
 use app\validate\UserValidate;
 use Exception;
@@ -89,11 +88,8 @@ class Index extends Base
         }
 
         try{
-            $desktopSessionHelper = new DesktopSessionHelper();
-            $desktopSessionHelper->deleteSessionByUserId($post['id']);
-
-            $mobileSessionHelper = new MobileSessionHelper();
-            $mobileSessionHelper->deleteSessionByUserId($post['id']);
+            $sessionHelper = new SessionHelper();
+            $sessionHelper->deleteByUserId($post['id']);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

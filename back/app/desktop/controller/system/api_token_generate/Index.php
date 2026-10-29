@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\api_token_generate;
 
 use app\desktop\controller\Base;
-use app\helper\api\SessionHelper;
+use app\helper\SessionHelper;
 use app\helper\JwtHelper;
 use Exception;
 use think\response;
@@ -18,10 +18,16 @@ class Index extends Base
     {
         try{
             $jwtHelper = new JwtHelper();
-            $token = $jwtHelper->generateToken(4);
+            $token = $jwtHelper->generateToken($this->userId);
 
             $sessionHelper = new SessionHelper();
-            $sessionHelper->createSession(4, $token);
+            $data = [
+                'user_id' => $this->userId,
+                'terminal' => 2,
+                'token' => $token,
+                'expire_time' => time() + 60 * 60 * 24 * 365 * 5
+            ];
+            $sessionHelper->add($data);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

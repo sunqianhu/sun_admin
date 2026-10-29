@@ -4,7 +4,7 @@ namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
 use app\model\UserModel;
-use app\helper\mobile\SessionHelper;
+use app\helper\SessionHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -45,7 +45,7 @@ class Detail extends Base
     public function logout()
     {
         $sessionHelper = new SessionHelper();
-        $sessionHelper->deleteSession($this->sessionId);
+        $sessionHelper->delete($this->sessionId);
 
         return $this->getSuccessResponse("退出登录成功");
     }
