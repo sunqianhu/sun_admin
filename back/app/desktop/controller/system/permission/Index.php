@@ -1,9 +1,10 @@
 <?php
 
-namespace app\desktop\controller\system\desktop\permission;
+namespace app\desktop\controller\system\permission;
 
 use app\desktop\controller\Base;
-use app\model\desktop\PermissionModel;
+use app\helper\PermissionHelper;
+use app\model\PermissionModel;
 use Exception;
 use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
@@ -49,13 +50,9 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $permissionModel = PermissionModel::find($id);
-        if (empty($permissionModel)) {
-            return $this->getErrorResponse('没有找到记录');
-        }
-
         try{
-            $permissionModel->delete();
+            $permissionHelper = new PermissionHelper();
+            $permissionHelper->delete($id);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

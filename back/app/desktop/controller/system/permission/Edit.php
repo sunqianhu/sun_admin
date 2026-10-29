@@ -1,11 +1,12 @@
 <?php
 
-namespace app\desktop\controller\system\mobile\permission;
+namespace app\desktop\controller\system\permission;
 
 use app\desktop\controller\Base;
-use app\model\mobile\PermissionModel;
+use app\helper\PermissionHelper;
+use app\model\PermissionModel;
+use app\validate\PermissionValidate;
 use app\validate\IdValidate;
-use app\validate\mobile\PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -45,17 +46,9 @@ class Edit extends Base
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
-        if($post['id'] == $post['permission_id']){
-            return $this->getErrorResponse('上级权限不能和此权限相同');
-        }
-
-        $permissionModel = PermissionModel::find($post['id']);
-        if(empty($permissionModel)){
-            return $this->getErrorResponse('没有找到权限记录');
-        }
-
         try{
-            $permissionModel->save($post);
+            $permissionHelper = new PermissionHelper();
+            $permissionHelper->edit($post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

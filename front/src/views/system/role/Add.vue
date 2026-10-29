@@ -19,15 +19,15 @@
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
-        <el-form-item label="桌面端权限" prop="desktop_permission_ids">
+        <el-form-item label="功能权限" prop="permission_ids">
           <el-tree
-            :data="desktopTreePermission"
+            :data="treePermission"
             :props="{ children: 'children', label: 'name' }"
             node-key="id"
             show-checkbox
-            ref="desktopTreePermissionRef"
+            ref="treePermissionRef"
             empty-text="无权限"
-            @check="checkDesktopTreePermission"
+            @check="checkTreePermission"
           />
         </el-form-item>
         <el-form-item label="桌面端菜单" prop="desktop_menu_ids">
@@ -52,17 +52,6 @@
             @check="checkDesktopRoutes"
           />
         </el-form-item>
-        <el-form-item label="移动端权限" prop="mobile_permission_ids">
-          <el-tree
-            :data="mobileTreePermission"
-            :props="{ children: 'children', label: 'name' }"
-            node-key="id"
-            show-checkbox
-            ref="mobileTreePermissionRef"
-            empty-text="无权限"
-            @check="checkMobileTreePermission"
-          />
-        </el-form-item>
       </el-form>
     </el-scrollbar>
     <template #footer>
@@ -80,10 +69,9 @@ import axios from "@/helper/axios";
 
 const emits = defineEmits(["close", "submited"]);
 const role = ref({
-  desktop_permission_ids: [],
+  permission_ids: [],
   desktop_menu_ids: [],
   desktop_route_ids: [],
-  mobile_permission_ids: [],
 });
 const roleRef = ref({});
 const rules = {
@@ -91,14 +79,12 @@ const rules = {
 };
 const initLoading = ref(true);
 const submitLoading = ref(false);
-const desktopTreePermission = ref([]);
-const desktopTreePermissionRef = ref(null);
+const treePermission = ref([]);
+const treePermissionRef = ref(null);
 const desktopTreeMenu = ref([]);
 const desktopTreeMenuRef = ref(null);
 const desktopRoutes = ref([]);
 const desktopRouteRef = ref([]);
-const mobileTreePermission = ref([]);
-const mobileTreePermissionRef = ref(null);
 
 /**
  * 初始化
@@ -118,10 +104,9 @@ const init = async () => {
     });
     return;
   }
-  desktopTreePermission.value = response.data.desktop_tree_permission;
+  treePermission.value = response.data.tree_permission;
   desktopTreeMenu.value = response.data.desktop_tree_menu;
   desktopRoutes.value = response.data.desktop_routes;
-  mobileTreePermission.value = response.data.mobile_tree_permission;
 };
 
 /**
@@ -132,13 +117,13 @@ const close = () => {
 };
 
 /**
- * 选择桌面端权限
+ * 选择权限
  */
-const checkDesktopTreePermission = () => {
-  const allKeys = desktopTreePermissionRef.value.getCheckedKeys(); //全选中
-  const halfKeys = desktopTreePermissionRef.value.getHalfCheckedKeys(); //半选中
+const checkTreePermission = () => {
+  const allKeys = treePermissionRef.value.getCheckedKeys(); //全选中
+  const halfKeys = treePermissionRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
-  role.value.desktop_permission_ids = keys;
+  role.value.permission_ids = keys;
 };
 
 /**
@@ -159,16 +144,6 @@ const checkDesktopRoutes = () => {
   const halfKeys = desktopRouteRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
   role.value.desktop_route_ids = keys;
-};
-
-/**
- * 选择移动端权限
- */
-const checkMobileTreePermission = () => {
-  const allKeys = mobileTreePermissionRef.value.getCheckedKeys(); //全选中
-  const halfKeys = mobileTreePermissionRef.value.getHalfCheckedKeys(); //半选中
-  const keys = [...allKeys, ...halfKeys];
-  role.value.mobile_permission_ids = keys;
 };
 
 /**

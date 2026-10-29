@@ -2,14 +2,15 @@
 
 namespace app\helper\role;
 
-use app\model\RoleDesktopPermissionModel;
+use app\model\RolePermissionModel;
+use app\model\PermissionModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 
-class RoleDesktopPermissionHelper
+class RolePermissionHelper
 {
     /**
      * 设置关系
@@ -24,13 +25,17 @@ class RoleDesktopPermissionHelper
     {
         Db::startTrans();
         try {
-            $roleDesktopPermissionModels = RoleDesktopPermissionModel::where('role_id', $roleId)->select();
-            $roleDesktopPermissionModels->delete();
+            $permissionIds = array_values(array_unique($permissionIds));
+            if (!empty($permissionIds) && (int) PermissionModel::whereIn('id', $permissionIds)->count() !== count($permissionIds)) {
+                throw new Exception('包含不存在的权限');
+            }
+            $rolePermissionModels = RolePermissionModel::where('role_id', $roleId)->select();
+            $rolePermissionModels->delete();
 
             if (!empty($permissionIds)) {
                 foreach ($permissionIds as $permissionId) {
-                    $roleDesktopPermissionModel = new RoleDesktopPermissionModel();
-                    $roleDesktopPermissionModel->save([
+                    $rolePermissionModel = new RolePermissionModel();
+                    $rolePermissionModel->save([
                         'role_id' => $roleId,
                         'permission_id' => $permissionId
                     ]);

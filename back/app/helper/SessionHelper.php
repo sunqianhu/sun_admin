@@ -2,8 +2,7 @@
 
 namespace app\helper;
 
-use app\helper\user\UserDesktopPermissionHelper;
-use app\helper\user\UserMobilePermissionHelper;
+use app\helper\user\UserPermissionHelper;
 use app\model\LoginLogModel;
 use app\model\SessionModel;
 use app\model\UserModel;
@@ -183,14 +182,13 @@ class SessionHelper
     }
 
     /**
-     * 桌面端及移动端接口认证
-     * @param int $terminal
+     * 接口认证
      * @param $userId
      * @param string $api
      * @return true
      * @throws Exception
      */
-    public function apiAuth($terminal, $userId, string $api)
+    public function apiAuth($userId, string $api)
     {
         if (empty($userId)) {
             throw new Exception('用户ID不能为空');
@@ -198,22 +196,9 @@ class SessionHelper
         if ($api === '') {
             throw new Exception('接口不能为空');
         }
-        if (!in_array($terminal, [0, 1], true)) {
-            throw new Exception('当前终端不支持接口权限校验');
-        }
-
-        if ($terminal === 0) {
-            $permissionHelper = new UserDesktopPermissionHelper();
-            if (!$permissionHelper->hasPermissionByApi($userId, $api)) {
-                throw new Exception('无权限');
-            }
-        }
-
-        if ($terminal === 1) {
-            $permissionHelper = new UserMobilePermissionHelper();
-            if (!$permissionHelper->hasPermissionByApi($userId, $api)) {
-                throw new Exception('无权限');
-            }
+        $userPermissionHelper = new UserPermissionHelper();
+        if (!$userPermissionHelper->hasPermissionByApi($userId, $api)) {
+            throw new Exception('无权限');
         }
 
         return true;

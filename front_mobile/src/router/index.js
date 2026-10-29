@@ -64,10 +64,6 @@ const getLoginRoutePath = () => {
  */
 const setPermissions = async () => {
   const permissionStore = usePermissionStore();
-  if (permissionStore.isSet) {
-    return;
-  }
-
   const response = await axios.get("mobile/Frame/getPermissions");
   if (response.code != 0) {
     throw new Error(response.message);

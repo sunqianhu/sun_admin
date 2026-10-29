@@ -1,10 +1,10 @@
 <?php
 
-namespace app\desktop\controller\system\desktop\permission;
+namespace app\desktop\controller\system\permission;
 
 use app\desktop\controller\Base;
-use app\model\desktop\PermissionModel;
-use app\validate\desktop\PermissionValidate;
+use app\helper\PermissionHelper;
+use app\validate\PermissionValidate;
 use Exception;
 use think\exception\ValidateException;
 
@@ -24,8 +24,8 @@ class Add extends Base
         }
 
         try {
-            $permissionModel = new PermissionModel();
-            $permissionModel->save($post);
+            $permissionHelper = new PermissionHelper();
+            $permissionHelper->add($post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

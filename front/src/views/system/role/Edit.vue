@@ -19,16 +19,16 @@
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
-        <el-form-item label="桌面端权限" prop="desktop_permission_ids">
+        <el-form-item label="功能权限" prop="permission_ids">
           <el-tree
-            :data="desktopTreePermission"
+            :data="treePermission"
             :props="{ children: 'children', label: 'name' }"
             node-key="id"
             show-checkbox
-            ref="desktopTreePermissionRef"
+            ref="treePermissionRef"
             empty-text="无权限"
-            :default-checked-keys="desktopTreePermissionDefaultCheckKeys"
-            @check="checkDesktopTreePermission"
+            :default-checked-keys="treePermissionDefaultCheckKeys"
+            @check="checkTreePermission"
           />
         </el-form-item>
         <el-form-item label="桌面端菜单" prop="desktop_menu_ids">
@@ -55,18 +55,6 @@
             @check="checkDesktopRoute"
           />
         </el-form-item>
-        <el-form-item label="移动端权限" prop="mobile_permission_ids">
-          <el-tree
-            :data="mobileTreePermission"
-            :props="{ children: 'children', label: 'name' }"
-            node-key="id"
-            show-checkbox
-            ref="mobileTreePermissionRef"
-            empty-text="无权限"
-            :default-checked-keys="mobileTreePermissionDefaultCheckKeys"
-            @check="checkMobileTreePermission"
-          />
-        </el-form-item>
       </el-form>
     </el-scrollbar>
     <template #footer>
@@ -85,10 +73,9 @@ import axios from "@/helper/axios";
 const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const role = ref({
-  desktop_permission_ids: [],
+  permission_ids: [],
   desktop_menu_ids: [],
   desktop_route_ids: [],
-  mobile_permission_ids: [],
 });
 const roleRef = ref();
 const rules = {
@@ -96,19 +83,16 @@ const rules = {
 };
 const initLoading = ref(true);
 const submitLoading = ref(false);
-const desktopTreePermission = ref([]);
-const desktopTreePermissionRef = ref(null);
+const treePermission = ref([]);
+const treePermissionRef = ref(null);
 const desktopTreeMenu = ref([]);
 const desktopTreeMenuRef = ref(null);
 const desktopRoutes = ref([]);
 const desktopRouteRef = ref([]);
-const mobileTreePermission = ref([]);
-const mobileTreePermissionRef = ref(null);
 
-const desktopTreePermissionDefaultCheckKeys = ref([]);
+const treePermissionDefaultCheckKeys = ref([]);
 const desktopTreeMenuDefaultCheckKeys = ref([]);
 const desktopRouteDefaultCheckKeys = ref([]);
-const mobileTreePermissionDefaultCheckKeys = ref([]);
 
 /**
  * 初始化
@@ -131,16 +115,15 @@ const init = async () => {
     return;
   }
 
-  desktopTreePermission.value = response.data.desktop_tree_permission;
+  treePermission.value = response.data.tree_permission;
   desktopTreeMenu.value = response.data.desktop_tree_menu;
   desktopRoutes.value = response.data.desktop_routes;
-  mobileTreePermission.value = response.data.mobile_tree_permission;
   await nextTick();
 
   role.value = response.data.role;
-  desktopTreePermissionDefaultCheckKeys.value =
-    getDesktopTreePermissionDefaultCheckKeys(
-      response.data.role.desktop_permission_ids,
+  treePermissionDefaultCheckKeys.value =
+    getTreePermissionDefaultCheckKeys(
+      response.data.role.permission_ids,
     );
   desktopTreeMenuDefaultCheckKeys.value = getDesktopTreeMenuDefaultCheckKeys(
     response.data.role.desktop_menu_ids,
@@ -148,10 +131,6 @@ const init = async () => {
   desktopRouteDefaultCheckKeys.value = getDesktopRouteDefaultCheckKeys(
     response.data.role.desktop_route_ids,
   );
-  mobileTreePermissionDefaultCheckKeys.value =
-    getMobileTreePermissionDefaultCheckKeys(
-      response.data.role.mobile_permission_ids,
-    );
 };
 
 /**
@@ -162,32 +141,32 @@ const close = () => {
 };
 
 /**
- * 得到桌面端权限默认选中的key(排除父节点)
- * @param {array} desktopPermissionIds
+ * 得到权限默认选中的key(排除父节点)
+ * @param {array} permissionIds
  */
-const getDesktopTreePermissionDefaultCheckKeys = (desktopPermissionIds) => {
+const getTreePermissionDefaultCheckKeys = (permissionIds) => {
   let finalPermissionIds = [];
-  for (let i in desktopPermissionIds) {
-    let desktopPermissionId = desktopPermissionIds[i];
-    let node = desktopTreePermissionRef.value.getNode(desktopPermissionId);
+  for (let i in permissionIds) {
+    let permissionId = permissionIds[i];
+    let node = treePermissionRef.value.getNode(permissionId);
     if (!node) {
       continue;
     }
     if (!node.childNodes || !node.childNodes.length) {
-      finalPermissionIds.push(desktopPermissionId);
+      finalPermissionIds.push(permissionId);
     }
   }
   return finalPermissionIds;
 };
 
 /**
- * 选择桌面端权限
+ * 选择权限
  */
-const checkDesktopTreePermission = () => {
-  const allKeys = desktopTreePermissionRef.value.getCheckedKeys(); //全选中
-  const halfKeys = desktopTreePermissionRef.value.getHalfCheckedKeys(); //半选中
+const checkTreePermission = () => {
+  const allKeys = treePermissionRef.value.getCheckedKeys(); //全选中
+  const halfKeys = treePermissionRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
-  role.value.desktop_permission_ids = keys;
+  role.value.permission_ids = keys;
 };
 
 /**
@@ -246,35 +225,6 @@ const checkDesktopRoute = () => {
   const halfKeys = desktopRouteRef.value.getHalfCheckedKeys(); //半选中
   const keys = [...allKeys, ...halfKeys];
   role.value.desktop_route_ids = keys;
-};
-
-/**
- * 得到移动端权限默认选中的key(排除父节点)
- * @param {array} desktopPermissionIds
- */
-const getMobileTreePermissionDefaultCheckKeys = (mobilePermissionIds) => {
-  let finalPermissionIds = [];
-  for (let i in mobilePermissionIds) {
-    let mobilePermissionId = mobilePermissionIds[i];
-    let node = mobileTreePermissionRef.value.getNode(mobilePermissionId);
-    if (!node) {
-      continue;
-    }
-    if (!node.childNodes || !node.childNodes.length) {
-      finalPermissionIds.push(mobilePermissionId);
-    }
-  }
-  return finalPermissionIds;
-};
-
-/**
- * 选择移动端权限
- */
-const checkMobileTreePermission = () => {
-  const allKeys = mobileTreePermissionRef.value.getCheckedKeys(); //全选中
-  const halfKeys = mobileTreePermissionRef.value.getHalfCheckedKeys(); //半选中
-  const keys = [...allKeys, ...halfKeys];
-  role.value.mobile_permission_ids = keys;
 };
 
 /**

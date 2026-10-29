@@ -26,6 +26,8 @@ class Base extends BaseController
      * @var array
      */
     public array $noTokenAuthActions = [];
+    public bool $isApiAuth = true; //是否接口认证
+    public array $noApiAuthActions = []; //不需要接口认证的方法
     public int $sessionId = 0;
     public int $userId = 0;
     public int $departmentId = 0;
@@ -39,6 +41,7 @@ class Base extends BaseController
         parent::initialize();
         $sessionHelper = new SessionHelper();
         $ip = $this->request->ip();
+        $api = $this->request->baseUrl();
 
         //ip
         $ipAuthHelper = new IpAuthHelper();
@@ -76,6 +79,17 @@ class Base extends BaseController
             }
         }
 
+        //接口认证
+        if ($this->sessionId && $this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
+            try {
+                $sessionHelper->apiAuth($this->userId, $api);
+            } catch (Exception $exception) {
+                throw new HttpResponseException(
+                    $this->getErrorResponse('接口认证失败，'.$exception->getMessage())
+                );
+            }
+        }
+
         //操作日志
         if ($this->userId) {
             $operationLogModel = new OperationLogModel();
@@ -83,7 +97,7 @@ class Base extends BaseController
                 'department_id' => $this->departmentId,
                 'user_id' => $this->userId,
                 'terminal' => 2,
-                'api' => $this->request->baseUrl(),
+                'api' => $api,
                 'ip' => $ip,
                 'time' => time()
             ];

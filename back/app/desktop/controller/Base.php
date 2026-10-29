@@ -72,7 +72,7 @@ class Base extends BaseController
         if ($this->sessionId) {
             if ($this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
                 try {
-                    $sessionHelper->apiAuth(0, $this->userId, $api);
+                    $sessionHelper->apiAuth($this->userId, $api);
                 } catch (Exception $exception) {
                     throw new HttpResponseException(
                         $this->getErrorResponse('接口认证失败，'.$exception->getMessage())

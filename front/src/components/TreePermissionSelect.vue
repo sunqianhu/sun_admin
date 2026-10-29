@@ -41,7 +41,7 @@ const treePermission = ref([]);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/components.desktop.treePermissionSelect/getTreePermission",
+    "desktop/components.TreePermissionSelect/getTreePermission",
     {
       params: {
         permission_id: props.permissionId,
@@ -58,15 +58,9 @@ const init = async () => {
   treePermission.value = response.data;
 };
 
-watch(
-  () => props.permissionId,
-  (newValue) => {
-    init();
-  },
-  {
-    deep: true,
-  },
-);
+watch(() => props.permissionId, () => {
+  init();
+});
 
 onMounted(() => {
   init();

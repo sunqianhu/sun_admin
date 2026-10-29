@@ -1,14 +1,14 @@
 <template>
   <el-dialog
     :model-value="true"
-    title="修改权限"
+    title="添加权限"
     :draggable="true"
     align-center
     width="600"
     @close="close"
-    class="edit"
+    class="add"
   >
-    <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
+    <el-scrollbar max-height="400px" class="scrollbar">
       <el-form
         :model="permission"
         :rules="rules"
@@ -27,12 +27,14 @@
         </el-form-item>
         <el-form-item label="权限标识" prop="key">
           <el-input v-model="permission.key" />
-          <div class="text-tip">全局定位标识，下划线分隔</div>
+          <div class="text-tip">
+            全局唯一，以下划线分隔，桌面端以desktop_开头，移动端以mobile_开头，API端以api_开头
+          </div>
         </el-form-item>
         <el-form-item label="接口地址" prop="api_string">
           <el-input v-model="permission.api_string" type="textarea" rows="3" />
           <div class="text-tip">
-            后端接口地址一行一个，格式：应用/控制器/方法
+            支持桌面端、移动端和API接口，一行一个，格式：应用/控制器/方法
           </div>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
@@ -50,14 +52,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref } from "vue";
 import axios from "@/helper/axios";
-import TreePermissionSelect from "@/components/desktop/TreePermissionSelect.vue";
+import TreePermissionSelect from "@/components/TreePermissionSelect.vue";
 
-const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
-const initLoading = ref(false);
-const permission = ref({});
+const permission = ref({
+  sort: 0,
+});
 const permissionRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入权限名称", trigger: "blur" }],
@@ -65,33 +67,6 @@ const rules = {
   sort: [{ required: true, message: "请输入排序", trigger: "blur" }],
 };
 const submitLoading = ref(false);
-
-/**
- * 初始化
- */
-const init = async () => {
-  initLoading.value = true;
-  let response;
-  try {
-    response = await axios.get(
-      "desktop/system.desktop.permission.Edit/init",
-      {
-        params: { id: props.id },
-      },
-    );
-  } finally {
-    initLoading.value = false;
-  }
-  if (response.code != 0) {
-    ElMessage({
-      message: response.message,
-      type: "error",
-    });
-    return;
-  }
-
-  permission.value = response.data;
-};
 
 /**
  * 关闭
@@ -110,7 +85,7 @@ const submitForm = async () => {
   let response;
   try {
     response = await axios.post(
-      "desktop/system.desktop.permission.Edit/save",
+      "desktop/system.permission.Add/save",
       permission.value,
     );
   } finally {
@@ -129,14 +104,10 @@ const submitForm = async () => {
   });
   emits("submited", true);
 };
-
-onMounted(() => {
-  init();
-});
 </script>
 
 <style lang="scss" scoped>
-.edit {
+.add {
   .scrollbar {
     padding-right: 50px;
     .el-select {

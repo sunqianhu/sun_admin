@@ -2,7 +2,7 @@
 
 namespace app\desktop\controller;
 
-use app\helper\user\UserDesktopPermissionHelper;
+use app\helper\user\UserPermissionHelper;
 use app\helper\user\UserDesktopRouteHelper;
 use app\helper\WatermarkHelper;
 use think\db\exception\DataNotFoundException;
@@ -20,8 +20,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $userDesktopPermissionHelper = new UserDesktopPermissionHelper();
-        $permissions = $userDesktopPermissionHelper->getPermissionKeys($this->userId);
+        $userPermissionHelper = new UserPermissionHelper();
+        $permissions = $userPermissionHelper->getPermissionKeys($this->userId);
         return $this->getSuccessResponse('获取成功', $permissions);
     }
 

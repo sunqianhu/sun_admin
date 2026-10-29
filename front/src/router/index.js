@@ -5,7 +5,6 @@ import axios from "@/helper/axios";
 import { usePermissionStore } from "@/stores/permission";
 import { useRouteStore } from "@/stores/route";
 import routeCache from "@/helper/route_cache";
-import permissionCache from "@/helper/permission_cache";
 import { useQuickNavigationStore } from "@/stores/quick_navigation";
 
 const writeList = ["/login", "/404", "/test"];
@@ -68,19 +67,11 @@ const getLoginRoutePath = () => {
  */
 const setPermissions = async () => {
   const permissionStore = usePermissionStore();
-  if (permissionStore.isSet) {
-    return;
+  const response = await axios.get("desktop/frame/getPermissions");
+  if (response.code != 0) {
+    throw new Error(response.message);
   }
-  let permissions = permissionCache.get();
-  if (permissions === null) {
-    const response = await axios.get("desktop/frame/getPermissions");
-    if (response.code != 0) {
-      throw new Error(response.message);
-    }
-    permissions = response.data;
-    permissionCache.set(permissions);
-  }
-  permissionStore.set(permissions);
+  permissionStore.set(response.data);
 };
 
 /**

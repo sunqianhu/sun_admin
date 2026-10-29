@@ -2,12 +2,12 @@
 
 namespace app\helper\user;
 
-use app\model\mobile\PermissionModel;
+use app\model\PermissionModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-class UserMobilePermissionHelper
+class UserPermissionHelper
 {
     /**
      * 得到接口列表
@@ -25,9 +25,9 @@ class UserMobilePermissionHelper
         }
 
         $permissionModels = PermissionModel::alias('p')
-            ->join('role_mobile_permission rmp', 'p.id = rmp.permission_id')
+            ->join('role_permission rp', 'p.id = rp.permission_id')
             ->field('p.api_string')
-            ->where('rmp.role_id', 'in', $roleIds)
+            ->whereIn('rp.role_id', $roleIds)
             ->where('p.api_string', '<>', '')
             ->group('p.id')
             ->append(['apis'])
@@ -64,13 +64,12 @@ class UserMobilePermissionHelper
         if (in_array($api, $apis, true)) {
             return true;
         }
-
         return false;
     }
 
     /**
      * 得到权限key列表
-     * @param $userId
+      * @param $userId
      * @return array
      */
     public function getPermissionKeys($userId){
@@ -81,12 +80,26 @@ class UserMobilePermissionHelper
         }
 
         $keys = PermissionModel::alias('p')
-            ->join('role_mobile_permission rmp', 'p.id = rmp.permission_id')
+            ->join('role_permission rp', 'p.id = rp.permission_id')
             ->field('p.key')
-            ->where('rmp.role_id', 'in', $roleIds)
+            ->where('rp.role_id', 'in', $roleIds)
             ->orderRaw('ANY_VALUE(p.sort) asc')
-            ->group('key')
-            ->column('key');
-        return $keys;
+            ->group('p.key')
+            ->column('p.key');
+        return array_unique($keys);
+    }
+
+    /**
+     * 是否有权限
+     * @param $userId
+     * @param $key
+     * @return bool
+     */
+    public function hasPermission($userId, $key){
+        $keys = $this->getPermissionKeys($userId);
+        if(in_array($key, $keys)){
+            return true;
+        }
+        return false;
     }
 }

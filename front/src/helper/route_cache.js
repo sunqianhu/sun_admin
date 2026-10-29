@@ -1,4 +1,4 @@
-const key = "route";
+const key = "route_permission";
 const ttl = 60 * 30 * 1000;
 
 /**

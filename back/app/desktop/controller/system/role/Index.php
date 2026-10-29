@@ -5,9 +5,8 @@ namespace app\desktop\controller\system\role;
 use app\desktop\controller\Base;
 use app\model\RoleDataScopePolicyModel;
 use app\model\RoleDesktopMenuModel;
-use app\model\RoleDesktopPermissionModel;
+use app\model\RolePermissionModel;
 use app\model\RoleDesktopRouteModel;
-use app\model\RoleMobilePermissionModel;
 use app\model\RoleModel;
 use Exception;
 use think\facade\Db;
@@ -54,17 +53,14 @@ class Index extends Base
             }
             $roleModel->delete($id);
 
-            $roleDesktopPermissionModels = RoleDesktopPermissionModel::where('role_id', $id)->select();
-            $roleDesktopPermissionModels->delete();
+            $rolePermissionModels = RolePermissionModel::where('role_id', $id)->select();
+            $rolePermissionModels->delete();
 
             $roleDesktopMenuModels = RoleDesktopMenuModel::where('role_id', $id)->select();
             $roleDesktopMenuModels->delete();
 
             $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $id)->select();
             $roleDesktopRouteModels->delete();
-
-            $roleMobilePermissionModels = RoleMobilePermissionModel::where('role_id', $id)->select();
-            $roleMobilePermissionModels->delete();
 
             $roleDataScopePolicyModels = RoleDataScopePolicyModel::where('role_id', $id)->select();
             $roleDataScopePolicyModels->delete();

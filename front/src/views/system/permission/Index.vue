@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <div class="page-name">权限管理</div>
+    <div class="page-name">功能权限</div>
     <div class="query-bar">
       <el-form :model="query" :inline="true">
         <el-form-item label="权限名称">
@@ -18,7 +18,13 @@
     </div>
 
     <div class="tool-bar">
-      <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
+      <el-button
+        v-permission="['desktop_system_permission_add']"
+        type="primary"
+        :icon="Plus"
+        @click="openAdd"
+        >添加</el-button
+      >
     </div>
 
     <div class="list">
@@ -44,10 +50,19 @@
           fixed="right"
           width="140"
         >
-          <el-button size="small" @click="openEdit(row.id)">修改</el-button>
+          <el-button
+            v-permission="['desktop_system_permission_edit']"
+            size="small"
+            @click="openEdit(row.id)"
+            >修改</el-button
+          >
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
-              <el-button size="small">删除</el-button>
+              <el-button
+                v-permission="['desktop_system_permission_delete']"
+                size="small"
+                >删除</el-button
+              >
             </template>
           </el-popconfirm>
         </el-table-column>
@@ -96,7 +111,7 @@ const getTreePermission = async () => {
   let response;
   try {
     response = await axios.get(
-      "desktop/system.desktop.permission.Index/getTreePermission",
+      "desktop/system.permission.Index/getTreePermission",
       {
         params: query.value,
       },
@@ -141,12 +156,9 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post(
-    "desktop/system.desktop.permission.Index/delete",
-    {
-      id: id,
-    },
-  );
+  const response = await axios.post("desktop/system.permission.Index/delete", {
+    id: id,
+  });
   if (response.code != 0) {
     ElMessage({
       message: response.message,

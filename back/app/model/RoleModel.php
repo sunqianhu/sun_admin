@@ -2,9 +2,7 @@
 namespace app\model;
 
 use app\model\desktop\MenuModel as DesktopMenuModel;
-use app\model\desktop\PermissionModel as DesktopPermissionModel;
 use app\model\desktop\RouteModel as DesktopRouteModel;
-use app\model\mobile\PermissionModel as MobilePermissionModel;
 use think\model\relation\BelongsToMany;
 
 class RoleModel extends BaseModel
@@ -12,12 +10,12 @@ class RoleModel extends BaseModel
     protected $name = 'role';
 
     /**
-     * 桌面端权限
+     * 权限
      * @return BelongsToMany
      */
-    public function desktopPermissions()
+    public function permissions()
     {
-        return $this->belongsToMany(DesktopPermissionModel::class, 'role_desktop_permission', 'permission_id', 'role_id');
+        return $this->belongsToMany(PermissionModel::class, 'role_permission', 'permission_id', 'role_id');
     }
 
     /**
@@ -39,26 +37,17 @@ class RoleModel extends BaseModel
     }
 
     /**
-     * 移动端权限
-     * @return BelongsToMany
-     */
-    public function mobilePermissions()
-    {
-        return $this->belongsToMany(MobilePermissionModel::class, 'role_mobile_permission', 'permission_id', 'role_id');
-    }
-
-    /**
-     * 得到桌面端权限id列表
+     * 得到权限id列表
      * @param $value
      * @param $data
      * @return array
      */
-    public function getDesktopPermissionIdsAttr($value, $data){
-        if(empty($this->desktop_permissions)){
+    public function getPermissionIdsAttr($value, $data){
+        if(empty($this->permissions)){
             return [];
         }
-        $desktopPermissions = $this->desktop_permissions->toArray();
-        $ids = array_column($desktopPermissions, 'id');
+        $permissions = $this->permissions->toArray();
+        $ids = array_column($permissions, 'id');
         return array_unique($ids);
     }
 
@@ -92,18 +81,4 @@ class RoleModel extends BaseModel
         return array_unique($ids);
     }
 
-    /**
-     * 得到移动端路由id列表
-     * @param $value
-     * @param $data
-     * @return array
-     */
-    public function getMobilePermissionIdsAttr($value, $data){
-        if(empty($this->mobile_permissions)){
-            return [];
-        }
-        $mobilePermissions = $this->mobile_permissions->toArray();
-        $ids = array_column($mobilePermissions, 'id');
-        return array_unique($ids);
-    }
 }
