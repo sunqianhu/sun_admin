@@ -26,9 +26,9 @@ class UserPermissionHelper
 
         $permissionModels = PermissionModel::alias('p')
             ->join('role_permission rp', 'p.id = rp.permission_id')
-            ->field('p.api_string')
+            ->field('p.apis_string')
             ->whereIn('rp.role_id', $roleIds)
-            ->where('p.api_string', '<>', '')
+            ->where('p.apis_string', '<>', '')
             ->group('p.id')
             ->append(['apis'])
             ->select();

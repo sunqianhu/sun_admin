@@ -16,11 +16,11 @@ class PermissionModel extends BaseModel
      */
     public function getApisAttr($value, $data)
     {
-        if(!isset($data['api_string'])){
+        if(!isset($data['apis_string'])){
             return [];
         }
 
-        $apis = preg_split('/\r\n|\r|\n/', $data['api_string'] ?? '');
+        $apis = preg_split('/\r\n|\r|\n/', $data['apis_string'] ?? '');
         $apis = array_map(function ($api) {
             return ltrim(trim($api), '/');
         }, $apis);

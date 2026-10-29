@@ -31,8 +31,8 @@
             全局唯一，以下划线分隔，桌面端以desktop_开头，移动端以mobile_开头，API端以api_开头
           </div>
         </el-form-item>
-        <el-form-item label="接口地址" prop="api_string">
-          <el-input v-model="permission.api_string" type="textarea" rows="3" />
+        <el-form-item label="接口地址" prop="apis_string">
+          <el-input v-model="permission.apis_string" type="textarea" rows="3" />
           <div class="text-tip">
             支持桌面端、移动端和API接口，一行一个，格式：应用/控制器/方法
           </div>

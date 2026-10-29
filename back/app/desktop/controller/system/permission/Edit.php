@@ -25,7 +25,7 @@ class Edit extends Base
         }
         $id = $get['id'];
 
-        $permissionModel = PermissionModel::field('id,permission_id,name,key,api_string,sort')->find($id);
+        $permissionModel = PermissionModel::field('id,permission_id,name,key,apis_string,sort')->find($id);
         if (empty($permissionModel)) {
             return $this->getErrorResponse('没有找到记录');
         }
@@ -39,7 +39,7 @@ class Edit extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['id', 'permission_id' => 0, 'name'=>'', 'key'=>'', 'api_string'=>'', 'sort']);
+        $post = $this->request->post(['id', 'permission_id' => 0, 'name'=>'', 'key'=>'', 'apis_string'=>'', 'sort']);
 
         try {
             validate(PermissionValidate::class)->scene('edit')->check($post);

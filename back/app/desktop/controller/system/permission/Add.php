@@ -15,7 +15,7 @@ class Add extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['permission_id' => 0, 'name' => '', 'key' => '', 'api_string' => '', 'sort']);
+        $post = $this->request->post(['permission_id' => 0, 'name' => '', 'key' => '', 'apis_string' => '', 'sort']);
 
         try {
             validate(PermissionValidate::class)->scene('add')->check($post);
