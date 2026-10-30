@@ -14,6 +14,9 @@
           <attribute label="日志ID" :span="12">
             {{ operationLog.id }}
           </attribute>
+          <attribute label="会话ID" :span="12">
+            {{ operationLog.session_id }}
+          </attribute>
           <attribute label="终端" :span="12">
             {{ operationLog.terminal_name }}
           </attribute>

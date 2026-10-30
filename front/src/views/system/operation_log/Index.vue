@@ -15,6 +15,12 @@
             type="terminal"
           ></dictionary-select>
         </el-form-item>
+        <el-form-item label="处理结果">
+          <el-select v-model="query.result_code" placeholder="全部" clearable>
+            <el-option label="成功" value="0" />
+            <el-option label="失败" value="1" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="操作时间">
           <el-date-picker
             v-model="query.times"
@@ -117,6 +123,7 @@ import axios from "@/helper/axios";
 import Detail from "./Detail.vue";
 
 const query = ref({
+  result_code: "",
   times: [
     dayjs(
       dayjs().subtract(6, "month").format("YYYY-MM-DD") + " 00:00:00",
