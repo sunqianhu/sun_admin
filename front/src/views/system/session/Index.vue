@@ -1,0 +1,330 @@
+<template>
+  <div class="index">
+    <div class="page-name">会话管理</div>
+    <div class="query-bar">
+      <el-form :model="query" :inline="true">
+        <el-form-item label="终端">
+          <dictionary-select
+            v-model="query.terminal"
+            type="terminal"
+          ></dictionary-select>
+        </el-form-item>
+        <el-form-item label="是否过期">
+          <el-select v-model="query.is_expired" placeholder="全部" clearable>
+            <el-option label="未过期" :value="0" />
+            <el-option label="已过期" :value="1" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="名称">
+          <el-input v-model="query.name" clearable />
+        </el-form-item>
+        <el-form-item label="所属用户">
+          <el-input
+            v-model="query.user_keyword"
+            placeholder="姓名或账号"
+            clearable
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" :icon="Search" @click="submitQuery">
+            查询
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+
+    <div class="tool-bar">
+      <el-button type="primary" :icon="Plus" @click="openAdd"> 添加 </el-button>
+    </div>
+
+    <div class="list">
+      <el-table
+        :data="sessions"
+        v-loading="listLoading"
+        row-key="id"
+        class="table"
+      >
+        <el-table-column prop="terminal_name" label="终端" width="100" />
+        <el-table-column
+          prop="name"
+          label="名称"
+          width="150"
+          show-overflow-tooltip
+        />
+        <el-table-column v-slot="{ row }" label="所属用户" width="130">
+          <a
+            :href="'/system/user/detail-' + row.user_id"
+            target="_blank"
+            v-if="row.user_name"
+          >
+            {{ row.user_name }}
+          </a>
+          <span v-else>已删除（ID：{{ row.user_id }}）</span>
+        </el-table-column>
+        <el-table-column v-slot="{ row }" prop="token" label="令牌">
+          <div class="token">
+            <el-tooltip :content="row.token" placement="top">
+              <div class="token__value">{{ row.token }}</div>
+            </el-tooltip>
+            <el-button link type="primary" @click="copyToken(row.token)">
+              复制
+            </el-button>
+          </div>
+        </el-table-column>
+        <el-table-column
+          v-slot="{ row }"
+          prop="expire_time"
+          label="过期时间"
+          width="220"
+        >
+          <div>
+            {{ dayjs.unix(row.expire_time).format("YYYY-MM-DD HH:mm:ss") }}
+          </div>
+          <el-text
+            type="danger"
+            size="small"
+            v-if="row.expire_time <= dayjs().unix()"
+          >
+            已过期
+          </el-text>
+        </el-table-column>
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="180"
+        >
+          <el-button size="small" @click="openExtend(row.id)">延期</el-button>
+          <el-popconfirm
+            title="确定删除该会话吗？删除后将立即失效。"
+            width="280"
+            @confirm="del(row.id)"
+          >
+            <template #reference>
+              <el-button size="small">删除</el-button>
+            </template>
+          </el-popconfirm>
+        </el-table-column>
+      </el-table>
+    </div>
+
+    <div class="pagination">
+      <el-pagination
+        background
+        layout="total,->,sizes,jumper,prev, pager, next"
+        :page-sizes="[10, 30, 50, 100, 200, 300]"
+        v-model:page-size="query.size"
+        v-model:current-page="query.page"
+        :total="total"
+        @size-change="changePaginationSize"
+        @current-change="changePaginationCurrent"
+      />
+    </div>
+
+    <add
+      @close="addFlag = false"
+      @submited="
+        query.page = 1;
+        getPaginate();
+        addFlag = false;
+      "
+      v-if="addFlag"
+    ></add>
+    <extend
+      :id="rowId"
+      @close="extendFlag = false"
+      @submited="
+        getPaginate();
+        extendFlag = false;
+      "
+      v-if="extendFlag"
+    ></extend>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue";
+import { Search, Plus } from "@element-plus/icons-vue";
+import axios from "@/helper/axios";
+import dayjs from "dayjs";
+import Add from "./Add.vue";
+import Extend from "./Extend.vue";
+import DictionarySelect from "@/components/DictionarySelect.vue";
+
+const query = ref({
+  name: "",
+  user_keyword: "",
+  terminal: "",
+  is_expired: "",
+  size: 30,
+  page: 1,
+});
+const sessions = ref([]);
+const listLoading = ref(true);
+const total = ref(0);
+const rowId = ref(0);
+const addFlag = ref(false);
+const extendFlag = ref(false);
+
+/**
+ * 获取分页
+ */
+const getPaginate = async () => {
+  listLoading.value = true;
+  let response;
+  try {
+    response = await axios.get("desktop/system.session.Index/getPaginate", {
+      params: query.value,
+    });
+  } finally {
+    listLoading.value = false;
+  }
+  if (response.code != 0) {
+    ElMessage({ message: response.message, type: "error" });
+    return;
+  }
+  sessions.value = response.data.data;
+  total.value = response.data.total;
+};
+
+/**
+ * 提交查询
+ */
+const submitQuery = () => {
+  query.value.page = 1;
+  getPaginate();
+};
+
+/**
+ * 改变分页显示条数
+ * @param {number} size
+ */
+const changePaginationSize = (size) => {
+  query.value.size = size;
+  query.value.page = 1;
+  getPaginate();
+};
+
+/**
+ * 改变分页当前页
+ * @param {number} page
+ */
+const changePaginationCurrent = (page) => {
+  query.value.page = page;
+  getPaginate();
+};
+
+/**
+ * 打开添加会话
+ */
+const openAdd = () => {
+  addFlag.value = true;
+};
+
+/**
+ * 打开会话延期
+ * @param {number} id
+ */
+const openExtend = (id) => {
+  rowId.value = id;
+  extendFlag.value = true;
+};
+
+/**
+ * 删除会话
+ * @param {number} id
+ */
+const del = async (id) => {
+  const response = await axios.post("desktop/system.session.Index/delete", {
+    id: id,
+  });
+  if (response.code != 0) {
+    ElMessage({ message: response.message, type: "error" });
+    return;
+  }
+  ElMessage({ message: response.message, type: "success" });
+  if (sessions.value.length === 1 && query.value.page > 1) {
+    query.value.page -= 1;
+  }
+  getPaginate();
+};
+
+/**
+ * 复制令牌
+ * @param {string} token
+ */
+const copyToken = async (token) => {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(token);
+    } else {
+      const textarea = document.createElement("textarea");
+      textarea.value = token;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      try {
+        textarea.select();
+        if (!document.execCommand("copy")) {
+          throw new Error("复制失败，请手动复制令牌");
+        }
+      } finally {
+        textarea.remove();
+      }
+    }
+    ElMessage({ message: "复制成功", type: "success" });
+  } catch (error) {
+    ElMessage({ message: "复制失败，请手动复制令牌", type: "error" });
+  }
+};
+
+onMounted(() => {
+  getPaginate();
+});
+</script>
+
+<style lang="scss" scoped>
+.index {
+  background-color: var(--background-color-light);
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  .page-name {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+  }
+  .query-bar {
+    margin-top: var(--margin);
+    .el-select {
+      min-width: 198px;
+    }
+  }
+  .list {
+    margin-top: var(--margin);
+    :deep(th.el-table__cell) {
+      background-color: var(--background-color-lighter);
+    }
+    .table {
+      width: 100%;
+    }
+    .token {
+      display: flex;
+      align-items: center;
+      gap: var(--margin-sm);
+      .token__value {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .el-button {
+        flex-shrink: 0;
+      }
+    }
+  }
+  .pagination {
+    margin-top: var(--margin);
+  }
+}
+</style>
