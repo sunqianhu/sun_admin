@@ -25,7 +25,7 @@ class Detail extends Base
     {
         $userModel = UserModel::field('id,avatar,name,department_id,phone')
             ->append(['avatar_url', 'department_name'])
-            ->find($this->userId);
+            ->find($this->request->userId);
         if(empty($userModel)){
             return $this->getErrorResponse('用户不存在');
         }
@@ -45,7 +45,7 @@ class Detail extends Base
     public function logout()
     {
         $sessionHelper = new SessionHelper();
-        $sessionHelper->delete($this->sessionId);
+        $sessionHelper->delete($this->request->sessionId);
 
         return $this->getSuccessResponse("退出登录成功");
     }

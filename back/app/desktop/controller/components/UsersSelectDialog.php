@@ -27,7 +27,7 @@ class UsersSelectDialog extends Base
                 $query->withField('id,name');
             }]);
         $userDataScopeHelper = new UserDataScopeHelper();
-        $query = $userDataScopeHelper->buildQueryConstraint($this->userId, 'global_user_access', $query, 'department_id', 'id');
+        $query = $userDataScopeHelper->buildQueryConstraint($this->request->userId, 'global_user_access', $query, 'department_id', 'id');
         if (!empty($get['department_ids'])) {
             $query->whereIn('department_id', $get['department_ids']);
         }

@@ -28,7 +28,7 @@ class TreeDepartmentSelect extends Base
         }
 
         $treeDepartmentHelper = new TreeDepartmentHelper();
-        $treeDepartment = $treeDepartmentHelper->getTreeDepartment($this->userId, $get['department_id']);
+        $treeDepartment = $treeDepartmentHelper->getTreeDepartment($this->request->userId, $get['department_id']);
         return $this->getSuccessResponse('获取成功', $treeDepartment);
     }
 }

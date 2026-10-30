@@ -23,7 +23,7 @@ class Menu extends Base
     public function getTreeMenu()
     {
         $userDesktopMenuHelper = new UserDesktopMenuHelper();
-        $treeMenu = $userDesktopMenuHelper->getTreeMenu($this->userId);
+        $treeMenu = $userDesktopMenuHelper->getTreeMenu($this->request->userId);
 
         return $this->getSuccessResponse('获取成功', $treeMenu);
     }

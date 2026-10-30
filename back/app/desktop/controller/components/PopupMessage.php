@@ -29,8 +29,8 @@ class PopupMessage extends Base
 
         $messageHelper = new MessageHelper();
         try{
-            $messageHelper->setRead($this->userId, $post['id']);
-            $messageHelper->sendReadByQueue($this->userId, $post['id']);
+            $messageHelper->setRead($this->request->userId, $post['id']);
+            $messageHelper->sendReadByQueue($this->request->userId, $post['id']);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

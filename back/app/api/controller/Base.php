@@ -55,28 +55,26 @@ class Base extends BaseController
         if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             try {
                 $token = $this->request->header('token', '');
-                $this->sessionId = $sessionHelper->tokenAuth(2, $token);
+                $this->request->sessionId = $sessionHelper->tokenAuth(2, $token);
             } catch (Exception $exception) {
                 throw new Exception($exception->getMessage(), 2, $exception);
             }
         }
 
-        if ($this->sessionId) {
+        if ($this->request->sessionId) {
             try {
-                $this->userId = $sessionHelper->getUserId($this->sessionId);
-                $this->request->userId = $this->userId;
+                $this->request->userId = $sessionHelper->getUserId($this->request->sessionId);
                 $userDepartmentHelper = new UserDepartmentHelper();
-                $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
-                $this->request->departmentId = $this->departmentId;
+                $this->request->departmentId = $userDepartmentHelper->getDepartmentId($this->request->userId);
             } catch (Exception $exception) {
                 throw new Exception($exception->getMessage(), 1, $exception);
             }
         }
 
         //接口认证
-        if ($this->sessionId && $this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
+        if ($this->request->sessionId && $this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
             try {
-                $sessionHelper->apiAuth($this->userId, $api);
+                $sessionHelper->apiAuth($this->request->userId, $api);
             } catch (Exception $exception) {
                 throw new Exception('接口认证失败，'.$exception->getMessage(), 1, $exception);
             }

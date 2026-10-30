@@ -30,11 +30,11 @@ class EditAvatar extends Base
 
         try {
             $userAvatarHelper = new UserAvatarHelper();
-            $userAvatarHelper->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
+            $userAvatarHelper->editAvatarByBase64Content($this->request->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
-        $url = $userAvatarHelper->getAvatarUrlByUserId($this->userId);
+        $url = $userAvatarHelper->getAvatarUrlByUserId($this->request->userId);
 
         return $this->getSuccessResponse('修改成功', $url);
     }

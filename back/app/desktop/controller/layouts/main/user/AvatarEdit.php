@@ -26,7 +26,7 @@ class AvatarEdit extends Base
      */
     public function init()
     {
-        $userModel = UserModel::field('big_avatar')->find($this->userId);
+        $userModel = UserModel::field('big_avatar')->find($this->request->userId);
         $url = $userModel->big_avatar_url;
 
         return $this->getSuccessResponse('获取成功', $url);
@@ -48,7 +48,7 @@ class AvatarEdit extends Base
 
         $userAvatarHelper = new UserAvatarHelper();
         try {
-            $userAvatarHelper->editAvatarByBase64Content($this->userId, $post['avatar_base64_image_content']);
+            $userAvatarHelper->editAvatarByBase64Content($this->request->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

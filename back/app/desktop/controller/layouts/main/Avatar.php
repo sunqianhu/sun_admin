@@ -25,7 +25,7 @@ class Avatar extends Base
     {
         $userModel = UserModel::field('id,name,avatar')
             ->append(['avatar_url'])
-            ->find($this->userId);
+            ->find($this->request->userId);
         $user = $userModel->toArray();
 
         return $this->getSuccessResponse('获取成功', $user);
@@ -39,7 +39,7 @@ class Avatar extends Base
     public function logout()
     {
         $sessionHelper = new SessionHelper();
-        $sessionHelper->delete($this->sessionId);
+        $sessionHelper->delete($this->request->sessionId);
 
         return $this->getSuccessResponse("退出成功");
     }

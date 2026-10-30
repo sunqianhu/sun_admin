@@ -29,7 +29,7 @@ class DepartmentUsersSelect extends Base
         }
 
         $userDataScopeHelper = new UserDataScopeHelper();
-        if(!$userDataScopeHelper->canAccessDepartment($this->userId, 'global_department_access', $get['department_id'])){
+        if(!$userDataScopeHelper->canAccessDepartment($this->request->userId, 'global_department_access', $get['department_id'])){
             return $this->getErrorResponse('无权限访问该部门');
         }
 

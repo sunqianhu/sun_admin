@@ -23,7 +23,7 @@ class Index extends Base
         if (!empty($get['times']) && count($get['times']) == 2) {
             $query->whereBetweenTime('add_time', intval($get['times'][0]), intval($get['times'][1]));
         }
-        $query->where('user_id', $this->userId)
+        $query->where('user_id', $this->request->userId)
             ->order('id', 'desc');
         $paginateObject = $query->paginate([
             'list_rows' => $get['size'],
@@ -42,8 +42,8 @@ class Index extends Base
     {
         $messageHelper = new MessageHelper();
         try{
-            $messageHelper->setAllRead($this->userId);
-            $messageHelper->sendAllReadByQueue($this->userId);
+            $messageHelper->setAllRead($this->request->userId);
+            $messageHelper->sendAllReadByQueue($this->request->userId);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

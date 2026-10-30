@@ -21,7 +21,7 @@ class Index extends Base
     {
         $userModel = UserModel::field('avatar,name,department_id')
             ->append(['avatar_url', 'department_name'])
-            ->find($this->userId);
+            ->find($this->request->userId);
         if(empty($userModel)){
             return $this->getErrorResponse('用户不存在');
         }

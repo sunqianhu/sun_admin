@@ -16,7 +16,7 @@ class Frame extends Base
     public function getPermissions()
     {
         $userPermissionHelper = new UserPermissionHelper();
-        $permissions = $userPermissionHelper->getPermissionKeys($this->userId);
+        $permissions = $userPermissionHelper->getPermissionKeys($this->request->userId);
         return $this->getSuccessResponse('获取成功', $permissions);
     }
 }

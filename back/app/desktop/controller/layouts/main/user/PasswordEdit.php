@@ -27,10 +27,10 @@ class PasswordEdit extends Base
 
         $userPasswordHelper = new UserPasswordHelper();
         try {
-            if (!$userPasswordHelper->checkPassword($this->userId, $post['old_password'])) {
+            if (!$userPasswordHelper->checkPassword($this->request->userId, $post['old_password'])) {
                 return $this->getErrorResponse('原密码错误');
             }
-            $userPasswordHelper->editPassword($this->userId, $post['new_password1']);
+            $userPasswordHelper->editPassword($this->request->userId, $post['new_password1']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

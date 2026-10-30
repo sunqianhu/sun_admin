@@ -40,30 +40,28 @@ class Base extends BaseController
         if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             try {
                 $token = $this->request->header('token', '');
-                $this->sessionId = $sessionHelper->tokenAuth(0, $token);
+                $this->request->sessionId = $sessionHelper->tokenAuth(0, $token);
             } catch (Exception $exception) {
                 throw new Exception('登录认证失败，'.$exception->getMessage(), 2, $exception);
             }
         }
 
-        if(!empty($this->sessionId)){
+        if(!empty($this->request->sessionId)){
             try{
-                $this->userId = $sessionHelper->getUserId($this->sessionId);
-                $this->request->userId = $this->userId;
+                $this->request->userId = $sessionHelper->getUserId($this->request->sessionId);
                 $userDepartmentHelper = new UserDepartmentHelper();
-                $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
-                $this->request->departmentId = $this->departmentId;
-                $sessionHelper->renewExpireTime($this->sessionId, time() + 30 * 60);
+                $this->request->departmentId = $userDepartmentHelper->getDepartmentId($this->request->userId);
+                $sessionHelper->renewExpireTime($this->request->sessionId, time() + 30 * 60);
             }catch (Exception $exception){
                 throw new Exception($exception->getMessage(), 1, $exception);
             }
         }
 
         //接口认证
-        if ($this->sessionId) {
+        if ($this->request->sessionId) {
             if ($this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
                 try {
-                    $sessionHelper->apiAuth($this->userId, $api);
+                    $sessionHelper->apiAuth($this->request->userId, $api);
                 } catch (Exception $exception) {
                     throw new Exception('接口认证失败，'.$exception->getMessage(), 1, $exception);
                 }

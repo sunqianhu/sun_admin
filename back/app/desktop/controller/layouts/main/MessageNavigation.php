@@ -19,7 +19,7 @@ class MessageNavigation extends Base
     {
         $messageHelper = new MessageHelper();
         try{
-            $count = $messageHelper->getNoReadCount($this->userId);
+            $count = $messageHelper->getNoReadCount($this->request->userId);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
