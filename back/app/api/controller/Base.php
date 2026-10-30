@@ -3,7 +3,7 @@
 namespace app\api\controller;
 
 use app\BaseController;
-use app\model\OperationLogModel;
+use app\helper\OperationLogHelper;
 use app\helper\SessionHelper;
 use app\helper\IpAuthHelper;
 use app\helper\user\UserDepartmentHelper;
@@ -13,6 +13,8 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\HttpResponseException;
 use think\Response;
+use think\facade\Log;
+use Throwable;
 
 class Base extends BaseController
 {
@@ -35,6 +37,7 @@ class Base extends BaseController
     /**
      * 初始化
      * @return void
+     * @throws Exception
      */
     function initialize()
     {
@@ -43,65 +46,66 @@ class Base extends BaseController
         $ip = $this->request->ip();
         $api = $this->request->baseUrl();
 
-        //ip
-        $ipAuthHelper = new IpAuthHelper();
         try {
-            $ipAuthHelper->ipAuth($ip);
-        } catch (Exception $exception) {
-            throw new HttpResponseException(
-                $this->getErrorResponse($exception->getMessage())
-            );
-        }
-
-        $action = $this->request->action();
-
-        //token
-        if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
-            $token = $this->request->header('token', '');
+            //ip
+            $ipAuthHelper = new IpAuthHelper();
             try {
-                $this->sessionId = $sessionHelper->tokenAuth(2, $token);
+                $ipAuthHelper->ipAuth($ip);
             } catch (Exception $exception) {
                 throw new HttpResponseException(
                     $this->getErrorResponse($exception->getMessage())
                 );
             }
-        }
 
-        if ($this->sessionId) {
-            try {
-                $this->userId = $sessionHelper->getUserId($this->sessionId);
-                $userDepartmentHelper = new UserDepartmentHelper();
-                $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
-            } catch (Exception $exception) {
-                throw new HttpResponseException(
-                    $this->getErrorResponse($exception->getMessage())
-                );
+            $action = $this->request->action();
+
+            //token
+            if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
+                $token = $this->request->header('token', '');
+                try {
+                    $this->sessionId = $sessionHelper->tokenAuth(2, $token);
+                } catch (Exception $exception) {
+                    throw new HttpResponseException(
+                        $this->getErrorResponse($exception->getMessage())
+                    );
+                }
             }
-        }
 
-        //接口认证
-        if ($this->sessionId && $this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
-            try {
-                $sessionHelper->apiAuth($this->userId, $api);
-            } catch (Exception $exception) {
-                throw new HttpResponseException(
-                    $this->getErrorResponse('接口认证失败，'.$exception->getMessage())
-                );
+            if ($this->sessionId) {
+                try {
+                    $this->userId = $sessionHelper->getUserId($this->sessionId);
+                    $userDepartmentHelper = new UserDepartmentHelper();
+                    $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
+                } catch (Exception $exception) {
+                    throw new HttpResponseException(
+                        $this->getErrorResponse($exception->getMessage())
+                    );
+                }
             }
-        }
 
-        //操作日志
-        if ($this->userId) {
-            $operationLogModel = new OperationLogModel();
+            //接口认证
+            if ($this->sessionId && $this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
+                try {
+                    $sessionHelper->apiAuth($this->userId, $api);
+                } catch (Exception $exception) {
+                    throw new HttpResponseException(
+                        $this->getErrorResponse('接口认证失败，'.$exception->getMessage())
+                    );
+                }
+            }
+        } finally {
+            $operationLogHelper = new OperationLogHelper();
             $data = [
                 'department_id' => $this->departmentId,
                 'user_id' => $this->userId,
                 'terminal' => 2,
                 'api' => $api,
+                'request_method' => $this->request->method(true),
+                'request_content' => $operationLogHelper->getRequestContent($this->request),
                 'ip' => $ip,
                 'time' => time()
             ];
-            $operationLogModel->save($data);
+            $operationLogHelper->add($data);
         }
     }
 
