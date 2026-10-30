@@ -50,23 +50,35 @@
         table-layout="auto"
         class="table"
       >
-        <el-table-column prop="terminal_name" label="终端" />
-        <el-table-column prop="department_name" label="所属部门" />
-        <el-table-column v-slot="{ row }" prop="user_name" label="用户姓名">
-          <a :href="'/system/user/detail-' + row.user_id" target="_blank">
+        <el-table-column
+          prop="department_name"
+          label="所属部门"
+          width="100"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          v-slot="{ row }"
+          prop="user_name"
+          label="用户姓名"
+          width="100"
+          show-overflow-tooltip
+        >
+          <a
+            v-if="row.user_name"
+            :href="'/system/user/detail-' + row.user_id"
+            target="_blank"
+          >
             {{ row.user_name }}
           </a>
         </el-table-column>
-        <el-table-column prop="ip" label="操作ip" />
-        <el-table-column label="操作时间" v-slot="{ row }">
+        <el-table-column label="操作时间" v-slot="{ row }" width="180">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
-        <el-table-column
-          prop="api"
-          label="请求接口"
-          width="400"
-          show-overflow-tooltip
-        />
+        <el-table-column prop="request_method" label="请求方法" width="100" />
+        <el-table-column prop="api" label="请求接口" show-overflow-tooltip />
+        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="90">
+          <el-button size="small" @click="openDetail(row.id)">详情</el-button>
+        </el-table-column>
       </el-table>
     </div>
 
@@ -81,6 +93,8 @@
         @current-change="changePaginationCurrent"
       />
     </div>
+
+    <detail :id="rowId" @close="detailFlag = false" v-if="detailFlag"></detail>
   </div>
 </template>
 
@@ -89,6 +103,7 @@ import { ref, onMounted } from "vue";
 import dayjs from "dayjs";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
+import Detail from "./Detail.vue";
 
 const query = ref({
   times: [
@@ -103,6 +118,8 @@ const query = ref({
 const operationLogs = ref([]);
 const listLoading = ref(true);
 const total = ref(0);
+const rowId = ref(0);
+const detailFlag = ref(false);
 
 /**
  * 得到分页
@@ -136,6 +153,7 @@ const getPaginate = async () => {
  * 提交查询
  */
 const submitQuery = () => {
+  query.value.page = 1;
   getPaginate();
 };
 
@@ -145,7 +163,7 @@ const submitQuery = () => {
  */
 const changePaginationSize = (size) => {
   query.value.size = size;
-  query.value.number = 1;
+  query.value.page = 1;
   getPaginate();
 };
 
@@ -156,6 +174,15 @@ const changePaginationSize = (size) => {
 const changePaginationCurrent = (page) => {
   query.value.page = page;
   getPaginate();
+};
+
+/**
+ * 打开操作日志详情
+ * @param {number} id
+ */
+const openDetail = (id) => {
+  rowId.value = id;
+  detailFlag.value = true;
 };
 
 onMounted(() => {

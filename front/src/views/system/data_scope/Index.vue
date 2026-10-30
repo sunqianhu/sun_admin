@@ -136,6 +136,7 @@ const getPaginate = async () => {
  * 提交查询
  */
 const submitQuery = () => {
+  query.value.page = 1;
   getPaginate();
 };
 
@@ -192,7 +193,7 @@ const del = async (id) => {
  */
 const changePaginationSize = (size) => {
   query.value.size = size;
-  query.value.number = 1;
+  query.value.page = 1;
   getPaginate();
 };
 

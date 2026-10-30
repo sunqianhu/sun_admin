@@ -97,7 +97,7 @@ const query = ref({
   page: 1,
 });
 const dictionarys = ref([]);
-const loading = ref(true);
+const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
@@ -106,14 +106,14 @@ const total = ref(0);
  * 得到分页
  */
 const getPaginate = async () => {
-  loading.value = true;
+  listLoading.value = true;
   let response;
   try {
     response = await axios.get("desktop/system.dictionary.Index/getPaginate", {
       params: query.value,
     });
   } finally {
-    loading.value = false;
+    listLoading.value = false;
   }
   if (response.code != 0) {
     ElMessage({
@@ -131,6 +131,7 @@ const getPaginate = async () => {
  * 提交查询
  */
 const submitQuery = () => {
+  query.value.page = 1;
   getPaginate();
 };
 
@@ -178,7 +179,7 @@ const del = async (id) => {
  */
 const changePaginationSize = (size) => {
   query.value.size = size;
-  query.value.number = 1;
+  query.value.page = 1;
   getPaginate();
 };
 

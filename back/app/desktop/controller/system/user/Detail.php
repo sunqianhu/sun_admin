@@ -47,7 +47,7 @@ class Detail extends Base
 
         //操作日志
         $operationLogModels = OperationLogModel::alias('ol')
-            ->field('ol.*,u.name')
+            ->field('ol.id,ol.department_id,ol.user_id,ol.terminal,ol.api,ol.request_method,ol.ip,ol.time,u.name')
             ->leftJoin("user u", "ol.user_id = u.id")
             ->where('u.id', $userModel->id)
             ->order('ol.id', 'desc')
