@@ -79,6 +79,13 @@
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
         <el-table-column prop="request_method" label="请求方法" width="100" />
+        <el-table-column v-slot="{ row }" label="处理结果" width="100">
+          <el-tag type="success" v-if="row.result_code == 0"> 成功 </el-tag>
+          <el-tag type="danger" v-else> 失败 </el-tag>
+        </el-table-column>
+        <el-table-column v-slot="{ row }" label="耗时" width="120">
+          {{ row.duration + " ms" }}
+        </el-table-column>
         <el-table-column prop="api" label="请求接口" show-overflow-tooltip />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="90">
           <el-button size="small" @click="openDetail(row.id)">详情</el-button>

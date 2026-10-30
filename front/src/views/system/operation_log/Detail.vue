@@ -29,6 +29,18 @@
           <attribute label="操作时间" :span="12">
             {{ dayjs.unix(operationLog.time).format("YYYY-MM-DD HH:mm:ss") }}
           </attribute>
+          <attribute label="处理结果" :span="12">
+            <el-tag type="success" v-if="operationLog.result_code == 0">
+              成功
+            </el-tag>
+            <el-tag type="danger" v-else> 失败 </el-tag>
+          </attribute>
+          <attribute label="结果码" :span="12">
+            {{ operationLog.result_code }}
+          </attribute>
+          <attribute label="处理耗时" :span="24">
+            {{ operationLog.duration + " ms" }}
+          </attribute>
           <attribute label="请求方法" :span="24">
             {{ operationLog.request_method }}
           </attribute>
@@ -36,11 +48,15 @@
             {{ operationLog.api }}
           </attribute>
         </attribute-list>
-        <div class="request-content">
-          <div class="request-content__label">请求内容</div>
-          <pre class="request-content__value">{{
+        <div class="content">
+          <div class="content__label">请求内容</div>
+          <pre class="content__value">{{
             operationLog.request_content || "无请求内容"
           }}</pre>
+        </div>
+        <div class="content">
+          <div class="content__label">结果内容</div>
+          <pre class="content__value">{{ operationLog.result_content }}</pre>
         </div>
       </div>
     </el-scrollbar>
@@ -98,13 +114,13 @@ onMounted(() => {
 .detail {
   .scrollbar {
     min-height: 200px;
-    .request-content {
+    .content {
       margin-top: var(--margin);
-      .request-content__label {
+      .content__label {
         margin-bottom: var(--margin-sm);
         color: var(--font-color-secondary);
       }
-      .request-content__value {
+      .content__value {
         padding: var(--padding);
         border-radius: var(--border-radius);
         background-color: var(--background-color-lighter);

@@ -16,7 +16,7 @@ class Index extends Base
         $get = $this->request->get(['department_ids'=>[], 'terminal'=>'', 'times' => [], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
 
         $query = OperationLogModel::alias('ol')
-            ->field('ol.id,ol.department_id,ol.user_id,ol.terminal,ol.api,ol.request_method,ol.ip,ol.time,u.name as user_name,d.name as department_name')
+            ->field('ol.id,ol.department_id,ol.user_id,ol.terminal,ol.api,ol.request_method,ol.result_code,ol.duration,ol.ip,ol.time,u.name as user_name,d.name as department_name')
             ->leftJoin("user u", "ol.user_id = u.id")
             ->leftJoin("department d", "u.department_id = d.id");
         if (!empty($get['times']) && count($get['times']) == 2) {

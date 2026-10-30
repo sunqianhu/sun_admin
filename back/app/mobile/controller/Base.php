@@ -3,15 +3,11 @@
 namespace app\mobile\controller;
 
 use app\BaseController;
-use app\helper\OperationLogHelper;
 use app\helper\IpAuthHelper;
 use app\helper\SessionHelper;
 use app\helper\user\UserDepartmentHelper;
 use Exception;
-use think\exception\HttpResponseException;
 use think\Response;
-use think\facade\Log;
-use Throwable;
 
 class Base extends BaseController
 {
@@ -36,68 +32,46 @@ class Base extends BaseController
         $ip = $this->request->ip();
         $api = $this->request->baseUrl();
 
+        //ip
+        $ipAuthHelper = new IpAuthHelper();
         try {
-            //ip
-            $ipAuthHelper = new IpAuthHelper();
+            $ipAuthHelper->ipAuth($ip);
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage(), 1, $exception);
+        }
+
+        //token
+        if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
             try {
-                $ipAuthHelper->ipAuth($ip);
+                $token = $this->request->header('token', '');
+                $this->sessionId = $sessionHelper->tokenAuth(1, $token);
             } catch (Exception $exception) {
-                throw new HttpResponseException(
-                    $this->getErrorResponse($exception->getMessage())
-                );
+                throw new Exception('登录认证失败，'.$exception->getMessage(), 2, $exception);
             }
+        }
 
-            //token
-            if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
+        if ($this->sessionId) {
+            try{
+                $this->userId = $sessionHelper->getUserId($this->sessionId);
+                $this->request->userId = $this->userId;
+                $userDepartmentHelper = new UserDepartmentHelper();
+                $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
+                $this->request->departmentId = $this->departmentId;
+                $sessionHelper->renewExpireTime($this->sessionId, time() + 60 * 60 * 24 * 7);
+            }catch (Exception $exception){
+                throw new Exception($exception->getMessage(), 1, $exception);
+            }
+        }
+
+        //接口认证
+        if ($this->sessionId) {
+            if ($this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
                 try {
-                    $token = $this->request->header('token', '');
-                    $this->sessionId = $sessionHelper->tokenAuth(1, $token);
+                    $sessionHelper->apiAuth($this->userId, $api);
                 } catch (Exception $exception) {
-                    throw new HttpResponseException(
-                        $this->getErrorResponse('登录认证失败，'.$exception->getMessage(), null, 2)
-                    );
+                    throw new Exception('接口认证失败，'.$exception->getMessage(), 1, $exception);
                 }
             }
-
-            if ($this->sessionId) {
-                try{
-                    $this->userId = $sessionHelper->getUserId($this->sessionId);
-                    $userDepartmentHelper = new UserDepartmentHelper();
-                    $this->departmentId = $userDepartmentHelper->getDepartmentId($this->userId);
-                    $sessionHelper->renewExpireTime($this->sessionId, time() + 60 * 60 * 24 * 7);
-                }catch (Exception $exception){
-                    throw new HttpResponseException(
-                        $this->getErrorResponse($exception->getMessage())
-                    );
-                }
-            }
-
-            //接口认证
-            if ($this->sessionId) {
-                if ($this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
-                    try {
-                        $sessionHelper->apiAuth($this->userId, $api);
-                    } catch (Exception $exception) {
-                        throw new HttpResponseException(
-                            $this->getErrorResponse('接口认证失败，'.$exception->getMessage())
-                        );
-                    }
-                }
-            }
-        } finally {
-            //日志
-            $operationLogHelper = new OperationLogHelper();
-            $data = [
-                'department_id' => $this->departmentId,
-                'user_id' => $this->userId,
-                'terminal' => 1,
-                'api' => $api,
-                'request_method' => $this->request->method(true),
-                'request_content' => $operationLogHelper->getRequestContent($this->request),
-                'ip' => $ip,
-                'time' => time()
-            ];
-            $operationLogHelper->add($data);
         }
     }
 
