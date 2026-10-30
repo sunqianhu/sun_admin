@@ -8,6 +8,7 @@ use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\facade\Cache;
 
 class UserDepartmentHelper
 {
@@ -22,11 +23,21 @@ class UserDepartmentHelper
      */
     public function getDepartmentId($userId)
     {
+        $cacheKey = 'user_department_id_'.$userId;
+        $cacheTtl = 600;
+        $departmentId = Cache::get($cacheKey);
+        if ($departmentId !== null) {
+            return $departmentId;
+        }
+
         $userModel = UserModel::field('department_id')->find($userId);
         if(empty($userModel)){
             throw new Exception('没有找到用户记录');
         }
-        return $userModel->department_id;
+        $departmentId = $userModel->department_id;
+        Cache::set($cacheKey, $departmentId, $cacheTtl);
+
+        return $departmentId;
     }
 
     /**

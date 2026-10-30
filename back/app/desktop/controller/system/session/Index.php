@@ -39,6 +39,8 @@ class Index extends Base
         if ($get['is_expired'] !== '') {
             $query->where('s.expire_time', $get['is_expired'] == 1 ? '<=' : '>', time());
         }
+        $query->order('s.id', 'desc');
+        $query->append(['terminal_name']);
         $paginateObject = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],

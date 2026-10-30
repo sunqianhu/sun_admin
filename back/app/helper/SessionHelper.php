@@ -7,6 +7,7 @@ use app\model\LoginLogModel;
 use app\model\SessionModel;
 use app\model\UserModel;
 use Exception;
+use think\facade\Cache;
 
 class SessionHelper
 {
@@ -236,11 +237,21 @@ class SessionHelper
      */
     public function getUserId($id)
     {
+        $cacheKey = 'session_user_id'.$id;
+        $cacheTtl = 600;
+        $userId = Cache::get($cacheKey);
+        if ($userId !== null) {
+            return $userId;
+        }
+
         $sessionModel = SessionModel::field('user_id')
             ->find($id);
         if (empty($sessionModel)) {
             throw new Exception('没有找到会话记录');
         }
-        return $sessionModel->user_id;
+        $userId = $sessionModel->user_id;
+        Cache::set($cacheKey, $userId, $cacheTtl);
+
+        return $userId;
     }
 }

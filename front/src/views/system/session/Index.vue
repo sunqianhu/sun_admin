@@ -46,7 +46,7 @@
           width="150"
           show-overflow-tooltip
         />
-        <el-table-column v-slot="{ row }" label="所属用户" width="130">
+        <el-table-column v-slot="{ row }" label="所属用户" width="120">
           <a
             :href="'/system/user/detail-' + row.user_id"
             target="_blank"
@@ -72,9 +72,7 @@
           label="过期时间"
           width="220"
         >
-          <div>
-            {{ dayjs.unix(row.expire_time).format("YYYY-MM-DD HH:mm:ss") }}
-          </div>
+          {{ dayjs.unix(row.expire_time).format("YYYY-MM-DD HH:mm:ss") }}
           <el-text
             type="danger"
             size="small"
@@ -87,7 +85,7 @@
           v-slot="{ row }"
           label="操作"
           fixed="right"
-          width="180"
+          width="150"
         >
           <el-button size="small" @click="openRenew(row.id)">续期</el-button>
           <el-popconfirm

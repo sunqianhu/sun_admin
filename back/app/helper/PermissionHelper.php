@@ -22,7 +22,6 @@ class PermissionHelper
     public function add(array $data)
     {
         $data['permission_id'] = (int) ($data['permission_id'] ?? 0);
-        $this->checkData($data);
         $permissionModel = new PermissionModel();
         $permissionModel->save($data);
         return $permissionModel->id;
@@ -40,7 +39,6 @@ class PermissionHelper
         if (empty($permissionModel)) {
             throw new Exception('没有找到权限记录');
         }
-        $this->checkData($data, $data['id']);
         $permissionModel->save($data);
     }
 
@@ -51,50 +49,11 @@ class PermissionHelper
      */
     public function delete($id)
     {
-        Db::startTrans();
-        try {
-            $permissionModel = PermissionModel::find($id);
-            if (empty($permissionModel)) {
-                throw new Exception('没有找到权限记录');
-            }
-            if ($this->getExistPermissions($id)) {
-                throw new Exception('请先删除下级权限');
-            }
-            RolePermissionModel::where('permission_id', $id)->delete();
-            $permissionModel->delete();
-            Db::commit();
-        } catch (Exception $exception) {
-            Db::rollback();
-            throw $exception;
+        $permissionModel = PermissionModel::find($id);
+        if (empty($permissionModel)) {
+            throw new Exception('没有找到权限记录');
         }
-    }
-
-    /**
-     * 检查权限标识和上级权限
-     * @param array $data
-     * @param int $id
-     * @throws Exception
-     */
-    private function checkData(array $data, $id = 0)
-    {
-        $query = PermissionModel::where('key', $data['key']);
-        if ($id) {
-            $query->where('id', '<>', $id);
-        }
-        if ($query->count()) {
-            throw new Exception('权限标识已存在');
-        }
-
-        $permissionId = (int) ($data['permission_id'] ?? 0);
-        if ($permissionId === 0) {
-            return;
-        }
-        if (!PermissionModel::where('id', $permissionId)->count()) {
-            throw new Exception('上级权限不存在');
-        }
-        if ($id && ($permissionId === (int) $id || in_array($permissionId, $this->getAllPermissionIds($id)))) {
-            throw new Exception('上级权限不能是本权限或下级权限');
-        }
+        $permissionModel->delete();
     }
 
     /**
