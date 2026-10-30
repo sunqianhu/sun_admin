@@ -43,6 +43,7 @@ class Base extends BaseController
     {
         parent::initialize();
         $sessionHelper = new SessionHelper();
+        $action = $this->request->action();
         $ip = $this->request->ip();
         $api = $this->request->baseUrl();
 
@@ -57,12 +58,10 @@ class Base extends BaseController
                 );
             }
 
-            $action = $this->request->action();
-
             //token
             if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
-                $token = $this->request->header('token', '');
                 try {
+                    $token = $this->request->header('token', '');
                     $this->sessionId = $sessionHelper->tokenAuth(2, $token);
                 } catch (Exception $exception) {
                     throw new HttpResponseException(

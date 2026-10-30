@@ -48,9 +48,9 @@ class Base extends BaseController
             }
 
             //token
-            $token = $this->request->header('token', '');
             if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
                 try {
+                    $token = $this->request->header('token', '');
                     $this->sessionId = $sessionHelper->tokenAuth(1, $token);
                 } catch (Exception $exception) {
                     throw new HttpResponseException(
@@ -85,6 +85,7 @@ class Base extends BaseController
                 }
             }
         } finally {
+            //日志
             $operationLogHelper = new OperationLogHelper();
             $data = [
                 'department_id' => $this->departmentId,
