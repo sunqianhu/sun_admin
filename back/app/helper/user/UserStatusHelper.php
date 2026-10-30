@@ -2,13 +2,11 @@
 
 namespace app\helper\user;
 
-use app\helper\SessionHelper;
 use app\model\UserModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
-use think\facade\Db;
 
 class UserStatusHelper
 {
