@@ -38,12 +38,7 @@
     </div>
 
     <div class="list">
-      <el-table
-        :data="sessions"
-        v-loading="listLoading"
-        row-key="id"
-        class="table"
-      >
+      <el-table :data="sessions" v-loading="loading" row-key="id" class="table">
         <el-table-column prop="terminal_name" label="终端" width="100" />
         <el-table-column
           prop="name"
@@ -160,7 +155,7 @@ const query = ref({
   page: 1,
 });
 const sessions = ref([]);
-const listLoading = ref(true);
+const loading = ref(true);
 const total = ref(0);
 const rowId = ref(0);
 const addFlag = ref(false);
@@ -170,14 +165,14 @@ const extendFlag = ref(false);
  * 获取分页
  */
 const getPaginate = async () => {
-  listLoading.value = true;
+  loading.value = true;
   let response;
   try {
     response = await axios.get("desktop/system.session.Index/getPaginate", {
       params: query.value,
     });
   } finally {
-    listLoading.value = false;
+    loading.value = false;
   }
   if (response.code != 0) {
     ElMessage({ message: response.message, type: "error" });
