@@ -51,11 +51,14 @@
         class="table"
       >
         <el-table-column
+          v-slot="{ row }"
           prop="department_name"
           label="所属部门"
           width="100"
           show-overflow-tooltip
-        />
+        >
+          {{ row.department_name || "未登录" }}
+        </el-table-column>
         <el-table-column
           v-slot="{ row }"
           prop="user_name"
@@ -64,12 +67,13 @@
           show-overflow-tooltip
         >
           <a
-            v-if="row.user_name"
             :href="'/system/user/detail-' + row.user_id"
             target="_blank"
+            v-if="row.user_name"
           >
             {{ row.user_name }}
           </a>
+          <span v-else>未登录</span>
         </el-table-column>
         <el-table-column label="操作时间" v-slot="{ row }" width="180">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
