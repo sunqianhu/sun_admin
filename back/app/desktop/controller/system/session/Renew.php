@@ -10,7 +10,7 @@ use app\validate\IdValidate;
 use Exception;
 use think\exception\ValidateException;
 
-class Extend extends Base
+class Renew extends Base
 {
     /**
      * 初始化
@@ -39,17 +39,17 @@ class Extend extends Base
     {
         $post = $this->request->post(['id', 'expire_time']);
         try {
-            validate(SessionValidate::class)->scene('extend')->check($post);
+            validate(SessionValidate::class)->scene('renew')->check($post);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
         try {
             $sessionHelper = new SessionHelper();
-            $sessionHelper->extend($post['id'], (int) $post['expire_time']);
+            $sessionHelper->renewExpireTime($post['id'], (int) $post['expire_time']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        return $this->getSuccessResponse('延期成功');
+        return $this->getSuccessResponse('续期成功');
     }
 }

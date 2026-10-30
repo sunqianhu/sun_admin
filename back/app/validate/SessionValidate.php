@@ -30,7 +30,7 @@ class SessionValidate extends Validate
     ];
     protected $scene = [
         'add' => ['name', 'terminal', 'user_id', 'expire_time'],
-        'extend' => ['id', 'expire_time'],
+        'renew' => ['id', 'expire_time'],
         'delete' => ['id'],
     ];
 }

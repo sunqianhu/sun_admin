@@ -1,12 +1,12 @@
 <template>
   <el-dialog
     :model-value="true"
-    title="会话延期"
+    title="会话续期"
     width="500"
     align-center
     :draggable="true"
     @close="close"
-    class="extend"
+    class="renew"
   >
     <el-scrollbar v-loading="initLoading" max-height="300px" class="scrollbar">
       <el-form
@@ -62,7 +62,7 @@ const init = async () => {
   initLoading.value = true;
   let response;
   try {
-    response = await axios.get("desktop/system.session.Extend/init", {
+    response = await axios.get("desktop/system.session.Renew/init", {
       params: { id: props.id },
     });
   } finally {
@@ -91,7 +91,7 @@ const submitForm = async () => {
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.session.Extend/save", {
+    response = await axios.post("desktop/system.session.Renew/save", {
       id: props.id,
       expire_time: session.value.expire_time,
     });
@@ -112,7 +112,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.extend {
+.renew {
   .scrollbar {
     padding-right: 30px;
   }

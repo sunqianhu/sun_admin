@@ -18,7 +18,17 @@ class SessionHelper
      */
     public function add(array $data)
     {
+        $data['name'] = trim($data['name'] ?? '');
+        if ($data['name'] === '') {
+            $defaultNames = [
+                0 => '桌面端登录',
+                1 => '移动端登录',
+                2 => 'API接口调用'
+            ];
+            $data['name'] = $defaultNames[(int) $data['terminal']] ?? '会话';
+        }
         $data['add_time'] = $data['add_time'] ?? time();
+
         $sessionModel = new SessionModel();
         $sessionModel->save($data);
 
@@ -26,7 +36,7 @@ class SessionHelper
     }
 
     /**
-     * 删除会话
+     * 删除会话记录
      * @param $id
      * @throws Exception
      */
@@ -40,10 +50,11 @@ class SessionHelper
     }
 
     /**
-     * 通过用户ID删除会话，未指定终端时删除三端全部会话
+     * 通过用户ID删除会话
      * @param $userId
      * @param int|null $terminal
      * @return bool
+     * @throws Exception
      */
     public function deleteByUserId($userId, $terminal = null)
     {
@@ -60,7 +71,7 @@ class SessionHelper
      * @param $account
      * @param $password
      * @param string $ip
-     * @param int $expireTime 到期时间戳
+     * @param int $expireTime 过期时间戳
      * @return int
      * @throws Exception
      */
@@ -164,7 +175,7 @@ class SessionHelper
     /**
      * 续期
      * @param $id
-     * @param int $expireTime 新的到期时间戳
+     * @param int $expireTime 新的过期时间戳
      * @return void
      * @throws Exception
      */
@@ -173,9 +184,6 @@ class SessionHelper
         $sessionModel = SessionModel::find($id);
         if (empty($sessionModel)) {
             throw new Exception('没有找到会话记录');
-        }
-        if ($sessionModel->expire_time <= time()) {
-            throw new Exception('登录已过期');
         }
         $sessionModel->expire_time = $expireTime;
         $sessionModel->save();

@@ -89,10 +89,10 @@
           fixed="right"
           width="180"
         >
-          <el-button size="small" @click="openExtend(row.id)">延期</el-button>
+          <el-button size="small" @click="openRenew(row.id)">续期</el-button>
           <el-popconfirm
             title="确定删除该会话吗？删除后将立即失效。"
-            width="280"
+            width="260"
             @confirm="del(row.id)"
           >
             <template #reference>
@@ -125,15 +125,15 @@
       "
       v-if="addFlag"
     ></add>
-    <extend
+    <renew
       :id="rowId"
-      @close="extendFlag = false"
+      @close="renewFlag = false"
       @submited="
         getPaginate();
-        extendFlag = false;
+        renewFlag = false;
       "
-      v-if="extendFlag"
-    ></extend>
+      v-if="renewFlag"
+    ></renew>
   </div>
 </template>
 
@@ -143,7 +143,7 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import Add from "./Add.vue";
-import Extend from "./Extend.vue";
+import Renew from "./Renew.vue";
 import DictionarySelect from "@/components/DictionarySelect.vue";
 
 const query = ref({
@@ -159,7 +159,7 @@ const loading = ref(true);
 const total = ref(0);
 const rowId = ref(0);
 const addFlag = ref(false);
-const extendFlag = ref(false);
+const renewFlag = ref(false);
 
 /**
  * 获取分页
@@ -217,12 +217,12 @@ const openAdd = () => {
 };
 
 /**
- * 打开会话延期
+ * 打开会话续期
  * @param {number} id
  */
-const openExtend = (id) => {
+const openRenew = (id) => {
   rowId.value = id;
-  extendFlag.value = true;
+  renewFlag.value = true;
 };
 
 /**
