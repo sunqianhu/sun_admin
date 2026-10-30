@@ -17,7 +17,7 @@
             <hamburger class="header__hamburger"></hamburger>
           </div>
           <quick-navigation
-            class="header__center"
+            class="header__center quick-navigation"
             v-if="themeStore.mainLayout_quickNavigation"
           ></quick-navigation>
           <div class="header__right">
