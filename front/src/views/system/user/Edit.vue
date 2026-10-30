@@ -4,8 +4,8 @@
     title="修改用户"
     width="500"
     :draggable="true"
-    @close="close"
     class="edit"
+    @close="close"
   >
     <el-scrollbar max-height="300px" v-loading="initLoading" class="scrollbar">
       <el-form
@@ -99,10 +99,7 @@ const submitForm = async () => {
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post(
-      "desktop/system.user.Edit/save",
-      user.value,
-    );
+    response = await axios.post("desktop/system.user.Edit/save", user.value);
   } finally {
     submitLoading.value = false;
   }

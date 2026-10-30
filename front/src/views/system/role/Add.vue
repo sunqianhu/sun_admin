@@ -5,8 +5,8 @@
     width="700"
     :draggable="true"
     align-center
-    @close="close"
     class="add"
+    @close="close"
   >
     <el-scrollbar max-height="400px" class="scrollbar" v-loading="initLoading">
       <el-form

@@ -5,8 +5,8 @@
     width="700"
     :draggable="true"
     align-center
-    @close="close"
     class="edit"
+    @close="close"
   >
     <el-scrollbar max-height="400px" class="scrollbar" v-loading="initLoading">
       <el-form
@@ -121,10 +121,9 @@ const init = async () => {
   await nextTick();
 
   role.value = response.data.role;
-  treePermissionDefaultCheckKeys.value =
-    getTreePermissionDefaultCheckKeys(
-      response.data.role.permission_ids,
-    );
+  treePermissionDefaultCheckKeys.value = getTreePermissionDefaultCheckKeys(
+    response.data.role.permission_ids,
+  );
   desktopTreeMenuDefaultCheckKeys.value = getDesktopTreeMenuDefaultCheckKeys(
     response.data.role.desktop_menu_ids,
   );
@@ -235,10 +234,7 @@ const submitForm = async () => {
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post(
-      "desktop/system.role.Edit/save",
-      role.value,
-    );
+    response = await axios.post("desktop/system.role.Edit/save", role.value);
   } finally {
     submitLoading.value = false;
   }

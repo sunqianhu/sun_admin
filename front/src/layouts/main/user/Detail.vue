@@ -4,8 +4,8 @@
     title="账号信息"
     width="500"
     :draggable="true"
-    @close="close"
     class="detail"
+    @close="close"
   >
     <div v-loading="dialogLoading" class="detail">
       <div class="detail__left">

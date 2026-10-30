@@ -5,8 +5,8 @@
     :draggable="true"
     align-center
     width="600"
-    @close="close"
     class="edit"
+    @close="close"
   >
     <el-scrollbar max-height="400px" v-loading="initLoading" class="scrollbar">
       <el-form
@@ -75,12 +75,9 @@ const init = async () => {
   initLoading.value = true;
   let response;
   try {
-    response = await axios.get(
-      "desktop/system.permission.Edit/init",
-      {
-        params: { id: props.id },
-      },
-    );
+    response = await axios.get("desktop/system.permission.Edit/init", {
+      params: { id: props.id },
+    });
   } finally {
     initLoading.value = false;
   }

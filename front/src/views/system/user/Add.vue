@@ -4,8 +4,8 @@
     title="添加用户"
     width="550"
     :draggable="true"
-    @close="close"
     class="add"
+    @close="close"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
       <el-form

@@ -4,8 +4,8 @@
     title="修改策略"
     width="500"
     :draggable="true"
-    @close="close"
     class="edit"
+    @close="close"
   >
     <el-scrollbar v-loading="initLoading" max-height="300px" class="scrollbar">
       <el-form
@@ -88,12 +88,9 @@ const init = async () => {
   initLoading.value = true;
   let response;
   try {
-    response = await axios.get(
-      "desktop/system.data_scope.policy.Edit/init",
-      {
-        params: { id: props.id },
-      },
-    );
+    response = await axios.get("desktop/system.data_scope.policy.Edit/init", {
+      params: { id: props.id },
+    });
   } finally {
     initLoading.value = false;
   }

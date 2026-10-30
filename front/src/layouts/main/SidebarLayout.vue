@@ -121,12 +121,10 @@ onMounted(() => {
     position: relative;
     .sidebar-layout__left {
       position: relative;
-      z-index: 2;
       width: v-bind('leftWidth + "px"');
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
       background-color: v-bind(leftBgColor);
       color: v-bind(leftTextColor);
-      z-index: 2;
       transition: width 0.5s;
       overflow: hidden;
       display: flex;
@@ -158,7 +156,6 @@ onMounted(() => {
     .sidebar-layout__right {
       position: relative;
       min-width: 0;
-      z-index: 1;
       background-color: var(--background-color);
       > .header {
         display: flex;
