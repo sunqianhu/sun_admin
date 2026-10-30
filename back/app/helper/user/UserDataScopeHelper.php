@@ -128,7 +128,7 @@ class UserDataScopeHelper
 
         $access['granted'] = !empty($rules);
         $access['rules'] = $rules;
-        Cache::set($cacheKey, $access, $cacheTtl);
+        Cache::tag('data_scope')->set($cacheKey, $access, $cacheTtl);
         return $access;
     }
 
@@ -226,5 +226,14 @@ class UserDataScopeHelper
             return true;
         }
         return false;
+    }
+
+    /**
+     * 清除缓存
+     * @return void
+     */
+    public function clearCache()
+    {
+        Cache::tag('data_scope')->clear();
     }
 }
