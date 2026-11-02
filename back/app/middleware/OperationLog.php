@@ -62,7 +62,7 @@ class OperationLog
             'header' => $request->header(),
             'files' => $this->getRequestFiles($request->file() ?? []),
             'body' => $request->param(false)
-        ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
+        ], JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     }
 
     /**
