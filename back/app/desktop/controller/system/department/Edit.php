@@ -4,6 +4,7 @@ namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
 use app\helper\department\DepartmentPathHelper;
+use app\helper\department\TreeDepartmentHelper;
 use app\model\DepartmentModel;
 use app\validate\DepartmentValidate;
 use app\validate\IdValidate;
@@ -48,8 +49,10 @@ class Edit extends Base
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
-        if($post['id'] == $post['department_id']){
-            return $this->getErrorResponse('上级部门不能和本部门相同');
+        $treeDepartmentHelper = new TreeDepartmentHelper();
+        $descendantDepartmentIds = $treeDepartmentHelper->getDescendantDepartmentIdsWithCurrentId($post['id']);
+        if (in_array($post['department_id'], $descendantDepartmentIds)) {
+            return $this->getErrorResponse('上级部门不能是本部门或本部门的子孙部门');
         }
 
         $departmentModel = DepartmentModel::find($post['id']);
