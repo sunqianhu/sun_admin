@@ -36,7 +36,7 @@ class JwtHelper
         try{
             $decoded = FirebaseJWT::decode($token, new Key($this->key, 'HS256'));
         }catch (Exception $exception){
-            throw new Exception('登录凭证错误['.$exception->getMessage().']');
+            throw new Exception('登录凭证错误['.$exception->getMessage().']', 0, $exception);
         }
 
         if(empty($decoded->user_id)){

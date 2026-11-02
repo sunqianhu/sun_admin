@@ -17,31 +17,34 @@
           <attribute label="会话ID" :span="12">
             {{ operationLog.session_id }}
           </attribute>
+          <attribute label="操作时间" :span="12">
+            {{ dayjs.unix(operationLog.time).format("YYYY-MM-DD HH:mm:ss") }}
+          </attribute>
           <attribute label="终端" :span="12">
             {{ operationLog.terminal_name }}
-          </attribute>
-          <attribute label="用户姓名" :span="12">
-            {{ operationLog.user_name }}
           </attribute>
           <attribute label="所属部门" :span="12">
             {{ operationLog.department_name }}
           </attribute>
+          <attribute label="用户姓名" :span="12">
+            {{ operationLog.user_name }}
+          </attribute>
           <attribute label="操作IP" :span="12">
             {{ operationLog.ip }}
           </attribute>
-          <attribute label="操作时间" :span="12">
-            {{ dayjs.unix(operationLog.time).format("YYYY-MM-DD HH:mm:ss") }}
+          <attribute label="HTTP状态码" :span="12">
+            {{ operationLog.response_http_code ?? "未记录" }}
           </attribute>
-          <attribute label="处理结果" :span="12">
-            <el-tag type="success" v-if="operationLog.result_code == 0">
-              成功
+          <attribute label="业务码" :span="12">
+            <el-tag
+              :type="
+                operationLog.response_business_code == 0 ? 'success' : 'danger'
+              "
+            >
+              {{ operationLog.response_business_code_name }}
             </el-tag>
-            <el-tag type="danger" v-else> 失败 </el-tag>
           </attribute>
-          <attribute label="结果码" :span="12">
-            {{ operationLog.result_code }}
-          </attribute>
-          <attribute label="处理耗时" :span="24">
+          <attribute label="处理耗时" :span="12">
             {{ operationLog.duration + " ms" }}
           </attribute>
           <attribute label="请求方法" :span="24">
@@ -58,8 +61,8 @@
           }}</pre>
         </div>
         <div class="content">
-          <div class="content__label">结果内容</div>
-          <pre class="content__value">{{ operationLog.result_content }}</pre>
+          <div class="content__label">响应内容</div>
+          <pre class="content__value">{{ operationLog.response_content }}</pre>
         </div>
       </div>
     </el-scrollbar>

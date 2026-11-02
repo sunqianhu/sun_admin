@@ -26,7 +26,7 @@ class Detail extends Base
             ->leftJoin('user u', 'ol.user_id = u.id')
             ->leftJoin('department d', 'u.department_id = d.id')
             ->where('ol.id', $get['id'])
-            ->append(['terminal_name'])
+            ->append(['terminal_name', 'response_business_code_name'])
             ->find();
         if (empty($operationLogModel)) {
             return $this->getErrorResponse('没有找到操作日志记录');

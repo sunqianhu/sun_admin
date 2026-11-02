@@ -15,11 +15,17 @@
             type="terminal"
           ></dictionary-select>
         </el-form-item>
-        <el-form-item label="处理结果">
-          <el-select v-model="query.result_code" placeholder="全部" clearable>
-            <el-option label="成功" value="0" />
-            <el-option label="失败" value="1" />
-          </el-select>
+        <el-form-item label="业务码">
+          <dictionary-select
+            v-model="query.response_business_code"
+            type="response_business_code"
+          ></dictionary-select>
+        </el-form-item>
+        <el-form-item label="用户姓名">
+          <el-input v-model="query.name" />
+        </el-form-item>
+        <el-form-item label="手机号码">
+          <el-input v-model="query.phone" />
         </el-form-item>
         <el-form-item label="操作时间">
           <el-date-picker
@@ -33,12 +39,6 @@
             editable
             unlink-panels
           />
-        </el-form-item>
-        <el-form-item label="用户姓名">
-          <el-input v-model="query.name" />
-        </el-form-item>
-        <el-form-item label="手机号码">
-          <el-input v-model="query.phone" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="submitQuery">
@@ -84,14 +84,27 @@
         <el-table-column label="操作时间" v-slot="{ row }" width="180">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
         </el-table-column>
-        <el-table-column prop="request_method" label="请求方法" width="100" />
-        <el-table-column v-slot="{ row }" label="处理结果" width="100">
-          <el-tag type="success" v-if="row.result_code == 0"> 成功 </el-tag>
-          <el-tag type="danger" v-else> 失败 </el-tag>
+        <el-table-column
+          v-slot="{ row }"
+          label="业务码"
+          width="80"
+          show-overflow-tooltip
+        >
+          <el-tag
+            :type="row.response_business_code == 0 ? 'success' : 'danger'"
+          >
+            {{ row.response_business_code_name }}
+          </el-tag>
         </el-table-column>
-        <el-table-column v-slot="{ row }" label="耗时" width="120">
-          {{ row.duration + " ms" }}
+        <el-table-column
+          v-slot="{ row }"
+          label="耗时"
+          width="90"
+          show-overflow-tooltip
+        >
+          {{ row.duration + "ms" }}
         </el-table-column>
+        <el-table-column prop="request_method" label="请求方法" width="90" />
         <el-table-column prop="api" label="请求接口" show-overflow-tooltip />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="90">
           <el-button size="small" @click="openDetail(row.id)">详情</el-button>
@@ -123,7 +136,7 @@ import axios from "@/helper/axios";
 import Detail from "./Detail.vue";
 
 const query = ref({
-  result_code: "",
+  response_business_code: "",
   times: [
     dayjs(
       dayjs().subtract(6, "month").format("YYYY-MM-DD") + " 00:00:00",
