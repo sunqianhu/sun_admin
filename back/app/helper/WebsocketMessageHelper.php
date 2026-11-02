@@ -25,6 +25,7 @@ class WebsocketMessageHelper
 
         $assembleData = [
             'type' => 'send',
+            'key'=>md5('sun_admin_999'),
             'user_ids' => $userIds,
             'data' => $data
         ];

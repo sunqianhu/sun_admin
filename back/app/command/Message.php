@@ -23,6 +23,8 @@ class Message extends Command
      */
     public Worker $worker;
 
+    public $ttl = 3600;
+
     /**
      * 命令参数
      * @var array
@@ -128,11 +130,11 @@ class Message extends Command
                 try {
                     $sessionHelper = new SessionHelper();
                     $sessionHelper->tokenAuth(0, $connection->token);
+                    $sessionHelper->renewExpireTime($connection->sessionId, time() + $this->ttl);
                     unset($sessionHelper);
                 } catch (Exception $exception) {
                     $connection->close();
                     throw new Exception($exception->getMessage());
-                    return;
                 }
             }
 
@@ -159,14 +161,14 @@ class Message extends Command
      */
     public function clearConnection($worker)
     {
-        Timer::add(3600, function () use ($worker) {
+        Timer::add($this->ttl, function () use ($worker) {
             $time = time();
             foreach ($worker->connections as $connection) {
                 if (empty($connection->activeTime)) {
                     $connection->activeTime = $time;
                     continue;
                 }
-                if ($time - $connection->activeTime > 3600) {
+                if ($time - $connection->activeTime > $this->ttl) {
                     $connection->close();
                 }
             }
@@ -191,6 +193,7 @@ class Message extends Command
             $sessionId = $sessionHelper->tokenAuth(0, $token);
             $userId = $sessionHelper->getUserId($sessionId);
 
+            $connection->sessionId = $sessionId;
             $connection->userId = $userId;
             $connection->token = $token;
         }catch (Exception $exception){
@@ -211,6 +214,9 @@ class Message extends Command
      */
     public function send($userIds, $data)
     {
+        if($data['key'] !== md5('sun_admin_999')){
+            throw new Exception('发送消息认证失败');
+        }
         if (empty($userIds)) {
             throw new Exception('接收消息userIds不能为空');
         }
