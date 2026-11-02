@@ -1,10 +1,12 @@
 stages:
   - build
   - package
+  - push
 
 variables:
   GIT_DEPTH: "0"
   VERSION: 1.4.5
+  HARBOR_PROJECT: sun_admin
 
 before_script:
   - echo "checking docker daemon status..."
@@ -57,3 +59,27 @@ package_images:
     - product
   tags:
     - runner171
+
+push_images:
+  stage: push
+  needs:
+    - package_images
+  before_script:
+    - 'test -n "$HARBOR_REGISTRY" || (echo "HARBOR_REGISTRY is not configured" && exit 1)'
+    - 'test -n "$HARBOR_USERNAME" || (echo "HARBOR_USERNAME is not configured" && exit 1)'
+    - 'test -n "$HARBOR_PASSWORD" || (echo "HARBOR_PASSWORD is not configured" && exit 1)'
+    - 'printf "%s" "$HARBOR_PASSWORD" | docker login "$HARBOR_REGISTRY" --username "$HARBOR_USERNAME" --password-stdin'
+  script:
+    - docker tag sun_admin_back:$VERSION "$HARBOR_REGISTRY/$HARBOR_PROJECT/sun_admin_back:$VERSION"
+    - docker tag sun_admin_front:$VERSION "$HARBOR_REGISTRY/$HARBOR_PROJECT/sun_admin_front:$VERSION"
+    - docker tag sun_admin_front_mobile:$VERSION "$HARBOR_REGISTRY/$HARBOR_PROJECT/sun_admin_front_mobile:$VERSION"
+    
+    - docker push "$HARBOR_REGISTRY/$HARBOR_PROJECT/sun_admin_back:$VERSION"
+    - docker push "$HARBOR_REGISTRY/$HARBOR_PROJECT/sun_admin_front:$VERSION"
+    - docker push "$HARBOR_REGISTRY/$HARBOR_PROJECT/sun_admin_front_mobile:$VERSION"
+  after_script:
+    - docker logout "$HARBOR_REGISTRY" || true
+  only:
+    - product
+  tags:
+    - runner22
