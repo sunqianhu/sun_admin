@@ -5,6 +5,7 @@
         <div class="system-name">
           <img src="@/assets/logo.png" class="logo" />
           <span class="name">{{ systemName }}</span>
+          <span class="version">版本 {{ version }}</span>
         </div>
       </div>
       <div class="system-name-row__right">
@@ -51,6 +52,7 @@ import { useThemeStore } from "@/stores/theme";
 
 const themeStore = useThemeStore();
 const systemName = ref("");
+const version = ref("");
 
 /**
  * 初始化
@@ -63,6 +65,7 @@ const init = async () => {
     return;
   }
   systemName.value = response.data.system_name;
+  version.value = response.data.version;
 };
 
 onMounted(() => {
@@ -96,6 +99,11 @@ onMounted(() => {
         .name {
           font-size: var(--font-size-xl);
           font-weight: var(--font-weight-bold);
+        }
+        .version {
+          margin-left: var(--margin);
+          font-size: var(--font-size-sm);
+          color: var(--font-color-secondary);
         }
       }
     }
