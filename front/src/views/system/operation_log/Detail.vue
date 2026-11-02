@@ -56,13 +56,11 @@
         </attribute-list>
         <div class="content">
           <div class="content__label">请求内容</div>
-          <pre class="content__value">{{
-            operationLog.request_content || "无请求内容"
-          }}</pre>
+          <pre class="content__value">{{ requestContent }}</pre>
         </div>
         <div class="content">
           <div class="content__label">响应内容</div>
-          <pre class="content__value">{{ operationLog.response_content }}</pre>
+          <pre class="content__value">{{ responseContent }}</pre>
         </div>
       </div>
     </el-scrollbar>
@@ -70,7 +68,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import AttributeList from "@/components/AttributeList.vue";
@@ -80,6 +78,23 @@ const props = defineProps(["id"]);
 const emits = defineEmits(["close"]);
 const operationLog = ref({});
 const initLoading = ref(true);
+
+const requestContent = computed(() => {
+  const content = operationLog.value.request_content ?? "";
+  try {
+    return JSON.stringify(JSON.parse(content), null, 2);
+  } catch {
+    return content;
+  }
+});
+const responseContent = computed(() => {
+  const content = operationLog.value.response_content ?? "";
+  try {
+    return JSON.stringify(JSON.parse(content), null, 2);
+  } catch {
+    return content;
+  }
+});
 
 /**
  * 初始化
@@ -127,6 +142,8 @@ onMounted(() => {
         color: var(--font-color-secondary);
       }
       .content__value {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
         padding: var(--padding);
         border-radius: var(--border-radius);
         background-color: var(--background-color-lighter);
