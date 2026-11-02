@@ -61,7 +61,7 @@ const editorConfig = Object.assign(
     placeholder: "请输入...",
     MENU_CONF: {
       uploadImage: {
-        server: import.meta.env.VITE_API_PREFIX + "desktop/UploadFile/upload",
+        server: import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload",
         fieldName: "file",
         maxFileSize: 1024 * 1024 * 20,
         headers: {
@@ -85,7 +85,7 @@ const editorConfig = Object.assign(
         },
       },
       uploadVideo: {
-        server: import.meta.env.VITE_API_PREFIX + "desktop/UploadFile/upload",
+        server: import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload",
         fieldName: "file",
         maxFileSize: 1024 * 1024 * 200,
         headers: {
