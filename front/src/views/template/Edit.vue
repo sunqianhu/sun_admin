@@ -51,7 +51,7 @@ const init = async () => {
   initLoading.value = true;
   let response;
   try {
-    response = await axios.get("desktop/system.dictionary.Edit/init", {
+    response = await axios.get("desktop/dictionary.Edit/init", {
       params: { id: props.id },
     });
   } finally {
@@ -83,7 +83,7 @@ const submitForm = async () => {
   let response;
   try {
     response = await axios.post(
-      "desktop/system.dictionary.Edit/save",
+      "desktop/dictionary.Edit/save",
       dictionary.value,
     );
   } finally {

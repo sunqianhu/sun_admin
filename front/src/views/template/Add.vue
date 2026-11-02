@@ -58,7 +58,7 @@ const submitForm = async () => {
   let response;
   try {
     response = await axios.post(
-      "desktop/system.dictionary.Add/save",
+      "desktop/dictionary.Add/save",
       dictionary.value,
     );
   } finally {
