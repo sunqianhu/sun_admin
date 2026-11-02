@@ -26,6 +26,15 @@ class Base extends BaseController
     function initialize()
     {
         parent::initialize();
+        $this->auth();
+    }
+
+    /**
+     * 认证
+     * @return void
+     */
+    public function auth()
+    {
         $sessionHelper = new SessionHelper();
         $ip = $this->request->ip();
         $action = $this->request->action();
