@@ -3,6 +3,7 @@
 namespace app\api\controller;
 
 use app\BaseController;
+use app\helper\ResponseHelper;
 use app\helper\SessionHelper;
 use app\helper\IpAuthHelper;
 use app\helper\user\UserDepartmentHelper;
@@ -57,7 +58,7 @@ class Base extends BaseController
         }
 
         //接口认证
-        if ($this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
+        if ($this->isTokenAuth && $this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
             try{
                 $sessionHelper->apiAuth($this->request->userId, $api);
             } catch (Exception $exception) {
@@ -78,12 +79,8 @@ class Base extends BaseController
      */
     public function getSuccessResponse(string $message, $data = null, int $businessCode = 0, int $httpCode = 200)
     {
-        $result = [
-            'code' => $businessCode,
-            'message' => $message,
-            'data' => $data
-        ];
-        return Response::create($result, 'json', $httpCode);
+        $responseHelper = new ResponseHelper();
+        return $responseHelper->getSuccessResponse($message, $data, $businessCode, $httpCode);
     }
 
     /**
@@ -96,11 +93,7 @@ class Base extends BaseController
      */
     public function getErrorResponse(string $message, $data = null, int $businessCode = 1, int $httpCode = 200)
     {
-        $result = [
-            'code' => $businessCode,
-            'message' => $message,
-            'data' => $data
-        ];
-        return Response::create($result, 'json', $httpCode);
+        $responseHelper = new ResponseHelper();
+        return $responseHelper->getErrorResponse($message, $data, $businessCode, $httpCode);
     }
 }

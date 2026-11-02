@@ -87,7 +87,7 @@
         <el-table-column
           v-slot="{ row }"
           label="业务码"
-          width="80"
+          width="110"
           show-overflow-tooltip
         >
           <el-tag
