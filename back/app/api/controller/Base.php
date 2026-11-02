@@ -7,28 +7,15 @@ use app\helper\SessionHelper;
 use app\helper\IpAuthHelper;
 use app\helper\user\UserDepartmentHelper;
 use Exception;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
+use think\exception\HttpResponseException;
 use think\Response;
 
 class Base extends BaseController
 {
-    /**
-     * 是否token认证
-     * @var bool
-     */
-    public bool $isTokenAuth = true;
-    /**
-     * 不需要token认证的方法
-     * @var array
-     */
-    public array $noTokenAuthActions = [];
+    public bool $isTokenAuth = true; //是否token认证
+    public array $noTokenAuthActions = []; //不需要token认证的方法
     public bool $isApiAuth = true; //是否接口认证
     public array $noApiAuthActions = []; //不需要接口认证的方法
-    public int $sessionId = 0;
-    public int $userId = 0;
-    public int $departmentId = 0;
 
     /**
      * 初始化
@@ -44,39 +31,39 @@ class Base extends BaseController
         $api = $this->request->baseUrl();
 
         //ip
-        $ipAuthHelper = new IpAuthHelper();
-        try {
+        try{
+            $ipAuthHelper = new IpAuthHelper();
             $ipAuthHelper->ipAuth($ip);
         } catch (Exception $exception) {
-            throw new Exception($exception->getMessage(), 1, $exception);
+            throw new HttpResponseException(
+                $this->getErrorResponse('IP认证失败，' . $exception->getMessage())
+            );
         }
 
         //token
         if ($this->isTokenAuth && !in_array($action, $this->noTokenAuthActions)) {
-            try {
+            try{
                 $token = $this->request->header('token', '');
                 $this->request->sessionId = $sessionHelper->tokenAuth(2, $token);
-            } catch (Exception $exception) {
-                throw new Exception($exception->getMessage(), 2, $exception);
-            }
-        }
 
-        if ($this->request->sessionId) {
-            try {
                 $this->request->userId = $sessionHelper->getUserId($this->request->sessionId);
                 $userDepartmentHelper = new UserDepartmentHelper();
                 $this->request->departmentId = $userDepartmentHelper->getDepartmentId($this->request->userId);
             } catch (Exception $exception) {
-                throw new Exception($exception->getMessage(), 1, $exception);
+                throw new HttpResponseException(
+                    $this->getErrorResponse('身份认证失败，' . $exception->getMessage(), null, 2)
+                );
             }
         }
 
         //接口认证
-        if ($this->request->sessionId && $this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
-            try {
+        if ($this->isApiAuth && !in_array($action, $this->noApiAuthActions)) {
+            try{
                 $sessionHelper->apiAuth($this->request->userId, $api);
             } catch (Exception $exception) {
-                throw new Exception('接口认证失败，'.$exception->getMessage(), 1, $exception);
+                throw new HttpResponseException(
+                    $this->getErrorResponse('接口认证失败，' . $exception->getMessage())
+                );
             }
         }
     }
