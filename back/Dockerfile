@@ -5,12 +5,14 @@ RUN composer install --no-interaction --ignore-platform-reqs --no-scripts
 
 #环境
 FROM sunqianhu/php_nginx:php82nginx1263
+ARG VERSION=dev
 WORKDIR /var/www/html
 
 #代码
 COPY . .
 COPY --from=composer /app/vendor ./vendor
 RUN composer dump-autoload --no-dev \
+	&& printf '%s\n' "$VERSION" > VERSION \
 	&& chown -R www-data:www-data /var/www/html \
 	&& rm -rf docker/
 

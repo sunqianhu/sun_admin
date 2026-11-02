@@ -10,6 +10,7 @@
           <span class="name">{{ systemName }}</span>
         </div>
         <el-scrollbar class="menu-row"><Menu></Menu></el-scrollbar>
+        <div class="version">版本 {{ version }}</div>
       </el-aside>
       <el-container class="sidebar-layout__right">
         <el-header class="header">
@@ -69,6 +70,7 @@ import QuickNavigation from "./QuickNavigation.vue";
 
 const sidebarLayoutStore = useSidebarLayoutStore();
 const systemName = ref("");
+const version = ref("");
 const themeStore = useThemeStore();
 const isDark = useDark();
 const leftBgColor = computed(() =>
@@ -92,6 +94,7 @@ const init = async () => {
     return;
   }
   systemName.value = response.data.system_name;
+  version.value = response.data.version;
 };
 
 /**
@@ -150,6 +153,12 @@ onMounted(() => {
       }
       .menu-row {
         flex: 1;
+        min-height: 0;
+      }
+      .version {
+        padding-left: 16px;
+        font-size: var(--font-size-sm);
+        opacity: 0.5;
       }
     }
 

@@ -5,8 +5,8 @@
         <div class="system-logo">
           <img src="@/assets/logo.png" alt="" />
         </div>
-        <div class="welcome">欢迎使用</div>
         <h1 class="system-name">{{ systemName }}</h1>
+        <div class="version">版本 {{ version }}</div>
       </div>
 
       <div class="main__right">
@@ -82,6 +82,7 @@ import axios from "@/helper/axios";
 import Vcode from "vue3-puzzle-vcode";
 
 const systemName = ref("");
+const version = ref("");
 const session = ref({});
 const sessionRef = ref();
 const rules = {
@@ -105,6 +106,7 @@ const init = async () => {
   }
 
   systemName.value = response.data.system_name;
+  version.value = response.data.version;
   document.title = systemName.value;
 };
 
@@ -199,17 +201,17 @@ onMounted(() => {
         width: 32px;
       }
     }
-    .welcome {
-      margin-top: var(--margin);
-      color: #b9c7df;
-      font-size: var(--font-size);
-    }
     .system-name {
       font-size: var(--font-size-xl);
       font-weight: var(--font-weight-bold);
       line-height: 1.5;
       overflow-wrap: anywhere;
       margin: 0px;
+      margin-top: var(--margin-sm);
+    }
+    .version {
+      font-size: var(--font-size-sm);
+      color: #b9c7df;
     }
   }
   .main__right {

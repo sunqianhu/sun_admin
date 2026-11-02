@@ -16,11 +16,11 @@ build_back:
   stage: build
   script:
     - cd back
-    - docker build -t sun_admin_back:$VERSION .
+    - docker build --build-arg VERSION="$VERSION" -t sun_admin_back:$VERSION .
   only:
     - product
   tags:
-    - runner171
+    - runner22
 
 build_front:
   stage: build
@@ -30,7 +30,7 @@ build_front:
   only:
     - product
   tags:
-    - runner171
+    - runner22
 
 build_front_mobile:
   stage: build
@@ -40,7 +40,7 @@ build_front_mobile:
   only:
     - product
   tags:
-    - runner171
+    - runner22
 
 package_images:
   stage: package
@@ -58,7 +58,7 @@ package_images:
   only:
     - product
   tags:
-    - runner171
+    - runner22
 
 push_images:
   stage: push

@@ -23,7 +23,8 @@ class Login extends Base
         $configHelper = new ConfigHelper();
         $systemName = $configHelper->getValue('system_name');
         $data = [
-            'system_name' => $systemName
+            'system_name' => $systemName,
+            'version' => config('app.version')
         ];
         return $this->getSuccessResponse('获取成功', $data);
     }

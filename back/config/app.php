@@ -3,6 +3,8 @@
 // | 应用设置
 // +----------------------------------------------------------------------
 
+$versionFile = dirname(__DIR__) . '/VERSION';
+
 return [
     // 应用地址
     'app_host'         => env('APP_HOST', ''),
@@ -29,4 +31,7 @@ return [
     'error_message'    => '页面错误！请稍后再试～',
     // 显示错误信息
     'show_error_msg'   => false,
+
+    //版本，由 Docker 构建时写入
+    'version' => is_file($versionFile) ? file_get_contents($versionFile) : '0.0.0',
 ];
