@@ -32,4 +32,5 @@ return [
 
     // 应用名称
     'app_name' => env('APP_NAME', 'sun admin'),
+    'frame_version' => env('APP_FRAME_VERSION', '1.0.0'),
 ];

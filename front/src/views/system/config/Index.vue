@@ -11,9 +11,6 @@
       <el-form-item label="系统名称" prop="system_name">
         <el-input v-model="config.system_name" />
       </el-form-item>
-      <el-form-item label="框架版本" prop="frame_version">
-        <el-input v-model="config.frame_version" />
-      </el-form-item>
       <el-form-item label="系统版本" prop="version">
         <el-input v-model="config.version" />
       </el-form-item>
@@ -43,9 +40,6 @@ const config = ref({});
 const configRef = ref({});
 const rules = {
   system_name: [{ required: true, message: "请输入系统名称", trigger: "blur" }],
-  frame_version: [
-    { required: true, message: "请输入框架版本", trigger: "blur" },
-  ],
   version: [{ required: true, message: "请输入系统版本", trigger: "blur" }],
 };
 const initLoading = ref(false);
