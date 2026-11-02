@@ -11,9 +11,6 @@
       <el-form-item label="系统名称" prop="system_name">
         <el-input v-model="config.system_name" />
       </el-form-item>
-      <el-form-item label="系统版本" prop="version">
-        <el-input v-model="config.version" />
-      </el-form-item>
       <el-form-item label="禁止访问IP" prop="denied_ips_string">
         <el-input v-model="config.denied_ips_string" type="textarea" :rows="5" />
         <div class="text-tip">一行一个</div>
@@ -40,7 +37,6 @@ const config = ref({});
 const configRef = ref({});
 const rules = {
   system_name: [{ required: true, message: "请输入系统名称", trigger: "blur" }],
-  version: [{ required: true, message: "请输入系统版本", trigger: "blur" }],
 };
 const initLoading = ref(false);
 const submitLoading = ref(false);
