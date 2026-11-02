@@ -1,9 +1,9 @@
 <?php
 
-namespace app\desktop\controller\system\dictionary;
+namespace app\desktop\controller\dictionary;
 
 use app\desktop\controller\Base;
-use app\model\DictionaryModel;
+use app\helper\DictionaryHelper;
 use app\validate\DictionaryValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -26,8 +26,8 @@ class Add extends Base
         }
 
         try{
-            $dictionaryModel = new DictionaryModel();
-            $dictionaryModel->save($post);
+            $dictionaryHelper = new DictionaryHelper();
+            $dictionaryHelper->add($post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

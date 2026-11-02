@@ -1,8 +1,9 @@
 <?php
 
-namespace app\desktop\controller\system\dictionary;
+namespace app\desktop\controller\dictionary;
 
 use app\desktop\controller\Base;
+use app\helper\DictionaryHelper;
 use app\model\DictionaryModel;
 use app\validate\DictionaryValidate;
 use app\validate\IdValidate;
@@ -59,13 +60,9 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $dictionaryModel = DictionaryModel::find($post['id']);
-        if(empty($dictionaryModel)){
-            return $this->getErrorResponse('没有找到记录');
-        }
-
         try{
-            $dictionaryModel->save($post);
+            $dictionaryHelper = new DictionaryHelper();
+            $dictionaryHelper->edit($post['id'], $post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

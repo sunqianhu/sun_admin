@@ -1,8 +1,9 @@
 <?php
 
-namespace app\desktop\controller\system\dictionary;
+namespace app\desktop\controller\dictionary;
 
 use app\desktop\controller\Base;
+use app\helper\DictionaryHelper;
 use app\model\DictionaryModel;
 use app\validate\IdValidate;
 use Exception;
@@ -60,15 +61,9 @@ class Index extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $id = $post['id'];
-
-        $dictionaryModel = DictionaryModel::find($id);
-        if (empty($dictionaryModel)) {
-            return $this->getErrorResponse('没有找到记录');
-        }
-
         try{
-            $dictionaryModel->delete();
+            $dictionaryHelper = new DictionaryHelper();
+            $dictionaryHelper->delete($post['id']);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

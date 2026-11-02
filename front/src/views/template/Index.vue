@@ -25,7 +25,7 @@
     <div class="list">
       <el-table
         :data="dictionarys"
-        v-loading="loading"
+        v-loading="listLoading"
         row-key="id"
         table-layout="auto"
         class="table"
@@ -109,7 +109,7 @@ const getPaginate = async () => {
   listLoading.value = true;
   let response;
   try {
-    response = await axios.get("desktop/system.dictionary.Index/getPaginate", {
+    response = await axios.get("desktop/dictionary.Index/getPaginate", {
       params: query.value,
     });
   } finally {
@@ -155,7 +155,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const response = await axios.post("desktop/system.dictionary.Index/delete", {
+  const response = await axios.post("desktop/dictionary.Index/delete", {
     id: id,
   });
   if (response.code != 0) {
