@@ -27,7 +27,7 @@ instance.interceptors.request.use(
       type: "error",
     });
     return Promise.reject(error);
-  }
+  },
 );
 
 //响应拦截器
@@ -35,11 +35,13 @@ instance.interceptors.response.use(
   function (response) {
     const data = response.data;
     if (data && data.code == 2) {
-      ElMessage({
-        message: data.message,
-        type: "error",
-      });
-      logout();
+      if (localStorage.getItem("token")) {
+        ElMessage({
+          message: data.message,
+          type: "error",
+        });
+        logout();
+      }
       return Promise.reject(data);
     }
     return data;
@@ -61,7 +63,7 @@ instance.interceptors.response.use(
       type: "error",
     });
     return Promise.reject(error);
-  }
+  },
 );
 
 /**
