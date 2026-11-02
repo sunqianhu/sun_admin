@@ -59,7 +59,7 @@
         </div>
         <div class="footer">
           支持浏览器：Edge ≥ 85 Firefox≥79 Chrome≥85 Safari≥14.1<br />
-          &copy; {{ new Date().getFullYear() }} {{ systemName }}
+          2024至{{ new Date().getFullYear() }} &copy; {{ systemName }}
         </div>
       </div>
     </div>
