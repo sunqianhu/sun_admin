@@ -3,6 +3,7 @@
 namespace app\desktop\controller\system\session;
 
 use app\desktop\controller\Base;
+use app\helper\JwtHelper;
 use app\helper\SessionHelper;
 use app\validate\SessionValidate;
 use Exception;
@@ -22,8 +23,11 @@ class Add extends Base
             return $this->getErrorResponse($exception->getError());
         }
         try {
+            $data = $post;
+            $jwtHelper = new JwtHelper();
+            $data['token'] = $jwtHelper->generateToken($post['user_id']);
             $sessionHelper = new SessionHelper();
-            $sessionHelper->add($post);
+            $sessionHelper->add($data);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

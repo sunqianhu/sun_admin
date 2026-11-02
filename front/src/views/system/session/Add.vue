@@ -70,18 +70,7 @@ const session = ref({
 const sessionRef = ref();
 const rules = {
   terminal: [{ required: true, message: "请选择终端", trigger: "change" }],
-  user_id: [
-    {
-      validator: (rule, value, callback) => {
-        if (!value || Number(value) <= 0) {
-          callback(new Error("请选择所属用户"));
-          return;
-        }
-        callback();
-      },
-      trigger: "change",
-    },
-  ],
+  user_id: [{ required: true, message: "请选择所属用户", trigger: "change" }],
   expire_time: [
     { required: true, message: "请选择过期时间", trigger: "change" },
   ],
