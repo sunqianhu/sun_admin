@@ -53,7 +53,7 @@ const toolBarConfig = Object.assign(
     //toolBarKeys: ["bold"]
     //excludeKeys: []
   },
-  props.editorConfig,
+  props.toolBarConfig,
 );
 const editorConfig = Object.assign(
   {},
