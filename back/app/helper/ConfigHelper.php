@@ -63,8 +63,12 @@ class ConfigHelper
             return $deniedIps;
         }
         $deniedIpsString = $this->getValue('denied_ips_string');
-        $deniedIps = explode("\r\n", $deniedIpsString);
-        $deniedIps = array_filter($deniedIps);
+        $deniedIps = [];
+        if($deniedIpsString !== ''){
+            $deniedIpsString = str_replace("\r\n", "\n", $deniedIpsString);
+            $deniedIps = explode("\n", $deniedIpsString);
+            $deniedIps = array_filter($deniedIps);
+        }
         Cache::tag('config')->set('config_denied_ips', $deniedIps, 60 * 60 * 24 * 7);
         return $deniedIps;
     }
