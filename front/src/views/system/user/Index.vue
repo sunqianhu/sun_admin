@@ -84,19 +84,19 @@
                   >修改密码</el-dropdown-item
                 >
                 <el-dropdown-item
-                  v-permission="['system_user_desktop_offline']"
+                  v-if="hasPermission(['system_user_desktop_offline'])"
                   @click="desktopOffline(row.id)"
                 >
                   踢桌面端下线
                 </el-dropdown-item>
                 <el-dropdown-item
-                  v-permission="['system_user_mobile_offline']"
+                  v-if="hasPermission(['system_user_mobile_offline'])"
                   @click="mobileOffline(row.id)"
                 >
                   踢移动端下线
                 </el-dropdown-item>
                 <el-dropdown-item
-                  v-permission="['system_user_api_offline']"
+                  v-if="hasPermission(['system_user_api_offline'])"
                   @click="apiOffline(row.id)"
                 >
                   踢API端下线
@@ -151,6 +151,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
+import { hasPermission } from "@/helper/permission";
 import dayjs from "dayjs";
 import { Search, ArrowDown, Plus } from "@element-plus/icons-vue";
 import Add from "./Add.vue";
