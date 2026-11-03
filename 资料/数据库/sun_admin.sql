@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50744
 File Encoding         : 65001
 
-Date: 2026-11-02 17:04:21
+Date: 2026-11-03 11:33:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -6720,290 +6720,11 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
 -- ----------------------------
-INSERT INTO `login_log` VALUES ('1', '0', '1', '0', '1721279896', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('2', '0', '1', '0', '1721281841', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('3', '0', '1', '0', '1721283308', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('4', '0', '1', '0', '1721295019', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('5', '0', '1', '0', '1721295056', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('6', '0', '1', '0', '1721295062', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('7', '0', '1', '0', '1721295119', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('8', '0', '1', '0', '1721295148', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('9', '0', '1', '0', '1721295260', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('10', '0', '1', '0', '1721295474', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('11', '0', '1', '0', '1721295550', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('12', '0', '1', '0', '1721295974', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('13', '0', '1', '0', '1721295982', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('14', '0', '1', '0', '1721296030', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('15', '0', '1', '0', '1721298728', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('16', '0', '1', '0', '1721352576', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('17', '0', '1', '0', '1721352698', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('18', '0', '1', '0', '1721354799', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('19', '0', '1', '0', '1721355327', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('20', '0', '1', '0', '1721356880', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('21', '0', '1', '0', '1721360261', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('22', '0', '1', '0', '1721360358', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('23', '0', '1', '0', '1721360399', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('24', '0', '1', '0', '1721360433', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('25', '0', '1', '0', '1721360563', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('26', '0', '1', '0', '1721360709', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('27', '0', '1', '0', '1721366120', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('28', '0', '1', '0', '1721370713', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('29', '0', '1', '0', '1721374404', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('30', '0', '1', '0', '1721375701', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('31', '0', '1', '0', '1721376659', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('32', '0', '1', '0', '1722840439', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('33', '0', '1', '0', '1722852169', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('34', '0', '1', '0', '1722999409', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('35', '0', '1', '0', '1722999524', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('36', '0', '1', '0', '1723002721', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('37', '0', '1', '0', '1723003404', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('38', '0', '1', '0', '1723003436', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('39', '0', '1', '0', '1723008394', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('40', '0', '1', '0', '1723008607', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('41', '0', '1', '0', '1723016937', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('42', '0', '1', '0', '1723019338', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('43', '0', '1', '0', '1723078746', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('44', '0', '1', '0', '1723082071', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('45', '0', '1', '0', '1723083591', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('46', '0', '1', '0', '1723084076', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('47', '0', '1', '0', '1723084544', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('48', '0', '1', '0', '1723085253', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('49', '0', '1', '0', '1723096643', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('50', '0', '1', '0', '1723096722', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('51', '0', '1', '0', '1723096780', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('52', '0', '1', '0', '1723096841', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('53', '0', '1', '0', '1724830161', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('54', '0', '1', '0', '1724832288', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('55', '0', '1', '0', '1725519533', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('56', '0', '1', '0', '1725522390', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('57', '0', '1', '0', '1728630587', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('58', '0', '1', '0', '1728633146', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('59', '0', '1', '0', '1736054080', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('60', '0', '1', '0', '1736054092', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('61', '0', '1', '0', '1736055953', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('62', '0', '1', '0', '1736056531', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('63', '0', '1', '0', '1736057055', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('64', '0', '1', '0', '1736057119', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('65', '0', '1', '0', '1736057183', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('66', '0', '1', '0', '1736065551', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('67', '0', '1', '0', '1736568604', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('68', '0', '1', '0', '1736592964', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('69', '0', '1', '0', '1736596222', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('70', '0', '1', '0', '1736731103', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('71', '0', '1', '0', '1736743561', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('72', '0', '1', '0', '1736749182', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('73', '0', '1', '0', '1736753852', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('74', '0', '1', '0', '1737182458', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('75', '0', '1', '0', '1737188530', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('76', '0', '1', '0', '1737195067', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('77', '0', '1', '0', '1737343934', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('78', '0', '1', '0', '1737356550', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('79', '0', '1', '0', '1737356555', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('80', '0', '1', '0', '1737356700', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('81', '0', '1', '0', '1737356719', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('82', '0', '1', '0', '1737359169', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('83', '0', '1', '0', '1737359282', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('84', '0', '1', '0', '1739848469', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('85', '0', '1', '0', '1740034716', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('86', '0', '1', '0', '1740037129', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('87', '0', '1', '0', '1740472180', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('88', '0', '1', '0', '1740563101', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('89', '0', '1', '0', '1740566318', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('90', '0', '1', '0', '1740566322', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('91', '0', '1', '0', '1740629780', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('92', '0', '1', '0', '1740629786', '172.18.0.2');
-INSERT INTO `login_log` VALUES ('93', '0', '1', '0', '1740727401', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('94', '0', '1', '0', '1744107778', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('95', '0', '1', '0', '1744183529', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('96', '0', '1', '0', '1744192165', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('97', '0', '1', '0', '1745464632', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('98', '0', '1', '0', '1745742158', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('99', '0', '1', '0', '1745748937', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('100', '0', '1', '0', '1745748997', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('101', '0', '1', '0', '1745749096', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('102', '0', '1', '0', '1745805772', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('103', '0', '1', '0', '1745808080', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('104', '0', '1', '0', '1745836935', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('105', '0', '1', '0', '1747204130', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('106', '0', '1', '0', '1747204140', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('107', '0', '1', '0', '1747204690', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('108', '0', '1', '0', '1748252254', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('109', '0', '1', '0', '1748508105', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('110', '0', '1', '0', '1749003760', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('111', '0', '1', '0', '1749008069', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('112', '0', '1', '0', '1750297660', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('113', '0', '1', '0', '1750301577', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('114', '0', '1', '0', '1750305236', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('115', '0', '1', '0', '1750310577', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('116', '0', '1', '0', '1750314720', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('117', '0', '1', '0', '1750327131', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('118', '0', '1', '0', '1750327689', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('119', '0', '1', '0', '1750382763', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('120', '0', '1', '0', '1750382813', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('121', '0', '1', '0', '1750406861', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('122', '0', '1', '0', '1750656729', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('123', '0', '1', '0', '1750757382', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('124', '0', '1', '0', '1750900293', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('125', '0', '1', '0', '1750904058', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('126', '0', '1', '0', '1750904091', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('127', '0', '1', '0', '1750904716', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('128', '0', '1', '0', '1750905676', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('129', '0', '1', '0', '1750906451', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('130', '0', '1', '0', '1750906729', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('131', '0', '1', '0', '1750910320', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('132', '0', '1', '0', '1750911393', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('133', '0', '1', '0', '1750911562', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('134', '0', '1', '0', '1750917116', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('135', '0', '1', '0', '1750926791', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('136', '0', '1', '0', '1750928757', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('137', '0', '1', '0', '1750929154', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('138', '0', '1', '0', '1750929186', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('139', '0', '1', '0', '1750930278', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('140', '0', '1', '0', '1750930394', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('141', '0', '1', '0', '1750930457', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('142', '0', '1', '0', '1750990388', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('143', '0', '1', '0', '1751003327', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('144', '0', '1', '0', '1751015741', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('145', '0', '1', '0', '1751017550', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('146', '0', '1', '0', '1751250987', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('147', '0', '1', '0', '1751251143', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('148', '0', '1', '0', '1751252026', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('149', '0', '1', '0', '1751358327', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('150', '0', '1', '0', '1751358693', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('151', '0', '1', '0', '1751358881', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('152', '0', '1', '0', '1751359023', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('153', '0', '1', '0', '1751361475', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('154', '0', '1', '0', '1752027012', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('155', '0', '1', '0', '1755055666', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('156', '0', '1', '0', '1755055677', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('157', '0', '1', '0', '1755055783', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('158', '0', '1', '0', '1755055797', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('159', '0', '1', '0', '1755055813', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('160', '0', '1', '0', '1755055829', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('161', '0', '1', '0', '1755055892', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('162', '0', '1', '0', '1755055976', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('163', '0', '1', '0', '1755056005', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('164', '0', '1', '0', '1755056076', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('165', '0', '1', '0', '1755056327', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('166', '0', '1', '0', '1755059489', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('167', '0', '1', '0', '1755062153', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('168', '0', '1', '0', '1755063239', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('169', '0', '1', '0', '1755063324', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('170', '0', '1', '0', '1755063357', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('171', '0', '1', '0', '1755063520', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('172', '0', '1', '0', '1755063656', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('173', '0', '1', '0', '1755063845', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('174', '0', '1', '0', '1755064082', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('175', '0', '1', '0', '1755072976', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('176', '0', '1', '0', '1755078251', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('177', '0', '1', '0', '1755136080', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('178', '0', '1', '0', '1755153518', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('179', '0', '1', '0', '1755163825', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('180', '0', '1', '0', '1755228265', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('181', '0', '1', '0', '1760663459', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('182', '0', '1', '0', '1760672903', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('183', '0', '1', '0', '1760681250', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('184', '0', '1', '0', '1760768075', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('185', '0', '1', '0', '1760777414', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('186', '0', '1', '0', '1760781727', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('187', '0', '1', '0', '1760951326', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('188', '0', '1', '0', '1760953296', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('189', '0', '1', '0', '1761008487', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('190', '0', '1', '0', '1761012452', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('191', '0', '1', '0', '1761024022', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('192', '0', '1', '0', '1761036938', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('193', '0', '1', '0', '1761096670', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('194', '0', '1', '0', '1761104652', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('195', '0', '1', '0', '1761182977', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('196', '1', '1', '0', '1761185208', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('197', '1', '1', '0', '1761188303', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('198', '1', '1', '0', '1761188432', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('199', '1', '1', '0', '1761189503', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('200', '1', '1', '0', '1774431990', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('201', '1', '1', '0', '1774487917', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('202', '1', '1', '0', '1774498302', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('203', '1', '1', '0', '1774502597', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('204', '1', '1', '0', '1774509705', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('205', '1', '1', '0', '1774515797', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('206', '1', '1', '0', '1774573785', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('207', '1', '1', '0', '1774578642', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('208', '1', '1', '0', '1774588626', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('209', '1', '1', '0', '1774592291', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('210', '1', '1', '0', '1774601431', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('211', '1', '1', '0', '1774836236', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('212', '1', '1', '0', '1774844310', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('213', '1', '1', '0', '1774863118', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('214', '1', '1', '0', '1774863667', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('215', '1', '1', '0', '1774866644', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('216', '1', '1', '0', '1774930876', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('217', '1', '1', '0', '1774946805', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('218', '1', '1', '0', '1774946980', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('219', '1', '1', '0', '1774951243', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('220', '1', '1', '0', '1775718145', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('221', '1', '1', '0', '1787017744', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('222', '1', '1', '0', '1787018150', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('223', '1', '1', '0', '1787018273', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('224', '1', '1', '0', '1791795147', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('225', '1', '1', '0', '1793065749', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('226', '1', '1', '0', '1793072483', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('227', '1', '1', '0', '1793078479', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('228', '1', '1', '0', '1793090996', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('229', '1', '1', '0', '1793091824', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('230', '1', '1', '0', '1793092771', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('231', '1', '1', '0', '1793092920', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('232', '1', '1', '0', '1793093203', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('233', '1', '1', '0', '1793093323', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('234', '1', '1', '0', '1793093355', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('235', '1', '1', '0', '1793093470', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('236', '1', '1', '0', '1793093970', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('237', '1', '1', '0', '1793094309', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('238', '1', '1', '0', '1793094465', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('239', '1', '1', '0', '1793152953', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('240', '1', '1', '0', '1793177004', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('241', '1', '1', '0', '1793177655', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('242', '1', '1', '0', '1793177668', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('243', '1', '1', '0', '1793179319', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('244', '1', '1', '0', '1793179526', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('245', '1', '1', '0', '1793180083', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('246', '1', '1', '0', '1793180408', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('247', '1', '1', '0', '1793180938', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('248', '1', '1', '0', '1793181232', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('249', '1', '1', '0', '1793181258', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('250', '1', '1', '0', '1793181330', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('251', '1', '1', '0', '1793236628', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('252', '1', '1', '0', '1793239468', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('253', '1', '1', '0', '1793257665', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('254', '1', '1', '0', '1793259677', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('255', '1', '1', '0', '1793264009', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('256', '1', '1', '0', '1793264031', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('257', '1', '1', '0', '1793266312', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('258', '1', '1', '0', '1793324317', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('259', '1', '1', '0', '1793327470', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('260', '1', '1', '0', '1793327842', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('261', '1', '1', '0', '1793328043', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('262', '1', '1', '0', '1793328682', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('263', '1', '1', '0', '1793332672', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('264', '1', '1', '0', '1793337665', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('265', '1', '1', '0', '1793339619', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('266', '1', '1', '0', '1793347823', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('267', '1', '1', '0', '1793352036', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('268', '1', '1', '0', '1793581980', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('269', '1', '1', '0', '1793589526', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('270', '1', '1', '0', '1793589925', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('271', '1', '1', '0', '1793596850', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('272', '1', '1', '0', '1793600899', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('273', '1', '1', '0', '1793602828', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('274', '1', '1', '0', '1793605090', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('275', '1', '1', '0', '1793605772', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('276', '1', '1', '0', '1793606213', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('277', '1', '1', '0', '1793606491', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('278', '1', '1', '0', '1793608175', '127.0.0.1');
-INSERT INTO `login_log` VALUES ('279', '1', '1', '0', '1793608395', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for message
@@ -7071,11 +6792,18 @@ CREATE TABLE `operation_log` (
   `ip` varchar(31) NOT NULL DEFAULT '' COMMENT '操作ip',
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=260 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
 -- ----------------------------
+INSERT INTO `operation_log` VALUES ('253', '1', '1', '4', '0', '/desktop/system.operation_log.TimeRangeDelete/save', 'POST', '{\"header\":{\"accept-language\":\"zh-CN,zh;q=0.9\",\"accept-encoding\":\"gzip, deflate, br, zstd\",\"referer\":\"http:\\/\\/localhost:5179\\/system\\/operation-log\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\",\"origin\":\"http:\\/\\/localhost:5179\",\"sec-ch-ua-mobile\":\"?0\",\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjczNDY1fQ.j9Nmw5LghQFqb4uNtQiv7Ei3uJhuMPA68MGf5y_Kj9g\",\"content-type\":\"application\\/json\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"155\\\", \\\"Chromium\\\";v=\\\"155\\\", \\\"Not(A:Brand\\\";v=\\\"24\\\"\",\"accept\":\"application\\/json, text\\/plain, *\\/*\",\"user-agent\":\"Mozilla\\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"sec-ch-ua-platform\":\"\\\"Windows\\\"\",\"content-length\":\"44\",\"connection\":\"close\",\"host\":\"back.sun-admin.sunqianhu.cc\"},\"files\":[],\"body\":{\"start_time\":2649600,\"end_time\":1794412800}}', '200', '0', '{\"code\":0,\"message\":\"删除成功，共删除146条操作日志\",\"data\":null}', '121', '127.0.0.1', '1793676608');
+INSERT INTO `operation_log` VALUES ('254', '1', '1', '4', '0', '/desktop/system.operation_log.Index/getPaginate', 'GET', '{\"header\":{\"accept-language\":\"zh-CN,zh;q=0.9\",\"accept-encoding\":\"gzip, deflate, br, zstd\",\"referer\":\"http:\\/\\/localhost:5179\\/system\\/operation-log\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\",\"sec-ch-ua-mobile\":\"?0\",\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjczNDY1fQ.j9Nmw5LghQFqb4uNtQiv7Ei3uJhuMPA68MGf5y_Kj9g\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"155\\\", \\\"Chromium\\\";v=\\\"155\\\", \\\"Not(A:Brand\\\";v=\\\"24\\\"\",\"accept\":\"application\\/json, text\\/plain, *\\/*\",\"user-agent\":\"Mozilla\\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"sec-ch-ua-platform\":\"\\\"Windows\\\"\",\"connection\":\"close\",\"host\":\"back.sun-admin.sunqianhu.cc\",\"content-length\":\"\",\"content-type\":\"\"},\"files\":[],\"body\":{\"response_business_code\":\"\",\"times\":[\"1777737600\",\"1793721599\"],\"size\":\"30\",\"page\":\"1\"}}', '200', '0', '{\"code\":0,\"message\":\"获取成功\",\"data\":{\"total\":1,\"per_page\":30,\"current_page\":1,\"last_page\":1,\"data\":[{\"id\":253,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"api\":\"\\/desktop\\/system.operation_log.TimeRangeDelete\\/save\",\"request_method\":\"POST\",\"response_http_code\":200,\"response_business_code\":0,\"duration\":121,\"ip\":\"127.0.0.1\",\"time\":1793676608,\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\",\"response_business_code_name\":\"成功\"}],\"has_more\":false}}', '79', '127.0.0.1', '1793676608');
+INSERT INTO `operation_log` VALUES ('255', '1', '1', '4', '0', '/desktop/system.operation_log.TimeRangeDelete/save', 'POST', '{\"header\":{\"accept-language\":\"zh-CN,zh;q=0.9\",\"accept-encoding\":\"gzip, deflate, br, zstd\",\"referer\":\"http:\\/\\/localhost:5179\\/system\\/operation-log\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\",\"origin\":\"http:\\/\\/localhost:5179\",\"sec-ch-ua-mobile\":\"?0\",\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjczNDY1fQ.j9Nmw5LghQFqb4uNtQiv7Ei3uJhuMPA68MGf5y_Kj9g\",\"content-type\":\"application\\/json\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"155\\\", \\\"Chromium\\\";v=\\\"155\\\", \\\"Not(A:Brand\\\";v=\\\"24\\\"\",\"accept\":\"application\\/json, text\\/plain, *\\/*\",\"user-agent\":\"Mozilla\\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"sec-ch-ua-platform\":\"\\\"Windows\\\"\",\"content-length\":\"38\",\"connection\":\"close\",\"host\":\"back.sun-admin.sunqianhu.cc\"},\"files\":[],\"body\":{\"start_time\":0,\"end_time\":1785727869}}', '200', '0', '{\"code\":0,\"message\":\"删除成功，共删除0条操作日志\",\"data\":null}', '110', '127.0.0.1', '1793676671');
+INSERT INTO `operation_log` VALUES ('256', '1', '1', '4', '0', '/desktop/system.operation_log.Index/getPaginate', 'GET', '{\"header\":{\"accept-language\":\"zh-CN,zh;q=0.9\",\"accept-encoding\":\"gzip, deflate, br, zstd\",\"referer\":\"http:\\/\\/localhost:5179\\/system\\/operation-log\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\",\"sec-ch-ua-mobile\":\"?0\",\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjczNDY1fQ.j9Nmw5LghQFqb4uNtQiv7Ei3uJhuMPA68MGf5y_Kj9g\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"155\\\", \\\"Chromium\\\";v=\\\"155\\\", \\\"Not(A:Brand\\\";v=\\\"24\\\"\",\"accept\":\"application\\/json, text\\/plain, *\\/*\",\"user-agent\":\"Mozilla\\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"sec-ch-ua-platform\":\"\\\"Windows\\\"\",\"connection\":\"close\",\"host\":\"back.sun-admin.sunqianhu.cc\",\"content-length\":\"\",\"content-type\":\"\"},\"files\":[],\"body\":{\"response_business_code\":\"\",\"times\":[\"1777737600\",\"1793721599\"],\"size\":\"30\",\"page\":\"1\"}}', '200', '0', '{\"code\":0,\"message\":\"获取成功\",\"data\":{\"total\":3,\"per_page\":30,\"current_page\":1,\"last_page\":1,\"data\":[{\"id\":255,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"api\":\"\\/desktop\\/system.operation_log.TimeRangeDelete\\/save\",\"request_method\":\"POST\",\"response_http_code\":200,\"response_business_code\":0,\"duration\":110,\"ip\":\"127.0.0.1\",\"time\":1793676671,\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\",\"response_business_code_name\":\"成功\"},{\"id\":254,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"api\":\"\\/desktop\\/system.operation_log.Index\\/getPaginate\",\"request_method\":\"GET\",\"response_http_code\":200,\"response_business_code\":0,\"duration\":79,\"ip\":\"127.0.0.1\",\"time\":1793676608,\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\",\"response_business_code_name\":\"成功\"},{\"id\":253,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"api\":\"\\/desktop\\/system.operation_log.TimeRangeDelete\\/save\",\"request_method\":\"POST\",\"response_http_code\":200,\"response_business_code\":0,\"duration\":121,\"ip\":\"127.0.0.1\",\"time\":1793676608,\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\",\"response_business_code_name\":\"成功\"}],\"has_more\":false}}', '87', '127.0.0.1', '1793676671');
+INSERT INTO `operation_log` VALUES ('257', '1', '1', '4', '0', '/desktop/components.DictionarySelect/getDictionary', 'GET', '{\"header\":{\"accept-language\":\"zh-CN,zh;q=0.9\",\"accept-encoding\":\"gzip, deflate, br, zstd\",\"referer\":\"http:\\/\\/localhost:5179\\/system\\/login-log\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\",\"sec-ch-ua-mobile\":\"?0\",\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjczNDY1fQ.j9Nmw5LghQFqb4uNtQiv7Ei3uJhuMPA68MGf5y_Kj9g\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"155\\\", \\\"Chromium\\\";v=\\\"155\\\", \\\"Not(A:Brand\\\";v=\\\"24\\\"\",\"accept\":\"application\\/json, text\\/plain, *\\/*\",\"user-agent\":\"Mozilla\\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"sec-ch-ua-platform\":\"\\\"Windows\\\"\",\"connection\":\"close\",\"host\":\"back.sun-admin.sunqianhu.cc\",\"content-length\":\"\",\"content-type\":\"\"},\"files\":[],\"body\":{\"type\":\"terminal\"}}', '200', '0', '{\"code\":0,\"message\":\"获取成功\",\"data\":[{\"key\":\"0\",\"value\":\"桌面端\"},{\"key\":\"1\",\"value\":\"移动端\"},{\"key\":\"2\",\"value\":\"API接口\"}]}', '134', '127.0.0.1', '1793676737');
+INSERT INTO `operation_log` VALUES ('258', '1', '1', '4', '0', '/desktop/system.login_log.Index/getPaginate', 'GET', '{\"header\":{\"accept-language\":\"zh-CN,zh;q=0.9\",\"accept-encoding\":\"gzip, deflate, br, zstd\",\"referer\":\"http:\\/\\/localhost:5179\\/system\\/login-log\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\",\"sec-ch-ua-mobile\":\"?0\",\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjczNDY1fQ.j9Nmw5LghQFqb4uNtQiv7Ei3uJhuMPA68MGf5y_Kj9g\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"155\\\", \\\"Chromium\\\";v=\\\"155\\\", \\\"Not(A:Brand\\\";v=\\\"24\\\"\",\"accept\":\"application\\/json, text\\/plain, *\\/*\",\"user-agent\":\"Mozilla\\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"sec-ch-ua-platform\":\"\\\"Windows\\\"\",\"connection\":\"close\",\"host\":\"back.sun-admin.sunqianhu.cc\",\"content-length\":\"\",\"content-type\":\"\"},\"files\":[],\"body\":{\"times\":[\"1777737600\",\"1793721599\"],\"size\":\"30\",\"page\":\"1\"}}', '200', '0', '{\"code\":0,\"message\":\"获取成功\",\"data\":{\"total\":62,\"per_page\":30,\"current_page\":1,\"last_page\":3,\"data\":[{\"id\":282,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793673465,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":281,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793667754,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":280,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793611549,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":279,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793608395,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":278,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793608175,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":277,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793606491,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":276,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793606213,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":275,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793605772,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":274,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793605090,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":273,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793602828,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":272,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793600899,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":271,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793596850,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":270,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793589925,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":269,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793589526,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":268,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793581980,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":267,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793352036,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":266,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793347823,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":265,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793339619,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":264,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793337665,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":263,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793332672,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":262,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793328682,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":261,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793328043,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":260,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793327842,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":259,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793327470,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":258,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793324317,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":257,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793266312,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":256,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793264031,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":255,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793264009,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":254,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793259677,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"},{\"id\":253,\"department_id\":1,\"user_id\":1,\"terminal\":0,\"time\":1793257665,\"ip\":\"127.0.0.1\",\"user_name\":\"张三\",\"department_name\":\"部门1\",\"terminal_name\":\"桌面端\"}],\"has_more\":true}}', '214', '127.0.0.1', '1793676737');
+INSERT INTO `operation_log` VALUES ('259', '1', '1', '4', '0', '/desktop/components.TreeDepartmentSelect/getTreeDepartment', 'GET', '{\"header\":{\"accept-language\":\"zh-CN,zh;q=0.9\",\"accept-encoding\":\"gzip, deflate, br, zstd\",\"referer\":\"http:\\/\\/localhost:5179\\/system\\/login-log\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\",\"sec-ch-ua-mobile\":\"?0\",\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjczNDY1fQ.j9Nmw5LghQFqb4uNtQiv7Ei3uJhuMPA68MGf5y_Kj9g\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"155\\\", \\\"Chromium\\\";v=\\\"155\\\", \\\"Not(A:Brand\\\";v=\\\"24\\\"\",\"accept\":\"application\\/json, text\\/plain, *\\/*\",\"user-agent\":\"Mozilla\\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"sec-ch-ua-platform\":\"\\\"Windows\\\"\",\"connection\":\"close\",\"host\":\"back.sun-admin.sunqianhu.cc\",\"content-length\":\"\",\"content-type\":\"\"},\"files\":[],\"body\":{\"department_id\":\"0\"}}', '200', '0', '{\"code\":0,\"message\":\"获取成功\",\"data\":[{\"id\":1,\"name\":\"部门1\",\"department_id\":0,\"type\":1,\"path\":\"\\/1\",\"children\":[{\"id\":2,\"name\":\"部门1-1\",\"department_id\":1,\"type\":2,\"path\":\"\\/1\\/2\"}]},{\"id\":3,\"name\":\"部门2\",\"department_id\":0,\"type\":1,\"path\":\"\\/3\"}]}', '64', '127.0.0.1', '1793676739');
 
 -- ----------------------------
 -- Table structure for permission
@@ -7091,7 +6819,7 @@ CREATE TABLE `permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `permission_key` (`key`),
   KEY `permission_id` (`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COMMENT='全站权限';
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COMMENT='全站权限';
 
 -- ----------------------------
 -- Records of permission
@@ -7112,7 +6840,7 @@ INSERT INTO `permission` VALUES ('13', '11', '菜单管理', 'system_desktop_men
 INSERT INTO `permission` VALUES ('14', '1', '权限管理', 'system_permission', 'desktop/system.permission.Index/init\ndesktop/system.permission.Index/getTreePermission', '8');
 INSERT INTO `permission` VALUES ('17', '1', '字典管理', 'system_dictionary', 'desktop/system.dictionary.Index/init\ndesktop/system.dictionary.Index/getPaginate', '13');
 INSERT INTO `permission` VALUES ('18', '1', '登录日志', 'system_login_log', 'desktop/system.login_log.Index/getPaginate', '15');
-INSERT INTO `permission` VALUES ('19', '1', '操作日志', 'system_operation_log', 'desktop/system.operation_log.Index/getPaginate\r\ndesktop/system.operation_log.Detail/init', '17');
+INSERT INTO `permission` VALUES ('19', '1', '操作日志', 'system_operation_log', 'desktop/system.operation_log.Index/getPaginate\ndesktop/system.operation_log.Detail/init\ndesktop/system.operation_log.TimeRangeDelete/save', '17');
 INSERT INTO `permission` VALUES ('20', '9', '添加', 'system_department_add', 'desktop/system.department.Add/init\ndesktop/system.department.Add/save', '1');
 INSERT INTO `permission` VALUES ('21', '9', '修改', 'system_department_edit', 'desktop/system.department.Edit/init\ndesktop/system.department.Edit/save', '3');
 INSERT INTO `permission` VALUES ('22', '9', '删除', 'system_department_delete', 'desktop/system.department.Index/delete', '9');
@@ -7142,7 +6870,7 @@ INSERT INTO `permission` VALUES ('51', '2', '踢移动端下线', 'system_user_m
 INSERT INTO `permission` VALUES ('52', '2', '踢API端下线', 'system_user_api_offline', 'desktop/system.user.Index/apiOffline', '15');
 INSERT INTO `permission` VALUES ('53', '46', '添加会话', 'session_add', 'desktop/system.session.Add/save', '1');
 INSERT INTO `permission` VALUES ('55', '46', '会话续期', 'session_renew', 'desktop/system.session.Renew/init\ndesktop/system.session.Renew/save', '3');
-INSERT INTO `permission` VALUES ('56', '46', '删除会话', 'session_delete', 'desktop/system.session.Index/delete', '5');
+INSERT INTO `permission` VALUES ('56', '46', '删除会话', 'session_delete', 'desktop/system.session.Index/delete\ndesktop/system.session.Index/deleteExpired', '5');
 
 -- ----------------------------
 -- Table structure for role
@@ -7263,7 +6991,7 @@ CREATE TABLE `role_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_permission` (`role_id`,`permission_id`),
   KEY `permission_id` (`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关系';
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关系';
 
 -- ----------------------------
 -- Records of role_permission
@@ -7315,6 +7043,8 @@ INSERT INTO `role_permission` VALUES ('52', '3', '52');
 INSERT INTO `role_permission` VALUES ('53', '3', '53');
 INSERT INTO `role_permission` VALUES ('55', '3', '55');
 INSERT INTO `role_permission` VALUES ('56', '3', '56');
+INSERT INTO `role_permission` VALUES ('57', '3', '57');
+INSERT INTO `role_permission` VALUES ('59', '3', '59');
 INSERT INTO `role_permission` VALUES ('46', '4', '38');
 INSERT INTO `role_permission` VALUES ('45', '4', '40');
 INSERT INTO `role_permission` VALUES ('44', '4', '41');
@@ -7352,12 +7082,12 @@ CREATE TABLE `session` (
   UNIQUE KEY `terminal_token` (`terminal`,`token`),
   KEY `user_id_terminal` (`user_id`,`terminal`),
   KEY `expire_time` (`expire_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='会话';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='会话';
 
 -- ----------------------------
 -- Records of session
 -- ----------------------------
-INSERT INTO `session` VALUES ('1', '桌面端登录', '1', '0', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjA4Mzk1fQ.tnrwDcs_GOTrSij8kEkg9xNJ0lJpI3LlXMjZP3JuuQ0', '1793611836', '1793608395', '');
+INSERT INTO `session` VALUES ('4', '桌面端登录', '1', '0', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lIjoxNzkzNjczNDY1fQ.j9Nmw5LghQFqb4uNtQiv7Ei3uJhuMPA68MGf5y_Kj9g', '1793678539', '1793673465', '');
 
 -- ----------------------------
 -- Table structure for user
@@ -7385,7 +7115,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', '$2y$10$Eu3xsqx0L6N1sa265OIxi.EZ3Lfj3bRrm4CoZrd964BOZuGLzbaw2', '1', '张三', '15122222222', 'avatar/2026/10/29/1bca6f35c1699b72ecfc92c3d234c543.png', 'big_avatar/2026/10/29/574c53508e1e7fc911021f75b8162a4c.png', '1684989244', '1716183018', '1793608395', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', 'admin', '$2y$10$Eu3xsqx0L6N1sa265OIxi.EZ3Lfj3bRrm4CoZrd964BOZuGLzbaw2', '1', '张三', '15122222222', 'avatar/2026/10/29/1bca6f35c1699b72ecfc92c3d234c543.png', 'big_avatar/2026/10/29/574c53508e1e7fc911021f75b8162a4c.png', '1684989244', '1716183018', '1793673465', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', 'user', '$2y$10$UgRQ5ZbLVVqALwcUTvboGeSMn8OCIG7B9DCMBmm.Rlj0rbfrinR1K', '1', '李四', '15111111111', '', '', '1684992552', '1703148627', '0', '');
 INSERT INTO `user` VALUES ('3', '1', 'test1', '$2y$10$KGf9vZaH9DB5XvMS82WUgeGDlSL3IlmeEi6AuVshFshmOqq6Cay6i', '1', 'test1', '15108273575', '', '', '0', '0', '0', '');
 
