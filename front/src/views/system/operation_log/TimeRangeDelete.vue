@@ -32,6 +32,7 @@
           range-separator="至"
           start-placeholder="开始时间"
           end-placeholder="结束时间"
+          :shortcuts="shortcuts"
           unlink-panels
         />
       </el-form-item>
@@ -53,6 +54,17 @@ import axios from "@/helper/axios";
 const emits = defineEmits(["close", "submited"]);
 const timeRangeDelete = ref({ times: [] });
 const timeRangeDeleteRef = ref();
+const shortcuts = [
+  { text: "3个月前", months: 3 },
+  { text: "6个月前", months: 6 },
+  { text: "1年前", months: 12 },
+  { text: "2年前", months: 24 },
+  { text: "3年前", months: 36 },
+  { text: "5年前", months: 60 },
+].map((item) => ({
+  text: item.text,
+  value: () => [new Date(0), dayjs().subtract(item.months, "month").toDate()],
+}));
 const rules = {
   times: [
     {
