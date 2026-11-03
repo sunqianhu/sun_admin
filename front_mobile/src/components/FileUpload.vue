@@ -121,7 +121,7 @@ const updateFile = (file, serverFile) => {
   if (index === -1) {
     return;
   }
-  files.push(serverFile);
+  Object.assign(files.value[index], serverFile);
 };
 
 /**
