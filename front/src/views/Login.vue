@@ -158,8 +158,6 @@ onMounted(() => {
   .main {
     display: flex;
     width: 840px;
-    height: 480px;
-    max-height: 100%;
     overflow: hidden;
     border-radius: var(--border-radius-lg);
     background-color: var(--background-color-light);
@@ -285,9 +283,6 @@ onMounted(() => {
       padding: 20px 24px;
       .system-logo {
         display: none;
-      }
-      .welcome {
-        margin-top: 0px;
       }
       .system-name {
         font-size: var(--font-size-lg);
