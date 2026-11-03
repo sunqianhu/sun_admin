@@ -49,8 +49,9 @@ class Edit extends Base
 
         $permissionHelper = new PermissionHelper();
         $permissionIds = $permissionHelper->getAllPermissionIds($post['id']);
+        $permissionIds[] = $post['id'];
         if(in_array($post['permission_id'], $permissionIds)){
-            return $this->getErrorResponse('父权限不能选择本权限的子孙');
+            return $this->getErrorResponse('上级权限不能是本权限或本权限的子孙权限');
         }
 
         try{

@@ -3,6 +3,7 @@
 namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
+use app\helper\desktop\MenuHelper;
 use app\model\desktop\MenuModel;
 use app\validate\desktop\MenuValidate;
 use app\validate\IdValidate;
@@ -45,8 +46,11 @@ class Edit extends Base
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
-        if($post['id'] == $post['menu_id']){
-            return $this->getErrorResponse('上级菜单不能和此菜单相同');
+        $menuHelper = new MenuHelper();
+        $menuIds = $menuHelper->getAllMenuIds($post['id']);
+        $menuIds[] = $post['id'];
+        if(in_array($post['menu_id'], $menuIds)){
+            return $this->getErrorResponse('上级菜单不能是本菜单或本菜单的子孙菜单');
         }
 
         $menuModel = MenuModel::find($post['id']);

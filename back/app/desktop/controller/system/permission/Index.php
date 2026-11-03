@@ -40,9 +40,6 @@ class Index extends Base
     /**
      * 删除
      * @return Response
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function delete(){
         $id = $this->request->post('id', 0);
