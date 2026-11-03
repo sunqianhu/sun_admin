@@ -32,6 +32,7 @@ return [
     // 显示错误信息
     'show_error_msg'   => false,
 
+    'jwt_key'          => env('APP_JWT_KEY', ''),
     //版本，由 Docker 构建时写入
     'version' => is_file($versionFile) ? file_get_contents($versionFile) : '0.0.0',
 ];

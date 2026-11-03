@@ -5,11 +5,24 @@ namespace app\helper;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
+use think\facade\Config;
 
 class JwtHelper
 {
-    private string $key = 'axjeJXKlA836x7s@#';
+    private string $key = '';
     private int $leeway = 180;
+
+    /**
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        $key = Config::get('app.jwt_key');
+        if($key === null){
+            throw new Exception('请配置项目会话令牌key');
+        }
+        $this->key = $key;
+    }
 
     /**
      * 生成token
