@@ -46,8 +46,14 @@ class Edit extends Base
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
+
+        $permissionHelper = new PermissionHelper();
+        $permissionIds = $permissionHelper->getAllPermissionIds($post['id']);
+        if(in_array($post['permission_id'], $permissionIds)){
+            return $this->getErrorResponse('父权限不能选择本权限的子孙');
+        }
+
         try{
-            $permissionHelper = new PermissionHelper();
             $permissionHelper->edit($post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
