@@ -102,16 +102,16 @@ class DepartmentHelper
 
     /**
      * 是否存在部门或用户
-     * @param $departmentId
+     * @param $id
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function isExistDepartmentsOrUsers($departmentId)
+    public function isExistDepartmentsOrUsers($id)
     {
         $departmentUserHelper = new DepartmentUserHelper();
-        if($this->isExistDepartments($departmentId) || $departmentUserHelper->isExistUsers($departmentId)){
+        if($this->isExistDepartments($id) || $departmentUserHelper->isExistUsers($id)){
             return true;
         }
         return false;

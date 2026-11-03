@@ -3,6 +3,7 @@
 namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
+use app\helper\DepartmentHelper;
 use app\model\DepartmentModel;
 use Exception;
 use Sunqianhu\Helper\Arr;
@@ -51,6 +52,11 @@ class Index extends Base
         $departmentModel = DepartmentModel::find($id);
         if(empty($departmentModel)){
             return $this->getErrorResponse('没有找到记录');
+        }
+
+        $departmentHelper = new DepartmentHelper();
+        if($departmentHelper->isExistDepartmentsOrUsers($id)){
+            return $this->getErrorResponse('该部门下存在子部门或存在用户，不能删除');
         }
 
         try{
