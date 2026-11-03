@@ -8,7 +8,9 @@ use app\model\RoleDesktopMenuModel;
 use app\model\RolePermissionModel;
 use app\model\RoleDesktopRouteModel;
 use app\model\RoleModel;
+use app\validate\PaginationValidate;
 use Exception;
+use think\exception\ValidateException;
 use think\facade\Db;
 use think\Response;
 
@@ -20,6 +22,12 @@ class Index extends Base
     public function getPaginate()
     {
         $get = $this->request->get(['name' => '', 'size' => '30', 'page' => '1']);
+
+        try {
+            validate(PaginationValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
 
         $query = RoleModel::field('id,name');
         if ($get['name'] !== '') {

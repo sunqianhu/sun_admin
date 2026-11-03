@@ -2,6 +2,7 @@
 
 namespace app\helper;
 
+use app\helper\role\RolePermissionHelper;
 use app\model\PermissionModel;
 use app\model\RolePermissionModel;
 use Exception;
@@ -53,7 +54,16 @@ class PermissionHelper
         if (empty($permissionModel)) {
             throw new Exception('没有找到权限记录');
         }
-        $permissionModel->delete();
+
+        Db::startTrans();
+        try{
+            $rolePermissionHelper = new RolePermissionHelper();
+            $rolePermissionHelper->deleteByPermissionId($id);
+            $permissionModel->delete();
+            Db::commit();
+        }catch (Exception $exception){
+            Db::rollback();
+        }
     }
 
     /**

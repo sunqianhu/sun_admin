@@ -6,6 +6,7 @@ use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\helper\SessionHelper;
 use app\helper\user\UserStatusHelper;
+use app\validate\PaginationValidate;
 use app\validate\UserValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -18,6 +19,12 @@ class Index extends Base
     public function getPaginate()
     {
         $get = $this->request->get(['department_ids'=>[], 'role_id', 'account', 'name', 'phone', 'size' => 30, 'page' => 1]);
+
+        try {
+            validate(PaginationValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
 
         $query = UserModel::alias('u')
             ->leftJoin('user_role ur', 'u.id = ur.user_id')

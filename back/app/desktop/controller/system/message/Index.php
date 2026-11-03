@@ -5,7 +5,9 @@ namespace app\desktop\controller\system\message;
 use app\desktop\controller\Base;
 use app\model\MessageModel;
 use app\helper\MessageHelper;
+use app\validate\PaginationValidate;
 use Exception;
+use think\exception\ValidateException;
 use think\Response;
 
 class Index extends Base
@@ -18,6 +20,12 @@ class Index extends Base
     public function getPaginate()
     {
         $get = $this->request->get(['times' =>[], 'size' => '30', 'page' => '1']);
+
+        try {
+            validate(PaginationValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
 
         $query = MessageModel::field('id, add_time,title,url,content,is_read');
         if (!empty($get['times']) && count($get['times']) == 2) {

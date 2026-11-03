@@ -44,4 +44,18 @@ class RolePermissionHelper
             throw $exception;
         }
     }
+
+    /**
+     * 通过权限删除
+     * @param $permissionId
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function deleteByPermissionId($permissionId)
+    {
+        $rolePermissionModels = RolePermissionModel::where('permission_id', $permissionId)->select();
+        $rolePermissionModels->delete();
+    }
 }

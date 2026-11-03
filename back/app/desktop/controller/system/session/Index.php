@@ -5,6 +5,7 @@ namespace app\desktop\controller\system\session;
 use app\desktop\controller\Base;
 use app\helper\SessionHelper;
 use app\model\SessionModel;
+use app\validate\PaginationValidate;
 use app\validate\SessionValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -17,6 +18,13 @@ class Index extends Base
     public function getPaginate()
     {
         $get = $this->request->get(['name' => '', 'terminal' => '', 'user_keyword' => '', 'is_expired' => '', 'size' => 30, 'page' => 1]);
+
+        try {
+            validate(PaginationValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
+
         $query = SessionModel::alias('s')
             ->leftJoin('user u', 's.user_id = u.id')
             ->field('s.id,s.name,s.user_id,s.terminal,s.token,s.expire_time,u.name as user_name,u.account as user_account');

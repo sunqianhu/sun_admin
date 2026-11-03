@@ -7,10 +7,12 @@ use app\model\data_scope\PolicyDepartmentModel;
 use app\model\data_scope\PolicyModel;
 use app\model\DataScopeModel;
 use app\model\RoleDataScopePolicyModel;
+use app\validate\PaginationValidate;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\exception\ValidateException;
 use think\facade\Db;
 use think\Response;
 
@@ -22,6 +24,13 @@ class Index extends Base
     public function getPaginate()
     {
         $get = $this->request->get(['name' => '', 'key' => '', 'size' => '30', 'page' => '1']);
+
+        try {
+            validate(PaginationValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
+
         $query = DataScopeModel::field('id,name,key,sort');
         if ($get['name'] !== '') {
             $query->where('name', 'LIKE', '%' . $get['name'] . '%');

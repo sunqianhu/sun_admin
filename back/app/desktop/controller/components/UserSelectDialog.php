@@ -5,7 +5,9 @@ namespace app\desktop\controller\components;
 use app\desktop\controller\Base;
 use app\helper\user\UserDataScopeHelper;
 use app\model\UserModel;
+use app\validate\PaginationValidate;
 use think\db\exception\DbException;
+use think\exception\ValidateException;
 use think\Response;
 
 class UserSelectDialog extends Base
@@ -20,6 +22,13 @@ class UserSelectDialog extends Base
     public function getPaginate()
     {
         $get = $this->request->get(['department_ids' => [], 'keyword' => '', 'size' => '30', 'page' => '1']);
+
+        try {
+            validate(PaginationValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
+
         $query = UserModel::field('id,name,department_id')
             ->with(['department' => function ($query) {
                 $query->withField('id,name');

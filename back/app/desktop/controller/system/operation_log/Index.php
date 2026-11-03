@@ -4,6 +4,8 @@ namespace app\desktop\controller\system\operation_log;
 
 use app\desktop\controller\Base;
 use app\model\OperationLogModel;
+use app\validate\PaginationValidate;
+use think\exception\ValidateException;
 
 class Index extends Base
 {
@@ -14,6 +16,12 @@ class Index extends Base
     public function getPaginate()
     {
         $get = $this->request->get(['department_ids'=>[], 'terminal'=>'', 'response_business_code'=>'', 'times' => [], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
+
+        try {
+            validate(PaginationValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
 
         $query = OperationLogModel::alias('ol')
             ->field('ol.id,ol.department_id,ol.user_id,ol.terminal,ol.api,ol.request_method,ol.response_http_code,ol.response_business_code,ol.duration,ol.ip,ol.time,u.name as user_name,d.name as department_name')

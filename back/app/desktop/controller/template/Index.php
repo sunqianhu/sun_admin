@@ -6,6 +6,7 @@ use app\desktop\controller\Base;
 use app\helper\DictionaryHelper;
 use app\model\DictionaryModel;
 use app\validate\IdValidate;
+use app\validate\PaginationValidate;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -23,6 +24,13 @@ class Index extends Base
     public function getPaginate()
     {
         $get = $this->request->get(['type' => '', 'size' => '30', 'page' => '1']);
+
+        try {
+            validate(PaginationValidate::class)->check($get);
+        } catch (ValidateException $exception) {
+            return $this->getErrorResponse($exception->getError());
+        }
+
         $query = DictionaryModel::field('id,type');
         if ($get['type'] !== '') {
             $query->where('type', 'LIKE', '%' . $get['type'] . '%');
