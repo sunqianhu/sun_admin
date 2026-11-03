@@ -24,7 +24,7 @@ class Detail extends Base
         $operationLogModel = OperationLogModel::alias('ol')
             ->field('ol.*,u.name as user_name,d.name as department_name')
             ->leftJoin('user u', 'ol.user_id = u.id')
-            ->leftJoin('department d', 'u.department_id = d.id')
+            ->leftJoin('department d', 'ol.department_id = d.id')
             ->where('ol.id', $get['id'])
             ->append(['terminal_name', 'response_business_code_name'])
             ->find();
