@@ -35,6 +35,13 @@
 
     <div class="tool-bar">
       <el-button type="primary" :icon="Plus" @click="openAdd"> 添加 </el-button>
+      <el-button
+        :loading="deleteExpiredLoading"
+        @click="deleteExpired"
+        v-permission="['session_delete']"
+      >
+        删除过期会话
+      </el-button>
     </div>
 
     <div class="list">
@@ -158,6 +165,7 @@ const total = ref(0);
 const rowId = ref(0);
 const addFlag = ref(false);
 const renewFlag = ref(false);
+const deleteExpiredLoading = ref(false);
 
 /**
  * 获取分页
@@ -239,6 +247,38 @@ const del = async (id) => {
   if (sessions.value.length === 1 && query.value.page > 1) {
     query.value.page -= 1;
   }
+  getPaginate();
+};
+
+/**
+ * 删除过期会话
+ */
+const deleteExpired = async () => {
+  await ElMessageBox.confirm(
+    "确定删除桌面端、移动端和API端的全部过期会话吗？",
+    "提示",
+    { type: "warning", draggable: true },
+  );
+  deleteExpiredLoading.value = true;
+  let response;
+  try {
+    response = await axios.post("desktop/system.session.Index/deleteExpired");
+  } finally {
+    deleteExpiredLoading.value = false;
+  }
+  if (response.code != 0) {
+    ElMessage({
+      message: response.message,
+      type: "error",
+    });
+    return;
+  }
+
+  ElMessage({
+    message: response.message,
+    type: "success",
+  });
+  query.value.page = 1;
   getPaginate();
 };
 

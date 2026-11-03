@@ -51,6 +51,16 @@ class SessionHelper
     }
 
     /**
+     * 删除过期会话
+     * @return int
+     * @throws Exception
+     */
+    public function deleteExpired()
+    {
+        return SessionModel::where('expire_time', '<', time())->delete();
+    }
+
+    /**
      * 通过用户ID删除会话
      * @param $userId
      * @param int|null $terminal

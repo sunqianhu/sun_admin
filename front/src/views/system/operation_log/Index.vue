@@ -49,12 +49,7 @@
     </div>
 
     <div class="tool-bar">
-      <el-button
-        @click="openTimeRangeDelete"
-        v-permission="['system_operation_log_delete']"
-      >
-        删除
-      </el-button>
+      <el-button @click="openTimeRangeDelete"> 删除 </el-button>
     </div>
 
     <div class="list">

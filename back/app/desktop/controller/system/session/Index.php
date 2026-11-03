@@ -70,4 +70,19 @@ class Index extends Base
 
         return $this->getSuccessResponse('删除成功');
     }
+
+    /**
+     * 删除过期会话
+     */
+    public function deleteExpired()
+    {
+        try {
+            $sessionHelper = new SessionHelper();
+            $count = $sessionHelper->deleteExpired();
+        } catch (Exception $exception) {
+            return $this->getErrorResponse($exception->getMessage());
+        }
+
+        return $this->getSuccessResponse('删除成功，共删除' . $count . '条过期会话');
+    }
 }
