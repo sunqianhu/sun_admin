@@ -22,16 +22,10 @@ class Index extends Base
      */
     public function getPaginate()
     {
-        $get = $this->request->get(['type' => '', 'key' => '', 'value' => '', 'size' => '30', 'page' => '1']);
-        $query = DictionaryModel::field('id,type,key,value,sort');
+        $get = $this->request->get(['type' => '', 'size' => '30', 'page' => '1']);
+        $query = DictionaryModel::field('id,type');
         if ($get['type'] !== '') {
             $query->where('type', 'LIKE', '%' . $get['type'] . '%');
-        }
-        if ($get['key'] !== '') {
-            $query->where('key', 'LIKE', '%' . $get['key'] . '%');
-        }
-        if ($get['value'] !== '') {
-            $query->where('value', 'LIKE', '%' . $get['value'] . '%');
         }
         $query->order([
             'type' => 'asc',

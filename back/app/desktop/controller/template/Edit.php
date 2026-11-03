@@ -34,7 +34,7 @@ class Edit extends Base
         }
         $id = $get['id'];
 
-        $dictionaryModel = DictionaryModel::field('id,type,key,value,sort')->find($id);
+        $dictionaryModel = DictionaryModel::field('id,type')->find($id);
         if (empty($dictionaryModel)) {
             return $this->getErrorResponse('没有找到记录');
         }
@@ -46,13 +46,10 @@ class Edit extends Base
     /**
      * 保存
      * @return Response
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function save()
     {
-        $post = $this->request->post(['id', 'type', 'key', 'value', 'sort']);
+        $post = $this->request->post(['id', 'type']);
 
         try {
             validate(DictionaryValidate::class)->scene('edit')->check($post);

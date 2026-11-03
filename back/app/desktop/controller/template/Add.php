@@ -17,7 +17,7 @@ class Add extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['type', 'key', 'value', 'sort']);
+        $post = $this->request->post(['type']);
 
         try {
             validate(DictionaryValidate::class)->scene('add')->check($post);

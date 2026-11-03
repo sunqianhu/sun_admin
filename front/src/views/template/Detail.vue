@@ -5,9 +5,6 @@
         <attribute label="用户ID" :md="8">
           {{ user.id }}
         </attribute>
-        <attribute label="添加时间" :md="8">
-          {{ dayjs.unix(user.add_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </attribute>
       </attribute-list>
     </card-panel>
 
@@ -19,9 +16,6 @@
       </template>
       <el-table :data="loginLogs" row-key="id" style="width: 100%">
         <el-table-column prop="ip" label="登录ip" />
-        <el-table-column label="登录时间" v-slot="{ row }">
-          {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
-        </el-table-column>
       </el-table>
     </card-panel>
   </div>
@@ -34,7 +28,6 @@ import axios from "@/helper/axios";
 import CardPanel from "@/components/CardPanel.vue";
 import AttributeList from "@/components/AttributeList.vue";
 import Attribute from "@/components/Attribute.vue";
-import dayjs from "dayjs";
 
 const route = useRoute();
 const initLoading = ref(true);
