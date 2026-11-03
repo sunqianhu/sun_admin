@@ -76,7 +76,7 @@ const userId = defineModel({
   type: Number,
   default: 0,
 });
-const selectedUser = ref({});
+const selectedUser = ref(null);
 const users = ref([]);
 const paginateLoading = ref(false);
 const total = ref(0);
