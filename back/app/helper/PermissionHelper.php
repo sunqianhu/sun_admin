@@ -63,6 +63,7 @@ class PermissionHelper
             Db::commit();
         }catch (Exception $exception){
             Db::rollback();
+            throw $exception;
         }
     }
 
