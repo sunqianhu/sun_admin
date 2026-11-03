@@ -3,6 +3,7 @@
 namespace app\helper\desktop;
 
 use app\model\desktop\MenuModel;
+use Exception;
 use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -70,5 +71,26 @@ class MenuHelper
             return true;
         }
         return false;
+    }
+
+    /**
+     * 删除
+     * @param $id
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     * @throws Exception
+     */
+    public function delete($id)
+    {
+        $menuModel = MenuModel::find($id);
+        if(empty($menuModel)){
+            throw new Exception('没有找到记录');
+        }
+        if($this->isExistMenus($id)){
+            throw new Exception('存在子菜单，不能删除');
+        }
+        $menuModel->delete();
     }
 }

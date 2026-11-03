@@ -2,15 +2,12 @@
 
 namespace app\helper;
 
-use app\helper\role\RolePermissionHelper;
 use app\model\PermissionModel;
-use app\model\RolePermissionModel;
 use Exception;
 use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
-use think\facade\Db;
 
 class PermissionHelper
 {
@@ -54,17 +51,10 @@ class PermissionHelper
         if (empty($permissionModel)) {
             throw new Exception('没有找到权限记录');
         }
-
-        Db::startTrans();
-        try{
-            $rolePermissionHelper = new RolePermissionHelper();
-            $rolePermissionHelper->deleteByPermissionId($id);
-            $permissionModel->delete();
-            Db::commit();
-        }catch (Exception $exception){
-            Db::rollback();
-            throw $exception;
+        if($this->isExistPermissions($id)){
+            throw new Exception('存在子权限不能删除');
         }
+        $permissionModel->delete();
     }
 
     /**
@@ -118,7 +108,7 @@ class PermissionHelper
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getExistPermissions($id){
+    public function isExistPermissions($id){
         $permissionModel = PermissionModel::field('id')
             ->where('permission_id', $id)
             ->limit(0,1)

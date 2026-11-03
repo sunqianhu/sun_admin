@@ -3,6 +3,7 @@
 namespace app\desktop\controller\system\desktop\menu;
 
 use app\desktop\controller\Base;
+use app\helper\desktop\MenuHelper;
 use app\model\desktop\MenuModel;
 use Exception;
 use Sunqianhu\Helper\Arr;
@@ -36,9 +37,6 @@ class Index extends Base
     /**
      * 删除
      * @return Response
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function delete(){
         $id = $this->request->post('id', 0);
@@ -46,13 +44,9 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $menuModel = MenuModel::find($id);
-        if(empty($menuModel)){
-            return $this->getErrorResponse('没有找到记录');
-        }
-
         try{
-            $menuModel->delete();
+            $menuHelper = new MenuHelper();
+            $menuHelper->delete($id);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
