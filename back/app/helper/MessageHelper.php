@@ -102,13 +102,17 @@ class MessageHelper
             'type' => 'message',
             'data' => [
                 'type'=>'message',
-                'user_ids' => $userIds,
+                'user_ids' => [],
                 'title' => $title,
                 'content' => $content,
                 'url' => $url
             ]
         ];
-        Queue::push('app\job\Message', $data, 'message');
+        //每个用户单独入队，失败时只重试当前用户
+        foreach ($userIds as $userId) {
+            $data['data']['user_ids'] = [$userId];
+            Queue::push('app\job\Message', $data, 'message');
+        }
     }
 
     /**
