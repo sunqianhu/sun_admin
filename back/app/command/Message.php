@@ -125,19 +125,6 @@ class Message extends Command
                 throw new Exception('data数据格式错误，数据：'.$data);
             }
 
-            //除了绑定都要认证
-            if($decodeData['type'] !== 'bind'){
-                try {
-                    $sessionHelper = new SessionHelper();
-                    $sessionHelper->tokenAuth(0, $connection->token);
-                    $sessionHelper->renewExpireTime($connection->sessionId, time() + $this->ttl);
-                    unset($sessionHelper);
-                } catch (Exception $exception) {
-                    $connection->close();
-                    throw new Exception($exception->getMessage());
-                }
-            }
-
             //处理
             switch ($decodeData['type']) {
                 //绑定
@@ -146,7 +133,7 @@ class Message extends Command
                     break;
                 //发送
                 case 'send':
-                    $this->send($decodeData['user_ids'], $decodeData['data']);
+                    $this->send($decodeData);
                     break;
             }
         } catch (Exception $exception) {
@@ -187,41 +174,33 @@ class Message extends Command
         if (empty($token)) {
             throw new Exception('token不能为空');
         }
+        $sessionHelper = new SessionHelper();
+        $sessionHelper->tokenAuth(0, $token);
 
-        try{
-            $sessionHelper = new SessionHelper();
-            $sessionId = $sessionHelper->tokenAuth(0, $token);
-            $userId = $sessionHelper->getUserId($sessionId);
-
-            $connection->sessionId = $sessionId;
-            $connection->userId = $userId;
-            $connection->token = $token;
-        }catch (Exception $exception){
-            throw new Exception($exception->getMessage());
-        }
-
-        unset($userId);
-        unset($sessionId);
+        $connection->sessionId = $sessionHelper->tokenAuth(0, $token);
+        $connection->userId = $sessionHelper->getUserId($connection->sessionId);
+        $connection->token = $token;
         unset($sessionHelper);
     }
 
     /**
      * 发送
-     * @param $userIds
-     * @param $data
+     * @param $decodeData
      * @return void
      * @throws Exception
      */
-    public function send($userIds, $data)
+    public function send($decodeData)
     {
-        if($data['key'] !== md5('sun_admin_999')){
+        if($decodeData['key'] !== md5('sun_admin_999')){
             throw new Exception('发送消息认证失败');
         }
+        $userIds = $decodeData['user_ids'];
         if (empty($userIds)) {
             throw new Exception('接收消息userIds不能为空');
         }
 
         //消息
+        $data = $decodeData['data'];
         $encodeData = json_encode($data);
         foreach ($this->worker->connections as $connection) {
             if (empty($connection->userId)) {
