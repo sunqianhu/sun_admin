@@ -196,7 +196,7 @@ class SessionHelper
         if (empty($sessionModel)) {
             throw new Exception('没有找到会话记录');
         }
-        if($expireTime - $sessionModel->expire_time < 60 * 2){
+        if($expireTime - $sessionModel->expire_time < 60 * 3){
             return;
         }
         $sessionModel->expire_time = $expireTime;
