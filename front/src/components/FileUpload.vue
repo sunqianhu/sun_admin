@@ -21,7 +21,7 @@
     :list-type="props.listType"
     :with-credentials="props.withCredentials"
     :crossorigin="props.crossorigin"
-    :before-upload="handleBeforeUpload"
+    :before-upload="props.beforeUpload"
     :on-success="handleSuccess"
     :on-remove="handleRemove"
     :on-change="handleChange"
@@ -145,6 +145,10 @@ const props = defineProps({
     type: Boolean,
     default: undefined,
   },
+  beforeUpload: {
+    type: Function,
+    default: undefined,
+  },
 });
 const emits = defineEmits([
   "success",
@@ -154,7 +158,6 @@ const emits = defineEmits([
   "progress",
   "error",
   "abort",
-  "beforeUpload",
 ]);
 const files = defineModel({
   type: Array,
@@ -171,18 +174,6 @@ let action = import.meta.env.VITE_API_PREFIX + "desktop/FileUpload/upload";
 if (props.action) {
   action = import.meta.env.VITE_API_PREFIX + props.action;
 }
-
-/**
- * 处理上传前
- * @param rawFile
- */
-const handleBeforeUpload = (rawFile) => {
-  let result = emits("beforeUpload", rawFile);
-  if (result === false) {
-    return false;
-  }
-  return true;
-};
 
 /**
  * 处理上传成功
