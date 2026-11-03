@@ -57,6 +57,7 @@
         layout="total,->,sizes,jumper,prev, pager, next"
         :page-sizes="[10, 30, 50, 100, 200, 300]"
         :page-size="query.size"
+        :current-page="query.page"
         :total="total"
         @size-change="changePaginationSize"
         @current-change="changePaginationCurrent"

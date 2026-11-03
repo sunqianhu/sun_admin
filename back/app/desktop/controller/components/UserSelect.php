@@ -4,7 +4,7 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\helper\UserHelper;
-use app\validate\components\SelectUserValidate;
+use app\validate\user\UserSelectValidate;
 use Exception;
 use think\exception\ValidateException;
 use think\Response;
@@ -23,7 +23,7 @@ class UserSelect extends Base
         $get = $this->request->post(['user_id' => 0]);
 
         try {
-            validate(SelectUserValidate::class)->check($get);
+            validate(UserSelectValidate::class)->check($get);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }

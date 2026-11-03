@@ -21,4 +21,16 @@ class OperationLogHelper
 
         return $operationLogModel->id;
     }
+
+    /**
+     * 按操作时间段删除日志，包含起止时间
+     * @param int $startTime
+     * @param int $endTime
+     * @return bool
+     * @throws Exception
+     */
+    public function deleteByTimeRange($startTime, $endTime)
+    {
+        return OperationLogModel::whereBetween('time', [$startTime, $endTime])->delete();
+    }
 }

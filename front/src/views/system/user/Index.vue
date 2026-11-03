@@ -113,7 +113,8 @@
         background
         layout="total,->,sizes,jumper,prev, pager, next"
         :page-sizes="[10, 30, 50, 100, 200, 300]"
-        v-model:page-size="query.size"
+        :page-size="query.size"
+        :current-page="query.page"
         :total="total"
         @size-change="changePaginationSize"
         @current-change="changePaginationCurrent"
@@ -301,10 +302,9 @@ const mobileOffline = async (id) => {
     draggable: true,
   });
 
-  const response = await axios.post(
-    "desktop/system.user.Index/mobileOffline",
-    { id: id },
-  );
+  const response = await axios.post("desktop/system.user.Index/mobileOffline", {
+    id: id,
+  });
   if (response.code != 0) {
     ElMessage({
       message: response.message,
@@ -327,10 +327,9 @@ const apiOffline = async (id) => {
     draggable: true,
   });
 
-  const response = await axios.post(
-    "desktop/system.user.Index/apiOffline",
-    { id: id },
-  );
+  const response = await axios.post("desktop/system.user.Index/apiOffline", {
+    id: id,
+  });
   if (response.code != 0) {
     ElMessage({
       message: response.message,

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\validate\components;
+namespace app\validate\user;
 
 use think\Validate;
 
-class SelectUserValidate extends Validate
+class UserSelectValidate extends Validate
 {
     protected $rule = [
         'user_id'  =>  'require|number|egt:0'

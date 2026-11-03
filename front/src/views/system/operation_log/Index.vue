@@ -48,6 +48,15 @@
       </el-form>
     </div>
 
+    <div class="tool-bar">
+      <el-button
+        @click="openTimeRangeDelete"
+        v-permission="['system_operation_log_delete']"
+      >
+        删除
+      </el-button>
+    </div>
+
     <div class="list">
       <el-table
         :data="operationLogs"
@@ -118,6 +127,7 @@
         layout="total,->,sizes,jumper,prev, pager, next"
         :page-sizes="[10, 30, 50, 100, 200, 300]"
         :page-size="query.size"
+        :current-page="query.page"
         :total="total"
         @size-change="changePaginationSize"
         @current-change="changePaginationCurrent"
@@ -125,6 +135,15 @@
     </div>
 
     <detail :id="rowId" @close="detailFlag = false" v-if="detailFlag"></detail>
+    <time-range-delete
+      @close="timeRangeDeleteFlag = false"
+      @submited="
+        query.page = 1;
+        getPaginate();
+        timeRangeDeleteFlag = false;
+      "
+      v-if="timeRangeDeleteFlag"
+    ></time-range-delete>
   </div>
 </template>
 
@@ -134,6 +153,7 @@ import dayjs from "dayjs";
 import { Search } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Detail from "./Detail.vue";
+import TimeRangeDelete from "./TimeRangeDelete.vue";
 
 const query = ref({
   response_business_code: "",
@@ -151,6 +171,7 @@ const listLoading = ref(true);
 const total = ref(0);
 const rowId = ref(0);
 const detailFlag = ref(false);
+const timeRangeDeleteFlag = ref(false);
 
 /**
  * 得到分页
@@ -216,6 +237,13 @@ const openDetail = (id) => {
   detailFlag.value = true;
 };
 
+/**
+ * 打开删除操作日志
+ */
+const openTimeRangeDelete = () => {
+  timeRangeDeleteFlag.value = true;
+};
+
 onMounted(() => {
   getPaginate();
 });
@@ -236,6 +264,9 @@ onMounted(() => {
     .el-select {
       min-width: 198px;
     }
+  }
+  .tool-bar {
+    margin-bottom: var(--margin);
   }
   .list {
     :deep(th.el-table__cell) {
