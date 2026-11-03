@@ -187,16 +187,17 @@ class SessionHelper
      * 续期
      * @param $id
      * @param int $expireTime 新的过期时间戳
+     * @param bool $limitInterval 是否限制更新间隔，小于3分钟不更新
      * @return void
      * @throws Exception
      */
-    public function renewExpireTime($id, int $expireTime)
+    public function renewExpireTime($id, int $expireTime, bool $limitInterval = false)
     {
         $sessionModel = SessionModel::find($id);
         if (empty($sessionModel)) {
             throw new Exception('没有找到会话记录');
         }
-        if($expireTime - $sessionModel->expire_time < 60 * 3){
+        if($limitInterval && $expireTime - $sessionModel->expire_time < 60 * 3){
             return;
         }
         $sessionModel->expire_time = $expireTime;

@@ -59,7 +59,7 @@ class Base extends BaseController
                 $this->request->userId = $sessionHelper->getUserId($this->request->sessionId);
                 $userDepartmentHelper = new UserDepartmentHelper();
                 $this->request->departmentId = $userDepartmentHelper->getDepartmentId($this->request->userId);
-                $sessionHelper->renewExpireTime($this->request->sessionId, time() + 60 * 60 * 24 * 7);
+                $sessionHelper->renewExpireTime($this->request->sessionId, time() + 60 * 60 * 24 * 7, true);
             } catch (Exception $exception) {
                 throw new HttpResponseException(
                     $this->getErrorResponse('身份认证失败，' . $exception->getMessage(), null, 2)
