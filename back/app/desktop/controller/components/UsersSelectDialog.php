@@ -64,9 +64,11 @@ class UsersSelectDialog extends Base
     public function getSelectedUsers()
     {
         $get = $this->request->post(['user_ids' => []]);
-        $userModels = UserModel::field('id,name')
-            ->whereIn('id', $get['user_ids'])
-            ->select();
+        $query = UserModel::field('id,name')
+            ->whereIn('id', $get['user_ids']);
+        $userDataScopeHelper = new UserDataScopeHelper();
+        $query = $userDataScopeHelper->buildQueryConstraint($this->request->userId, 'global_user_access', $query, 'department_id', 'id');
+        $userModels = $query->select();
         $users = $userModels->toArray();
         return $this->getSuccessResponse('获取成功', $users);
     }
