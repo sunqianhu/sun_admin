@@ -27,7 +27,10 @@ class TreeDepartmentHelper
         $path = $departmentPathHelper->getPath($departmentId);
 
         $query = DepartmentModel::field('id,name,department_id,type,path')
-            ->where('path', 'like', $path.'%');
+            ->where(function ($query) use ($path) {
+                $query->where('path', $path)
+                    ->whereOr('path', 'like', $path.'/%');
+            });
 
         $userDataScopeHelper = new UserDataScopeHelper();
         $query = $userDataScopeHelper->buildQueryConstraint($userId, 'global_department_access', $query, 'id', '');

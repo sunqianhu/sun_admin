@@ -35,7 +35,10 @@ class TreeDepartmentHelper
         $path = $departmentPathHelper->getPath($departmentId);
 
         return DepartmentModel::field('id')
-            ->where('path', 'like', $path.'%')
+            ->where(function ($query) use ($path) {
+                $query->where('path', $path)
+                    ->whereOr('path', 'like', $path.'/%');
+            })
             ->column('id');
     }
 
@@ -53,7 +56,10 @@ class TreeDepartmentHelper
         $path = $departmentPathHelper->getPath($departmentId);
 
         $departmentModels = DepartmentModel::field('id,name,department_id,type,path')
-            ->where('path', 'like', $path.'%')
+            ->where(function ($query) use ($path) {
+                $query->where('path', $path)
+                    ->whereOr('path', 'like', $path.'/%');
+            })
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
