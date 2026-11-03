@@ -90,7 +90,7 @@ const setPermissions = async () => {
 const setRoutes = async () => {
   const routeStore = useRouteStore();
   if (routeStore.isSet) {
-    return 0;
+    return false;
   }
 
   let childRoutes = routeCache.get();
@@ -106,12 +106,10 @@ const setRoutes = async () => {
 
   let mainRoute = staticRoutes.find((route) => route.name == "main");
   let blankRoute = staticRoutes.find((route) => route.name == "blank");
-  const componentFilePaths = import.meta.glob([
-    "@/views/*.vue",
-    "@/views/*/*.vue",
-    "@/views/*/*/*.vue",
-    "@/views/*/*/*/*.vue",
-  ]);
+  const componentFilePaths = import.meta.glob("@/views/**/*.vue");
+
+  mainRoute.children = [];
+  blankRoute.children = [];
   for (const childRoute of childRoutes) {
     if (!childRoute.component_path) {
       continue;
@@ -127,8 +125,6 @@ const setRoutes = async () => {
       mainRoute.children.push(childRoute);
     } else if (childRoute.meta.layout == "blank") {
       blankRoute.children.push(childRoute);
-    } else {
-      router.addRoute(childRoute);
     }
   }
 
@@ -147,15 +143,15 @@ const setRoutes = async () => {
   router.addRoute(mainRoute);
   router.addRoute(blankRoute);
 
-  return 1; //加载了路由
+  return true; //加载了路由
 };
 
 /**
- * 得到主布局跳转子路由
+ * 得到主布局默认跳转子路由
  * @param {*} currentRoutePath
  * @returns
  */
-const getMainRouteRedirect = (currentRoutePath) => {
+const getMainRouteDefaultRedirect = (currentRoutePath) => {
   if (currentRoutePath !== "/") {
     return null;
   }
@@ -167,7 +163,7 @@ const getMainRouteRedirect = (currentRoutePath) => {
   if (path === "") {
     return null;
   }
-  return { path: path, replace: true };
+  return { path: path, replace: true }; //跳转到指定地址，同时替换当前历史记录
 };
 
 /**
@@ -193,17 +189,16 @@ const beforeHandle = async (to, from) => {
   //权限+路由
   try {
     await setPermissions();
-    let result = await setRoutes();
-    if (result === 1) {
-      return to.fullPath;
+    if (await setRoutes()) {
+      return to.fullPath; //路由设置成功后，让vue重新执行路由流程，重新执行路由守卫。
     }
   } catch (error) {
     console.error(error);
     return getLoginRoutePath();
   }
 
-  //跳转
-  let redirect = getMainRouteRedirect(to.path);
+  //默认跳转
+  let redirect = getMainRouteDefaultRedirect(to.path);
   if (redirect) {
     return redirect;
   }
