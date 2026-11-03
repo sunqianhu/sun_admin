@@ -47,6 +47,8 @@ onMounted(() => {
   right: 0px;
   bottom: 0px;
   z-index: 3002;
+  color: #ffffff;
+  mix-blend-mode: difference;
   overflow: hidden;
   .watermark__item {
     float: left;
