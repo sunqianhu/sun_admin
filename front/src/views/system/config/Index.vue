@@ -16,7 +16,7 @@
           v-model="config.system_description"
           type="textarea"
           :rows="4"
-          :maxlength="65535"
+          :maxlength="5000"
           show-word-limit
         />
       </el-form-item>
@@ -46,6 +46,13 @@ const config = ref({});
 const configRef = ref({});
 const rules = {
   system_name: [{ required: true, message: "请输入系统名称", trigger: "blur" }],
+  system_description: [
+    {
+      max: 5000,
+      message: "系统简介不能超过5000个字符",
+      trigger: "blur",
+    },
+  ],
 };
 const initLoading = ref(false);
 const submitLoading = ref(false);
