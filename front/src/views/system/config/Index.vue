@@ -11,6 +11,15 @@
       <el-form-item label="系统名称" prop="system_name">
         <el-input v-model="config.system_name" />
       </el-form-item>
+      <el-form-item label="系统简介" prop="system_description">
+        <el-input
+          v-model="config.system_description"
+          type="textarea"
+          :rows="4"
+          :maxlength="1000"
+          show-word-limit
+        />
+      </el-form-item>
       <el-form-item label="禁止访问IP" prop="denied_ips_string">
         <el-input v-model="config.denied_ips_string" type="textarea" :rows="5" />
         <div class="text-tip">一行一个</div>

@@ -21,7 +21,8 @@ class About extends Base
         $configHelper = new ConfigHelper();
         $data = [
             'system_name' => $configHelper->getValue('system_name'),
-            'version' => config('app.version')
+            'version' => config('app.version'),
+            'system_description' => $configHelper->getValue('system_description')
         ];
 
         return $this->getSuccessResponse('获取成功', $data);

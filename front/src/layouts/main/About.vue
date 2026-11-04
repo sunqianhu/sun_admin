@@ -16,6 +16,9 @@
         <attribute label="系统版本" :span="24">
           {{ system.version }}
         </attribute>
+        <attribute label="系统简介" :span="24">
+          <div class="description">{{ system.system_description || "暂无简介" }}</div>
+        </attribute>
       </attribute-list>
     </div>
     <template #footer>
@@ -69,5 +72,9 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .about {
+  .description {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
 }
 </style>

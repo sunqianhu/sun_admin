@@ -23,7 +23,7 @@ class Index extends Base
      */
     public function init()
     {
-        $configModel = ConfigModel::field('id,system_name,denied_ips_string')->find(1);
+        $configModel = ConfigModel::field('id,system_name,system_description,denied_ips_string')->find(1);
         if(empty($configModel)){
             return $this->getErrorResponse('没有找到配置记录');
         }
@@ -37,7 +37,7 @@ class Index extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['system_name'=>'', 'denied_ips_string'=>'']);
+        $post = $this->request->post(['system_name'=>'', 'system_description'=>'', 'denied_ips_string'=>'']);
 
         $post['id'] = 1;
         try {
