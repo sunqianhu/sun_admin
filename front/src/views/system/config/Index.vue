@@ -16,7 +16,7 @@
           v-model="config.system_description"
           type="textarea"
           :rows="4"
-          :maxlength="1000"
+          :maxlength="65535"
           show-word-limit
         />
       </el-form-item>
