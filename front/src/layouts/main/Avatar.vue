@@ -16,11 +16,14 @@
           <el-dropdown-item :icon="User" @click="openDetail">
             账号信息
           </el-dropdown-item>
-          <el-dropdown-item :icon="User" @click="openAvatarEdit">
+          <el-dropdown-item :icon="Camera" @click="openAvatarEdit">
             修改头像
           </el-dropdown-item>
           <el-dropdown-item :icon="Edit" @click="openPasswordEdit">
             修改密码
+          </el-dropdown-item>
+          <el-dropdown-item :icon="Warning" @click="openAbout">
+            关于系统
           </el-dropdown-item>
           <el-dropdown-item :icon="SwitchButton" @click="logout">
             退出登录
@@ -43,13 +46,21 @@
       @submited="passwordEditFlag = false"
       v-if="passwordEditFlag"
     ></password-edit>
+    <about @close="aboutFlag = false" v-if="aboutFlag"></about>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { Edit, SwitchButton, User, ArrowDown } from "@element-plus/icons-vue";
+import {
+  Edit,
+  SwitchButton,
+  User,
+  Camera,
+  ArrowDown,
+  Warning,
+} from "@element-plus/icons-vue";
 import { usePermissionStore } from "@/stores/permission";
 import { useRouteStore } from "@/stores/route";
 import routeCache from "@/helper/route_cache";
@@ -59,11 +70,13 @@ import axios from "@/helper/axios";
 import Detail from "./user/Detail.vue";
 import AvatarEdit from "./user/AvatarEdit.vue";
 import PasswordEdit from "./user/PasswordEdit.vue";
+import About from "./About.vue";
 
 const router = useRouter();
 const detailFlag = ref(false);
 const avatarEditFlag = ref(false);
 const passwordEditFlag = ref(false);
+const aboutFlag = ref(false);
 const user = ref({});
 
 /**
@@ -97,6 +110,13 @@ const openAvatarEdit = async () => {
  */
 const openPasswordEdit = async () => {
   passwordEditFlag.value = true;
+};
+
+/**
+ * 打开关于系统
+ */
+const openAbout = () => {
+  aboutFlag.value = true;
 };
 
 /**
