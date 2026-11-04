@@ -84,4 +84,9 @@ html.dark {
   .el-empty {
     @include set-component-css-var("empty", $empty);
   }
+  .el-dialog {
+    .el-dialog__body {
+      color: var(--el-text-color-primary);
+    }
+  }
 }
