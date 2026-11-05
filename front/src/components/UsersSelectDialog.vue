@@ -128,6 +128,7 @@ const usersRef = ref(null);
 const paginateLoading = ref(false);
 const total = ref(0);
 const selectedUsers = ref([]);
+let settingTableSelected = false; //同步表格选中项时忽略选择事件
 
 /**
  * 关闭
@@ -208,6 +209,9 @@ const submitQuery = () => {
  * 选择用户列表
  */
 const selectUsers = (users) => {
+  if (settingTableSelected) {
+    return;
+  }
   selectedUsers.value = users;
 };
 
@@ -218,14 +222,17 @@ const setTableSelected = () => {
   if (!usersRef.value) {
     return;
   }
-  const selectedUserMap = new Map(
-    selectedUsers.value.map((user) => [user.id, user]),
-  );
+  const userMap = new Map(users.value.map((user) => [user.id, user]));
 
-  users.value.forEach((user) => {
-    const shouldSelect = selectedUserMap.has(user.id);
-    usersRef.value.toggleRowSelection(user, shouldSelect);
-  });
+  settingTableSelected = true;
+  try {
+    usersRef.value.clearSelection();
+    selectedUsers.value.forEach((user) => {
+      usersRef.value.toggleRowSelection(user, true);
+    });
+  } finally {
+    settingTableSelected = false;
+  }
 };
 
 /**
