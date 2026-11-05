@@ -228,7 +228,7 @@ const setTableSelected = () => {
   try {
     usersRef.value.clearSelection();
     selectedUsers.value.forEach((user) => {
-      usersRef.value.toggleRowSelection(user, true);
+      usersRef.value.toggleRowSelection(userMap.get(user.id) || user, true);
     });
   } finally {
     settingTableSelected = false;
