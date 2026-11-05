@@ -56,6 +56,26 @@ const request = (method, path, data, options = {}) => {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
+      const contentType = (response.headers.get("Content-Type") || "")
+        .split(";")[0]
+        .trim()
+        .toLowerCase();
+
+      //JSON响应
+      if (contentType === "application/json") {
+        const data = await response.json();
+        throw new Error(
+          data?.code != 0 && data?.message
+            ? data.message
+            : "服务器未返回流式数据",
+        );
+      }
+      //非流
+      if (contentType !== "text/event-stream" || !response.body) {
+        await response.body.cancel();
+        throw new Error("服务器未返回有效的流式数据");
+      }
+
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let buffer = "";
