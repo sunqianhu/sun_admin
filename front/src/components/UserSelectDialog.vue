@@ -156,7 +156,14 @@ const changePaginationCurrent = (page) => {
  * 确定选择
  */
 const confirmSelect = () => {
-  userId.value = selectedUser.value.id || 0;
+  if (!selectedUser.value) {
+    ElMessage({
+      message: "请选择用户",
+      type: "warning",
+    });
+    return;
+  }
+  userId.value = selectedUser.value.id;
   emits("confirmed", selectedUser.value);
 };
 

@@ -2,7 +2,7 @@
   <el-dialog
     :model-value="true"
     title="选择用户"
-    width="1200"
+    width="1000"
     :draggable="true"
     :align-center="true"
     append-to-body
@@ -215,7 +215,9 @@ const selectUsers = (users) => {
  * 设置表格选中项
  */
 const setTableSelected = () => {
-  if (!usersRef.value) return;
+  if (!usersRef.value) {
+    return;
+  }
   const selectedUserMap = new Map(
     selectedUsers.value.map((user) => [user.id, user]),
   );
@@ -301,16 +303,18 @@ onMounted(() => {
     .query-bar {
       margin-top: var(--margin);
       .el-select {
-        width: 198px;
+        width: 150px;
+      }
+      .el-input {
+        width: 150px;
       }
     }
     .list {
-      margin-top: var(--margin);
       :deep(th.el-table__cell) {
         background-color: var(--background-color-dark);
       }
       .table {
-        height: 350px;
+        height: 300px;
       }
     }
     .pagination {

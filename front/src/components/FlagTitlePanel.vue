@@ -43,14 +43,16 @@ const props = defineProps({
         position: relative;
         font-size: var(--font-size-lg);
         font-weight: var(--font-weight-bold);
+        display: flex;
+        align-items: center;
         &::before {
           content: "";
           display: inline-block;
           vertical-align: -2px;
-          width: 4px;
-          height: 16px;
+          width: 5px;
+          height: 20px;
           background-color: var(--color-primary);
-          margin-right: 4px;
+          margin-right: 8px;
           border-radius: 2px;
         }
       }
