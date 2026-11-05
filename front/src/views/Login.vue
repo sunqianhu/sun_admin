@@ -159,7 +159,10 @@ onMounted(() => {
   &::before,
   &::after {
     position: absolute;
-    inset: -15%;
+    left: -15%;
+    top: -15%;
+    right: -15%;
+    bottom: -15%;
     z-index: 1;
     content: "";
     pointer-events: none;
@@ -168,23 +171,24 @@ onMounted(() => {
     background:
       radial-gradient(
         ellipse at 18% 25%,
-        var(--el-color-primary-light-7),
-        transparent 45%
+        var(--el-color-primary-light-5),
+        transparent 38%
       ),
       radial-gradient(
         ellipse at 82% 75%,
-        var(--el-color-primary-light-8),
-        transparent 45%
+        var(--el-color-primary-light-7),
+        transparent 38%
       );
-    animation: login-background 10s ease-in-out infinite alternate;
+    animation: login-background 8s ease-in-out infinite alternate;
   }
   &::after {
     background-image: radial-gradient(
-      var(--border-color-dark) 1px,
+      var(--font-color-placeholder) 1px,
       transparent 1px
     );
     background-size: 28px 28px;
-    opacity: 0.7;
+    opacity: 0.4;
+    animation: login-dots 6s linear infinite;
   }
   .main {
     display: flex;
@@ -305,15 +309,22 @@ onMounted(() => {
 
 @keyframes login-background {
   from {
-    transform: translate(-2%, -2%);
+    transform: translate(-6%, -4%);
   }
   to {
-    transform: translate(2%, 2%) scale(1.2);
+    transform: translate(6%, 4%) scale(1.12);
+  }
+}
+
+@keyframes login-dots {
+  to {
+    transform: translate(28px, 28px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .login::before {
+  .login::before,
+  .login::after {
     animation: none;
   }
 }
