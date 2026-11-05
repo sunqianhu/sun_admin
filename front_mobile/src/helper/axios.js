@@ -20,7 +20,7 @@ instance.interceptors.request.use(
   function (error) {
     showToast(error.message);
     return Promise.reject(error);
-  }
+  },
 );
 
 //响应拦截器
@@ -28,8 +28,10 @@ instance.interceptors.response.use(
   function (response) {
     const data = response.data;
     if (data && data.code == 2) {
-      showToast(data.message);
-      logout();
+      if (localStorage.getItem("token")) {
+        showToast(data.message);
+        logout();
+      }
       return Promise.reject(data);
     }
 
@@ -38,7 +40,7 @@ instance.interceptors.response.use(
   function (error) {
     showToast(error.message);
     return Promise.reject(error);
-  }
+  },
 );
 
 /**

@@ -6,10 +6,9 @@
   --color-warning: #ff976a;
 
   //文字
-  --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica,
-    Segoe UI, Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB",
-    "Microsoft Yahei", sans-serif;
-  --font-family-price: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial,
+  --font-family:
+    -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Segoe UI,
+    Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei",
     sans-serif;
 
   --font-color: #323233;
@@ -53,18 +52,9 @@
   --margin-lg: 32px;
 
   //阴影
+  --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
   --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
-  --box-shadow-base: 0px 0px 16px rgba(0, 0, 0, 0.12);
   --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
-
-  //动画
-  --animation-duration: 0.3s;
-  --animation-duration-fast: 0.2s;
-
-  //组件大小
-  --component-size: 32px;
-  --component-size-sm: 24px;
-  --component-size-lg: 40px;
 }
 
 html {

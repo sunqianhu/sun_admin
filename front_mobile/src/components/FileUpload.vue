@@ -78,25 +78,34 @@ const init = () => {
  * @param file
  */
 const upload = async (file) => {
-  const formData = new FormData();
-  formData.append(props.name, file.file);
-  formData.append("module", props.module);
+  const uploadFiles = Array.isArray(file) ? file : [file];
+  const successFiles = [];
+  for (const currentFile of uploadFiles) {
+    const formData = new FormData();
+    formData.append(props.name, currentFile.file);
+    formData.append("module", props.module);
 
-  file.status = "uploading";
-  let response;
-  try {
-    response = await axios.post("mobile/FileUpload/upload", formData);
-  } finally {
-    file.status = response?.code == 0 ? "done" : "failed";
+    currentFile.status = "uploading";
+    let response;
+    try {
+      response = await axios.post("mobile/FileUpload/upload", formData);
+    } catch {
+      continue;
+    } finally {
+      currentFile.status = response?.code == 0 ? "done" : "failed";
+    }
+    if (response.code != 0) {
+      showFailToast(response.message);
+      continue;
+    }
+    updateFile(currentFile, response.data);
+    successFiles.push(currentFile);
   }
-  if (response.code != 0) {
-    showFailToast(response.message);
-    deleteFile(file);
-    return;
-  }
-  updateFile(file, response.data);
+
   emits("update:modelValue", getFiles());
-  emits("success", file);
+  for (const currentFile of successFiles) {
+    emits("success", currentFile);
+  }
 };
 
 /**
