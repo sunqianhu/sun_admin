@@ -89,6 +89,9 @@ class UserDataScopeHelper
             if($policy['type'] == 2){
                 $departmentPathHelper = new DepartmentPathHelper();
                 $path = $departmentPathHelper->getPath($departmentId);
+                if($path === ''){
+                    continue;
+                }
 
                 $departmentIds = DepartmentModel::field('id')
                     ->where('path', $path)
