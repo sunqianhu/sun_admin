@@ -174,9 +174,8 @@ class Message extends Command
         if (empty($token)) {
             throw new Exception('token不能为空');
         }
-        $sessionHelper = new SessionHelper();
-        $sessionHelper->tokenAuth(0, $token);
 
+        $sessionHelper = new SessionHelper();
         $connection->sessionId = $sessionHelper->tokenAuth(0, $token);
         $connection->userId = $sessionHelper->getUserId($connection->sessionId);
         $connection->token = $token;
