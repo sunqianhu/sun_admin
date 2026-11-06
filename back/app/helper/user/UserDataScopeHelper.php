@@ -43,7 +43,7 @@ class UserDataScopeHelper
         $userRoleHelper = new UserRoleHelper();
         $roleIds = $userRoleHelper->getRoleIds($userId);
         if(empty($roleIds)){
-            Cache::set($cacheKey, $access, $cacheTtl);
+            Cache::tag('data_scope')->set($cacheKey, $access, $cacheTtl);
             return $access;
         }
 
@@ -127,10 +127,24 @@ class UserDataScopeHelper
                 $access['all'] = true;
                 break;
             }
-        }
 
-        $access['granted'] = !empty($rules);
+            //无权限
+            if($policy['type'] == 100){
+                $rule = [
+                    'type'=>'no',
+                    'value'=>''
+                ];
+                $rules[] = $rule;
+                continue;
+            }
+        }
+        foreach($rules as $rule){
+            if($rule['type'] != 'no'){
+                $access['granted'] = true;
+            }
+        }
         $access['rules'] = $rules;
+
         Cache::tag('data_scope')->set($cacheKey, $access, $cacheTtl);
         return $access;
     }
@@ -179,6 +193,8 @@ class UserDataScopeHelper
                         }
                     } else if ($rule['type'] == 'specified_department') {
                         $ruleQuery->whereIn($departmentField, $rule['value']);
+                    } else if ($rule['type'] == 'no') {
+                        $ruleQuery->whereRaw('1 = 0');
                     }
                 });
             }
