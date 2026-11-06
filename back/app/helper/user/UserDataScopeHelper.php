@@ -180,7 +180,11 @@ class UserDataScopeHelper
             foreach($access['rules'] as $rule){
                 $linkQuery->whereOr(function ($ruleQuery) use ($rule, $departmentField, $userField) {
                     if ($rule['type'] == 'self_user') {
-                        $ruleQuery->where($userField, $rule['value']);
+                        if (empty($userField)) {
+                            $ruleQuery->whereRaw('1 = 0');
+                        } else {
+                            $ruleQuery->where($userField, $rule['value']);
+                        }
                     }
                     else if ($rule['type'] == 'self_department') {
                         $ruleQuery->where($departmentField, $rule['value']);
