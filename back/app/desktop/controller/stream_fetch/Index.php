@@ -69,6 +69,5 @@ print(f"今日专注效率: {score}%")';
             flush();
             usleep(1000 * 30);
         }
-        exit;
     }
 }
