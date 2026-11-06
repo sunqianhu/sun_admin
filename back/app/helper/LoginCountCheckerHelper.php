@@ -26,6 +26,7 @@ class LoginCountCheckerHelper
      */
     public function __construct($account)
     {
+        $account = strtolower($account);
         $this->cacheKey = 'login_fail_checker_'.md5($account);
     }
 

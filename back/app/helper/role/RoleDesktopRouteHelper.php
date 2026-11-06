@@ -24,8 +24,7 @@ class RoleDesktopRouteHelper
     {
         Db::startTrans();
         try{
-            $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $roleId)->select();
-            $roleDesktopRouteModels->delete();
+            $this->deleteByRoleId($roleId);
 
             if (!empty($routeIds)) {
                 foreach ($routeIds as $routeId) {
@@ -41,5 +40,19 @@ class RoleDesktopRouteHelper
             Db::rollback();
             throw $exception;
         }
+    }
+
+    /**
+     * 通过角色删除桌面端路由绑定
+     * @param $roleId
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function deleteByRoleId($roleId)
+    {
+        $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $roleId)->select();
+        $roleDesktopRouteModels->delete();
     }
 }

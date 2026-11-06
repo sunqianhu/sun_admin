@@ -25,8 +25,7 @@ class RolePermissionHelper
     {
         Db::startTrans();
         try {
-            $rolePermissionModels = RolePermissionModel::where('role_id', $roleId)->select();
-            $rolePermissionModels->delete();
+            $this->deleteByRoleId($roleId);
 
             $permissionIds = array_values(array_unique($permissionIds));
             if (!empty($permissionIds)) {
@@ -43,6 +42,20 @@ class RolePermissionHelper
             Db::rollback();
             throw $exception;
         }
+    }
+
+    /**
+     * 通过角色删除权限绑定
+     * @param $roleId
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function deleteByRoleId($roleId)
+    {
+        $rolePermissionModels = RolePermissionModel::where('role_id', $roleId)->select();
+        $rolePermissionModels->delete();
     }
 
     /**

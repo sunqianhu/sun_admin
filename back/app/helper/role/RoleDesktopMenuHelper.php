@@ -24,8 +24,7 @@ class RoleDesktopMenuHelper
     {
         Db::startTrans();
         try{
-            $roleDesktopMenuModels = RoleDesktopMenuModel::where('role_id', $roleId)->select();
-            $roleDesktopMenuModels->delete();
+            $this->deleteByRoleId($roleId);
 
             if (!empty($menuIds)) {
                 foreach ($menuIds as $menuId) {
@@ -41,5 +40,19 @@ class RoleDesktopMenuHelper
             Db::rollback();
             throw $exception;
         }
+    }
+
+    /**
+     * 通过角色删除桌面端菜单绑定
+     * @param $roleId
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function deleteByRoleId($roleId)
+    {
+        $roleDesktopMenuModels = RoleDesktopMenuModel::where('role_id', $roleId)->select();
+        $roleDesktopMenuModels->delete();
     }
 }

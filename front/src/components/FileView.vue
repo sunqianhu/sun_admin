@@ -33,7 +33,7 @@ const props = defineProps({
  */
 const getUrl = (file) => {
   const url = new URL(file.url, window.location.origin);
-  url.searchParams.set("file_name", encodeURIComponent(file.name));
+  url.searchParams.set("file_name", file.name);
   return url.toString();
 };
 </script>

@@ -4,11 +4,12 @@ namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
 use app\helper\RoleHelper;
+use app\helper\role\RoleDesktopMenuHelper;
+use app\helper\role\RoleDesktopRouteHelper;
+use app\helper\role\RolePermissionHelper;
 use app\helper\role\RolePolicyHelper;
+use app\helper\role\RoleUserHelper;
 use app\helper\user\UserDataScopeHelper;
-use app\model\RoleDesktopMenuModel;
-use app\model\RolePermissionModel;
-use app\model\RoleDesktopRouteModel;
 use app\model\RoleModel;
 use app\validate\PaginationValidate;
 use Exception;
@@ -60,17 +61,20 @@ class Index extends Base
             $roleHelper = new RoleHelper();
             $roleHelper->delete($id);
 
-            $rolePermissionModels = RolePermissionModel::where('role_id', $id)->select();
-            $rolePermissionModels->delete();
+            $rolePermissionHelper = new RolePermissionHelper();
+            $rolePermissionHelper->deleteByRoleId($id);
 
-            $roleDesktopMenuModels = RoleDesktopMenuModel::where('role_id', $id)->select();
-            $roleDesktopMenuModels->delete();
+            $roleDesktopMenuHelper = new RoleDesktopMenuHelper();
+            $roleDesktopMenuHelper->deleteByRoleId($id);
 
-            $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $id)->select();
-            $roleDesktopRouteModels->delete();
+            $roleDesktopRouteHelper = new RoleDesktopRouteHelper();
+            $roleDesktopRouteHelper->deleteByRoleId($id);
 
             $rolePolicyHelper = new RolePolicyHelper();
             $rolePolicyHelper->deleteByRoleId($id);
+
+            $roleUserHelper = new RoleUserHelper();
+            $roleUserHelper->deleteByRoleId($id);
 
             Db::commit();
         }catch (Exception $exception){
