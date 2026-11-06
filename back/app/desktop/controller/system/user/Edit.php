@@ -8,6 +8,7 @@ use app\model\UserRoleModel;
 use app\helper\UserHelper;
 use app\validate\UserValidate;
 use Exception;
+use Sunqianhu\Helper\IdsValidator;
 use think\db\Query;
 use think\exception\ValidateException;
 use think\facade\Db;
@@ -48,8 +49,12 @@ class Edit extends Base
 
         try {
             validate(UserValidate::class)->scene('edit')->check($post);
+            $idsValidator = new IdsValidator();
+            $idsValidator->check('角色', $post['role_ids']);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
+        } catch (Exception $exception) {
+            return $this->getErrorResponse($exception->getMessage());
         }
 
         Db::startTrans();
