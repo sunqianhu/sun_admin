@@ -41,7 +41,7 @@ const drawChart = () => {
  * 重绘
  */
 const resizeChart = () => {
-  chart.resize();
+  chart?.resize();
 };
 
 /**

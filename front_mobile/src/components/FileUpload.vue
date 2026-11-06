@@ -159,6 +159,9 @@ const getFiles = () => {
 watch(
   () => props.modelValue,
   (newModelValue) => {
+    if (files.value.some((file) => file.status === "uploading")) {
+      return;
+    }
     init();
   },
   {
