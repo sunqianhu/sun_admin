@@ -3,11 +3,13 @@
 namespace app\desktop\controller\system\data_scope\policy;
 
 use app\desktop\controller\Base;
+use app\helper\data_scope\PolicyDepartmentHelper;
+use app\helper\data_scope\PolicyHelper;
+use app\helper\role\RolePolicyHelper;
+use app\helper\user\UserDataScopeHelper;
 use app\model\data_scope\PolicyModel;
 use Exception;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
+use think\facade\Db;
 use think\Response;
 
 class Index extends Base
@@ -33,9 +35,6 @@ class Index extends Base
     /**
      * 删除
      * @return Response
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function delete(){
         $id = $this->request->post('id', 0);
@@ -43,16 +42,25 @@ class Index extends Base
             return $this->getErrorResponse('id参数错误');
         }
 
-        $policyModel = PolicyModel::find($id);
-        if(empty($policyModel)){
-            return $this->getErrorResponse('没有找到记录');
-        }
-
+        Db::startTrans();
         try{
-            $policyModel->delete();
+            $policyHelper = new PolicyHelper();
+            $policyHelper->delete($id);
+
+            $rolePolicyHelper = new RolePolicyHelper();
+            $rolePolicyHelper->deleteByPolicyId($id);
+
+            $policyDepartmentHelper = new PolicyDepartmentHelper();
+            $policyDepartmentHelper->deleteByPolicyId($id);
+
+            Db::commit();
         }catch (Exception $exception){
+            Db::rollback();
             return $this->getErrorResponse($exception->getMessage());
         }
+
+        $userDataScopeHelper = new UserDataScopeHelper();
+        $userDataScopeHelper->clearCache();
 
         return $this->getSuccessResponse('删除成功');
     }

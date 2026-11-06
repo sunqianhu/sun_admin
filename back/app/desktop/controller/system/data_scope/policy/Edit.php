@@ -3,7 +3,9 @@
 namespace app\desktop\controller\system\data_scope\policy;
 
 use app\desktop\controller\Base;
-use app\model\data_scope\PolicyDepartmentModel;
+use app\helper\data_scope\PolicyDepartmentHelper;
+use app\helper\data_scope\PolicyHelper;
+use app\helper\user\UserDataScopeHelper;
 use app\model\data_scope\PolicyModel;
 use app\validate\data_scope\PolicyValidate;
 use app\validate\IdValidate;
@@ -67,30 +69,31 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        $policyModel = PolicyModel::find($post['id']);
-        if(empty($policyModel)){
-            return $this->getErrorResponse('没有找到记录');
-        }
-
+        $id = $post['id'];
         Db::startTrans();
         try{
-            $policyModel->save($post);
-            $id = $policyModel->id;
+            $data = $post;
+            unset($data['department_ids']);
+            $policyHelper = new PolicyHelper();
+            $policyHelper->edit($id, $data);
 
-            PolicyDepartmentModel::where('policy_id', $id)->select()->delete();
+            $policyDepartmentHelper = new PolicyDepartmentHelper();
+            $policyDepartmentHelper->deleteByPolicyId($id);
             foreach($post['department_ids'] as $departmentId){
                 $data = [
                     'policy_id'=>$id,
                     'department_id'=>$departmentId
                 ];
-                $policyDepartmentModel = new PolicyDepartmentModel();
-                $policyDepartmentModel->save($data);
+                $policyDepartmentHelper->add($data);
             }
             Db::commit();
         } catch (Exception $exception) {
             Db::rollback();
             return $this->getErrorResponse($exception->getMessage());
         }
+
+        $userDataScopeHelper = new UserDataScopeHelper();
+        $userDataScopeHelper->clearCache();
 
         return $this->getSuccessResponse('修改成功');
     }

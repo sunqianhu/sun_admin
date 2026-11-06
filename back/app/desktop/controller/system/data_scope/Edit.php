@@ -3,6 +3,8 @@
 namespace app\desktop\controller\system\data_scope;
 
 use app\desktop\controller\Base;
+use app\helper\DataScopeHelper;
+use app\helper\user\UserDataScopeHelper;
 use app\model\DataScopeModel;
 use app\validate\DataScopeValidate;
 use app\validate\IdValidate;
@@ -54,16 +56,15 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $dataScopeModel = DataScopeModel::find($post['id']);
-        if(empty($dataScopeModel)){
-            return $this->getErrorResponse('没有找到记录');
-        }
-
         try{
-            $dataScopeModel->save($post);
+            $dataScopeHelper = new DataScopeHelper();
+            $dataScopeHelper->edit($post['id'], $post);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
+
+        $userDataScopeHelper = new UserDataScopeHelper();
+        $userDataScopeHelper->clearCache();
 
         return $this->getSuccessResponse('修改成功');
     }

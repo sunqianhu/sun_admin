@@ -3,10 +3,8 @@
 namespace app\desktop\controller\system\data_scope\policy;
 
 use app\desktop\controller\Base;
-use app\model\DataScopeModel;
-use app\model\DepartmentModel;
-use app\model\data_scope\PolicyDepartmentModel;
-use app\model\data_scope\PolicyModel;
+use app\helper\data_scope\PolicyDepartmentHelper;
+use app\helper\data_scope\PolicyHelper;
 use app\validate\data_scope\PolicyValidate;
 use Exception;
 use Sunqianhu\Helper\IdsValidator;
@@ -38,17 +36,16 @@ class Add extends Base
         try{
             $data = $post;
             unset($data['department_ids']);
-            $policyModel = new PolicyModel();
-            $policyModel->save($data);
-            $id = $policyModel->id;
+            $policyHelper = new PolicyHelper();
+            $id = $policyHelper->add($data);
 
+            $policyDepartmentHelper = new PolicyDepartmentHelper();
             foreach($post['department_ids'] as $departmentId){
                 $data = [
                     'policy_id'=>$id,
                     'department_id'=>$departmentId
                 ];
-                $policyDepartmentModel = new PolicyDepartmentModel();
-                $policyDepartmentModel->save($data);
+                $policyDepartmentHelper->add($data);
             }
             Db::commit();
         }catch (Exception $exception){
