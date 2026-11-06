@@ -12,6 +12,19 @@ use think\db\exception\ModelNotFoundException;
 class DataScopeHelper
 {
     /**
+     * 添加数据权限
+     * @param array $data
+     * @return int
+     * @throws Exception
+     */
+    public function add($data)
+    {
+        $dataScopeModel = new DataScopeModel();
+        $dataScopeModel->save($data);
+        return $dataScopeModel->id;
+    }
+
+    /**
      * 得到所有数据权限及策略
      * @return array
      * @throws DataNotFoundException

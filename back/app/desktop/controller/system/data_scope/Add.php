@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\data_scope;
 
 use app\desktop\controller\Base;
-use app\model\DataScopeModel;
+use app\helper\DataScopeHelper;
 use app\validate\DataScopeValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -24,8 +24,8 @@ class Add extends Base
         }
 
         try{
-            $dataScopeModel = new DataScopeModel();
-            $dataScopeModel->save($post);
+            $dataScopeHelper = new DataScopeHelper();
+            $dataScopeHelper->add($post);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }
