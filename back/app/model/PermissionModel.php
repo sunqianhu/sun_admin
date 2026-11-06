@@ -21,9 +21,6 @@ class PermissionModel extends BaseModel
         }
 
         $apis = preg_split('/\r\n|\r|\n/', $data['apis_string'] ?? '');
-        $apis = array_map(function ($api) {
-            return ltrim(trim($api), '/');
-        }, $apis);
         $apis = array_filter($apis, function($value) {
             return $value !== '';
         });

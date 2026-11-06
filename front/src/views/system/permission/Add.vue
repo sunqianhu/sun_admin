@@ -33,9 +33,7 @@
         </el-form-item>
         <el-form-item label="接口地址" prop="apis_string">
           <el-input v-model="permission.apis_string" type="textarea" rows="3" />
-          <div class="text-tip">
-            支持桌面端、移动端和API接口，一行一个，格式：应用/控制器/方法
-          </div>
+          <div class="text-tip">一行一个，格式：/应用/控制器/方法</div>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="permission.sort" type="number" />
