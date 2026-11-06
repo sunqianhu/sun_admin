@@ -51,7 +51,7 @@ class PermissionHelper
         if (empty($permissionModel)) {
             throw new Exception('没有找到权限记录');
         }
-        if($this->isExistPermissions($id)){
+        if($this->hasChildrenPermissions($id)){
             throw new Exception('存在子权限不能删除');
         }
         $permissionModel->delete();
@@ -108,7 +108,7 @@ class PermissionHelper
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function isExistPermissions($id){
+    public function hasChildrenPermissions($id){
         $permissionModel = PermissionModel::field('id')
             ->where('permission_id', $id)
             ->limit(0,1)
@@ -118,4 +118,6 @@ class PermissionHelper
         }
         return false;
     }
+
+
 }

@@ -11,6 +11,7 @@ use think\Response;
 
 class FileUpload extends Base
 {
+    public bool $isApiAuth = false;
     private $allowModules = ['rich_editor'];
 
     /**

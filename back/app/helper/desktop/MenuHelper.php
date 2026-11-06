@@ -62,7 +62,7 @@ class MenuHelper
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function isExistMenus($id){
+    public function hasChildrenMenus($id){
         $menuModel = MenuModel::field('id')
             ->where('menu_id', $id)
             ->limit(0,1)
@@ -88,7 +88,7 @@ class MenuHelper
         if(empty($menuModel)){
             throw new Exception('没有找到记录');
         }
-        if($this->isExistMenus($id)){
+        if($this->hasChildrenMenus($id)){
             throw new Exception('存在子菜单，不能删除');
         }
         $menuModel->delete();
