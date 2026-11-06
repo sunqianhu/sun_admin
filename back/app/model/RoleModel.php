@@ -3,6 +3,7 @@ namespace app\model;
 
 use app\model\desktop\MenuModel as DesktopMenuModel;
 use app\model\desktop\RouteModel as DesktopRouteModel;
+use app\model\data_scope\PolicyModel;
 use think\model\relation\BelongsToMany;
 
 class RoleModel extends BaseModel
@@ -16,6 +17,15 @@ class RoleModel extends BaseModel
     public function permissions()
     {
         return $this->belongsToMany(PermissionModel::class, 'role_permission', 'permission_id', 'role_id');
+    }
+
+    /**
+     * 数据权限策略
+     * @return BelongsToMany
+     */
+    public function policies()
+    {
+        return $this->belongsToMany(PolicyModel::class, 'role_policy', 'policy_id', 'role_id');
     }
 
     /**
@@ -49,6 +59,17 @@ class RoleModel extends BaseModel
         $permissions = $this->permissions->toArray();
         $ids = array_column($permissions, 'id');
         return array_unique($ids);
+    }
+
+    /**
+     * 得到策略ID列表
+     * @param $value
+     * @param $data
+     * @return array
+     */
+    public function getPolicyIdsAttr($value, $data)
+    {
+        return array_values(array_unique(array_column($this->policies->toArray(), 'id')));
     }
 
     /**

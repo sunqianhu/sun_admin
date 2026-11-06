@@ -50,9 +50,9 @@ class UserDataScopeHelper
         //策略
         $policies = PolicyModel::alias('p')
             ->field('p.id,p.data_scope_id,p.name,p.type')
-            ->join('role_data_scope_policy rdsp', 'rdsp.policy_id = p.id')
-            ->join('data_scope ds', 'ds.id = rdsp.data_scope_id')
-            ->whereIn('rdsp.role_id', $roleIds)
+            ->join('role_policy rp', 'rp.policy_id = p.id')
+            ->join('data_scope ds', 'ds.id = p.data_scope_id')
+            ->whereIn('rp.role_id', $roleIds)
             ->where('ds.key', $dataScopeKey)
             ->group('p.id')
             ->select()
