@@ -20,7 +20,7 @@ class RoleDesktopMenuHelper
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function setRelation($roleId, $menuIds)
+    public function updateRelateByMenuIds($roleId, $menuIds)
     {
         Db::startTrans();
         try{

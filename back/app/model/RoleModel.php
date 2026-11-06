@@ -69,7 +69,8 @@ class RoleModel extends BaseModel
      */
     public function getPolicyIdsAttr($value, $data)
     {
-        return array_values(array_unique(array_column($this->policies->toArray(), 'id')));
+        $policies = $this->policies->toArray();
+        return array_column($policies, 'id');
     }
 
     /**

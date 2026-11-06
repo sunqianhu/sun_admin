@@ -26,25 +26,21 @@ class RolePolicyHelper
     }
 
     /**
-     * 设置角色与策略的关系，空数组表示清空授权
+     * 通过策略id列表添加
      * @param $roleId
      * @param array $policyIds
      * @return void
      * @throws Exception
      */
-    public function setRelation($roleId, $policyIds)
+    public function updateRelateByPolicyIds($roleId, $policyIds)
     {
         Db::startTrans();
         try {
             $this->deleteByRoleId($roleId);
             foreach ($policyIds as $policyId) {
-                $policyModel = PolicyModel::find($policyId);
-                if (empty($policyModel)) {
-                    throw new Exception('没有找到策略记录');
-                }
                 $this->add([
                     'role_id' => $roleId,
-                    'policy_id' => $policyModel->id
+                    'policy_id' => $policyId
                 ]);
             }
 

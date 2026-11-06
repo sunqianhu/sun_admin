@@ -20,7 +20,7 @@ class RoleDesktopRouteHelper
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function setRelation($roleId, $routeIds)
+    public function updateRelateByRouteIds($roleId, $routeIds)
     {
         Db::startTrans();
         try{

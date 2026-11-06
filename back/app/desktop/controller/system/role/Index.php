@@ -3,7 +3,9 @@
 namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
-use app\model\RoleDataScopePolicyModel;
+use app\helper\RoleHelper;
+use app\helper\role\RolePolicyHelper;
+use app\helper\user\UserDataScopeHelper;
 use app\model\RoleDesktopMenuModel;
 use app\model\RolePermissionModel;
 use app\model\RoleDesktopRouteModel;
@@ -55,11 +57,8 @@ class Index extends Base
 
         Db::startTrans();
         try{
-            $roleModel = RoleModel::find($id);
-            if(empty($roleModel)){
-                throw new Exception('没有找到角色记录');
-            }
-            $roleModel->delete($id);
+            $roleHelper = new RoleHelper();
+            $roleHelper->delete($id);
 
             $rolePermissionModels = RolePermissionModel::where('role_id', $id)->select();
             $rolePermissionModels->delete();
@@ -70,14 +69,17 @@ class Index extends Base
             $roleDesktopRouteModels = RoleDesktopRouteModel::where('role_id', $id)->select();
             $roleDesktopRouteModels->delete();
 
-            $roleDataScopePolicyModels = RoleDataScopePolicyModel::where('role_id', $id)->select();
-            $roleDataScopePolicyModels->delete();
+            $rolePolicyHelper = new RolePolicyHelper();
+            $rolePolicyHelper->deleteByRoleId($id);
 
             Db::commit();
         }catch (Exception $exception){
             Db::rollback();
             return $this->getErrorResponse($exception->getMessage());
         }
+
+        $userDataScopeHelper = new UserDataScopeHelper();
+        $userDataScopeHelper->clearCache();
 
         return $this->getSuccessResponse('删除成功');
     }

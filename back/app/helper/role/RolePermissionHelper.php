@@ -21,7 +21,7 @@ class RolePermissionHelper
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function setRelation($roleId, $permissionIds)
+    public function updateRelateByPermissionIds($roleId, $permissionIds)
     {
         Db::startTrans();
         try {

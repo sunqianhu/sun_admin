@@ -2,7 +2,7 @@
   <el-dialog
     :model-value="true"
     title="修改角色"
-    width="700"
+    width="600"
     :draggable="true"
     align-center
     class="edit"
@@ -20,40 +20,77 @@
           <el-input v-model="role.name" />
         </el-form-item>
         <el-form-item label="功能权限" prop="permission_ids">
-          <el-tree
+          <el-tree-select
+            v-model="role.permission_ids"
             :data="treePermission"
             :props="{ children: 'children', label: 'name' }"
             node-key="id"
+            multiple
             show-checkbox
+            check-on-click-node
+            collapse-tags
+            collapse-tags-tooltip
+            filterable
+            clearable
             ref="treePermissionRef"
-            empty-text="无权限"
-            :default-checked-keys="treePermissionDefaultCheckKeys"
-            @check="checkTreePermission"
+            placeholder="请选择"
           />
         </el-form-item>
         <el-form-item label="桌面端菜单" prop="desktop_menu_ids">
-          <el-tree
+          <el-tree-select
+            v-model="role.desktop_menu_ids"
             :data="desktopTreeMenu"
             :props="{ children: 'children', label: 'name' }"
             node-key="id"
+            multiple
             show-checkbox
+            check-on-click-node
+            collapse-tags
+            collapse-tags-tooltip
+            filterable
+            clearable
             ref="desktopTreeMenuRef"
-            empty-text="无菜单"
-            :default-checked-keys="desktopTreeMenuDefaultCheckKeys"
-            @check="checkDesktopTreeMenu"
+            placeholder="请选择"
           />
         </el-form-item>
         <el-form-item label="桌面端路由" prop="desktop_route_ids">
-          <el-tree
-            :data="desktopRoutes"
-            :props="{ children: 'children', label: 'name' }"
-            node-key="id"
-            show-checkbox
-            ref="desktopRouteRef"
-            empty-text="无路由"
-            :default-checked-keys="desktopRouteDefaultCheckKeys"
-            @check="checkDesktopRoute"
-          />
+          <el-select
+            v-model="role.desktop_route_ids"
+            multiple
+            collapse-tags
+            collapse-tags-tooltip
+            filterable
+            clearable
+            placeholder="请选择"
+          >
+            <el-option
+              v-for="route in desktopRoutes"
+              :key="route.id"
+              :label="route.name"
+              :value="route.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-divider content-position="left" v-if="dataScopes.length">
+          数据权限
+        </el-divider>
+        <el-form-item
+          v-for="(dataScope, index) in dataScopes"
+          :key="dataScope.id"
+          :label="dataScope.name"
+        >
+          <el-select
+            v-model="role.policy_ids[index]"
+            placeholder="请选择"
+            clearable
+          >
+            <el-option
+              v-for="policy in dataScope.policies"
+              :key="policy.id"
+              :label="policy.name"
+              :value="policy.id"
+            />
+          </el-select>
         </el-form-item>
       </el-form>
     </el-scrollbar>
@@ -67,13 +104,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
 const props = defineProps(["id"]);
 const emits = defineEmits(["close", "submited"]);
 const role = ref({
   permission_ids: [],
+  policy_ids: [],
   desktop_menu_ids: [],
   desktop_route_ids: [],
 });
@@ -85,14 +123,10 @@ const initLoading = ref(true);
 const submitLoading = ref(false);
 const treePermission = ref([]);
 const treePermissionRef = ref(null);
+const dataScopes = ref([]);
 const desktopTreeMenu = ref([]);
 const desktopTreeMenuRef = ref(null);
 const desktopRoutes = ref([]);
-const desktopRouteRef = ref([]);
-
-const treePermissionDefaultCheckKeys = ref([]);
-const desktopTreeMenuDefaultCheckKeys = ref([]);
-const desktopRouteDefaultCheckKeys = ref([]);
 
 /**
  * 初始化
@@ -116,19 +150,27 @@ const init = async () => {
   }
 
   treePermission.value = response.data.tree_permission;
+  dataScopes.value = response.data.data_scopes;
   desktopTreeMenu.value = response.data.desktop_tree_menu;
   desktopRoutes.value = response.data.desktop_routes;
-  await nextTick();
-
   role.value = response.data.role;
-  treePermissionDefaultCheckKeys.value = getTreePermissionDefaultCheckKeys(
-    response.data.role.permission_ids,
+
+  role.value.permission_ids = getLeafIds(
+    treePermission.value,
+    role.value.permission_ids,
   );
-  desktopTreeMenuDefaultCheckKeys.value = getDesktopTreeMenuDefaultCheckKeys(
-    response.data.role.desktop_menu_ids,
-  );
-  desktopRouteDefaultCheckKeys.value = getDesktopRouteDefaultCheckKeys(
-    response.data.role.desktop_route_ids,
+
+  const policyIds = role.value.policy_ids;
+  role.value.policy_ids = dataScopes.value.map((dataScope) => {
+    const selectedPolicy = dataScope.policies.find((policy) => {
+      return policyIds.includes(policy.id);
+    });
+    return selectedPolicy?.id;
+  });
+
+  role.value.desktop_menu_ids = getLeafIds(
+    desktopTreeMenu.value,
+    role.value.desktop_menu_ids,
   );
 };
 
@@ -140,90 +182,18 @@ const close = () => {
 };
 
 /**
- * 得到权限默认选中的key(排除父节点)
- * @param {array} permissionIds
+ * 回显时仅绑定叶子节点，避免父节点导致未授权的子节点被选中
  */
-const getTreePermissionDefaultCheckKeys = (permissionIds) => {
-  let finalPermissionIds = [];
-  for (let i in permissionIds) {
-    let permissionId = permissionIds[i];
-    let node = treePermissionRef.value.getNode(permissionId);
-    if (!node) {
-      continue;
-    }
-    if (!node.childNodes || !node.childNodes.length) {
-      finalPermissionIds.push(permissionId);
+const getLeafIds = (nodes, ids) => {
+  const leafIds = [];
+  for (const node of nodes) {
+    if (node.children && node.children.length) {
+      leafIds.push(...getLeafIds(node.children, ids));
+    } else if (ids.includes(node.id)) {
+      leafIds.push(node.id);
     }
   }
-  return finalPermissionIds;
-};
-
-/**
- * 选择权限
- */
-const checkTreePermission = () => {
-  const allKeys = treePermissionRef.value.getCheckedKeys(); //全选中
-  const halfKeys = treePermissionRef.value.getHalfCheckedKeys(); //半选中
-  const keys = [...allKeys, ...halfKeys];
-  role.value.permission_ids = keys;
-};
-
-/**
- * 得到桌面端菜单默认选中的key(排除父节点)
- * @param {array} desktopMenuIds
- */
-const getDesktopTreeMenuDefaultCheckKeys = (desktopMenuIds) => {
-  let finalMenuIds = [];
-  for (let i in desktopMenuIds) {
-    let desktopMenuId = desktopMenuIds[i];
-    let node = desktopTreeMenuRef.value.getNode(desktopMenuId);
-    if (!node) {
-      continue;
-    }
-    if (!node.childNodes || !node.childNodes.length) {
-      finalMenuIds.push(desktopMenuId);
-    }
-  }
-  return finalMenuIds;
-};
-
-/**
- * 选择桌面端菜单
- */
-const checkDesktopTreeMenu = () => {
-  const allKeys = desktopTreeMenuRef.value.getCheckedKeys(); //全选中
-  const halfKeys = desktopTreeMenuRef.value.getHalfCheckedKeys(); //半选中
-  const keys = [...allKeys, ...halfKeys];
-  role.value.desktop_menu_ids = keys;
-};
-
-/**
- * 得到桌面端路由默认选中的key(排除父节点)
- * @param {array} desktopRouteIds
- */
-const getDesktopRouteDefaultCheckKeys = (desktopRouteIds) => {
-  let finalRouteIds = [];
-  for (let i in desktopRouteIds) {
-    let desktopRouteId = desktopRouteIds[i];
-    let node = desktopRouteRef.value.getNode(desktopRouteId);
-    if (!node) {
-      continue;
-    }
-    if (!node.childNodes || !node.childNodes.length) {
-      finalRouteIds.push(desktopRouteId);
-    }
-  }
-  return finalRouteIds;
-};
-
-/**
- * 选择桌面端路由
- */
-const checkDesktopRoute = () => {
-  const allKeys = desktopRouteRef.value.getCheckedKeys(); //全选中
-  const halfKeys = desktopRouteRef.value.getHalfCheckedKeys(); //半选中
-  const keys = [...allKeys, ...halfKeys];
-  role.value.desktop_route_ids = keys;
+  return leafIds;
 };
 
 /**
@@ -231,10 +201,24 @@ const checkDesktopRoute = () => {
  */
 const submitForm = async () => {
   await roleRef.value.validate();
+
+  //提交时包含父节点，保证权限和菜单层级完整
+  const data = {
+    ...role.value,
+    policy_ids: role.value.policy_ids.filter(Boolean),
+    permission_ids: [
+      ...treePermissionRef.value.getCheckedKeys(),
+      ...treePermissionRef.value.getHalfCheckedKeys(),
+    ],
+    desktop_menu_ids: [
+      ...desktopTreeMenuRef.value.getCheckedKeys(),
+      ...desktopTreeMenuRef.value.getHalfCheckedKeys(),
+    ],
+  };
   submitLoading.value = true;
   let response;
   try {
-    response = await axios.post("desktop/system.role.Edit/save", role.value);
+    response = await axios.post("desktop/system.role.Edit/save", data);
   } finally {
     submitLoading.value = false;
   }

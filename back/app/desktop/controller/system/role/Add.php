@@ -3,13 +3,15 @@
 namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
-use app\model\RoleModel;
+use app\helper\DataScopeHelper;
+use app\helper\RoleHelper;
 use app\helper\desktop\MenuHelper as DesktopMenuHelper;
 use app\helper\PermissionHelper;
 use app\helper\desktop\RouteHelper as DesktopRouteHelper;
 use app\helper\role\RoleDesktopMenuHelper;
 use app\helper\role\RolePermissionHelper;
 use app\helper\role\RoleDesktopRouteHelper;
+use app\helper\role\RolePolicyHelper;
 use app\validate\RoleValidate;
 use Exception;
 use Sunqianhu\Helper\IdsValidator;
@@ -32,10 +34,14 @@ class Add extends Base
         $desktopRouteHelper = new DesktopRouteHelper();
         $desktopRoutes = $desktopRouteHelper->getRoutes();
 
+        $dataScopeHelper = new DataScopeHelper();
+        $dataScopes = $dataScopeHelper->getDataScopes();
+
         $data = [
             'tree_permission' => $treePermission,
             'desktop_tree_menu' => $desktopTreeMenu,
-            'desktop_routes' => $desktopRoutes
+            'desktop_routes' => $desktopRoutes,
+            'data_scopes' => $dataScopes
         ];
         return $this->getSuccessResponse('获取成功', $data);
     }
@@ -45,7 +51,7 @@ class Add extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['name', 'permission_ids' => [], 'desktop_menu_ids' => [], 'desktop_route_ids' => []]);
+        $post = $this->request->post(['name', 'permission_ids' => [], 'policy_ids' => [], 'desktop_menu_ids' => [], 'desktop_route_ids' => []]);
 
         try {
             validate(RoleValidate::class)->scene('add')->check($post);
@@ -55,7 +61,8 @@ class Add extends Base
 
         try {
             $idsValidator = new IdsValidator();
-            $idsValidator->check('权限', $post['permission_ids']);
+            $idsValidator->check('功能权限', $post['permission_ids']);
+            $idsValidator->check('数据权限', $post['policy_ids']);
             $idsValidator->check('桌面端菜单', $post['desktop_menu_ids']);
             $idsValidator->check('桌面端路由', $post['desktop_route_ids']);
         } catch (Exception $exception) {
@@ -64,18 +71,20 @@ class Add extends Base
 
         Db::startTrans();
         try {
-            $roleModel = new RoleModel();
-            $roleModel->save(['name' => $post['name']]);
-            $id = $roleModel->id;
+            $roleHelper = new RoleHelper();
+            $id = $roleHelper->add(['name' => $post['name']]);
 
             $rolePermissionHelper = new RolePermissionHelper();
-            $rolePermissionHelper->setRelation($id, $post['permission_ids']);
+            $rolePermissionHelper->updateRelateByPermissionIds($id, $post['permission_ids']);
 
             $roleDesktopMenuHelper = new RoleDesktopMenuHelper();
-            $roleDesktopMenuHelper->setRelation($id, $post['desktop_menu_ids']);
+            $roleDesktopMenuHelper->updateRelateByMenuIds($id, $post['desktop_menu_ids']);
 
             $roleDesktopRouteHelper = new RoleDesktopRouteHelper();
-            $roleDesktopRouteHelper->setRelation($id, $post['desktop_route_ids']);
+            $roleDesktopRouteHelper->updateRelateByRouteIds($id, $post['desktop_route_ids']);
+
+            $rolePolicyHelper = new RolePolicyHelper();
+            $rolePolicyHelper->updateRelateByPolicyIds($id, $post['policy_ids']);
 
             Db::commit();
         } catch (Exception $exception) {

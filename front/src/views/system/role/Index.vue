@@ -28,12 +28,9 @@
           v-slot="{ row }"
           label="操作"
           fixed="right"
-          width="250"
+          width="160"
         >
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
-          <el-button size="small" @click="openDataScopeEdit(row.id)">
-            修改数据权限
-          </el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
             <template #reference>
               <el-button size="small">删除</el-button>
@@ -73,25 +70,15 @@
       :id="rowId"
       v-if="editFlag"
     ></edit>
-    <data-scope-edit
-      @close="dataScopeEditFlag = false"
-      @submited="
-        getPaginate();
-        dataScopeEditFlag = false;
-      "
-      :role-id="rowId"
-      v-if="dataScopeEditFlag"
-    ></data-scope-edit>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Search, Plus, ArrowDown } from "@element-plus/icons-vue";
+import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
-import DataScopeEdit from "./DataScopeEdit.vue";
 
 const rowId = ref(0);
 const query = ref({
@@ -103,7 +90,6 @@ const listLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
-const dataScopeEditFlag = ref(false);
 
 /**
  * 得到分页
@@ -150,15 +136,6 @@ const openAdd = () => {
  */
 const openEdit = (id) => {
   editFlag.value = true;
-  rowId.value = id;
-};
-
-/**
- * 打开数据权限修改
- * @param id
- */
-const openDataScopeEdit = (id) => {
-  dataScopeEditFlag.value = true;
   rowId.value = id;
 };
 
