@@ -55,7 +55,7 @@
     <div class="list">
       <el-table
         :data="operationLogs"
-        v-loading="listLoading"
+        v-loading="paginateLoading"
         row-key="id"
         table-layout="auto"
         class="table"
@@ -162,7 +162,7 @@ const query = ref({
   page: 1,
 });
 const operationLogs = ref([]);
-const listLoading = ref(true);
+const paginateLoading = ref(true);
 const total = ref(0);
 const rowId = ref(0);
 const detailFlag = ref(false);
@@ -172,7 +172,7 @@ const timeRangeDeleteFlag = ref(false);
  * 得到分页
  */
 const getPaginate = async () => {
-  listLoading.value = true;
+  paginateLoading.value = true;
   let response;
   try {
     response = await axios.get(
@@ -182,7 +182,7 @@ const getPaginate = async () => {
       },
     );
   } finally {
-    listLoading.value = false;
+    paginateLoading.value = false;
   }
   if (response.code != 0) {
     ElMessage({

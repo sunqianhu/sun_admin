@@ -24,7 +24,7 @@
     <div class="list">
       <el-table
         :data="dataScopes"
-        v-loading="listLoading"
+        v-loading="paginateLoading"
         row-key="id"
         class="table"
       >
@@ -102,7 +102,7 @@ const query = ref({
   page: 1,
 });
 const dataScopes = ref([]);
-const listLoading = ref(true);
+const paginateLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
@@ -112,14 +112,14 @@ const policyIndexFlag = ref(false);
  * 得到分页
  */
 const getPaginate = async () => {
-  listLoading.value = true;
+  paginateLoading.value = true;
   let response;
   try {
     response = await axios.get("desktop/system.data_scope.Index/getPaginate", {
       params: query.value,
     });
   } finally {
-    listLoading.value = false;
+    paginateLoading.value = false;
   }
   if (response.code != 0) {
     ElMessage({

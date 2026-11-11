@@ -25,7 +25,7 @@
     <div class="list">
       <el-table
         :data="dictionarys"
-        v-loading="listLoading"
+        v-loading="paginateLoading"
         row-key="id"
         table-layout="auto"
         class="table"
@@ -98,7 +98,7 @@ const query = ref({
   page: 1,
 });
 const dictionarys = ref([]);
-const listLoading = ref(true);
+const paginateLoading = ref(true);
 const addFlag = ref(false);
 const editFlag = ref(false);
 const total = ref(0);
@@ -107,14 +107,14 @@ const total = ref(0);
  * 得到分页
  */
 const getPaginate = async () => {
-  listLoading.value = true;
+  paginateLoading.value = true;
   let response;
   try {
     response = await axios.get("desktop/dictionary.Index/getPaginate", {
       params: query.value,
     });
   } finally {
-    listLoading.value = false;
+    paginateLoading.value = false;
   }
   if (response.code != 0) {
     ElMessage({

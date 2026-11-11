@@ -37,7 +37,7 @@
     <div class="list">
       <el-table
         :data="users"
-        v-loading="listLoading"
+        v-loading="paginateLoading"
         stripe
         table-layout="auto"
         class="table"
@@ -162,7 +162,7 @@ const query = ref({
   size: 30,
   page: 1,
 });
-const listLoading = ref(true);
+const paginateLoading = ref(true);
 const users = ref([]);
 const total = ref(0);
 const rowId = ref(0);
@@ -174,14 +174,14 @@ const passwordEditFlag = ref(false);
  * 得到分页
  */
 const getPaginate = async () => {
-  listLoading.value = true;
+  paginateLoading.value = true;
   let response;
   try {
     response = await axios.get("desktop/system.user.Index/getPaginate", {
       params: query.value,
     });
   } finally {
-    listLoading.value = false;
+    paginateLoading.value = false;
   }
   if (response.code != 0) {
     ElMessage({
