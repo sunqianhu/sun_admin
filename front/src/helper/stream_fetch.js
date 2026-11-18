@@ -1,3 +1,5 @@
+import { logout } from "@/helper/session";
+
 /**
  * 提取流
  * @param {*} method
@@ -64,6 +66,13 @@ const request = (method, path, data, options = {}) => {
       //JSON响应
       if (contentType === "application/json") {
         const data = await response.json();
+        if (data?.code == 2 && localStorage.getItem("token")) {
+          ElMessage({
+            message: data.message,
+            type: "error",
+          });
+          logout();
+        }
         throw new Error(
           data?.code != 0 && data?.message
             ? data.message
@@ -72,7 +81,7 @@ const request = (method, path, data, options = {}) => {
       }
       //非流
       if (contentType !== "text/event-stream" || !response.body) {
-        await response.body.cancel();
+        await response.body?.cancel();
         throw new Error("服务器未返回有效的流式数据");
       }
 
@@ -87,7 +96,7 @@ const request = (method, path, data, options = {}) => {
             buffer += decoder.decode(value, { stream: true });
           }
 
-          const messages = buffer.split("\n\n");
+          const messages = buffer.split(/\r?\n\r?\n/);
 
           //完成
           if (done) {

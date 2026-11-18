@@ -79,6 +79,7 @@
 import { ref, onMounted } from "vue";
 import { User, Lock } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
+import { login } from "@/helper/session";
 import Vcode from "vue3-puzzle-vcode";
 
 const systemName = ref("");
@@ -137,8 +138,7 @@ const submitForm = async () => {
     return;
   }
 
-  localStorage.setItem("token", response.data);
-  location.replace("./");
+  login(response.data);
 };
 
 onMounted(() => {

@@ -1,10 +1,5 @@
 import axios from "axios";
-import router from "../router";
-import { usePermissionStore } from "@/stores/permission";
-import { useRouteStore } from "@/stores/route";
-import routeCache from "@/helper/route_cache";
-import permissionCache from "@/helper/permission_cache";
-import watermarkCache from "@/helper/watermark_cache";
+import { logout } from "@/helper/session";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_PREFIX,
@@ -65,23 +60,5 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-/**
- * 退出登录
- */
-const logout = () => {
-  const permissionStore = usePermissionStore();
-  const routeStore = useRouteStore();
-  permissionStore.clear();
-  routeStore.clear();
-
-  localStorage.removeItem("token");
-
-  permissionCache.clear();
-  routeCache.clear();
-  watermarkCache.clear();
-
-  router.replace("/login");
-};
 
 export default instance;

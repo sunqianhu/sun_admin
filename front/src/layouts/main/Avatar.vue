@@ -52,7 +52,6 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import {
   Edit,
   SwitchButton,
@@ -61,18 +60,13 @@ import {
   ArrowDown,
   Warning,
 } from "@element-plus/icons-vue";
-import { usePermissionStore } from "@/stores/permission";
-import { useRouteStore } from "@/stores/route";
-import routeCache from "@/helper/route_cache";
-import permissionCache from "@/helper/permission_cache";
-import watermarkCache from "@/helper/watermark_cache";
 import axios from "@/helper/axios";
+import { logout as session_logout } from "@/helper/session";
 import Detail from "./user/Detail.vue";
 import AvatarEdit from "./user/AvatarEdit.vue";
 import PasswordEdit from "./user/PasswordEdit.vue";
 import About from "./About.vue";
 
-const router = useRouter();
 const detailFlag = ref(false);
 const avatarEditFlag = ref(false);
 const passwordEditFlag = ref(false);
@@ -132,16 +126,7 @@ const logout = async () => {
     return;
   }
 
-  localStorage.removeItem("token");
-  const permissionStore = usePermissionStore();
-  permissionStore.clear();
-  const routeStore = useRouteStore();
-  routeStore.clear();
-  permissionCache.clear();
-  routeCache.clear();
-  watermarkCache.clear();
-
-  router.replace("/login");
+  session_logout();
 };
 
 onMounted(() => {
