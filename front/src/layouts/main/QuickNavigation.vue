@@ -72,6 +72,7 @@ const remove = (key) => {
   }
   :deep(.el-tabs__header) {
     margin-bottom: 0px;
+    border-bottom: none;
     .el-tabs__nav {
       border: none;
       .el-tabs__item {

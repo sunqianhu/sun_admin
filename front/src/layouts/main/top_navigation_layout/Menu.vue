@@ -27,32 +27,32 @@ const isDark = useDark();
 const menuBgColor = computed(() =>
   isDark.value
     ? themeStore.topNavigationLayout_dark_menuBgColor
-    : themeStore.topNavigationLayout_light_menuBgColor
+    : themeStore.topNavigationLayout_light_menuBgColor,
 );
 const menuTextColor = computed(() =>
   isDark.value
     ? themeStore.topNavigationLayout_dark_menuTextColor
-    : themeStore.topNavigationLayout_light_menuTextColor
+    : themeStore.topNavigationLayout_light_menuTextColor,
 );
 const menuActiveBgColor = computed(() =>
   isDark.value
     ? themeStore.topNavigationLayout_dark_menuActiveBgColor
-    : themeStore.topNavigationLayout_light_menuActiveBgColor
+    : themeStore.topNavigationLayout_light_menuActiveBgColor,
 );
 const menuActiveTextColor = computed(() =>
   isDark.value
     ? themeStore.topNavigationLayout_dark_menuActiveTextColor
-    : themeStore.topNavigationLayout_light_menuActiveTextColor
+    : themeStore.topNavigationLayout_light_menuActiveTextColor,
 );
 const menuHoverBgColor = computed(() =>
   isDark.value
     ? themeStore.topNavigationLayout_dark_menuHoverBgColor
-    : themeStore.topNavigationLayout_light_menuHoverBgColor
+    : themeStore.topNavigationLayout_light_menuHoverBgColor,
 );
 const menuHoverTextColor = computed(() =>
   isDark.value
     ? themeStore.topNavigationLayout_dark_menuHoverTextColor
-    : themeStore.topNavigationLayout_light_menuHoverTextColor
+    : themeStore.topNavigationLayout_light_menuHoverTextColor,
 );
 
 /**
@@ -60,7 +60,7 @@ const menuHoverTextColor = computed(() =>
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/layouts.main.top_navigation_layout.Menu/getTreeMenu"
+    "desktop/layouts.main.top_navigation_layout.Menu/getTreeMenu",
   );
   treeMenu.value = response.data;
 };
