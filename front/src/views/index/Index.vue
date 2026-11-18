@@ -311,7 +311,6 @@ onMounted(() => {
     padding: var(--padding);
     display: flex;
     align-items: center;
-    box-shadow: var(--box-shadow);
     .welcome__icon {
       width: 50px;
       display: inline-block;
@@ -329,7 +328,6 @@ onMounted(() => {
       background-color: var(--background-color-light);
       border-radius: var(--border-radius);
       margin-bottom: var(--margin);
-      box-shadow: var(--box-shadow);
       .count-item__name {
       }
       .count-item__count {

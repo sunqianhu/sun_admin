@@ -2,7 +2,9 @@
   <div class="index">
     <div class="page-header">
       <div class="page-header__name">会话管理</div>
-      <div class="page-header__description">管理桌面端、移动端和 API 端的会话</div>
+      <div class="page-header__description">
+        管理桌面端、移动端和 API 端的会话
+      </div>
     </div>
     <div class="query-bar">
       <el-form :model="query" :inline="true" ref="queryRef">
@@ -49,7 +51,12 @@
     </div>
 
     <div class="list">
-      <el-table :data="sessions" v-loading="paginateLoading" row-key="id" class="table">
+      <el-table
+        :data="sessions"
+        v-loading="paginateLoading"
+        row-key="id"
+        class="table"
+      >
         <el-table-column prop="terminal_name" label="终端" width="100" />
         <el-table-column
           prop="name"
@@ -334,7 +341,6 @@ onMounted(() => {
   background-color: var(--background-color-light);
   padding: var(--padding);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
   .page-header {
     display: flex;
     .page-header__name {

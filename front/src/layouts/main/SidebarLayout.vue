@@ -125,7 +125,6 @@ onMounted(() => {
     .sidebar-layout__left {
       position: relative;
       width: v-bind('leftWidth + "px"');
-      box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
       background-color: v-bind(leftBgColor);
       color: v-bind(leftTextColor);
       transition: width 0.5s;

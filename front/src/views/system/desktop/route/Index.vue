@@ -175,7 +175,6 @@ onMounted(() => {
   background-color: var(--background-color-light);
   padding: var(--padding);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
   .page-header {
     .page-header__name {
       font-size: var(--font-size-lg);

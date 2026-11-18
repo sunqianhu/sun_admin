@@ -33,7 +33,6 @@ const props = defineProps({
 .card-panel {
   background: var(--background-color-light);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
   padding: var(--padding);
   position: relative;
 

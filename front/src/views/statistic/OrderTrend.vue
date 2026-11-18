@@ -198,7 +198,6 @@ onMounted(() => {
 .order-trend {
   background-color: var(--background-color-light);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
   padding: var(--padding);
   .page-header {
     display: flex;
