@@ -1,6 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-name">操作日志</div>
+    <div class="page-header">
+      <div class="page-header__name">操作日志</div>
+      <div class="page-header__description">查看操作记录及请求、响应详情</div>
+    </div>
     <div class="query-bar">
       <el-form :model="query" :inline="true" ref="queryRef">
         <el-form-item label="部门" prop="department_ids">
@@ -260,9 +263,17 @@ onMounted(() => {
   padding: var(--padding);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  .page-name {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
+  .page-header {
+    display: flex;
+    .page-header__name {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+    }
+    .page-header__description {
+      color: var(--font-color-secondary);
+      margin-left: var(--margin);
+      flex: 1;
+    }
   }
   .query-bar {
     margin-top: var(--margin);

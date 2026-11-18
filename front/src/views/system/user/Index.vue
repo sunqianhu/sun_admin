@@ -1,6 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-name">用户管理</div>
+    <div class="page-header">
+      <div class="page-header__name">用户管理</div>
+      <div class="page-header__description">管理用户账号、所属部门和角色</div>
+    </div>
 
     <div class="query-bar">
       <el-form :model="query" :inline="true" ref="queryRef">
@@ -365,9 +368,17 @@ onMounted(() => {
   padding: var(--padding);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  .page-name {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
+  .page-header {
+    display: flex;
+    .page-header__name {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+    }
+    .page-header__description {
+      color: var(--font-color-secondary);
+      margin-left: var(--margin);
+      flex: 1;
+    }
   }
   .query-bar {
     margin-top: var(--margin);

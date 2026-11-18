@@ -1,6 +1,9 @@
 <template>
   <div class="index" v-loading="initLoading">
-    <div class="page-name">系统设置</div>
+    <div class="page-header">
+      <div class="page-header__name">系统设置</div>
+      <div class="page-header__description">设置系统名称、简介和禁止访问 IP</div>
+    </div>
     <el-form
       :model="config"
       :rules="rules"
@@ -120,9 +123,17 @@ onMounted(() => {
   padding: var(--padding);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  .page-name {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
+  .page-header {
+    display: flex;
+    .page-header__name {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+    }
+    .page-header__description {
+      color: var(--font-color-secondary);
+      margin-left: var(--margin);
+      flex: 1;
+    }
   }
   .form {
     width: 500px;
