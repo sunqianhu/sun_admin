@@ -15,8 +15,8 @@
       </div>
     </div>
     <div class="query-bar">
-      <el-form :model="query" :inline="true">
-        <el-form-item label="订单时间">
+      <el-form :model="query" :inline="true" ref="queryRef">
+        <el-form-item label="订单时间" prop="add_times">
           <el-date-picker
             v-model="query.add_times"
             type="datetimerange"
@@ -33,6 +33,7 @@
           <el-button type="primary" :icon="Search" @click="submitQuery">
             查询
           </el-button>
+          <el-button :icon="RefreshLeft" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -46,10 +47,11 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Download, Search } from "@element-plus/icons-vue";
+import { Download, Search, RefreshLeft } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
 
+const queryRef = ref();
 const query = ref({
   add_times: [
     dayjs(
@@ -177,6 +179,14 @@ const exp = async () => {
  */
 const submitQuery = () => {
   init();
+};
+
+/**
+ * 重置查询
+ */
+const resetQuery = () => {
+  queryRef.value.resetFields();
+  submitQuery();
 };
 
 onMounted(() => {

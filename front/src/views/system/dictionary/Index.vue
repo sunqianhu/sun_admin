@@ -2,20 +2,21 @@
   <div class="index">
     <div class="page-name">字典管理</div>
     <div class="query-bar">
-      <el-form :model="query" :inline="true">
-        <el-form-item label="字典类型">
+      <el-form :model="query" :inline="true" ref="queryRef">
+        <el-form-item label="字典类型" prop="type">
           <el-input v-model="query.type" />
         </el-form-item>
-        <el-form-item label="字典键">
+        <el-form-item label="字典键" prop="key">
           <el-input v-model="query.key" />
         </el-form-item>
-        <el-form-item label="字典值">
+        <el-form-item label="字典值" prop="value">
           <el-input v-model="query.value" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="submitQuery"
-            >搜索</el-button
-          >
+          <el-button type="primary" :icon="Search" @click="submitQuery">
+            查询
+          </el-button>
+          <el-button :icon="RefreshLeft" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -86,12 +87,13 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Search, Plus } from "@element-plus/icons-vue";
+import { Search, RefreshLeft, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
 
 const rowId = ref(0);
+const queryRef = ref();
 const query = ref({
   size: 30,
   page: 1,
@@ -133,6 +135,14 @@ const getPaginate = async () => {
 const submitQuery = () => {
   query.value.page = 1;
   getPaginate();
+};
+
+/**
+ * 重置查询
+ */
+const resetQuery = () => {
+  queryRef.value.resetFields();
+  submitQuery();
 };
 
 /**

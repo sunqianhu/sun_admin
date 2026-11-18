@@ -2,17 +2,18 @@
   <div class="index">
     <div class="page-name">数据权限</div>
     <div class="query-bar">
-      <el-form :model="query" :inline="true">
-        <el-form-item label="名称">
+      <el-form :model="query" :inline="true" ref="queryRef">
+        <el-form-item label="名称" prop="type">
           <el-input v-model="query.type" />
         </el-form-item>
-        <el-form-item label="标识">
+        <el-form-item label="标识" prop="key">
           <el-input v-model="query.key" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="submitQuery">
             查询
           </el-button>
+          <el-button :icon="RefreshLeft" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -90,13 +91,14 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Search, Plus } from "@element-plus/icons-vue";
+import { Search, RefreshLeft, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
 import PolicyIndex from "./policy/Index.vue";
 
 const rowId = ref(0);
+const queryRef = ref();
 const query = ref({
   size: 30,
   page: 1,
@@ -139,6 +141,14 @@ const getPaginate = async () => {
 const submitQuery = () => {
   query.value.page = 1;
   getPaginate();
+};
+
+/**
+ * 重置查询
+ */
+const resetQuery = () => {
+  queryRef.value.resetFields();
+  submitQuery();
 };
 
 /**

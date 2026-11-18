@@ -3,29 +3,30 @@
     <div class="page-name">用户管理</div>
 
     <div class="query-bar">
-      <el-form :model="query" :inline="true">
-        <el-form-item label="部门">
+      <el-form :model="query" :inline="true" ref="queryRef">
+        <el-form-item label="部门" prop="department_ids">
           <tree-department-select
             v-model="query.department_ids"
             multiple
           ></tree-department-select>
         </el-form-item>
-        <el-form-item label="角色">
+        <el-form-item label="角色" prop="role_id">
           <role-select v-model="query.role_id"></role-select>
         </el-form-item>
-        <el-form-item label="账号">
+        <el-form-item label="账号" prop="account">
           <el-input v-model="query.account" />
         </el-form-item>
-        <el-form-item label="手机">
+        <el-form-item label="手机" prop="phone">
           <el-input v-model="query.phone" />
         </el-form-item>
-        <el-form-item label="姓名">
+        <el-form-item label="姓名" prop="name">
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="submitQuery"
-            >搜索</el-button
-          >
+          <el-button type="primary" :icon="Search" @click="submitQuery">
+            查询
+          </el-button>
+          <el-button :icon="RefreshLeft" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -153,11 +154,12 @@ import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 import { hasPermission } from "@/helper/permission";
 import dayjs from "dayjs";
-import { Search, ArrowDown, Plus } from "@element-plus/icons-vue";
+import { Search, RefreshLeft, ArrowDown, Plus } from "@element-plus/icons-vue";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
 import PasswordEdit from "./PasswordEdit.vue";
 
+const queryRef = ref();
 const query = ref({
   size: 30,
   page: 1,
@@ -200,6 +202,14 @@ const getPaginate = async () => {
 const submitQuery = () => {
   query.value.page = 1;
   getPaginate();
+};
+
+/**
+ * 重置查询
+ */
+const resetQuery = () => {
+  queryRef.value.resetFields();
+  submitQuery();
 };
 
 /**

@@ -14,21 +14,22 @@
         <flag-title-panel title="待选用户">
           <div class="user-panel">
             <div class="query-bar">
-              <el-form :model="query" :inline="true">
-                <el-form-item label="部门">
+              <el-form :model="query" :inline="true" ref="queryRef">
+                <el-form-item label="部门" prop="department_ids">
                   <tree-department-select
                     v-model="query.department_ids"
                     :multiple="true"
                     filter
                   ></tree-department-select>
                 </el-form-item>
-                <el-form-item label="姓名/手机号码">
+                <el-form-item label="姓名/手机号码" prop="keyword">
                   <el-input v-model="query.keyword" />
                 </el-form-item>
                 <el-form-item>
                   <el-button type="primary" :icon="Search" @click="submitQuery">
-                    搜索
+                    查询
                   </el-button>
+                  <el-button :icon="RefreshLeft" @click="resetQuery">重置</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -105,7 +106,7 @@
 
 <script setup>
 import { ref, watch, onMounted, nextTick } from "vue";
-import { Search } from "@element-plus/icons-vue";
+import { Search, RefreshLeft } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 
 const props = defineProps({
@@ -119,6 +120,7 @@ const userIds = defineModel({
   type: Array,
   default: [],
 });
+const queryRef = ref();
 const query = ref({
   size: 30,
   page: 1,
@@ -203,6 +205,14 @@ const init = async () => {
 const submitQuery = () => {
   query.value.page = 1;
   getPaginate();
+};
+
+/**
+ * 重置查询
+ */
+const resetQuery = () => {
+  queryRef.value.resetFields();
+  submitQuery();
 };
 
 /**

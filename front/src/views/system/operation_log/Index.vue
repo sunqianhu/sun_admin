@@ -2,32 +2,32 @@
   <div class="index">
     <div class="page-name">操作日志</div>
     <div class="query-bar">
-      <el-form :model="query" :inline="true">
-        <el-form-item label="部门">
+      <el-form :model="query" :inline="true" ref="queryRef">
+        <el-form-item label="部门" prop="department_ids">
           <tree-department-select
             v-model="query.department_ids"
             multiple
           ></tree-department-select>
         </el-form-item>
-        <el-form-item label="终端">
+        <el-form-item label="终端" prop="terminal">
           <dictionary-select
             v-model="query.terminal"
             type="terminal"
           ></dictionary-select>
         </el-form-item>
-        <el-form-item label="业务码">
+        <el-form-item label="业务码" prop="response_business_code">
           <dictionary-select
             v-model="query.response_business_code"
             type="response_business_code"
           ></dictionary-select>
         </el-form-item>
-        <el-form-item label="用户姓名">
+        <el-form-item label="用户姓名" prop="name">
           <el-input v-model="query.name" />
         </el-form-item>
-        <el-form-item label="手机号码">
+        <el-form-item label="手机号码" prop="phone">
           <el-input v-model="query.phone" />
         </el-form-item>
-        <el-form-item label="操作时间">
+        <el-form-item label="操作时间" prop="times">
           <el-date-picker
             v-model="query.times"
             type="datetimerange"
@@ -44,6 +44,7 @@
           <el-button type="primary" :icon="Search" @click="submitQuery">
             查询
           </el-button>
+          <el-button :icon="RefreshLeft" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -145,11 +146,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import dayjs from "dayjs";
-import { Search } from "@element-plus/icons-vue";
+import { Search, RefreshLeft } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Detail from "./Detail.vue";
 import TimeRangeDelete from "./TimeRangeDelete.vue";
 
+const queryRef = ref();
 const query = ref({
   response_business_code: "",
   times: [
@@ -202,6 +204,14 @@ const getPaginate = async () => {
 const submitQuery = () => {
   query.value.page = 1;
   getPaginate();
+};
+
+/**
+ * 重置查询
+ */
+const resetQuery = () => {
+  queryRef.value.resetFields();
+  submitQuery();
 };
 
 /**

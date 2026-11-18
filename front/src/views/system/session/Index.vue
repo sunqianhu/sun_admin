@@ -2,23 +2,23 @@
   <div class="index">
     <div class="page-name">会话管理</div>
     <div class="query-bar">
-      <el-form :model="query" :inline="true">
-        <el-form-item label="终端">
+      <el-form :model="query" :inline="true" ref="queryRef">
+        <el-form-item label="终端" prop="terminal">
           <dictionary-select
             v-model="query.terminal"
             type="terminal"
           ></dictionary-select>
         </el-form-item>
-        <el-form-item label="是否过期">
+        <el-form-item label="是否过期" prop="is_expired">
           <el-select v-model="query.is_expired" placeholder="全部" clearable>
             <el-option label="未过期" :value="0" />
             <el-option label="已过期" :value="1" />
           </el-select>
         </el-form-item>
-        <el-form-item label="名称">
+        <el-form-item label="名称" prop="name">
           <el-input v-model="query.name" clearable />
         </el-form-item>
-        <el-form-item label="所属用户">
+        <el-form-item label="所属用户" prop="user_keyword">
           <el-input
             v-model="query.user_keyword"
             placeholder="姓名或账号"
@@ -29,6 +29,7 @@
           <el-button type="primary" :icon="Search" @click="submitQuery">
             查询
           </el-button>
+          <el-button :icon="RefreshLeft" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -144,13 +145,14 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Search, Plus } from "@element-plus/icons-vue";
+import { Search, RefreshLeft, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import Add from "./Add.vue";
 import Renew from "./Renew.vue";
 import DictionarySelect from "@/components/DictionarySelect.vue";
 
+const queryRef = ref();
 const query = ref({
   name: "",
   user_keyword: "",
@@ -194,6 +196,14 @@ const getPaginate = async () => {
 const submitQuery = () => {
   query.value.page = 1;
   getPaginate();
+};
+
+/**
+ * 重置查询
+ */
+const resetQuery = () => {
+  queryRef.value.resetFields();
+  submitQuery();
 };
 
 /**
