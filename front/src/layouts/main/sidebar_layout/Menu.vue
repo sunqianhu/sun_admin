@@ -22,7 +22,7 @@ import { useDark } from "@vueuse/core";
 
 const sidebarLayoutStore = useSidebarLayoutStore();
 const route = useRoute();
-const defaultActive = route.path; //默认活跃项
+const defaultActive = computed(() => route.path); //默认活跃项
 const treeMenu = ref([]);
 const themeStore = useThemeStore();
 const isDark = useDark();
