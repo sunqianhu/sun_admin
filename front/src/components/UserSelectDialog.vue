@@ -191,8 +191,9 @@ onMounted(() => {
 .user-select-dialog {
   .query-bar {
     margin-top: var(--margin);
+    .el-input,
     .el-select {
-      width: 198px;
+      width: 200px;
     }
   }
   .list {

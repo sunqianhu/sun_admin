@@ -181,8 +181,9 @@ onMounted(() => {
   border-radius: var(--border-radius);
   .query-bar {
     margin-top: var(--margin);
+    .el-input,
     .el-select {
-      min-width: 198px;
+      width: 200px;
     }
   }
   .list {

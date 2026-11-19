@@ -237,6 +237,10 @@ onMounted(() => {
   border-radius: var(--border-radius);
   .query-bar {
     margin-top: var(--margin);
+    .el-input,
+    .el-select {
+      width: 200px;
+    }
   }
   .tool-bar {
   }

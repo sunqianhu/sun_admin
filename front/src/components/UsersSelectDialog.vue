@@ -324,11 +324,9 @@ onMounted(() => {
   .user-panel {
     .query-bar {
       margin-top: var(--margin);
+      .el-input,
       .el-select {
-        width: 150px;
-      }
-      .el-input {
-        width: 150px;
+        width: 200px;
       }
     }
     .list {
