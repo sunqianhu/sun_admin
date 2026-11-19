@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\layouts\main\sidebar_layout;
+namespace app\desktop\controller\layouts\main\sidebar;
 
 use app\desktop\controller\Base;
 use app\helper\user\UserDesktopMenuHelper;

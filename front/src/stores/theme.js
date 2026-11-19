@@ -3,43 +3,43 @@ import { defineStore } from "pinia";
 //默认主题
 const defaultTheme = {
   //主布局
-  mainLayout_layoutType: "sidebar_layout",
+  mainLayout_layoutType: "sidebar",
   mainLayout_quickNavigation: true,
 
   //侧边栏布局
-  sidebarLayout_leftWidth: 220,
-  sidebarLayout_light_leftBgColor: "#001e5f",
-  sidebarLayout_light_leftTextColor: "#ECF0F1",
-  sidebarLayout_light_menuBgColor: "#001e5f",
-  sidebarLayout_light_menuTextColor: "#ECF0F1",
-  sidebarLayout_light_menuActiveBgColor: "#005ebf",
-  sidebarLayout_light_menuActiveTextColor: "#ffffff",
-  sidebarLayout_light_menuHoverBgColor: "#003e9f",
-  sidebarLayout_light_menuHoverTextColor: "#ffffff",
+  sidebar_leftWidth: 220,
+  sidebar_light_leftBgColor: "#001e5f",
+  sidebar_light_leftTextColor: "#ECF0F1",
+  sidebar_light_menuBgColor: "#001e5f",
+  sidebar_light_menuTextColor: "#ECF0F1",
+  sidebar_light_menuActiveBgColor: "#005ebf",
+  sidebar_light_menuActiveTextColor: "#ffffff",
+  sidebar_light_menuHoverBgColor: "#003e9f",
+  sidebar_light_menuHoverTextColor: "#ffffff",
 
-  sidebarLayout_dark_leftBgColor: "#050404",
-  sidebarLayout_dark_leftTextColor: "#dfdfdf",
-  sidebarLayout_dark_menuBgColor: "#050404",
-  sidebarLayout_dark_menuTextColor: "#dfdfdf",
-  sidebarLayout_dark_menuActiveBgColor: "#409eff",
-  sidebarLayout_dark_menuActiveTextColor: "#ffffff",
-  sidebarLayout_dark_menuHoverBgColor: "#409eff",
-  sidebarLayout_dark_menuHoverTextColor: "#ffffff",
+  sidebar_dark_leftBgColor: "#050404",
+  sidebar_dark_leftTextColor: "#dfdfdf",
+  sidebar_dark_menuBgColor: "#050404",
+  sidebar_dark_menuTextColor: "#dfdfdf",
+  sidebar_dark_menuActiveBgColor: "#409eff",
+  sidebar_dark_menuActiveTextColor: "#ffffff",
+  sidebar_dark_menuHoverBgColor: "#409eff",
+  sidebar_dark_menuHoverTextColor: "#ffffff",
 
   //顶部导航栏布局
-  topNavigationLayout_light_menuBgColor: "#001e5f",
-  topNavigationLayout_light_menuTextColor: "#ECF0F1",
-  topNavigationLayout_light_menuActiveBgColor: "#005ebf",
-  topNavigationLayout_light_menuActiveTextColor: "#ffffff",
-  topNavigationLayout_light_menuHoverBgColor: "#003e9f",
-  topNavigationLayout_light_menuHoverTextColor: "#ffffff",
+  topNavigation_light_menuBgColor: "#001e5f",
+  topNavigation_light_menuTextColor: "#ECF0F1",
+  topNavigation_light_menuActiveBgColor: "#005ebf",
+  topNavigation_light_menuActiveTextColor: "#ffffff",
+  topNavigation_light_menuHoverBgColor: "#003e9f",
+  topNavigation_light_menuHoverTextColor: "#ffffff",
 
-  topNavigationLayout_dark_menuBgColor: "#050404",
-  topNavigationLayout_dark_menuTextColor: "#dfdfdf",
-  topNavigationLayout_dark_menuActiveBgColor: "#409eff",
-  topNavigationLayout_dark_menuActiveTextColor: "#ffffff",
-  topNavigationLayout_dark_menuHoverBgColor: "#409eff",
-  topNavigationLayout_dark_menuHoverTextColor: "#ffffff",
+  topNavigation_dark_menuBgColor: "#050404",
+  topNavigation_dark_menuTextColor: "#dfdfdf",
+  topNavigation_dark_menuActiveBgColor: "#409eff",
+  topNavigation_dark_menuActiveTextColor: "#ffffff",
+  topNavigation_dark_menuHoverBgColor: "#409eff",
+  topNavigation_dark_menuHoverTextColor: "#ffffff",
 };
 
 /**
@@ -51,6 +51,21 @@ const loadFromStorage = () => {
     const saved = localStorage.getItem("theme_setting");
     if (saved) {
       const parsed = JSON.parse(saved);
+      //兼容旧的布局主题配置
+      for (const key of Object.keys(parsed)) {
+        const newKey = key.replace(/^(sidebar|topNavigation)Layout_/, "$1_");
+        if (newKey !== key) {
+          if (!(newKey in parsed)) {
+            parsed[newKey] = parsed[key];
+          }
+          delete parsed[key];
+        }
+      }
+      if (parsed.mainLayout_layoutType === "sidebar_layout") {
+        parsed.mainLayout_layoutType = "sidebar";
+      } else if (parsed.mainLayout_layoutType === "top_navigation_layout") {
+        parsed.mainLayout_layoutType = "top_navigation";
+      }
       return { ...defaultTheme, ...parsed };
     }
   } catch (e) {

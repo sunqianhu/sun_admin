@@ -1,10 +1,10 @@
 <template>
-  <div class="sidebar-layout">
+  <div class="sidebar">
     <el-container
-      :class="{ 'sidebar-layout--fold': sidebarLayoutStore.fold }"
-      class="layout"
+      :class="{ 'sidebar--fold': sidebarStore.fold }"
+      class="sidebar__container"
     >
-      <el-aside class="sidebar-layout__left">
+      <el-aside class="sidebar__left">
         <div class="system-name-row">
           <img src="@/assets/logo.png" class="logo" />
           <span class="name">{{ systemName }}</span>
@@ -12,7 +12,7 @@
         <el-scrollbar class="menu-row"><Menu></Menu></el-scrollbar>
         <div class="version">版本 {{ version }}</div>
       </el-aside>
-      <el-container class="sidebar-layout__right">
+      <el-container class="sidebar__right">
         <el-header class="header">
           <div class="header__left">
             <hamburger class="header__hamburger"></hamburger>
@@ -31,18 +31,14 @@
             <avatar class="header__avatar"></avatar>
           </div>
         </el-header>
-        <el-main class="sidebar-layout__workspace">
+        <el-main class="sidebar__workspace">
           <router-view v-slot="{ Component, route }">
             <keep-alive v-if="route.meta?.keep_alive">
               <component :is="Component" />
             </keep-alive>
             <component :is="Component" v-else />
           </router-view>
-          <el-backtop
-            :right="15"
-            :bottom="15"
-            target=".sidebar-layout__workspace"
-          >
+          <el-backtop :right="15" :bottom="15" target=".sidebar__workspace">
             UP
           </el-backtop>
         </el-main>
@@ -54,42 +50,42 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { useSidebarLayoutStore } from "@/stores/sidebar_layout";
+import { useSidebarStore } from "@/stores/layout/sidebar";
 import axios from "@/helper/axios";
 import { useThemeStore } from "@/stores/theme";
 import { useDark } from "@vueuse/core";
-import Menu from "./sidebar_layout/Menu.vue";
+import Menu from "./sidebar/Menu.vue";
 import LightDark from "./LightDark.vue";
 import Hamburger from "./Hamburger.vue";
 import MessageNavigation from "./MessageNavigation.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
-import Guide from "./sidebar_layout/Guide.vue";
+import Guide from "./sidebar/Guide.vue";
 import ThemeSetting from "./ThemeSetting.vue";
 import QuickNavigation from "./QuickNavigation.vue";
 
-const sidebarLayoutStore = useSidebarLayoutStore();
+const sidebarStore = useSidebarStore();
 const systemName = ref("");
 const version = ref("");
 const themeStore = useThemeStore();
 const isDark = useDark();
 const leftBgColor = computed(() =>
   isDark.value
-    ? themeStore.sidebarLayout_dark_leftBgColor
-    : themeStore.sidebarLayout_light_leftBgColor,
+    ? themeStore.sidebar_dark_leftBgColor
+    : themeStore.sidebar_light_leftBgColor,
 );
 const leftTextColor = computed(() =>
   isDark.value
-    ? themeStore.sidebarLayout_dark_leftTextColor
-    : themeStore.sidebarLayout_light_leftTextColor,
+    ? themeStore.sidebar_dark_leftTextColor
+    : themeStore.sidebar_light_leftTextColor,
 );
-const leftWidth = computed(() => themeStore.sidebarLayout_leftWidth);
+const leftWidth = computed(() => themeStore.sidebar_leftWidth);
 
 /**
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("desktop/layouts.main.SidebarLayout/init");
+  const response = await axios.get("desktop/layouts.main.Sidebar/init");
   if (response.code != 0) {
     return;
   }
@@ -102,7 +98,7 @@ const init = async () => {
  */
 window.onresize = () => {
   if (document.body.clientWidth < 768) {
-    sidebarLayoutStore.setFold(true);
+    sidebarStore.setFold(true);
   }
 };
 
@@ -112,17 +108,17 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.sidebar-layout {
+.sidebar {
   position: absolute;
   left: 0;
   right: 0px;
   top: 0px;
   bottom: 0px;
   overflow: hidden;
-  > .layout {
+  > .sidebar__container {
     height: 100%;
     position: relative;
-    .sidebar-layout__left {
+    .sidebar__left {
       position: relative;
       width: v-bind('leftWidth + "px"');
       background-color: v-bind(leftBgColor);
@@ -161,7 +157,7 @@ onMounted(() => {
       }
     }
 
-    .sidebar-layout__right {
+    .sidebar__right {
       position: relative;
       min-width: 0;
       > .header {
@@ -203,12 +199,12 @@ onMounted(() => {
           }
         }
       }
-      .sidebar-layout__workspace {
+      .sidebar__workspace {
         padding: var(--padding);
       }
     }
-    &.sidebar-layout--fold {
-      .sidebar-layout__left {
+    &.sidebar--fold {
+      .sidebar__left {
         width: 64px;
         .system-name-row {
           padding-left: 19px;
@@ -224,9 +220,9 @@ onMounted(() => {
   }
 
   @media (max-width: 768px) {
-    .layout {
-      &.sidebar-layout--fold {
-        .sidebar-layout__left {
+    .sidebar__container {
+      &.sidebar--fold {
+        .sidebar__left {
           width: 0px;
         }
       }

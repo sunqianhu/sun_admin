@@ -1,6 +1,6 @@
 <?php
 
-namespace app\desktop\controller\layouts\main\top_navigation_layout;
+namespace app\desktop\controller\layouts\main\top_navigation;
 
 use app\desktop\controller\Base;
 use app\helper\user\UserDesktopMenuHelper;

@@ -1,18 +1,16 @@
 <template>
-  <sidebar-layout
-    v-if="themeStore.mainLayout_layoutType === 'sidebar_layout'"
-  ></sidebar-layout>
-  <top-navigation-layout
-    v-if="themeStore.mainLayout_layoutType === 'top_navigation_layout'"
-  ></top-navigation-layout>
+  <sidebar v-if="themeStore.mainLayout_layoutType === 'sidebar'"></sidebar>
+  <top-navigation
+    v-if="themeStore.mainLayout_layoutType === 'top_navigation'"
+  ></top-navigation>
   <theme-setting-form></theme-setting-form>
   <watermark />
   <popup-message />
 </template>
 
 <script setup>
-import SidebarLayout from "./main/SidebarLayout.vue";
-import TopNavigationLayout from "./main/TopNavigationLayout.vue";
+import Sidebar from "./main/Sidebar.vue";
+import TopNavigation from "./main/TopNavigation.vue";
 import ThemeSettingForm from "./main/ThemeSettingForm.vue";
 import { useThemeStore } from "@/stores/theme";
 

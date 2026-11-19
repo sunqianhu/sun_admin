@@ -1,5 +1,5 @@
 <template>
-  <div class="top-navigation-layout">
+  <div class="top-navigation">
     <div class="system-name-row">
       <div class="system-name-row__left">
         <div class="system-name">
@@ -26,7 +26,7 @@
     <quick-navigation
       v-if="themeStore.mainLayout_quickNavigation"
     ></quick-navigation>
-    <el-main class="top-navigation-layout__workspace">
+    <el-main class="top-navigation__workspace">
       <router-view v-slot="{ Component, route }">
         <keep-alive v-if="route.meta?.keep_alive">
           <component :is="Component" />
@@ -46,7 +46,7 @@ import MessageNavigation from "./MessageNavigation.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 import ThemeSetting from "./ThemeSetting.vue";
-import Menu from "./top_navigation_layout/Menu.vue";
+import Menu from "./top_navigation/Menu.vue";
 import QuickNavigation from "./QuickNavigation.vue";
 import { useThemeStore } from "@/stores/theme";
 
@@ -58,9 +58,7 @@ const version = ref("");
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get(
-    "desktop/layouts.main.TopNavigationLayout/init",
-  );
+  const response = await axios.get("desktop/layouts.main.TopNavigation/init");
   if (response.code != 0) {
     return;
   }
@@ -74,7 +72,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.top-navigation-layout {
+.top-navigation {
   position: absolute;
   left: 0px;
   right: 0px;
@@ -120,7 +118,7 @@ onMounted(() => {
       }
     }
   }
-  .top-navigation-layout__workspace {
+  .top-navigation__workspace {
     padding: var(--padding);
   }
 }

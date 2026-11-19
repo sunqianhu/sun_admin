@@ -7,7 +7,7 @@ use app\helper\ConfigHelper;
 use Exception;
 use think\Response;
 
-class TopNavigationLayout extends Base
+class Sidebar extends Base
 {
     public bool $isApiAuth = false;
 

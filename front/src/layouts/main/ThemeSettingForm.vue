@@ -18,24 +18,24 @@
           <el-row>
             <el-col :span="12">
               <img
-                src="@/assets/main/sidebar_layout_icon.png"
+                src="@/assets/main/sidebar_icon.png"
                 class="select-layout-type__icon"
                 :class="{
                   'select-layout-type__icon--selected':
-                    theme.mainLayout_layoutType === 'sidebar_layout',
+                    theme.mainLayout_layoutType === 'sidebar',
                 }"
-                @click="selectLayoutType('sidebar_layout')"
+                @click="selectLayoutType('sidebar')"
               />
             </el-col>
             <el-col :span="12">
               <img
-                src="@/assets/main/top_navigation_layout_icon.png"
+                src="@/assets/main/top_navigation_icon.png"
                 class="select-layout-type__icon"
                 :class="{
                   'select-layout-type__icon--selected':
-                    theme.mainLayout_layoutType === 'top_navigation_layout',
+                    theme.mainLayout_layoutType === 'top_navigation',
                 }"
-                @click="selectLayoutType('top_navigation_layout')"
+                @click="selectLayoutType('top_navigation')"
               />
             </el-col>
           </el-row>
@@ -53,35 +53,35 @@
       </el-form-item>
 
       <el-divider content-position="center">侧边栏布局</el-divider>
-      <el-form-item label="宽度" prop="sidebarLayout_leftWidth">
+      <el-form-item label="宽度" prop="sidebar_leftWidth">
         <el-input-number
-          v-model="theme.sidebarLayout_leftWidth"
+          v-model="theme.sidebar_leftWidth"
           :min="200"
           :max="500"
           @change="
             (value) => {
-              setAttribute('sidebarLayout_leftWidth', value);
+              setAttribute('sidebar_leftWidth', value);
             }
           "
         />
       </el-form-item>
       <template v-if="!isDark">
-        <el-form-item label="背景颜色" prop="sidebarLayout_light_leftBgColor">
+        <el-form-item label="背景颜色" prop="sidebar_light_leftBgColor">
           <el-color-picker
-            v-model="theme.sidebarLayout_light_leftBgColor"
+            v-model="theme.sidebar_light_leftBgColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_light_leftBgColor', value);
+                setAttribute('sidebar_light_leftBgColor', value);
               }
             "
           />
         </el-form-item>
-        <el-form-item label="文字颜色" prop="sidebarLayout_light_leftTextColor">
+        <el-form-item label="文字颜色" prop="sidebar_light_leftTextColor">
           <el-color-picker
-            v-model="theme.sidebarLayout_light_leftTextColor"
+            v-model="theme.sidebar_light_leftTextColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_light_leftTextColor', value);
+                setAttribute('sidebar_light_leftTextColor', value);
               }
             "
           />
@@ -89,100 +89,100 @@
 
         <el-form-item
           label="菜单背景颜色"
-          prop="sidebarLayout_light_menuBgColor"
+          prop="sidebar_light_menuBgColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_light_menuBgColor"
+            v-model="theme.sidebar_light_menuBgColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_light_menuBgColor', value);
+                setAttribute('sidebar_light_menuBgColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单文字颜色"
-          prop="sidebarLayout_light_menuTextColor"
+          prop="sidebar_light_menuTextColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_light_menuTextColor"
+            v-model="theme.sidebar_light_menuTextColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_light_menuTextColor', value);
+                setAttribute('sidebar_light_menuTextColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单激活项背景颜色"
-          prop="sidebarLayout_light_menuActiveBgColor"
+          prop="sidebar_light_menuActiveBgColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_light_menuActiveBgColor"
+            v-model="theme.sidebar_light_menuActiveBgColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_light_menuActiveBgColor', value);
+                setAttribute('sidebar_light_menuActiveBgColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单激活项文字颜色"
-          prop="sidebarLayout_light_menuActiveTextColor"
+          prop="sidebar_light_menuActiveTextColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_light_menuActiveTextColor"
+            v-model="theme.sidebar_light_menuActiveTextColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_light_menuActiveTextColor', value);
+                setAttribute('sidebar_light_menuActiveTextColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单鼠标经过项背景颜色"
-          prop="sidebarLayout_light_menuHoverBgColor"
+          prop="sidebar_light_menuHoverBgColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_light_menuHoverBgColor"
+            v-model="theme.sidebar_light_menuHoverBgColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_light_menuHoverBgColor', value);
+                setAttribute('sidebar_light_menuHoverBgColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单鼠标经过项文字颜色"
-          prop="sidebarLayout_light_menuHoverTextColor"
+          prop="sidebar_light_menuHoverTextColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_light_menuHoverTextColor"
+            v-model="theme.sidebar_light_menuHoverTextColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_light_menuHoverTextColor', value);
+                setAttribute('sidebar_light_menuHoverTextColor', value);
               }
             "
           />
         </el-form-item>
       </template>
       <template v-else>
-        <el-form-item label="背景颜色" prop="sidebarLayout_dark_leftBgColor">
+        <el-form-item label="背景颜色" prop="sidebar_dark_leftBgColor">
           <el-color-picker
-            v-model="theme.sidebarLayout_dark_leftBgColor"
+            v-model="theme.sidebar_dark_leftBgColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_dark_leftBgColor', value);
+                setAttribute('sidebar_dark_leftBgColor', value);
               }
             "
           />
         </el-form-item>
-        <el-form-item label="文字颜色" prop="sidebarLayout_dark_leftTextColor">
+        <el-form-item label="文字颜色" prop="sidebar_dark_leftTextColor">
           <el-color-picker
-            v-model="theme.sidebarLayout_dark_leftTextColor"
+            v-model="theme.sidebar_dark_leftTextColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_dark_leftTextColor', value);
+                setAttribute('sidebar_dark_leftTextColor', value);
               }
             "
           />
@@ -190,78 +190,78 @@
 
         <el-form-item
           label="菜单背景颜色"
-          prop="sidebarLayout_dark_menuBgColor"
+          prop="sidebar_dark_menuBgColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_dark_menuBgColor"
+            v-model="theme.sidebar_dark_menuBgColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_dark_menuBgColor', value);
+                setAttribute('sidebar_dark_menuBgColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单文字颜色"
-          prop="sidebarLayout_dark_menuTextColor"
+          prop="sidebar_dark_menuTextColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_dark_menuTextColor"
+            v-model="theme.sidebar_dark_menuTextColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_dark_menuTextColor', value);
+                setAttribute('sidebar_dark_menuTextColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单激活项背景颜色"
-          prop="sidebarLayout_dark_menuActiveBgColor"
+          prop="sidebar_dark_menuActiveBgColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_dark_menuActiveBgColor"
+            v-model="theme.sidebar_dark_menuActiveBgColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_dark_menuActiveBgColor', value);
+                setAttribute('sidebar_dark_menuActiveBgColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单激活项文字颜色"
-          prop="sidebarLayout_dark_menuActiveTextColor"
+          prop="sidebar_dark_menuActiveTextColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_dark_menuActiveTextColor"
+            v-model="theme.sidebar_dark_menuActiveTextColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_dark_menuActiveTextColor', value);
+                setAttribute('sidebar_dark_menuActiveTextColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单鼠标经过项背景颜色"
-          prop="sidebarLayout_dark_menuHoverBgColor"
+          prop="sidebar_dark_menuHoverBgColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_dark_menuHoverBgColor"
+            v-model="theme.sidebar_dark_menuHoverBgColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_dark_menuHoverBgColor', value);
+                setAttribute('sidebar_dark_menuHoverBgColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单鼠标经过项文字颜色"
-          prop="sidebarLayout_dark_menuHoverTextColor"
+          prop="sidebar_dark_menuHoverTextColor"
         >
           <el-color-picker
-            v-model="theme.sidebarLayout_dark_menuHoverTextColor"
+            v-model="theme.sidebar_dark_menuHoverTextColor"
             @change="
               (value) => {
-                setAttribute('sidebarLayout_dark_menuHoverTextColor', value);
+                setAttribute('sidebar_dark_menuHoverTextColor', value);
               }
             "
           />
@@ -272,40 +272,40 @@
       <template v-if="!isDark">
         <el-form-item
           label="菜单背景颜色"
-          prop="topNavigationLayout_light_menuBgColor"
+          prop="topNavigation_light_menuBgColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_light_menuBgColor"
+            v-model="theme.topNavigation_light_menuBgColor"
             @change="
               (value) => {
-                setAttribute('topNavigationLayout_light_menuBgColor', value);
+                setAttribute('topNavigation_light_menuBgColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单文字颜色"
-          prop="topNavigationLayout_light_menuTextColor"
+          prop="topNavigation_light_menuTextColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_light_menuTextColor"
+            v-model="theme.topNavigation_light_menuTextColor"
             @change="
               (value) => {
-                setAttribute('topNavigationLayout_light_menuTextColor', value);
+                setAttribute('topNavigation_light_menuTextColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单激活项背景颜色"
-          prop="topNavigationLayout_light_menuActiveBgColor"
+          prop="topNavigation_light_menuActiveBgColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_light_menuActiveBgColor"
+            v-model="theme.topNavigation_light_menuActiveBgColor"
             @change="
               (value) => {
                 setAttribute(
-                  'topNavigationLayout_light_menuActiveBgColor',
+                  'topNavigation_light_menuActiveBgColor',
                   value
                 );
               }
@@ -314,14 +314,14 @@
         </el-form-item>
         <el-form-item
           label="菜单激活项文字颜色"
-          prop="topNavigationLayout_light_menuActiveTextColor"
+          prop="topNavigation_light_menuActiveTextColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_light_menuActiveTextColor"
+            v-model="theme.topNavigation_light_menuActiveTextColor"
             @change="
               (value) => {
                 setAttribute(
-                  'topNavigationLayout_light_menuActiveTextColor',
+                  'topNavigation_light_menuActiveTextColor',
                   value
                 );
               }
@@ -330,14 +330,14 @@
         </el-form-item>
         <el-form-item
           label="菜单鼠标经过项背景颜色"
-          prop="topNavigationLayout_light_menuHoverBgColor"
+          prop="topNavigation_light_menuHoverBgColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_light_menuHoverBgColor"
+            v-model="theme.topNavigation_light_menuHoverBgColor"
             @change="
               (value) => {
                 setAttribute(
-                  'topNavigationLayout_light_menuHoverBgColor',
+                  'topNavigation_light_menuHoverBgColor',
                   value
                 );
               }
@@ -346,14 +346,14 @@
         </el-form-item>
         <el-form-item
           label="菜单鼠标经过项文字颜色"
-          prop="topNavigationLayout_light_menuHoverTextColor"
+          prop="topNavigation_light_menuHoverTextColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_light_menuHoverTextColor"
+            v-model="theme.topNavigation_light_menuHoverTextColor"
             @change="
               (value) => {
                 setAttribute(
-                  'topNavigationLayout_light_menuHoverTextColor',
+                  'topNavigation_light_menuHoverTextColor',
                   value
                 );
               }
@@ -364,40 +364,40 @@
       <template v-else>
         <el-form-item
           label="菜单背景颜色"
-          prop="topNavigationLayout_dark_menuBgColor"
+          prop="topNavigation_dark_menuBgColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_dark_menuBgColor"
+            v-model="theme.topNavigation_dark_menuBgColor"
             @change="
               (value) => {
-                setAttribute('topNavigationLayout_dark_menuBgColor', value);
+                setAttribute('topNavigation_dark_menuBgColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单文字颜色"
-          prop="topNavigationLayout_dark_menuTextColor"
+          prop="topNavigation_dark_menuTextColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_dark_menuTextColor"
+            v-model="theme.topNavigation_dark_menuTextColor"
             @change="
               (value) => {
-                setAttribute('topNavigationLayout_dark_menuTextColor', value);
+                setAttribute('topNavigation_dark_menuTextColor', value);
               }
             "
           />
         </el-form-item>
         <el-form-item
           label="菜单激活项背景颜色"
-          prop="topNavigationLayout_dark_menuActiveBgColor"
+          prop="topNavigation_dark_menuActiveBgColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_dark_menuActiveBgColor"
+            v-model="theme.topNavigation_dark_menuActiveBgColor"
             @change="
               (value) => {
                 setAttribute(
-                  'topNavigationLayout_dark_menuActiveBgColor',
+                  'topNavigation_dark_menuActiveBgColor',
                   value
                 );
               }
@@ -406,14 +406,14 @@
         </el-form-item>
         <el-form-item
           label="菜单激活项文字颜色"
-          prop="topNavigationLayout_dark_menuActiveTextColor"
+          prop="topNavigation_dark_menuActiveTextColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_dark_menuActiveTextColor"
+            v-model="theme.topNavigation_dark_menuActiveTextColor"
             @change="
               (value) => {
                 setAttribute(
-                  'topNavigationLayout_dark_menuActiveTextColor',
+                  'topNavigation_dark_menuActiveTextColor',
                   value
                 );
               }
@@ -422,14 +422,14 @@
         </el-form-item>
         <el-form-item
           label="菜单鼠标经过项背景颜色"
-          prop="topNavigationLayout_dark_menuHoverBgColor"
+          prop="topNavigation_dark_menuHoverBgColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_dark_menuHoverBgColor"
+            v-model="theme.topNavigation_dark_menuHoverBgColor"
             @change="
               (value) => {
                 setAttribute(
-                  'topNavigationLayout_dark_menuHoverBgColor',
+                  'topNavigation_dark_menuHoverBgColor',
                   value
                 );
               }
@@ -438,14 +438,14 @@
         </el-form-item>
         <el-form-item
           label="菜单鼠标经过项文字颜色"
-          prop="topNavigationLayout_dark_menuHoverTextColor"
+          prop="topNavigation_dark_menuHoverTextColor"
         >
           <el-color-picker
-            v-model="theme.topNavigationLayout_dark_menuHoverTextColor"
+            v-model="theme.topNavigation_dark_menuHoverTextColor"
             @change="
               (value) => {
                 setAttribute(
-                  'topNavigationLayout_dark_menuHoverTextColor',
+                  'topNavigation_dark_menuHoverTextColor',
                   value
                 );
               }

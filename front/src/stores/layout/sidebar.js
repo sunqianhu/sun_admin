@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useSidebarLayoutStore = defineStore("sidebar_layout", {
+export const useSidebarStore = defineStore("sidebar", {
   state: () => {
     return {
       fold: false,

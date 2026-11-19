@@ -19,7 +19,7 @@ const guide = () => {
   localStorage.setItem("guide", 1);
   let steps = [
     {
-      element: ".sidebar-layout__left",
+      element: ".sidebar__left",
       popover: {
         title: "功能菜单",
         description: "点击功能菜单导航到具体的功能页面",
@@ -68,7 +68,7 @@ const guide = () => {
         popover: { title: "头像", description: "查看或修改个人信息" },
       },
       {
-        element: ".sidebar-layout__workspace",
+        element: ".sidebar__workspace",
         popover: { title: "工作区", description: "具体功能显示区" },
       },
     ],
