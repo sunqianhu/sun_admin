@@ -155,47 +155,20 @@ onMounted(() => {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  &::before,
-  &::after {
-    position: absolute;
-    left: -15%;
-    top: -15%;
-    right: -15%;
-    bottom: -15%;
-    z-index: 1;
-    content: "";
-    pointer-events: none;
-  }
-  &::before {
-    background:
-      radial-gradient(
-        ellipse at 18% 25%,
-        var(--el-color-primary-light-5),
-        transparent 38%
-      ),
-      radial-gradient(
-        ellipse at 82% 75%,
-        var(--el-color-primary-light-7),
-        transparent 38%
-      );
-    animation: login-background 8s ease-in-out infinite alternate;
-  }
-  &::after {
-    background-image: radial-gradient(
-      var(--font-color-tertiary) 1px,
-      transparent 1px
-    );
-    background-size: 28px 28px;
-    opacity: 0.4;
-    animation: login-dots 6s linear infinite;
-  }
+  background: linear-gradient(
+    120deg,
+    var(--el-color-primary-light-7),
+    var(--background-color-light),
+    var(--el-color-primary-light-9)
+  );
+  background-size: 200% 200%;
+  animation: login-background 8s ease-in-out infinite alternate;
   .main {
     display: flex;
     width: 840px;
     overflow: hidden;
     border-radius: var(--border-radius-lg);
     background-color: var(--background-color-page);
-    box-shadow: var(--box-shadow-light);
     z-index: 2;
     .main__left {
       position: relative;
@@ -308,22 +281,15 @@ onMounted(() => {
 
 @keyframes login-background {
   from {
-    transform: translate(-6%, -4%);
+    background-position: 0% 50%;
   }
   to {
-    transform: translate(6%, 4%) scale(1.12);
-  }
-}
-
-@keyframes login-dots {
-  to {
-    transform: translate(28px, 28px);
+    background-position: 100% 50%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .login::before,
-  .login::after {
+  .login {
     animation: none;
   }
 }
@@ -333,20 +299,31 @@ onMounted(() => {
     padding: var(--padding);
     .main {
       flex-direction: column;
-      width: 400px;
-    }
-    .main__left {
-      flex: 0 0 auto;
-      padding: 20px 24px;
-      .system-logo {
-        display: none;
+      width: 100%;
+      max-width: 400px;
+      .main__left {
+        flex: 0 0 auto;
+        padding: 20px 24px;
+        display: grid;
+        grid-template-columns: 48px minmax(0, 1fr);
+        column-gap: var(--margin);
+        align-items: center;
+        .system-logo {
+          grid-row: span 2;
+        }
+        .system-name {
+          font-size: var(--font-size-lg);
+          margin-top: 0px;
+        }
       }
-      .system-name {
-        font-size: var(--font-size-lg);
+      .main__right {
+        flex: 0 1 auto;
+        padding: 24px;
+        .panel {
+          width: 100%;
+          max-width: 320px;
+        }
       }
-    }
-    .main__right {
-      flex: 0 1 auto;
     }
   }
 }
