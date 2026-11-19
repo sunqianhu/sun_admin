@@ -7,7 +7,12 @@
       </div>
     </div>
     <div class="query-bar">
-      <el-form :model="query" :inline="true" ref="queryRef">
+      <el-form
+        :model="query"
+        :inline="true"
+        ref="queryRef"
+        @submit.prevent="submitQuery"
+      >
         <el-form-item label="终端" prop="terminal">
           <dictionary-select
             v-model="query.terminal"
@@ -31,7 +36,7 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="submitQuery">
+          <el-button type="primary" :icon="Search" native-type="submit">
             查询
           </el-button>
           <el-button :icon="RefreshLeft" @click="resetQuery">重置</el-button>
