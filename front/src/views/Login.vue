@@ -155,7 +155,6 @@ onMounted(() => {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background-color: var(--background-color);
   &::before,
   &::after {
     position: absolute;
@@ -183,7 +182,7 @@ onMounted(() => {
   }
   &::after {
     background-image: radial-gradient(
-      var(--font-color-placeholder) 1px,
+      var(--font-color-tertiary) 1px,
       transparent 1px
     );
     background-size: 28px 28px;
@@ -195,7 +194,7 @@ onMounted(() => {
     width: 840px;
     overflow: hidden;
     border-radius: var(--border-radius-lg);
-    background-color: var(--background-color-light);
+    background-color: var(--background-color-panel);
     box-shadow: var(--box-shadow-light);
     z-index: 2;
     .main__left {
@@ -299,7 +298,7 @@ onMounted(() => {
       }
       .footer {
         margin-top: var(--margin);
-        color: var(--font-color-placeholder);
+        color: var(--font-color-tertiary);
         font-size: var(--font-size-xs);
         text-align: center;
       }

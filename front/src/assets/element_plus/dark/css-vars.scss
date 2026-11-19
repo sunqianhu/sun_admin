@@ -75,6 +75,9 @@ html.dark {
   @include set-component-css-var("fill-color", $fill-color);
   @include set-component-css-var("mask-color", $mask-color);
 
+  .el-table {
+    --el-table-header-bg-color: var(--background-color-table-header);
+  }
   .el-button {
     @include set-component-css-var("button", $button);
   }

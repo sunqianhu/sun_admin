@@ -146,7 +146,7 @@ onMounted(() => {
         overflow-wrap: anywhere;
         padding: var(--padding);
         border-radius: var(--border-radius);
-        background-color: var(--background-color-lighter);
+        background-color: var(--background-color-light);
       }
     }
   }

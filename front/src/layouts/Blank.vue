@@ -14,7 +14,5 @@
 <script setup></script>
 
 <style lang="scss">
-body {
-  background-color: var(--background-color);
-}
+
 </style>

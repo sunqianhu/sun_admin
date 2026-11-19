@@ -201,7 +201,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .order-trend {
-  background-color: var(--background-color-light);
+  background-color: var(--background-color-panel);
   border-radius: var(--border-radius);
   padding: var(--padding);
   .page-header {
@@ -228,9 +228,6 @@ onMounted(() => {
   .list {
     margin-top: var(--margin);
     width: 100%;
-    ::v-deep(th.el-table__cell) {
-      background-color: var(--background-color-dark);
-    }
   }
 }
 </style>

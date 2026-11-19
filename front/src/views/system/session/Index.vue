@@ -343,7 +343,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .index {
-  background-color: var(--background-color-light);
+  background-color: var(--background-color-panel);
   padding: var(--padding);
   border-radius: var(--border-radius);
   .page-header {
@@ -366,9 +366,6 @@ onMounted(() => {
   }
   .list {
     margin-top: var(--margin);
-    :deep(th.el-table__cell) {
-      background-color: var(--background-color-lighter);
-    }
     .table {
       width: 100%;
     }

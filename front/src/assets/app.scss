@@ -57,7 +57,7 @@ body {
   font-size: var(--font-size);
   line-height: 150%;
   color: var(--font-color);
-  background-color: var(--background-color-light);
+  background-color: var(--background-color-body);
 }
 a {
   color: var(--color-primary);
@@ -77,10 +77,10 @@ pre {
 .el-input__inner {
   &:-webkit-autofill {
     -webkit-text-fill-color: var(--el-input-text-color);
-    box-shadow: 0 0 0 1000px var(--background-color-light) inset;
+    -webkit-background-clip: text;
   }
   &:autofill {
-    box-shadow: 0 0 0 1000px var(--background-color-light) inset;
+    background-clip: text;
   }
 }
 .text-tip {

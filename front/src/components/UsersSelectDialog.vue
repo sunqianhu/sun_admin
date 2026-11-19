@@ -332,9 +332,6 @@ onMounted(() => {
       }
     }
     .list {
-      :deep(th.el-table__cell) {
-        background-color: var(--background-color-dark);
-      }
       .table {
         height: 300px;
       }

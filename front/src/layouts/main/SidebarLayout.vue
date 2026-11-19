@@ -164,13 +164,12 @@ onMounted(() => {
     .sidebar-layout__right {
       position: relative;
       min-width: 0;
-      background-color: var(--background-color);
       > .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         height: 50px;
-        background-color: var(--background-color-light);
+        background-color: var(--background-color-panel);
         padding: 0px;
         .header__center {
           flex: 1;

@@ -8,8 +8,7 @@
   //文字颜色
   --font-color: #303133;
   --font-color-secondary: #606266;
-  --font-color-placeholder: #909399;
-  --font-color-disabled: #c0c4cc;
+  --font-color-tertiary: #909399;
 
   //边框颜色
   --border-color: #e4e7ed;
@@ -18,14 +17,11 @@
 
   //背景颜色
   --background-color: #e4eaf3;
-  --background-color-light: #ffffff;
-  --background-color-lighter: #edf1f7;
+  --background-color-light: #edf1f7;
   --background-color-dark: #d7e0ed;
-
-  //透明背景颜色
-  --background-color-opacity: rgba(255, 255, 255, 0.8);
-  --background-color-opacity-light: rgba(255, 255, 255, 0.9);
-  --background-color-opacity-dark: rgba(255, 255, 255, 0.8);
+  --background-color-body: #e4eaf3;
+  --background-color-panel: #ffffff;
+  --background-color-table-header: #edf1f7;
 
   //阴影
   --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);

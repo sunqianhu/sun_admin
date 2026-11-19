@@ -31,7 +31,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .card-panel {
-  background: var(--background-color-light);
+  background: var(--background-color-panel);
   border-radius: var(--border-radius);
   padding: var(--padding);
   position: relative;

@@ -75,7 +75,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .top-navigation-layout {
-  background-color: var(--background-color);
   position: absolute;
   left: 0px;
   right: 0px;
@@ -85,7 +84,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     padding: var(--padding) var(--padding);
-    background-color: var(--background-color-light);
+    background-color: var(--background-color-panel);
     .system-name-row__left {
       display: flex;
       align-items: center;

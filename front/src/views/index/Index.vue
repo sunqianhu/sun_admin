@@ -306,7 +306,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .index {
   .welcome {
-    background: var(--background-color-light);
+    background: var(--background-color-panel);
     border-radius: var(--border-radius);
     padding: var(--padding);
     display: flex;
@@ -325,7 +325,7 @@ onMounted(() => {
     margin-top: var(--margin);
     .count-item {
       padding: var(--padding);
-      background-color: var(--background-color-light);
+      background-color: var(--background-color-panel);
       border-radius: var(--border-radius);
       margin-bottom: var(--margin);
       .count-item__name {

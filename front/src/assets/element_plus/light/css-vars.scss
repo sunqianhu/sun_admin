@@ -2,6 +2,9 @@
 @use "element-plus/theme-chalk/src/index.scss" as *;
 
 :root {
+  .el-table {
+    --el-table-header-bg-color: var(--background-color-table-header);
+  }
   .el-message__content {
     font-size: 16px;
   }
