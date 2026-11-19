@@ -1,6 +1,7 @@
 <template>
   <el-menu
     mode="horizontal"
+    :ellipsis="false"
     :default-active="defaultActive"
     :unique-opened="true"
     popper-class="top-navigation-menu-popper"

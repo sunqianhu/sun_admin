@@ -7,10 +7,12 @@
       <el-aside class="sidebar__left">
         <div class="system-name-row">
           <img src="@/assets/logo.png" class="logo" />
-          <span class="name">{{ systemName }}</span>
+          <div class="system-info">
+            <span class="name">{{ systemName }}</span>
+            <span class="version">版本：{{ version }}</span>
+          </div>
         </div>
         <el-scrollbar class="menu-row"><Menu></Menu></el-scrollbar>
-        <div class="version">版本 {{ version }}</div>
       </el-aside>
       <el-container class="sidebar__right">
         <el-header class="header">
@@ -127,33 +129,41 @@ onMounted(() => {
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      padding-bottom: var(--padding);
       .system-name-row {
         width: v-bind('leftWidth + "px"');
-        height: 50px;
-        line-height: 50px;
+        flex-shrink: 0;
+        display: flex;
         overflow: hidden;
         transition: all 0.5s;
-        padding-left: 19px;
+        padding-left: 10px;
+        padding-top: 8px;
         .logo {
-          height: 25px;
-          vertical-align: text-bottom;
+          height: 32px;
+          flex-shrink: 0;
+          padding-top: 6px;
         }
-        .name {
-          font-size: var(--font-size-xl);
-          font-weight: var(--font-weight-bold);
+        .system-info {
+          display: flex;
+          flex-direction: column;
           margin-left: 8px;
-          display: inline-block;
-          transition: all 0.5s;
+          line-height: 1.2;
+          transition: margin-left 0.5s;
+          .name {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            white-space: nowrap;
+          }
+          .version {
+            font-size: var(--font-size-sm);
+            opacity: 0.5;
+          }
         }
       }
       .menu-row {
+        margin-top: 12px;
         flex: 1;
         min-height: 0;
-      }
-      .version {
-        padding-left: 16px;
-        font-size: var(--font-size-sm);
-        opacity: 0.5;
       }
     }
 
@@ -207,13 +217,10 @@ onMounted(() => {
       .sidebar__left {
         width: 64px;
         .system-name-row {
-          padding-left: 19px;
-          .name {
-            margin-left: 30px;
+          padding-left: 13px;
+          .system-info {
+            margin-left: 50px;
           }
-        }
-        .version {
-          display: none;
         }
       }
     }

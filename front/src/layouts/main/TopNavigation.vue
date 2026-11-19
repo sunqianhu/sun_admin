@@ -4,8 +4,10 @@
       <div class="system-name-row__left">
         <div class="system-name">
           <img src="@/assets/logo.png" class="logo" />
-          <span class="name">{{ systemName }}</span>
-          <span class="version">版本 {{ version }}</span>
+          <div class="system-info">
+            <span class="name">{{ systemName }}</span>
+            <span class="version">版本：{{ version }}</span>
+          </div>
         </div>
       </div>
       <div class="system-name-row__right">
@@ -19,7 +21,7 @@
       </div>
     </div>
     <div class="navigation">
-      <el-scrollbar>
+      <el-scrollbar view-style="width: max-content; min-width: 100%">
         <Menu></Menu>
       </el-scrollbar>
     </div>
@@ -80,27 +82,35 @@ onMounted(() => {
   bottom: 0px;
   .system-name-row {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
-    padding: var(--padding) var(--padding);
+    gap: var(--margin);
+    padding: var(--padding-sm) var(--padding);
     background-color: var(--background-color-layout-main-header);
     .system-name-row__left {
       display: flex;
       align-items: center;
+      flex-shrink: 0;
       .system-name {
         display: flex;
-        align-items: center;
         .logo {
-          height: 32px;
-          margin-right: 8px;
+          height: 40px;
+          padding-top: 4px;
         }
-        .name {
-          font-size: var(--font-size-xl);
-          font-weight: var(--font-weight-bold);
-        }
-        .version {
-          margin-left: var(--margin);
-          font-size: var(--font-size-sm);
-          color: var(--font-color-secondary);
+        .system-info {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+          margin-left: 8px;
+          .name {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+          }
+          .version {
+            font-size: var(--font-size-sm);
+            color: var(--font-color-secondary);
+          }
         }
       }
     }
@@ -108,7 +118,8 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      padding-right: var(--padding);
+      flex-shrink: 0;
+      margin-left: auto;
       .header__message-navigation,
       .header__fullscreen,
       .header__theme-setting,
