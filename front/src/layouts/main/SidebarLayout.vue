@@ -169,7 +169,7 @@ onMounted(() => {
         align-items: center;
         justify-content: space-between;
         height: 50px;
-        background-color: var(--background-color-panel);
+        background-color: var(--background-color-layout-main-header);
         padding: 0px;
         .header__center {
           flex: 1;

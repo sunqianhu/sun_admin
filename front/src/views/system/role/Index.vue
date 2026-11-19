@@ -206,7 +206,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .index {
-  background-color: var(--background-color-panel);
+  background-color: var(--background-color-page);
   padding: var(--padding);
   border-radius: var(--border-radius);
   .page-header {

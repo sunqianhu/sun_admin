@@ -66,7 +66,7 @@ const remove = (key) => {
 <style lang="scss" scoped>
 .quick-navigation {
   --el-tabs-header-height: 40px;
-  background-color: var(--background-color-panel);
+  background-color: var(--background-color-layout-main-header);
   :deep(.el-tabs__content) {
     display: none;
   }

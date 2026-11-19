@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .popup-message {
-  background-color: var(--background-color-panel);
+  background-color: var(--background-color-page);
   width: 400px;
   position: fixed;
   right: var(--margin);

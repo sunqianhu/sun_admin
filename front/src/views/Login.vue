@@ -194,7 +194,7 @@ onMounted(() => {
     width: 840px;
     overflow: hidden;
     border-radius: var(--border-radius-lg);
-    background-color: var(--background-color-panel);
+    background-color: var(--background-color-page);
     box-shadow: var(--box-shadow-light);
     z-index: 2;
     .main__left {

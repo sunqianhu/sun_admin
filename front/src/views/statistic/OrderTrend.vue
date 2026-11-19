@@ -201,7 +201,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .order-trend {
-  background-color: var(--background-color-panel);
+  background-color: var(--background-color-page);
   border-radius: var(--border-radius);
   padding: var(--padding);
   .page-header {

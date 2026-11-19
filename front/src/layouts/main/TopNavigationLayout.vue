@@ -84,7 +84,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     padding: var(--padding) var(--padding);
-    background-color: var(--background-color-panel);
+    background-color: var(--background-color-layout-main-header);
     .system-name-row__left {
       display: flex;
       align-items: center;
