@@ -1,9 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-header">
-      <div class="page-header__name">菜单管理</div>
-      <div class="page-header__description">配置桌面端菜单及显示顺序</div>
-    </div>
+    <page-header>
+      菜单管理
+      <template #subtitle>配置桌面端菜单及显示顺序</template>
+    </page-header>
     <div class="query-bar">
       <el-form
         :model="query"
@@ -182,18 +182,6 @@ onMounted(() => {
   background-color: var(--background-color-page);
   padding: var(--padding);
   border-radius: var(--border-radius);
-  .page-header {
-    display: flex;
-    .page-header__name {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-    }
-    .page-header__description {
-      color: var(--font-color-secondary);
-      margin-left: var(--margin);
-      flex: 1;
-    }
-  }
   .query-bar {
     margin-top: var(--margin);
   }

@@ -1,9 +1,9 @@
 <template>
   <div class="order-trend" v-loading="initLoading">
-    <div class="page-header">
-      <span class="page-header__name">订单趋势统计</span>
-      <span class="page-header__description">查看一段时间内订单趋势</span>
-      <div class="page-header__action">
+    <page-header>
+      订单趋势统计
+      <template #subtitle>查看一段时间内订单趋势</template>
+      <template #action>
         <el-button
           type="primary"
           :icon="Download"
@@ -12,8 +12,8 @@
         >
           导出
         </el-button>
-      </div>
-    </div>
+      </template>
+    </page-header>
     <div class="query-bar">
       <el-form
         :model="query"
@@ -204,20 +204,6 @@ onMounted(() => {
   background-color: var(--background-color-page);
   border-radius: var(--border-radius);
   padding: var(--padding);
-  .page-header {
-    display: flex;
-    .page-header__name {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-    }
-    .page-header__description {
-      color: var(--font-color-secondary);
-      margin-left: var(--margin);
-      flex: 1;
-    }
-    .page-header__action {
-    }
-  }
   .query-bar {
     margin-top: var(--margin);
   }

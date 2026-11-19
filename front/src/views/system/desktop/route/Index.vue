@@ -1,9 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-header">
-      <span class="page-header__name">路由管理</span>
-      <span class="page-header__description">前端路由管理</span>
-    </div>
+    <page-header>
+      路由管理
+      <template #subtitle>前端路由管理</template>
+    </page-header>
     <div class="query-bar">
       <el-form
         :model="query"
@@ -180,16 +180,6 @@ onMounted(() => {
   background-color: var(--background-color-page);
   padding: var(--padding);
   border-radius: var(--border-radius);
-  .page-header {
-    .page-header__name {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-    }
-    .page-header__description {
-      color: var(--font-color-secondary);
-      margin-left: var(--margin);
-    }
-  }
   .query-bar {
     margin-top: var(--margin);
   }

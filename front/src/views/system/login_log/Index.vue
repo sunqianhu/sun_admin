@@ -1,9 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-header">
-      <div class="page-header__name">登录日志</div>
-      <div class="page-header__description">查看用户登录时间、终端和 IP</div>
-    </div>
+    <page-header>
+      登录日志
+      <template #subtitle>查看用户登录时间、终端和 IP</template>
+    </page-header>
     <div class="query-bar">
       <el-form
         :model="query"
@@ -179,18 +179,6 @@ onMounted(() => {
   background-color: var(--background-color-page);
   padding: var(--padding);
   border-radius: var(--border-radius);
-  .page-header {
-    display: flex;
-    .page-header__name {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-    }
-    .page-header__description {
-      color: var(--font-color-secondary);
-      margin-left: var(--margin);
-      flex: 1;
-    }
-  }
   .query-bar {
     margin-top: var(--margin);
     .el-select {

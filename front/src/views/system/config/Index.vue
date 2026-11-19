@@ -1,9 +1,9 @@
 <template>
   <div class="index" v-loading="initLoading">
-    <div class="page-header">
-      <div class="page-header__name">系统设置</div>
-      <div class="page-header__description">设置系统名称、简介和禁止访问 IP</div>
-    </div>
+    <page-header>
+      系统设置
+      <template #subtitle>设置系统名称、简介和禁止访问 IP</template>
+    </page-header>
     <el-form
       :model="config"
       :rules="rules"
@@ -24,7 +24,11 @@
         />
       </el-form-item>
       <el-form-item label="禁止访问IP" prop="denied_ips_string">
-        <el-input v-model="config.denied_ips_string" type="textarea" :rows="5" />
+        <el-input
+          v-model="config.denied_ips_string"
+          type="textarea"
+          :rows="5"
+        />
         <div class="text-tip">一行一个</div>
       </el-form-item>
       <el-form-item>
@@ -122,20 +126,8 @@ onMounted(() => {
   background-color: var(--background-color-page);
   padding: var(--padding);
   border-radius: var(--border-radius);
-  .page-header {
-    display: flex;
-    .page-header__name {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-    }
-    .page-header__description {
-      color: var(--font-color-secondary);
-      margin-left: var(--margin);
-      flex: 1;
-    }
-  }
   .form {
-    width: 500px;
+    max-width: 500px;
     margin-top: 16px;
     .el-select {
       width: 100%;

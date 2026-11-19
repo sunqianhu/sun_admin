@@ -1,10 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-header">
-      <div class="page-header__name">流式提取</div>
-      <div class="page-header__description">主要用于大模型流式输出</div>
-      <div class="page-header__action"></div>
-    </div>
+    <page-header>
+      流式提取
+      <template #subtitle>主要用于大模型流式输出</template>
+    </page-header>
     <div v-html="resultMd" class="result"></div>
     <div class="error">{{ error }}</div>
     <div class="action">
@@ -98,19 +97,6 @@ const submitFetch = async () => {
   background-color: var(--background-color-page);
   padding: var(--padding);
   border-radius: var(--border-radius);
-  .page-header {
-    display: flex;
-    .page-header__name {
-      font-size: var(--font-size-lg);
-    }
-    .page-header__description {
-      color: var(--font-color-secondary);
-      margin-left: var(--margin);
-      flex: 1;
-    }
-    .page-header__action {
-    }
-  }
   .action {
     margin-top: var(--margin);
     text-align: center;
