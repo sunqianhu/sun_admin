@@ -12,7 +12,7 @@
       v-model:visible="visible"
       placement="right"
       trigger="click"
-      :width="500"
+      :width="600"
     >
       <template #reference>
         <el-button class="popover__reference"> 选择 </el-button>
@@ -30,9 +30,10 @@
               class="icon"
               @click="select(iconName)"
             >
-              <el-icon size="18">
+              <el-icon size="20">
                 <component :is="icons[iconName]" />
               </el-icon>
+              <span class="icon__name">{{ iconName }}</span>
             </div>
           </div>
         </el-scrollbar>
@@ -93,19 +94,26 @@ const select = async (iconName) => {
   .icon-grid {
     margin-top: var(--margin-sm);
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0px;
     .icon {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 40px;
+      gap: var(--margin-sm);
+      min-height: 60px;
+      padding: var(--padding-sm);
       border-radius: 4px;
       transition: all 0.2s ease;
       cursor: pointer;
+      .icon__name {
+        width: 100%;
+        font-size: var(--font-size-xs);
+        text-align: center;
+        overflow-wrap: anywhere;
+      }
       &:hover {
         background-color: #f5f7fa;
-        transform: scale(1.2);
         color: #409eff;
       }
     }

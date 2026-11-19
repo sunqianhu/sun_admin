@@ -35,9 +35,11 @@
         class="table"
       >
         <el-table-column v-slot="{ row }" prop="name" label="菜单名称">
+          <el-icon v-if="icons[row.icon]" class="menu-icon">
+            <component :is="icons[row.icon]" />
+          </el-icon>
           {{ row.name }}
         </el-table-column>
-        <el-table-column prop="icon" label="菜单图标" show-overflow-tooltip />
         <el-table-column prop="url" label="菜单网址" show-overflow-tooltip />
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column
@@ -79,6 +81,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Search, RefreshLeft, Plus } from "@element-plus/icons-vue";
+import * as icons from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
@@ -195,6 +198,10 @@ onMounted(() => {
     margin-top: var(--margin);
     .table {
       width: 100%;
+      .menu-icon {
+        margin-right: 4px;
+        vertical-align: -2px;
+      }
     }
   }
 }
