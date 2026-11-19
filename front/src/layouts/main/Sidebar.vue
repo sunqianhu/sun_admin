@@ -221,6 +221,9 @@ onMounted(() => {
 
   @media (max-width: 768px) {
     .sidebar__container {
+      .sidebar__right > .header .header__center {
+        display: none;
+      }
       &.sidebar--fold {
         .sidebar__left {
           width: 0px;
