@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\command;
 
+use app\helper\MessageHelper;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -20,6 +21,6 @@ class Test extends Command
 
     protected function execute(Input $input, Output $output)
     {
-
+        echo (new MessageHelper())->send(1, '消息标题', '消息内容', 'https://www.baidu.com');
     }
 }

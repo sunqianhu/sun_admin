@@ -6,10 +6,19 @@
 
 return [
     // 默认缓存驱动
-    'default' => 'file',
+    'default' => 'redis',
 
     // 缓存连接方式配置
     'stores'  => [
+        'redis' => [
+            'type'     => 'Redis',
+            'host'     => env('REDIS_HOST', '127.0.0.1'),
+            'port'     => (int) env('REDIS_PORT', 6379),
+            'password' => env('REDIS_PASSWORD', ''),
+            'select'   => (int) env('REDIS_DB_CACHE', 0),
+            'prefix'   => '',
+            'expire'   => 0,
+        ],
         'file' => [
             // 驱动方式
             'type'       => 'File',

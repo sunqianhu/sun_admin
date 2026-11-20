@@ -51,21 +51,6 @@ const loadFromStorage = () => {
     const saved = localStorage.getItem("theme_setting");
     if (saved) {
       const parsed = JSON.parse(saved);
-      //兼容旧的布局主题配置
-      for (const key of Object.keys(parsed)) {
-        const newKey = key.replace(/^(sidebar|topNavigation)Layout_/, "$1_");
-        if (newKey !== key) {
-          if (!(newKey in parsed)) {
-            parsed[newKey] = parsed[key];
-          }
-          delete parsed[key];
-        }
-      }
-      if (parsed.mainLayout_layoutType === "sidebar_layout") {
-        parsed.mainLayout_layoutType = "sidebar";
-      } else if (parsed.mainLayout_layoutType === "top_navigation_layout") {
-        parsed.mainLayout_layoutType = "top_navigation";
-      }
       return { ...defaultTheme, ...parsed };
     }
   } catch (e) {
