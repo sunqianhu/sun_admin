@@ -279,6 +279,8 @@ composer install
 php think run --host 0.0.0.0 --port 8000
 ~~~
 
+`composer install`、`composer update` 和 `composer dump-autoload` 会通过 `post-autoload-dump` 自动执行 `sunqianhu_helper_install.php`，补齐 `config` 目录中缺失的 `database.php`、`file.php`、`file_log.php`，保留已有文件。使用 `--no-scripts` 时不会执行；后端 Dockerfile 已在复制完整代码后运行 `composer dump-autoload`，因此构建镜像时也会初始化这些配置。
+
 后端开发地址为 `http://127.0.0.1:8000`，文档根目录为 `back/public`。内置服务器用于本地开发，生产环境使用 Nginx 和 PHP-FPM。
 
 ### 4. 配置并启动桌面端

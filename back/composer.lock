@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31fa0ea5fb9559577641dd9443e12bc2",
+    "content-hash": "89f8a1ff7d357c37a155e99caa36bfa5",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -1333,24 +1333,29 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.6.6",
+            "version": "1.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "d42f77d0c57f8383e89290f75f1c0c87cb7aa149"
+                "reference": "c41df344554f21ff93fa789008470c246a88b4ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/d42f77d0c57f8383e89290f75f1c0c87cb7aa149",
-                "reference": "d42f77d0c57f8383e89290f75f1c0c87cb7aa149",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/c41df344554f21ff93fa789008470c246a88b4ce",
+                "reference": "c41df344554f21ff93fa789008470c246a88b4ce",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-gd": "*",
+                "ext-json": "*",
                 "ext-pdo": "*",
-                "ext-zip": "*"
+                "ext-zip": "*",
+                "php": ">7.4"
             },
+            "bin": [
+                "bin/sunqianhu_helper_install.php"
+            ],
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1363,16 +1368,25 @@
             ],
             "authors": [
                 {
-                    "name": "sunqianhu",
+                    "name": "sun qian hu",
                     "email": "469661426@qq.com"
                 }
             ],
-            "description": "php助手类包含项目开发过程中各种常用的工具类",
+            "description": "PHP 常用工具库，提供数组、字符串、时间、数据库、HTTP、图片与文件处理助手",
+            "homepage": "https://github.com/sunqianhu/helper",
+            "keywords": [
+                "database",
+                "helper",
+                "http",
+                "image",
+                "php",
+                "utils"
+            ],
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.6.6"
+                "source": "https://github.com/sunqianhu/helper"
             },
-            "time": "2026-03-31T04:18:01+00:00"
+            "time": "2026-11-20T11:29:56+00:00"
         },
         {
             "name": "symfony/clock",
