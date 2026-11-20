@@ -161,6 +161,7 @@ onMounted(() => {
         }
       }
       .menu-row {
+        margin-top: var(--margin);
         flex: 1;
         min-height: 0;
       }
