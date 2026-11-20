@@ -11,6 +11,45 @@ class ConfigHelper
 
     /**
      * 获取值
+     * @return array
+     * @throws Exception
+     */
+    public function get()
+    {
+        $cacheKey = 'config';
+        $config = Cache::get($cacheKey);
+        if ($config !== null) {
+            return $config;
+        }
+
+        $configModel = ConfigModel::find($this->id);
+        if (empty($configModel)) {
+            throw new Exception('没有找到配置记录');
+        }
+        $configModel->append(['system_logo_url', 'system_favicon_url']);
+        $config = $configModel->toArray();
+
+        Cache::tag('config')->set($cacheKey, $config, 60 * 60 * 24 * 7);
+        return $config;
+    }
+
+    /**
+     * 修改
+     * @param $data
+     * @return bool
+     */
+    public function edit($data)
+    {
+        $configModel = ConfigModel::findOrEmpty($this->id);
+        $result = $configModel->save($data);
+        if ($result) {
+            $this->clearCache();
+        }
+        return $result;
+    }
+
+    /**
+     * 获取值
      * @param $field
      * @return mixed
      * @throws Exception

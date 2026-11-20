@@ -23,6 +23,7 @@ CREATE TABLE `config` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `system_name` varchar(127) NOT NULL DEFAULT '' COMMENT '系统名称',
   `system_logo` varchar(255) NOT NULL DEFAULT '' COMMENT '系统Logo路径',
+  `system_favicon` varchar(255) NOT NULL DEFAULT '' COMMENT '系统浏览器图标路径',
   `system_description` text NOT NULL COMMENT '系统简介',
   `denied_ips_string` text NOT NULL COMMENT '拒绝登录ip串',
   PRIMARY KEY (`id`)
@@ -31,7 +32,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('1', 'sun admin', '', '本系统是一套通用管理后台框架，集成用户管理、角色权限、组织机构、会话管理、操作日志和系统配置等基础功能，支持桌面端、移动端及 API 接入，为各类业务系统提供统一、可扩展的开发基础。', '');
+INSERT INTO `config` VALUES ('1', 'sun admin', '', '', '本系统是一套通用管理后台框架，集成用户管理、角色权限、组织机构、会话管理、操作日志和系统配置等基础功能，支持桌面端、移动端及 API 接入，为各类业务系统提供统一、可扩展的开发基础。', '');
 
 -- ----------------------------
 -- Table structure for data_scope

@@ -2,7 +2,9 @@
   <div class="index" v-loading="initLoading">
     <page-header>
       系统设置
-      <template #subtitle>设置系统名称、Logo、简介和禁止访问 IP</template>
+      <template #subtitle
+        >系统相关设置</template
+      >
     </page-header>
     <el-form
       :model="config"
@@ -11,6 +13,9 @@
       ref="configRef"
       class="form"
     >
+      <el-form-item label="系统名称" prop="system_name">
+        <el-input v-model="config.system_name" />
+      </el-form-item>
       <el-form-item label="系统Logo" prop="system_logo">
         <div class="system-logo">
           <img :src="config.system_logo_url" alt="系统Logo" />
@@ -26,16 +31,32 @@
               :icon="Upload"
               :disabled="submitLoading || uploadLoading"
             >
-              上传Logo
+              上传
             </el-button>
           </file-upload>
-        </div>
-        <div class="text-tip">
-          支持 PNG、JPG、GIF、WebP，最大2MB，建议使用正方形图片。上传后请保存。
+          <div class="text-tip">支持 PNG、JPG、GIF，建议使用正方形图片。</div>
         </div>
       </el-form-item>
-      <el-form-item label="系统名称" prop="system_name">
-        <el-input v-model="config.system_name" />
+      <el-form-item label="浏览器图标" prop="system_favicon">
+        <div class="system-favicon">
+          <img :src="config.system_favicon_url" alt="浏览器图标" />
+          <file-upload
+            v-model="systemFaviconFile"
+            :data="{ module: 'system_favicon' }"
+            accept=".ico"
+            :show-file-list="false"
+            :disabled="submitLoading || uploadLoading"
+            @success="changeSystemFavicon"
+          >
+            <el-button
+              :icon="Upload"
+              :disabled="submitLoading || uploadLoading"
+            >
+              上传
+            </el-button>
+          </file-upload>
+          <div class="text-tip">后缀名ico，最大2MB，保存并刷新页面后生效。</div>
+        </div>
       </el-form-item>
       <el-form-item label="系统简介" prop="system_description">
         <el-input
@@ -89,8 +110,9 @@ const rules = {
 const initLoading = ref(false);
 const submitLoading = ref(false);
 const systemLogoFile = ref([]);
+const systemFaviconFile = ref([]);
 const uploadLoading = computed(() =>
-  systemLogoFile.value.some((file) =>
+  [...systemLogoFile.value, ...systemFaviconFile.value].some((file) =>
     ["ready", "uploading"].includes(file.status),
   ),
 );
@@ -101,6 +123,14 @@ const uploadLoading = computed(() =>
 const changeSystemLogo = (response) => {
   config.value.system_logo = response.data.path;
   config.value.system_logo_url = response.data.url;
+};
+
+/**
+ * 切换系统浏览器图标
+ */
+const changeSystemFavicon = (response) => {
+  config.value.system_favicon = response.data.path;
+  config.value.system_favicon_url = response.data.url;
 };
 
 /**
@@ -168,7 +198,8 @@ onMounted(() => {
   .form {
     max-width: 700px;
     margin-top: 16px;
-    .system-logo {
+    .system-logo,
+    .system-favicon {
       display: flex;
       align-items: center;
       gap: var(--margin);
@@ -177,6 +208,10 @@ onMounted(() => {
         height: 64px;
         object-fit: contain;
       }
+    }
+    .system-favicon img {
+      width: 32px;
+      height: 32px;
     }
     .el-select {
       width: 100%;

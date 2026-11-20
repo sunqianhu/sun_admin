@@ -25,4 +25,21 @@ class ConfigModel extends BaseModel
         $file = new File();
         return $file->getUrl($data['system_logo']);
     }
+
+    /**
+     * 得到系统浏览器图标访问地址
+     * @param $value
+     * @param $data
+     * @return string
+     * @throws Exception
+     */
+    public function getSystemFaviconUrlAttr($value, $data)
+    {
+        if (empty($data['system_favicon'])) {
+            $siteHelper = new SiteHelper();
+            return $siteHelper->getUrl('image/favicon.ico');
+        }
+        $file = new File();
+        return $file->getUrl($data['system_favicon']);
+    }
 }

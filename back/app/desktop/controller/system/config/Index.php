@@ -33,7 +33,7 @@ class Index extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['system_name'=>'', 'system_logo'=>'', 'system_description'=>'', 'denied_ips_string'=>'']);
+        $post = $this->request->post(['system_name'=>'', 'system_logo'=>'', 'system_favicon'=>'', 'system_description'=>'', 'denied_ips_string'=>'']);
 
         try {
             $post['id'] = 1;
