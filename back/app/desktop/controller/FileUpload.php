@@ -12,7 +12,7 @@ use think\Response;
 class FileUpload extends Base
 {
     public bool $isApiAuth = false;
-    private $allowModules = ['rich_editor'];
+    private $allowModules = ['rich_editor', 'system_logo'];
 
     /**
      * 上传

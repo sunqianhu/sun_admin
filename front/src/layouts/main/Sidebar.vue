@@ -5,8 +5,13 @@
       class="sidebar__container"
     >
       <el-aside class="sidebar__left">
-        <div class="system-name-row">
-          <img src="@/assets/logo.png" class="logo" />
+        <div class="system-name-row" v-if="systemName !== ''">
+          <img
+            :src="systemLogoUrl"
+            class="logo"
+            alt="系统Logo"
+            v-if="systemLogoUrl !== ''"
+          />
           <div class="system-info">
             <span class="name">{{ systemName }}</span>
             <span class="version">版本：{{ version }}</span>
@@ -68,6 +73,7 @@ import QuickNavigation from "./QuickNavigation.vue";
 
 const sidebarStore = useSidebarStore();
 const systemName = ref("");
+const systemLogoUrl = ref("");
 const version = ref("");
 const themeStore = useThemeStore();
 const isDark = useDark();
@@ -92,6 +98,7 @@ const init = async () => {
     return;
   }
   systemName.value = response.data.system_name;
+  systemLogoUrl.value = response.data.system_logo_url;
   version.value = response.data.version;
 };
 
@@ -139,7 +146,9 @@ onMounted(() => {
         padding-left: 10px;
         padding-top: 8px;
         .logo {
+          width: 32px;
           height: 32px;
+          object-fit: contain;
           flex-shrink: 0;
           padding-top: 6px;
         }

@@ -2,8 +2,13 @@
   <div class="top-navigation">
     <div class="system-name-row">
       <div class="system-name-row__left">
-        <div class="system-name">
-          <img src="@/assets/logo.png" class="logo" />
+        <div class="system-name" v-if="systemName !== ''">
+          <img
+            :src="systemLogoUrl"
+            class="logo"
+            alt="系统Logo"
+            v-if="systemLogoUrl !== ''"
+          />
           <div class="system-info">
             <span class="name">{{ systemName }}</span>
             <span class="version">版本：{{ version }}</span>
@@ -54,6 +59,7 @@ import { useThemeStore } from "@/stores/theme";
 
 const themeStore = useThemeStore();
 const systemName = ref("");
+const systemLogoUrl = ref("");
 const version = ref("");
 
 /**
@@ -65,6 +71,7 @@ const init = async () => {
     return;
   }
   systemName.value = response.data.system_name;
+  systemLogoUrl.value = response.data.system_logo_url;
   version.value = response.data.version;
 };
 
@@ -95,7 +102,9 @@ onMounted(() => {
       .system-name {
         display: flex;
         .logo {
+          width: 40px;
           height: 40px;
+          object-fit: contain;
           padding-top: 4px;
         }
         .system-info {

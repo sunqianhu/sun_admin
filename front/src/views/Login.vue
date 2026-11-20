@@ -2,11 +2,11 @@
   <div class="login">
     <div class="main">
       <div class="main__left">
-        <div class="system-logo">
-          <img src="@/assets/logo.png" alt="" />
+        <div class="system-logo" v-if="systemLogoUrl !== ''">
+          <img :src="systemLogoUrl" alt="系统Logo" />
         </div>
         <h1 class="system-name">{{ systemName }}</h1>
-        <div class="version">版本 {{ version }}</div>
+        <div class="version" v-if="version !== ''">版本 {{ version }}</div>
       </div>
 
       <div class="main__right">
@@ -83,6 +83,7 @@ import { login } from "@/helper/session";
 import Vcode from "vue3-puzzle-vcode";
 
 const systemName = ref("");
+const systemLogoUrl = ref("");
 const version = ref("");
 const session = ref({});
 const sessionRef = ref();
@@ -107,6 +108,7 @@ const init = async () => {
   }
 
   systemName.value = response.data.system_name;
+  systemLogoUrl.value = response.data.system_logo_url;
   version.value = response.data.version;
   document.title = systemName.value;
 };
@@ -204,6 +206,8 @@ onMounted(() => {
         img {
           display: block;
           width: 32px;
+          height: 32px;
+          object-fit: contain;
         }
       }
       .system-name {

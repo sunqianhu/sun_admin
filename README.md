@@ -176,7 +176,7 @@ Pinia 保存当前页面运行所需状态，部分路由、权限和水印数�
 | 登录日志 | 查看登录用户、终端、IP 和时间 | [system/login_log](front/src/views/system/login_log) |
 | 操作日志 | 查看请求方法、内容、HTTP 状态码、业务码、响应、会话及耗时，按时间段删除 | [system/operation_log](front/src/views/system/operation_log) |
 | 系统消息 | 查看消息、未读数量、设置已读，配合 WebSocket 接收提醒 | [system/message](front/src/views/system/message) |
-| 系统设置 | 设置系统名称、系统简介和禁止访问的 IP | [system/config](front/src/views/system/config) |
+| 系统设置 | 设置系统名称、Logo、系统简介和禁止访问的 IP | [system/config](front/src/views/system/config) |
 
 ### 框架界面与个人功能
 
@@ -209,7 +209,7 @@ API 端与其他终端共用会话、角色和权限。外部程序使用终端�
 
 **新增可用账号：** 先维护单位，再创建角色并分配菜单、路由、功能权限和数据策略，最后在用户管理中创建用户、选择单位和角色。新用户登录后看到的入口和可访问的数据由这些配置共同决定。
 
-**修改系统信息：** 在系统设置中修改名称和简介；关于系统读取同一份简介。应用版本来自构建，不在系统设置中手动维护。
+**修改系统信息：** 在系统设置中修改名称、Logo 和简介；关于系统读取同一份简介。Logo 支持 PNG、JPG、GIF、WebP，最大 2 MB，上传并保存后刷新页面，登录页、侧边栏和顶部导航栏会显示新 Logo；未设置时使用后端 `back/public/image/logo.png`，由 `ConfigModel` 获取器通过 `SiteHelper` 生成访问地址。已有数据库需先执行 [system_logo.sql](资料/部署/system_logo.sql) 增加字段。应用版本来自构建，不在系统设置中手动维护。
 
 **创建 API 凭据：** 在会话管理中添加会话，终端选择 API 端，填写所属用户、名称和过期时间。添加后复制令牌，调用 API 时放入 `token` 请求头。该会话沿用所属用户的角色权限，不单独建立另一套授权。
 

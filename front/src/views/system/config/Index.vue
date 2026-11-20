@@ -2,7 +2,7 @@
   <div class="index" v-loading="initLoading">
     <page-header>
       系统设置
-      <template #subtitle>设置系统名称、简介和禁止访问 IP</template>
+      <template #subtitle>设置系统名称、Logo、简介和禁止访问 IP</template>
     </page-header>
     <el-form
       :model="config"
@@ -11,6 +11,29 @@
       ref="configRef"
       class="form"
     >
+      <el-form-item label="系统Logo" prop="system_logo">
+        <div class="system-logo">
+          <img :src="config.system_logo_url" alt="系统Logo" />
+          <file-upload
+            v-model="systemLogoFile"
+            :data="{ module: 'system_logo' }"
+            accept=".png,.jpg,.jpeg,.gif"
+            :show-file-list="false"
+            :disabled="submitLoading || uploadLoading"
+            @success="changeSystemLogo"
+          >
+            <el-button
+              :icon="Upload"
+              :disabled="submitLoading || uploadLoading"
+            >
+              上传Logo
+            </el-button>
+          </file-upload>
+        </div>
+        <div class="text-tip">
+          支持 PNG、JPG、GIF、WebP，最大2MB，建议使用正方形图片。上传后请保存。
+        </div>
+      </el-form-item>
       <el-form-item label="系统名称" prop="system_name">
         <el-input v-model="config.system_name" />
       </el-form-item>
@@ -37,6 +60,7 @@
           class="button"
           @click="submitForm"
           :loading="submitLoading"
+          :disabled="uploadLoading"
         >
           保存
         </el-button>
@@ -46,7 +70,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { computed, ref, onMounted } from "vue";
+import { Upload } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 
 const config = ref({});
@@ -63,6 +88,20 @@ const rules = {
 };
 const initLoading = ref(false);
 const submitLoading = ref(false);
+const systemLogoFile = ref([]);
+const uploadLoading = computed(() =>
+  systemLogoFile.value.some((file) =>
+    ["ready", "uploading"].includes(file.status),
+  ),
+);
+
+/**
+ * 切换系统logo
+ */
+const changeSystemLogo = (response) => {
+  config.value.system_logo = response.data.path;
+  config.value.system_logo_url = response.data.url;
+};
 
 /**
  * 初始化
@@ -127,8 +166,18 @@ onMounted(() => {
   padding: var(--padding);
   border-radius: var(--border-radius);
   .form {
-    max-width: 500px;
+    max-width: 700px;
     margin-top: 16px;
+    .system-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--margin);
+      img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+      }
+    }
     .el-select {
       width: 100%;
     }

@@ -23,12 +23,8 @@ class Index extends Base
      */
     public function init()
     {
-        $configModel = ConfigModel::field('id,system_name,system_description,denied_ips_string')->find(1);
-        if(empty($configModel)){
-            return $this->getErrorResponse('没有找到配置记录');
-        }
-
-        $config = $configModel->toArray();
+        $configHelper = new ConfigHelper();
+        $config = $configHelper->get();
         return $this->getSuccessResponse('获取成功', $config);
     }
 
@@ -37,23 +33,19 @@ class Index extends Base
      */
     public function save()
     {
-        $post = $this->request->post(['system_name'=>'', 'system_description'=>'', 'denied_ips_string'=>'']);
+        $post = $this->request->post(['system_name'=>'', 'system_logo'=>'', 'system_description'=>'', 'denied_ips_string'=>'']);
 
-        $post['id'] = 1;
         try {
+            $post['id'] = 1;
             validate(ConfigValidate::class)->scene('edit')->check($post);
         } catch (ValidateException $exception) {
             return $this->getErrorResponse($exception->getError());
         }
 
-        $configModel = ConfigModel::find($post['id']);
-        if(empty($configModel)){
-            return $this->getErrorResponse('没有找到配置记录');
-        }
-        $configModel->save($post);
-
         $configHelper = new ConfigHelper();
-        $configHelper->clearCache();
+        $data = $post;
+        unset($data['id']);
+        $configHelper->edit($data);
 
         return $this->getSuccessResponse('保存成功');
     }

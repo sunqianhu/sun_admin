@@ -21,9 +21,10 @@ class Login extends Base
     public function init()
     {
         $configHelper = new ConfigHelper();
-        $systemName = $configHelper->getValue('system_name');
+        $config = $configHelper->get();
         $data = [
-            'system_name' => $systemName,
+            'system_name' => $config['system_name'],
+            'system_logo_url' => $config['system_logo_url'],
             'version' => config('app.version')
         ];
         return $this->getSuccessResponse('获取成功', $data);
