@@ -4,7 +4,7 @@ COPY ./composer.json ./composer.lock .
 RUN composer install --no-interaction --ignore-platform-reqs --no-scripts
 
 #环境
-FROM sunqianhu/php_nginx:php82nginx1263
+FROM sunqianhu/php_nginx:php8235nginx1319
 ARG VERSION=dev
 WORKDIR /var/www/html
 
@@ -18,7 +18,7 @@ RUN composer dump-autoload --no-dev \
 
 #配置
 COPY ./docker/.env .
-COPY ./docker/nginx.conf /usr/local/nginx-1.26.3/conf/nginx.conf
+COPY ./docker/nginx.conf /usr/local/nginx-1.31.9/conf/nginx.conf
 COPY ./docker/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY ./docker/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf

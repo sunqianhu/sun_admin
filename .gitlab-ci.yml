@@ -31,7 +31,7 @@ test_back:
       -v "$CI_PROJECT_DIR/back:/var/www/html"
       -v "$CI_PROJECT_DIR/back/docker/.env_test:/var/www/html/.env"
       -w /var/www/html
-      sunqianhu/php_nginx:php82nginx1263
+      sunqianhu/php_nginx:php8235nginx1319
       -c "composer install --no-interaction --prefer-dist &&
       php vendor/phpunit/phpunit/phpunit --log-junit tests/report.xml"
   artifacts:

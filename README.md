@@ -1441,6 +1441,8 @@ npm run build
 
 ### 构建 Docker 镜像
 
+后端、桌面端和移动端的运行阶段统一使用 `sunqianhu/php_nginx:php8235nginx1319`，CI 后端测试也使用同一镜像。Nginx 安装目录为 `/usr/local/nginx-1.31.9`，前端静态文件目录为 `/var/www/html`；前端通过各自的 `docker/supervisord.conf` 管理 Nginx 进程。
+
 在仓库根目录执行，以下 `1.4.5` 仅为示例版本：
 
 ~~~sh

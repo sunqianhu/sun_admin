@@ -6,13 +6,15 @@ RUN npm ci
 RUN npm run build
 
 #nginx服务
-FROM nginx:1.26.3-alpine
+FROM sunqianhu/php_nginx:php8235nginx1319
 
-WORKDIR /usr/share/nginx/html
+WORKDIR /var/www/html
 COPY --from=build /app/dist .
 
 EXPOSE 80
 EXPOSE 443
 
-COPY docker/nginx.conf /etc/nginx/nginx.conf
-CMD ["nginx", "-g", "daemon off;"]
+COPY docker/nginx.conf /usr/local/nginx-1.31.9/conf/nginx.conf
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
