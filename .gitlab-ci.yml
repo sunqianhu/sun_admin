@@ -18,6 +18,7 @@ workflow:
     - when: never
 
 before_script:
+  - echo $VERSION
   - echo "checking docker daemon status..."
   - docker info || (echo "docker daemon is not running!" && exit 1)
 
