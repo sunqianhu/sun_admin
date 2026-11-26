@@ -2,3 +2,4 @@
 /back/.phpunit.result.cache
 /front/.vscode
 /back/runtime
+.env

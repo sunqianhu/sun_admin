@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 return [
-    'default'     => 'redis',
+    'default'     => env('QUEUE_DRIVER', 'database'),
     'connections' => [
         'sync'     => [
             'type' => 'sync',
@@ -27,7 +27,7 @@ return [
             'host'       => env('REDIS_HOST', '127.0.0.1'),
             'port'       => (int) env('REDIS_PORT', 6379),
             'password'   => env('REDIS_PASSWORD', ''),
-            'select'     => (int) env('REDIS_DB_QUEUE', 1),
+            'select'     => (int) env('QUEUE_REDIS_DB', 1),
             'timeout'    => 0,
             'persistent' => false,
         ],

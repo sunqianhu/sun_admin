@@ -6,7 +6,7 @@
 
 return [
     // 默认缓存驱动
-    'default' => 'redis',
+    'default' => env('CACHE_DRIVER', 'file'),
 
     // 缓存连接方式配置
     'stores'  => [
@@ -15,7 +15,7 @@ return [
             'host'     => env('REDIS_HOST', '127.0.0.1'),
             'port'     => (int) env('REDIS_PORT', 6379),
             'password' => env('REDIS_PASSWORD', ''),
-            'select'   => (int) env('REDIS_DB_CACHE', 0),
+            'select'   => (int) env('CACHE_REDIS_DB', 0),
             'prefix'   => '',
             'expire'   => 0,
         ],

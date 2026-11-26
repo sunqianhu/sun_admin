@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50744
 File Encoding         : 65001
 
-Date: 2026-11-20 11:49:31
+Date: 2026-11-26 11:13:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,7 +32,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('1', 'sun admin', '', '', '本系统是一套通用管理后台框架，集成用户管理、角色权限、组织机构、会话管理、操作日志和系统配置等基础功能，支持桌面端、移动端及 API 接入，为各类业务系统提供统一、可扩展的开发基础。', '');
+INSERT INTO `config` VALUES ('1', 'sun admin', 'system_logo/20261120/b9d919d3570b9405c5a0ad35a2268090.png', '', '本系统是一套通用管理后台框架，集成用户管理、角色权限、组织机构、会话管理、操作日志和系统配置等基础功能，支持桌面端、移动端及 API 接入，为各类业务系统提供统一、可扩展的开发基础。', '');
 
 -- ----------------------------
 -- Table structure for data_scope
@@ -232,6 +232,44 @@ INSERT INTO `dictionary` VALUES ('23', 'response_business_code', '0', '成功', 
 INSERT INTO `dictionary` VALUES ('24', 'response_business_code', '1', '失败', '1');
 INSERT INTO `dictionary` VALUES ('25', 'response_business_code', '2', '登录认证失败', '2');
 INSERT INTO `dictionary` VALUES ('26', 'data_scope_policy_type', '100', '无权限', '100');
+
+-- ----------------------------
+-- Table structure for failed_jobs
+-- ----------------------------
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE `failed_jobs` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `connection` text COLLATE utf8mb4_unicode_ci,
+  `queue` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci,
+  `exception` longtext COLLATE utf8mb4_unicode_ci,
+  `fail_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of failed_jobs
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for jobs
+-- ----------------------------
+DROP TABLE IF EXISTS `jobs`;
+CREATE TABLE `jobs` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci,
+  `attempts` tinyint(4) unsigned DEFAULT NULL,
+  `reserve_time` int(11) unsigned DEFAULT NULL,
+  `available_time` int(11) unsigned DEFAULT NULL,
+  `create_time` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `queue` (`queue`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of jobs
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for login_log
@@ -620,7 +658,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', '$2y$10$Eu3xsqx0L6N1sa265OIxi.EZ3Lfj3bRrm4CoZrd964BOZuGLzbaw2', '1', '张三', '15122222222', 'avatar/2026/11/03/3802aca9dbbcdea2999d0c9a1bd0f122.png', 'big_avatar/2026/11/03/2e95271424930fd2067fba2faa70d9c0.png', '1684989244', '1716183018', '1795146386', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', 'admin', '$2y$10$Eu3xsqx0L6N1sa265OIxi.EZ3Lfj3bRrm4CoZrd964BOZuGLzbaw2', '1', '张三', '15122222222', 'avatar/2026/11/03/3802aca9dbbcdea2999d0c9a1bd0f122.png', 'big_avatar/2026/11/03/2e95271424930fd2067fba2faa70d9c0.png', '1684989244', '1716183018', '1795596990', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', 'user', '$2y$10$UgRQ5ZbLVVqALwcUTvboGeSMn8OCIG7B9DCMBmm.Rlj0rbfrinR1K', '1', '李四', '15111111111', '', '', '1684992552', '1703148627', '0', '');
 INSERT INTO `user` VALUES ('3', '1', 'test1', '$2y$10$KGf9vZaH9DB5XvMS82WUgeGDlSL3IlmeEi6AuVshFshmOqq6Cay6i', '0', 'test1', '15108273575', '', '', '0', '0', '0', '');
 

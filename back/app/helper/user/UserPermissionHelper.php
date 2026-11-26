@@ -82,7 +82,7 @@ class UserPermissionHelper
             ->join('role_permission rp', 'p.id = rp.permission_id')
             ->field('p.key')
             ->where('rp.role_id', 'in', $roleIds)
-            ->orderRaw('ANY_VALUE(p.sort) asc')
+            ->orderRaw('MIN(p.sort) asc')
             ->group('p.key')
             ->column('p.key');
         return array_unique($keys);

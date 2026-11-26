@@ -24,6 +24,8 @@ before_script:
 test_back:
   stage: test
   script:
+    - 'test -f "$BACK_TEST_ENV_FILE" || (echo "请配置后端测试.env文件路径 BACK_TEST_ENV_FILE" && exit 1)'
+    - cp "$BACK_TEST_ENV_FILE" back/docker/.env_test
     - >
       docker run --rm
       --entrypoint sh

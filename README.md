@@ -32,7 +32,7 @@ sun admin 是一个前后端分离的管理系统开发基座，包含 ThinkPHP 
 | --- | --- | --- |
 | 后端框架 | ThinkPHP 8、ThinkORM 4、ThinkPHP 多应用 | HTTP 接口、数据库访问、按终端组织控制器 |
 | 后端辅助能力 | JWT、think-queue 3、Workerman 4、PhpSpreadsheet、sunqianhu/helper | 会话凭据、队列、WebSocket、Excel 和常用工具 |
-| 缓存与队列存储 | Redis、PHP Redis 扩展 | 缓存和队列共用 Redis 服务，分别使用独立 DB |
+| 缓存与队列存储 | 文件缓存、MySQL 队列，可选 Redis | 通过环境变量选择缓存和队列驱动 |
 | 桌面端 | Vue 3.5、Vue Router 4、Pinia、Element Plus 2 | 管理界面、动态路由、状态管理 |
 | 桌面端扩展 | ECharts 5、wangEditor 5、Axios、Day.js、Sass | 图表、富文本、请求、时间和样式 |
 | 移动端 | Vue 3.5、Vue Router、Pinia、Vant 4、Axios | 移动界面和公共组件 |
@@ -42,7 +42,7 @@ sun admin 是一个前后端分离的管理系统开发基座，包含 ThinkPHP 
 
 建议使用 PHP 8.2、Composer 2，以及支持 Vite 6 的 Node.js 版本。仓库 Dockerfile 使用 PHP 8.2 和 Node.js 24.3.0。虽然后端 `composer.json` 声明 PHP `>=8.0`，当前 PHPUnit 11 需要 PHP 8.2。
 
-默认数据库为 MySQL，部署示例使用 MySQL 5.7.44。缓存和队列默认使用 Redis，需要 PHP Redis 扩展。默认缓存使用 Redis DB 0，队列使用 DB 1。
+默认数据库为 MySQL，部署示例使用 MySQL 5.7.44。缓存默认使用文件，队列默认使用数据库，可通过 `.env` 中的 `CACHE_DRIVER`、`QUEUE_DRIVER` 分别切换为 Redis。启用 Redis 时需要 PHP Redis 扩展，缓存默认使用 Redis DB 0，队列使用 DB 1。
 
 依赖的准确版本以 [back/composer.lock](back/composer.lock)、[front/package-lock.json](front/package-lock.json) 和 [front_mobile/package-lock.json](front_mobile/package-lock.json) 为准。
 
@@ -64,8 +64,8 @@ flowchart TD
     C --> P["Helper：可复用业务操作"]
     P --> O["Model / Query"]
     O --> DB[("MySQL")]
-    P --> CACHE["Redis 缓存 DB 0"]
-    P --> Q["Redis 队列 DB 1"]
+    P --> CACHE["文件缓存 / Redis"]
+    P --> Q["数据库队列 / Redis"]
     Q --> W["消息队列 Worker"]
     W --> WS["Workerman WebSocket"]
     WS --> D
@@ -153,10 +153,10 @@ Pinia 保存当前页面运行所需状态，部分路由、权限和水印数�
 | 数据权限 | `data_scope`、`data_scope_policy`、`data_scope_policy_department`、`role_policy` | 数据权限包含策略，角色绑定策略，指定单位单独维护关联 |
 | 桌面入口 | `desktop_menu`、`desktop_route`、`role_desktop_menu`、`role_desktop_route` | 菜单和路由分别保存，并分别授权角色 |
 | 登录和会话 | `session`、`login_log` | 会话保留终端和过期时间，登录日志保留登录记录 |
-| 消息和队列 | `message`、`jobs`、`failed_jobs` | 消息存入 MySQL，任务默认存入 Redis；`jobs` 保留用于数据库驱动，失败任务是否入库由配置决定 |
+| 消息和队列 | `message`、`jobs` | 消息存入 MySQL，任务默认存入 `jobs`，也可切换为 Redis；失败任务是否入库由配置决定 |
 | 设置和运行记录 | `config`、`dictionary`、`runtime`、`operation_log` | 系统配置、字典、运行值及操作审计 |
 
-表结构和初始化关系以 [sun_admin.sql](资料/部署/sun_admin.sql) 为准。当前队列的失败任务存储类型配置为 `none`，不能仅因存在 `failed_jobs` 表就认为失败任务已自动入库。
+表结构和初始化关系以 [sun_admin.sql](资料/部署/sun_admin.sql) 为准。当前队列的失败任务存储类型配置为 `none`，失败信息不会自动写入 `failed_jobs`；如需数据库保存失败任务，还需启用该配置并创建对应表。
 
 ## 功能模块
 
@@ -221,11 +221,11 @@ API 端与其他终端共用会话、角色和权限。外部程序使用终端�
 
 ### 1. 准备运行环境
 
-准备 PHP 8.2、Composer 2、Node.js、npm、MySQL 和 Redis，并启用 PHP Redis 扩展。PHP 需要相应的数据库及扩展支持；使用 Excel、图片处理等功能时也要安装所需扩展。可参考 [后端 Dockerfile](back/Dockerfile) 的运行环境。
+准备 PHP 8.2、Composer 2、Node.js、npm 和 MySQL。PHP 需要相应的数据库及扩展支持；使用 Excel、图片处理等功能时也要安装所需扩展。可参考 [后端 Dockerfile](back/Dockerfile) 的运行环境。
 
 以下命令均从仓库根目录开始，按目录分别执行。初次运行需要同时准备后端和至少一个前端。
 
-启动后端前，确认 Redis 服务已运行，并检查当前命令行 PHP 是否已启用 Redis 扩展：
+默认配置使用文件缓存和数据库队列。切换为 Redis 时，先启动 Redis 服务，并检查当前命令行 PHP 是否已启用 Redis 扩展：
 
 ~~~sh
 php --ri redis
@@ -245,7 +245,13 @@ SQL 包含表结构和系统基础数据。账号明文密码请向项目维护�
 
 ### 3. 配置并启动后端
 
-编辑 `back/.env`，最小配置示例：
+首次安装先从参考配置创建实际环境文件，再编辑 `back/.env`：
+
+~~~sh
+cp back/.env.example back/.env
+~~~
+
+最小配置示例：
 
 ~~~dotenv
 APP_DEBUG=true
@@ -260,18 +266,23 @@ DB_PASS=your_password
 DB_CHARSET=utf8mb4
 DB_PREFIX=
 
+CACHE_DRIVER=file
+QUEUE_DRIVER=database
+
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
 REDIS_PASSWORD="your_redis_password"
-REDIS_DB_CACHE=0
-REDIS_DB_QUEUE=1
+CACHE_REDIS_DB=0
+QUEUE_REDIS_DB=1
 ~~~
 
 初始化 SQL 使用无前缀表名，通常保持 `DB_PREFIX` 为空。
 
 `REDIS_PASSWORD` 填写实际 Redis 密码，包含 `#`、空格等字符时用引号包裹；未设置密码时留空。缓存和队列应使用不同的 Redis DB，并为本站预留，避免清理缓存时影响队列或其他应用。
 
-Redis 不需要导入初始化 SQL。用户、会话、消息及日志等业务数据仍存入 MySQL，Redis 用于缓存和待处理队列任务。
+默认配置不需要连接 Redis。需要使用 Redis 时，将 `CACHE_DRIVER` 或 `QUEUE_DRIVER` 改为 `redis`，并填写 Redis 连接；两项可以分别选择。数据库队列使用初始化 SQL 中的 `jobs` 表。
+
+已有数据库如果缺少 `jobs` 表，先执行 [database_queue.sql](资料/部署/database_queue.sql) 补齐表结构，再使用数据库队列。
 
 ~~~sh
 cd back
@@ -352,10 +363,12 @@ WebSocket 服务和队列 Worker 是两个进程，前端 Vite 服务不会自�
 | `DB_HOST` / `DB_PORT` | 数据库主机、端口 | `127.0.0.1` / `3306` |
 | `DB_NAME` / `DB_USER` / `DB_PASS` | 数据库名称、用户和密码 | 按环境填写 |
 | `DB_CHARSET` / `DB_PREFIX` | 数据库字符集、表前缀 | 默认 `utf8` / 空 |
+| `CACHE_DRIVER` | 默认缓存驱动 | `file`，可选 `redis` |
+| `QUEUE_DRIVER` | 默认队列驱动 | `database`，可选 `redis`、`sync` |
 | `REDIS_HOST` / `REDIS_PORT` | 缓存和队列共用的 Redis 地址、端口 | `127.0.0.1` / `6379` |
 | `REDIS_PASSWORD` | Redis 密码 | 未设置密码时留空 |
-| `REDIS_DB_CACHE` | 缓存使用的 Redis DB | `0` |
-| `REDIS_DB_QUEUE` | 队列使用的 Redis DB | `1`，与缓存分开 |
+| `CACHE_REDIS_DB` | 缓存使用的 Redis DB | `0` |
+| `QUEUE_REDIS_DB` | 队列使用的 Redis DB | `1`，与缓存分开 |
 | `FILE_ROOT_PATH` | 上传文件物理根目录 | `back/public/storage/` |
 | `FILE_ACCESS_PREFIX` | 上传文件访问前缀 | `/api/storage/` |
 | `SITE_ROOT_PATH` | 站点物理根目录 | `back/public/` |
@@ -370,17 +383,26 @@ WebSocket 服务和队列 Worker 是两个进程，前端 Vite 服务不会自�
 
 ### 环境文件的使用位置
 
+后端在 Git 中保存脱敏的 `.example` 参考配置，实际 `.env`、`.env_test` 被忽略；现有本地文件可以继续使用。首次安装按下表复制并填写自己的地址、账号、密码和密钥，已有配置无需重新复制。
+
+| 参考配置 | 实际配置 | 使用场景 |
+| --- | --- | --- |
+| [back/.env.example](back/.env.example) | `back/.env` | 本地后端和本地 PHPUnit |
+| [back/docker/.env.example](back/docker/.env.example) | `back/docker/.env` | 后端 Dockerfile 复制到镜像内的环境配置 |
+| [back/docker/.env_test.example](back/docker/.env_test.example) | `back/docker/.env_test` | GitLab CI 测试容器挂载的环境配置 |
+
+前端保留原有的环境区分，以下文件直接保存在 Git 中，由 Vite 按运行模式读取：
+
 | 文件 | 使用场景 |
 | --- | --- |
-| `back/.env` | 本地后端和本地 PHPUnit |
-| `back/docker/.env` | 后端 Dockerfile 复制到镜像内的环境配置 |
-| `back/docker/.env_test` | GitLab CI 测试容器挂载的环境配置 |
-| `front/.env.development` / `front_mobile/.env.development` | 前端开发服务器 |
-| `front/.env.production` / `front_mobile/.env.production` | 前端正式构建 |
+| [front/.env.development](front/.env.development) | 桌面端开发服务器 |
+| [front/.env.production](front/.env.production) | 桌面端正式构建 |
+| [front_mobile/.env.development](front_mobile/.env.development) | 移动端开发服务器 |
+| [front_mobile/.env.production](front_mobile/.env.production) | 移动端正式构建 |
 
 修改本地 `back/.env` 不会自动修改 Docker 和 CI 的环境配置。
 
-Docker 环境默认通过 `host.docker.internal` 访问宿主机已有的 Redis，Compose 已配置该地址映射。CI 测试使用 Runner 可访问的 Redis 地址；分别在对应环境文件填写地址和密码。
+如需 Redis，Docker 参考配置通过 `host.docker.internal` 访问宿主机 Redis，Compose 已配置该地址映射。CI 测试使用 Runner 可访问的 Redis 地址；分别在对应环境文件填写地址和密码。
 
 | 运行位置 | Redis 连接配置 |
 | --- | --- |
@@ -1136,7 +1158,7 @@ $names = $dictionaryHelper->getValuesString('response_business_code', [0, 1]);
 ~~~text
 业务代码
   → MessageHelper::sendsByQueue()
-  → Redis DB 1 中的 message 队列
+  → 当前队列驱动中的 message 队列（默认存入 jobs 表）
   → 队列 Worker 执行 app/job/Message.php
   → MessageHelper 写入 message 表
   → WebsocketMessageHelper 发送给消息服务
@@ -1146,7 +1168,7 @@ $names = $dictionaryHelper->getValuesString('response_business_code', [0, 1]);
 
 `MessageHelper::send()`、`sends()` 是同步执行；`sendsByQueue()` 将发送任务入队，每个接收用户单独创建任务，避免一名用户失败导致整批重试。
 
-默认队列连接由 `config/queue.php` 的 `default=redis` 决定。系统消息使用名为 `message` 的队列，因此 Worker 需要传入 `--queue=message`；Redis DB 编号由 `REDIS_DB_QUEUE` 决定，与队列名称分别配置。
+默认队列连接由 `.env` 的 `QUEUE_DRIVER` 决定，未设置时使用 `database`，任务存入 `jobs` 表。设置 `QUEUE_DRIVER=redis` 时改用 Redis。系统消息使用名为 `message` 的队列，因此 Worker 需要传入 `--queue=message`；Redis DB 编号由 `QUEUE_REDIS_DB` 决定，与队列名称分别配置。
 
 ### 调用示例
 
@@ -1201,7 +1223,7 @@ php think message stop
 
 Docker 内 [supervisord.conf](back/docker/supervisord.conf) 已管理 Nginx、PHP-FPM、消息服务和消息队列进程，无需在同一容器内重复启动这些进程。
 
-修改缓存或队列配置后，需要重启已有消息服务和队列 Worker。旧 `jobs` 表中的待处理任务不会自动迁移到 Redis；数据库队列连接仍保留，需要处理旧任务时可以显式指定 `database` 连接。
+修改缓存或队列配置后，需要重启已有消息服务和队列 Worker。切换队列驱动不会迁移待处理任务，应先使用原驱动处理完原有队列，再切换新驱动。
 
 ### 连接与发送认证
 
@@ -1265,9 +1287,9 @@ $operationLogHelper->deleteByTimeRange($startTime, $endTime);
 
 ## 缓存管理
 
-后端默认通过 Redis 存储缓存，原有 `Cache` 和 tag 调用方式不变，缓存键前缀为 `sun_admin:`。文件缓存连接保留在配置中，默认不使用。
+后端通过 `.env` 的 `CACHE_DRIVER` 选择缓存驱动，未设置时使用 `file`，缓存文件位于 `back/runtime/cache/`。设置 `CACHE_DRIVER=redis` 时改用 Redis，`Cache` 和 tag 调用方式相同；当前配置的键前缀为空。
 
-Redis 缓存驱动的默认有效期为 `0`，表示不自动过期；各助手在写入时指定的 TTL 仍按原值生效。切换后缓存会在首次访问时重新生成，旧文件缓存无需迁移。
+文件和 Redis 缓存驱动的默认有效期均为 `0`，表示不自动过期；各助手在写入时指定的 TTL 仍按原值生效。切换缓存驱动后缓存会在首次访问时重新生成，无需迁移旧缓存。
 
 ### 当前缓存范围
 
@@ -1292,13 +1314,13 @@ Redis 缓存驱动的默认有效期为 `0`，表示不自动过期；各助手�
 (new UserDataScopeHelper())->clearCache();
 ~~~
 
-清理当前后端 Redis 缓存库：
+清理当前后端默认驱动的缓存：
 
 ~~~php
 \think\facade\Cache::clear();
 ~~~
 
-该方法清空 `REDIS_DB_CACHE` 指定的整个 Redis DB，因此该 DB 应专用于本站缓存。队列使用独立的 `REDIS_DB_QUEUE`，不会被一并清除。`php think clear --cache` 只清理运行目录中的缓存文件，不能清理 Redis。上述操作均不会清理浏览器缓存。
+使用文件缓存时，该方法清理当前文件缓存；使用 Redis 时，会清空 `CACHE_REDIS_DB` 指定的整个 Redis DB，因此该 DB 应专用于本站缓存。Redis 队列使用独立的 `QUEUE_REDIS_DB`，不会被一并清除。`php think clear --cache` 只清理运行目录中的缓存文件，不能清理 Redis。上述操作均不会清理浏览器缓存。
 
 菜单、路由、权限调整后，退出并重新登录可重新获取前端数据。
 
@@ -1356,7 +1378,7 @@ Redis 缓存驱动的默认有效期为 `0`，表示不自动过期；各助手�
 | [UserDataScopeTest](back/tests/unit/user/UserDataScopeTest.php) | 调用真实 `canAccessUser(1, 'global_user_access', 1)`，检查访问是否允许 |
 | [Test](back/tests/unit/Test.php) | 基础断言演示 |
 
-这些测试使用环境文件中的真实 MySQL 和 Redis 连接，不会自动创建隔离数据库，也不使用 Mock 替代助手。运行前需要两个服务均可访问，并有对应用户和授权数据；数据权限测试会通过真实助手读写 Redis 缓存。
+这些测试使用环境文件中的真实 MySQL 连接，不会自动创建隔离数据库，也不使用 Mock 替代助手。运行前需要数据库可访问，并有对应用户和授权数据；数据权限测试会通过真实助手读写当前缓存驱动，默认使用文件，选择 Redis 时还需 Redis 服务可访问。
 
 当前测试属于基础回归检查，没有覆盖全部策略组合和系统功能。两个前端目前没有配置自动测试脚本。
 
@@ -1435,7 +1457,7 @@ npm ci
 npm run build
 ~~~
 
-正式环境变量见各自的 `.env.production`，默认产物目录为 `dist`。`npm run preview` 用于本地预览构建产物，不作为正式服务部署方案。
+正式构建直接读取各自保存在 Git 中的 `.env.production`，默认产物目录为 `dist`。`npm run preview` 用于本地预览构建产物，不作为正式服务部署方案。
 
 桌面端使用 history 路由，静态服务器需要将页面路径回退到 `index.html`。仓库 [桌面 Nginx 配置](front/docker/nginx.conf) 已包含相应处理。
 
@@ -1451,7 +1473,7 @@ docker build -t sun_admin_front:1.4.5 front
 docker build -t sun_admin_front_mobile:1.4.5 front_mobile
 ~~~
 
-后端镜像使用 `back/docker/.env`。构建前应准备对应环境；上传文件和数据库数据使用持久化目录，容器替换后继续使用原数据。
+后端镜像使用 `back/docker/.env`。首次构建前，复制 `back/docker/.env.example` 为 `back/docker/.env` 并填写实际配置。桌面端、移动端 Docker 构建直接使用各自保存在 Git 中的 `.env.production`。上传文件和数据库数据使用持久化目录，容器替换后继续使用原数据。
 
 ### Docker Compose
 
@@ -1460,7 +1482,7 @@ docker build -t sun_admin_front_mobile:1.4.5 front_mobile
 首次使用先调整：
 
 1. 三个服务的镜像或构建配置，示例镜像版本当前为 `1.4.3`。
-2. 数据库连接信息及后端 `back/docker/.env` 中的 Redis 地址、密码；容器使用宿主机 Redis 时，Redis 需监听容器可访问的地址。
+2. 后端 `back/docker/.env` 中的数据库、缓存和队列配置；选择 Redis 时，填写容器可访问的 Redis 地址、密码。
 3. 数据库、上传文件的宿主机持久化目录；示例包含 Linux 绝对路径。
 4. 前端映射端口、部署地址及 WebSocket 地址。
 5. 后端构建参数 `VERSION`；只修改镜像标签不会改变界面显示的版本。
@@ -1552,10 +1574,22 @@ test → build → package → push
 
 - 挂载仓库 `back` 目录。
 - 将 `back/docker/.env_test` 挂载为容器内的 `.env`。
+- 该文件由 GitLab 文件类型变量 `BACK_TEST_ENV_FILE` 提供，不从 Git 获取。
 - 使用 `--network host` 访问已配置的数据库。
-- 不自动启动 MySQL 或 Redis service，需要在环境文件中填写 Runner 能访问的数据库、Redis 地址及密码。
+- 不自动启动 MySQL 或 Redis service，需要填写 Runner 能访问的数据库；选择 Redis 驱动时再填写对应连接。
 
 仅填写开发电脑的 `127.0.0.1` 不代表远程 Runner 能访问开发电脑数据库，应按 Runner 的实际网络位置填写地址。
+
+### CI 环境配置文件
+
+在 GitLab CI/CD Variables 中增加以下 **File（文件）类型**变量，将填写好的实际配置内容作为变量值。示例文件中只有参考值，需要先补全数据库连接和密钥。
+
+| 变量 | 是否必填 | 参考配置及用途 |
+| --- | --- | --- |
+| `BACK_TEST_ENV_FILE` | 是 | 参考 `back/docker/.env_test.example`，测试作业复制为 `back/docker/.env_test` |
+| `BACK_ENV_FILE` | 是 | 参考 `back/docker/.env.example`，后端构建作业复制为 `back/docker/.env` |
+
+变量的可用分支、标签范围应覆盖实际触发流水线的 `product` 分支和发布标签。
 
 ### Harbor 变量
 
