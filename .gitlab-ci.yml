@@ -28,6 +28,8 @@ test_back:
     - cp "$BACK_TEST_ENV_FILE" back/docker/.env_test
     - >
       docker run --rm
+      --user "$(id -u):$(id -g)"
+      --env COMPOSER_HOME=/tmp/composer
       --entrypoint sh
       --network host
       -v "$CI_PROJECT_DIR/back:/var/www/html"
