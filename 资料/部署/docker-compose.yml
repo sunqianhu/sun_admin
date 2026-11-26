@@ -11,10 +11,7 @@ services:
     restart: always
   #后端
   back:
-    build:
-      context: ./back/
-      dockerfile: Dockerfile
-    image: sun_admin_back:1.4.3
+    image: harbor.reefun.com/sun_admin/sun_admin_back:3.8.7
     container_name: sun_admin_back
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -26,15 +23,23 @@ services:
     restart: always
   #前端
   front:
-    build:
-      context: ./front/
-      dockerfile: Dockerfile
-    image: sun_admin_front:1.4.3
+    image: harbor.reefun.com/sun_admin/sun_admin_front:3.8.7
     container_name: sun_admin_front
     depends_on:
       - back
     ports:
-      - "80:80"
+      - "127.0.0.1:9110:80"
+    networks:
+      - sun_admin
+    restart: always
+  #前端移动端
+  front_mobile:
+    image: harbor.reefun.com/sun_admin/sun_admin_front_mobile:3.8.7
+    container_name: sun_admin_front_mobile
+    depends_on:
+      - back
+    ports:
+      - "127.0.0.1:9111:80"
     networks:
       - sun_admin
     restart: always
@@ -58,7 +63,3 @@ services:
 networks:
   sun_admin:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.30.0.0/24
-          gateway: 172.30.0.1
