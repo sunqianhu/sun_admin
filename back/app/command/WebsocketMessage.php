@@ -15,7 +15,7 @@ use Workerman\Connection\TcpConnection;
 use Workerman\Timer;
 use Workerman\Worker;
 
-class Message extends Command
+class WebsocketMessage extends Command
 {
     /**
      * 容器
@@ -34,10 +34,10 @@ class Message extends Command
     protected function configure()
     {
         // 指令配置
-        $this->setName('message')
+        $this->setName('websocket_message')
             ->addArgument('action', Argument::OPTIONAL, "操作参数[start|stop|reload|restart|status]", 'start')
             ->addOption('daemon', null, Option::VALUE_OPTIONAL, '以守护进程运行')
-            ->setDescription('系统消息，windows启动命令：php think message，linux启动命令：php think message start --daemon true');
+            ->setDescription('系统消息，windows启动命令：php think websocket_message，linux启动命令：php think websocket_message start --daemon true');
     }
 
     /**
@@ -62,7 +62,7 @@ class Message extends Command
             if (!in_array($action, $this->actions)) {
                 throw new Exception('action参数错误');
             }
-            $argv[0] = 'message';
+            $argv[0] = 'websocket_message';
             $argv[1] = $action;
             if ($input->hasOption('daemon')) {
                 $argv[2] = '-d';
@@ -77,13 +77,13 @@ class Message extends Command
 
         //容器
         $config = Config::get('message');
-        if (!isset($config['listen_ip']) || !isset($config['port'])) {
+        if (!isset($config['websocket_listen_ip']) || !isset($config['websocket_port'])) {
             throw new Exception('还未配置监听ip或端口');
         }
 
-        $url = 'websocket://' . $config['listen_ip'] . ':' . $config['port'];
+        $url = 'websocket://' . $config['websocket_listen_ip'] . ':' . $config['websocket_port'];
         $this->worker = new Worker($url);
-        $this->worker->name = 'message';
+        $this->worker->name = 'websocket_message';
         $this->worker->count = 1;
 
         //事件

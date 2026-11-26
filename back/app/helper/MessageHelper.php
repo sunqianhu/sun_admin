@@ -2,6 +2,7 @@
 
 namespace app\helper;
 
+use app\helper\message\WebsocketHelper;
 use app\model\MessageModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -49,8 +50,8 @@ class MessageHelper
                 'url' => $url,
                 'add_time' => $time
             ];
-            $websocketMessageHelper = new WebsocketMessageHelper();
-            $websocketMessageHelper->send([$userId], $data);
+            $websocketHelper = new WebsocketHelper();
+            $websocketHelper->send([$userId], $data);
 
             Db::commit();
         } catch (Exception $exception) {
@@ -161,8 +162,8 @@ class MessageHelper
             'type' => 'read',
             'id' => $id
         ];
-        $websocketMessageHelper = new WebsocketMessageHelper();
-        $websocketMessageHelper->send([$userId], $data);
+        $websocketHelper = new WebsocketHelper();
+        $websocketHelper->send([$userId], $data);
     }
 
     /**
@@ -213,8 +214,8 @@ class MessageHelper
         $data = [
             'type' => 'all_read'
         ];
-        $websocketMessageHelper = new WebsocketMessageHelper();
-        $websocketMessageHelper->send([$userId], $data);
+        $websocketHelper = new WebsocketHelper();
+        $websocketHelper->send([$userId], $data);
     }
 
     /**

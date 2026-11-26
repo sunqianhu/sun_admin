@@ -5,7 +5,7 @@
 return [
     // 指令定义
     'commands' => [
-        'message' => 'app\command\Message',
+        'websocket_message' => 'app\command\WebsocketMessage',
         'test' => 'app\command\Test'
     ],
 ];

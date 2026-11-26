@@ -1,12 +1,12 @@
 <?php
 
-namespace app\helper;
+namespace app\helper\message;
 
 use Exception;
 use think\facade\Config;
 use WebSocket\Client;
 
-class WebsocketMessageHelper
+class WebsocketHelper
 {
     /**
      * 发送
@@ -18,10 +18,10 @@ class WebsocketMessageHelper
     public function send($userIds, $data)
     {
 		$config = Config::get('message');
-        if(empty($config['request_ip']) || empty($config['port'])){
+        if(empty($config['websocket_request_ip']) || empty($config['websocket_port'])){
             throw new Exception('还没有配置websocket服务ip和端口');
         }
-        $url = 'ws://' . $config['request_ip'] . ':' . $config['port'];
+        $url = 'ws://' . $config['websocket_request_ip'] . ':' . $config['websocket_port'];
 
         $assembleData = [
             'type' => 'send',
