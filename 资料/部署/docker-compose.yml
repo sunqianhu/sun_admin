@@ -19,6 +19,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
+      - /home/www/sun_admin.sunqianhu.com/back/.env:/var/www/html/.env
       - /home/www/sun_admin.sunqianhu.com/back/public/storage:/var/www/html/public/storage
     networks:
       - sun_admin

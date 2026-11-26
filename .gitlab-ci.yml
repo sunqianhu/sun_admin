@@ -54,7 +54,9 @@ build_back:
 build_front:
   stage: build
   script:
+    - 'test -f "$FRONT_ENV_FILE" || (echo "请配置文件类型变量 FRONT_ENV_FILE" && exit 1)'
     - cd front
+    - cp "$FRONT_ENV_FILE" .env.production
     - docker build -t sun_admin_front:$VERSION .
   tags:
     - runner22
@@ -62,7 +64,9 @@ build_front:
 build_front_mobile:
   stage: build
   script:
+    - 'test -f "$FRONT_MOBILE_ENV_FILE" || (echo "请配置文件类型变量 FRONT_MOBILE_ENV_FILE" && exit 1)'
     - cd front_mobile
+    - cp "$FRONT_MOBILE_ENV_FILE" .env.production
     - docker build -t sun_admin_front_mobile:$VERSION .
   tags:
     - runner22

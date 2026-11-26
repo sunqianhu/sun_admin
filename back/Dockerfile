@@ -17,7 +17,6 @@ RUN composer dump-autoload --no-dev \
 	&& rm -rf docker/
 
 #配置
-COPY ./docker/.env .
 COPY ./docker/nginx.conf /usr/local/nginx-1.31.9/conf/nginx.conf
 COPY ./docker/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY ./docker/php.ini /usr/local/etc/php/php.ini
