@@ -1,0 +1,7 @@
+部署gitlab ci/cd需要部署一些环境变量，包括如下变量：
+BACK_TEST_ENV_FILE：后端测试配置文件.env内容，变量类型为file。
+FRONT_ENV_FILE：前端生产构建配置文件.env.production文件内容，变量类型为file，用于编译构件前端。
+FRONT_MOBILE_ENV_FILE：前端移动端生产构建配置文件.env.production文件内容，变量类型为file，用于编译构件前端移动端。
+HARBOR_REGISTRY：docker镜像仓库地址，字符串类型。
+HARBOR_USERNAME：docker镜像仓库用户名，字符串类型。
+HARBOR_PASSWORD：docker镜像仓库密码，字符串类型。
