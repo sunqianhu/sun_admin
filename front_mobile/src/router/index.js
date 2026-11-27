@@ -33,6 +33,14 @@ const staticRoutes = [
     children: [],
   },
   {
+    path: "/my/user/avatar-crop",
+    name: "my_user_avatar_crop",
+    component: () => import("../views/my/user/AvatarCrop.vue"),
+    meta: {
+      name: "裁剪头像",
+    },
+  },
+  {
     path: "/test",
     name: "test",
     component: () => import("../views/Test.vue"),

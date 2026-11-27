@@ -12,7 +12,9 @@
       </div>
       <div class="header__user">
         <div class="header__name" @click="openUserDetail">{{ user.name }}</div>
-        <div class="header__description">{{ user.department_name }}</div>
+        <div class="header__description" @click="openUserDetail">
+          {{ user.department_name }}
+        </div>
       </div>
     </div>
     <div class="body">
@@ -85,7 +87,6 @@ onMounted(() => {
     }
   }
   .body {
-    margin-top: var(--margin);
     .moudles {
       .moudle {
         text-align: center;
