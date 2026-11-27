@@ -3,7 +3,7 @@
 namespace app\helper;
 
 use app\model\DepartmentModel;
-use app\helper\department\DepartmentUserHelper;
+use app\helper\department\UserHelper;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -110,8 +110,8 @@ class DepartmentHelper
      */
     public function isExistDepartmentsOrUsers($id)
     {
-        $departmentUserHelper = new DepartmentUserHelper();
-        if($this->isExistDepartments($id) || $departmentUserHelper->isExistUsers($id)){
+        $userHelper = new UserHelper();
+        if($this->isExistDepartments($id) || $userHelper->isExistUsers($id)){
             return true;
         }
         return false;

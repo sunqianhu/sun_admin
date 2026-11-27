@@ -7,7 +7,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-class DepartmentUserHelper
+class UserHelper
 {
     /**
      * 得到用户列表

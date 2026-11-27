@@ -4,7 +4,7 @@ namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
 use app\helper\user\UserDataScopeHelper;
-use app\helper\department\DepartmentUserHelper;
+use app\helper\department\UserHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -33,8 +33,8 @@ class DepartmentUsersSelect extends Base
             return $this->getErrorResponse('无权限访问该部门');
         }
 
-        $departmentUserHelper = new DepartmentUserHelper();
-        $users = $departmentUserHelper->getUsers($get['department_id']);
+        $userHelper = new UserHelper();
+        $users = $userHelper->getUsers($get['department_id']);
         return $this->getSuccessResponse('获取成功', $users);
     }
 }
