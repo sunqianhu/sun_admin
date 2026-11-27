@@ -3,7 +3,7 @@
 namespace app\helper\user\data_scope\global_department_access;
 
 use app\helper\department\PathHelper;
-use app\helper\user\UserDataScopeHelper;
+use app\helper\user\DataScopeHelper;
 use app\model\DepartmentModel;
 use Sunqianhu\Helper\Arr;
 use think\db\exception\DataNotFoundException;
@@ -32,8 +32,8 @@ class TreeDepartmentHelper
                     ->whereOr('path', 'like', $path.'/%');
             });
 
-        $userDataScopeHelper = new UserDataScopeHelper();
-        $query = $userDataScopeHelper->buildQueryConstraint($userId, 'global_department_access', $query, 'id', '');
+        $dataScopeHelper = new DataScopeHelper();
+        $query = $dataScopeHelper->buildQueryConstraint($userId, 'global_department_access', $query, 'id', '');
 
         $query->order('sort', 'asc');
         $departmentModels = $query->select();

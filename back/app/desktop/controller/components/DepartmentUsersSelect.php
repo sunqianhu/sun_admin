@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\helper\user\UserDataScopeHelper;
+use app\helper\user\DataScopeHelper;
 use app\helper\department\UserHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -28,8 +28,8 @@ class DepartmentUsersSelect extends Base
             return $this->getErrorResponse('department_id参数错误');
         }
 
-        $userDataScopeHelper = new UserDataScopeHelper();
-        if(!$userDataScopeHelper->canAccessDepartment($this->request->userId, 'global_department_access', $get['department_id'])){
+        $dataScopeHelper = new DataScopeHelper();
+        if(!$dataScopeHelper->canAccessDepartment($this->request->userId, 'global_department_access', $get['department_id'])){
             return $this->getErrorResponse('无权限访问该部门');
         }
 

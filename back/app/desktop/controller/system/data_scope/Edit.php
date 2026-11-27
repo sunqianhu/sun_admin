@@ -4,7 +4,7 @@ namespace app\desktop\controller\system\data_scope;
 
 use app\desktop\controller\Base;
 use app\helper\DataScopeHelper;
-use app\helper\user\UserDataScopeHelper;
+use app\helper\user\DataScopeHelper as UserDataScopeHelper;
 use app\model\DataScopeModel;
 use app\validate\DataScopeValidate;
 use app\validate\IdValidate;

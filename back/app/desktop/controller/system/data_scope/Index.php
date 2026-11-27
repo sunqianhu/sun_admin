@@ -7,7 +7,7 @@ use app\helper\DataScopeHelper;
 use app\helper\data_scope\PolicyDepartmentHelper;
 use app\helper\data_scope\PolicyHelper;
 use app\helper\role\RolePolicyHelper;
-use app\helper\user\UserDataScopeHelper;
+use app\helper\user\DataScopeHelper as UserDataScopeHelper;
 use app\model\DataScopeModel;
 use app\validate\PaginationValidate;
 use Exception;

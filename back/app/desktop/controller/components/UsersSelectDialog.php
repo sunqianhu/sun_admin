@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\helper\user\UserDataScopeHelper;
+use app\helper\user\DataScopeHelper;
 use app\model\UserModel;
 use app\validate\PaginationValidate;
 use think\db\exception\DataNotFoundException;
@@ -35,8 +35,8 @@ class UsersSelectDialog extends Base
             ->with(['department' => function ($query) {
                 $query->withField('id,name');
             }]);
-        $userDataScopeHelper = new UserDataScopeHelper();
-        $query = $userDataScopeHelper->buildQueryConstraint($this->request->userId, 'global_user_access', $query, 'department_id', 'id');
+        $dataScopeHelper = new DataScopeHelper();
+        $query = $dataScopeHelper->buildQueryConstraint($this->request->userId, 'global_user_access', $query, 'department_id', 'id');
         if (!empty($get['department_ids'])) {
             $query->whereIn('department_id', $get['department_ids']);
         }
@@ -66,8 +66,8 @@ class UsersSelectDialog extends Base
         $get = $this->request->post(['user_ids' => []]);
         $query = UserModel::field('id,name')
             ->whereIn('id', $get['user_ids']);
-        $userDataScopeHelper = new UserDataScopeHelper();
-        $query = $userDataScopeHelper->buildQueryConstraint($this->request->userId, 'global_user_access', $query, 'department_id', 'id');
+        $dataScopeHelper = new DataScopeHelper();
+        $query = $dataScopeHelper->buildQueryConstraint($this->request->userId, 'global_user_access', $query, 'department_id', 'id');
         $userModels = $query->select();
         $users = $userModels->toArray();
         return $this->getSuccessResponse('获取成功', $users);

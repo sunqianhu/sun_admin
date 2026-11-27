@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\data_scope\policy;
 use app\desktop\controller\Base;
 use app\helper\data_scope\PolicyDepartmentHelper;
 use app\helper\data_scope\PolicyHelper;
-use app\helper\user\UserDataScopeHelper;
+use app\helper\user\DataScopeHelper;
 use app\model\data_scope\PolicyModel;
 use app\validate\data_scope\PolicyValidate;
 use app\validate\IdValidate;
@@ -92,8 +92,8 @@ class Edit extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        $userDataScopeHelper = new UserDataScopeHelper();
-        $userDataScopeHelper->clearCache();
+        $dataScopeHelper = new DataScopeHelper();
+        $dataScopeHelper->clearCache();
 
         return $this->getSuccessResponse('修改成功');
     }

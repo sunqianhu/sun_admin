@@ -3,7 +3,7 @@
 namespace app\desktop\controller\components;
 
 use app\desktop\controller\Base;
-use app\helper\user\UserDataScopeHelper;
+use app\helper\user\DataScopeHelper;
 use app\helper\UserHelper;
 use app\validate\user\UserSelectValidate;
 use Exception;
@@ -29,8 +29,8 @@ class UserSelect extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $userDataScopeHelper = new UserDataScopeHelper();
-        if(!$userDataScopeHelper->canAccessUser($this->request->userId, 'global_user_access', $get['user_id'])){
+        $dataScopeHelper = new DataScopeHelper();
+        if(!$dataScopeHelper->canAccessUser($this->request->userId, 'global_user_access', $get['user_id'])){
             return $this->getErrorResponse('无权限');
         }
 

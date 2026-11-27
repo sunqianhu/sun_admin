@@ -14,7 +14,7 @@ use think\db\exception\ModelNotFoundException;
 use think\db\Query;
 use think\facade\Cache;
 
-class UserDataScopeHelper
+class DataScopeHelper
 {
     /**
      * 得到访问权限

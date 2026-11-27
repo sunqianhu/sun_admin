@@ -5,12 +5,12 @@ namespace app\desktop\controller\system\role;
 use app\desktop\controller\Base;
 use app\helper\DataScopeHelper;
 use app\helper\RoleHelper;
-use app\helper\desktop\MenuHelper as DesktopMenuHelper;
+use app\helper\desktop\MenuHelper;
 use app\helper\PermissionHelper;
-use app\helper\desktop\RouteHelper as DesktopRouteHelper;
-use app\helper\role\DesktopMenuHelper as RoleDesktopMenuHelper;
+use app\helper\desktop\RouteHelper;
+use app\helper\role\DesktopMenuHelper;
 use app\helper\role\PermissionHelper as RolePermissionHelper;
-use app\helper\role\DesktopRouteHelper as RoleDesktopRouteHelper;
+use app\helper\role\DesktopRouteHelper;
 use app\helper\role\RolePolicyHelper;
 use app\validate\RoleValidate;
 use Exception;
@@ -28,11 +28,11 @@ class Add extends Base
         $permissionHelper = new PermissionHelper();
         $treePermission = $permissionHelper->getTreePermission(0);
 
-        $desktopMenuHelper = new DesktopMenuHelper();
-        $desktopTreeMenu = $desktopMenuHelper->getTreeMenu(0);
+        $menuHelper = new MenuHelper();
+        $desktopTreeMenu = $menuHelper->getTreeMenu(0);
 
-        $desktopRouteHelper = new DesktopRouteHelper();
-        $desktopRoutes = $desktopRouteHelper->getRoutes();
+        $routeHelper = new RouteHelper();
+        $desktopRoutes = $routeHelper->getRoutes();
 
         $dataScopeHelper = new DataScopeHelper();
         $dataScopes = $dataScopeHelper->getDataScopes();
@@ -77,11 +77,11 @@ class Add extends Base
             $rolePermissionHelper = new RolePermissionHelper();
             $rolePermissionHelper->updateRelateByPermissionIds($id, $post['permission_ids']);
 
-            $roleDesktopMenuHelper = new RoleDesktopMenuHelper();
-            $roleDesktopMenuHelper->updateRelateByMenuIds($id, $post['desktop_menu_ids']);
+            $desktopMenuHelper = new DesktopMenuHelper();
+            $desktopMenuHelper->updateRelateByMenuIds($id, $post['desktop_menu_ids']);
 
-            $roleDesktopRouteHelper = new RoleDesktopRouteHelper();
-            $roleDesktopRouteHelper->updateRelateByRouteIds($id, $post['desktop_route_ids']);
+            $desktopRouteHelper = new DesktopRouteHelper();
+            $desktopRouteHelper->updateRelateByRouteIds($id, $post['desktop_route_ids']);
 
             $rolePolicyHelper = new RolePolicyHelper();
             $rolePolicyHelper->updateRelateByPolicyIds($id, $post['policy_ids']);
