@@ -5,7 +5,7 @@ namespace app\desktop\controller\system\user;
 use app\desktop\controller\Base;
 use app\model\UserModel;
 use app\helper\SessionHelper;
-use app\helper\user\UserStatusHelper;
+use app\helper\user\StatusHelper;
 use app\validate\PaginationValidate;
 use app\validate\UserValidate;
 use Exception;
@@ -71,9 +71,9 @@ class Index extends Base
         }
 
         $status = $post['status'] == 1 ? 1 : 0;
-        $userStatusHelper = new UserStatusHelper();
+        $statusHelper = new StatusHelper();
         try{
-            $userStatusHelper->editStatus($post['id'], $status);
+            $statusHelper->editStatus($post['id'], $status);
         }catch (Exception $exception){
             return $this->getErrorResponse($exception->getMessage());
         }

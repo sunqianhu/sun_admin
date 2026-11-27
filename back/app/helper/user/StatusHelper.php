@@ -8,7 +8,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-class UserStatusHelper
+class StatusHelper
 {
     /**
      * 修改状态
