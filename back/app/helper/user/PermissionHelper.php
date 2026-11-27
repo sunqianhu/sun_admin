@@ -7,7 +7,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-class UserPermissionHelper
+class PermissionHelper
 {
     /**
      * 得到接口列表
@@ -18,8 +18,8 @@ class UserPermissionHelper
      * @throws ModelNotFoundException
      */
     public function getApis($userId){
-        $userRoleHelper = new UserRoleHelper();
-        $roleIds = $userRoleHelper->getRoleIds($userId);
+        $roleHelper = new RoleHelper();
+        $roleIds = $roleHelper->getRoleIds($userId);
         if(empty($roleIds)){
             return [];
         }
@@ -72,8 +72,8 @@ class UserPermissionHelper
      * @return array
      */
     public function getPermissionKeys($userId){
-        $userRoleHelper = new UserRoleHelper();
-        $roleIds = $userRoleHelper->getRoleIds($userId);
+        $roleHelper = new RoleHelper();
+        $roleIds = $roleHelper->getRoleIds($userId);
         if(empty($roleIds)){
             return [];
         }

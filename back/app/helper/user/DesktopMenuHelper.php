@@ -8,7 +8,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-class UserDesktopMenuHelper
+class DesktopMenuHelper
 {
     /**
      * 得到树形菜单
@@ -19,8 +19,8 @@ class UserDesktopMenuHelper
      * @throws ModelNotFoundException
      */
     public function getTreeMenu($userId){
-        $userRoleHelper = new UserRoleHelper();
-        $roleIds = $userRoleHelper->getRoleIds($userId);
+        $roleHelper = new RoleHelper();
+        $roleIds = $roleHelper->getRoleIds($userId);
         if(empty($roleIds)){
             return [];
         }

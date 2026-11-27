@@ -2,8 +2,8 @@
 
 namespace app\desktop\controller;
 
-use app\helper\user\UserPermissionHelper;
-use app\helper\user\UserDesktopRouteHelper;
+use app\helper\user\PermissionHelper;
+use app\helper\user\DesktopRouteHelper;
 use app\helper\WatermarkHelper;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -20,8 +20,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $userPermissionHelper = new UserPermissionHelper();
-        $permissions = $userPermissionHelper->getPermissionKeys($this->request->userId);
+        $permissionHelper = new PermissionHelper();
+        $permissions = $permissionHelper->getPermissionKeys($this->request->userId);
         return $this->getSuccessResponse('获取成功', $permissions);
     }
 
@@ -34,8 +34,8 @@ class Frame extends Base
      */
     public function getRoutes()
     {
-        $userDesktopRouteHelper = new UserDesktopRouteHelper();
-        $routes = $userDesktopRouteHelper->getRoutes($this->request->userId);
+        $desktopRouteHelper = new DesktopRouteHelper();
+        $routes = $desktopRouteHelper->getRoutes($this->request->userId);
         return $this->getSuccessResponse('获取成功', $routes);
     }
 

@@ -7,7 +7,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-class UserDesktopRouteHelper
+class DesktopRouteHelper
 {
     /**
      * 得到路由
@@ -18,8 +18,8 @@ class UserDesktopRouteHelper
      * @throws ModelNotFoundException
      */
     public function getRoutes($userId){
-        $userRoleHelper = new UserRoleHelper();
-        $roleIds = $userRoleHelper->getRoleIds($userId);
+        $roleHelper = new RoleHelper();
+        $roleIds = $roleHelper->getRoleIds($userId);
         if(empty($roleIds)){
             return [];
         }

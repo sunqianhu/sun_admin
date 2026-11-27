@@ -4,7 +4,7 @@ namespace app\helper\user;
 
 use app\model\UserRoleModel;
 
-class UserRoleHelper
+class RoleHelper
 {
     /**
      * 得到角色id列表

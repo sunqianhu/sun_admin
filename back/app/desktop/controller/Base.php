@@ -6,7 +6,7 @@ use app\BaseController;
 use app\helper\ResponseHelper;
 use app\helper\SessionHelper;
 use app\helper\IpAuthHelper;
-use app\helper\user\UserDepartmentHelper;
+use app\helper\user\DepartmentHelper;
 use Exception;
 use think\exception\HttpResponseException;
 use think\Response;
@@ -57,8 +57,8 @@ class Base extends BaseController
                 $this->request->sessionId = $sessionHelper->tokenAuth(0, $token);
 
                 $this->request->userId = $sessionHelper->getUserId($this->request->sessionId);
-                $userDepartmentHelper = new UserDepartmentHelper();
-                $this->request->departmentId = $userDepartmentHelper->getDepartmentId($this->request->userId);
+                $departmentHelper = new DepartmentHelper();
+                $this->request->departmentId = $departmentHelper->getDepartmentId($this->request->userId);
                 $sessionHelper->renewExpireTime($this->request->sessionId, time() + 30 * 60, true);
             } catch (Exception $exception) {
                 throw new HttpResponseException(

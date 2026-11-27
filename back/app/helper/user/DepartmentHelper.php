@@ -3,14 +3,14 @@
 namespace app\helper\user;
 
 use app\model\UserModel;
-use app\helper\DepartmentHelper;
+use app\helper\DepartmentHelper as BaseDepartmentHelper;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Cache;
 
-class UserDepartmentHelper
+class DepartmentHelper
 {
     /**
      * 得到部门id
@@ -51,7 +51,7 @@ class UserDepartmentHelper
     public function getBaseDepartment($userId)
     {
         $departmentId = $this->getDepartmentId($userId);
-        $departmentHelper = new DepartmentHelper();
-        return $departmentHelper->getBaseDepartment($departmentId);
+        $baseDepartmentHelper = new BaseDepartmentHelper();
+        return $baseDepartmentHelper->getBaseDepartment($departmentId);
     }
 }

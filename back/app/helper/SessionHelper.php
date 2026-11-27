@@ -2,7 +2,7 @@
 
 namespace app\helper;
 
-use app\helper\user\UserPermissionHelper;
+use app\helper\user\PermissionHelper;
 use app\model\LoginLogModel;
 use app\model\SessionModel;
 use app\model\UserModel;
@@ -219,8 +219,8 @@ class SessionHelper
         if ($api === '') {
             throw new Exception('接口不能为空');
         }
-        $userPermissionHelper = new UserPermissionHelper();
-        if (!$userPermissionHelper->hasPermissionByApi($userId, $api)) {
+        $permissionHelper = new PermissionHelper();
+        if (!$permissionHelper->hasPermissionByApi($userId, $api)) {
             throw new Exception('无权限');
         }
 

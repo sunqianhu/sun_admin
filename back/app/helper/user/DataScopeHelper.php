@@ -40,8 +40,8 @@ class DataScopeHelper
             'all'=>false,
             'rules'=>[]
         ];
-        $userRoleHelper = new UserRoleHelper();
-        $roleIds = $userRoleHelper->getRoleIds($userId);
+        $roleHelper = new RoleHelper();
+        $roleIds = $roleHelper->getRoleIds($userId);
         if(empty($roleIds)){
             Cache::tag('data_scope')->set($cacheKey, $access, $cacheTtl);
             return $access;
@@ -59,8 +59,8 @@ class DataScopeHelper
             ->toArray();
 
         //部门
-        $userDepartmentHelper = new UserDepartmentHelper();
-        $departmentId = $userDepartmentHelper->getDepartmentId($userId);
+        $departmentHelper = new DepartmentHelper();
+        $departmentId = $departmentHelper->getDepartmentId($userId);
 
         //规则
         $rules = [];

@@ -2,7 +2,7 @@
 
 namespace app\mobile\controller;
 
-use app\helper\user\UserPermissionHelper;
+use app\helper\user\PermissionHelper;
 use think\Response;
 
 class Frame extends Base
@@ -15,8 +15,8 @@ class Frame extends Base
      */
     public function getPermissions()
     {
-        $userPermissionHelper = new UserPermissionHelper();
-        $permissions = $userPermissionHelper->getPermissionKeys($this->request->userId);
+        $permissionHelper = new PermissionHelper();
+        $permissions = $permissionHelper->getPermissionKeys($this->request->userId);
         return $this->getSuccessResponse('获取成功', $permissions);
     }
 }
