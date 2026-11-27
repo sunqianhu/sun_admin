@@ -9,7 +9,7 @@ use Exception;
 use think\exception\ValidateException;
 use think\Response;
 
-class EditAvatar extends Base
+class AvatarCrop extends Base
 {
     public bool $isApiAuth = false;
 
