@@ -3,7 +3,7 @@
 namespace app\helper;
 
 use Exception;
-use Firebase\JWT\JWT as FirebaseJWT;
+use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use think\facade\Config;
 
@@ -34,7 +34,7 @@ class JwtHelper
             'user_id' => $userId,
             'time' => time()
         ];
-        return FirebaseJWT::encode($payload, $this->key, 'HS256');
+        return JWT::encode($payload, $this->key, 'HS256');
     }
 
     /**
@@ -45,9 +45,9 @@ class JwtHelper
      */
     function resolverToken($token)
     {
-        FirebaseJWT::$leeway = $this->leeway;
+        JWT::$leeway = $this->leeway;
         try{
-            $decoded = FirebaseJWT::decode($token, new Key($this->key, 'HS256'));
+            $decoded = JWT::decode($token, new Key($this->key, 'HS256'));
         }catch (Exception $exception){
             throw new Exception('登录凭证错误['.$exception->getMessage().']', 0, $exception);
         }

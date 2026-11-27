@@ -1,8 +1,8 @@
 <?php
 namespace app\model;
 
-use app\model\desktop\MenuModel as DesktopMenuModel;
-use app\model\desktop\RouteModel as DesktopRouteModel;
+use app\model\desktop\MenuModel;
+use app\model\desktop\RouteModel;
 use app\model\data_scope\PolicyModel;
 use think\model\relation\BelongsToMany;
 
@@ -34,7 +34,7 @@ class RoleModel extends BaseModel
      */
     public function desktopMenus()
     {
-        return $this->belongsToMany(DesktopMenuModel::class, 'role_desktop_menu', 'menu_id', 'role_id');
+        return $this->belongsToMany(MenuModel::class, 'role_desktop_menu', 'menu_id', 'role_id');
     }
 
     /**
@@ -43,7 +43,7 @@ class RoleModel extends BaseModel
      */
     public function desktopRoutes()
     {
-        return $this->belongsToMany(DesktopRouteModel::class, 'role_desktop_route', 'route_id', 'role_id');
+        return $this->belongsToMany(RouteModel::class, 'role_desktop_route', 'route_id', 'role_id');
     }
 
     /**

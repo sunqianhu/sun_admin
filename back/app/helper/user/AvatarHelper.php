@@ -37,11 +37,11 @@ class AvatarHelper
      */
     public function getAvatarUrlByUserId($userId)
     {
-        $UserModel = UserModel::field('avatar')->find($userId);
-        if (empty($UserModel)) {
+        $userModel = UserModel::field('avatar')->find($userId);
+        if (empty($userModel)) {
             throw new Exception('没有找到用户记录');
         }
-        $path = $UserModel->avatar;
+        $path = $userModel->avatar;
         return $this->getAvatarUrl($path);
     }
 
@@ -71,11 +71,11 @@ class AvatarHelper
      */
     public function getBigAvatarUrlByUserId($userId)
     {
-        $UserModel = UserModel::field('big_avatar')->find($userId);
-        if (empty($UserModel)) {
+        $userModel = UserModel::field('big_avatar')->find($userId);
+        if (empty($userModel)) {
             throw new Exception('没有找到用户记录');
         }
-        $path = $UserModel->big_avatar;
+        $path = $userModel->big_avatar;
         return $this->getBigAvatarUrl($path);
     }
 

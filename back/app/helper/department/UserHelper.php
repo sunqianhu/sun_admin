@@ -34,11 +34,11 @@ class UserHelper
      */
     public function isExistUsers($departmentId)
     {
-        $UserModel = UserModel::field('id')
+        $userModel = UserModel::field('id')
             ->where('department_id', $departmentId)
             ->limit(0,1)
             ->find();
-        if(empty($UserModel)){
+        if(empty($userModel)){
             return false;
         }
         return true;

@@ -20,8 +20,8 @@ class TreeDepartmentSelect extends Base
      */
     public function getTreeDepartment()
     {
-        $treeDepartmentByPathHelper = new TreeDepartmentHelper();
-        $treeDepartment = $treeDepartmentByPathHelper->getTreeDepartment(0);
+        $treeDepartmentHelper = new TreeDepartmentHelper();
+        $treeDepartment = $treeDepartmentHelper->getTreeDepartment(0);
         return $this->getSuccessResponse('获取成功', $treeDepartment);
     }
 }

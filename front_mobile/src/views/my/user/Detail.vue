@@ -1,11 +1,11 @@
 <template>
   <div class="detail">
-    <group-radius class="user">
+    <van-cell-group inset class="user">
       <avatar-edit :url="user.avatar_url"></avatar-edit>
       <van-cell title="姓名" :value="user.name" />
       <van-cell title="所属部门" :value="user.department_name" />
       <van-cell title="手机号码" :value="user.phone" />
-    </group-radius>
+    </van-cell-group>
     <div class="button-wrap">
       <van-button type="primary" block :loading="logoutLoading" @click="logout">
         退出登录

@@ -9,7 +9,7 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Response;
 
-class treeMenuSelect extends Base
+class TreeMenuSelect extends Base
 {
     public bool $isApiAuth = false;
 

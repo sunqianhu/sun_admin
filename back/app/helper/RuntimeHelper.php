@@ -36,9 +36,9 @@ class RuntimeHelper
      * @return void
      */
     public function setValue($key, $value){
-        $runtime = RuntimeModel::where('key', $key)->findOrEmpty();
-        $runtime->key = $key;
-        $runtime->value = $value;
-        $runtime->save();
+        $runtimeModel = RuntimeModel::where('key', $key)->findOrEmpty();
+        $runtimeModel->key = $key;
+        $runtimeModel->value = $value;
+        $runtimeModel->save();
     }
 }

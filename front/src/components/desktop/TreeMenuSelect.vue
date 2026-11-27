@@ -41,7 +41,7 @@ const treeMenu = ref([]);
  */
 const init = async () => {
   const response = await axios.get(
-    "desktop/components.desktop.treeMenuSelect/getTreeMenu",
+    "desktop/components.desktop.TreeMenuSelect/getTreeMenu",
     {
       params: { menu_id: props.menuId },
     },
