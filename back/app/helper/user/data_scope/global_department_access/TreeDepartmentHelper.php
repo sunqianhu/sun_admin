@@ -2,7 +2,7 @@
 
 namespace app\helper\user\data_scope\global_department_access;
 
-use app\helper\department\DepartmentPathHelper;
+use app\helper\department\PathHelper;
 use app\helper\user\UserDataScopeHelper;
 use app\model\DepartmentModel;
 use Sunqianhu\Helper\Arr;
@@ -23,8 +23,8 @@ class TreeDepartmentHelper
      */
     public function getTreeDepartment($userId, $departmentId)
     {
-        $departmentPathHelper = new DepartmentPathHelper();
-        $path = $departmentPathHelper->getPath($departmentId);
+        $pathHelper = new PathHelper();
+        $path = $pathHelper->getPath($departmentId);
 
         $query = DepartmentModel::field('id,name,department_id,type,path')
             ->where(function ($query) use ($path) {

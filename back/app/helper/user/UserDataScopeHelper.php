@@ -2,7 +2,7 @@
 
 namespace app\helper\user;
 
-use app\helper\department\DepartmentPathHelper;
+use app\helper\department\PathHelper;
 use app\model\data_scope\PolicyDepartmentModel;
 use app\model\data_scope\PolicyModel;
 use app\model\DepartmentModel;
@@ -87,8 +87,8 @@ class UserDataScopeHelper
 
             //本单位及下级单位
             if($policy['type'] == 2){
-                $departmentPathHelper = new DepartmentPathHelper();
-                $path = $departmentPathHelper->getPath($departmentId);
+                $pathHelper = new PathHelper();
+                $path = $pathHelper->getPath($departmentId);
                 if($path === ''){
                     continue;
                 }

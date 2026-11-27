@@ -3,7 +3,7 @@
 namespace app\desktop\controller\system\department;
 
 use app\desktop\controller\Base;
-use app\helper\department\DepartmentPathHelper;
+use app\helper\department\PathHelper;
 use app\model\DepartmentModel;
 use app\validate\DepartmentValidate;
 use Exception;
@@ -31,8 +31,8 @@ class Add extends Base
             $departmentModel->save($post);
             $id = $departmentModel->id;
 
-            $departmentPathHelper = new DepartmentPathHelper();
-            $departmentPathHelper->updatePath($id);
+            $pathHelper = new PathHelper();
+            $pathHelper->updatePath($id);
             Db::commit();
         }catch (Exception $exception){
             Db::rollback();

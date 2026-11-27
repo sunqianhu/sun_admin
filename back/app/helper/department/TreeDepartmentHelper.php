@@ -16,8 +16,8 @@ class TreeDepartmentHelper
      * @return array
      */
     public function getDescendantDepartmentIds($departmentId){
-        $departmentPathHelper = new DepartmentPathHelper();
-        $path = $departmentPathHelper->getPath($departmentId);
+        $pathHelper = new PathHelper();
+        $path = $pathHelper->getPath($departmentId);
 
         return DepartmentModel::field('id')
             ->where('path', 'like', $path.'/%')
@@ -31,8 +31,8 @@ class TreeDepartmentHelper
      */
     public function getDescendantDepartmentIdsWithCurrentId($departmentId)
     {
-        $departmentPathHelper = new DepartmentPathHelper();
-        $path = $departmentPathHelper->getPath($departmentId);
+        $pathHelper = new PathHelper();
+        $path = $pathHelper->getPath($departmentId);
 
         return DepartmentModel::field('id')
             ->where(function ($query) use ($path) {
@@ -52,8 +52,8 @@ class TreeDepartmentHelper
      */
     public function getTreeDepartment($departmentId)
     {
-        $departmentPathHelper = new DepartmentPathHelper();
-        $path = $departmentPathHelper->getPath($departmentId);
+        $pathHelper = new PathHelper();
+        $path = $pathHelper->getPath($departmentId);
 
         $departmentModels = DepartmentModel::field('id,name,department_id,type,path')
             ->where(function ($query) use ($path) {
@@ -73,8 +73,8 @@ class TreeDepartmentHelper
      * @return array
      */
     public function getAncestorDepartmentIds($departmentId){
-        $departmentPathHelper = new DepartmentPathHelper();
-        $path = $departmentPathHelper->getPath($departmentId);
+        $pathHelper = new PathHelper();
+        $path = $pathHelper->getPath($departmentId);
 
         $departmentIds = explode('/', $path);
         $departmentIds = array_unique($departmentIds);
@@ -92,8 +92,8 @@ class TreeDepartmentHelper
      */
     public function getAncestorDepartmentIdsWithCurrentId($departmentId)
     {
-        $departmentPathHelper = new DepartmentPathHelper();
-        $path = $departmentPathHelper->getPath($departmentId);
+        $pathHelper = new PathHelper();
+        $path = $pathHelper->getPath($departmentId);
 
         $departmentIds = explode('/', $path);
         $departmentIds = array_unique($departmentIds);
