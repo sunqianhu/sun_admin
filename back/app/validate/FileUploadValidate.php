@@ -7,7 +7,7 @@ use think\Validate;
 class FileUploadValidate extends Validate
 {
     protected $rule = [
-        'file' => 'require|file|fileExt:txt,png,jpg,jpeg,gif,doc,docx,xls,xlsx,ppt,pptx,zip,gz,rar,mp3,mp4|fileSize:'.(1024 * 1024 * 200)
+        'file' => 'require|file|fileExt:txt,png,jpg,jpeg,gif,ico,doc,docx,xls,xlsx,ppt,pptx,zip,gz,rar,mp3,mp4|fileSize:'.(1024 * 1024 * 200)
     ];
     protected $message = [
         'file.require' => '请选择上传文件',
