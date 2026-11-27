@@ -9,7 +9,7 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use Throwable;
 
-class UserPasswordHelper
+class PasswordHelper
 {
     /**
      * 检测密码

@@ -4,7 +4,7 @@ namespace app\desktop\controller\layouts\main\user;
 
 use app\desktop\controller\Base;
 use app\model\UserModel;
-use app\helper\user\UserAvatarHelper;
+use app\helper\user\AvatarHelper;
 use app\validate\user\AvatarBase64ImageContentValidate;
 use Exception;
 use think\db\exception\DataNotFoundException;
@@ -46,9 +46,9 @@ class AvatarEdit extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $userAvatarHelper = new UserAvatarHelper();
+        $avatarHelper = new AvatarHelper();
         try {
-            $userAvatarHelper->editAvatarByBase64Content($this->request->userId, $post['avatar_base64_image_content']);
+            $avatarHelper->editAvatarByBase64Content($this->request->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

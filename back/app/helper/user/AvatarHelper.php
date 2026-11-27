@@ -9,7 +9,7 @@ use Sunqianhu\Helper\File;
 use Sunqianhu\Helper\Image;
 use Sunqianhu\Helper\SingletonFactory;
 
-class UserAvatarHelper
+class AvatarHelper
 {
     /**
      * 得到头像url

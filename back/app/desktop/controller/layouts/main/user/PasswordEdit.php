@@ -3,7 +3,7 @@
 namespace app\desktop\controller\layouts\main\user;
 
 use app\desktop\controller\Base;
-use app\helper\user\UserPasswordHelper;
+use app\helper\user\PasswordHelper;
 use app\validate\user\UserPasswordEditValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -25,12 +25,12 @@ class PasswordEdit extends Base
             return $this->getErrorResponse($exception->getError());
         }
 
-        $userPasswordHelper = new UserPasswordHelper();
+        $passwordHelper = new PasswordHelper();
         try {
-            if (!$userPasswordHelper->checkPassword($this->request->userId, $post['old_password'])) {
+            if (!$passwordHelper->checkPassword($this->request->userId, $post['old_password'])) {
                 return $this->getErrorResponse('原密码错误');
             }
-            $userPasswordHelper->editPassword($this->request->userId, $post['new_password1']);
+            $passwordHelper->editPassword($this->request->userId, $post['new_password1']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }

@@ -3,7 +3,7 @@
 namespace app\mobile\controller\my\user;
 
 use app\mobile\controller\Base;
-use app\helper\user\UserAvatarHelper;
+use app\helper\user\AvatarHelper;
 use app\validate\user\AvatarBase64ImageContentValidate;
 use Exception;
 use think\exception\ValidateException;
@@ -29,12 +29,12 @@ class AvatarCrop extends Base
         }
 
         try {
-            $userAvatarHelper = new UserAvatarHelper();
-            $userAvatarHelper->editAvatarByBase64Content($this->request->userId, $post['avatar_base64_image_content']);
+            $avatarHelper = new AvatarHelper();
+            $avatarHelper->editAvatarByBase64Content($this->request->userId, $post['avatar_base64_image_content']);
         } catch (Exception $exception) {
             return $this->getErrorResponse($exception->getMessage());
         }
-        $url = $userAvatarHelper->getAvatarUrlByUserId($this->request->userId);
+        $url = $avatarHelper->getAvatarUrlByUserId($this->request->userId);
 
         return $this->getSuccessResponse('修改成功', $url);
     }
