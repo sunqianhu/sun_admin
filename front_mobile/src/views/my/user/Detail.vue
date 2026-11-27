@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
     <group-radius class="user">
-      <edit-avatar :url="user.avatar_url" @successed="init"></edit-avatar>
+      <avatar-edit :url="user.avatar_url"></avatar-edit>
       <van-cell title="姓名" :value="user.name" />
       <van-cell title="所属部门" :value="user.department_name" />
       <van-cell title="手机号码" :value="user.phone" />
@@ -17,7 +17,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
-import EditAvatar from "./EditAvatar.vue";
+import AvatarEdit from "./AvatarEdit.vue";
 
 const user = ref({});
 const logoutLoading = ref(false);
