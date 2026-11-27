@@ -4,3 +4,4 @@
 /back/runtime
 .env*
 !.env*.example
+/front_mobile/.vscode
