@@ -9,7 +9,7 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 
-class RoleDesktopMenuHelper
+class DesktopMenuHelper
 {
     /**
      * 设置关系

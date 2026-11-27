@@ -4,12 +4,12 @@ namespace app\desktop\controller\system\role;
 
 use app\desktop\controller\Base;
 use app\helper\RoleHelper;
-use app\helper\role\RoleDesktopMenuHelper;
-use app\helper\role\RoleDesktopRouteHelper;
-use app\helper\role\RolePermissionHelper;
+use app\helper\role\DesktopMenuHelper;
+use app\helper\role\DesktopRouteHelper;
+use app\helper\role\PermissionHelper;
 use app\helper\role\RolePolicyHelper;
-use app\helper\role\RoleUserHelper;
-use app\helper\user\UserDataScopeHelper;
+use app\helper\role\UserHelper;
+use app\helper\user\DataScopeHelper;
 use app\model\RoleModel;
 use app\validate\PaginationValidate;
 use Exception;
@@ -61,20 +61,20 @@ class Index extends Base
             $roleHelper = new RoleHelper();
             $roleHelper->delete($id);
 
-            $rolePermissionHelper = new RolePermissionHelper();
-            $rolePermissionHelper->deleteByRoleId($id);
+            $permissionHelper = new PermissionHelper();
+            $permissionHelper->deleteByRoleId($id);
 
-            $roleDesktopMenuHelper = new RoleDesktopMenuHelper();
-            $roleDesktopMenuHelper->deleteByRoleId($id);
+            $desktopMenuHelper = new DesktopMenuHelper();
+            $desktopMenuHelper->deleteByRoleId($id);
 
-            $roleDesktopRouteHelper = new RoleDesktopRouteHelper();
-            $roleDesktopRouteHelper->deleteByRoleId($id);
+            $desktopRouteHelper = new DesktopRouteHelper();
+            $desktopRouteHelper->deleteByRoleId($id);
 
             $rolePolicyHelper = new RolePolicyHelper();
             $rolePolicyHelper->deleteByRoleId($id);
 
-            $roleUserHelper = new RoleUserHelper();
-            $roleUserHelper->deleteByRoleId($id);
+            $userHelper = new UserHelper();
+            $userHelper->deleteByRoleId($id);
 
             Db::commit();
         }catch (Exception $exception){
@@ -82,8 +82,8 @@ class Index extends Base
             return $this->getErrorResponse($exception->getMessage());
         }
 
-        $userDataScopeHelper = new UserDataScopeHelper();
-        $userDataScopeHelper->clearCache();
+        $dataScopeHelper = new DataScopeHelper();
+        $dataScopeHelper->clearCache();
 
         return $this->getSuccessResponse('删除成功');
     }

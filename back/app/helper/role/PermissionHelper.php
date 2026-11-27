@@ -10,7 +10,7 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 
-class RolePermissionHelper
+class PermissionHelper
 {
     /**
      * 设置关系

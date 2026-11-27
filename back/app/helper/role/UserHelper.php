@@ -7,7 +7,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-class RoleUserHelper
+class UserHelper
 {
     /**
      * 通过角色删除用户绑定
