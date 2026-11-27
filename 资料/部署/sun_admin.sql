@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50744
 File Encoding         : 65001
 
-Date: 2026-11-26 11:13:39
+Date: 2026-11-27 09:26:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,12 +27,11 @@ CREATE TABLE `config` (
   `system_description` text NOT NULL COMMENT '系统简介',
   `denied_ips_string` text NOT NULL COMMENT '拒绝登录ip串',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统配置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统配置';
 
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('1', 'sun admin', 'system_logo/20261120/b9d919d3570b9405c5a0ad35a2268090.png', '', '本系统是一套通用管理后台框架，集成用户管理、角色权限、组织机构、会话管理、操作日志和系统配置等基础功能，支持桌面端、移动端及 API 接入，为各类业务系统提供统一、可扩展的开发基础。', '');
 
 -- ----------------------------
 -- Table structure for data_scope
@@ -658,9 +657,8 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', '$2y$10$Eu3xsqx0L6N1sa265OIxi.EZ3Lfj3bRrm4CoZrd964BOZuGLzbaw2', '1', '张三', '15122222222', 'avatar/2026/11/03/3802aca9dbbcdea2999d0c9a1bd0f122.png', 'big_avatar/2026/11/03/2e95271424930fd2067fba2faa70d9c0.png', '1684989244', '1716183018', '1795596990', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', 'admin', '$2y$10$Eu3xsqx0L6N1sa265OIxi.EZ3Lfj3bRrm4CoZrd964BOZuGLzbaw2', '1', '张三', '15122222222', '', '', '1684989244', '1716183018', '1795687089', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', 'user', '$2y$10$UgRQ5ZbLVVqALwcUTvboGeSMn8OCIG7B9DCMBmm.Rlj0rbfrinR1K', '1', '李四', '15111111111', '', '', '1684992552', '1703148627', '0', '');
-INSERT INTO `user` VALUES ('3', '1', 'test1', '$2y$10$KGf9vZaH9DB5XvMS82WUgeGDlSL3IlmeEi6AuVshFshmOqq6Cay6i', '0', 'test1', '15108273575', '', '', '0', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for user_role
